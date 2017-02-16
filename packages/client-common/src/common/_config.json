@@ -1,0 +1,8 @@
+{
+  "firebase": {
+    "apiKey": "...",
+    "authDomain": "...",
+    "databaseURL": "...",
+    "storageBucket": "..."
+  }
+}
