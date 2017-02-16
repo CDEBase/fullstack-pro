@@ -14,5 +14,5 @@ It uses lerna.json for creating the packages structure. Under packages you can c
 - sample-graphql-resolver - This is where you store the graphql schema and resolvers are stored. This will be used in sample-server to test. 
 - sample-server-core - This is where the core interface of the package stays and core functionality
 - sample-client-core - This is where core client components and redux binding stays. 
-- sample-client-browser - This is used mainly to test the component in the browser. 
-- client-common - This should be mostly static files and should be modified. It has all the boilerplate configuration for browser to work. 
+- sample-client-browser - This is used mainly to test the @sample-client-core component in the browser.
+- client-common - This has the config files and boilerplate code for client and should not be modified.
