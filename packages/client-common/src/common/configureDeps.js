@@ -5,7 +5,7 @@
 // import firebase from 'firebase/app';
 // import 'firebase/auth';
 // import 'firebase/database';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import validate from './validate';
 
 /*
@@ -14,7 +14,7 @@ import validate from './validate';
 
 const configureDeps = (initialState, platformDeps) => ({
   ...platformDeps,
-  ...createFirebaseDeps(initialState.config.firebase),
+  // ...createFirebaseDeps(initialState.config.firebase),
   getUid: () => platformDeps.uuid.v4(),
   now: () => Date.now(),
   validate,

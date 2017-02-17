@@ -17,3 +17,7 @@ After creating your Database and Connectors from Database, you can call the reso
 The first part of Sample Schema is **database**. This class provides an easy connection to your database using some connection settings, explained below.
 
 --TODO--
+
+
+## Reference:
+https://github.com/ramsaylanier/WordExpressSchema

@@ -1,4 +1,4 @@
 
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+// import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
-import {  meteorClientConfig } from 'meteor/apollo';
+// import {  meteorClientConfig } from 'meteor/apollo';
