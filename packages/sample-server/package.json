@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/DxCx/webpack-apollo-server#readme",
   "dependencies": {
+    "@sample/schema": "0.0.4",
     "@types/body-parser": "0.0.33",
     "@types/cors": "2.8.0",
     "@types/express": "^4.0.35",
@@ -45,7 +46,6 @@
     "body-parser": "^1.16.0",
     "cors": "^2.8.1",
     "express": "^4.14.0",
-    "graphql": "0.9.1",
     "graphql-server-express": "^0.6.0",
     "graphql-subscriptions": "^0.3.0",
     "graphql-tools": "0.10.0",

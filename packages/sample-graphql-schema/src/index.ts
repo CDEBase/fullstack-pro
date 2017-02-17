@@ -1,13 +1,14 @@
 import {GraphQLSchema} from 'graphql';
 import {makeExecutableSchema, addMockFunctionsToSchema} from 'graphql-tools';
+import { persons, findPerson, addPerson } from './data-base/person-database';
 
 /* tslint:disable:no-var-requires */
 const modules = [
-  require("./modules/mocked-type"),
-  require("./modules/some-type"),
-  require("./modules/person-type"),
-  require("./modules/query"),
-  require("./modules/mutation"),
+  require('./modules/mocked-type'),
+  require('./modules/some-type'),
+  require('./modules/person-type'),
+  require('./modules/query'),
+  require('./modules/mutation'),
 ];
 
 const mainDefs = [`
@@ -23,7 +24,7 @@ const resolvers = Object.assign({},
 
 const typeDefs = mainDefs.concat(modules.map((m) => m.typeDef).filter((res) => !!res));
 
-const Schema: GraphQLSchema = makeExecutableSchema({
+const schema: GraphQLSchema = makeExecutableSchema({
   logger: console,
   resolverValidationOptions: {
     requireResolversForNonScalar: false,
@@ -34,7 +35,8 @@ const Schema: GraphQLSchema = makeExecutableSchema({
 addMockFunctionsToSchema({
   mocks: {},
   preserveResolvers: true,
-  schema: Schema,
+  schema,
 });
 
-export {Schema};
+const database = { persons, addPerson, findPerson};
+export {resolvers, typeDefs, database};

@@ -4,12 +4,13 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "declaration": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": false,
     "pretty": true,
     "removeComments": true,
-    "lib": ["es6"],
+    "lib": [
+      "es6"
+    ],
     "types": [
       "@types/node"
     ]

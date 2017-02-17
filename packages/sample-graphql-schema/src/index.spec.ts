@@ -1,7 +1,24 @@
-import {Schema} from './schema';
 import {graphql} from 'graphql';
 import 'jest';
 import {persons, findPerson, addPerson} from './data-base/person-database';
+import {GraphQLSchema} from 'graphql';
+import {makeExecutableSchema, addMockFunctionsToSchema} from 'graphql-tools';
+import { resolvers, typeDefs } from './index';
+
+const schema: GraphQLSchema = makeExecutableSchema({
+  logger: console,
+  resolverValidationOptions: {
+    requireResolversForNonScalar: false,
+  },
+  resolvers: resolvers,
+  typeDefs: typeDefs,
+});
+addMockFunctionsToSchema({
+  mocks: {},
+  preserveResolvers: true,
+  schema,
+
+});
 
 function assertNoError(res) {
   if (res.errors) {
@@ -12,7 +29,7 @@ function assertNoError(res) {
 
 describe('Schema', () => {
   it('should export valid schema', () => {
-    let query = Schema.getQueryType();
+    let query = schema.getQueryType();
     expect(typeof query).toBe('object');
 
     let fields: any = query.getFields();
@@ -28,7 +45,7 @@ describe('Schema', () => {
       testString: 'it Works!',
     };
 
-    return graphql(Schema, testQuery, undefined, {}).then((res) => {
+    return graphql(schema, testQuery, undefined, {}).then((res) => {
       assertNoError(res);
       expect(res.data).toMatchSnapshot();
     });
@@ -43,7 +60,7 @@ describe('Schema', () => {
             }
         }`;
 
-    return graphql(Schema, testQuery, undefined, {}).then((res) => {
+    return graphql(schema, testQuery, undefined, {}).then((res) => {
       assertNoError(res);
       expect(res.data).toMatchSnapshot();
     });
@@ -55,7 +72,7 @@ describe('Schema', () => {
         }`;
 
     const ctx = {testConnector: {testString: 'it works from connector as well!'}};
-    return graphql(Schema, testQuery, undefined, ctx).then((res) => {
+    return graphql(schema, testQuery, undefined, ctx).then((res) => {
       assertNoError(res);
       expect(res.data).toMatchSnapshot();
     });
@@ -69,7 +86,7 @@ describe('Schema', () => {
             }
         }`;
 
-    return graphql(Schema, testQuery, undefined, {}).then((res) => {
+    return graphql(schema, testQuery, undefined, {}).then((res) => {
       let data = res.data as {
         mockedObject: {
           mockedInt: number
@@ -93,7 +110,7 @@ describe('Schema', () => {
             }
         }`;
 
-    return graphql(Schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
+    return graphql(schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
       assertNoError(res);
       expect(res.data).toMatchSnapshot();
     });
@@ -113,7 +130,7 @@ describe('Schema', () => {
             }
         }`;
 
-    return graphql(Schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
+    return graphql(schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
       assertNoError(res);
       expect(res.data).toMatchSnapshot();
     });
@@ -126,18 +143,18 @@ describe('Schema', () => {
             }
         }`;
 
-    return graphql(Schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
+    return graphql(schema, testQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
       assertNoError(res);
-      let newId = res.data.addPerson.id;
+      let newId = res.data['addPerson'].id;
       let testVerifyQuery = `{
                 getPerson(id: "${newId}"){
                         id
                         name
                     }
                 }`;
-      return graphql(Schema, testVerifyQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
-        expect(res.data.getPerson.id).toEqual(newId);
-        expect(res.data.getPerson.name).toEqual('kuku');
+      return graphql(schema, testVerifyQuery, undefined, {persons, findPerson, addPerson}).then((res) => {
+        expect(res.data['getPerson'].id).toEqual(newId);
+        expect(res.data['getPerson'].name).toEqual('kuku');
       });
     });
   });

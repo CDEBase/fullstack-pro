@@ -1,7 +1,7 @@
-var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
+var nodeExternals = require('webpack-node-externals');
 
 /* helper function to get into build directory */
 var distPath = function (name) {
@@ -13,11 +13,13 @@ var distPath = function (name) {
 };
 
 var webpack_opts = {
-  entry: './src/main.ts',
+  entry: './src/index.ts',
   target: 'node',
+  externals: [nodeExternals()],
   output: {
-    filename: distPath('main.js'),
-    libraryTarget: "commonjs2"
+    filename: distPath('index.js'),
+    library: '@sample/schema',
+    libraryTarget: 'umd',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -46,10 +48,7 @@ var webpack_opts = {
     loaders: [{
       test: /\.ts$/,
       loaders: 'awesome-typescript-loader'
-    }, {
-      test: /\.json?$/,
-      loader: 'json'
-    },]
+    }]
   },
   externals: [nodeExternals()]
 };
