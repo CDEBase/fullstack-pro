@@ -1,22 +1,19 @@
 {
-  "name": "@sample/graphql",
-  "version": "0.1.0",
+  "name": "@sample/client-redux",
+  "version": "0.0.1",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack -p --config --progress --watch",
-    "typify": "gql-gen --url http://localhost:3000/graphql --template flow --out ./flow/decl/schema.js ./src/**/*.graphql",
     "compile": "webpack -p --config --progress",
     "prepare": "npm run compile",
     "test": "yarn lint && yarn testonly",
     "test-ci": "yarn lint && yarn coverage",
     "testonly": "jest",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "flow:check": "flow check",
-    "flow:stop": "flow stop",
-    "lint": "eslint src",
-    "coverage": "yarn testonly -- --coverage",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "generate-graphql-types": "apollo-codegen generate src/graphql/**/*.graphql --schema schema.json --target ts --output src/schema.ts",
+    "generate-graphql-schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output schema.json",
+    "build": "webpack",
+    "build:watch": "webpack --watch"
   },
   "jest": {
     "testEnvironment": "node",
@@ -33,6 +30,9 @@
   },
   "homepage": "https://github.com/js-accounts/graphql#readme",
   "devDependencies": {
+    "@types/jest": "^18.1.1",
+    "@types/redux": "^3.6.0",
+    "awesome-typescript-loader": "^3.1.2",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
@@ -45,12 +45,12 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-es2015-node4": "^2.1.0",
     "coveralls": "^2.11.14",
+    "apollo-codegen": "^0.10.9",
     "eslint": "^3.7.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.3.0",
     "flow-bin": "^0.37.0",
     "graphql-code-generator": "^0.1.7",
     "jest": "^18.0.0",
@@ -62,9 +62,11 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
+    "apollo-client": "^0.10.1",
     "graphql-tag": "^1.1.2"
   },
   "peerDependencies": {
-    "graphql": "^0.8.2"
+    "graphql": "^0.8.2",
+    "redux": ">=3.6.0"
   }
 }

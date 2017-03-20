@@ -2,15 +2,6 @@ import {GraphQLSchema} from 'graphql';
 import {makeExecutableSchema, addMockFunctionsToSchema} from 'graphql-tools';
 import { resolvers, typeDefs } from '@sample/schema';
 
-const mainDefs = [`
-    schema {
-        query: Query,
-        mutation: Mutation
-    }
-`,
-];
-
-
 const schema: GraphQLSchema = makeExecutableSchema({
   logger: console,
   resolverValidationOptions: {

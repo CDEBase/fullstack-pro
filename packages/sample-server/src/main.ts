@@ -1,11 +1,15 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import {graphqlExpress, graphiqlExpress} from 'graphql-server-express';
-import {schema} from './schema';
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import { schema } from './schema';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as morgan from 'morgan';
-import {database} from '@sample/schema';
+import { database } from '@sample/schema';
+
+import { createServer } from "http";
+import { SubscriptionServer } from "subscriptions-transport-ws";
+import { subscriptionManager, pubsub } from "./subscriptions";
 
 // Default port or given one.
 export const GRAPHQL_ROUTE = '/graphql';
@@ -17,6 +21,7 @@ interface IMainOptions {
   enableGraphiql: boolean;
   env: string;
   port: number;
+  wsPort?: number;
   verbose?: boolean;
 }
 
@@ -57,7 +62,7 @@ export function main(options: IMainOptions) {
   }));
 
   if (true === options.enableGraphiql) {
-    app.use(GRAPHIQL_ROUTE, graphiqlExpress({endpointURL: GRAPHQL_ROUTE}));
+    app.use(GRAPHIQL_ROUTE, graphiqlExpress({ endpointURL: GRAPHQL_ROUTE }));
   }
 
   return new Promise((resolve, reject) => {
@@ -71,12 +76,40 @@ export function main(options: IMainOptions) {
     }).on('error', (err: Error) => {
       reject(err);
     });
+  }).then((server) => {
+            if ( undefined === options.wsPort ) {
+            return [server];
+        }
+
+        const httpServer = createServer((request, response) => {
+            response.writeHead(404);
+            response.end();
+        });
+
+        httpServer.listen(options.wsPort, () => console.log( // eslint-disable-line no-console
+            `Websocket Server is now running on http://localhost:${options.wsPort}`
+        ));
+                return [server, new SubscriptionServer({
+                subscriptionManager,
+                // TODO: Why not Same server? same context :( ?
+                onSubscribe: (msg, params) => {
+                    return Object.assign({}, params, {
+                        context: {},
+                    });
+                },
+            }, {
+            server: httpServer,
+            path: '/',
+            },
+        )];
   });
 }
 
 /* istanbul ignore if: main scope */
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
+
+  const WS_PORT = process.env.WS_PORT || 8080;
 
   // Either to export GraphiQL (Debug Interface) or not.
   const NODE_ENV = process.env.NODE_ENV !== 'production' ? 'dev' : 'production';
@@ -92,5 +125,6 @@ if (require.main === module) {
     env: NODE_ENV,
     port: PORT,
     verbose: true,
+    wsPort: WS_PORT,
   });
 }

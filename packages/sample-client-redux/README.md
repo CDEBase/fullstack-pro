@@ -1,0 +1,5 @@
+
+
+# Redux Plugin
+
+uses graphql 

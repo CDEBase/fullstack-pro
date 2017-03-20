@@ -1,16 +1,29 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "types": [
+      "reflect-metadata"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
     "rootDir": "./src",
     "outDir": "./dist",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ]
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "lib",
+    "webpack.config.js"
   ]
 }

@@ -3,13 +3,16 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
+    "declaration": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": false,
     "pretty": true,
     "removeComments": true,
     "lib": [
-      "es6"
+      "es6",
+      "dom"
     ],
     "types": [
       "@types/node"

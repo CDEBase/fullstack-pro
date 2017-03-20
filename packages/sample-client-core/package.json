@@ -1,0 +1,33 @@
+{
+  "name": "@sample/client-core",
+  "version": "0.0.1",
+  "description": "Sample core for higher packages to depend on",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha ./dist/index.test.js",
+    "prebuild": "rimraf dist/*",
+    "build": "webpack",
+    "build:watch": "webpack --watch"
+  },
+  "author": "Veera Marni <marni.srikanth@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
+    "@types/semver": "^5.3.30",
+    "@types/sinon": "^1.16.34",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
+  },
+  "dependencies": {
+    "inversify": "^3.1.0",
+    "reflect-metadata": "^0.1.10"
+  },
+  "typings": "dist/index.d.ts",
+  "typescript": {
+    "definition": "dist/index.d.ts"
+  }
+}
