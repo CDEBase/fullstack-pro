@@ -16,3 +16,33 @@ It uses lerna.json for creating the packages structure. Under packages you can c
 - sample-client-core - This is where core client components and redux binding stays. 
 - sample-client-browser - This is used mainly to test the @sample-client-core component in the browser.
 - client-common - This has the config files and boilerplate code for client and should not be modified.
+
+
+## Development
+
+If you want to develop gitstack locally you must follow the following instructions:
+
+* Fork or Clone this repository
+
+* Install the GraphQL Server project in your computer
+
+```
+git clone https://github.com/cdmbase/fullstack-pro
+cd fullstack-pro
+npm install
+npm run install
+```
+to run server
+```
+cd packages/sample-server
+npm start
+```
+to run client server
+```
+cd packages/sample-browser-server
+npm start
+```
+to run build with watch. Go to main directory and run
+```
+npm run build:packages:watch
+```
