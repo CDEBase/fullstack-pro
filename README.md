@@ -24,7 +24,7 @@ If you want to develop gitstack locally you must follow the following instructio
 
 * Fork or Clone this repository
 
-* Install the GraphQL Server project in your computer
+* Install the project in your computer
 
 ```
 git clone https://github.com/cdmbase/fullstack-pro
