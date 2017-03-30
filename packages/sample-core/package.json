@@ -2,12 +2,14 @@
   "name": "@sample/core",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "mocha ./dist/index.test.js",
-    "prebuild": "rimraf dist/*",
-    "build": "webpack",
-    "build:watch": "webpack --watch"
+    "test": "mocha ./lib/index.test.js",
+    "prepublish": "npm run build",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch"
   },
   "author": "Veera Marni <marni.srikanth@gmail.com>",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "@types/node": "^7.0.5",
     "@types/semver": "^5.3.30",
     "@types/sinon": "^1.16.34",
+    "typescript": "^2.2.2",
     "mocha": "^3.2.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.2.1",
@@ -26,8 +29,8 @@
     "inversify": "^3.1.0",
     "reflect-metadata": "^0.1.10"
   },
-  "typings": "dist/index.d.ts",
+  "typings": "lib/index.d.ts",
   "typescript": {
-    "definition": "dist/index.d.ts"
+    "definition": "lib/index.d.ts"
   }
 }

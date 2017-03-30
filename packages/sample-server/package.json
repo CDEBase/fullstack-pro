@@ -4,14 +4,14 @@
   "description": "Starter kit for apollo server using webpack and typescript",
   "main": "dist/main.js",
   "scripts": {
-    "build": "webpack",
-    "build:watch": "webpack --watch",
     "pretest": "npm run build",
+    "build": "npm run build:clean && npm run build:dist",
+    "build:watch": "npm run build:dist -- --watch",
+    "build:dist": "webpack",
+    "build:clean": "rimraf dist",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:notify": "npm run test:watch -- --notify",
-    "coverage": "npm test -- --coverage",
-    "coverage:notify": "npm run coverage -- --watch --notify",
     "start": "npm run build && node dist/main.js",
     "start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/main.js\"",
     "preupver": "npm test",
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/DxCx/webpack-apollo-server#readme",
   "dependencies": {
-    "@sample/schema": "0.0.4",
+    "@sample/schema": "0.0.1",
     "@types/body-parser": "0.0.33",
     "@types/cors": "2.8.0",
     "@types/express": "^4.0.35",
@@ -50,7 +50,8 @@
     "graphql-subscriptions": "^0.3.0",
     "graphql-tools": "0.10.0",
     "helmet": "^3.4.0",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "subscriptions-transport-ws": "^0.5.5-alpha.0"
   },
   "devDependencies": {
     "@types/graphql": "^0.8.6",

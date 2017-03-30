@@ -16,7 +16,7 @@ export const GRAPHQL_ROUTE = '/graphql';
 export const GRAPHIQL_ROUTE = '/graphiql';
 
 const { persons, findPerson, addPerson } = database;
-interface IMainOptions {
+export interface IMainOptions {
   enableCors: boolean;
   enableGraphiql: boolean;
   env: string;
@@ -77,31 +77,31 @@ export function main(options: IMainOptions) {
       reject(err);
     });
   }).then((server) => {
-            if ( undefined === options.wsPort ) {
-            return [server];
-        }
+    if (undefined === options.wsPort) {
+      return [server];
+    }
 
-        const httpServer = createServer((request, response) => {
-            response.writeHead(404);
-            response.end();
-        });
+    // const httpServer = createServer((request, response) => {
+    //   response.writeHead(404);
+    //   response.end();
+    // });
 
-        httpServer.listen(options.wsPort, () => console.log( // eslint-disable-line no-console
-            `Websocket Server is now running on http://localhost:${options.wsPort}`
-        ));
-                return [server, new SubscriptionServer({
-                subscriptionManager,
-                // TODO: Why not Same server? same context :( ?
-                onSubscribe: (msg, params) => {
-                    return Object.assign({}, params, {
-                        context: {},
-                    });
-                },
-            }, {
-            server: httpServer,
-            path: '/',
-            },
-        )];
+    // httpServer.listen(options.wsPort, () => console.log( // eslint-disable-line no-console
+    //   `Websocket Server is now running on http://localhost:${options.wsPort}`
+    // ));
+    // return [server, new SubscriptionServer({
+    //   subscriptionManager,
+    //   // TODO: Why not Same server? same context :( ?
+    //   onSubscribe: (msg, params) => {
+    //     return Object.assign({}, params, {
+    //       context: {},
+    //     });
+    //   },
+    // }, {
+    //     server: httpServer,
+    //     path: '/',
+    //   },
+    // )];
   });
 }
 

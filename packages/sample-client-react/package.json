@@ -2,7 +2,7 @@
   "name": "@sample/client-react",
   "version": "0.0.1",
   "description": "browser plugin for git",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "webpack -p --config --progress --watch",
     "compile": "webpack -p --config --progress",
@@ -10,8 +10,11 @@
     "test": "yarn lint && yarn testonly",
     "test-ci": "yarn lint && yarn coverage",
     "testonly": "jest",
-    "build": "webpack",
-    "build:watch": "webpack --watch"
+    "prepublish": "npm run build",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch"
   },
   "author": "Veera Marni <marni.srikanth@gmail.com> (http://vm.com)",
   "license": "ISC",
@@ -37,5 +40,9 @@
     "rimraf": "^2.6.1",
     "webpack": "^2.2.1",
     "webpack-node-externals": "^1.5.4"
+  },
+  "typings": "lib/index.d.ts",
+  "typescript": {
+    "definition": "lib/index.d.ts"
   }
 }

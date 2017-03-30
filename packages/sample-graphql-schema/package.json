@@ -1,20 +1,21 @@
 {
   "name": "@sample/schema",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "Sample Schema Module",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "start": "webpack -p --config --progress --watch",
-    "compile": "webpack",
-    "prepublish": "npm run compile",
     "test": "npm run testonly",
     "test-ci": "npm lint && npm coverage",
     "testonly": "jest",
-    "coverage": "npm run testonly -- --coverage",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "prepublish": "npm run build",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch"
   },
   "jest": {
     "testEnvironment": "node",
@@ -48,8 +49,8 @@
   "optionalDependencies": {
     "@types/graphql": "^0.8.5"
   },
-  "typings": "dist/main.d.ts",
+  "typings": "lib/index.d.ts",
   "typescript": {
-    "definition": "dist/main.d.ts"
+    "definition": "lib/index.d.ts"
   }
 }

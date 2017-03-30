@@ -12,8 +12,11 @@
     "testonly": "jest",
     "generate-graphql-types": "apollo-codegen generate src/graphql/**/*.graphql --schema schema.json --target ts --output src/schema.ts",
     "generate-graphql-schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output schema.json",
-    "build": "webpack",
-    "build:watch": "webpack --watch"
+    "prepublish": "npm run build",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch"
   },
   "jest": {
     "testEnvironment": "node",
@@ -68,5 +71,9 @@
   "peerDependencies": {
     "graphql": "^0.8.2",
     "redux": ">=3.6.0"
+  },
+  "typings": "lib/index.d.ts",
+  "typescript": {
+    "definition": "lib/index.d.ts"
   }
 }

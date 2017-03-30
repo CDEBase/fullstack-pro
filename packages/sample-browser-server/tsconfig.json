@@ -6,7 +6,9 @@
       "dom"
     ],
     "rootDir": "./src",
-    "outDir": "./lib",
+    "jsx": "react",
+    "noImplicitAny": true,
+    "outDir": "./dist",
     "typeRoots": [
       "node_modules/@types"
     ]

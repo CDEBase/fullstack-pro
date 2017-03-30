@@ -1,10 +1,10 @@
 {
-  "name": "@sample/client-core",
+  "name": "@sample/browser-server",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "mocha ./lib/index.test.js",
+    "test": "mocha ./dist/index.test.js",
     "prepublish": "npm run build",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
@@ -21,7 +21,6 @@
     "@types/sinon": "^1.16.34",
     "mocha": "^3.2.0",
     "rimraf": "^2.6.1",
-    "typescript": "^2.2.2",
     "webpack": "^2.2.1",
     "webpack-node-externals": "^1.5.4"
   },
@@ -29,8 +28,8 @@
     "inversify": "^3.1.0",
     "reflect-metadata": "^0.1.10"
   },
-  "typings": "lib/index.d.ts",
+  "typings": "dist/index.d.ts",
   "typescript": {
-    "definition": "lib/index.d.ts"
+    "definition": "dist/index.d.ts"
   }
 }
