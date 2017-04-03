@@ -51,7 +51,7 @@
     "graphql-tools": "0.10.0",
     "helmet": "^3.4.0",
     "morgan": "^1.7.0",
-    "subscriptions-transport-ws": "^0.5.5-alpha.0"
+    "subscriptions-transport-ws": "^0.5.4"
   },
   "devDependencies": {
     "@types/graphql": "^0.8.6",

@@ -1,0 +1,37 @@
+{
+  "name": "@sample/server-core",
+  "version": "0.0.1",
+  "description": "xterm server services for Node",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha ./lib/test.js",
+    "prepublish": "npm run build",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch"
+  },
+  "author": "Veera Marni <marni.srikanth@gmail.com> (http://vm.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.5",
+    "@types/semver": "^5.3.30",
+    "@types/sinon": "^1.16.34",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
+  },
+  "dependencies": {
+    "@sample/core": "0.0.1"
+  },
+  "typings": "lib/index.d.ts",
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
+}

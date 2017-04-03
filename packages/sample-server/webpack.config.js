@@ -43,7 +43,7 @@ var webpack_opts = {
   ],
   devtool: 'source-map',
   module: {
-    loaders: [{
+    rules: [{
       test: /\.ts$/,
       loaders: 'awesome-typescript-loader'
     }, {

@@ -9,7 +9,6 @@
     "jsx": "react",
     "noImplicitAny": true,
     "outDir": "./lib",
-    "declarationDir": "./lib",
     "typeRoots": [
       "node_modules/@types"
     ]
