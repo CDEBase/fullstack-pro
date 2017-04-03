@@ -11,7 +11,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     library: '@sample/schema',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
   },
   resolve: {
     extensions: ['.ts', '.js'],

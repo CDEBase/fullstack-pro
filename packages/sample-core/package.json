@@ -15,18 +15,18 @@
   "license": "ISC",
   "devDependencies": {
     "@types/minimist": "^1.2.0",
-    "@types/mocha": "^2.2.39",
-    "@types/node": "^7.0.5",
-    "@types/semver": "^5.3.30",
-    "@types/sinon": "^1.16.34",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/semver": "^5.3.31",
+    "@types/sinon": "^2.1.1",
     "typescript": "^2.2.2",
     "mocha": "^3.2.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.2.1",
+    "webpack": "^2.3.3",
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "inversify": "^3.1.0",
+    "inversify": "^3.3.0",
     "reflect-metadata": "^0.1.10"
   },
   "typings": "lib/index.d.ts",

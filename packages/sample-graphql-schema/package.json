@@ -32,22 +32,22 @@
   "license": "MIT",
   "dependencies": {
     "cdm-logger": "^0.3.2",
-    "graphql-tools": "0.10.0",
-    "lodash": "^4.16.4"
+    "graphql-tools": "0.11.0",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@types/jest": "^18.1.1",
+    "@types/jest": "^19.2.2",
     "graphql-code-generator": "^0.5.1",
-    "graphql-subscriptions": "^0.3.0",
+    "graphql-subscriptions": "^0.3.1",
     "rimraf": "^2.6.1",
-    "webpack": "^2.2.1",
+    "webpack": "^2.3.3",
     "webpack-node-externals": "^1.5.4"
   },
   "peerDependencies": {
     "graphql": "^0.8.0 || ^0.9.0"
   },
   "optionalDependencies": {
-    "@types/graphql": "^0.8.5"
+    "@types/graphql": "^0.9.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
