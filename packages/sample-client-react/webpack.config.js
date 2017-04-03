@@ -50,6 +50,9 @@ var webpack_opts = {
     }, {
       test: /\.json?$/,
       loaders: 'json-loader'
+    },{
+      test: /\.css$/,
+      loaders: 'css-loader'
     },]
   },
   externals: [nodeExternals()]
