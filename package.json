@@ -98,7 +98,7 @@
     "graphql-tools": "0.10.0",
     "helmet": "^3.4.0",
     "morgan": "^1.7.0",
-    "subscriptions-transport-ws": "^0.5.5-alpha.0",
+    "subscriptions-transport-ws": "^0.5.4",
     "apollo-client": "^0.10.1",
     "graphql-tag": "^1.1.2",
     "node-pty": "^0.6.2",
