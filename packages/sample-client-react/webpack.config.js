@@ -44,12 +44,12 @@ var webpack_opts = {
   ],
   devtool: 'source-map',
   module: {
-    loaders: [{
+    rules: [{
       test: /\.tsx?$/,
       loaders: 'ts-loader'
     }, {
       test: /\.json?$/,
-      loader: 'json'
+      loaders: 'json-loader'
     },]
   },
   externals: [nodeExternals()]
