@@ -20,7 +20,7 @@ var webpack_opts = {
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.json'],
     modules: [
       'node_modules',
       'src',
@@ -45,10 +45,11 @@ var webpack_opts = {
   module: {
     rules: [{
       test: /\.ts$/,
-      loaders: 'awesome-typescript-loader'
+      use: 'ts-loader',
+      exclude: /(node_modules)/
     }, {
-      test: /\.json?$/,
-      loader: 'json'
+      test: /\.json$/,
+      use: 'json-loader'
     },]
   },
   externals: [nodeExternals()]

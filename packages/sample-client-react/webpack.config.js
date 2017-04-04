@@ -21,7 +21,7 @@ var webpack_opts = {
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js',  '.css'],
     modules: [
       'node_modules',
       'src',
@@ -55,7 +55,10 @@ var webpack_opts = {
       loaders: 'css-loader'
     },]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals(), {
+        'react': 'umd react',
+        'react-dom': 'umd react-dom',
+    }]
 };
 
 module.exports = webpack_opts;

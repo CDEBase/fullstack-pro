@@ -48,6 +48,8 @@
     "babel-preset-es2015": "^6.24.0",
     "apollo-codegen": "^0.10.9",
     "graphql-code-generator": "^0.5.1",
+    "eslint": "^3.17.1",
+    "eslint-plugin-graphql": "^0.6.1",
     "jest": "^19.0.2",
     "lodash": "^4.17.4",
     "nock": "^9.0.11",

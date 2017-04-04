@@ -32,11 +32,11 @@ const schema: GraphQLSchema = makeExecutableSchema({
   resolvers: resolvers,
   typeDefs: typeDefs,
 });
-addMockFunctionsToSchema({
-  mocks: {},
-  preserveResolvers: true,
-  schema,
-});
+// addMockFunctionsToSchema({
+//   mocks: {},
+//   preserveResolvers: true,
+//   schema,
+// });
 
 const database = { persons, addPerson, findPerson};
 export {resolvers, typeDefs, database};

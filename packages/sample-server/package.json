@@ -37,35 +37,30 @@
   },
   "homepage": "https://github.com/DxCx/webpack-apollo-server#readme",
   "dependencies": {
-    "@sample/schema": "0.0.1",
-    "@types/body-parser": "1.16.3",
-    "@types/cors": "2.8.1",
-    "@types/express": "^4.0.35",
+    "@sample/schema": "*",
     "@types/helmet": "0.0.34",
-    "@types/morgan": "^1.7.32",
+    "graphql": "^0.9.1",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
     "graphql-server-express": "^0.6.0",
     "graphql-subscriptions": "^0.3.1",
-    "graphql-tools": "0.11.0",
+    "graphql-tools": "0.10.0",
     "helmet": "^3.5.0",
     "morgan": "^1.8.1",
     "subscriptions-transport-ws": "^0.5.5-alpha.0"
   },
   "devDependencies": {
-    "@types/graphql": "^0.9.0",
+    "@types/body-parser": "1.16.3",
+    "@types/cors": "2.8.1",
+    "@types/express": "^4.0.35",
     "@types/jest": "^19.2.2",
+    "@types/morgan": "^1.7.32",
     "@types/node": "^7.0.12",
+    "json-loader": "^0.5.4",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.3",
+    "webpack": "^2.2.1",
     "webpack-node-externals": "^1.5.4"
-  },
-  "peerDependencies": {
-    "graphql": "^0.8.0 || ^0.9.0"
-  },
-  "optionalDependencies": {
-    "@types/graphql": "^0.9.0"
   },
   "typings": "dist/main.d.ts",
   "typescript": {

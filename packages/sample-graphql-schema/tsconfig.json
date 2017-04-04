@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "module": "umd",
     "rootDir": "./src",
     "outDir": "./lib",
     "typeRoots": [

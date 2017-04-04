@@ -20,7 +20,7 @@ var webpack_opts = {
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.css', '.json'],
     modules: [
       'node_modules',
       'src',
@@ -44,11 +44,24 @@ var webpack_opts = {
   devtool: 'source-map',
   module: {
     rules: [{
+      enforce: 'pre',
+      test: /\.js$/,
+      use: 'source-map-loader',
+      exclude: /(node_modules)/
+    }, {
+      enforce: 'pre',
       test: /\.tsx?$/,
-      loaders: 'ts-loader'
+      use: 'source-map-loader'
+    }, {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /(node_modules)/
     }, {
       test: /\.json?$/,
-      loader: 'json'
+      use: 'json-loader'
+    }, {
+      test: /\.css$/,
+      use: 'css-loader'
     },]
   },
   externals: [nodeExternals()]

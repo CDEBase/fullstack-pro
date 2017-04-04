@@ -37,7 +37,7 @@ var webpack_opts = {
   module: {
     rules: [{
       test: /\.ts$/,
-      loaders: 'ts-loader'
+      use: 'ts-loader'
     }, {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
