@@ -1,0 +1,54 @@
+exports[`Schema should find a person and drill down matches (2 levels) correctly 1`] = `
+Object {
+  "getPerson": Object {
+    "id": "3",
+    "matches": Array [
+      Object {
+        "id": "2",
+        "matches": Array [
+          Object {
+            "name": "miro",
+          },
+          Object {
+            "name": "joe",
+          },
+        ],
+      },
+    ],
+    "name": "joe",
+  },
+}
+`;
+
+exports[`Schema should find a person correctly 1`] = `
+Object {
+  "getPerson": Object {
+    "id": "3",
+    "name": "joe",
+  },
+}
+`;
+
+exports[`Schema should resolve mockedObject  correctly 1`] = `"Hello World"`;
+
+exports[`Schema should resolve someType correctly 1`] = `
+Object {
+  "someType": Object {
+    "fixedString": "fixed.",
+    "testFloat": 303.0303,
+    "testInt": 666,
+  },
+}
+`;
+
+exports[`Schema should resolve testString correctly 1`] = `
+Object {
+  "testString": "it Works!",
+}
+`;
+
+exports[`Schema should resolve testStringConnector correctly 1`] = `
+Object {
+  "testStringConnector": "it works from connector as well!",
+}
+`;
