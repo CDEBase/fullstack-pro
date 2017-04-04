@@ -1,6 +1,7 @@
 {
   "private": true,
   "license": "MIT",
+  "version": "0.0.1",
   "author": "CDMbase (https://github.com/cdmbase)",
   "repository": {
     "type": "git",
