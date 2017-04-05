@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "prepublish": "npm run build",
-    "start": "http-server",
+    "start": "NODE_ENV=development webpack-dev-server --hot --history-api-fallback",
+    "stats": "NODE_ENV=production webpack && open dist/statistics.html",
     "dev": "watch-http-server -i -d False -e js",
     "build": "npm run build:clean && npm run build:dist",
     "build:clean": "rimraf dist",
@@ -28,16 +29,16 @@
     "@types/sinon": "^2.1.1",
     "eslint": "^3.17.1",
     "eslint-plugin-graphql": "^0.6.1",
-    "http-server": "^0.9.0",
     "jest": "^19.0.2",
     "jest-cli": "^19.0.2",
     "mocha": "^3.2.0",
     "react-addons-test-utils": "^15.4.2",
     "rimraf": "^2.6.1",
     "ts-jest": "^19.0.6",
-    "watch-http-server": "^0.7.6",
     "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2",
     "webpack-fail-plugin": "^1.0.6",
+    "webpack-visualizer-plugin": "^0.1.11",
     "zakalwe": "https://github.com/rjz/zakalwe.git"
   },
   "dependencies": {

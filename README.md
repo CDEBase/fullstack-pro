@@ -30,7 +30,6 @@ If you want to develop gitstack locally you must follow the following instructio
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
 npm install
-npm run install
 ```
 to run server
 ```

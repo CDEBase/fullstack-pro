@@ -1,4 +1,30 @@
 var failPlugin = require('webpack-fail-plugin');
+const { CheckerPlugin } = require("awesome-typescript-loader");
+var Visualizer = require("webpack-visualizer-plugin");
+const webpack = require("webpack");
+
+var corePlugins = [
+  failPlugin,
+  new CheckerPlugin(),
+  new webpack.DefinePlugin({
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
+  }),
+  new Visualizer({
+    filename: './dist/statistics.html'
+  })
+];
+
+
+var devePlugins = [
+  // Add dev plugins here
+];
+
+var prodPlugins = [
+  new webpack.optimize.UglifyJsPlugin(),
+  new webpack.optimize.DedupePlugin()
+];
+
+var plugins = process.env.NODE_ENV === "production" ? corePlugins.concat(prodPlugins) : corePlugins.concat(devePlugins)
 
 // https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
 module.exports = {
@@ -6,17 +32,20 @@ module.exports = {
   output: {
     filename: './dist/bundle.js',
   },
+  devServer: {
+    inline: true
+  },
 
   // enable sourcemaps for debugging webpack's output.
-  devtool: 'source-map',
+  devtool: "cheap-module-eval-source-map",
+
 
   resolve: {
     // add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
   },
 
-  plugins: [failPlugin],
-
+  plugins: plugins,
   module: {
     rules: [
       {
