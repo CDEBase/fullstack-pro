@@ -32,12 +32,29 @@ cd fullstack-pro
 npm install
 ```
 to run server
+you can run both the client and server by 
 ```
+npm start
+```
+The graphql server endpoints are
+>http://localhost:3000/graphql
+
+>http://localhost:3000/graphiql
+
+The browser server endopoint is
+>http://localhost:8080
+
+If you want to run server independently
+```
+npm runs start:server 
+- or -
 cd packages/sample-server
 npm start
 ```
 to run client server
 ```
+npm run start:client
+- or -
 cd packages/sample-browser-server
 npm start
 ```

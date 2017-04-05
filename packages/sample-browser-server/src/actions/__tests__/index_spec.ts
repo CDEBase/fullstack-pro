@@ -36,7 +36,7 @@
 //     })
 
 //     it('sends an API request', () => {
-//       actions.saveCount({ value: '14' })(jest.fn())
+//       actions.saveCount({ value: 14 })(jest.fn())
 //       expect(api.save.mock.calls.length).toEqual(1)
 //     })
 
@@ -90,14 +90,14 @@
 //     })
 
 //     it('sends an API request', () => {
-//       actions.loadCount()(jest.fn())
+//       actions.loadCount(null)(jest.fn())
 //       expect(api.load.mock.calls.length).toEqual(1)
 //     })
 
 //     describe('when API request succeeds', () => {
 //       it('dispatches LOAD_COUNT_SUCCESS', () => {
 //         const { dispatch, reducer } = store()
-//         actions.loadCount()(dispatch)
+//         actions.loadCount(null)(dispatch)
 //         return eventually(expectTypes(reducer, [
 //           'LOAD_COUNT_REQUEST',
 //           'LOAD_COUNT_SUCCESS',
@@ -106,7 +106,7 @@
 
 //       it('includes new value with LOAD_COUNT_SUCCESS', () => {
 //         const { dispatch, reducer } = store()
-//         actions.loadCount()(dispatch)
+//         actions.loadCount(null)(dispatch)
 //         return eventually(() => {
 //           expect(reducer.mock.calls[1][1].response).toEqual({ value: 14 })
 //         })
@@ -120,7 +120,7 @@
 
 //       it('dispatches LOAD_COUNT_ERROR', () => {
 //         const { dispatch, reducer } = store()
-//         actions.loadCount()(dispatch)
+//         actions.loadCount(null)(dispatch)
 //         return eventually(expectTypes(reducer, [
 //           'LOAD_COUNT_REQUEST',
 //           'LOAD_COUNT_ERROR',
@@ -129,7 +129,7 @@
 
 //       it('includes error message with LOAD_COUNT_ERROR', () => {
 //         const { dispatch, reducer } = store()
-//         actions.loadCount()(dispatch)
+//         actions.loadCount(null)(dispatch)
 //         return eventually(() => {
 //           expect(reducer.mock.calls[1][1].error.message)
 //             .toEqual('something terrible happened')
