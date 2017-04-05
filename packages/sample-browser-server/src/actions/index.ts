@@ -68,5 +68,5 @@ function apiActionGroupFactory<Q, S>(x: ApiActionGroup<Q, S>, go: apiFunc<Q, S>)
   } 
 }
 
-export const saveCount: (request: { value: number; }) => (dispatch: redux.Dispatch<Store.All> )  => void = apiActionGroupFactory(_saveCount, api.save)
+export const saveCount = apiActionGroupFactory(_saveCount, api.save)
 export const loadCount = apiActionGroupFactory(_loadCount, api.load)
