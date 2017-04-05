@@ -20,7 +20,7 @@ It uses lerna.json for creating the packages structure. Under packages you can c
 
 ## Development
 
-If you want to develop gitstack locally you must follow the following instructions:
+If you want to develop FullStack locally you must follow the following instructions:
 
 * Fork or Clone this repository
 
