@@ -11,13 +11,13 @@ The idea is to create modules for each package so it can work independently as w
 It uses `lerna.json` for creating the packages structure. Under packages you can create different modules based on its usage. For example:
 
 - sample-apollo-server    - Where express or graphql server runs the server code.
-- sample-graphql-resolver - This is where you store the graphql schema and resolvers. This will be used in sample-apollo-server to run. 
+- sample-graphql-resolver - This is where you store the graphql schema and resolvers. This will be used in `sample-apollo-server` to run. 
 - sample-core             - This is where the core interface of the package stays and core functionality shared between client and server.
 - sample-server-core      - This is where the core interface of the package stays and core functionality that only runs on server.
 - sample-client-core      - This is where the core interface of the package stays and core functionality that only runs on client.
-- sample-client-redux     - This is where the redux's reducer and actions are defined. Which uses the `sample-core` or `sample-client-core`.
+- sample-client-redux     - This is where the redux's reducer and actions are defined. Which uses the `@sample\core` or `@sample\client-core`.
 - sample-client-react     - This is where react dumb component are created.
-- sample-browser-server   - This is used mainly to test the @sample-client-core component in the browser.
+- sample-browser-server   - This is used mainly to test the `@sample\client-*` component in the browser.
 
 
 ## Development
