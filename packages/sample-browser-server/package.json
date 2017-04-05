@@ -1,37 +1,63 @@
 {
-  "name": "@sample/browser-server",
+  "name": "sample-browser-server",
   "version": "0.0.1",
-  "description": "Sample core for higher packages to depend on",
-  "main": "dist/index.js",
+  "description": "Sample Client server",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha ./dist/index.test.js",
+    "test": "jest",
     "prepublish": "npm run build",
-    "build": "npm run build:clean && npm run build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch"
+    "start": "http-server",
+    "dev": "watch-http-server -i -d False -e js",
+    "build": "npm run build:clean && npm run build:dist",
+    "build:clean": "rimraf dist",
+    "build:dist": "webpack",
+    "build:dist:watch": "npm run build:lib -- --watch"
   },
-  "author": "Veera Marni <marni.srikanth@gmail.com>",
+  "author": "Veera Marni",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^19.2.2",
     "@types/minimist": "^1.2.0",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
+    "@types/react": "^15.0.21",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-redux": "^4.4.38",
+    "@types/redux": "^3.6.0",
     "@types/semver": "^5.3.31",
     "@types/sinon": "^2.1.1",
     "eslint": "^3.17.1",
     "eslint-plugin-graphql": "^0.6.1",
+    "http-server": "^0.9.0",
+    "jest": "^19.0.2",
+    "jest-cli": "^19.0.2",
     "mocha": "^3.2.0",
+    "react-addons-test-utils": "^15.4.2",
     "rimraf": "^2.6.1",
+    "ts-jest": "^19.0.6",
+    "watch-http-server": "^0.7.6",
     "webpack": "^2.3.3",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-fail-plugin": "^1.0.6",
+    "zakalwe": "https://github.com/rjz/zakalwe.git"
   },
   "dependencies": {
-    "inversify": "^3.3.0",
-    "reflect-metadata": "^0.1.10"
+    "react": "^15.4.2",
+    "react-apollo": "^1.0.0",
+    "redux-thunk": "^2.2.0",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
+    "reselect": "^3.0.0"
   },
-  "typings": "dist/index.d.ts",
-  "typescript": {
-    "definition": "dist/index.d.ts"
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   }
 }

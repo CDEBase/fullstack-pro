@@ -26,7 +26,7 @@
     "type": "git",
     "url": "git+https://github.com/js-accounts/graphql.git"
   },
-  "author": "David Yahalomi",
+  "author": "Veera Marni",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/js-accounts/graphql/issues"
@@ -35,17 +35,6 @@
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "@types/redux": "^3.6.0",
-    "awesome-typescript-loader": "^3.1.2",
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.0",
-    "babel-eslint": "^7.2.1",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-plugin-transform-async-to-generator": "^6.22.0",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-regenerator": "^6.22.0",
-    "babel-preset-es2015": "^6.24.0",
     "apollo-codegen": "^0.10.9",
     "graphql-code-generator": "^0.5.1",
     "eslint": "^3.17.1",

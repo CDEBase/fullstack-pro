@@ -1,70 +1,67 @@
-var nodeExternals = require('webpack-node-externals');
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
+var failPlugin = require('webpack-fail-plugin');
 
-/* helper function to get into build directory */
-var distPath = function (name) {
-  if (undefined === name) {
-    return path.join('dist');
-  }
-
-  return path.join('dist', name);
-};
-
-var webpack_opts = {
-  entry: './src/index.ts',
-  target: 'node',
+// https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
+module.exports = {
+  entry: './src/index.tsx',
   output: {
-    filename: distPath('index.js'),
-    libraryTarget: "commonjs2"
+    filename: './dist/bundle.js',
   },
+
+  // enable sourcemaps for debugging webpack's output.
+  devtool: 'source-map',
+
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css', '.json'],
-    modules: [
-      'node_modules',
-      'src',
+    // add '.ts' and '.tsx' as resolvable extensions.
+    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+  },
+
+  plugins: [failPlugin],
+
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        exclude: /(node_modules)/
+      },
+      {
+        enforce: 'pre',
+        test: /\.tsx?$/,
+        use: 'source-map-loader'
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'awesome-typescript-loader',
+        exclude: /(node_modules)/
+      },
+      /**
+       * Raw loader support for *.scss files
+       *
+       * See: https://github.com/webpack/raw-loader
+       */
+      {
+        test: /\.scss$/,
+        loader: ['raw-loader', 'sass-loader'],
+      },
+      /**
+      * Raw loader support for *.css files
+      *
+      * See: https://github.com/webpack/raw-loader
+      */
+      {
+        test: /\.css$/,
+        loader: ['css-loader'],
+      },
     ]
   },
-  plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        test: /\.tsx?$/,
-        ts: {
-          compiler: 'typescript',
-          configFileName: 'tsconfig.json'
-        },
-        tslint: {
-          emitErrors: true,
-          failOnHint: true
-        }
-      }
-    })
-  ],
-  devtool: 'source-map',
-  module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.js$/,
-      use: 'source-map-loader',
-      exclude: /(node_modules)/
-    }, {
-      enforce: 'pre',
-      test: /\.tsx?$/,
-      use: 'source-map-loader'
-    }, {
-      test: /\.tsx?$/,
-      use: 'ts-loader',
-      exclude: /(node_modules)/
-    }, {
-      test: /\.json?$/,
-      use: 'json-loader'
-    }, {
-      test: /\.css$/,
-      use: 'css-loader'
-    },]
-  },
-  externals: [nodeExternals()]
-};
 
-module.exports = webpack_opts;
+  // when importing a module whose path matches one of the following, just
+  // assume a corresponding global variable exists and use that instead.
+  // this is important because it allows us to avoid bundling all of our
+  // dependencies, which allows browsers to cache those libraries between builds.
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  }
+};

@@ -6,8 +6,10 @@
       "dom"
     ],
     "rootDir": "./src",
+    "sourceMap": true,
     "jsx": "react",
-    "noImplicitAny": true,
+    "declaration": false,
+    // "noImplicitAny": true,
     "outDir": "./dist",
     "typeRoots": [
       "node_modules/@types"

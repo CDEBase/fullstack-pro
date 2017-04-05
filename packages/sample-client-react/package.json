@@ -16,7 +16,7 @@
     "build:lib": "webpack",
     "build:lib:watch": "npm run build:lib -- --watch"
   },
-  "author": "Veera Marni <marni.srikanth@gmail.com> (http://vm.com)",
+  "author": "Veera Marni",
   "license": "ISC",
   "peerDependencies": {
     "redux": ">=3.6.0",
