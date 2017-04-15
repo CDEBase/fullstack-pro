@@ -39,14 +39,10 @@ var webpack_opts = {
   module: {
     rules: [{
       test: /\.ts$/,
-      loaders: 'awesome-typescript-loader'
+      loaders: 'ts-loader'
     }, {
       test: /\.json?$/,
       loader: 'json'
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
     }]
   },
   externals: [nodeExternals()]

@@ -45,7 +45,7 @@ var webpack_opts = {
   module: {
     rules: [{
       test: /\.ts$/,
-      use: 'ts-loader',
+      use: 'awesome-typescript-loader',
       exclude: /(node_modules)/
     }, {
       test: /\.json$/,

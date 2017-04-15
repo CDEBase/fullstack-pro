@@ -1,13 +1,11 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "declaration": false,
     "rootDir": "./src",
     "outDir": "./dist",
     "typeRoots": [
-      "node_modules/@types"
+      "../../node_modules/@types/"
     ]
   },
   "exclude": [

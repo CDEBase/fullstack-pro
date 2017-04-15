@@ -1,17 +1,8 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "lib": [
-      "es2016",
-      "dom"
-    ],
     "rootDir": "./src",
-    "jsx": "react",
-    "noImplicitAny": true,
-    "outDir": "./lib",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "jsx": "react"
   },
   "exclude": [
     "node_modules",

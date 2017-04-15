@@ -48,7 +48,7 @@ The browser server endopoint is
 
 If you want to run server independently
 ```
-npm runs start:server 
+npm run start:server 
 - or -
 cd packages/sample-server
 npm start
