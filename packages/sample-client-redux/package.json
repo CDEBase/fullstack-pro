@@ -34,7 +34,6 @@
   "homepage": "https://github.com/js-accounts/graphql#readme",
   "devDependencies": {
     "@types/jest": "^19.2.2",
-    "@types/redux": "^3.6.0",
     "apollo-codegen": "^0.10.9",
     "graphql-code-generator": "^0.5.1",
     "eslint": "^3.17.1",
