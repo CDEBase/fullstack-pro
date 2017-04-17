@@ -11,6 +11,11 @@
       "tag: internal": ":house: Internal"
     }
   },
+  "commands": {
+    "publish": {
+      "ignore": "*server"
+    }
+  },
   "packages": [
     "packages/*"
   ],
