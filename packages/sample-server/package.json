@@ -13,7 +13,8 @@
     "test:watch": "npm test -- --watch",
     "test:notify": "npm run test:watch -- --notify",
     "start": "npm run build && node dist/main.js",
-    "start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/main.js\"",
+    "nodemon": "nodemon --watch dist dist/main.js",
+    "start:watch": "concurrently \"npm run build:watch\" \"npm run nodemon\"",
     "preupver": "npm test",
     "upver": "standard-version"
   },
@@ -37,6 +38,7 @@
   },
   "homepage": "https://github.com/DxCx/webpack-apollo-server#readme",
   "dependencies": {
+    "@types/node": "^7.0.12",
     "@sample/schema": "*",
     "@types/helmet": "0.0.34",
     "graphql": "^0.9.1",

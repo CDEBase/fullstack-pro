@@ -18,6 +18,9 @@
     "build:lib": "webpack",
     "build:lib:watch": "npm run build:lib -- --watch"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "jest": {
     "testEnvironment": "node",
     "testRegex": "(/.*.(test|spec)).(js|jsx)$"

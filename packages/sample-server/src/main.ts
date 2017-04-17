@@ -59,6 +59,7 @@ export function main(options: IMainOptions) {
       addPerson,
     },
     schema,
+    debug: true,
   }));
 
   if (true === options.enableGraphiql) {

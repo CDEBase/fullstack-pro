@@ -11,6 +11,9 @@
     "build:lib": "webpack",
     "build:lib:watch": "npm run build:lib -- --watch"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Veera Marni",
   "license": "ISC",
   "devDependencies": {
