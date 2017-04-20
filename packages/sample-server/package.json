@@ -41,7 +41,7 @@
     "@types/node": "^7.0.12",
     "@sample/schema": "*",
     "@types/helmet": "0.0.34",
-    "graphql": "^0.9.1",
+    "graphql": "^0.9.2",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
