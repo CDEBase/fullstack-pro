@@ -1,10 +1,6 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "lib": [
-      "es2016",
-      "dom"
-    ],
     "rootDir": "./src",
     "outDir": "./lib",
     "typeRoots": [
