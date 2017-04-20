@@ -100,7 +100,7 @@
     "webpack-fail-plugin": "^1.0.6",
     "webpack-visualizer-plugin": "^0.1.11",
     "webpack": "^2.3.3",
-    "webpack-node-externals": "^1.5.4"
+    "cdm-webpack-node-externals": "^1.5.6"
   },
   "dependencies": {
     "cdm-logger": "^0.3.2",
