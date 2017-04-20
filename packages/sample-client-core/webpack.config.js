@@ -1,4 +1,4 @@
-var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('cdm-webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
@@ -10,7 +10,8 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath('index.js'),
-    libraryTarget: "commonjs2"
+    libraryTarget: "commonjs2",
+    library: '@sample/client-core'
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -44,7 +45,7 @@ var webpack_opts = {
       loader: 'json'
     },]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

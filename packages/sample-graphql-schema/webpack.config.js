@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('cdm-webpack-node-externals');
 var libPath = require('../../src/webpack-util');
 
 var webpack_opts = {
@@ -42,7 +42,7 @@ var webpack_opts = {
       loaders: 'ts-loader'
     }]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

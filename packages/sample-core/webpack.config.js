@@ -1,4 +1,4 @@
-var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('cdm-webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
@@ -43,7 +43,7 @@ var webpack_opts = {
       loader: 'json-loader'
     },]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

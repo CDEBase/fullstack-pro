@@ -21,8 +21,7 @@
     "@types/semver": "^5.3.31",
     "@types/sinon": "^2.1.1",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.3",
-    "webpack-node-externals": "^1.5.4"
+    "webpack": "^2.3.3"
   },
   "dependencies": {
     "@sample/core": "0.0.1"

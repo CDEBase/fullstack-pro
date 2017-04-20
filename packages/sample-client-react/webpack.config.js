@@ -1,24 +1,16 @@
-var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('cdm-webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var libPath = require('../../src/webpack-util');
-
-/* helper function to get into build directory */
-var distPath = function (name) {
-  if (undefined === name) {
-    return path.join('dist');
-  }
-
-  return path.join('dist', name);
-};
 
 var webpack_opts = {
   entry: './src/index.ts',
   target: 'node',
   output: {
     filename: libPath('index.js'),
-    libraryTarget: "commonjs2"
+    libraryTarget: "commonjs2",
+    library: "@sample/client-react"
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js',  '.css'],
@@ -55,10 +47,7 @@ var webpack_opts = {
       loaders: 'css-loader'
     },]
   },
-  externals: [nodeExternals(), {
-        'react': 'umd react',
-        'react-dom': 'umd react-dom',
-    }]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

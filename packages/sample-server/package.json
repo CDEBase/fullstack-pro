@@ -64,8 +64,7 @@
     "json-loader": "^0.5.4",
     "jest": "^19.0.2",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.3",
-    "webpack-node-externals": "^1.5.4"
+    "webpack": "^2.3.3"
   },
   "typings": "dist/main.d.ts",
   "typescript": {

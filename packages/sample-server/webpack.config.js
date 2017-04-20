@@ -52,7 +52,7 @@ var webpack_opts = {
       use: 'json-loader'
     },]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var nodeExternals = require('webpack-node-externals');
+var nodeExternals = require('cdm-webpack-node-externals');
 var libPath = require('../../src/webpack-util');
 
 var webpack_opts = {
@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     library: '@sample/client-redux',
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -44,7 +44,7 @@ var webpack_opts = {
       use: 'graphql-tag/loader'
     }]
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
 
 module.exports = webpack_opts;

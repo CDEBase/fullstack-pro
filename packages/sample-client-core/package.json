@@ -29,8 +29,6 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "inversify": "^3.3.0",
-    "reflect-metadata": "^0.1.10"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
