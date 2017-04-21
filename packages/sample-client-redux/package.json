@@ -37,8 +37,7 @@
   "homepage": "https://github.com/js-accounts/graphql#readme",
   "devDependencies": {
     "@types/jest": "^19.2.2",
-    "apollo-codegen": "^0.10.9",
-    "graphql-code-generator": "^0.5.1",
+    "apollo-codegen": "^0.10.11",
     "eslint": "^3.17.1",
     "eslint-plugin-graphql": "^0.6.1",
     "jest": "^19.0.2",
