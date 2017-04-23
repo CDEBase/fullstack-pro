@@ -25,8 +25,6 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "inversify": "^3.3.0",
-    "reflect-metadata": "^0.1.10"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

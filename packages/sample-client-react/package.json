@@ -33,7 +33,7 @@
     "react-addons-test-utils": "^15.4.2",
     "rimraf": "^2.6.1",
     "webpack": "^2.3.3",
-    "webpack-node-externals": "^1.5.4"
+    "cdm-webpack-node-externals": "^1.5.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

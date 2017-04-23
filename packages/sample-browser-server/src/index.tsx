@@ -10,6 +10,7 @@ import {
 } from './reducers'
 
 import { Counter } from './components/counter'
+import './index.css';
 
 let store: redux.Store<Store.All> = redux.createStore(
   reducers,
