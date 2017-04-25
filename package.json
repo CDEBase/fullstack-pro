@@ -19,7 +19,7 @@
     "start:server": "lerna run --scope sample-apollo-server start --stream",
     "build": "npm run build:packages",
     "build:packages": "lerna run build --ignore *server",
-    "build:packages:watch": "lerna run build:lib:watch --stream",
+    "build:packages:watch": "lerna run build:lib:watch --stream --no-sort",
     "prebootstrap": "npm install",
     "postinstall": "lerna bootstrap",
     "pretest": "npm run compile",
