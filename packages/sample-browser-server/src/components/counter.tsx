@@ -12,7 +12,8 @@ import {
 import { Store } from '../reducers'
 
 export type OwnProps = {
-  label: string
+  label: string,
+  store?: redux.Store<Store.All>
 }
 
 export type ConnectedState = {
@@ -35,14 +36,22 @@ const mapStateToProps = (state: Store.All, ownProps: OwnProps): ConnectedState =
   error: state.error,
 })
 
+// const mapDispatchToProps = (dispatch: redux.Dispatch<Store.All>): ConnectedDispatch => ({
+//   increment: (n: number) =>
+//     dispatch(incrementCounter(n)),
+//   load: () =>
+//     loadCount(null)(dispatch),
+//   save: (value: number) =>
+//     saveCount({ value })(dispatch),
+// })
+
 const mapDispatchToProps = (dispatch: redux.Dispatch<Store.All>): ConnectedDispatch => ({
   increment: (n: number) =>
     dispatch(incrementCounter(n)),
   load: () =>
-    // (null) => (dispatch) => loadCount,
-    loadCount(null)(dispatch),
+    dispatch(loadCount(null)),
   save: (value: number) =>
-    saveCount({ value })(dispatch),
+    dispatch(saveCount({ value })),
 })
 
 class CounterComponent extends React.Component<ConnectedState & ConnectedDispatch & OwnProps, {}> {

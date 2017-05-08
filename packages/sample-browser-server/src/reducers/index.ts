@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers, Action as reduxAction } from 'redux'
 
 import { Action } from '../actions'
 

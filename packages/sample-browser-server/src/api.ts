@@ -18,13 +18,18 @@ const flakify = <T>(f: () => T): Promise<T> =>
     }, 200 + Math.random() * 2000)
   )
 
-export const api = {
-  save: (counter: { value: number }): Promise<null> => flakify(() => {
-      localStorage.setItem('__counterValue', counter.value.toString())
-      return null
-    }),
-  load: (): Promise<{ value: number }> => flakify(() => {
-      const value = parseInt(localStorage.getItem('__counterValue'), 10)
-      return { value }
-    }),
+export type Api = {
+  save(x: { value: number }): Promise<null>,
+  load(): (Promise<{ value: number }>),
+}
+
+export const api: Api = {
+  save: (counter) => flakify(() => {
+    localStorage.setItem('__counterValue', counter.value.toString())
+    return null
+  }),
+  load: () => flakify(() => {
+    const value = parseInt(localStorage.getItem('__counterValue'), 10)
+    return { value }
+  }),
 }
