@@ -1,22 +1,22 @@
 import 'jest';
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
-import { reducers } from '../index'
+import { reducers, Store } from '../index'
 import {
   incrementCounter,
 } from '../../actions'
 
 describe('reducers/counter', () => {
   it('starts at 0', () => {
-    const store = createStore(reducers)
-    const { counter } = store.getState()
+    const store = createStore(combineReducers<Store.All>(reducers))
+    const  counter  = store.getState()["@sample/counter"]
     expect(counter.value).toEqual(0)
   })
 
   it('increments', (done) => {
-    const store = createStore(reducers)
+    const store = createStore(combineReducers<Store.All>(reducers))
     store.subscribe(() => {
-      const { counter } = store.getState()
+      const counter = store.getState()["@sample/counter"]
       expect(counter.value).toEqual(3)
       done()
     })
@@ -24,9 +24,9 @@ describe('reducers/counter', () => {
   })
 
   it('restores state', (done) => {
-    const store = createStore(reducers)
+    const store = createStore(combineReducers<Store.All>(reducers))
     store.subscribe(() => {
-      const { counter } = store.getState()
+      const counter = store.getState()["@sample/counter"]
       expect(counter.value).toEqual(14)
       done()
     })

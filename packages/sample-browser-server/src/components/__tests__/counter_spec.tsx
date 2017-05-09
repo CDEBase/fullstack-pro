@@ -3,15 +3,15 @@ import 'jest';
 import * as React from 'react'
 import * as TestUtils from 'react-dom/test-utils'
 
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
 import { Counter } from '../counter'
-import { reducers } from '../../reducers'
+import { reducers, Store } from '../../reducers'
 
 describe('components/Counter', () => {
 
   it('renders', () => {
-    const store = createStore(reducers)
+    const store = createStore(combineReducers<Store.All>(reducers))
     const renderer = TestUtils.createRenderer()
     expect(renderer.render(
       <Counter label='a counter!' store={store} />
@@ -20,7 +20,7 @@ describe('components/Counter', () => {
 
   describe('clicking "increment"', () => {
     it('increments counter', () => {
-      const store = createStore(reducers)
+      const store = createStore(combineReducers<Store.All>(reducers))
       const counter = TestUtils.renderIntoDocument(
         <Counter label='a counter!' store={store} />
       )

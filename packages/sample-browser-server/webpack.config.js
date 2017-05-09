@@ -2,6 +2,7 @@ var failPlugin = require('webpack-fail-plugin');
 const { CheckerPlugin } = require("awesome-typescript-loader");
 var Visualizer = require("webpack-visualizer-plugin");
 const webpack = require("webpack");
+const path =  require("path");
 
 var corePlugins = [
   failPlugin,
@@ -37,12 +38,12 @@ module.exports = {
   },
 
   // enable sourcemaps for debugging webpack's output.
-  devtool: "cheap-module-eval-source-map",
+  devtool: "source-map",
 
 
   resolve: {
     // add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
   },
 
   plugins: plugins,
@@ -84,13 +85,4 @@ module.exports = {
       },
     ]
   },
-
-  // when importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // this is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
-  }
 };

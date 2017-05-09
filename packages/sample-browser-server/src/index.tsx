@@ -1,12 +1,12 @@
 import * as React from 'react' // tslint:disable-line
 import * as ReactDOM from 'react-dom'
-import * as redux from 'redux'
+import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 import {
   reducers,
-  Store,
+  Store as StoreState,
 } from './reducers'
 
 import { Counter } from './components/counter'
@@ -20,14 +20,31 @@ const client = new ApolloClient({
   networkInterface: networkInterface
 });
 
-let store: redux.Store<any> = redux.createStore(
-  redux.combineReducers({
-    reducers,
+const middlewares: Middleware[] = [
+  thunk,
+  client.middleware(),
+  // logicMiddleware,
+];
+
+
+const enhancers: GenericStoreEnhancer[] = [
+  applyMiddleware(...middlewares),
+];
+
+const ReduxExtentionComposeName: string = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
+const composeEnhancers =
+  window[ReduxExtentionComposeName] ?
+    window[ReduxExtentionComposeName] : compose;
+
+const store = createStore(
+  combineReducers({
+    ...reducers,
     apollo: client.reducer(),
   }),
-  {} as Store.All,
-  redux.applyMiddleware(thunk),
-)
+  {} as StoreState.All,
+  composeEnhancers(...enhancers),
+);
+
 
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
@@ -36,5 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <ApolloProvider store={store} client={client}>
       <Counter label='count:' />
     </ApolloProvider>
-  , rootEl)
+    , rootEl)
 })
+
+

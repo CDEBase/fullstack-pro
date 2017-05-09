@@ -7,14 +7,14 @@ export namespace Store {
   export type Counter = { value: number }
 
   export type All = {
-    counter: Counter,
-    isSaving: boolean,
-    isLoading: boolean,
-    error: string,
+    "@sample/counter": Counter,
+    "@sample/isSaving": boolean,
+    "@sample/isLoading": boolean,
+    "@sample/error": string,
   }
 }
 
-function isSaving (state: boolean = false, action: Action): boolean {
+function isSaving(state: boolean = false, action: Action): boolean {
   switch (action.type) {
     case 'SAVE_COUNT_REQUEST':
       return true
@@ -26,7 +26,7 @@ function isSaving (state: boolean = false, action: Action): boolean {
   }
 }
 
-function isLoading (state: boolean = false, action: Action): boolean {
+function isLoading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
     case 'LOAD_COUNT_REQUEST':
       return true
@@ -38,7 +38,7 @@ function isLoading (state: boolean = false, action: Action): boolean {
   }
 }
 
-function error (state: string = '', action: Action): string {
+function error(state: string = '', action: Action): string {
   switch (action.type) {
     case 'LOAD_COUNT_REQUEST':
     case 'SAVE_COUNT_REQUEST':
@@ -55,7 +55,7 @@ const initialState: Store.Counter = {
   value: 0,
 }
 
-function counter (state: Store.Counter = initialState, action: Action): Store.Counter {
+function counter(state: Store.Counter = initialState, action: Action): Store.Counter {
   switch (action.type) {
     case 'INCREMENT_COUNTER':
       const { delta } = action
@@ -72,9 +72,9 @@ function counter (state: Store.Counter = initialState, action: Action): Store.Co
   }
 }
 
-export const reducers = combineReducers<Store.All>({
-  counter,
-  isSaving,
-  isLoading,
-  error,
-})
+export const reducers = {
+  "@sample/counter": counter,
+  "@sample/isSaving": isSaving,
+  "@sample/isLoading": isLoading,
+  "@sample/error": error,
+};

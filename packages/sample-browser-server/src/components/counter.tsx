@@ -30,20 +30,11 @@ export type ConnectedDispatch = {
 }
 
 const mapStateToProps = (state: Store.All, ownProps: OwnProps): ConnectedState => ({
-  counter: state.counter,
-  isSaving: state.isSaving,
-  isLoading: state.isLoading,
-  error: state.error,
+  counter: state["@sample/counter"],
+  isSaving: state["@sample/isSaving"],
+  isLoading: state["@sample/isLoading"],
+  error: state["@sample/error"],
 })
-
-// const mapDispatchToProps = (dispatch: redux.Dispatch<Store.All>): ConnectedDispatch => ({
-//   increment: (n: number) =>
-//     dispatch(incrementCounter(n)),
-//   load: () =>
-//     loadCount(null)(dispatch),
-//   save: (value: number) =>
-//     saveCount({ value })(dispatch),
-// })
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<Store.All>): ConnectedDispatch => ({
   increment: (n: number) =>
