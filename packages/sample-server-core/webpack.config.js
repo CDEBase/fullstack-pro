@@ -46,7 +46,7 @@ var webpack_opts = {
     }]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" },
-    { "@xterm-stack/core": "@xterm-stack/core" }
+    { "@git-stack/core": "@git-stack/core" }
   )]
 };
 
