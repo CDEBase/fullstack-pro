@@ -46,7 +46,7 @@ var webpack_opts = {
     }]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" },
-    { "@git-stack/core": "@git-stack/core" }
+    { "@sample/core": "@sample/core" }
   )]
 };
 
