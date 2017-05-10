@@ -79,9 +79,10 @@ module.exports = {
       *
       * See: https://github.com/webpack/raw-loader
       */
-      {
-        test: /\.css$/,
-        loader: ['css-loader'],
+     {  
+       test: /\.css$/, 
+       exclude: /node_modules/, 
+       loaders: ['style-loader', 'css-loader'] 
       },
     ]
   },
