@@ -17,6 +17,7 @@
     "start": "lerna run --scope *server start --stream",
     "start:client": "lerna run --scope sample-browser-server start --stream",
     "start:server": "lerna run --scope sample-apollo-server start --stream",
+    "watch": "npm run build:packages:watch",
     "build": "npm run build:packages",
     "build:packages": "lerna run build --ignore *server",
     "build:packages:watch": "lerna run build:lib:watch --stream --no-sort",
