@@ -9,7 +9,7 @@ import {
   Store as StoreState,
 } from '@sample/client-redux'
 
-import { Counter } from './components/counter'
+import { Counter } from '@sample/client-react'
 import './index.css';
 
 const networkInterface = createNetworkInterface({
