@@ -7,9 +7,9 @@ import {
   loadCount,
   saveCount,
   Action
-} from '../actions'
+} from '@sample/client-redux'
 
-import { Store } from '../reducers'
+import { Store } from '@sample/client-redux'
 
 export type OwnProps = {
   label: string,

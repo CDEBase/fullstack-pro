@@ -1,7 +1,7 @@
 import 'jest';
 import { createStore, combineReducers } from 'redux'
 
-import { reducers, Store } from '../index'
+import { reducers, Store } from '../sampleReducers'
 import {
   incrementCounter,
 } from '../../actions'

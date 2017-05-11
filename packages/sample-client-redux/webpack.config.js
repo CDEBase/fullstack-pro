@@ -9,8 +9,8 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath('index.js'),
-    library: '@sample/client-redux',
     libraryTarget: 'commonjs2',
+    library: '@sample/client-redux',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -44,7 +44,10 @@ var webpack_opts = {
       use: 'graphql-tag/loader'
     }]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  {
+    "@sample/client-core": "@sample/client-core"
+  }]
 };
 
 module.exports = webpack_opts;

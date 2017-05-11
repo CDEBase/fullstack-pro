@@ -47,7 +47,10 @@ var webpack_opts = {
       loaders: 'css-loader'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" }), 
+  {
+    "@sample/client-core": "@sample/client-core",
+  }]
 };
 
 module.exports = webpack_opts;

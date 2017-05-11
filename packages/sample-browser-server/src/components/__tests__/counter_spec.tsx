@@ -6,7 +6,7 @@ import * as TestUtils from 'react-dom/test-utils'
 import { createStore, combineReducers } from 'redux'
 
 import { Counter } from '../counter'
-import { reducers, Store } from '../../reducers'
+import { reducers, Store } from '@sample/client-redux'
 
 describe('components/Counter', () => {
 

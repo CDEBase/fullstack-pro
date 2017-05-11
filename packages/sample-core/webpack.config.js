@@ -9,7 +9,8 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath('index.js'),
-    libraryTarget: "commonjs2"
+    libraryTarget: "commonjs2",
+    library: "@sample/core",
   },
   resolve: {
     extensions: ['.ts', '.js'],

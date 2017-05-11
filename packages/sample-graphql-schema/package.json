@@ -20,7 +20,7 @@
   "jest": {
     "testEnvironment": "node",
     "testRegex": "(/.*.(test|spec)).(js|jsx)$",
-    "testPathDirs": [
+    "roots": [
       "src"
     ]
   },

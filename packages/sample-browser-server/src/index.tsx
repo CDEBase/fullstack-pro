@@ -7,7 +7,7 @@ import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apol
 import {
   reducers,
   Store as StoreState,
-} from './reducers'
+} from '@sample/client-redux'
 
 import { Counter } from './components/counter'
 import './index.css';
@@ -51,7 +51,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const rootEl = document.getElementById('redux-app-root')
   if (rootEl) ReactDOM.render(
     <ApolloProvider store={store} client={client}>
-      <Counter label='count:' />
+      <div>
+        <div>
+          <h2>Redux Counter Test</h2>
+          <Counter label='count:' />
+        </div>
+        <div>
+          <h2>Apollo Graphql Test </h2>
+        </div>
+      </div>
     </ApolloProvider>
     , rootEl)
 })

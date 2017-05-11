@@ -7,9 +7,10 @@
     "start": "webpack -p --config --progress --watch",
     "compile": "webpack -p --config --progress",
     "prepare": "npm run compile",
-    "test": "yarn lint && yarn testonly",
-    "test-ci": "yarn lint && yarn coverage",
-    "testonly": "jest",
+    "jest": "./node_modules/.bin/jest",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
     "generate-graphql-types": "apollo-codegen generate src/graphql/**/*.graphql --schema schema.json --target ts --output src/schema.ts",
     "generate-graphql-schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output schema.json",
     "prepublish": "npm run build",
@@ -23,7 +24,18 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testRegex": "(/.*.(test|spec)).(js|jsx)$"
+    "roots": [
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   },
   "repository": {
     "type": "git",
@@ -48,10 +60,12 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "apollo-client": "^1.0.1",
-    "graphql-tag": "^2.0.0"
+    "@sample/client-core": "*"
   },
   "peerDependencies": {
+    "@sample/client-core": "*",
+    "apollo-client": "^1.0.1",
+    "graphql-tag": "^2.0.0",
     "graphql": "^0.9.0",
     "redux": ">=3.6.0"
   },
