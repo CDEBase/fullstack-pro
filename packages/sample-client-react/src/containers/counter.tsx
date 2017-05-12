@@ -17,7 +17,7 @@ const mapStateToProps = (state: Store.All, ownProps: OwnProps): ConnectedState =
   error: state["@sample/error"],
 })
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<Store.All>): ConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: Function): ConnectedDispatch => ({
   increment: (n: number) =>
     dispatch(incrementCounter(n)),
   load: () =>

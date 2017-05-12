@@ -22,7 +22,6 @@ export type ConnectedDispatch = {
 }
 
 
-
 export class CounterComponent extends React.Component<ConnectedState & ConnectedDispatch & OwnProps, {}> {
 
     _onClickIncrement = (e: React.SyntheticEvent<HTMLButtonElement>) => {
