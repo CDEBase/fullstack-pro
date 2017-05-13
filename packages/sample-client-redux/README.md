@@ -17,12 +17,12 @@ What does it include:
 
 Purpose:
 ---
-    This package can be installable in front-end webserver
+This package can be installable in front-end webserver to use the reducers and actions.
 
 What's not included
 ---
-    It does not have any client UI components such as React
-    It does have configured Redux Store
+- It does not have any client UI components such as React
+- It does not configure Redux Store
 
 Useful commands:
 ---

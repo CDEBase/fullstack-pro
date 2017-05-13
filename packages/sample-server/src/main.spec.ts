@@ -24,7 +24,7 @@ describe('main', () => {
       port: PORT,
     })
     .then(([server]) => {
-      return <Server>server.close();
+      return (<Server>server).close();
     });
   });
 
@@ -35,8 +35,8 @@ describe('main', () => {
       env: 'dev',
       port: PORT,
     })
-    .then((server: Server) => {
-      return server.close();
+    .then(([server]) => {
+      return (<Server>server).close();
     });
   });
 
@@ -47,9 +47,9 @@ describe('main', () => {
       env: 'dev',
       port: PORT,
     })
-    .then((server: Server) => {
+    .then(([server]) => {
       return getFromServer(GRAPHQL_ROUTE).then((res: any) => {
-        server.close();
+        (<Server>server).close();
         // GET without query returns 400
         expect(res.statusCode).toBe(400);
       });
@@ -63,9 +63,9 @@ describe('main', () => {
       env: 'production',
       port: PORT,
     })
-    .then((server: Server) => {
+    .then(([server]) => {
       return getFromServer(GRAPHQL_ROUTE).then((res: any) => {
-        server.close();
+        (<Server>server).close();
         // GET without query returns 400
         expect(res.statusCode).toBe(400);
       });
@@ -79,9 +79,9 @@ describe('main', () => {
       env: 'dev',
       port: PORT,
     })
-    .then((server: Server) => {
+    .then(([server]) => {
       return getFromServer(GRAPHIQL_ROUTE).then((res: any) => {
-        server.close();
+        (<Server>server).close();
         expect(res.statusCode).toBe(200);
       });
     });
@@ -94,9 +94,9 @@ describe('main', () => {
       env: 'production',
       port: PORT,
     })
-    .then((server: Server) => {
+    .then(([server]) => {
       return getFromServer(GRAPHIQL_ROUTE).then((res: any) => {
-        server.close();
+        (<Server>server).close();
         expect(res.statusCode).toBe(404);
       });
     });
@@ -109,19 +109,19 @@ describe('main', () => {
       env: 'production',
       port: PORT,
     })
-    .then((server: Server) => {
+    .then(([server]) => {
       return main({
         enableCors: false,
         enableGraphiql: false,
         env: 'production',
         port: PORT,
       })
-      .then((secondServer: Server) => {
-        server.close();
-        secondServer.close();
+      .then(([secondServer]) => {
+        (<Server>server).close();
+        (<Server>secondServer).close();
         throw new Error('Was able to listen twice!');
       }, (err: Error) => {
-        server.close();
+        (<Server>server).close();
         expect(err[ERRNO_KEY]).toBe('EADDRINUSE');
       });
     });

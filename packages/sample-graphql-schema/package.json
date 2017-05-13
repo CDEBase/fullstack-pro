@@ -7,11 +7,12 @@
     "access": "public"
   },
   "scripts": {
-    "start": "webpack -p --config --progress --watch",
-    "test": "npm run testonly",
-    "test-ci": "npm lint && npm coverage",
-    "testonly": "jest",
+    "jest": "./node_modules/.bin/jest",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
+    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",

@@ -4,7 +4,12 @@
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
+    "jest": "./node_modules/.bin/jest",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
+    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
@@ -24,8 +29,7 @@
     "rimraf": "^2.6.1",
     "webpack": "^2.3.3"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"

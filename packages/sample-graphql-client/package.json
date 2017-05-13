@@ -5,12 +5,12 @@
   "main": "lib/index.js",
   "scripts": {
     "typify": "gql-gen --url http://localhost:3000/graphql --template flow --out ./flow/decl/schema.js ./src/**/*.graphql",
-    "prepare": "npm run compile",
     "jest": "./node_modules/.bin/jest",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
+    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",

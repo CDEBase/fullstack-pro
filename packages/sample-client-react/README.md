@@ -10,7 +10,7 @@ What does it include:
 
 Purpose:
 ---
-    This package can be installable in front-end webserver
+This package can be installable in front-end webserver
 
 Useful commands:
 ---

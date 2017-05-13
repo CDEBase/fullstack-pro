@@ -4,7 +4,6 @@
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
-    "prepare": "npm run compile",
     "jest": "./node_modules/.bin/jest",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
@@ -12,6 +11,7 @@
     "generate-graphql-types": "apollo-codegen generate src/graphql/**/*.graphql --schema schema.json --target ts --output src/schema.ts",
     "generate-graphql-schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output schema.json",
     "prepublish": "npm run build",
+    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
