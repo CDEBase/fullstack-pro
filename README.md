@@ -8,8 +8,8 @@ Purpose:
 
 Useful commands:
 ---
-    lerna clean             - removes the node_modules directory from all packages. [More details here.][lerna-clean]
-    npm start               - Starts the web server and backend server
+    lerna clean             - removes the node_modules directory from all packages. 
+    npm start               - starts the web server and backend server
     npm run watch           - build the packages in watchmode (Useful for development)
     npm run lerna           - install external dependencies at the repo root so they're available to all packages.
     npm run build           - build all the packages
@@ -20,16 +20,20 @@ Files explained:
 ---    
 It uses `lerna.json` for creating the packages structure. Under packages you can create different modules based on its usage. For example:
 
-packages
- sample-apollo-server    - Where express or graphql server runs the server code.
-     sample-graphql-resolver - This is where you store the graphql schema and resolvers. This will be used in `sample-apollo-server` to run. 
-     sample-core             - This is where the core interface of the package stays and core functionality shared between client and server.
-     sample-server-core      - This is where the core interface of the package stays and core functionality that only runs on server.
-     sample-client-core      - This is where the core interface of the package stays and core functionality that only runs on client.
-     sample-client-redux     - This is where the redux's reducer and actions are defined. Which uses `@sample\core` or `@sample\client-core`.
-     sample-client-react     - This is where react pure components and containers are created. Which uses `@sample\client-redux`
-     sample-browser-server   - This is useful to show demo of the `@sample\client-*` components and UI elements in the browser.
-
+     packages                    - Has the packages to organize the codebase into multi-package repositories.
+         sample-core             - Core interfaces of the packages which can be shared between server and client.
+         sample-server-core      - Core interfaces and its implementation code for Server.   
+         sample-client-core      - Core interfaces and its implementation code for Client.
+         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@sample\client-core` or `@sample\core`
+         sample-client-react     - React pure components and containers are defined. 
+         sample-graphql-client   - Graphql Quries and Mutation for Client.
+         sample-graphql-schema   - Graphql Schema for Server.
+         sample-apollo-server    - Backend Graphql Server which runs the server code. 
+         sample-brwoser-server   - Front-end Client Server. This is useful to show demo of this package.
+        index.spec.ts            - Tests file for main
+        actions                  - Contains Actions to transform the state tree
+            index.ts             - References all the exported actions
+        reducers                 - Contains reducers, pure function with (s
 
 ## Getting Started
 
