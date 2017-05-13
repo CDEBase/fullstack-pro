@@ -23,8 +23,8 @@ describe('main', () => {
       env: 'production',
       port: PORT,
     })
-    .then((server: Server) => {
-      return server.close();
+    .then(([server]) => {
+      return <Server>server.close();
     });
   });
 

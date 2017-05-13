@@ -2,6 +2,7 @@
   "name": "@sample/server-core",
   "version": "0.0.1",
   "description": "xterm server services for Node",
+  "private": true,
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "npm run build",
@@ -13,8 +14,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  },
   "author": "CDMBase LLC",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cdmbase/fullstack-pro/issues"
+  },
+  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
     "@types/minimist": "^1.2.0",
     "@types/node": "^7.0.12",

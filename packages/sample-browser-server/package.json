@@ -2,6 +2,7 @@
   "name": "sample-browser-server",
   "version": "0.0.1",
   "description": "Sample Client server",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
@@ -17,8 +18,16 @@
     "build:dist": "webpack",
     "build:dist:watch": "npm run build:lib -- --watch"
   },
-  "author": "Veera Marni",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  },
+  "author": "CDMBase LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cdmbase/fullstack-pro/issues"
+  },
+  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "@types/minimist": "^1.2.0",
@@ -29,8 +38,6 @@
     "@types/semver": "^5.3.31",
     "@types/sinon": "^2.1.1",
     "awesome-typescript-loader": "^3.1.2",
-    "eslint": "^3.17.1",
-    "eslint-plugin-graphql": "^0.6.1",
     "jest": "^19.0.2",
     "jest-cli": "^19.0.2",
     "react-addons-test-utils": "^15.4.2",

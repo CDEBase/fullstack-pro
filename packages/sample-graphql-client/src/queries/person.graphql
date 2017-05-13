@@ -1,0 +1,22 @@
+query ($id: String){
+    getPerson(id: $id) {
+        id
+        name
+        sex
+        matches {
+            id
+            name
+            sex
+            matches {
+                id
+                name
+                sex
+                matches {
+                    id
+                    name
+                    sex
+                }
+            }
+        }
+    }
+}

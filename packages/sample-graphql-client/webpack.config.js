@@ -2,23 +2,27 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var nodeExternals = require('cdm-webpack-node-externals');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var libPath = require('../../src/webpack-util');
 
-var webpack_opts = {
-  entry: './src/index.ts',
+module.exports = {
+  entry: './src/index.js',
   target: 'node',
   output: {
-    filename: libPath('index.js'),
+    filename: libPath("[name].js"),
+    library: '@sample/graphql',
     libraryTarget: 'commonjs2',
-    library: '@sample/client-redux',
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.graphql'],
     modules: [
       'src',
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([
+      { from: 'src/**/*.graphql', to: 'lib'}
+    ]),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,
@@ -38,12 +42,14 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       use: 'ts-loader'
-    }]
+    }, {
+      test: /\.graphql$/,
+      loader: 'raw',
+      exclude: /node_modules/,
+    },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
   {
     "@sample/client-core": "@sample/client-core"
   }]
 };
-
-module.exports = webpack_opts;

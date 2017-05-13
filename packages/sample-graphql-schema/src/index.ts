@@ -3,13 +3,19 @@ import {makeExecutableSchema, addMockFunctionsToSchema} from 'graphql-tools';
 import { persons, findPerson, addPerson } from './data-base/person-database';
 
 /* tslint:disable:no-var-requires */
-const modules = [
-  require('./modules/mocked-type'),
-  require('./modules/some-type'),
-  require('./modules/person-type'),
-  require('./modules/query'),
-  require('./modules/mutation'),
-];
+// const modules = [
+//   require('./modules/mocked-type'),
+//   require('./modules/some-type'),
+//   require('./modules/person-type'),
+//   require('./modules/query'),
+//   require('./modules/mutation'),
+// ];
+
+const moduleFiles = (<any> require).context("./modules/", true, /\.ts/);
+
+const modules = moduleFiles.keys().map((moduleName) => {
+  return moduleFiles(moduleName);
+});
 
 const mainDefs = [`
     schema {

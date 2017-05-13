@@ -18,10 +18,6 @@
     "preupver": "npm test",
     "upver": "standard-version"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DxCx/webpack-apollo-server.git"
-  },
   "keywords": [
     "apollo",
     "backend",
@@ -32,11 +28,16 @@
     "graphiql",
     "express"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  },
+  "author": "CDMBase LLC",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DxCx/webpack-apollo-server/issues"
+    "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
-  "homepage": "https://github.com/DxCx/webpack-apollo-server#readme",
+  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
     "@types/node": "^7.0.12",
     "@sample/schema": "*",

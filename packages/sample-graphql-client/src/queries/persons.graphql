@@ -1,0 +1,6 @@
+query persons() {
+    persons {
+        id
+        name
+    }
+}

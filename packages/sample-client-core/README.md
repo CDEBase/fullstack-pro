@@ -1,11 +1,5 @@
-# Redux Package
-Redux npm package includes actions, action-types and reducers
-
-  1. [TypeScript and Redux: getting started][article-1]
-  2. [TypeScript and Redux: async actions][article-3]
-  3. [TypeScript and Redux: unit testing with Jest][article-4]
-  4. [Integrating TypeScript and redux-thunk][article-5]
-
+# Client Core Package
+Helper methods and interfaces that can be used by the client part of the packages 
 
 What does it include:
 ---
@@ -43,9 +37,3 @@ Files explained:
      tsconfig.json               - configuration file for the library compilation
      webpack.config.js           - configuration file of the compilation automation process for the library
                  
-
-[article-1]: https://rjzaworski.com/2016/08/getting-started-with-redux-and-typescript
-[article-2]: https://rjzaworski.com/2016/08/typescript-redux-and-react
-[article-3]: https://rjzaworski.com/2016/09/typescript-redux-async-actions
-[article-4]: https://rjzaworski.com/2016/12/testing-typescript-with-jest
-[article-5]: https://rjzaworski.com/2017/01/typescript-redux-thunk

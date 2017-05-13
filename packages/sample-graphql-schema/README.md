@@ -1,5 +1,5 @@
 # @schema/schema
-This package is intended to be used with [Apollo Server](http://docs.apollostack.com/apollo-server/tools.html) to provide an easy way to setup a GraphQL server and connect it to your database. Note that Apollo Server is not a depenedecy of this package. 
+This package is intended to be used with [Apollo Server](http://docs.apollostack.com/apollo-server/tools.html) to provide an easy way to setup a GraphQL server and connect it to your database. Note that Apollo Server is not a depenedency of this package. 
 
 ##Usage
 
@@ -15,9 +15,6 @@ After creating your Database and Connectors from Database, you can call the reso
 
 *database*
 The first part of Sample Schema is **database**. This class provides an easy connection to your database using some connection settings, explained below.
-
---TODO--
-
 
 ## Reference:
 https://github.com/ramsaylanier/WordExpressSchema
