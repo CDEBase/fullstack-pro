@@ -30,10 +30,6 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          sample-graphql-schema   - Graphql Schema for Server.
          sample-apollo-server    - Backend Graphql Server which runs the server code. 
          sample-brwoser-server   - Front-end Client Server. This is useful to show demo of this package.
-        index.spec.ts            - Tests file for main
-        actions                  - Contains Actions to transform the state tree
-            index.ts             - References all the exported actions
-        reducers                 - Contains reducers, pure function with (s
 
 ## Getting Started
 

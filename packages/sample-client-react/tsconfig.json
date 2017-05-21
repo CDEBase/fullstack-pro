@@ -1,12 +1,15 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "rootDir": "./src",
     "outDir": "./lib",
     "jsx": "react",
     "typeRoots": [
       "../../node_modules/@types"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",

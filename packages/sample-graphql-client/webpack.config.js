@@ -9,7 +9,8 @@ module.exports = {
   entry: './src/index.js',
   target: 'node',
   output: {
-    filename: libPath("[name].js"),
+    
+    filename: libPath("index.js"),
     library: '@sample/graphql',
     libraryTarget: 'commonjs2',
   },
@@ -42,11 +43,18 @@ module.exports = {
     rules: [{
       test: /\.ts$/,
       use: 'ts-loader'
-    }, {
-      test: /\.graphql$/,
-      loader: 'raw',
+    },
+    // {
+    //   test: /\.graphql$/,
+    //   loader: 'raw',
+    //   exclude: /node_modules/,
+    // }, 
+    {
+      test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-    },]
+      loader: 'graphql-tag/loader'
+    },
+    ]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
   {

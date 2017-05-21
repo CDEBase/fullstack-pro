@@ -32,5 +32,9 @@ Files explained:
      webpack.config.js           - configuration file of the compilation automation process for the library
 
 
-
+Tutorials:
+---
+[react-jest-enzymes test](https://www.youtube.com/watch?v=bMmntkVM4wQ)
+[testing react with enzyme tutorial](http://codeheaven.io/testing-react-components-with-enzyme/)
+[react-redux-typescript-guide](https://github.com/piotrwitek/react-redux-typescript-guide)
                  

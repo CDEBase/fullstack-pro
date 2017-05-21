@@ -1,3 +1,2 @@
-// @flow
-
-import gql from 'graphql-tag';
+export * from './mutations';
+export * from './queries';

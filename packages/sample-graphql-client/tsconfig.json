@@ -3,9 +3,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "declaration": false,
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./lib",
     "typeRoots": [
       "node_modules/@types"
     ]

@@ -3,18 +3,20 @@ import * as ReactDOM from 'react-dom'
 import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
+import { ApolloClient, createNetworkInterface, graphql, ApolloProvider } from 'react-apollo';
 import {
   reducers,
   Store as StoreState,
 } from '@sample/client-redux'
+import gql from 'graphql-tag';
 
-import { Counter } from '@sample/client-react'
+import { Counter, PersonList } from '@sample/client-react'
 import './index.css';
 
 const networkInterface = createNetworkInterface({
   uri: 'http://localhost:3000/graphql'
 });
+import { pure, compose as comCompose, flattenProp } from 'recompose';
 
 const client = new ApolloClient({
   networkInterface: networkInterface
@@ -41,7 +43,7 @@ const store = createStore(
     ...reducers,
     apollo: client.reducer(),
   }),
-  {} as StoreState.All,
+  {} as StoreState.Sample,
   composeEnhancers(...enhancers),
 );
 
@@ -58,6 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
         <div>
           <h2>Apollo Graphql Test </h2>
+          <PersonList />
         </div>
       </div>
     </ApolloProvider>

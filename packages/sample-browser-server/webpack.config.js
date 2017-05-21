@@ -2,7 +2,7 @@ var failPlugin = require('webpack-fail-plugin');
 const { CheckerPlugin } = require("awesome-typescript-loader");
 var Visualizer = require("webpack-visualizer-plugin");
 const webpack = require("webpack");
-const path =  require("path");
+const path = require("path");
 
 var corePlugins = [
   failPlugin,
@@ -44,6 +44,10 @@ module.exports = {
   resolve: {
     // add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.css'],
+    modules: [
+      'node_modules',
+      'src',
+    ]
   },
 
   plugins: plugins,
@@ -79,10 +83,10 @@ module.exports = {
       *
       * See: https://github.com/webpack/raw-loader
       */
-     {  
-       test: /\.css$/, 
-       exclude: /node_modules/, 
-       loaders: ['style-loader', 'css-loader'] 
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loaders: ['style-loader', 'css-loader']
       },
     ]
   },

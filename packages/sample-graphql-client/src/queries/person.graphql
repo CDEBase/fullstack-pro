@@ -1,4 +1,4 @@
-query ($id: String){
+query getPerson($id: String!){
     getPerson(id: $id) {
         id
         name

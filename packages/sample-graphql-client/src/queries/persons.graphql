@@ -1,4 +1,4 @@
-query persons() {
+query getPersons {
     persons {
         id
         name

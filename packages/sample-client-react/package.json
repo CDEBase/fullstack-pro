@@ -31,7 +31,7 @@
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
   },
   "repository": {
     "type": "git",
@@ -46,22 +46,24 @@
   "peerDependencies": {
     "@sample/client-core": "*",
     "@sample/client-redux": "*",
+    "@sample/graphql": "*",
+    "apollo-client": "^1.2.2",
     "redux": ">=3.6.0",
     "react": ">=15.0.0",
+    "react-apollo": "^1.2.0",
     "react-dom": ">=15.0.0",
     "react-router": "^3.0.0"
   },
   "dependencies": {
     "@sample/client-core": "*",
-    "@sample/client-redux": "*"
+    "@sample/client-redux": "*",
+    "@sample/graphql": "*"
   },
   "devDependencies": {
-    "@types/jest": "^19.2.2",
-    "css-loader": "^0.28.0",
-    "react-addons-test-utils": "^15.4.2",
+    "@sample/schema": "*",
+    "jest": "^20.0.3",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.3",
-    "cdm-webpack-node-externals": "^1.5.6"
+    "webpack": "^2.3.3"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

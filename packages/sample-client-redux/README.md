@@ -19,6 +19,12 @@ Purpose:
 ---
 This package can be installable in front-end webserver to use the reducers and actions.
 
+The goal is to make a isolated and reusable module that is self-contained. In order to avoid name conflicts, following rules need to be abide.
+1. MUST export a function call reducer()
+2. MUST export its action creators as functions
+3. MUST have action types in the form `@npm-module-or-app/ACTION_TYPE` eg. `@@sample/INCREMENT_COUNTER`
+4. MUST have reducer in the form `npm-module-or-app/reducer_name` eg. `@sample/counter`
+
 What's not included
 ---
 - It does not have any client UI components such as React

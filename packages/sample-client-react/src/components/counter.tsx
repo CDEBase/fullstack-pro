@@ -1,28 +1,22 @@
 import * as React from 'react'
-import * as redux from 'redux'
+// import * as redux from 'redux'
 
-import { Store } from '@sample/client-redux'
+// import { Store } from '@sample/client-redux'
 
-export type OwnProps = {
-    label: string,
-    store?: redux.Store<Store.All>
+export interface ICounterProps {
+    label: string;
+    counter: { value: number };
+    isSaving: boolean;
+    isLoading: boolean;
+    error: string;
+    increment: (n: number) => void;
+    save: (n: number) => void;
+    load: () => void;
 }
 
-export type ConnectedState = {
-    counter: { value: number }
-    isSaving: boolean,
-    isLoading: boolean,
-    error: string,
-}
+interface State {}
 
-export type ConnectedDispatch = {
-    increment: (n: number) => void
-    save: (n: number) => void
-    load: () => void
-}
-
-
-export class CounterComponent extends React.Component<ConnectedState & ConnectedDispatch & OwnProps, {}> {
+export class CounterComponent extends React.Component<ICounterProps, {}> {
 
     _onClickIncrement = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -43,7 +37,7 @@ export class CounterComponent extends React.Component<ConnectedState & Connected
         }
     }
 
-    render() {
+    render(): JSX.Element {
         const { counter, label, isSaving, isLoading, error } = this.props
         return <form>
             <legend>{label}</legend>

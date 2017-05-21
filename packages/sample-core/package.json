@@ -21,11 +21,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "devDependencies": {
-    "@types/minimist": "^1.2.0",
-    "@types/node": "^7.0.12",
-    "@types/semver": "^5.3.31",
-    "@types/sinon": "^2.1.1",
-    "typescript": "^2.2.2",
+    "jest": "^20.0.3",
     "rimraf": "^2.6.1",
     "webpack": "^2.3.3"
   },

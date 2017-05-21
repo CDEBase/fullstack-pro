@@ -13,7 +13,7 @@ var webpack_opts = {
     library: "@sample/client-react"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js',  '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.css'],
     modules: [
       'node_modules',
       'src',
@@ -42,15 +42,22 @@ var webpack_opts = {
     }, {
       test: /\.json?$/,
       loaders: 'json-loader'
-    },{
+    },
+    {
+      test: /\.(graphql|gql)$/,
+      exclude: /node_modules/,
+      loader: 'graphql-tag/loader'
+    },
+    {
       test: /\.css$/,
       loaders: 'css-loader'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" }), 
-  {
-    "@sample/client-core": "@sample/client-core",
-  }]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  { "@sample/client-core": "@sample/client-core" },
+  { "@sample/graphql": "@sample/graphql" },
+  { "@sample/schema": "@sample/schema" },
+  { "@sample/client-redux": "@sample/client-redux" }]
 };
 
 module.exports = webpack_opts;

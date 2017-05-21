@@ -44,12 +44,12 @@ describe('actions', () => {
     })
 
     describe('when API request succeeds', () => {
-      it('dispatches SAVE_COUNT_SUCCESS', () => {
+      it('dispatches @@sample/SAVE_COUNT_SUCCESS', () => {
         const { dispatch, reducer } = store()
         actions.saveCount({ value: 14 })(dispatch)
         return eventually(expectTypes(reducer, [
-          'SAVE_COUNT_REQUEST',
-          'SAVE_COUNT_SUCCESS',
+          '@@sample/SAVE_COUNT_REQUEST',
+          '@@sample/SAVE_COUNT_SUCCESS',
         ]))
       })
     })
@@ -59,16 +59,16 @@ describe('actions', () => {
         api.save.mockReturnValue(Promise.reject(new Error('something terrible happened')))
       })
 
-      it('dispatches SAVE_COUNT_ERROR', () => {
+      it('dispatches @@sample/SAVE_COUNT_ERROR', () => {
         const { dispatch, reducer } = store()
         actions.saveCount({ value: 14 })(dispatch)
         return eventually(expectTypes(reducer, [
-          'SAVE_COUNT_REQUEST',
-          'SAVE_COUNT_ERROR',
+          '@@sample/SAVE_COUNT_REQUEST',
+          '@@sample/SAVE_COUNT_ERROR',
         ]))
       })
 
-      it('includes error message with SAVE_COUNT_ERROR', () => {
+      it('includes error message with @@sample/SAVE_COUNT_ERROR', () => {
         const { dispatch, reducer } = store()
         actions.saveCount({ value: 14 })(dispatch)
         return eventually(() => {
@@ -77,7 +77,7 @@ describe('actions', () => {
         })
       })
 
-      it('includes request with SAVE_COUNT_ERROR for convenience', () => {
+      it('includes request with @@sample/SAVE_COUNT_ERROR for convenience', () => {
         const { dispatch, reducer } = store()
         actions.saveCount({ value: 14 })(dispatch)
         return eventually(() => {
@@ -98,12 +98,12 @@ describe('actions', () => {
     })
 
     describe('when API request succeeds', () => {
-      it('dispatches LOAD_COUNT_SUCCESS', () => {
+      it('dispatches @sample/LOAD_COUNT_SUCCESS', () => {
         const { dispatch, reducer } = store()
         actions.loadCount(null)(dispatch)
         return eventually(expectTypes(reducer, [
-          'LOAD_COUNT_REQUEST',
-          'LOAD_COUNT_SUCCESS',
+          '@@sample/LOAD_COUNT_REQUEST',
+          '@@sample/LOAD_COUNT_SUCCESS',
         ]))
       })
 
@@ -121,16 +121,16 @@ describe('actions', () => {
         api.load.mockReturnValue(Promise.reject(new Error('something terrible happened')))
       })
 
-      it('dispatches LOAD_COUNT_ERROR', () => {
+      it('dispatches @@sample/LOAD_COUNT_ERROR', () => {
         const { dispatch, reducer } = store()
         actions.loadCount(null)(dispatch)
         return eventually(expectTypes(reducer, [
-          'LOAD_COUNT_REQUEST',
-          'LOAD_COUNT_ERROR',
+          '@@sample/LOAD_COUNT_REQUEST',
+          '@@sample/LOAD_COUNT_ERROR',
         ]))
       })
 
-      it('includes error message with LOAD_COUNT_ERROR', () => {
+      it('includes error message with @@sample/LOAD_COUNT_ERROR', () => {
         const { dispatch, reducer } = store()
         actions.loadCount(null)(dispatch)
         return eventually(() => {

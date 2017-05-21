@@ -11,61 +11,61 @@ export type QEmpty = Q<null>
 export type QValue = Q<{ value: number }>
 
 export type Action =
-// UI actions
-   { type: 'INCREMENT_COUNTER', delta: number }
-|  { type: 'RESET_COUNTER' }
+  // UI actions
+  { type: '@@sample/INCREMENT_COUNTER', delta: number }
+  | { type: '@@sample/RESET_COUNTER' }
 
-// API Requests
-| ({ type: 'SAVE_COUNT_REQUEST' } & QValue)
-| ({ type: 'SAVE_COUNT_SUCCESS' } & QValue & S<{}>)
-| ({ type: 'SAVE_COUNT_ERROR'   } & QValue & E)
+  // API Requests
+  | ({ type: '@@sample/SAVE_COUNT_REQUEST' } & QValue)
+  | ({ type: '@@sample/SAVE_COUNT_SUCCESS' } & QValue & S<{}>)
+  | ({ type: '@@sample/SAVE_COUNT_ERROR' } & QValue & E)
 
-| ({ type: 'LOAD_COUNT_REQUEST' } & QEmpty)
-| ({ type: 'LOAD_COUNT_SUCCESS' } & QEmpty & S<{ value: number }>)
-| ({ type: 'LOAD_COUNT_ERROR'   } & QEmpty & E)
+  | ({ type: '@@sample/LOAD_COUNT_REQUEST' } & QEmpty)
+  | ({ type: '@@sample/LOAD_COUNT_SUCCESS' } & QEmpty & S<{ value: number }>)
+  | ({ type: '@@sample/LOAD_COUNT_ERROR' } & QEmpty & E)
 
 export const incrementCounter = (delta: number): Action => ({
-  type: 'INCREMENT_COUNTER',
+  type: '@@sample/INCREMENT_COUNTER',
   delta,
 })
 
 export const resetCounter = (): Action => ({
-  type: 'RESET_COUNTER',
+  type: '@@sample/RESET_COUNTER',
 })
 
 export type ApiActionGroup<_Q, _S> = {
-  request: (q?: _Q)         => Action & Q<_Q>
-  success: (s: _S, q?: _Q)  => Action & Q<_Q> & S<_S>
+  request: (q?: _Q) => Action & Q<_Q>
+  success: (s: _S, q?: _Q) => Action & Q<_Q> & S<_S>
   error: (e: Error, q?: _Q) => Action & Q<_Q> & E
 }
 
 const _saveCount: ApiActionGroup<{ value: number }, {}> = {
   request: (request) =>
-    ({ type: 'SAVE_COUNT_REQUEST', request }),
+    ({ type: '@@sample/SAVE_COUNT_REQUEST', request }),
   success: (response, request) =>
-    ({ type: 'SAVE_COUNT_SUCCESS', request, response }),
+    ({ type: '@@sample/SAVE_COUNT_SUCCESS', request, response }),
   error: (error, request) =>
-    ({ type: 'SAVE_COUNT_ERROR',   request, error }),
+    ({ type: '@@sample/SAVE_COUNT_ERROR', request, error }),
 }
 
 const _loadCount: ApiActionGroup<null, { value: number }> = {
   request: (request) =>
-    ({ type: 'LOAD_COUNT_REQUEST', request: null }),
+    ({ type: '@@sample/LOAD_COUNT_REQUEST', request: null }),
   success: (response, request) =>
-    ({ type: 'LOAD_COUNT_SUCCESS', request: null, response }),
+    ({ type: '@@sample/LOAD_COUNT_SUCCESS', request: null, response }),
   error: (error, request) =>
-    ({ type: 'LOAD_COUNT_ERROR',   request: null, error }),
+    ({ type: '@@sample/LOAD_COUNT_ERROR', request: null, error }),
 }
 
 type apiFunc<Q, S> = (q: Q) => Promise<S>
 
 function apiActionGroupFactory<Q, S>(x: ApiActionGroup<Q, S>, go: apiFunc<Q, S>) {
-  return (request: Q) => (dispatch: redux.Dispatch<Store.All>) => {
+  return (request: Q) => (dispatch: redux.Dispatch<Store.Sample>) => {
     dispatch(x.request(request))
     go(request)
       .then((response) => dispatch(x.success(response, request)))
       .catch((e: Error) => dispatch(x.error(e, request)))
-  } 
+  }
 }
 
 export const saveCount = apiActionGroupFactory(_saveCount, api.save)
