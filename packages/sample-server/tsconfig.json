@@ -1,13 +1,16 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "sourceMap": true,
     "declaration": false,
-    "rootDir": "./src",
     "outDir": "./dist",
     "typeRoots": [
       "../../node_modules/@types/"
     ]
   },
+  "files": [
+    "typings/index.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist"

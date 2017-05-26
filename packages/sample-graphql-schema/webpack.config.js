@@ -5,11 +5,14 @@ var nodeExternals = require('cdm-webpack-node-externals');
 var libPath = require('../../src/webpack-util');
 
 var webpack_opts = {
-  entry: './src/index.ts',
+  entry: {
+    index: './src/index.ts',
+    'validation.test': './src/__tests__/validation.ts'
+  },
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    filename: libPath('index.js'),
+    filename: libPath('[name].js'),
     library: '@sample/schema',
     libraryTarget: 'commonjs2',
   },
@@ -40,7 +43,11 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       loaders: 'ts-loader'
-    }]
+    },
+    {
+      test: /\.graphql?/,
+      use: 'raw-loader'
+    },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };

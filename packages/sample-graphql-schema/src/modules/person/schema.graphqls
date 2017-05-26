@@ -1,0 +1,21 @@
+# Person Type
+type PersonType {
+    name: String
+    id: String
+    sex: String
+    matches: [PersonType]
+}
+
+extend type Query {
+    getPerson(id: String!): PersonType
+    persons: [PersonType]
+}
+
+extend type Mutation {
+    addPerson(name: String!, sex: String!): PersonType
+}
+
+extend type Subscription {
+    # Subscription fires on every comment added
+    clock(onlyMinutesChange: Boolean): String
+}

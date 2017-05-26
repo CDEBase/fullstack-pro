@@ -2,9 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "sourceMap": true,
+    "declaration": false,
     "jsx": "react",
-    "rootDir": "./src",
     "outDir": "./dist",
+    "rootDir": "./src",
     "typeRoots": [
       "../../node_modules/@types"
     ]

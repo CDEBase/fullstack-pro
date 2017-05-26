@@ -1,26 +1,46 @@
-import {GraphQLSchema} from 'graphql';
-import {makeExecutableSchema, addMockFunctionsToSchema} from 'graphql-tools';
-import { persons, findPerson, addPerson } from './data-base/person-database';
+import { GraphQLSchema } from 'graphql';
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+import { persons, findPerson, addPerson } from './modules/person/database';
+import { ICounterRepository, ICount} from './modules/counter/database';
+import { loadSchema } from '@cdmbase/graphql-schema-collector';
+import { merge } from 'lodash';
 
-const moduleFiles = (<any> require).context("./modules/", true, /\.ts/);
+// to atomatically load the resolvers
+const resolverFiles = (<any>require).context("./modules/", true, /\**resolvers.ts/);
 
-const modules = moduleFiles.keys().map((moduleName) => {
-  return moduleFiles(moduleName);
+const resolverModules = resolverFiles.keys().map((moduleName) => {
+  return resolverFiles(moduleName);
 });
 
-const mainDefs = [`
-    schema {
-        query: Query,
-        mutation: Mutation,
-        subscription: Subscription
-    }
-`,
-];
+// to automatically load the subscriptiontypes
+const subscriptionFiles = (<any>require).context('./modules/', true, /\**subscriptions.ts/);
 
-const resolvers = Object.assign({},
-  ...(modules.map((m) => m.resolver).filter((res) => !!res)));
+const subscriptionModules = subscriptionFiles.keys().map((moduleName) => {
+  return subscriptionFiles(moduleName);
+});
 
-const typeDefs = mainDefs.concat(modules.map((m) => m.typeDef).filter((res) => !!res));
+// to automatically resolve the graphql files
+const graphqlFiles = (<any>require).context('./modules/', true, /\**.graphql?/);
 
-const database = { persons, addPerson, findPerson};
-export {resolvers, typeDefs, database};
+const graphqls = graphqlFiles.keys().map((graphqlName) => {
+  return graphqlFiles(graphqlName)
+})
+
+const resolvers = resolverModules.reduce((state, m) => {
+  if (!m.resolver) {
+    return state;
+  }
+  return merge(state, m.resolver);
+}, {});
+
+const typeDefs = graphqls.reduce((prev, cur) => prev.concat("\n" + cur), "\n");
+
+const subscriptions = subscriptionModules.reduce((state, m) => {
+  if (!m.subscription) {
+    return state;
+  }
+  return merge(state, m.subscription);
+}, {});
+
+const database = { persons, addPerson, findPerson };
+export { resolvers, typeDefs, subscriptions, database };

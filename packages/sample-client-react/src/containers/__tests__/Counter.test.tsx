@@ -1,8 +1,7 @@
 import 'jest';
-import React from 'react'
+import * as React from 'react'
 import { shallow, mount } from 'enzyme';
 import * as Sinon from 'sinon';
-// tslint:disable-next-line no-unused-variable
 import * as TestUtils from 'react-dom/test-utils'
 import { createStore, combineReducers } from 'redux'
 import configureStore from 'redux-mock-store'

@@ -3,12 +3,6 @@ import { graphql, gql } from 'react-apollo';
 import { pure, compose, flattenProp } from 'recompose';
 import { getPersons } from '@sample/graphql';
 
-// const getPersons = gql`query getPersons {
-//     persons {
-//         id
-//         name
-//     }
-// }`
 export interface IPersonListProps {
     persons
 }

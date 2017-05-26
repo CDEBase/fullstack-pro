@@ -13,10 +13,10 @@ var distPath = function (name) {
 };
 
 var webpack_opts = {
-  entry: './src/main.ts',
+  entry: './src/index.ts',
   target: 'node',
   output: {
-    filename: distPath('main.js'),
+    filename: distPath('index.js'),
     libraryTarget: "commonjs2"
   },
   resolve: {
@@ -50,6 +50,9 @@ var webpack_opts = {
     }, {
       test: /\.json$/,
       use: 'json-loader'
+    },    {
+      test: /\.graphql?/,
+      use: 'raw-loader'
     },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" })]

@@ -8,15 +8,7 @@
     "jest": "./node_modules/.bin/jest",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "prepublish": "npm run build",
-    "start": "NODE_ENV=development webpack-dev-server --hot --history-api-fallback",
-    "stats": "NODE_ENV=production webpack && open dist/statistics.html",
-    "dev": "watch-http-server -i -d False -e js",
-    "build": "npm run build:clean && npm run build:dist",
-    "build:clean": "rimraf dist",
-    "build:dist": "webpack",
-    "build:dist:watch": "npm run build:lib -- --watch"
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -32,8 +24,8 @@
     "jest": "^20.0.3",
     "rimraf": "^2.6.1",
     "source-map-loader": "^0.2.1",
-    "webpack": "^2.3.3",
-    "webpack-dev-server": "^2.4.2",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5",
     "webpack-fail-plugin": "^1.0.6",
     "webpack-visualizer-plugin": "^0.1.11"
   },

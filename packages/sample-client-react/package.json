@@ -63,7 +63,7 @@
     "@sample/schema": "*",
     "jest": "^20.0.3",
     "rimraf": "^2.6.1",
-    "webpack": "^2.3.3"
+    "webpack": "^2.5.1"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
