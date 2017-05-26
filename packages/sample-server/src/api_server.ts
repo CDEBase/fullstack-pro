@@ -8,7 +8,8 @@ import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE, GRAPHQL_ROUTE } from './ENDPOINTS';
 import * as Webpack from 'webpack';
 const queryMap = require('persisted_queries.json');
-
+import { corsMiddleware } from './middleware/cors';
+7	
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { addGraphQLSubscriptions } from './api/subscriptions';
@@ -26,31 +27,32 @@ app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (settings.persistGraphQL && process.env.NODE_ENV !== 'test') {
-    const invertedMap = invert(queryMap);
+// if (settings.persistGraphQL && process.env.NODE_ENV !== 'test') {
+//     const invertedMap = invert(queryMap);
 
-    app.use(
-        GRAPHQL_ROUTE,
-        (req, res, next) => {
-            if (isArray(req.body)) {
-                req.body = req.body.map(body => {
-                    const id = body['id'];
-                    return {
-                        query: invertedMap[id],
-                        ...body
-                    }
-                });
-                next();
-            } else {
-                if (!__DEV__ || (req.get('Referer') || '').indexOf(GRAPHIQL_ROUTE) < 0) {
-                    res.status(500).send('Unknown GraphQL query has been received, rejecting...');
-                } else {
-                    next();
-                }
-            }
-        }
-    )
-}
+//     app.use(
+//         GRAPHQL_ROUTE,
+//         (req, res, next) => {
+//             if (isArray(req.body)) {
+//                 req.body = req.body.map(body => {
+//                     const id = body['id'];
+//                     return {
+//                         query: invertedMap[id],
+//                         ...body
+//                     }
+//                 });
+//                 next();
+//             } else {
+//                 if (!__DEV__ || (req.get('Referer') || '').indexOf(GRAPHIQL_ROUTE) < 0) {
+//                     res.status(500).send('Unknown GraphQL query has been received, rejecting...');
+//                 } else {
+//                     next();
+//                 }
+//             }
+//         }
+//     )
+// }
+app.use(corsMiddleware);
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
 app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
 

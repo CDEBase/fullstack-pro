@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    // "jsx": "react",
+    "jsx": "react",
     "declaration": true,
     "experimentalDecorators": true,
     "sourceMap": true,

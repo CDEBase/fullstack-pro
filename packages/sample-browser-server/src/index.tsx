@@ -1,14 +1,14 @@
 /// <reference path='../../../typings/index.d.ts' />
 
 
-import * as React from 'react' // tslint:disable-line
+import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { addPersistedQueries } from 'persistgraphql';
+// import { addPersistedQueries } from 'persistgraphql';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
-const settings = require('../../../package.json');
+const { settings } = require('../../../package.json');
 const queryMap = require('persisted_queries.json');
 
 require('backend_reload');
@@ -42,7 +42,7 @@ networkInterface = addGraphQLSubscriptions(
 // }
 
 const client = new ApolloClient({
-  networkInterface: addPersistedQueries(networkInterface, queryMap)
+  networkInterface
 });
 
 const middlewares: Middleware[] = [

@@ -51,19 +51,6 @@
   "settings": {
     "backendBuildDir": "packages/sample-server/dist",
     "frontendBuildDir": "packages/sample-browser-server/dist",
-    "webpackDevPort": 3000,
-    "apiPort": 8080,
-    "ssr": false,
-    "webpackDll": true,
-    "frontendRefreshOnBackendChange": true,
-    "reactHotLoader": false,
-    "debugSQL": false,
-    "persistGraphQL": true,
-    "apolloLogging": true
-  },
-  "app": {
-    "backendBuildDir": "packages/sample-server/dist",
-    "frontendBuildDir": "packages/sample-browser-server/dist",
     "graphQLUrl": "http://localhost:8080/graphql",
     "webpackDevPort": 3000,
     "apiPort": 8080,
@@ -73,7 +60,7 @@
     "reactHotLoader": false,
     "debugSQL": false,
     "persistGraphQL": true,
-    "apolloLogging": false
+    "apolloLogging": true
   },
   "devDependencies": {
     "@types/body-parser": "1.16.3",
