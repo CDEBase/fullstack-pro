@@ -2,7 +2,7 @@ import {GraphQLSchema} from 'graphql';
 import {makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema} from 'graphql-tools';
 import { resolvers, typeDefs } from '@sample/schema';
 const rootSchemaDef = require('./root_schema.graphqls');
-import { logger } from '../../../../src/logger';
+import { logger } from '../../../../tools/logger';
 
 const schema: GraphQLSchema = makeExecutableSchema({
   logger: console,

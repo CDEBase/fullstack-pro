@@ -1,5 +1,5 @@
 {
-  "lerna": "2.0.0-rc.4",
+  "lerna": "2.0.0-rc.5",
   "changelog": {
     "repo": "cdmbase/lerna-bootstrap",
     "labels": {
@@ -17,7 +17,8 @@
     }
   },
   "packages": [
-    "packages/*"
+    "packages/*",
+    "servers/*"
   ],
   "version": "0.0.0"
 }

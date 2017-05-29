@@ -1,4 +1,4 @@
-import { IEntity } from '../../IEntity';
+import { IEntity } from '@sample/server-core';
 
 export class ICount implements IEntity {
 

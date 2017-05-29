@@ -29,7 +29,10 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          sample-graphql-client   - Graphql Quries and Mutation for Client.
          sample-graphql-schema   - Graphql Schema for Server.
          sample-apollo-server    - Backend Graphql Server which runs the server code. 
-         sample-brwoser-server   - Front-end Client Server. This is useful to show demo of this package.
+     servers                     - Has the packages to organize the codebase into multi-package repositories.
+         frontend-server         - Frontend Client Server. This is useful to show demo of this package.
+         backend-server          - Backend apollo server. 
+    
 
 ## Getting Started
 

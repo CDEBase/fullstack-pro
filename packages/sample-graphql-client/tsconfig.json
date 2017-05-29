@@ -1,16 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "rootDir": "./src",
     "outDir": "./lib",
     "typeRoots": [
-      "node_modules/@types"
+      "../../node_modules/@types"
     ]
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "lib",
+    "dist",
+    "webpack.config.js"
   ]
 }

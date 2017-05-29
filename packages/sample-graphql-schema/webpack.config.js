@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var nodeExternals = require('cdm-webpack-node-externals');
-var libPath = require('../../src/webpack-util');
+var libPath = require('../../tools/webpack-util');
 
 var webpack_opts = {
   entry: {
@@ -10,7 +10,6 @@ var webpack_opts = {
     'validation.test': './src/__tests__/validation.ts'
   },
   target: 'node',
-  externals: [nodeExternals()],
   output: {
     filename: libPath('[name].js'),
     library: '@sample/schema',
@@ -49,7 +48,8 @@ var webpack_opts = {
       use: 'raw-loader'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  { "@sample/server-core": "@sample/server-core" }]
 };
 
 module.exports = webpack_opts;

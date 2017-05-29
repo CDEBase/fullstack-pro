@@ -1,4 +1,4 @@
-import { AbstractRepository } from '../../AbstractRepository';
+import { AbstractRepository } from '@sample/server-core';
 import { ICounterRepository } from './ICounterRepository';
 import { ICount } from './ICountModel';
 import { injectable } from 'inversify';
@@ -7,7 +7,7 @@ import { injectable } from 'inversify';
 export class CounterRepository extends AbstractRepository implements ICounterRepository {
 
     // Set the table name to count
-    tableName: string = "counter";
+    tableName: string = "count";
 
     async getById(id: number): Promise<ICount> {
         return await this.getTable()

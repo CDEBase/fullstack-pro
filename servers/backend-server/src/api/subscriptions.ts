@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 const { settings } = require('../../../../package.json');
 
 import { subscriptions } from '@sample/schema'
-import { logger } from '../../../../src/logger';
+import { logger } from '../../../../tools/logger';
 const pubsub = new PubSub();
 const manager = new SubscriptionManager({
     schema,

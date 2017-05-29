@@ -1,8 +1,9 @@
 {
-  "name": "sample-apollo-server",
+  "name": "apollo-server",
   "version": "0.0.1",
   "description": "Starter kit for apollo server using webpack and typescript",
   "main": "dist/main.js",
+  "private": true,
   "scripts": {
     "pretest": "npm run build",
     "build": "npm run build:clean && npm run build:dist",
@@ -15,7 +16,9 @@
     "start": "npm run build && node dist/main.js",
     "start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/main.js\"",
     "preupver": "npm test",
-    "upver": "standard-version"
+    "upver": "standard-version",
+    "seed": "ts-node ../../node_modules/knex/bin/cli seed:run --knexfile ./src/database/config.json",
+    "migrate": "ts-node ../../node_modules/knex/bin/cli migrate:latest --knexfile ./src/database/config.json"
   },
   "keywords": [
     "apollo",
@@ -52,9 +55,11 @@
   },
   "dependencies": {
     "@sample/schema": "*",
+    "@sample/server-core": "*",
     "graphql": "^0.9.2",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
+    "knex": "^0.13.0",
     "express": "^4.15.2",
     "graphql-server-express": "^0.7.1",
     "graphql-subscriptions": "^0.3.1",
@@ -65,6 +70,7 @@
     "subscriptions-transport-ws": "^0.6.0"
   },
   "devDependencies": {
+    "ts-node": "^3.0.4",
     "nodemon": "^1.11.0",
     "json-loader": "^0.5.4",
     "jest": "^20.0.3",

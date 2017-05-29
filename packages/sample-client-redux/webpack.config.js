@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var nodeExternals = require('cdm-webpack-node-externals');
-var libPath = require('../../src/webpack-util');
+var libPath = require('../../tools/webpack-util');
 
 var webpack_opts = {
   entry: './src/index.ts',

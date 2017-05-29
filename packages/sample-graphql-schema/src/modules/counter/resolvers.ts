@@ -3,6 +3,7 @@ import { ICounterRepository, ICount } from './database';
 export const resolver = () =>( {
     Query: {
         count(obj, args, context: { Count: ICounterRepository }) {
+            console.log(context.Count);
             return context.Count.getCount();
         },
     },

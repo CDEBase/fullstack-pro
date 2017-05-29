@@ -1,5 +1,5 @@
 {
-  "name": "sample-browser-server",
+  "name": "frontend-server",
   "version": "0.0.1",
   "description": "Sample Client server",
   "private": true,

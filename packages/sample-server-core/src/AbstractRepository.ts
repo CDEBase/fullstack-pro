@@ -7,20 +7,10 @@ let _db: Knex;
 /**
  * Returns an instance of database
  */
-const getDb = (config: DbConfig):Knex => {
+const getDb = (config: DbConfig): Knex => {
 
-    if(!_db) {
-        _db = Knex({
-            client: "sqlite3",
-            connection: {
-                filename: config.dbName
-            },
-            pool: {
-                min: 0,
-                max: config.maxConnection || 10
-            },
-            useNullAsDefault: true
-        })
+    if (!_db) {
+        _db = Knex(config.getConfiguration())
     }
 
     return _db;
@@ -30,7 +20,7 @@ const getDb = (config: DbConfig):Knex => {
 export abstract class AbstractRepository {
 
     @inject('DefaultDbConfig')
-    public dbConfig:DbConfig;
+    public dbConfig: DbConfig;
 
     abstract tableName: string;
 

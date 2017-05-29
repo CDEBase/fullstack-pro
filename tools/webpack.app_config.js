@@ -1,14 +1,14 @@
 // App-specific front-end config should be here
 const clientConfig = {
     entry: {
-        bundle: ['./packages/sample-browser-server/src/index.tsx']
+        bundle: ['./servers/frontend-server/src/index.tsx']
     }
 }
 
 // App-specific back-end config should be here
 const serverConfig = {
     entry: {
-        index: ['./packages/sample-server/src/index.ts']
+        index: ['./servers/backend-server/src/index.ts']
     }
 };
 

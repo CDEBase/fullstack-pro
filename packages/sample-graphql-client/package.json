@@ -1,10 +1,9 @@
 {
   "name": "@sample/graphql",
   "version": "0.0.1",
-  "description": "GraphQL Client side queries and mutations for sample",
+  "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
-    "typify": "gql-gen --url http://localhost:3000/graphql --template flow --out ./flow/decl/schema.js ./src/**/*.graphql",
     "jest": "./node_modules/.bin/jest",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
@@ -19,45 +18,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "src"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
-  },
   "author": "CDMBase LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cdmbase/fullstack-pro/issues"
-  },
-  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
+  "license": "ISC",
   "devDependencies": {
-    "apollo-codegen": "^0.10.13",
-    "babel-eslint": "^7.2.1",
-    "eslint": "^3.19.0",
-    "eslint-plugin-graphql": "^0.8.0",
-    "graphql-code-generator": "^0.5.2",
     "jest": "^20.0.3",
-    "raw-loader": "^0.5.1",
-    "nock": "^9.0.11",
     "rimraf": "^2.6.1",
     "webpack": "^2.5.1"
   },
-  "dependencies": {
-    "graphql-tag": "^2.0.0"
-  },
-  "peerDependencies": {
-    "graphql": ">=0.9.0"
-  },
+  "dependencies": {},
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"

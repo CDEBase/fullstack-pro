@@ -1,29 +1,25 @@
+var nodeExternals = require('cdm-webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var nodeExternals = require('cdm-webpack-node-externals');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var libPath = require('../../src/webpack-util');
+var libPath = require('../../tools/webpack-util');
 
-module.exports = {
-  entry: './src/index.js',
+var webpack_opts = {
+  entry: './src/index.ts',
   target: 'node',
   output: {
-    
-    filename: libPath("index.js"),
-    library: '@sample/graphql',
-    libraryTarget: 'commonjs2',
+    filename: libPath('index.js'),
+    libraryTarget: "commonjs2",
+    library: "@sample/graphql",
   },
   resolve: {
-    extensions: ['.ts', '.js', '.graphql'],
+    extensions: ['.ts', '.graphql', '.gql'],
     modules: [
+      'node_modules',
       'src',
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'src/**/*.graphql', to: 'lib'}
-    ]),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,
@@ -44,20 +40,17 @@ module.exports = {
       test: /\.ts$/,
       use: 'ts-loader'
     },
-    // {
-    //   test: /\.graphql$/,
-    //   loader: 'raw',
-    //   exclude: /node_modules/,
-    // }, 
     {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-      loader: 'graphql-tag/loader'
+      use: "graphql-tag/loader"
     },
-    ]
+    {
+      test: /\.json?$/,
+      use: 'json-loader'
+    },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  {
-    "@sample/client-core": "@sample/client-core"
-  }]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
 };
+
+module.exports = webpack_opts;
