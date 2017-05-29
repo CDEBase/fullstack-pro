@@ -1,4 +1,4 @@
-export const resolver = {
+export const resolver = (pubsub) =>  ({
     PersonType: {
         matches(root, args, ctx) {
             return ctx.persons.filter(person => person.sex !== root.sex);
@@ -22,4 +22,4 @@ export const resolver = {
             return new Date();
         }
     }
-};
+});

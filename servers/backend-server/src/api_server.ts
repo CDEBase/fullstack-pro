@@ -7,9 +7,8 @@ import * as http from 'http';
 import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE, GRAPHQL_ROUTE } from './ENDPOINTS';
 import * as Webpack from 'webpack';
-const queryMap = require('persisted_queries.json');
+
 import { corsMiddleware } from './middleware/cors';
-7
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';

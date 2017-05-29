@@ -5,7 +5,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
-const PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
+// const PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
+// Replace following lines once PersistGraphQLPlugin is configured
+var VirtualModulesPlugin = require('webpack-virtual-modules');
+function PersistGraphQLPlugin() {
+};
+PersistGraphQLPlugin.prototype.apply = function(compiler) {}
+
 const _ = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -26,6 +32,7 @@ const buildNodeEnv = __DEV__ ? (IS_TEST ? 'test' : 'development') : 'production'
 
 const moduleName = path.resolve('node_modules/persisted_queries.json');
 let clientPersistPlugin, serverPersistPlugin;
+
 if (IS_PERSIST_GQL) {
     clientPersistPlugin = new PersistGraphQLPlugin({
         moduleName,

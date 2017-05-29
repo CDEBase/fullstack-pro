@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { graphql } from 'graphql';
 import 'jest';
 import { GraphQLSchema } from 'graphql';
@@ -22,7 +24,7 @@ const schema: GraphQLSchema = makeExecutableSchema({
   resolverValidationOptions: {
     requireResolversForAllFields: true,
   },
-  resolvers: resolvers,
+  resolvers: resolvers(null),
   typeDefs: mainDefs,
 });
 addMockFunctionsToSchema({

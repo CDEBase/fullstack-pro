@@ -1,13 +1,13 @@
 {
     "client": "sqlite3",
     "connection": {
-        "filename": "./prod-db.sqlite3"
+        "filename": ":memory:"
     },
     "seeds": {
-        "directory": "./seeds"
+        "directory": "./src/database/seeds"
     },
     "migrations": {
-        "directory": "./migrations"
+        "directory": "./src/database/migrations"
     },
     "useNullAsDefault": true
 }

@@ -4,13 +4,13 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { PubSub, SubscriptionManager } from "graphql-subscriptions";
 import { addApolloLogging } from 'apollo-logger';
 import { Module } from 'webpack';
-import { schema } from "./schema";
+import { schema, pubsub } from "./schema";
 import { Observable } from 'rxjs';
 const { settings } = require('../../../../package.json');
-
+import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { subscriptions } from '@sample/schema'
 import { logger } from '../../../../tools/logger';
-const pubsub = new PubSub();
+
 const manager = new SubscriptionManager({
     schema,
     pubsub,
@@ -23,7 +23,7 @@ var subscriptionServer;
 const addSubscriptions = httpServer => {
     let subscriptionServerConfig = {
         server: httpServer,
-        path: '/',
+        path: GRAPHQL_ROUTE,
     };
 
     subscriptionServer = new SubscriptionServer({

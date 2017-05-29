@@ -19,15 +19,11 @@ Please note that you will need to rename the library name in some files:
 
 Useful commands:
 ----
-    npm run prebuild    - install NPM dependancies
     npm run build       - build the library files (Required for start:watch)
     npm run build:watch - build the library files in watchmode (Useful for development)
-    npm start           - Start the server
-    npm start:watch     - Start the server in watchmode (Useful for development)
     npm test            - run tests once
     npm run test:watch  - run tests in watchmode (Useful for development)
     npm run test:growl  - run tests in watchmode with growl notification (even more useful for development)
-    npm run upver       - runs standard-version to update the server version.
 
 How to run it:
 ----
@@ -59,6 +55,22 @@ Output files explained:
     1. node_modules - directory npm creates with all the dependencies of the module (result of npm install)
     2. dist         - directory contains the compiled server (javascript)
     3. html-report  - output of npm test, code coverage html report.
+
+
+Database
+----
+Connects to memory database through Knex
+
+Database configuration is set in `db-config.json`
+
+
+What files to be customized? 
+----
+Customizable files for a specific project would be the following
+```
+src/container
+src/middleware/graphql.ts
+```
 
 The Person type - dynamic/parametrized query and drill down:
 ----

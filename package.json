@@ -57,7 +57,7 @@
     "frontendRefreshOnBackendChange": true,
     "reactHotLoader": false,
     "debugSQL": false,
-    "persistGraphQL": true,
+    "persistGraphQL": false,
     "apolloLogging": true
   },
   "devDependencies": {
@@ -118,7 +118,6 @@
     "node-dev": "^3.1.3",
     "nodemon": "^1.11.0",
     "npm-check-updates": "^2.10.5",
-    "persistgraphql-webpack-plugin": "^0.2.3",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^15.5.1",
     "react-redux-typescript": "^2.3.0",
@@ -149,10 +148,10 @@
     "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.6.0",
     "webpack-sources": "^0.2.3",
+    "webpack-virtual-modules": "^0.1.5",
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "@cdmbase/graphql-schema-collector": "^0.3.0",
     "apollo-client": "^1.2.2",
     "bunyan": "^1.8.10",
     "cdm-logger": "^0.3.2",

@@ -4,7 +4,7 @@ import { DbConfig } from '@sample/server-core';
 import { RepositoryDiSetup } from '@sample/schema';
 
 
-const DEFAULT_DB_CONFIG = require('../database/config.json');
+const DEFAULT_DB_CONFIG = require('../../db-config.json');
 
 
 const dbConfig = new DbConfig(DEFAULT_DB_CONFIG);

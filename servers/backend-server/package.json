@@ -17,8 +17,8 @@
     "start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/main.js\"",
     "preupver": "npm test",
     "upver": "standard-version",
-    "seed": "ts-node ../../node_modules/knex/bin/cli seed:run --knexfile ./src/database/config.json",
-    "migrate": "ts-node ../../node_modules/knex/bin/cli migrate:latest --knexfile ./src/database/config.json"
+    "seed": "ts-node ../../node_modules/knex/bin/cli seed:run --knexfile ./db-config.json",
+    "migrate": "ts-node ../../node_modules/knex/bin/cli migrate:latest --knexfile ./db-config.json"
   },
   "keywords": [
     "apollo",

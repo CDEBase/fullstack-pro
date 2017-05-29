@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
 const { settings } = require('../../../package.json');
-const queryMap = require('persisted_queries.json');
+// const queryMap = require('persisted_queries.json');
 
 require('backend_reload');
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';

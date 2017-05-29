@@ -27,11 +27,11 @@ const graphqls = graphqlFiles.keys().map((graphqlName) => {
   return graphqlFiles(graphqlName)
 })
 
-const resolvers = resolverModules.reduce((state, m) => {
+const resolvers = (pubsub) => resolverModules.reduce((state, m) => {
   if (!m.resolver) {
     return state;
   }
-  return merge(state, m.resolver);
+  return merge(state, m.resolver(pubsub));
 }, {});
 
 const typeDefs = graphqls.reduce((prev, cur) => prev.concat("\n" + cur), "\n");

@@ -8,7 +8,6 @@
   },
   "scripts": {
     "jest": "./node_modules/.bin/jest",
-    "validation": "jest --findRelatedTests lib/validation.test.js",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
@@ -33,7 +32,7 @@
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    "testRegex": ".*test*\\.(ts|tsx|js)$"
   },
   "repository": {
     "type": "git",
