@@ -53,12 +53,12 @@ you can run both the client and server together by
 npm start
 ```
 The graphql server endpoints are
->http://localhost:3000/graphql
+>http://localhost:8080/graphql
 
->http://localhost:3000/graphiql
+>http://localhost:8080/graphiql
 
 The browser server endopoint is
->http://localhost:8080
+>http://localhost:3000
 
 To run build with watch. Useful for auto reloading changes into the server to be productive during development.
 ```
