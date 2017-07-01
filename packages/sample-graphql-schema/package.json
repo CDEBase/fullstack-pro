@@ -42,7 +42,6 @@
   "license": "MIT",
   "dependencies": {
     "@sample/server-core": "*",
-    "cdm-logger": "^0.3.2",
     "graphql-tools": "0.11.0",
     "lodash": "^4.17.4"
   },

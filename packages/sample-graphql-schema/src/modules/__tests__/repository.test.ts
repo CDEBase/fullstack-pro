@@ -27,7 +27,7 @@ describe('DI Test', () => {
     })
 
     afterAll(() => {
-
+        knex.destroy();
     })
 
     it('counter', async () => {
