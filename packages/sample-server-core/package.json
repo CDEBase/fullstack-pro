@@ -19,6 +19,21 @@
   "publishConfig": {
     "access": "public"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cdmbase/fullstack-pro.git"
