@@ -1,4 +1,4 @@
-import { Container } from 'inversify'
+import { Container } from 'inversify';
 import { ICounterRepository, CounterRepository, TYPES} from './counter/database';
 
 

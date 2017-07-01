@@ -10,7 +10,7 @@ const path = require('path');
 var VirtualModulesPlugin = require('webpack-virtual-modules');
 function PersistGraphQLPlugin() {
 };
-PersistGraphQLPlugin.prototype.apply = function(compiler) {}
+PersistGraphQLPlugin.prototype.apply = function (compiler) { }
 
 const _ = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -64,7 +64,8 @@ const baseConfig = {
             {
                 enforce: 'pre',
                 test: /\.tsx?$/,
-                use: 'source-map-loader'
+                use: 'source-map-loader',
+                exclude: [/node_modules/]
             },
             {
                 test: /\.graphqls/,
@@ -137,7 +138,7 @@ const serverConfig = merge.smart(_.cloneDeep(baseConfig), {
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
-                exclude: /(node_modules)/,
+                exclude: [/node_modules/],
                 query: {
                     configFileName: './servers/backend-server/tsconfig.json'
                 }
@@ -179,10 +180,10 @@ let clientPlugins = [
 ];
 
 if (pkg.settings.graphQLUrl) {
-  clientPlugins.push(new HtmlWebpackPlugin({
-    template: 'tools/html-plugin-template.ejs',
-    inject: 'body',
-  }));
+    clientPlugins.push(new HtmlWebpackPlugin({
+        template: 'tools/html-plugin-template.ejs',
+        inject: 'body',
+    }));
 }
 
 if (!__DEV__) {
@@ -190,7 +191,7 @@ if (!__DEV__) {
     clientPlugins.push(new webpack.optimize.CommonsChunkPlugin({
         name: "vendor",
         filename: "[name].[hash].js",
-        minChunks: function(module) {
+        minChunks: function (module) {
             return module.resource && module.resource.indexOf(path.resolve('./node_modules')) === 0;
         }
     }));
@@ -216,7 +217,7 @@ const clientConfig = merge.smart(_.cloneDeep(baseConfig), {
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
-                exclude: /(node_modules)/,
+                exclude: [/node_modules/],
                 query: {
                     configFileName: './servers/frontend-server/tsconfig.json'
                 }

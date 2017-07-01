@@ -36,9 +36,9 @@ describe('<ApolloProvider /> Component', () => {
         const wrapper = shallow(
             <ApolloProvider store={store} client={client}>
                 <div className='unique' />
-            </ApolloProvider>
+            </ApolloProvider>,
         );
 
         expect(wrapper.contains(<div className='unique' />)).toBe(true);
-    })
-})
+    });
+});

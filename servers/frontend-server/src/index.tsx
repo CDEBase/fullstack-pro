@@ -1,8 +1,8 @@
 /// <reference path='../../../typings/index.d.ts' />
 
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 // import { addPersistedQueries } from 'persistgraphql';
@@ -12,20 +12,21 @@ const { settings } = require('../../../package.json');
 // const queryMap = require('persisted_queries.json');
 
 require('backend_reload');
+
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 import {
   reducers,
   Store as StoreState,
-} from '@sample/client-redux'
+} from '@sample/client-redux';
 
-import { Counter, PersonList } from '@sample/client-react'
+import { Counter, PersonList } from '@sample/client-react';
 import './index.css';
 
 
 const rootEl = document.getElementById('content');
 
 let networkInterface = createNetworkInterface({
-  uri: __EXTERNAL_BACKEND_URL__ || "/graphql",
+  uri: __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
 const wsClient = new SubscriptionClient(window.location.origin.replace(/^http/, 'ws')
@@ -42,7 +43,7 @@ networkInterface = addGraphQLSubscriptions(
 // }
 
 const client = new ApolloClient({
-  networkInterface
+  networkInterface,
 });
 
 const middlewares: Middleware[] = [
@@ -55,13 +56,13 @@ const enhancers: GenericStoreEnhancer[] = [
   applyMiddleware(...middlewares),
 ];
 
-const ReduxExtentionComposeName: string = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
+const REDUX_EXTENSION_COMPOSE_NAME: string = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
 
 
 
 const composeEnhancers =
-  window[ReduxExtentionComposeName] ?
-    window[ReduxExtentionComposeName] : compose;
+  window[REDUX_EXTENSION_COMPOSE_NAME] ?
+    window[REDUX_EXTENSION_COMPOSE_NAME] : compose;
 
 const store = createStore(
   combineReducers({
@@ -75,20 +76,23 @@ const store = createStore(
 
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
-  if (rootEl) ReactDOM.render(
-    <ApolloProvider store={store} client={client}>
-      <div>
+  if (rootEl) {
+    ReactDOM.render(
+      <ApolloProvider store={store} client={client}>
         <div>
-          <h2>Redux Counter Test</h2>
-          <Counter label='count:' />
+          <div>
+            <h2>Redux Counter Test</h2>
+            <Counter label='count:' />
+          </div>
+          <div>
+            <h2>Apollo Graphql Test </h2>
+            <PersonList />
+          </div>
         </div>
-        <div>
-          <h2>Apollo Graphql Test </h2>
-          <PersonList />
-        </div>
-      </div>
-    </ApolloProvider>
-    , rootEl)
-})
+      </ApolloProvider>
+      , rootEl);
+  }
+});
+
 
 

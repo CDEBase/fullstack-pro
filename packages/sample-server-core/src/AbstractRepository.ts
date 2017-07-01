@@ -14,7 +14,7 @@ const getDb = (config: DbConfig): Knex => {
     }
 
     return _db;
-}
+};
 
 @injectable()
 export abstract class AbstractRepository {

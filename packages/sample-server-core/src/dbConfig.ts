@@ -1,10 +1,8 @@
 import { Config } from 'knex';
 
-export class DbConfig implements Config {
+export class DbConfig {
     constructor(private config: Config) {
 
     }
-
-    public getConfiguration(): Config { return this.config }
-
+    public getConfiguration(): Config { return this.config; }
 }

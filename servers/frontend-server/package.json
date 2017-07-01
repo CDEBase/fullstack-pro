@@ -1,55 +1,57 @@
 {
-  "name": "frontend-server",
-  "version": "0.0.1",
-  "description": "Sample Client server",
-  "private": true,
-  "main": "index.js",
-  "scripts": {
-    "jest": "./node_modules/.bin/jest",
-    "test": "jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
-  },
-  "author": "CDMBase LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cdmbase/fullstack-pro/issues"
-  },
-  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
-  "devDependencies": {
-    "jest": "^20.0.3",
-    "rimraf": "^2.6.1",
-    "source-map-loader": "^0.2.1",
-    "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5",
-    "webpack-fail-plugin": "^1.0.6",
-    "webpack-visualizer-plugin": "^0.1.11"
-  },
-  "dependencies": {
-    "@sample/client-core": "*",
-    "@sample/client-react": "*",
-    "@sample/client-redux": "*",
-    "apollo-client": "^1.2.2",
-    "react": "^15.5.4",
-    "react-apollo": "^1.2.0",
-    "redux-thunk": "^2.2.0",
-    "react-redux": "^5.0.3",
-    "redux": "^3.6.0",
-    "reselect": "^3.0.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
-  }
+	"name": "frontend-server",
+	"version": "0.0.1",
+	"description": "Sample Client server",
+	"private": true,
+	"main": "index.js",
+	"scripts": {
+		"jest": "./node_modules/.bin/jest",
+		"test": "jest",
+		"test:debug": "npm test -- --runInBand",
+		"test:watch": "npm test -- --watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cdmbase/fullstack-pro.git"
+	},
+	"author": "CDMBase LLC",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/cdmbase/fullstack-pro/issues"
+	},
+	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
+	"devDependencies": {
+		"jest": "^20.0.3",
+		"rimraf": "^2.6.1",
+		"source-map-loader": "^0.2.1",
+		"webpack": "^2.5.1",
+		"webpack-dev-server": "^2.4.5",
+		"webpack-fail-plugin": "^1.0.6",
+		"webpack-visualizer-plugin": "^0.1.11"
+	},
+	"dependencies": {
+		"@sample/client-core": "*",
+		"@sample/client-react": "*",
+		"@sample/client-redux": "*"
+	},
+	"peerDependencies": {
+		"apollo-client": "*",
+		"react": "*",
+		"react-apollo": "*",
+		"redux-thunk": "*",
+		"react-redux": "*",
+		"redux": "*",
+		"reselect": "*"
+	},
+	"jest": {
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		],
+		"transform": {
+			"\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+		},
+		"testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+	}
 }

@@ -1,8 +1,8 @@
 /* setup.js */
 
-var jsdom = require('jsdom').jsdom;
+let jsdom = require('jsdom').jsdom;
 
-var exposedProperties = ['window', 'navigator', 'document'];
+let exposedProperties = ['window', 'navigator', 'document'];
 
 (<any>global).document = jsdom('');
 (<any>global).window = document.defaultView;
@@ -14,5 +14,5 @@ Object.keys(document.defaultView).forEach((property) => {
 });
 
 (<any>global).navigator = {
-  userAgent: 'node.js'
+  userAgent: 'node.js',
 };

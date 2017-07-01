@@ -56,12 +56,12 @@ describe('redux integration', () => {
         class Component extends React.Component<any, any> {
             componentWillReceiveProps(nextProps) {
                 // trigger redux action
-                if (nextProps.first === 1) { 
-                    this.props.dispatch({ type: 'INCREMENT' }) 
-                };
+                if (nextProps.first === 1) {
+                    this.props.dispatch({ type: 'INCREMENT' });
+                }
 
                 if (nextProps.first === 2) {
-                    if (nextProps.data.loading) return;
+                    if (nextProps.data.loading) { return; }
                     expect(nextProps.data.allPeople).toEqual(data2.allPeople);
                     done();
                 }
@@ -75,14 +75,14 @@ describe('redux integration', () => {
             connect((state) => ({ first: state.counter })),
             graphql(query),
             flattenProp('data'),
-            pure
+            pure,
         )(Component);
 
         wrapper = renderer.create(
             <ApolloProvider client={client} store={store}>
                 <Container />
-            </ApolloProvider>
-        )
-    })
+            </ApolloProvider>,
+        );
+    });
 
-})
+});
