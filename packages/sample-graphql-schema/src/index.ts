@@ -3,7 +3,6 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import { persons, findPerson, addPerson } from './modules/person/database';
 import { ICounterRepository, ICount, TYPES as CounterTypes} from './modules/counter/database';
 import { RepositoryDiSetup } from './modules/repositoryDiSetup';
-import { loadSchema } from '@cdmbase/graphql-schema-collector';
 import { merge } from 'lodash';
 
 // to atomatically load the resolvers
