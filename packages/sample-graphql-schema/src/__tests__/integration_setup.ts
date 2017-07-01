@@ -1,3 +1,5 @@
+/// <reference path='../../../../typings/index.d.ts' />
+// until this issue fix https://github.com/apollographql/graphql-subscriptions/issues/83
 import * as WebSocket from 'ws';
 import { createNetworkInterface, ApolloClient } from 'apollo-client';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
@@ -14,7 +16,7 @@ beforeAll(async () => {
 
     const networkInterface = addGraphQLSubscriptions(
         createNetworkInterface({ uri: `http://localhost:${process.env['PORT']}/graphql`}),
-        wsClient
+        wsClient,
     );
 
     apollo = new ApolloClient({

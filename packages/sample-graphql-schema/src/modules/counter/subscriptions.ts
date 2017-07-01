@@ -4,7 +4,7 @@ export const subscription = {
         countUpdated: {
             filter: () => {
                 return true;
-            }
-        }
-    })
-}
+            },
+        },
+    }),
+};

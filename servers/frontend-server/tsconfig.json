@@ -10,6 +10,9 @@
       "../../node_modules/@types"
     ]
   },
+  "files": [
+    "typings/index.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "lib",
