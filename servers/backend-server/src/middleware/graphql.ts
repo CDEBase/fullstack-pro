@@ -11,7 +11,7 @@ import { database, ICounterRepository, CounterTypes } from '@sample/schema';
 const { persons, findPerson, addPerson } = database;
 
 export const graphqlExpressMiddleware =
-    graphqlExpress((request: express.Request, response: express.Response,) => {
+    graphqlExpress((request: express.Request, response: express.Response) => {
         try {
             const graphqlOptions: GraphQLOptions = {
                 schema,

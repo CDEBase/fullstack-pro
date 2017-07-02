@@ -63,8 +63,10 @@
     "express": "^4.15.2",
     "concurrently": "^3.4.0",
     "helmet": "^3.6.0",
-    "morgan": "^1.8.1",
-    "subscriptions-transport-ws": "^0.6.0"
+    "morgan": "^1.8.1"
+  },
+  "peerDependencies": {
+    "subscriptions-transport-ws": "*"
   },
   "devDependencies": {
     "jest": "^20.0.3",

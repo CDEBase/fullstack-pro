@@ -1,35 +1,29 @@
 ///<reference types='webpack-env' />
 
 import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { PubSub, SubscriptionManager } from 'graphql-subscriptions';
-import { addApolloLogging } from 'apollo-logger';
+import { execute } from 'graphql';
+import { subscribe } from 'graphql/subscription';
+
 import { Module } from 'webpack';
-import { schema, pubsub } from './schema';
-import { Observable } from 'rxjs';
-import { app as settings } from '../../../../app.json';
+import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { subscriptions } from '@sample/schema';
 import { logger } from '../../../../tools/logger';
-
-const manager = new SubscriptionManager({
-    schema,
-    pubsub,
-    setupFunctions: subscriptions,
-});
-const subscriptionManager = settings.apolloLogging ? addApolloLogging(manager) : manager;
+import { container } from '../container';
+import { database, ICounterRepository, CounterTypes } from '@sample/schema';
 
 let subscriptionServer;
 
 const addSubscriptions = httpServer => {
-    let subscriptionServerConfig = {
-        server: httpServer,
-        path: GRAPHQL_ROUTE,
-    };
-
-    subscriptionServer = new SubscriptionServer({
-        subscriptionManager,
-    }, subscriptionServerConfig);
+    subscriptionServer = SubscriptionServer.create({
+        schema,
+        execute,
+        subscribe,
+        onConnect: () => ({ Count: container.get<ICounterRepository>(CounterTypes.ICounterRepository) }),
+    }, {
+            server: httpServer,
+            path: GRAPHQL_ROUTE,
+        });
 };
 
 const addGraphQLSubscriptions = httpServer => {
@@ -55,5 +49,5 @@ if (module.hot) {
         }
     });
 }
-export { addGraphQLSubscriptions, pubsub };
+export { addGraphQLSubscriptions };
 

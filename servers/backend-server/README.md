@@ -63,7 +63,12 @@ Connects to memory database through Knex
 
 Database configuration is set in `db-config.json`
 
-
+Setup
+----
+Create a database and fill the data
+```
+npm run db:seed         
+```
 What files to be customized? 
 ----
 Customizable files for a specific project would be the following

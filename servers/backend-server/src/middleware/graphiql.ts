@@ -5,7 +5,7 @@ import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
 
 const port = process.env.PORT || settings.apiPort;
-const subscriptionUrl = `ws://localhost:${port}`;
+const subscriptionUrl = `ws://localhost:${port}/graphql`;
 
 export const graphiqlExpressMiddleware =
     graphiqlExpress({

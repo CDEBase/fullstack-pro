@@ -59,7 +59,9 @@ if (module.hot) {
             logger.error(error.stack);
         }
     });
-
+    module.hot.accept(['./middleware/graphql'], () => {
+        logger.debug('loading ./middleware/graphql');
+    });
     module.hot.accept(['./api/subscriptions'], () => {
         try {
             addGraphQLSubscriptions(server);

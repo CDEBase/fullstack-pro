@@ -30,8 +30,7 @@ let networkInterface = createNetworkInterface({
   uri: __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
-const wsClient = new SubscriptionClient(window.location.origin.replace(/^http/, 'ws')
-  .replace(':' + settings.webpackDevPort, ':' + settings.apiPort));
+const wsClient = new SubscriptionClient(__EXTERNAL_BACKEND_URL__.replace(/^http/, 'ws'));
 
 networkInterface = addGraphQLSubscriptions(
   networkInterface,

@@ -1,6 +1,9 @@
 import { ICounterRepository, ICount } from './database';
+import { PubSub } from 'graphql-subscriptions';
 
-export const resolver = (pubsub) => ({
+const COUNT_UPDATED_TOPIC = 'count_updated';
+
+export const resolver = (pubsub: PubSub) => ({
     Query: {
         count(obj, args, context: { Count: ICounterRepository }) {
             console.log(context.Count);
@@ -12,15 +15,13 @@ export const resolver = (pubsub) => ({
             await context.Count.addCount(amount);
             let count = await context.Count.getCount();
             console.log('amount is ' + count);
-
-            // pubsub.publish('countUpdated', count);
-
+            pubsub.publish(COUNT_UPDATED_TOPIC, { coutUpdated: { amount: count.amount } });
             return count;
         },
     },
     Subscription: {
-        countUpdated(amount) {
-            return amount;
+        countUpdated: {
+            subscribe: () => pubsub.asyncIterator(COUNT_UPDATED_TOPIC),
         },
     },
 });

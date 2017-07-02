@@ -1,12 +1,4 @@
-import * as nconf from 'nconf';
-
-nconf.argv()
-    .env()
-    .file({
-        file: '../../app.json',
-    });
-// export const dbConfig = nconf.get('database');
-const { database } = require('../../app.json');
+const { database }: any = require('../../app.json');
 export const development = {
     ...database,
     'seeds': {

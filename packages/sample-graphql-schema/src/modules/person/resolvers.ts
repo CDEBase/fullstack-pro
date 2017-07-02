@@ -1,4 +1,6 @@
-export const resolver = (pubsub) =>  ({
+import { PubSub } from 'graphql-subscriptions';
+
+export const resolver = (pubsub: PubSub) =>  ({
     PersonType: {
         matches(root, args, ctx) {
             return ctx.persons.filter(person => person.sex !== root.sex);
