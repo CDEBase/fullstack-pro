@@ -13,7 +13,8 @@
     "removeComments": true,
     "lib": [
       "es2017",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ],
     "types": [
       "@types/node"

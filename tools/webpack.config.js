@@ -18,15 +18,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CheckerPlugin, } = require("awesome-typescript-loader");
 
 const appConfigs = require('./webpack.app_config');
-const pkg = require('../package.json');
+import pkg from '../package.json';
+import { app as settings } from '../app.json';
 
 
 const IS_TEST = process.argv[1].indexOf('mocha-webpack') >= 0;
 if (IS_TEST) {
-    delete pkg.settings.graphQLUrl;
+    delete settings.graphQLUrl;
 }
-const IS_SSR = pkg.settings.ssr && !pkg.settings.graphQLUrl && !IS_TEST;
-const IS_PERSIST_GQL = pkg.settings.persistGraphQL && !pkg.settings.graphQLUrl && !IS_TEST;
+const IS_SSR = settings.ssr && !settings.graphQLUrl && !IS_TEST;
+const IS_PERSIST_GQL = settings.persistGraphQL && !settings.graphQLUrl && !IS_TEST;
 global.__DEV__ = process.argv.length >= 3 && (process.argv[2].indexOf('watch') >= 0 || IS_TEST);
 const buildNodeEnv = __DEV__ ? (IS_TEST ? 'test' : 'development') : 'production';
 
@@ -80,7 +81,7 @@ const baseConfig = {
                 test: /\.(graphql|gql)$/,
                 exclude: /node_modules/,
                 use: ['graphql-tag/loader'].concat(
-                    pkg.settings.persistGraphQL ?
+                    settings.persistGraphQL ?
                         ['persistgraphql-webpack-plugin/graphql-loader'] : []
                 )
             },
@@ -100,7 +101,7 @@ const baseConfig = {
     },
     resolve: {
         modules: [path.join(__dirname, '../src'), 'node_modules'],
-        extensions: ['.webpack.js', '.ts', '.tsx', '.js', '.css'],
+        extensions: ['.webpack.js', '.ts', '.tsx', '.js', '.css', '.json'],
     },
     plugins: basePlugins,
     watchOptions: {
@@ -115,7 +116,7 @@ let serverPlugins = [
         raw: true, entryOnly: false
     }),
     new webpack.DefinePlugin(Object.assign({
-        __CLIENT__: false, __SERVER__: true, __SSR__: pkg.settings.ssr,
+        __CLIENT__: false, __SERVER__: true, __SSR__: settings.ssr,
         __DEV__: __DEV__, 'process.env.NODE_ENV': `"${buildNodeEnv}"`,
         __PERSIST_GQL__: IS_PERSIST_GQL
     })),
@@ -160,7 +161,7 @@ const serverConfig = merge.smart(_.cloneDeep(baseConfig), {
         devtoolFallbackModuleFilenameTemplate: __DEV__ ? '../../[resource-path];[hash]' : undefined,
         filename: '[name].js',
         sourceMapFilename: '[name].[chunkhash].js.map',
-        path: path.resolve(pkg.settings.backendBuildDir),
+        path: path.resolve(settings.backendBuildDir),
         publicPath: '/'
     },
     plugins: serverPlugins
@@ -171,15 +172,15 @@ let clientPlugins = [
         fileName: 'assets.json'
     }),
     new webpack.DefinePlugin(Object.assign({
-        __CLIENT__: true, __SERVER__: false, __SSR__: pkg.settings.ssr,
+        __CLIENT__: true, __SERVER__: false, __SSR__: settings.ssr,
         __DEV__: __DEV__, 'process.env.NODE_ENV': `"${buildNodeEnv}"`,
         __PERSIST_GQL__: IS_PERSIST_GQL,
-        __EXTERNAL_BACKEND_URL__: pkg.settings.graphQLUrl ? `"${pkg.settings.graphQLUrl}"` : false
+        __EXTERNAL_BACKEND_URL__: settings.graphQLUrl ? `"${settings.graphQLUrl}"` : false
     })),
     clientPersistPlugin
 ];
 
-if (pkg.settings.graphQLUrl) {
+if (settings.graphQLUrl) {
     clientPlugins.push(new HtmlWebpackPlugin({
         template: 'tools/html-plugin-template.ejs',
         inject: 'body',
@@ -227,7 +228,7 @@ const clientConfig = merge.smart(_.cloneDeep(baseConfig), {
     },
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(pkg.settings.frontendBuildDir),
+        path: path.resolve(settings.frontendBuildDir),
         publicPath: '/'
     },
     plugins: clientPlugins
@@ -241,12 +242,12 @@ const dllConfig = merge.smart(_.cloneDeep(baseConfig), {
     plugins: [
         new webpack.DllPlugin({
             name: '[name]',
-            path: path.join(pkg.settings.frontendBuildDir, '[name]_dll.json'),
+            path: path.join(settings.frontendBuildDir, '[name]_dll.json'),
         }),
     ],
     output: {
         filename: '[name].[hash]_dll.js',
-        path: path.resolve(pkg.settings.frontendBuildDir),
+        path: path.resolve(settings.frontendBuildDir),
         library: '[name]',
     },
 });

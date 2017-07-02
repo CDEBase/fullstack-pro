@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 
 import { logger } from '../../../tools/logger';
-import './api_server';
+import './api-server';
 
 process.on('uncaughtException', (ex) => {
     logger.error(ex);
@@ -20,3 +20,4 @@ if (module.hot) {
 
     module.hot.accept();
 }
+

@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "sourceMap": true,
     "declaration": false,
-    "rootDirs": ["./src", "../../../tools/logger.ts"],
+    "rootDirs": ["./src", "../../../tools/logger.ts", "../knexfile.ts"],
     "outDir": "./dist",
     "typeRoots": [
       "../../node_modules/@types/"

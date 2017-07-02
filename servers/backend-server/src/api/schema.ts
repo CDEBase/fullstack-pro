@@ -6,18 +6,15 @@ import { resolvers, typeDefs } from '@sample/schema';
 const rootSchemaDef = require('./root_schema.graphqls');
 import { logger } from '../../../../tools/logger';
 import { PubSub } from 'graphql-subscriptions';
-const { settings } = require('../../../../package.json');
+import { app as settings } from '../../../../app.json';
 
 export const pubsub = settings.apolloLogging ? addApolloLogging(new PubSub()) : new PubSub();
 
 
 const schema: GraphQLSchema = makeExecutableSchema({
-  logger: console,
-  resolverValidationOptions: {
-    requireResolversForNonScalar: false,
-  },
+
   resolvers: resolvers(pubsub),
-  typeDefs: [rootSchemaDef].concat(typeDefs),
+  typeDefs: [rootSchemaDef].concat(typeDefs) as Array<any>,
 });
 
 addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });

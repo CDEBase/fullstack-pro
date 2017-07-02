@@ -1,5 +1,6 @@
 import { graphiqlExpress } from 'graphql-server-express';
-const { settings } = require('../../../../package.json');
+import { app as settings } from '../../../../app.json';
+
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
 
@@ -15,5 +16,5 @@ export const graphiqlExpressMiddleware =
         '  count {\n' +
         '    amount\n' +
         '  }\n' +
-        '}'
+        '}',
     });

@@ -1,26 +1,26 @@
 export const persons = [
   {
-    id: "1",
+    id: '1',
     sex: 'male',
-    name: 'miro'
+    name: 'miro',
   },
   {
-    id: "2",
+    id: '2',
     sex: 'female',
-    name: 'lala'
+    name: 'lala',
   },
   {
-    id: "3",
+    id: '3',
     sex: 'male',
-    name: 'joe'
-  }
+    name: 'joe',
+  },
 ];
 
-export const findPerson = (persons: Array<any>, id: string) => {
-  return persons.find(person => person.id === id);
+export const findPerson = (personRepo: Array<any>, id: string) => {
+  return personRepo.find(person => person.id === id);
 };
 
-export const addPerson = (persons: Array<any>, person: any) => {
-  persons.push(person);
+export const addPerson = (personRepo: Array<any>, person: any) => {
+  personRepo.push(person);
   return person;
 };

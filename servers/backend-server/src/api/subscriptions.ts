@@ -1,24 +1,25 @@
-///<reference types="webpack-env" />
+///<reference types='webpack-env' />
 
 import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { PubSub, SubscriptionManager } from "graphql-subscriptions";
+import { PubSub, SubscriptionManager } from 'graphql-subscriptions';
 import { addApolloLogging } from 'apollo-logger';
 import { Module } from 'webpack';
-import { schema, pubsub } from "./schema";
+import { schema, pubsub } from './schema';
 import { Observable } from 'rxjs';
-const { settings } = require('../../../../package.json');
+import { app as settings } from '../../../../app.json';
+
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { subscriptions } from '@sample/schema'
+import { subscriptions } from '@sample/schema';
 import { logger } from '../../../../tools/logger';
 
 const manager = new SubscriptionManager({
     schema,
     pubsub,
-    setupFunctions: subscriptions
+    setupFunctions: subscriptions,
 });
-const subscriptionManager = settings.apolloLogging ? addApolloLogging(manager): manager;
+const subscriptionManager = settings.apolloLogging ? addApolloLogging(manager) : manager;
 
-var subscriptionServer;
+let subscriptionServer;
 
 const addSubscriptions = httpServer => {
     let subscriptionServerConfig = {
@@ -27,8 +28,8 @@ const addSubscriptions = httpServer => {
     };
 
     subscriptionServer = new SubscriptionServer({
-        subscriptionManager
-    }, subscriptionServerConfig)
+        subscriptionManager,
+    }, subscriptionServerConfig);
 };
 
 const addGraphQLSubscriptions = httpServer => {
@@ -38,7 +39,7 @@ const addGraphQLSubscriptions = httpServer => {
             logger.debug('Reloading the subscription server.');
             prevServer.wsServer.close(() => {
                 addSubscriptions(httpServer);
-            })
+            });
         }
     } else {
         addSubscriptions(httpServer);

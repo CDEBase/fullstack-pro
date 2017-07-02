@@ -8,7 +8,8 @@ import thunk from 'redux-thunk';
 // import { addPersistedQueries } from 'persistgraphql';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
-const { settings } = require('../../../package.json');
+import { app as settings } from '../../../app.json';
+
 // const queryMap = require('persisted_queries.json');
 
 require('backend_reload');

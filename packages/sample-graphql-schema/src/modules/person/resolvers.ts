@@ -2,7 +2,7 @@ export const resolver = (pubsub) =>  ({
     PersonType: {
         matches(root, args, ctx) {
             return ctx.persons.filter(person => person.sex !== root.sex);
-        }
+        },
     },
     Query: {
         getPerson(root, args, ctx) {
@@ -20,6 +20,6 @@ export const resolver = (pubsub) =>  ({
     Subscription: {
         clock(root) {
             return new Date();
-        }
-    }
+        },
+    },
 });

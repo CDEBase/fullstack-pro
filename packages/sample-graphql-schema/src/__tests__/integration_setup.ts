@@ -1,10 +1,7 @@
-/// <reference path='../../../../typings/index.d.ts' />
-// until this issue fix https://github.com/apollographql/graphql-subscriptions/issues/83
 import * as WebSocket from 'ws';
 import { createNetworkInterface, ApolloClient } from 'apollo-client';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 import { addApollLogging } from 'apollo-logger';
-
 
 let server;
 let apollo;
@@ -20,9 +17,9 @@ beforeAll(async () => {
     );
 
     apollo = new ApolloClient({
-        networkInterface: addApollLogging(networkInterface)
+        networkInterface: addApollLogging(networkInterface),
     });
-})
+});
 
 afterAll(() => {
     if (server) {

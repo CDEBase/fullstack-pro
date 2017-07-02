@@ -11,10 +11,10 @@ const { persons, findPerson, addPerson } = database;
 
 const graphqlFiles = (<any>require).context('./', true, /\**.graphql?/);
 const graphqls = graphqlFiles.keys().map((graphqlName) => {
-  return graphqlFiles(graphqlName)
-})
+  return graphqlFiles(graphqlName);
+});
 
-const mainDefs = graphqls.map(m => m).reduce((prev, cur) => prev.concat("\n" + cur), "\n").concat("\n" + typeDefs);
+const mainDefs = graphqls.map(m => m).reduce((prev, cur) => prev.concat('\n' + cur), '\n').concat('\n' + typeDefs);
 console.log(mainDefs);
 
 console.log(resolvers);
@@ -54,7 +54,7 @@ describe('Schema', () => {
 describe('Person API ', () => {
   it('should find a person correctly', () => {
     let testQuery = `{
-             getPerson(id: "3"){
+             getPerson(id: '3'){
                 name
                 id
             }
@@ -68,7 +68,7 @@ describe('Person API ', () => {
 
   it('should find a person and drill down matches (2 levels) correctly', () => {
     let testQuery = `{
-             getPerson(id: "3"){
+             getPerson(id: '3'){
                 name
                 id
                 matches {
@@ -88,7 +88,7 @@ describe('Person API ', () => {
 
   it('should add a person and retrieve it correctly', () => {
     let testQuery = `mutation {
-            addPerson(name:"kuku", sex: "male") {
+            addPerson(name:'kuku', sex: 'male') {
                 id
             }
         }`;
@@ -97,14 +97,14 @@ describe('Person API ', () => {
       assertNoError(res);
       let newId = res.data['addPerson'].id;
       let testVerifyQuery = `{
-                getPerson(id: "${newId}"){
+                getPerson(id: '${newId}'){
                         id
                         name
                     }
                 }`;
-      return graphql(schema, testVerifyQuery, undefined, { persons, findPerson, addPerson }).then((res) => {
-        expect(res.data['getPerson'].id).toEqual(newId);
-        expect(res.data['getPerson'].name).toEqual('kuku');
+      return graphql(schema, testVerifyQuery, undefined, { persons, findPerson, addPerson }).then((response) => {
+        expect(response.data['getPerson'].id).toEqual(newId);
+        expect(response.data['getPerson'].name).toEqual('kuku');
       });
     });
   });
@@ -114,9 +114,5 @@ describe('Person API ', () => {
 describe('Counter example API works', () => {
   let server, apollo;
 
-  beforeAll(() => {
 
-  });
-
-
-})
+});

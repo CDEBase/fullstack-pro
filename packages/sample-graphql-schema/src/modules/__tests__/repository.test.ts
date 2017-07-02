@@ -24,11 +24,11 @@ describe('DI Test', () => {
         // container...
         new RepositoryDiSetup().setup(container);
 
-    })
+    });
 
     afterAll(() => {
         knex.destroy();
-    })
+    });
 
     it('counter', async () => {
         const repository = container.get<ICounterRepository>(TYPES.ICounterRepository);
@@ -39,7 +39,7 @@ describe('DI Test', () => {
         } catch (e) {
             expect(e).toBeUndefined();
         }
-    })
+    });
 
     it('add counter', async () => {
         const repository = container.get<ICounterRepository>(TYPES.ICounterRepository);
@@ -50,7 +50,7 @@ describe('DI Test', () => {
         } catch (e) {
             expect(e).toBeUndefined();
         }
-    })
+    });
 
 
-})
+});

@@ -1,6 +1,7 @@
 import * as cors from 'cors';
 import * as express from 'express';
-const { settings } = require('../../../../package.json');
+import { app as settings } from '../../../../app.json';
+
 
 
 const port = process.env.PORT || settings.webpackDevPort;

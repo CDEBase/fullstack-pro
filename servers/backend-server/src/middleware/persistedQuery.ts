@@ -11,8 +11,8 @@ export const persistedQueryMiddleware = (req, res, next) => {
             const id = body['id'];
             return {
                 query: invertedMap[id],
-                ...body
-            }
+                ...body,
+            };
         });
         next();
     } else {
@@ -22,4 +22,5 @@ export const persistedQueryMiddleware = (req, res, next) => {
             next();
         }
     }
-}
+};
+

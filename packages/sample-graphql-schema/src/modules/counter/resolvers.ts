@@ -1,6 +1,6 @@
 import { ICounterRepository, ICount } from './database';
 
-export const resolver = (pubsub) =>( {
+export const resolver = (pubsub) => ({
     Query: {
         count(obj, args, context: { Count: ICounterRepository }) {
             console.log(context.Count);
@@ -8,7 +8,7 @@ export const resolver = (pubsub) =>( {
         },
     },
     Mutation: {
-        async addCount(obj, { amount }, context: { Count: ICounterRepository  }) {
+        async addCount(obj, { amount }, context: { Count: ICounterRepository }) {
             await context.Count.addCount(amount);
             let count = await context.Count.getCount();
             console.log('amount is ' + count);
@@ -21,6 +21,6 @@ export const resolver = (pubsub) =>( {
     Subscription: {
         countUpdated(amount) {
             return amount;
-        }
-    }
-})
+        },
+    },
+});

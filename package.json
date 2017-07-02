@@ -46,20 +46,6 @@
     "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
-  "settings": {
-    "backendBuildDir": "servers/backend-server/dist",
-    "frontendBuildDir": "servers/frontend-server/dist",
-    "graphQLUrl": "http://localhost:8080/graphql",
-    "webpackDevPort": 3000,
-    "apiPort": 8080,
-    "ssr": false,
-    "webpackDll": true,
-    "frontendRefreshOnBackendChange": true,
-    "reactHotLoader": false,
-    "debugSQL": false,
-    "persistGraphQL": false,
-    "apolloLogging": true
-  },
   "devDependencies": {
     "@types/async": "^2.0.40",
     "@types/body-parser": "1.16.3",
@@ -169,6 +155,7 @@
     "inversify": "^4.1.0",
     "knex": "^0.13.0",
     "morgan": "^1.8.1",
+    "nconf": "^0.8.4",
     "node-pre-gyp": "~0.6.31",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",

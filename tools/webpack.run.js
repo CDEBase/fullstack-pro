@@ -11,8 +11,8 @@ import VirtualModules from 'webpack-virtual-modules';
 import waitOn from 'wait-on';
 import { ConcatSource, RawSource } from 'webpack-sources';
 
-import pkg from '../package.json';
 import configs from './webpack.config';
+import { app as settings } from '../app.json';
 
 minilog.enable();
 
@@ -78,8 +78,8 @@ function webpackReporter(log, err, stats) {
 
     if (!__DEV__) {
       const dir = log === logFront ?
-        pkg.settings.frontendBuildDir :
-        pkg.settings.backendBuildDir;
+        settings.frontendBuildDir :
+        settings.backendBuildDir;
       createDirs(dir);
       fs.writeFileSync(path.join(dir, 'stats.json'), JSON.stringify(stats.toJson()));
     }
@@ -96,11 +96,11 @@ function startClient() {
 
     if (__DEV__) {
       _.each(clientConfig.entry, entry => {
-        if (pkg.settings.reactHotLoader) {
+        if (settings.reactHotLoader) {
           entry.unshift('react-hot-loader/patch');
         }
         entry.unshift(
-          `webpack-dev-server/client?http://localhost:${pkg.settings.webpackDevPort}/`,
+          `webpack-dev-server/client?http://localhost:${settings.webpackDevPort}/`,
           'webpack/hot/dev-server');
       });
       clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(),
@@ -168,7 +168,7 @@ function startServer() {
             server.kill('SIGUSR2');
           }
 
-          if (pkg.settings.frontendRefreshOnBackendChange) {
+          if (settings.frontendRefreshOnBackendChange) {
             for (let module of stats.compilation.modules) {
               if (module.built && module.resource &&
                 module.resource.indexOf(path.resolve('./src/server')) === 0) {
@@ -197,7 +197,7 @@ function startWebpackDevServer(clientConfig, reporter) {
   compiler.plugin('after-emit', (compilation, callback) => {
     if (backendFirstStart) {
       logFront.debug("Webpack dev server is waiting for backend to start...");
-      waitOn({ resources: [`tcp:localhost:${pkg.settings.apiPort}`] }, err => {
+      waitOn({ resources: [`tcp:localhost:${settings.apiPort}`] }, err => {
         if (err) {
           logFront.error(err);
         } else {
@@ -209,10 +209,10 @@ function startWebpackDevServer(clientConfig, reporter) {
       callback();
     }
   });
-  if (pkg.settings.webpackDll) {
+  if (settings.webpackDll) {
     compiler.plugin('after-compile', (compilation, callback) => {
-      let vendorHashesJson = JSON.parse(fs.readFileSync(path.join(pkg.settings.frontendBuildDir, 'vendor_dll_hashes.json')));
-      const vendorContents = fs.readFileSync(path.join(pkg.settings.frontendBuildDir, vendorHashesJson.name)).toString();
+      let vendorHashesJson = JSON.parse(fs.readFileSync(path.join(settings.frontendBuildDir, 'vendor_dll_hashes.json')));
+      const vendorContents = fs.readFileSync(path.join(settings.frontendBuildDir, vendorHashesJson.name)).toString();
       _.each(compilation.chunks, chunk => {
         _.each(chunk.files, file => {
           compilation.assets[file] = new ConcatSource(new RawSource(vendorContents), compilation.assets[file]);
@@ -222,7 +222,7 @@ function startWebpackDevServer(clientConfig, reporter) {
     });
   }
   compiler.plugin('done', stats => {
-    const dir = pkg.settings.frontendBuildDir;
+    const dir = settings.frontendBuildDir;
     createDirs(dir);
     if (stats.compilation.assets['assets.json']) {
       const assetsMap = JSON.parse(stats.compilation.assets['assets.json'].source());
@@ -244,7 +244,7 @@ function startWebpackDevServer(clientConfig, reporter) {
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       '!/*.hot-update.{json,js}': {
-        target: `http://localhost:${pkg.settings.apiPort}`,
+        target: `http://localhost:${settings.apiPort}`,
         logLevel: 'info'
       }
     },
@@ -258,13 +258,13 @@ function startWebpackDevServer(clientConfig, reporter) {
     }
   });
 
-  logFront(`Webpack dev server listening on ${pkg.settings.webpackDevPort}`);
-  app.listen(pkg.settings.webpackDevPort);
+  logFront(`Webpack dev server listening on ${settings.webpackDevPort}`);
+  app.listen(settings.webpackDevPort);
 }
 
 function useWebpackDll() {
   console.log("Using Webpack DLL vendor bundle");
-  const jsonPath = path.join('..', pkg.settings.frontendBuildDir, 'vendor_dll.json');
+  const jsonPath = path.join('..', settings.frontendBuildDir, 'vendor_dll.json');
   clientConfig.plugins.push(new webpack.DllReferencePlugin({
     context: process.cwd(),
     manifest: require(jsonPath) // eslint-disable-line import/no-dynamic-require
@@ -277,13 +277,13 @@ function useWebpackDll() {
 
 function isDllValid() {
   try {
-    const hashesPath = path.join(pkg.settings.frontendBuildDir, 'vendor_dll_hashes.json');
+    const hashesPath = path.join(settings.frontendBuildDir, 'vendor_dll_hashes.json');
     if (!fs.existsSync(hashesPath)) {
       console.warn("Vendor DLL does not exists");
       return false;
     }
     let meta = JSON.parse(fs.readFileSync(hashesPath));
-    if (!fs.existsSync(path.join(pkg.settings.frontendBuildDir, meta.name))) {
+    if (!fs.existsSync(path.join(settings.frontendBuildDir, meta.name))) {
       console.warn("Vendor DLL does not exists");
       return false;
     }
@@ -292,7 +292,7 @@ function isDllValid() {
       return false;
     }
 
-    let json = JSON.parse(fs.readFileSync(path.join(pkg.settings.frontendBuildDir, 'vendor_dll.json')));
+    let json = JSON.parse(fs.readFileSync(path.join(settings.frontendBuildDir, 'vendor_dll.json')));
 
     for (let filename of Object.keys(json.content)) {
       if (filename.indexOf(' ') < 0) {
@@ -324,12 +324,12 @@ function buildDll() {
       const compiler = webpack(dllConfig);
 
       compiler.run((err, stats) => {
-        let json = JSON.parse(fs.readFileSync(path.join(pkg.settings.frontendBuildDir, 'vendor_dll.json')));
+        let json = JSON.parse(fs.readFileSync(path.join(settings.frontendBuildDir, 'vendor_dll.json')));
         const meta = { name: _.keys(stats.compilation.assets)[0], hashes: {}, modules: dllConfig.entry.vendor };
         for (let filename of Object.keys(json.content)) {
           if (filename.indexOf(' ') < 0) {
             meta.hashes[filename] = crypto.createHash('md5').update(fs.readFileSync(filename)).digest('hex');
-            fs.writeFileSync(path.join(pkg.settings.frontendBuildDir, 'vendor_dll_hashes.json'), JSON.stringify(meta));
+            fs.writeFileSync(path.join(settings.frontendBuildDir, 'vendor_dll_hashes.json'), JSON.stringify(meta));
           }
         }
         done();
@@ -345,7 +345,7 @@ function startWebpack() {
   startClient();
 }
 
-if (!__DEV__ || !pkg.settings.webpackDll) {
+if (!__DEV__ || !settings.webpackDll) {
   startWebpack();
 } else {
   buildDll().then(function() {

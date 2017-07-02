@@ -13,7 +13,8 @@ import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
-const { settings } = require('../../../package.json');
+import { app as settings } from '../../../app.json';
+
 import { logger } from '../../../tools/logger';
 
 let server;
