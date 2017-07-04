@@ -7,30 +7,30 @@ import { injectable } from 'inversify';
 export class CounterRepository extends AbstractRepository implements ICounterRepository {
 
     // Set the table name to count
-    tableName: string = "count";
+    protected tableName: string = 'count';
 
-    async getById(id: number): Promise<ICount> {
+    public async getById(id: number): Promise<ICount> {
         return await this.getTable()
-                        .where({id})
-                        .first();
+            .where({ id })
+            .first();
     }
 
-    async find(filter: string, pageNumber: number = 1, count: number = 20): Promise<ICount[]> {
+    public async find(filter: string, pageNumber: number = 1, count: number = 20): Promise<ICount[]> {
         return await this.getTable().where('amount', 'like', `%${filter}`).select();
     }
 
-    async create(dto: ICount): Promise<ICount> {
-        throw new Error("Method not implemented");
+    public async create(dto: ICount): Promise<ICount> {
+        throw new Error('Method not implemented');
     }
 
-    async update(dto: ICount): Promise<ICount> {
-        throw new Error("Method not implemented");
+    public async update(dto: ICount): Promise<ICount> {
+        throw new Error('Method not implemented');
     }
-    async getCount(): Promise<ICount> {
+    public async getCount(): Promise<ICount> {
         return await this.getTable().first();
     }
 
-    async addCount(amount) {
+    public async  addCount(amount) {
         await this.getTable().increment('amount', amount);
     }
 }

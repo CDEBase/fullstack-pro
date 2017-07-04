@@ -13,7 +13,7 @@ export const pubsub = settings.apolloLogging ? addApolloLogging(new PubSub()) : 
 
 
 const schema: GraphQLSchema = makeExecutableSchema({
-  resolvers: resolvers(pubsub),
+  resolvers: resolvers(pubsub, logger),
   typeDefs: [rootSchemaDef].concat(typeDefs) as Array<any>,
 });
 

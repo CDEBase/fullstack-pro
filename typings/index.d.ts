@@ -31,3 +31,8 @@ declare module "*.graphql" {
   const value: any;
   export = value;
 }
+
+declare module "*.graphqls" {
+  const value: any;
+  export = value;
+}

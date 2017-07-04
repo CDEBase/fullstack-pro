@@ -5,10 +5,7 @@
   "main": "dist/main.js",
   "private": true,
   "scripts": {
-    "pretest": "npm run build",
-    "build": "npm run build:clean && npm run build:dist",
-    "build:watch": "npm run build:dist -- --watch",
-    "build:dist": "webpack",
+    "prepublish": "npm run build:clean",
     "build:clean": "rimraf dist",
     "test": "jest",
     "test:watch": "npm test -- --watch",

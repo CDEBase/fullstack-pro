@@ -101,7 +101,7 @@ const baseConfig = {
     },
     resolve: {
         modules: [path.join(__dirname, '../src'), 'node_modules'],
-        extensions: ['.webpack.js', '.ts', '.tsx', '.js', '.css', '.json'],
+        extensions: ['.ts', '.tsx', '.js', '.css', '.json'],
     },
     plugins: basePlugins,
     watchOptions: {

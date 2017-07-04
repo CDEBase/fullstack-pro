@@ -22,19 +22,19 @@ export abstract class AbstractRepository {
     @inject('DefaultDbConfig')
     public dbConfig: DbConfig;
 
-    abstract tableName: string;
+    protected abstract tableName: string;
 
     /**
      * Returns an instance of database
      */
-    getDb(): Knex {
+    public getDb(): Knex {
         return getDb(this.dbConfig);
     }
 
     /**
      * Returns a IQueryBuilder instance of Table
      */
-    getTable(): Knex.QueryBuilder {
+    public getTable(): Knex.QueryBuilder {
         return this.getDb().table(this.tableName);
     }
 }

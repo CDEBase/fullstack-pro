@@ -1,3 +1,4 @@
 export const TYPES = {
-    ICounterRepository: Symbol('ICounterService')
-}
+    ICounterRepository: Symbol('ICounterService'),
+};
+

@@ -5,6 +5,8 @@
 	"private": true,
 	"main": "index.js",
 	"scripts": {
+		"prepublish": "npm run build:clean",
+		"build:clean": "rimraf dist",
 		"jest": "./node_modules/.bin/jest",
 		"test": "jest",
 		"test:debug": "npm test -- --runInBand",

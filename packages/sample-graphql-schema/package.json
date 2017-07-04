@@ -41,8 +41,7 @@
   "author": "CDMBase LLC",
   "license": "MIT",
   "dependencies": {
-    "@sample/server-core": "*",
-    "lodash": "^4.17.4"
+    "@sample/server-core": "*"
   },
   "devDependencies": {
     "jest": "^20.0.3",
@@ -50,6 +49,8 @@
     "webpack": "^2.5.1"
   },
   "peerDependencies": {
+    "@sample/server-core": "*",
+    "lodash": "^4.17.4",
     "graphql-tools": "1.0.0",
     "graphql": "^0.9.0 || ^0.10.0"
   },
