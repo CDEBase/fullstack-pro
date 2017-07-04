@@ -1,6 +1,5 @@
 /// <reference path='../../../typings/index.d.ts' />
 
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
@@ -14,32 +13,37 @@ import { app as settings } from '../../../app.json';
 
 require('backend_reload');
 
-import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
+import { ApolloClient, createNetworkInterface, ApolloProvider, NetworkInterface } from 'react-apollo';
 import {
   reducers,
   Store as StoreState,
 } from '@sample/client-redux';
 
-import { Counter, PersonList } from '@sample/client-react';
+import { Counter, PersonList, CounterWithApollo } from '@sample/client-react';
 import './index.css';
 
 
 const rootEl = document.getElementById('content');
 
-let networkInterface = createNetworkInterface({
+const networkInterface = createNetworkInterface({
   uri: __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
-const wsClient = new SubscriptionClient(__EXTERNAL_BACKEND_URL__.replace(/^http/, 'ws'));
+const wsClient = new SubscriptionClient((__EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
+  .replace(/^http/, 'ws')
+  .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
+    reconnect: true,
+  });
 
-networkInterface = addGraphQLSubscriptions(
+// Extend the network interface with the WebSocket
+let networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
   networkInterface,
   wsClient,
 );
 
 
 // if (__PERSIST_GQL__) {
-//   networkInterface = addPersistedQueries(networkInterface, queryMap);
+//   networkInterfaceWithSubscriptions = addPersistedQueries(networkInterfaceWithSubscriptions, queryMap);
 // }
 
 const client = new ApolloClient({
@@ -58,8 +62,6 @@ const enhancers: GenericStoreEnhancer[] = [
 
 const REDUX_EXTENSION_COMPOSE_NAME: string = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
 
-
-
 const composeEnhancers =
   window[REDUX_EXTENSION_COMPOSE_NAME] ?
     window[REDUX_EXTENSION_COMPOSE_NAME] : compose;
@@ -73,7 +75,6 @@ const store = createStore(
   composeEnhancers(...enhancers),
 );
 
-
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
   if (rootEl) {
@@ -82,10 +83,11 @@ window.addEventListener('DOMContentLoaded', () => {
         <div>
           <div>
             <h2>Redux Counter Test</h2>
-            <Counter label='count:' />
+            <Counter label="count:" />
           </div>
           <div>
             <h2>Apollo Graphql Test </h2>
+            <CounterWithApollo/>
             <PersonList />
           </div>
         </div>

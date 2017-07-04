@@ -1,4 +1,7 @@
 {
+  "extends": [
+    "tslint-react"
+  ],
   "rules": {
     "align": [
       false,
@@ -24,10 +27,7 @@
     ],
     "member-access": true,
     "member-ordering": [
-      true,
-      "public-before-private",
-      "static-before-instance",
-      "variables-before-functions"
+      true
     ],
     "no-any": false,
     "no-arg": true,
@@ -56,6 +56,10 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
+    "no-unused-variable": [
+      true,
+      "react"
+    ],
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": false,
@@ -71,6 +75,7 @@
     "quotemark": [
       true,
       "single",
+      "jsx-double",
       "avoid-escape"
     ],
     "radix": true,
@@ -118,7 +123,6 @@
     ],
     "variable-name": [
       true,
-      "check-format",
       "allow-leading-underscore",
       "ban-keywords"
     ],

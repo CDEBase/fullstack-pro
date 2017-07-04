@@ -21,3 +21,13 @@ declare module "*app.json" {
 
   }
 }
+
+declare module "*.json" {
+  const value: any;
+  export = value;
+}
+
+declare module "*.graphql" {
+  const value: any;
+  export = value;
+}

@@ -15,12 +15,12 @@ import { reducers, Store } from '@sample/client-redux';
 import { ApolloProvider, graphql, createNetworkInterface } from 'react-apollo';
 import { database } from '@sample/schema';
 import { mockNetworkInterface } from 'react-apollo/lib/test-utils';
-import { getPersons } from '@sample/graphql';
+import { PERSONS_QUERY, GetPersonsQuery } from '@sample/graphql';
 
 describe('components/PersonList', () => {
   it('renders correctly', (done) => {
     const networkInterface = mockNetworkInterface({
-      request: { query: getPersons, variables: {} }, result: { data: database.persons },
+      request: { query: PERSONS_QUERY, variables: {} }, result: { data: database.persons },
     });
 
     const client = new ApolloClient({

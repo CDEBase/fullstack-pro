@@ -16,7 +16,7 @@ describe('components/Counter', () => {
     const store: any = createStore(combineReducers<Store.Sample>(reducers));
 
     expect(shallow(
-      <Counter label='a counter!' store={store} />,
+      <Counter label="a counter!" store={store} />,
     ).shallow()).toMatchSnapshot();
   });
 
@@ -28,7 +28,7 @@ describe('components/Counter', () => {
       store = createStore(combineReducers(reducers));
       counter = mount(
         <Provider store={store}>
-          <Counter label='a counter!' />
+          <Counter label="a counter!'" />
         </Provider>,
       );
     });

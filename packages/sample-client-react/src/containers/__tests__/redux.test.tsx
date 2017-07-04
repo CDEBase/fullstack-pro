@@ -12,7 +12,7 @@ declare function require(name: string);
 
 import ApolloClient from 'apollo-client';
 import { ApolloProvider, graphql } from 'react-apollo';
-import { mockNetworkInterface } from 'react-apollo/lib/test-utils'
+import { mockNetworkInterface } from 'react-apollo/lib/test-utils';
 
 describe('redux integration', () => {
     it('updates child props on state change', (done) => {
@@ -25,7 +25,7 @@ describe('redux integration', () => {
 
         const networkInterface = mockNetworkInterface(
             { request: { query, variables }, result: { data } },
-            { request: { query, variables: variables2 }, result: { data: data2 } }
+            { request: { query, variables: variables2 }, result: { data: data2 } },
         );
 
 
@@ -49,12 +49,12 @@ describe('redux integration', () => {
                 counter,
                 apollo: apolloReducer,
             }),
-            applyMiddleware(client.middleware())
+            applyMiddleware(client.middleware()),
         );
 
 
         class Component extends React.Component<any, any> {
-            componentWillReceiveProps(nextProps) {
+            public componentWillReceiveProps(nextProps) {
                 // trigger redux action
                 if (nextProps.first === 1) {
                     this.props.dispatch({ type: 'INCREMENT' });
@@ -67,7 +67,7 @@ describe('redux integration', () => {
                 }
 
             }
-            render() {
+            public render() {
                 return null;
             }
         }
