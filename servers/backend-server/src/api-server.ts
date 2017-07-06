@@ -15,7 +15,7 @@ import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { app as settings } from '../../../app.json';
 
-import { logger } from '../../../tools/logger';
+import { logger } from '@sample/utils';
 
 let server;
 const app = express();

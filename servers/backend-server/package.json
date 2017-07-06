@@ -66,6 +66,7 @@
     "subscriptions-transport-ws": "*"
   },
   "devDependencies": {
+    "@sample/utils": "*",
     "jest": "^20.0.3",
     "rimraf": "^2.6.1",
     "webpack": "^2.5.1"

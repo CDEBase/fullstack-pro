@@ -5,7 +5,7 @@ import { makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema
 import { resolvers, typeDefs } from '@sample/schema';
 const rootSchemaDef = require('./root-schema.graphqls');
 // import rootSchemaDef from './root_schema.graphqls';
-import { logger } from '../../../../tools/logger';
+import { logger } from '@sample/utils';
 import { PubSub } from 'graphql-subscriptions';
 import { app as settings } from '../../../../app.json';
 

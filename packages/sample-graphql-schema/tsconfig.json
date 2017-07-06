@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDirs": ["./src", "../../../tools/logger.ts"],
+    "rootDir": "./src",
     "outDir": "./lib",
     "typeRoots": [
       "../../node_modules/@types/"

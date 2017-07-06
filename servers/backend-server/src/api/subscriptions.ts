@@ -8,7 +8,7 @@ import { Module } from 'webpack';
 import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '../../../../tools/logger';
+import { logger } from '@sample/utils';
 import { container } from '../container';
 import { database, ICounterRepository, CounterTypes } from '@sample/schema';
 

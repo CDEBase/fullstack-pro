@@ -2,7 +2,7 @@
 import { graphqlExpress, ExpressHandler } from 'graphql-server-express';
 import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
-import { logger } from '../../../../tools/logger';
+import { logger } from '@sample/utils';
 import * as express from 'express';
 import { container } from '../container';
 import { schema } from '../api/schema';

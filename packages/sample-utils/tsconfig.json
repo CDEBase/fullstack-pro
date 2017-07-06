@@ -1,12 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "declaration": false,
-    "rootDirs": ["./src","../knexfile.ts"],
-    "outDir": "./dist",
+    "rootDir": "./src",
+    "outDir": "./lib",
     "typeRoots": [
-      "../../node_modules/@types/"
+      "../../node_modules/@types"
     ]
   },
   "exclude": [

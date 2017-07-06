@@ -1,11 +1,8 @@
 {
-  "name": "@sample/schema",
+  "name": "@sample/utils",
   "version": "0.0.1",
-  "description": "Sample Schema Module",
+  "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "test": "jest",
@@ -18,11 +15,13 @@
     "build:lib": "webpack",
     "build:lib:watch": "npm run build:lib -- --watch"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "jest": {
     "testEnvironment": "node",
     "roots": [
-      "src",
-      "lib"
+      "src"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -32,33 +31,16 @@
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": ".*test*\\.(ts|tsx|js)$"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/js-accounts/accounts/tree/master/packages/server"
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
   },
   "author": "CDMBase LLC",
-  "license": "MIT",
-  "dependencies": {
-    "@sample/server-core": "*"
-  },
+  "license": "ISC",
   "devDependencies": {
-    "@sample/utils": "*",
     "jest": "^20.0.3",
     "rimraf": "^2.6.1",
     "webpack": "^2.5.1"
   },
-  "peerDependencies": {
-    "@sample/server-core": "*",
-    "lodash": "^4.17.4",
-    "graphql-tools": "1.0.0",
-    "graphql": "^0.9.0 || ^0.10.0"
-  },
-  "optionalDependencies": {
-    "knex": "^0.13.0",
-    "@types/graphql": "^0.9.2"
-  },
+  "dependencies": {},
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"

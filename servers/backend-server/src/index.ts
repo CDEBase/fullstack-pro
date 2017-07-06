@@ -1,7 +1,7 @@
 ///<reference types="webpack-env" />
 import 'reflect-metadata';
 
-import { logger } from '../../../tools/logger';
+import { logger } from '@sample/utils';
 import './api-server';
 
 process.on('uncaughtException', (ex) => {
