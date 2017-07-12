@@ -38,19 +38,6 @@
     "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
-  "settings": {
-    "backendBuildDir": "packages/sample-server/dist",
-    "frontendBuildDir": "packages/sample-browser-server/dist",
-    "webpackDevPort": 3000,
-    "apiPort": 8080,
-    "ssr": false,
-    "webpackDll": true,
-    "frontendRefreshOnBackendChange": true,
-    "reactHotLoader": false,
-    "debugSQL": false,
-    "persistGraphQL": true,
-    "apolloLogging": false
-  },
   "dependencies": {
     "@sample/schema": "*",
     "@sample/server-core": "*",
