@@ -95,7 +95,7 @@
     "jest-cli": "^20.0.3",
     "jest-mock-knex": "^1.4.2",
     "json-loader": "^0.5.4",
-    "lerna": "2.0.0-rc.5",
+    "lerna": "2.0.0",
     "lodash": "^4.17.4",
     "minilog": "^3.1.0",
     "mkdirp": "^0.5.1",
