@@ -175,6 +175,7 @@
     "reflect-metadata": "^0.1.10",
     "reselect": "^3.0.0",
     "rxjs": "^5.4.0",
+    "sequelize": "^4.3.1",
     "sqlite3": "^3.1.8",
     "styled-components": "^2.0.0",
     "subscriptions-transport-ws": "^0.7.3"

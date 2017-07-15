@@ -18,7 +18,7 @@ export const resolver = (pubsub: PubSub, logger?: Logger) => ({
             await context.Count.addCount(amount);
             let count = await context.Count.getCount();
             logger.debug('added count and the amount is {%s} ', count);
-            // pubsub.publish(COUNT_UPDATED_TOPIC, { coutUpdated: { amount: count.amount } });
+            pubsub.publish(COUNT_UPDATED_TOPIC, { coutUpdated: { amount: count.amount } });
             return count;
         },
     },
