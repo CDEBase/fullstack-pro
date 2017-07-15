@@ -5,7 +5,7 @@ import * as Sinon from 'sinon';
 import * as TestUtils from 'react-dom/test-utils';
 import { createStore, combineReducers } from 'redux';
 import configureStore from 'redux-mock-store';
-import { Counter } from '../counter';
+import { Counter } from '../Counter';
 import { reducers, Store } from '@sample/client-redux';
 import { Provider } from 'react-redux';
 import './setup';
