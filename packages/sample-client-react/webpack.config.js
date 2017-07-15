@@ -54,6 +54,7 @@ var webpack_opts = {
     },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  { "@sample/core": "@sample/core" },
   { "@sample/client-core": "@sample/client-core" },
   { "@sample/graphql": "@sample/graphql" },
   { "@sample/schema": "@sample/schema" },

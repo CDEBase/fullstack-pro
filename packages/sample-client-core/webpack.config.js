@@ -45,7 +45,8 @@ var webpack_opts = {
       loader: 'json'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
+  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  { "@sample/core": "@sample/core" }]
 };
 
 module.exports = webpack_opts;

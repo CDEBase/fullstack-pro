@@ -49,6 +49,7 @@ var webpack_opts = {
     },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
+  { "@sample/core": "@sample/core" },
   { "@sample/server-core": "@sample/server-core" }]
 };
 

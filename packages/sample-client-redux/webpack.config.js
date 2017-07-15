@@ -41,9 +41,8 @@ var webpack_opts = {
     }]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  {
-    "@sample/client-core": "@sample/client-core"
-  }]
+  { "@sample/core": "@sample/core" },
+  { "@sample/client-core": "@sample/client-core" }]
 };
 
 module.exports = webpack_opts;
