@@ -9,6 +9,10 @@ process.on('uncaughtException', (ex) => {
     process.exit(1);
 });
 
+process.on('unhandledRejection', reason => {
+  logger.error(reason);
+});
+
 if (module.hot) {
     module.hot.status(event => {
         if (event === 'abort' || event === 'fail') {

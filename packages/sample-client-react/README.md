@@ -35,6 +35,16 @@ Files explained:
 Tutorials:
 ---
 [react-jest-enzymes test](https://www.youtube.com/watch?v=bMmntkVM4wQ)
+
 [testing react with enzyme tutorial](http://codeheaven.io/testing-react-components-with-enzyme/)
+
 [react-redux-typescript-guide](https://github.com/piotrwitek/react-redux-typescript-guide)
+
+Performance:
+---
+[Redux FAQ: Connecting multiple components](http://redux.js.org/docs/FAQ.html#react-multiple-components)
+
+[React/Redux Links: Performance articles](https://github.com/markerikson/react-redux-links/blob/master/react-performance.md)
+
+[React/Redux: Component re-rendering too often?](http://redux.js.org/docs/faq/ReactRedux.html#react-rendering-too-often)
                  

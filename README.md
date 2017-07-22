@@ -64,3 +64,7 @@ To run build with watch. Useful for auto reloading changes into the server to be
 npm run watch
 ```
 [lerna-clean]: https://github.com/lerna/lerna#clean
+
+## resource
+Jest
+https://www.youtube.com/watch?v=HAuXJVI_bUs&t=1053s
