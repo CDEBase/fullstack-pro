@@ -8,8 +8,6 @@
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "generate-graphql-types": "apollo-codegen generate src/graphql/**/*.graphql --schema schema.json --target ts --output src/schema.ts",
-    "generate-graphql-schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output schema.json",
     "prepublish": "npm run build",
     "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
