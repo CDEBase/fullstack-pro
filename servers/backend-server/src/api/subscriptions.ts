@@ -11,7 +11,7 @@ import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@sample/utils';
 import { container } from '../container';
 import { database } from '@sample/schema';
-import { ICounterRepository, CounterTypes } from '@sample/core';
+import { ICounterRepository, TYPES as CounterTypes } from '@sample/store';
 
 let subscriptionServer;
 
