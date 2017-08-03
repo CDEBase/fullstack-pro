@@ -1,5 +1,5 @@
-import { IRepository } from '@sample/server-core';
-import { ICount } from './ICountModel';
+import { IRepository } from '../../db-helpers';
+import { ICount } from '../../models';
 
 export interface ICounterRepository extends IRepository<ICount> {
 

@@ -41,6 +41,7 @@
   "dependencies": {
     "@sample/schema": "*",
     "@sample/server-core": "*",
+    "@sample/store": "*",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "knex": "^0.13.0",

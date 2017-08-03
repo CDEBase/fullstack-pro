@@ -1,6 +1,6 @@
-import { AbstractRepository } from '@sample/server-core';
-import { ICounterRepository } from './ICounterRepository';
-import { ICount } from './ICountModel';
+import { AbstractRepository } from '../db-helpers';
+import { ICounterRepository } from './interfaces';
+import { ICount } from '../models';
 import { injectable } from 'inversify';
 
 @injectable()

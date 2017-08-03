@@ -6,7 +6,8 @@ import { logger } from '@sample/utils';
 import * as express from 'express';
 import { container } from '../container';
 import { schema } from '../api/schema';
-import { database, ICounterRepository, CounterTypes } from '@sample/schema';
+import { database  } from '@sample/schema';
+import { ICounterRepository, CounterTypes } from '@sample/core';
 
 const { persons, findPerson, addPerson } = database;
 

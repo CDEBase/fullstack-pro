@@ -1,4 +1,4 @@
-import { IEntity } from '@sample/server-core';
+import { IEntity } from '../../db-helpers';
 
 export class ICount implements IEntity {
 

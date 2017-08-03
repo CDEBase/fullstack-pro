@@ -10,7 +10,8 @@ import { schema } from './schema';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@sample/utils';
 import { container } from '../container';
-import { database, ICounterRepository, CounterTypes } from '@sample/schema';
+import { database } from '@sample/schema';
+import { ICounterRepository, CounterTypes } from '@sample/core';
 
 let subscriptionServer;
 

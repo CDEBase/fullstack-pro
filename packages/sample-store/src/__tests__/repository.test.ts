@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 
 import * as Knex from 'knex';
-import { DbConfig } from '@sample/server-core';
-import { RepositoryDiSetup } from '../repositoryDiSetup';
+import { DbConfig } from '../db-helpers';
+import { RepositoryDiSetup } from '../repository-di-setup';
 import { Container } from 'inversify';
-import { ICounterRepository, CounterRepository, TYPES } from '../counter/database';
+import { ICounterRepository, CounterRepository } from '../repository';
+import { TYPES } from '../constants';
 import 'jest';
 const DEFAULT_DB_CONFIG = require('./db/config.json');
 

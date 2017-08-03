@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
-import { ICounterRepository, CounterRepository, TYPES } from './counter/database';
+import { ICounterRepository, CounterRepository } from './repository';
+import { TYPES } from './constants';
 
 
 export class RepositoryDiSetup {
