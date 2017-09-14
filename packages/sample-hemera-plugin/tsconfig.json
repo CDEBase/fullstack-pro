@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "rootDir": "./src",
+      "outDir": "./lib",
+      "typeRoots": [
+        "../../node_modules/@types"
+      ]
+    },
+    "exclude": [
+      "node_modules",
+      "lib",
+      "dist",
+      "webpack.config.js"
+    ]
+  }

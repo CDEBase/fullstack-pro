@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "sourceMap": true,
+      "declaration": false,
+      "outDir": "./dist",
+      "typeRoots": [
+        "../../node_modules/@types/"
+      ]
+    },
+    "exclude": [
+      "node_modules",
+      "lib",
+      "dist",
+      "webpack.config.js"
+    ]
+  }

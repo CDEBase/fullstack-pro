@@ -1,0 +1,25 @@
+{
+    "name": "hemera-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "ENV_FILE=../../config/development/development.env nodemon dist/main.js",
+        "pretest": "npm run build",
+        "build": "npm run build:clean && npm run build:dist",
+        "build:watch": "npm run build:dist -- --watch",
+        "build:dist": "webpack",
+        "build:clean": "rimraf dist"
+    },
+    "author": "CDMBase LLC",
+    "license": "ISC",
+    "devDependencies": {
+        "jest": "^20.0.3",
+        "rimraf": "^2.6.1",
+        "nodemon": "^1.11.0",
+        "webpack": "^2.5.1"
+    },
+    "dependencies": {
+        "nats-hemera": "^1.5.11"
+    }
+}

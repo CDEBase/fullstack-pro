@@ -1,0 +1,55 @@
+{
+    "name": "@container-stack/microservice-hemera-plugin",
+    "version": "0.0.0",
+    "description": "This is Container Configuration Service hemera plugin",
+    "main": "lib/index.js",
+    "scripts": {
+      "jest": "./node_modules/.bin/jest",
+      "test": "ENV=test ENV_FILE=../../config/development/development.env jest",
+      "test:debug": "npm test -- --runInBand",
+      "test:watch": "npm test -- --watch",
+      "prepublish": "npm run build",
+      "watch": "npm run build:lib:watch",
+      "build": "npm run build:clean && npm run build:lib",
+      "build:clean": "rimraf lib",
+      "build:lib": "webpack",
+      "build:lib:watch": "npm run build:lib -- --watch"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "jest": {
+      "testEnvironment": "node",
+      "roots": [
+        "src"
+      ],
+      "moduleFileExtensions": [
+        "ts",
+        "tsx",
+        "js",
+        "json"
+      ],
+      "transform": {
+        "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+      },
+      "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    },
+    "engines": {
+      "node": ">=4.0.0"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+      "@sample/utils": "*"
+    },
+    "peerDependencies": {
+      "nats-hemera": "1.x",
+      "hemera-plugin": "^0.0.2",
+      "hemera-joi": "1.x"
+    },
+    "devDependencies": {
+      "jest": "^20.0.3",
+      "rimraf": "^2.6.1",
+      "webpack": "^2.5.1"
+    }
+  }
