@@ -1,13 +1,13 @@
 {
     "client": "sqlite3",
     "connection": {
-        "filename": "src/modules/__tests__/db/test-db.sqlite3"
+        "filename": "packages/sample-store/__tests__/db/test-db.sqlite3"
     },
     "seeds": {
-        "directory": "src/modules/__tests__/db/seeds"
+        "directory": "packages/sample-store/__tests__/db/seeds"
     },
     "migrations": {
-        "directory": "src/modules/__tests__/db/migrations"
+        "directory": "packages/sample-store/__tests__/db/migrations"
     },
     "useNullAsDefault": true
 }

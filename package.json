@@ -13,7 +13,6 @@
     "build:packages": "lerna run build --ignore *server",
     "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
     "prebootstrap": "npm install",
-    "pretest": "npm run compile",
     "test": "jest",
     "posttest": "npm run lint",
     "coverage": "jest --coverage",
@@ -26,7 +25,7 @@
   "jest": {
     "testEnvironment": "node",
     "roots": [
-      "src"
+      "packages"
     ],
     "moduleFileExtensions": [
       "ts",
