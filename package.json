@@ -7,6 +7,7 @@
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
     "lerna": "lerna bootstrap --hoist",
     "install": "npm run lerna",
+    "clean": "lerna clean",
     "start": "babel-node --presets es2015 tools/webpack.run watch",
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
     "build": "npm run build:packages",
