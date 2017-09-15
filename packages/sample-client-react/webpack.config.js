@@ -25,7 +25,7 @@ var webpack_opts = {
         test: /\.tsx?$/,
         ts: {
           compiler: 'typescript',
-          configFileName: 'tsconfig.json'
+          configFile: 'tsconfig.json'
         },
         tslint: {
           emitErrors: true,
