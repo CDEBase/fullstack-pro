@@ -5,7 +5,7 @@
     "main": "lib/index.js",
     "scripts": {
       "jest": "./node_modules/.bin/jest",
-      "test": "ENV=test ENV_FILE=../../config/development/development.env jest",
+      "test": "ENV=test ENV_FILE=../../config/development/dev.env jest",
       "test:debug": "npm test -- --runInBand",
       "test:watch": "npm test -- --watch",
       "prepublish": "npm run build",

@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "ENV_FILE=../../config/development/development.env nodemon dist/main.js",
+        "start": "ENV_FILE=../../config/development/dev.env nodemon dist/main.js",
         "pretest": "npm run build",
         "build": "npm run build:clean && npm run build:dist",
         "build:watch": "npm run build:dist -- --watch",
