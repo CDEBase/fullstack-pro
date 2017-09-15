@@ -29,25 +29,33 @@ const networkInterface = createNetworkInterface({
   uri: __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
-const wsClient = new SubscriptionClient((__EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
+const wsClient: NetworkInterface = new SubscriptionClient((__EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
   .replace(/^http/, 'ws')
   .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
     reconnect: true,
-  });
+  }) as NetworkInterface;
 
-// Extend the network interface with the WebSocket
-let networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-  networkInterface,
-  wsClient,
-);
+// Hybrid WebSocket Transport
+// https://github.com/apollographql/subscriptions-transport-ws#hybrid-websocket-transport
+// let networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+//   networkInterface,
+//   wsClient,
+// );
+
 
 
 // if (__PERSIST_GQL__) {
 //   networkInterfaceWithSubscriptions = addPersistedQueries(networkInterfaceWithSubscriptions, queryMap);
 // }
 
+// const client = new ApolloClient({
+//   networkInterface,
+// });
+
+// For Full Websocket Transport
+// https://github.com/apollographql/subscriptions-transport-ws#full-websocket-transport
 const client = new ApolloClient({
-  networkInterface,
+  networkInterface: wsClient,
 });
 
 const middlewares: Middleware[] = [
