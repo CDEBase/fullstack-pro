@@ -62,7 +62,7 @@ describe('redux integration', () => {
 
                 if (nextProps.first === 2) {
                     if (nextProps.data.loading) { return; }
-                    expect(nextProps.data.allPeople).toEqual(data2.allPeople);
+                    expect(nextProps.data.allPeople.people).toContain(data2.allPeople.people);
                     done();
                 }
 
