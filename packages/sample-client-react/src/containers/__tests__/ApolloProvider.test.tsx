@@ -17,14 +17,14 @@ interface ChildContext {
 describe('<ApolloProvider /> Component', () => {
 
     class Child extends React.Component<any, { store: any, client: any }> {
-        static contextTypes: React.ValidationMap<any> = {
+        public static contextTypes: React.ValidationMap<any> = {
             client: PropTypes.object.isRequired,
             store: PropTypes.object.isRequired,
         };
 
-        context: ChildContext;
+        public context: ChildContext;
 
-        render() {
+        public render() {
             return <div />;
         }
     }
@@ -35,10 +35,10 @@ describe('<ApolloProvider /> Component', () => {
     it('should render children components', () => {
         const wrapper = shallow(
             <ApolloProvider store={store} client={client}>
-                <div className='unique' />
+                <div className="unique" />
             </ApolloProvider>,
         );
 
-        expect(wrapper.contains(<div className='unique' />)).toBe(true);
+        expect(wrapper.contains(<div className="unique" />)).toBe(true);
     });
 });

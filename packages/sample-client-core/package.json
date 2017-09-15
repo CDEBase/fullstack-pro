@@ -44,9 +44,9 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
-    "jest": "^20.0.3",
+    "jest": "^21.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.5.1"
+    "webpack": "^3.5.6"
   },
   "dependencies": {},
   "typings": "lib/index.d.ts",

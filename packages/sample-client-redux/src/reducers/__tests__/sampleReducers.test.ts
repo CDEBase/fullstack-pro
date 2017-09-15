@@ -1,41 +1,41 @@
 
 import 'jest';
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers } from 'redux';
 
-import { reducers } from '../sampleReducers'
-import { Store } from '../Store'
+import { reducers } from '../sampleReducers';
+import { Store } from '../Store';
 
 import {
   incrementCounter,
-} from '../../actions'
+} from '../../actions';
 
 describe('reducers/counter', () => {
   it('starts at 0', () => {
-    const store = createStore(combineReducers<Store.Sample>(reducers))
-    const  counter  = store.getState()["@sample/counter"]
-    expect(counter.value).toEqual(0)
-  })
+    const store = createStore(combineReducers<Store.Sample>(reducers));
+    const  counter  = store.getState()['@sample/counter'];
+    expect(counter.value).toEqual(0);
+  });
 
   it('increments', (done) => {
-    const store = createStore(combineReducers<Store.Sample>(reducers))
+    const store = createStore(combineReducers<Store.Sample>(reducers));
     store.subscribe(() => {
-      const counter = store.getState()["@sample/counter"]
-      expect(counter.value).toEqual(3)
-      done()
-    })
-    store.dispatch(incrementCounter(3))
-  })
+      const counter = store.getState()['@sample/counter'];
+      expect(counter.value).toEqual(3);
+      done();
+    });
+    store.dispatch(incrementCounter(3));
+  });
 
   it('restores state', (done) => {
-    const store = createStore(combineReducers<Store.Sample>(reducers))
+    const store = createStore(combineReducers<Store.Sample>(reducers));
     store.subscribe(() => {
-      const counter = store.getState()["@sample/counter"]
-      expect(counter.value).toEqual(14)
-      done()
-    })
+      const counter = store.getState()['@sample/counter'];
+      expect(counter.value).toEqual(14);
+      done();
+    });
     store.dispatch({
       type: '@@sample/LOAD_COUNT_SUCCESS',
       request: {},
-      response: { value: 14 } })
-  })
-})
+      response: { value: 14 } });
+  });
+});

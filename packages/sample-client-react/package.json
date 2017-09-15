@@ -61,9 +61,9 @@
   },
   "devDependencies": {
     "@sample/schema": "*",
-    "jest": "^20.0.3",
+    "jest": "^21.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.5.1"
+    "webpack": "^3.5.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

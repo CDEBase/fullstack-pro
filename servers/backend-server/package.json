@@ -41,23 +41,23 @@
   "dependencies": {
     "@sample/schema": "*",
     "@sample/server-core": "*",
-    "@sample/store": "*",
-    "body-parser": "^1.17.1",
-    "cors": "^2.8.3",
-    "knex": "^0.13.0",
-    "express": "^4.15.2",
-    "concurrently": "^3.4.0",
-    "helmet": "^3.6.0",
-    "morgan": "^1.8.1"
+    "@sample/store": "*"
   },
   "peerDependencies": {
-    "subscriptions-transport-ws": "*"
+    "subscriptions-transport-ws": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "knex": "*",
+    "express": "*",
+    "concurrently": "*",
+    "helmet": "*",
+    "morgan": "*"
   },
   "devDependencies": {
     "@sample/utils": "*",
-    "jest": "^20.0.3",
+    "jest": "^21.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.5.1"
+    "webpack": "^3.5.6"
   },
   "typings": "dist/main.d.ts",
   "typescript": {

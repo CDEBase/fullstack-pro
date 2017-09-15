@@ -3,7 +3,7 @@
 const Hemera = require('nats-hemera');
 const Plugin1 = require('./example-asyncplugin');
 const HemeraTestsuite = require('hemera-testsuite');
-
+import 'jest';
 
 // prevent warning message of too much listeners
 process.setMaxListeners(0);

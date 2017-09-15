@@ -12,7 +12,7 @@ declare function require(name: string);
 
 import ApolloClient from 'apollo-client';
 import { ApolloProvider, graphql } from 'react-apollo';
-import { mockNetworkInterface } from 'react-apollo/lib/test-utils';
+import { mockNetworkInterface } from 'react-apollo/test-utils';
 
 describe('redux integration', () => {
     it('updates child props on state change', (done) => {

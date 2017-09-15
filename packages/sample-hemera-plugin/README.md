@@ -4,12 +4,12 @@ Your plugin description
 
 # Requirements
 
-Make sure to set following environment properties
+Make sure to set following environment properties in environment file
 
 ```
-    process.env.CLOUDFLARE_EMAIL,
-    process.env.CLOUDFLARE_KEY,
-    process.env.CLOUDFLARE_ZONE_ID,
+NATS_URL=nats://localhost:4222/
+NATS_USER=
+NATS_PW=
 ```
 # Prerequisites
 

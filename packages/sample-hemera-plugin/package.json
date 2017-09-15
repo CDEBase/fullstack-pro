@@ -1,5 +1,5 @@
 {
-    "name": "@container-stack/microservice-hemera-plugin",
+    "name": "@sample/hemera-plugin",
     "version": "0.0.0",
     "description": "This is Container Configuration Service hemera plugin",
     "main": "lib/index.js",
@@ -44,12 +44,12 @@
     },
     "peerDependencies": {
       "nats-hemera": "1.x",
-      "hemera-plugin": "^0.0.2",
+      "hemera-plugin": "0.x",
       "hemera-joi": "1.x"
     },
     "devDependencies": {
-      "jest": "^20.0.3",
+      "jest": "^21.1.0",
       "rimraf": "^2.6.1",
-      "webpack": "^2.5.1"
+      "webpack": "^3.5.6"
     }
   }
