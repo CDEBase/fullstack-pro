@@ -1,7 +1,7 @@
 'use strict';
 
 const Hemera = require('nats-hemera');
-const Plugin1 = require('./example-asyncplugin');
+const Plugin1 = require('./example-async');
 const HemeraTestsuite = require('hemera-testsuite');
 import 'jest';
 
