@@ -140,10 +140,9 @@ const serverConfig = merge.smart(_.cloneDeep(baseConfig), {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: [/node_modules/],
-                query: {
-                    configFile: './servers/backend-server/tsconfig.json'
+                options: {
+                    configFileName: './servers/backend-server/tsconfig.json'
                 }
-
             },
             {
                 test: /\.scss$/,
@@ -219,8 +218,8 @@ const clientConfig = merge.smart(_.cloneDeep(baseConfig), {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: [/node_modules/],
-                query: {
-                    configFile: './servers/frontend-server/tsconfig.json'
+                options: {
+                    configFileName: './servers/frontend-server/tsconfig.json'
                 }
 
             },
