@@ -29,7 +29,7 @@ if (IS_TEST) {
 const IS_SSR = settings.ssr && !settings.graphQLUrl && !IS_TEST;
 const IS_PERSIST_GQL = settings.persistGraphQL && !settings.graphQLUrl && !IS_TEST;
 global.__DEV__ = process.argv.length >= 3 && (process.argv[2].indexOf('watch') >= 0 || IS_TEST);
-const buildNodeEnv = __DEV__ ? (IS_TEST ? 'test' : 'development') : 'production';
+const buildNodeEnv = process.env.NODE_ENV || (__DEV__ ? (IS_TEST ? 'test' : 'development') : 'production');
 
 const moduleName = path.resolve('node_modules/persisted_queries.json');
 let clientPersistPlugin, serverPersistPlugin;
