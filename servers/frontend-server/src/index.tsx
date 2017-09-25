@@ -6,6 +6,8 @@ import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, 
 import thunk from 'redux-thunk';
 // import { addPersistedQueries } from 'persistgraphql';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
+import * as ReactFela from 'react-fela';
+import createRenderer from './fela-renderer';
 
 import { app as settings } from '../../../app.json';
 
@@ -85,8 +87,11 @@ const store = createStore(
 
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
+  const mountNode = document.getElementById('stylesheet');
+  const renderer = createRenderer(document.getElementById('font-stylesheet'));
   if (rootEl) {
     ReactDOM.render(
+      <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
       <ApolloProvider store={store} client={client}>
         <div>
           <div>
@@ -100,6 +105,7 @@ window.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </ApolloProvider>
+      </ReactFela.Provider>
       , rootEl);
   }
 });

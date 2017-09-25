@@ -11,6 +11,7 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath("[name].js"),
+    library: '@sample/server-core',
     libraryTarget: "commonjs2"
   },
   resolve: {
