@@ -85,13 +85,19 @@ const store = createStore(
   composeEnhancers(...enhancers),
 );
 
+/* Fela */
+import Panel from './panel';
+
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('stylesheet');
   const renderer = createRenderer(document.getElementById('font-stylesheet'));
   if (rootEl) {
     ReactDOM.render(
-      <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
+      <div>
+      { 
+        //<ReactFela.Provider renderer={renderer} mountNode={mountNode}> 
+      }      
       <ApolloProvider store={store} client={client}>
         <div>
           <div>
@@ -105,7 +111,11 @@ window.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </ApolloProvider>
-      </ReactFela.Provider>
+      <Panel />      
+      { 
+        //</ReactFela.Provider> 
+      }
+      </div>
       , rootEl);
   }
 });
