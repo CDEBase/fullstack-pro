@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
-    "test": "jest",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
@@ -37,6 +37,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.5.6"

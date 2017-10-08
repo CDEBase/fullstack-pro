@@ -4,7 +4,7 @@ export interface PersonType {
     name: string;
     id: string;
     sex: string;
-    matches: [PersonType]
+    matches: [PersonType];
 }
 
 export interface SomeType {
