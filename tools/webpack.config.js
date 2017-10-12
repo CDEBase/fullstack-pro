@@ -1,5 +1,6 @@
 
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
@@ -55,7 +56,7 @@ let basePlugins = [new CheckerPlugin()];
 if (__DEV__) {
     basePlugins.push(new webpack.NamedModulesPlugin());
 } else {
-    basePlugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
+    basePlugins.push(new UglifyJSPlugin());
     basePlugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
 }
 

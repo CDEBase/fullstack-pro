@@ -1,7 +1,7 @@
 import * as WebSocket from 'ws';
 import { createNetworkInterface, ApolloClient } from 'apollo-client';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
-import { addApollLogging } from 'apollo-logger';
+import { addApolloLogging } from 'apollo-logger';
 
 let server;
 let apollo;
@@ -16,9 +16,9 @@ beforeAll(async () => {
         wsClient,
     );
 
-    apollo = new ApolloClient({
-        networkInterface: addApollLogging(networkInterface),
-    });
+    // apollo = new ApolloClient({
+    //     networkInterface: addApolloLogging(networkInterface),
+    // });
 });
 
 afterAll(() => {
