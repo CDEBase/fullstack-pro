@@ -31,9 +31,10 @@ const networkInterface = createNetworkInterface({
   uri: process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
-const wsClient: NetworkInterface = new SubscriptionClient((__EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
-  .replace(/^http/, 'ws')
-  .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
+const wsClient: NetworkInterface = new SubscriptionClient(
+  (process.env.GRAPHQL_URL + __EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
+    .replace(/^http/, 'ws')
+    .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
     reconnect: true,
   }) as NetworkInterface;
 
@@ -92,19 +93,19 @@ window.addEventListener('DOMContentLoaded', () => {
   if (rootEl) {
     ReactDOM.render(
       <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
-      <ApolloProvider store={store} client={client}>
-        <div>
+        <ApolloProvider store={store} client={client}>
           <div>
-            <h2>Redux Counter Test</h2>
-            <Counter label="count:" />
+            <div>
+              <h2>Redux Counter Test</h2>
+              <Counter label="count:" />
+            </div>
+            <div>
+              <h2>Apollo Graphql Test </h2>
+              <CounterWithApollo />
+              <PersonList />
+            </div>
           </div>
-          <div>
-            <h2>Apollo Graphql Test </h2>
-            <CounterWithApollo/>
-            <PersonList />
-          </div>
-        </div>
-      </ApolloProvider>
+        </ApolloProvider>
       </ReactFela.Provider>
       , rootEl);
   }
