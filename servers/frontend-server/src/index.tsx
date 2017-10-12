@@ -28,7 +28,7 @@ import './index.css';
 const rootEl = document.getElementById('content');
 
 const networkInterface = createNetworkInterface({
-  uri: __EXTERNAL_BACKEND_URL__ || '/graphql',
+  uri: process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__ || '/graphql',
 });
 
 const wsClient: NetworkInterface = new SubscriptionClient((__EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
