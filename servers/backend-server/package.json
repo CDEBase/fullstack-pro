@@ -1,6 +1,84 @@
 {
+	"name": "apollo-server",
+	"version": "0.0.1",
+	"description": "Starter kit for apollo server using webpack and typescript",
+	"main": "dist/main.js",
+	"private": true,
+	"scripts": {
+		"prepublish": "npm run build:clean",
+		"build:clean": "rimraf dist",
+		"test": "jest",
+		"test:watch": "npm test -- --watch",
+		"test:notify": "npm run test:watch -- --notify",
+		"docker:build": "docker build . -t sample-stack-backend:0.0.1",
+		"docker:run": "docker run -it sample-stack-backend:0.0.1",
+		"start": "node dist/index.js",
+		"start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/index.js\"",
+		"preupver": "npm test",
+		"upver": "standard-version",
+		"db:migrate": "../../node_modules/.bin/knex migrate:latest --cwd ../../ --knexfile ./knexfile.ts",
+		"db:migrate:rollback": "../../node_modules/.bin/knex migrate:rollback  --cwd ../../ --knexfile ./knexfile.ts",
+		"db:seed": "npm run db:migrate && ../../node_modules/.bin/knex seed:run  --cwd ../../ --knexfile ./knexfile.ts"
+	},
+	"keywords": [
+		"apollo",
+		"backend",
+		"apollo-server",
+		"typescript",
+		"webpack",
+		"graphql",
+		"graphiql",
+		"express"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cdmbase/fullstack-pro.git"
+	},
+	"author": "CDMBase LLC",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/cdmbase/fullstack-pro/issues"
+	},
+	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
+		"@sample/schema": "*",
+		"@sample/server-core": "*",
+		"@sample/store": "*",
 		"@cdm-logger/server": "^3.0.2",
-		"apollo-logger": "^0.1.0"
+		"apollo-logger": "^0.1.0",
+		"reflect-metadata": "^0.1.10",
+		"lodash": "^4.17.4",
+		"knex": "^0.13.0",
+		"subscriptions-transport-ws": "^0.8.3",
+		"isomorphic-fetch": "^2.2.1",
+		"inversify": "^4.1.0",
+		"graphql": "^0.10.5",
+		"graphql-tools": "1.2.2",
+		"graphql-subscriptions": "^0.5.0",
+		"graphql-server-express": "^1.1.2",
+		"express": "^4.16.2",
+		"cors": "^2.8.3",
+		"body-parser": "^1.18.1",
+		"apollo-link": "^0.7.0"
+	},
+	"peerDependencies": {
+		"subscriptions-transport-ws": "*",
+		"body-parser": "*",
+		"cors": "*",
+		"knex": "*",
+		"express": "*",
+		"concurrently": "*",
+		"helmet": "*",
+		"morgan": "*"
+	},
+	"devDependencies": {
+		"@sample/utils": "*",
+		"jest": "^21.1.0",
+		"rimraf": "^2.6.1",
+		"webpack": "^3.5.6"
+	},
+	"typings": "dist/main.d.ts",
+	"typescript": {
+		"definition": "dist/main.d.ts"
 	}
 }
