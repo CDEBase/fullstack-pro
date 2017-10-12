@@ -1,4 +1,4 @@
-import { ICounterRepository, ICount } from '@sample/store';
+import { ICounterRepository, ICount } from '@sample-stack/store';
 import { PubSub } from 'graphql-subscriptions';
 import * as Logger from 'bunyan';
 

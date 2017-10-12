@@ -8,10 +8,10 @@ import { Module } from 'webpack';
 import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@sample/utils';
+import { logger } from '@sample-stack/utils';
 import { container } from '../container';
-import { database } from '@sample/schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@sample/store';
+import { database } from '@sample-stack/schema';
+import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
 let subscriptionServer;
 

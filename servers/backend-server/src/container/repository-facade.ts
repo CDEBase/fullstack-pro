@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { DbConfig, RepositoryDiSetup } from '@sample/store';
+import { DbConfig, RepositoryDiSetup } from '@sample-stack/store';
 
 
 import { database as DEFAULT_DB_CONFIG } from '../../../../app.json';

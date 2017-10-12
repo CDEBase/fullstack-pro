@@ -41,9 +41,9 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
-		"@sample/schema": "*",
-		"@sample/server-core": "*",
-		"@sample/store": "*",
+		"@sample-stack/schema": "*",
+		"@sample-stack/server-core": "*",
+		"@sample-stack/store": "*",
 		"@cdm-logger/server": "^3.0.2",
 		"apollo-logger": "^0.1.0",
 		"reflect-metadata": "^0.1.10",
@@ -72,10 +72,10 @@
 		"morgan": "*"
 	},
 	"devDependencies": {
-		"@sample/utils": "*",
+		"@sample-stack/utils": "*",
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
-		"webpack": "^3.5.6"
+		"webpack": "^3.7.1"
 	},
 	"typings": "dist/main.d.ts",
 	"typescript": {

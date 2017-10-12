@@ -1,4 +1,4 @@
-# @sample/schema
+# @sample-stack/schema
 This package is intended to be used with [Apollo Server](http://docs.apollostack.com/apollo-server/tools.html) to provide an easy way to setup a GraphQL server and connect it to your database. Note that Apollo Server is not a depenedency of this package. 
 
 Usage

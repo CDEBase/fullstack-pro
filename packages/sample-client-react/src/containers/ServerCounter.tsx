@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import { graphql, compose } from 'react-apollo';
 import { ApolloQueryResult } from 'apollo-client';
 import { CounterComponent, ICounterProps } from '../components';
-import { COUNT_SUBSCRIPTION, COUNT_QUERY, GetCountQuery, AddCountMutation, ADD_COUNT_MUTATION } from '@sample/graphql';
+import { COUNT_SUBSCRIPTION, COUNT_QUERY, GetCountQuery, AddCountMutation, ADD_COUNT_MUTATION } from '@sample-stack/graphql';
 
 type SubscriptionProps = {
     subscribeToMore: Function;

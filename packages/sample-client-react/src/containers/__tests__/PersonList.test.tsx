@@ -11,11 +11,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import gql from 'graphql-tag';
 
 import { PersonList } from '../PersonList';
-import { reducers, Store } from '@sample/client-redux';
+import { reducers, Store } from '@sample-stack/client-redux';
 import { ApolloProvider, graphql, createNetworkInterface } from 'react-apollo';
-import { database } from '@sample/schema';
+import { database } from '@sample-stack/schema';
 import { mockNetworkInterface } from 'apollo-test-utils';
-import { PERSONS_QUERY, GetPersonsQuery } from '@sample/graphql';
+import { PERSONS_QUERY, GetPersonsQuery } from '@sample-stack/graphql';
 
 describe('components/PersonList', () => {
   it('renders correctly', (done) => {

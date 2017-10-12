@@ -12,14 +12,14 @@ import {
 describe('reducers/counter', () => {
   it('starts at 0', () => {
     const store = createStore(combineReducers<Store.Sample>(reducers));
-    const  counter  = store.getState()['@sample/counter'];
+    const  counter  = store.getState()['@sample-stack/counter'];
     expect(counter.value).toEqual(0);
   });
 
   it('increments', (done) => {
     const store = createStore(combineReducers<Store.Sample>(reducers));
     store.subscribe(() => {
-      const counter = store.getState()['@sample/counter'];
+      const counter = store.getState()['@sample-stack/counter'];
       expect(counter.value).toEqual(3);
       done();
     });
@@ -29,12 +29,12 @@ describe('reducers/counter', () => {
   it('restores state', (done) => {
     const store = createStore(combineReducers<Store.Sample>(reducers));
     store.subscribe(() => {
-      const counter = store.getState()['@sample/counter'];
+      const counter = store.getState()['@sample-stack/counter'];
       expect(counter.value).toEqual(14);
       done();
     });
     store.dispatch({
-      type: '@@sample/LOAD_COUNT_SUCCESS',
+      type: '@@sample-stack/LOAD_COUNT_SUCCESS',
       request: {},
       response: { value: 14 } });
   });

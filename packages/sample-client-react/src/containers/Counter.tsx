@@ -4,7 +4,7 @@ import {
   saveCount,
   Action,
   Store,
-} from '@sample/client-redux';
+} from '@sample-stack/client-redux';
 import { connect } from 'react-redux';
 import { returntypeof } from 'react-redux-typescript';
 import * as redux from 'redux';
@@ -16,10 +16,10 @@ export type CounterOwnProps = {
 };
 
 const mapStateToProps = (state: Store.Sample) => ({
-  counter: state['@sample/counter'],
-  isSaving: state['@sample/isSaving'],
-  isLoading: state['@sample/isLoading'],
-  error: state['@sample/error'],
+  counter: state['@sample-stack/counter'],
+  isSaving: state['@sample-stack/isSaving'],
+  isLoading: state['@sample-stack/isLoading'],
+  error: state['@sample-stack/error'],
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({

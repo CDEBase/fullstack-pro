@@ -24,7 +24,7 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          sample-core             - Core interfaces of the packages which can be shared between server and client.
          sample-server-core      - Core interfaces and its implementation code for Server.   
          sample-client-core      - Core interfaces and its implementation code for Client.
-         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@sample\client-core` or `@sample\core`
+         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@sample-stack\client-core` or `@sample-stack\core`
          sample-client-react     - React pure components and containers are defined. 
          sample-graphql-client   - Graphql Quries and Mutation for Client.
          sample-graphql-schema   - Graphql Schema for Server.

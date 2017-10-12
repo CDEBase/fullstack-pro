@@ -19,9 +19,9 @@ import { ApolloClient, createNetworkInterface, ApolloProvider, NetworkInterface 
 import {
   reducers,
   Store as StoreState,
-} from '@sample/client-redux';
+} from '@sample-stack/client-redux';
 
-import { Counter, PersonList, CounterWithApollo } from '@sample/client-react';
+import { Counter, PersonList, CounterWithApollo } from '@sample-stack/client-react';
 import './index.css';
 
 

@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: 'commonjs2',
-    library: '@sample/client-redux',
+    library: '@sample-stack/client-redux',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -41,8 +41,8 @@ var webpack_opts = {
     }]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample/core": "@sample/core" },
-  { "@sample/client-core": "@sample/client-core" }]
+  { "@sample-stack/core": "@sample-stack/core" },
+  { "@sample-stack/client-core": "@sample-stack/client-core" }]
 };
 
 module.exports = webpack_opts;

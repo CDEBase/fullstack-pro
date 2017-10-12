@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: "commonjs2",
-    library: "@sample/client-react"
+    library: "@sample-stack/client-react"
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.css'],
@@ -54,11 +54,11 @@ var webpack_opts = {
     },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample/core": "@sample/core" },
-  { "@sample/client-core": "@sample/client-core" },
-  { "@sample/graphql": "@sample/graphql" },
-  { "@sample/schema": "@sample/schema" },
-  { "@sample/client-redux": "@sample/client-redux" }]
+  { "@sample-stack/core": "@sample-stack/core" },
+  { "@sample-stack/client-core": "@sample-stack/client-core" },
+  { "@sample-stack/graphql": "@sample-stack/graphql" },
+  { "@sample-stack/schema": "@sample-stack/schema" },
+  { "@sample-stack/client-redux": "@sample-stack/client-redux" }]
 };
 
 module.exports = webpack_opts;

@@ -2,12 +2,12 @@
 import { graphqlExpress, ExpressHandler } from 'graphql-server-express';
 import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
-import { logger } from '@sample/utils';
+import { logger } from '@sample-stack/utils';
 import * as express from 'express';
 import { container } from '../container';
 import { schema } from '../api/schema';
-import { database  } from '@sample/schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@sample/store';
+import { database  } from '@sample-stack/schema';
+import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
 const { persons, findPerson, addPerson } = database;
 

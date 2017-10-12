@@ -11,7 +11,7 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath("[name].js"),
-    library: '@sample/server-core',
+    library: '@sample-stack/server-core',
     libraryTarget: "commonjs2"
   },
   resolve: {
@@ -47,7 +47,7 @@ var webpack_opts = {
     }]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" },
-    { "@sample/core": "@sample/core" }
+    { "@sample-stack/core": "@sample-stack/core" }
   )]
 };
 
