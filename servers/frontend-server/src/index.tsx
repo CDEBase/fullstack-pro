@@ -32,7 +32,7 @@ const networkInterface = createNetworkInterface({
 });
 
 const wsClient: NetworkInterface = new SubscriptionClient(
-  (process.env.GRAPHQL_URL + __EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
+  (process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
     .replace(/^http/, 'ws')
     .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
     reconnect: true,
