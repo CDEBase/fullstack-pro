@@ -49,6 +49,10 @@
     "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
+    "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
+  },
   "devDependencies": {
     "@types/async": "^2.0.40",
     "@types/body-parser": "1.16.5",
@@ -58,7 +62,7 @@
     "@types/express": "^4.0.35",
     "@types/graphql": "^0.10.2",
     "@types/isomorphic-fetch": "0.0.34",
-    "@types/jest": "^20.0.8",
+    "@types/jest": "^21.1.2",
     "@types/knex": "0.0.61",
     "@types/minimist": "^1.2.0",
     "@types/nats-hemera": "^1.0.0",
@@ -102,7 +106,6 @@
     "istanbul": "1.0.0-alpha.2",
     "jest": "^21.1.0",
     "jest-cli": "^21.1.0",
-    "jest-mock-knex": "^1.4.2",
     "json-loader": "^0.5.4",
     "lerna": "2.1.2",
     "lodash": "^4.17.4",
@@ -128,7 +131,7 @@
     "source-map-loader": "^0.2.1",
     "standard-version": "^4.0.0",
     "style-loader": "^0.18.2",
-    "ts-jest": "^21.0.1",
+    "ts-jest": "^21.1.2",
     "ts-loader": "^2.2.1",
     "ts-node": "^3.1.0",
     "tslint": "^5.4.3",
