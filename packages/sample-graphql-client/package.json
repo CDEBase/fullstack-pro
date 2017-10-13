@@ -43,7 +43,7 @@
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^3.5.6"
+    "webpack": "^3.7.1"
   },
   "dependencies": {},
   "typings": "lib/index.d.ts",
