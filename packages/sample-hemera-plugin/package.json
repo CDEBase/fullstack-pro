@@ -1,5 +1,5 @@
 {
-  "name": "@sample/hemera-plugin",
+  "name": "@sample/hemera-counter",
   "version": "0.0.0",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
