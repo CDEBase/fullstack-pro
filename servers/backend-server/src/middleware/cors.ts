@@ -4,7 +4,7 @@ import { app as settings } from '../../../../app.json';
 
 
 
-const port = process.env.PORT || settings.webpackDevPort;
+const port = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
 
 const corsWhitelist = [
