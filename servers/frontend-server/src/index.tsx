@@ -27,14 +27,18 @@ import './index.css';
 
 const rootEl = document.getElementById('content');
 
+const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || settings.apiPort;
+const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
+const GRAPHQL_URL = process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__;
+
 const networkInterface = createNetworkInterface({
-  uri: process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__ || '/graphql',
+  uri: GRAPHQL_URL || '/graphql',
 });
 
 const wsClient: NetworkInterface = new SubscriptionClient(
-  (process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__ || (window.location.origin + '/graphql'))
+  (GRAPHQL_URL || (window.location.origin + '/graphql'))
     .replace(/^http/, 'ws')
-    .replace(':' + settings.webpackDevPort, ':' + settings.apiPort), {
+    .replace(':' + CLIENT_PORT, ':' + SERVER_PORT), {
     reconnect: true,
   }) as NetworkInterface;
 
