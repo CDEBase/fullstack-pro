@@ -2,7 +2,7 @@
 const server = {
      entry: {
        index: [
-        './servers/frontend-server/src/index.tsx'        
+        './servers/backend-server/src/index.ts'        
        ]
      }
 };
