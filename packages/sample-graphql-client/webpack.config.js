@@ -43,7 +43,7 @@ var webpack_opts = {
     {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-      use: "graphql-tag/loader"
+      use: ['graphql-tag/loader', 'persistgraphql-webpack-plugin/graphql-loader']
     },
     {
       test: /\.json?$/,

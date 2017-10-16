@@ -1,5 +1,5 @@
 {
-  "name": "@sample/graphql",
+  "name": "@sample-stack/graphql",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
@@ -16,7 +16,8 @@
     "build:lib:watch": "npm run build:lib -- --watch",
     "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json",
     "schema:generate": "./node_modules/.bin/apollo-codegen generate src/**/*.graphql --schema schema.json --target typescript --output src/schema.ts",
-    "persistgraphql": "persistgraphql client/src/graphql/ --add_typename"
+    "persistgraphql": "persistgraphql src/ --add_typename",
+    "extractqueries": "persistgraphql src/ --js --extension=ts"
   },
   "publishConfig": {
     "access": "public"
@@ -40,8 +41,10 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "devDependencies": {
+    "apollo-codegen": "^0.16.5",
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
+    "persistgraphql": "^0.3.10",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
   },

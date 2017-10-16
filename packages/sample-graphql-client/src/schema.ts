@@ -1,11 +1,11 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
-export type AddCountMutationVariables = {
+export type addCountMutationVariables = {
   amount: number,
 };
 
-export type AddCountMutation = {
+export type addCountMutation = {
   // Increase counter value, returns current counter amount
   addCount:  {
     // Current amount
@@ -13,19 +13,19 @@ export type AddCountMutation = {
   } | null,
 };
 
-export type AddPersonMutationVariables = {
+export type addPersonMutationVariables = {
   name: string,
   sex: string,
 };
 
-export type AddPersonMutation = {
+export type addPersonMutation = {
   addPerson:  {
     id: string | null,
     name: string | null,
   } | null,
 };
 
-export type GetCountQuery = {
+export type getCountQuery = {
   // Counter
   count:  {
     // Current amount
@@ -33,11 +33,11 @@ export type GetCountQuery = {
   } | null,
 };
 
-export type GetPersonQueryVariables = {
+export type getPersonQueryVariables = {
   id: string,
 };
 
-export type GetPersonQuery = {
+export type getPersonQuery = {
   getPerson:  {
     id: string | null,
     name: string | null,
@@ -54,22 +54,22 @@ export type GetPersonQuery = {
           id: string | null,
           name: string | null,
           sex: string | null,
-        } > | null,
-      } > | null,
-    } > | null,
+        } | null > | null,
+      } | null > | null,
+    } | null > | null,
   } | null,
 };
 
-export type GetPersonsQuery = {
+export type getPersonsQuery = {
   persons:  Array< {
     id: string | null,
     name: string | null,
-  } > | null,
+  } | null > | null,
 };
 
-export type OnCountUpdatedSubscription = {
+export type subscribeToCountSubscription = {
   // Subscription fired when anyone increases counter
-  countUpdated:  {
+  subscribeToCount:  {
     // Current amount
     amount: number,
   } | null,

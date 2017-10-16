@@ -15,7 +15,7 @@ import { reducers, Store } from '@sample-stack/client-redux';
 import { ApolloProvider, graphql, createNetworkInterface } from 'react-apollo';
 import { database } from '@sample-stack/schema';
 import { mockNetworkInterface } from 'apollo-test-utils';
-import { PERSONS_QUERY, GetPersonsQuery } from '@sample-stack/graphql';
+import { PERSONS_QUERY } from '@sample-stack/graphql';
 
 describe('components/PersonList', () => {
   it('renders correctly', (done) => {

@@ -1,5 +1,5 @@
 {
-  "name": "@sample/schema",
+  "name": "@sample-stack/schema",
   "version": "0.0.1",
   "description": "Sample Schema Module",
   "main": "lib/index.js",
@@ -42,18 +42,17 @@
   "author": "CDMBase LLC",
   "license": "MIT",
   "dependencies": {
-    "@sample/server-core": "*",
-    "@sample/store": "*"
+    "@sample-stack/server-core": "*",
+    "@sample-stack/store": "*"
   },
   "devDependencies": {
     "cross-env": "^5.0.5",
-    "@sample/utils": "*",
+    "@sample-stack/utils": "*",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
   },
   "peerDependencies": {
-    "@sample/server-core": "*",
     "lodash": "^4.17.4",
     "graphql-tools": "1.0.0",
     "graphql": "^0.10.0 || ^0.11.0"

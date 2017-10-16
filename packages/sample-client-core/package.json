@@ -1,5 +1,5 @@
 {
-  "name": "@sample/client-core",
+  "name": "@sample-stack/client-core",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
@@ -49,7 +49,9 @@
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@sample-stack/core": "*"
+  },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"

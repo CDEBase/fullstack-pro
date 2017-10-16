@@ -6,18 +6,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
-// const PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
-// Replace following lines once PersistGraphQLPlugin is configured
-var VirtualModulesPlugin = require('webpack-virtual-modules');
-function PersistGraphQLPlugin() {
-};
-PersistGraphQLPlugin.prototype.apply = function (compiler) { }
-
+import PersistGraphQLPlugin from 'persistgraphql-webpack-plugin';
 const _ = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const { CheckerPlugin, } = require("awesome-typescript-loader");
-
 const appConfigs = require('./webpack.app_config');
 import pkg from '../package.json';
 import { app as settings } from '../app.json';
@@ -27,8 +19,8 @@ const IS_TEST = process.argv[1].indexOf('mocha-webpack') >= 0;
 if (IS_TEST) {
     delete settings.graphQLUrl;
 }
-const IS_SSR = settings.ssr && !settings.graphQLUrl && !IS_TEST;
-const IS_PERSIST_GQL = settings.persistGraphQL && !settings.graphQLUrl && !IS_TEST;
+const IS_SSR = settings.ssr && !IS_TEST;
+const IS_PERSIST_GQL = settings.persistGraphQL && !IS_TEST;
 global.__DEV__ = process.argv.length >= 3 && (process.argv[2].indexOf('watch') >= 0 || IS_TEST);
 const buildNodeEnv = process.env.NODE_ENV || (__DEV__ ? (IS_TEST ? 'test' : 'development') : 'production');
 
@@ -58,6 +50,7 @@ if (__DEV__) {
 } else {
     basePlugins.push(new UglifyJSPlugin());
     basePlugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
+    basePlugins.push(new webpack.optimize.ModuleConcatenationPlugin());
 }
 
 const baseConfig = {
@@ -82,7 +75,7 @@ const baseConfig = {
                 test: /\.(graphql|gql)$/,
                 exclude: /node_modules/,
                 use: ['graphql-tag/loader'].concat(
-                    settings.persistGraphQL ?
+                    IS_PERSIST_GQL ?
                         ['persistgraphql-webpack-plugin/graphql-loader'] : []
                 )
             },
@@ -139,11 +132,15 @@ const serverConfig = merge.smart(_.cloneDeep(baseConfig), {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                use: [
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: {
+                            configFileName: './servers/backend-server/tsconfig.json'
+                        }
+                    }]
+                    .concat(IS_PERSIST_GQL ? ['persistgraphql-webpack-plugin/js-loader'] : []),
                 exclude: [/node_modules/],
-                options: {
-                    configFileName: './servers/backend-server/tsconfig.json'
-                }
             },
             {
                 test: /\.scss$/,
@@ -217,11 +214,16 @@ const clientConfig = merge.smart(_.cloneDeep(baseConfig), {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                use: [
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: {
+                            configFileName: './servers/frontend-server/tsconfig.json'
+                        }
+                    }]
+                    .concat(IS_PERSIST_GQL ? ['persistgraphql-webpack-plugin/js-loader'] : []),
                 exclude: [/node_modules/],
-                options: {
-                    configFileName: './servers/frontend-server/tsconfig.json'
-                }
+
 
             },
         ]

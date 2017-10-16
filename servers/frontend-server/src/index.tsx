@@ -1,21 +1,18 @@
 /// <reference path='../../../typings/index.d.ts' />
+///<reference types="webpack-env" />
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createStore, Store, applyMiddleware, Middleware, GenericStoreEnhancer, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-// import { addPersistedQueries } from 'persistgraphql';
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 import * as ReactFela from 'react-fela';
+import { ApolloProvider } from 'react-apollo';
 import createRenderer from './fela-renderer';
-
+import { createApolloClient } from './apollo-client';
+import { createReduxStore } from './redux-config';
 import { app as settings } from '../../../app.json';
 
-// const queryMap = require('persisted_queries.json');
 
 require('backend_reload');
 
-import { ApolloClient, createNetworkInterface, ApolloProvider, NetworkInterface } from 'react-apollo';
 import {
   reducers,
   Store as StoreState,
@@ -27,68 +24,23 @@ import './index.css';
 
 const rootEl = document.getElementById('content');
 
-const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || settings.apiPort;
-const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
-const GRAPHQL_URL = process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__;
 
-const networkInterface = createNetworkInterface({
-  uri: GRAPHQL_URL || '/graphql',
-});
+const client = createApolloClient();
 
-const wsClient: NetworkInterface = new SubscriptionClient(
-  (GRAPHQL_URL || (window.location.origin + '/graphql'))
-    .replace(/^http/, 'ws')
-    .replace(':' + CLIENT_PORT, ':' + SERVER_PORT), {
-    reconnect: true,
-  }) as NetworkInterface;
+let initialState = {};
 
-// Hybrid WebSocket Transport
-// https://github.com/apollographql/subscriptions-transport-ws#hybrid-websocket-transport
-// let networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-//   networkInterface,
-//   wsClient,
-// );
+if (window.__APOLLO_STATE__) {
+  initialState = window.__APOLLO_STATE__;
+}
 
+const store = createReduxStore(initialState, client);
 
-
-// if (__PERSIST_GQL__) {
-//   networkInterfaceWithSubscriptions = addPersistedQueries(networkInterfaceWithSubscriptions, queryMap);
-// }
-
-// const client = new ApolloClient({
-//   networkInterface,
-// });
-
-// For Full Websocket Transport
-// https://github.com/apollographql/subscriptions-transport-ws#full-websocket-transport
-const client = new ApolloClient({
-  networkInterface: wsClient,
-});
-
-const middlewares: Middleware[] = [
-  thunk,
-  client.middleware(),
-];
-
-
-const enhancers: GenericStoreEnhancer[] = [
-  applyMiddleware(...middlewares),
-];
-
-const REDUX_EXTENSION_COMPOSE_NAME: string = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
-
-const composeEnhancers =
-  window[REDUX_EXTENSION_COMPOSE_NAME] ?
-    window[REDUX_EXTENSION_COMPOSE_NAME] : compose;
-
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    apollo: client.reducer(),
-  }),
-  {} as StoreState.Sample,
-  composeEnhancers(...enhancers),
-);
+if (module.hot) {
+  module.hot.dispose(() => {
+    // Force Apollo to fetch the latest data from the server
+    delete window.__APOLLO_STATE__;
+  });
+}
 
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {

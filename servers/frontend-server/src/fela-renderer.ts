@@ -1,4 +1,4 @@
-import { createRenderer } from 'fela';
+import { createRenderer, IRenderer } from 'fela';
 import prefixer from 'fela-plugin-prefixer';
 import fallbackValue from 'fela-plugin-fallback-value';
 import unit from 'fela-plugin-unit';

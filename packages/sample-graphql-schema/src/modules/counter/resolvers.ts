@@ -17,13 +17,13 @@ export const resolver = (pubsub: PubSub, logger?: Logger) => ({
 
             await context.Count.addCount(amount);
             let count = await context.Count.getCount();
-            logger.debug('added count and the amount is {%s} ', count);
-            pubsub.publish(COUNT_UPDATED_TOPIC, { coutUpdated: { amount: count.amount } });
+            logger.debug('added count and the amount is {%j} ', count);
+            pubsub.publish(COUNT_UPDATED_TOPIC, { subscribeToCount: { amount: count.amount } });
             return count;
         },
     },
     Subscription: {
-        countUpdated: {
+        subscribeToCount: {
             subscribe: () => pubsub.asyncIterator(COUNT_UPDATED_TOPIC),
         },
     },

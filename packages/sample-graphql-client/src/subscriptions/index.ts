@@ -1,1 +1,1 @@
-export const COUNT_SUBSCRIPTION = require('./countUpdated');
+export const COUNT_SUBSCRIPTION = require('./count');

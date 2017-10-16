@@ -28,9 +28,9 @@ app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (settings.persistGraphQL && process.env.NODE_ENV !== 'test') {
+if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
