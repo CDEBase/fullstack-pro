@@ -14,7 +14,7 @@ const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
 const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || settings.apiPort;
 const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
-const GRAPHQL_URL = process.env.GRAPHQL_URL || __EXTERNAL_BACKEND_URL__;
+const GRAPHQL_URL = process.env.GRAPHQL_URL || 'http://localhost:8080/graphql'; // __EXTERNAL_BACKEND_URL__;
 
 
 let networkInterface: NetworkInterface;

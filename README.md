@@ -65,6 +65,11 @@ npm run watch
 ```
 [lerna-clean]: https://github.com/lerna/lerna#clean
 
+
+## Troubleshoot
+To troubleshoot webpack configuration run
+npx spin -v watch
+
 ## resource
 Jest
 https://www.youtube.com/watch?v=HAuXJVI_bUs&t=1053s

@@ -19,7 +19,7 @@ import {
 } from '@sample-stack/client-redux';
 
 import { Counter, PersonList, CounterWithApollo } from '@sample-stack/client-react';
-import './index.css';
+// import './index.css';
 
 
 const rootEl = document.getElementById('content');
