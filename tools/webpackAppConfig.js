@@ -1,11 +1,11 @@
 // App-specific back-end Webpack config should be here
-const server = {
-     entry: {
-       index: [
-        './servers/backend-server/src/index.ts'        
-       ]
-     }
-};
+// const server = {
+//      entry: {
+//        index: [
+//         './servers/backend-server/src/index.ts'        
+//        ]
+//      }
+// };
 
 // App-specific web front-end Webpack config should be here
 const web = {
@@ -13,6 +13,15 @@ const web = {
         index: [
             './servers/frontend-server/src/index.tsx'
         ]
+    }
+};
+
+// App-specific back-end Webpack config should be here
+const server = {
+    entry: {
+      index: [
+       './servers/frontend-server/src/server.ts'        
+      ]
     }
 };
 

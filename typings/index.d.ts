@@ -1,5 +1,6 @@
 declare const __DEV__;
 declare const __EXTERNAL_BACKEND_URL__;
+declare const __BACKEND_URL__;
 declare const __PERSIST_GQL__;
 
 declare const __SSR__;
@@ -18,9 +19,11 @@ declare module "*app.json" {
     "frontendBuildDir": string;
     "graphQLUrl": string;
     "webpackDevPort": number,
+    "clientPort": number,
     "apiPort": number,
     "ssr": boolean;
     "webpackDll": boolean;
+    "dllBuildDir": string;
     "frontendRefreshOnBackendChange": boolean;
     "reactHotLoader": boolean;
     "debugSQL": boolean;

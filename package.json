@@ -168,6 +168,7 @@
     "sinon-as-promised": "^4.0.3",
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.1",
+    "source-map-support": "^0.5.0",
     "spinjs": "^0.4.9",
     "standard-version": "^4.0.0",
     "style-loader": "^0.18.2",

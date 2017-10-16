@@ -29,7 +29,7 @@
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
 		"webpack": "^3.7.1",
-		"webpack-dev-server": "^2.8.2",
+		"webpack-dev-server": "^2.9.1",
 		"webpack-fail-plugin": "^2.0.0",
 		"webpack-visualizer-plugin": "^0.1.11"
 	},
@@ -39,6 +39,7 @@
 		"@sample-stack/client-react": "*",
 		"@sample-stack/client-redux": "*",
 		"@sample-stack/graphql": "*",
+		"@sample-stack/utils": "*",
 		"express": "^4.16.2"
 	},
 	"peerDependencies": {

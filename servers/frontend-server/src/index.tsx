@@ -9,7 +9,7 @@ import createRenderer from './fela-renderer';
 import { createApolloClient } from './apollo-client';
 import { createReduxStore } from './redux-config';
 import { app as settings } from '../../../app.json';
-
+import { Component } from './component';
 
 require('backend_reload');
 
@@ -50,17 +50,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(
       <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
         <ApolloProvider store={store} client={client}>
-          <div>
-            <div>
-              <h2>Redux Counter Test</h2>
-              <Counter label="count:" />
-            </div>
-            <div>
-              <h2>Apollo Graphql Test </h2>
-              <CounterWithApollo />
-              <PersonList />
-            </div>
-          </div>
+          <Component />
         </ApolloProvider>
       </ReactFela.Provider>
       , rootEl);

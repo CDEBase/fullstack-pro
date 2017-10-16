@@ -18,6 +18,7 @@
       true,
       "spaces"
     ],
+    "jsx-no-multiline-js": false,
     "interface-name": false,
     "jsdoc-format": true,
     "label-position": true,
