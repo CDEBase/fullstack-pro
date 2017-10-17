@@ -159,7 +159,6 @@
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.5.0",
-    "spinjs": "0.4.11",
     "standard-version": "^4.0.0",
     "style-loader": "^0.18.2",
     "tcomb": "^3.2.24",
@@ -253,6 +252,7 @@
     "rxjs": "^5.4.3",
     "sequelize": "^4.8.4",
     "serialize-javascript": "^1.4.0",
+    "spinjs": "^0.4.11",
     "sqlite3": "^3.1.8",
     "styled-components": "^2.0.0",
     "subscriptions-transport-ws": "^0.8.3"
