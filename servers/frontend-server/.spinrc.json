@@ -22,7 +22,7 @@
         "backendBuildDir": "./dist",
         "frontendBuildDir": "./dist",
         "dllBuildDir": "build/dll",
-        "overridesConfig": "../tools/webpackAppConfig.js",
+        "overridesConfig": "./tools/webpackAppConfig.js",
         "stack": [
             "apollo",
             "ts",

@@ -13,7 +13,7 @@
                 "server"
             ],
             "tsLoaderOptions": {
-                "configFileName": "./servers/frontend-server/tsconfig.json"
+                "configFileName": "./servers/backend-server/tsconfig.json"
             },
             "enabled": true
         },
@@ -39,7 +39,7 @@
         }
     },
     "options": {
-        "backendBuildDir": "servers/frontend-server/dist",
+        "backendBuildDir": "servers/backend-server/dist",
         "frontendBuildDir": "servers/frontend-server/dist",
         "dllBuildDir": "build/dll",
         "overridesConfig": "tools/webpackAppConfig.js",
