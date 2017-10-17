@@ -2,7 +2,7 @@
 const server = {
      entry: {
        index: [
-        '../src/server.ts'        
+        './src/server.ts'        
        ]
      }
 };
@@ -11,7 +11,7 @@ const server = {
 const web = {
     entry: {
         index: [
-            '../src/index.tsx'
+            './src/index.tsx'
         ]
     }
 };
