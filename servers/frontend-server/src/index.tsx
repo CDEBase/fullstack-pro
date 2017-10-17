@@ -8,7 +8,6 @@ import { ApolloProvider } from 'react-apollo';
 import createRenderer from './fela-renderer';
 import { createApolloClient } from './apollo-client';
 import { createReduxStore } from './redux-config';
-import { app as settings } from '../../../app.json';
 import { Component } from './component';
 
 require('backend_reload');

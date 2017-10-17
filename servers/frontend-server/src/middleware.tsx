@@ -12,7 +12,7 @@ import * as fs from 'fs';
 import { logger } from '@sample-stack/client-core';
 import { createApolloClient } from './apollo-client';
 import { createReduxStore } from './redux-config';
-import { app as settings } from '../../../app.json';
+import { options as settings } from '../../../.spinrc.json';
 const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
 
 const GRAPHQL_URL = process.env.GRAPHQL_URL || __BACKEND_URL__;
@@ -31,7 +31,7 @@ async function renderServerSide(req, res, queryMap) {
         </ApolloProvider>
     );
 
-    await getDataFromTree(component);
+    // await getDataFromTree(component);
     res.status(200);
     const html = ReactDOMServer.renderToString(component);
     const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
@@ -48,18 +48,6 @@ async function renderServerSide(req, res, queryMap) {
             assetMap={assetMap}
             helmet={helmet} />
     );
-    res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
-
-    res.end();
-}
-
-async function renderClientSide(req, res) {
-    const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
-
-    if (__DEV__ || !assetMap) {
-        assetMap = JSON.parse(fs.readFileSync(path.join(settings.frontendBuildDir, 'web', 'assets.json')) as any);
-    }
-    const page = <Html state={({})} assetMap={assetMap} helmet={helmet} />;
     res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
     res.end();
 }

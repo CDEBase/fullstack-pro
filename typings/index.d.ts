@@ -35,6 +35,22 @@ declare module "*app.json" {
   }
 }
 
+declare module "*spinrc.json" {
+  export const options: {
+    "backendBuildDir": string;
+    "frontendBuildDir": string;
+    "webpackDevPort": number,
+    "ssr": boolean;
+    "webpackDll": boolean;
+    "dllBuildDir": string;
+    "frontendRefreshOnBackendChange": boolean;
+    "reactHotLoader": boolean;
+    "debugSQL": boolean;
+    "persistGraphQL": boolean;
+    "apolloLogging": boolean;
+  };
+}
+
 declare module "*.json" {
   const value: any;
   export = value;

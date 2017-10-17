@@ -1,14 +1,5 @@
 {
     "builders": {
-        "backendServer": {
-            "stack": [
-                "server"
-            ],
-            "tsLoaderOptions": {
-                "configFileName": "./servers/backend-server/tsconfig.json"
-            },
-            "enabled": false
-        },
         "web": {
             "stack": "web",
             "tsLoaderOptions": {
@@ -48,8 +39,8 @@
         }
     },
     "options": {
-        "backendBuildDir": "servers/backend-server/dist",
-        "frontendBuildDir": "servers/frontend-server/dist",
+        "backendBuildDir": "servers/frontend-server/dist/server",
+        "frontendBuildDir": "servers/frontend-server/dist/client",
         "dllBuildDir": "build/dll",
         "overridesConfig": "tools/webpackAppConfig.js",
         "stack": [

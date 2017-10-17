@@ -6,13 +6,15 @@ import {
     ApolloProvider, createBatchingNetworkInterface,
     NetworkInterface,
 } from 'react-apollo';
-import { app as settings } from '../../../app.json';
+// import { app as settings } from '../../../app.json';
+import { options as settings } from '../../../.spinrc.json';
+
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
 // const queryMap = require('persisted_queries.json');
 const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
-const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || settings.apiPort;
+const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || 8080;
 const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
 const GRAPHQL_URL = process.env.GRAPHQL_URL || 'http://localhost:8080/graphql'; // __EXTERNAL_BACKEND_URL__;
 
