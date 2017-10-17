@@ -47,12 +47,11 @@
             "apollo",
             "ts",
             "react",
-            "sass",
             "webpack",
             "css"
         ],
         "backendUrl": "http://{ip}:8080/graphql",
-        "ssr": true,
+        "ssr": false,
         "webpackDll": true,
         "reactHotLoader": false,
         "persistGraphQL": false,

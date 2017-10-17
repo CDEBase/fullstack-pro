@@ -6,7 +6,6 @@ import {
     ApolloProvider, createBatchingNetworkInterface,
     NetworkInterface,
 } from 'react-apollo';
-// import { app as settings } from '../../../app.json';
 import { options as settings } from '../../../.spinrc.json';
 
 import { addPersistedQueries } from 'persistgraphql';

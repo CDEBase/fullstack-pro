@@ -13,7 +13,6 @@ import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
-// import { app as settings } from '../../../app.json';
 import { options as settings } from '../../../.spinrc.json';
 
 import { logger } from '@sample-stack/utils';

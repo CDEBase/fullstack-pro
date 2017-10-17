@@ -1,6 +1,6 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { app as settings } from '../../../../app.json';
+import { options as settings } from '../../../../.spinrc.json';
 
 
 

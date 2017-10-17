@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import * as path from 'path';
 import * as url from 'url';
-// import { app as settings } from '../../../app.json';
 import { options as settings } from '../../../.spinrc.json';
 import { logger } from '@sample-stack/utils';
 import { websiteMiddleware } from './middleware';
