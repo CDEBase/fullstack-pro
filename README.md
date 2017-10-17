@@ -68,7 +68,9 @@ npm run watch
 
 ## Troubleshoot
 To troubleshoot webpack configuration run
+```
 npx spin -v watch
+```
 
 ## resource
 Jest
