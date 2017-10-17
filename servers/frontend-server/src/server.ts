@@ -13,7 +13,7 @@ let server;
 const app = express();
 
 const { port, pathname } = url.parse(__BACKEND_URL__);
-const serverPort = process.env.PORT || port;
+const serverPort = process.env.CLIENT_PORT || port;
 
 // Don't rate limit heroku
 app.enable('trust proxy');
@@ -38,8 +38,8 @@ app.use(websiteMiddleware);
 
 server = http.createServer(app);
 
-server.listen(port, () => {
-    logger.info(`Client Server is now running on port ${port}`);
+server.listen(serverPort, () => {
+    logger.info(`Client Server is now running on port ${serverPort}`);
 });
 
 server.on('close', () => {
