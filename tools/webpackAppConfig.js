@@ -60,7 +60,7 @@ const dependencyPlatforms = {
     'redux-form': 'web',
     'serialize-javascript': 'server',
     'source-map-support': 'server',
-    sqlite3: 'server',
+    // sqlite3: 'server',
     'styled-components': ['server', 'web'],
     'subscriptions-transport-ws': ['ios', 'android', 'web'],
     // 'universal-cookie-express': 'server',

@@ -6,7 +6,8 @@
                 "configFileName": "./servers/frontend-server/tsconfig.json"
             },
             "openBrowser": true,
-            "enabled": true
+            "enabled": true,
+            "htmlTemplate": "./tools/html-plugin-template.ejs"            
         },
         "server": {
             "stack": [
@@ -41,7 +42,7 @@
     "options": {
         "backendBuildDir": "servers/backend-server/dist",
         "frontendBuildDir": "servers/frontend-server/dist",
-        "dllBuildDir": "build/dll",
+        "dllBuildDir": ".build/dll",
         "overridesConfig": "tools/webpackAppConfig.js",
         "stack": [
             "apollo",
