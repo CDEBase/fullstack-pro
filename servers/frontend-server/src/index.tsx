@@ -5,10 +5,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
-import createRenderer from './fela-renderer';
-import { createApolloClient } from './apollo-client';
+import createRenderer from './setup/fela-renderer';
+import { createApolloClient } from './setup/apollo-client';
 import { createReduxStore } from './redux-config';
-import { Component } from './component';
+import { Component } from './components';
 
 require('backend_reload');
 

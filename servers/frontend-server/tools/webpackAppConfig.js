@@ -2,7 +2,7 @@
 const server = {
      entry: {
        index: [
-        './src/server.ts'        
+        './src/setup/app.ts'        
        ]
      }
 };

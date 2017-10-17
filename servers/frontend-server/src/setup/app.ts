@@ -1,5 +1,7 @@
+///<reference types="webpack-env" />
+
 import { logger } from '@sample-stack/utils';
-import './server';
+import './backend/server';
 
 process.on('uncaughtException', ex => {
     logger.error(ex);

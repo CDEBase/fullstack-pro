@@ -4,14 +4,14 @@ import { createBatchingNetworkInterface } from 'apollo-client';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { addApolloLogging } from 'apollo-logger';
 import { addPersistedQueries } from 'persistgraphql';
-import { Html } from './html';
-import { Component } from './component';
+import { Html } from '../ssr/html';
+import { Component } from '../../components';
 import Helmet from 'react-helmet';
 import * as path from 'path';
 import * as fs from 'fs';
 import { logger } from '@sample-stack/client-core';
-import { createApolloClient } from './apollo-client';
-import { createReduxStore } from './redux-config';
+import { createApolloClient } from '../apollo-client';
+import { createReduxStore } from '../../redux-config';
 import { options as settings } from '../../../.spinrc.json';
 const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
 

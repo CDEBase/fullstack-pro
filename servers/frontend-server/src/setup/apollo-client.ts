@@ -1,4 +1,4 @@
-/// <reference path='../../../typings/index.d.ts' />
+/// <reference path='../../../../typings/index.d.ts' />
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 import {
     ApolloClient,
@@ -6,7 +6,7 @@ import {
     ApolloProvider, createBatchingNetworkInterface,
     NetworkInterface,
 } from 'react-apollo';
-import { options as settings } from '../../../.spinrc.json';
+import { options as settings } from '../../../../.spinrc.json';
 
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
