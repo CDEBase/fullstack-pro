@@ -39,8 +39,8 @@
         }
     },
     "options": {
-        "backendBuildDir": "servers/frontend-server/dist/server",
-        "frontendBuildDir": "servers/frontend-server/dist/client",
+        "backendBuildDir": "servers/frontend-server/dist",
+        "frontendBuildDir": "servers/frontend-server/dist",
         "dllBuildDir": "build/dll",
         "overridesConfig": "tools/webpackAppConfig.js",
         "stack": [
@@ -48,9 +48,10 @@
             "ts",
             "react",
             "sass",
-            "webpack"
+            "webpack",
+            "css"
         ],
-        "backendUrl": "http://localhost:8080/graphql",
+        "backendUrl": "http://{ip}:8080/graphql",
         "ssr": true,
         "webpackDll": true,
         "reactHotLoader": false,

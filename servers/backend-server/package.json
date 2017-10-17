@@ -60,7 +60,7 @@
 		"graphql-server-express": "^1.1.2",
 		"express": "^4.16.2",
 		"cors": "^2.8.3",
-		"body-parser": "^1.18.1",
+		"body-parser": "^1.18.2",
 		"apollo-link": "^0.7.0"
 	},
 	"peerDependencies": {

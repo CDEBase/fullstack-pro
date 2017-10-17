@@ -13,21 +13,8 @@ declare interface Window {
   __INITIAL_STATE__?: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: <F extends Function>(f: F) => F;
 }
-declare module "*app.json" {
+declare module "*settings.json" {
   export const app: {
-    "backendBuildDir": string;
-    "frontendBuildDir": string;
-    "graphQLUrl": string;
-    "webpackDevPort": number,
-    "clientPort": number,
-    "apiPort": number,
-    "ssr": boolean;
-    "webpackDll": boolean;
-    "dllBuildDir": string;
-    "frontendRefreshOnBackendChange": boolean;
-    "reactHotLoader": boolean;
-    "debugSQL": boolean;
-    "persistGraphQL": boolean;
     "apolloLogging": boolean;
   };
   export const database: {

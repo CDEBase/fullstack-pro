@@ -7,10 +7,7 @@ import { GraphQLAnyObject } from './scalar';
 const rootSchemaDef = require('./root-schema.graphqls');
 // import rootSchemaDef from './root_schema.graphqls';
 import { logger } from '@sample-stack/utils';
-import { PubSub } from 'graphql-subscriptions';
-import { app as settings } from '../../../../app.json';
-
-export const pubsub = settings.apolloLogging ? addApolloLogging(new PubSub()) : new PubSub();
+import { pubsub } from '../container';
 
 const DefaultResolver = {
   AnyObject: GraphQLAnyObject,
