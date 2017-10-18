@@ -6,7 +6,7 @@ Purpose:
 ---
 The idea is to create modules for each package so it can work independently as well as integrated to another project as packages. 
 
-## Hot Code Reload demo
+## Screenshot
 ![screencast](./ScreenShot.png)
 
 
