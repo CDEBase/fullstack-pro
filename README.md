@@ -49,6 +49,10 @@ npm install
 to run server
 you can run both the client and server together by 
 ```
+npm run spin:watch
+```
+still supports backward compatibility as below
+```
 npm start
 ```
 The graphql server endpoints are
@@ -69,7 +73,7 @@ npm run watch
 ## Troubleshoot
 To troubleshoot webpack configuration run
 ```
-npx spin -v watch
+npm run spin:watch:debug
 ```
 
 ## resource
