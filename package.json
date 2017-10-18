@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -161,7 +161,7 @@
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.5.0",
-    "spinjs": "0.4.11",
+    "spinjs": "^0.4.15",
     "standard-version": "^4.0.0",
     "style-loader": "^0.18.2",
     "tcomb": "^3.2.24",
@@ -241,6 +241,7 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
+    "react-transition-group": "^2.2.1",
     "reactstrap": "^4.6.2",
     "recompose": "^0.25.0",
     "redux": "^3.6.0",
