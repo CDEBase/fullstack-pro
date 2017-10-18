@@ -4,7 +4,7 @@ import { options as settings } from '../../../../.spinrc.json';
 
 
 
-const port = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
+const port = process.env.CLIENT_PORT || settings.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
 
 const corsWhitelist = [

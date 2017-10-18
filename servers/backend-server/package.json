@@ -41,11 +41,11 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
-		"@sample-stack/schema": "*",
+		"@sample-stack/graphql-schema": "*",
 		"@sample-stack/server-core": "*",
 		"@sample-stack/core": "*",
 		"@sample-stack/store": "*",
-		"@sample-stack/graphql": "*",
+		"@sample-stack/graphql-gql": "*",
 		"@cdm-logger/server": "^3.0.2",
 		"apollo-logger": "^0.1.0",
 		"reflect-metadata": "^0.1.10",
@@ -75,6 +75,7 @@
 	},
 	"devDependencies": {
 		"@sample-stack/utils": "*",
+		"spinjs": "^0.4.15",
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
 		"webpack": "^3.7.1"

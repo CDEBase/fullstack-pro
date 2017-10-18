@@ -2,7 +2,7 @@ import { GraphQLSchema } from 'graphql';
 import { addApolloLogging } from 'apollo-logger';
 
 import { makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema } from 'graphql-tools';
-import { resolvers, typeDefs } from '@sample-stack/schema';
+import { resolvers, typeDefs } from '@sample-stack/graphql-schema';
 import { GraphQLAnyObject } from './scalar';
 const rootSchemaDef = require('./root-schema.graphqls');
 // import rootSchemaDef from './root_schema.graphqls';

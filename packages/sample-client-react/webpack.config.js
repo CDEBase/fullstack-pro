@@ -56,8 +56,8 @@ var webpack_opts = {
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
   { "@sample-stack/core": "@sample-stack/core" },
   { "@sample-stack/client-core": "@sample-stack/client-core" },
-  { "@sample-stack/graphql": "@sample-stack/graphql" },
-  { "@sample-stack/schema": "@sample-stack/schema" },
+  { "@sample-stack/graphql-gql": "@sample-stack/graphql-gql" },
+  { "@sample-stack/graphql-schema": "@sample-stack/graphql-schema" },
   { "@sample-stack/client-redux": "@sample-stack/client-redux" }]
 };
 

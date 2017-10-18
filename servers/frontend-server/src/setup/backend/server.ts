@@ -1,3 +1,5 @@
+///<reference types="webpack-env" />
+
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
@@ -47,5 +49,23 @@ server.listen(serverPort, () => {
 server.on('close', () => {
     server = undefined;
 });
+
+if (module.hot) {
+    module.hot.dispose(() => {
+        try {
+            if (server) {
+                server.close();
+            }
+        } catch (error) {
+            logger.error(error.stack);
+        }
+    });
+    module.hot.accept(['./middleware'], () => {
+        logger.debug('...reloading middleware');
+    });
+
+    module.hot.accept();
+}
+
 
 export default server;

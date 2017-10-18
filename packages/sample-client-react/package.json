@@ -47,7 +47,7 @@
   "peerDependencies": {
     "@sample-stack/client-core": "*",
     "@sample-stack/client-redux": "*",
-    "@sample-stack/graphql": "*",
+    "@sample-stack/graphql-gql": "*",
     "apollo-client": "^1.2.2",
     "redux": ">=3.6.0",
     "react": ">=15.0.0",
@@ -58,10 +58,10 @@
   "dependencies": {
     "@sample-stack/client-core": "*",
     "@sample-stack/client-redux": "*",
-    "@sample-stack/graphql": "*"
+    "@sample-stack/graphql-gql": "*"
   },
   "devDependencies": {
-    "@sample-stack/schema": "*",
+    "@sample-stack/graphql-schema": "*",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"

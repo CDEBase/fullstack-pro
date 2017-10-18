@@ -1,5 +1,5 @@
 {
-  "name": "@sample-stack/schema",
+  "name": "@sample-stack/graphql-schema",
   "version": "0.0.1",
   "description": "Sample Schema Module",
   "main": "lib/index.js",

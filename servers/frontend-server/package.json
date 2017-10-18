@@ -40,7 +40,7 @@
 		"@sample-stack/client-core": "*",
 		"@sample-stack/client-react": "*",
 		"@sample-stack/client-redux": "*",
-		"@sample-stack/graphql": "*",
+		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
 		"express": "^4.16.2"
 	},

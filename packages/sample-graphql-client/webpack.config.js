@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: "commonjs2",
-    library: "@sample-stack/graphql",
+    library: "@sample-stack/graphql-gql",
   },
   resolve: {
     extensions: ['.ts', '.graphql', '.gql'],

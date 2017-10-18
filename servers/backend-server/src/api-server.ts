@@ -20,8 +20,7 @@ import { logger } from '@sample-stack/utils';
 let server;
 const app = express();
 
-const { protocol, port, pathname, hostname } = url.parse(process.env.GRAPHQL_URL || __BACKEND_URL__);
-const serverPort = process.env.GRAPHQL_SERVER_PORT || port;
+const { protocol, port: serverPort, pathname, hostname } = url.parse(process.env.GRAPHQL_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku
 app.enable('trust proxy');

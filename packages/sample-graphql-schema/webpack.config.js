@@ -12,7 +12,7 @@ var webpack_opts = {
   target: 'node',
   output: {
     filename: libPath('[name].js'),
-    library: '@sample-stack/schema',
+    library: '@sample-stack/graphql-schema',
     libraryTarget: 'commonjs2',
   },
   resolve: {
