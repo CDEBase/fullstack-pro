@@ -15,8 +15,6 @@ import { createReduxStore } from '../../redux-config';
 import { options as settings } from '../../../.spinrc.json';
 const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
 
-const GRAPHQL_URL = process.env.GRAPHQL_URL || __BACKEND_URL__;
-
 let assetMap;
 async function renderServerSide(req, res, queryMap) {
 
@@ -46,7 +44,8 @@ async function renderServerSide(req, res, queryMap) {
             content={html}
             state={apolloState}
             assetMap={assetMap}
-            helmet={helmet} />
+            helmet={helmet}
+        />
     );
     res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
     res.end();

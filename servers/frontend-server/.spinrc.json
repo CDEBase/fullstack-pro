@@ -28,7 +28,8 @@
             "ts",
             "react",
             "sass",
-            "webpack"
+            "webpack",
+            "css"
         ],
         "backendUrl": "http://{ip}:8080/graphql",
         "ssr": true,

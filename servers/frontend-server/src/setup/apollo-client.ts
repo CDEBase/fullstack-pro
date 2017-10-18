@@ -6,6 +6,7 @@ import {
     ApolloProvider, createBatchingNetworkInterface,
     NetworkInterface,
 } from 'react-apollo';
+import * as url from 'url';
 import { options as settings } from '../../../../.spinrc.json';
 
 import { addPersistedQueries } from 'persistgraphql';
@@ -13,17 +14,17 @@ import { addApolloLogging } from 'apollo-logger';
 // const queryMap = require('persisted_queries.json');
 const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
-const SERVER_PORT = process.env.GRAPHQL_SERVER_PORT || 8080;
 const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
-const GRAPHQL_URL = process.env.GRAPHQL_URL || 'http://localhost:8080/graphql'; // __EXTERNAL_BACKEND_URL__;
+const GRAPHQL_URL = process.env.GRAPHQL_URL || __BACKEND_URL__;
 
+const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(GRAPHQL_URL);
 
 let networkInterface: NetworkInterface;
 if (__CLIENT__) {
     networkInterface = new SubscriptionClient(
-        (GRAPHQL_URL || (window.location.origin + '/graphql'))
-            .replace(/^http/, 'ws')
-            .replace(':' + CLIENT_PORT, ':' + SERVER_PORT), {
+        (GRAPHQL_URL)
+            .replace(/^https?/, 'ws')
+        , {
             reconnect: true,
         }) as NetworkInterface;
 } else {
@@ -65,8 +66,8 @@ const createApolloClient = () => {
     };
     if (__SSR__) {
         if (__CLIENT__) {
-            if (window[__APOLLO_STATE__]) {
-                params.initialState = window[__APOLLO_STATE__];
+            if (window.__APOLLO_STATE__) {
+                params.initialState = window.__APOLLO_STATE__;
             }
             params.ssrForceFetchDelay = 100;
         } else {
