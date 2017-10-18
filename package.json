@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -189,7 +189,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "@cdm-logger/client": "^3.1.0",
+    "@cdm-logger/client": "^3.1.1",
     "@cdm-logger/server": "^3.0.2",
     "apollo-client": "^1.9.2",
     "apollo-link": "^0.7.0",
@@ -232,7 +232,6 @@
     "node-pre-gyp": "~0.6.31",
     "persistgraphql": "^0.3.10",
     "prop-types": "^15.5.8",
-    "ramda": "^0.25.0",
     "react": "^15.5.4",
     "react-apollo": "^1.4.15",
     "react-dom": "^15.5.4",
