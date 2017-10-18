@@ -12,6 +12,8 @@ let server;
 
 const app = express();
 
+// By default it uses backend_url port, which may conflict with graphql server.
+// By passing CLIENT_PORT we can run it on it own port.
 const { port, pathname } = url.parse(__BACKEND_URL__);
 const serverPort = process.env.CLIENT_PORT || port;
 

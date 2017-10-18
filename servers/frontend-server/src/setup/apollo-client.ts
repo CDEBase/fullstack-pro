@@ -14,7 +14,6 @@ import { addApolloLogging } from 'apollo-logger';
 // const queryMap = require('persisted_queries.json');
 const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
-const CLIENT_PORT = process.env.GRAPHQL_CLIENT_PORT || settings.webpackDevPort;
 const GRAPHQL_URL = process.env.GRAPHQL_URL || __BACKEND_URL__;
 
 const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(GRAPHQL_URL);
