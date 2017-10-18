@@ -12,12 +12,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CheckerPlugin, } = require("awesome-typescript-loader");
 const appConfigs = require('./webpack.app_config');
 import pkg from '../package.json';
-import { app as settings } from '../app.json';
+import { options as settings } from '../.spinrc.json';
 
 
 const IS_TEST = process.argv[1].indexOf('mocha-webpack') >= 0;
 if (IS_TEST) {
-    delete settings.graphQLUrl;
+    delete settings.backendUrl;
 }
 const IS_SSR = settings.ssr && !IS_TEST;
 const IS_PERSIST_GQL = settings.persistGraphQL && !IS_TEST;
@@ -172,12 +172,12 @@ let clientPlugins = [
         __CLIENT__: true, __SERVER__: false, __SSR__: settings.ssr,
         __DEV__: __DEV__, 'process.env.NODE_ENV': `"${buildNodeEnv}"`,
         __PERSIST_GQL__: IS_PERSIST_GQL,
-        __EXTERNAL_BACKEND_URL__: settings.graphQLUrl ? `"${settings.graphQLUrl}"` : false
+        __BACKEND_URL__: settings.backendUrl ? `"${settings.backendUrl}"` : false
     })),
     clientPersistPlugin
 ];
 
-if (settings.graphQLUrl) {
+if (settings.backendUrl) {
     clientPlugins.push(new HtmlWebpackPlugin({
         template: 'tools/html-plugin-template.ejs',
         inject: 'body',

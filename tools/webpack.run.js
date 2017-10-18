@@ -13,7 +13,7 @@ import waitOn from 'wait-on';
 import { ConcatSource, RawSource } from 'webpack-sources';
 
 import configs from './webpack.config';
-import { app as settings } from '../app.json';
+import { options as settings } from '../.spinrc.json';
 
 minilog.enable();
 
@@ -109,9 +109,9 @@ function startClient() {
           entry.unshift('react-hot-loader/patch');
         }
         entry.unshift(
-          // `webpack-dev-server/client?http://localhost:${settings.webpackDevPort}/`,
-          // 'webpack/hot/dev-server');
-          `webpack-hot-middleware/client`);
+          `webpack-dev-server/client?http://localhost:${settings.webpackDevPort}/`,
+          'webpack/hot/dev-server');
+          // `webpack-hot-middleware/client`);
       });
       clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin());

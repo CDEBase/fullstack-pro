@@ -1,0 +1,12 @@
+{
+  "app": {
+    "apolloLogging": true
+  },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "dev-db.sqlite3"
+    },
+    "useNullAsDefault": true
+  }
+}
