@@ -13,12 +13,15 @@ const { CheckerPlugin, } = require("awesome-typescript-loader");
 const appConfigs = require('./webpack.app_config');
 import pkg from '../package.json';
 import { options as settings } from '../.spinrc.json';
+import * as ip from 'ip';
 
 
 const IS_TEST = process.argv[1].indexOf('mocha-webpack') >= 0;
 if (IS_TEST) {
     delete settings.backendUrl;
 }
+const backendUrl = settings.backendUrl.replace('{ip}', ip.address());
+
 const IS_SSR = settings.ssr && !IS_TEST;
 const IS_PERSIST_GQL = settings.persistGraphQL && !IS_TEST;
 global.__DEV__ = process.argv.length >= 3 && (process.argv[2].indexOf('watch') >= 0 || IS_TEST);
@@ -112,7 +115,8 @@ let serverPlugins = [
     new webpack.DefinePlugin(Object.assign({
         __CLIENT__: false, __SERVER__: true, __SSR__: settings.ssr,
         __DEV__: __DEV__, 'process.env.NODE_ENV': `"${buildNodeEnv}"`,
-        __PERSIST_GQL__: IS_PERSIST_GQL
+        __PERSIST_GQL__: IS_PERSIST_GQL,
+        __BACKEND_URL__: backendUrl ? `"${backendUrl}"` :  "http://localhost:8080/graphql"
     })),
     serverPersistPlugin
 ];
@@ -172,12 +176,12 @@ let clientPlugins = [
         __CLIENT__: true, __SERVER__: false, __SSR__: settings.ssr,
         __DEV__: __DEV__, 'process.env.NODE_ENV': `"${buildNodeEnv}"`,
         __PERSIST_GQL__: IS_PERSIST_GQL,
-        __BACKEND_URL__: settings.backendUrl ? `"${settings.backendUrl}"` : false
+        __BACKEND_URL__: backendUrl ? `"${backendUrl}"` :  "http://localhost:8080/graphql"
     })),
     clientPersistPlugin
 ];
 
-if (settings.backendUrl) {
+if (backendUrl) {
     clientPlugins.push(new HtmlWebpackPlugin({
         template: 'tools/html-plugin-template.ejs',
         inject: 'body',

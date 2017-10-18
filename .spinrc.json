@@ -54,8 +54,10 @@
         "backendUrl": "http://{ip}:8080/graphql",
         "ssr": false,
         "webpackDll": true,
+        "webpackDevPort": 3000,
         "reactHotLoader": false,
         "persistGraphQL": false,
-        "frontendRefreshOnBackendChange": true
+        "frontendRefreshOnBackendChange": true,
+        "apiPort": 8080
     }
 }
