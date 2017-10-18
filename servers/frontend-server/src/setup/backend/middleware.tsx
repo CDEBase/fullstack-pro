@@ -29,7 +29,7 @@ async function renderServerSide(req, res, queryMap) {
         </ApolloProvider>
     );
 
-    // await getDataFromTree(component);
+    await getDataFromTree(component);
     res.status(200);
     const html = ReactDOMServer.renderToString(component);
     const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
