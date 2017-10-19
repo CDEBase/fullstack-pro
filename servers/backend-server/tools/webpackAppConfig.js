@@ -2,38 +2,9 @@
 const server = {
      entry: {
        index: [
-        './src/setup/app.ts'        
+        './src/index.ts'        
        ]
      }
-};
-
-// App-specific web front-end Webpack config should be here
-const web = {
-    entry: {
-        index: [
-            './src/index.tsx'
-        ]
-    }
-};
-
-// App-specific Android React Native front-end Webpack config should be here
-const android = {
-    //  entry: {
-    //    'index.mobile.bundle': [
-    //      require.resolve('./react-native-polyfill.js'),
-    //      './src/mobile/index.js'
-    //    ]
-    //  }
-};
-
-// App-specific iOS React Native front-end Webpack config should be here
-const ios = {
-    //  entry: {
-    //    'index.mobile.bundle': [
-    //      require.resolve('./react-native-polyfill.js'),
-    //      './src/mobile/index.js'
-    //    ]
-    //  }
 };
 
 const dependencyPlatforms = {
