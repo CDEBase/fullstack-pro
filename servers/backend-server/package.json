@@ -6,6 +6,7 @@
 	"private": true,
 	"scripts": {
 		"prepublish": "npm run build:clean",
+		"build": "spin build",
 		"build:clean": "rimraf dist",
 		"test": "jest",
 		"test:watch": "npm test -- --watch",

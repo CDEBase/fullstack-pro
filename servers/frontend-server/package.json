@@ -7,7 +7,7 @@
 	"scripts": {
 		"prebuild": "npm run build:clean",
 		"build:clean": "rimraf dist",
-		"build": "../../node_modules/.bin/spin build",
+		"build": "spin build",
 		"start": "node dist/index.js",
 		"docker:build": "docker build . -t sample-stack-frontend:0.0.1",
 		"docker:run": "docker run -it sample-stack-frontend:0.0.1",
