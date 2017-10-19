@@ -37,4 +37,4 @@ const dependencyPlatforms = {
     // 'universal-cookie-express': 'server',
 };
 
-module.exports = { server, web, android, ios, dependencyPlatforms };
+module.exports = { server, dependencyPlatforms };
