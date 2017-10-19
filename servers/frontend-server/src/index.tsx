@@ -12,14 +12,7 @@ import { Component } from './components';
 
 require('backend_reload');
 
-import {
-  reducers,
-  Store as StoreState,
-} from '@sample-stack/client-redux';
-
-import { Counter, PersonList, CounterWithApollo } from '@sample-stack/client-react';
 import './index.css';
-
 
 const rootEl = document.getElementById('content');
 

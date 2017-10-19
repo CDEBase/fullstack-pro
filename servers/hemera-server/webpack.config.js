@@ -1,4 +1,4 @@
-var nodeExternals = require('cdm-webpack-node-externals');
+var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');

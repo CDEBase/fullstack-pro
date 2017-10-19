@@ -20,7 +20,6 @@ import { logger } from '@sample-stack/utils';
 let server;
 const app = express();
 
-console.log(__BACKEND_URL__);
 const { protocol, port: serverPort, pathname, hostname } = url.parse(process.env.GRAPHQL_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku

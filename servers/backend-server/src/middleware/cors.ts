@@ -5,7 +5,7 @@ import { options as settings } from '../../../../.spinrc.json';
 
 
 const port = process.env.CLIENT_PORT || settings.webpackDevPort;
-const appUrl = `http://localhost:${port}`;
+const appUrl = process.env.CLIENT_URL || `http://localhost:${port}`;
 
 const corsWhitelist = [
   appUrl,
