@@ -5,10 +5,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
+import { Provider as ReduxProvider } from 'react-redux';
 import createRenderer from './setup/fela-renderer';
 import { createApolloClient } from './setup/apollo-client';
 import { createReduxStore } from './redux-config';
 import { Component } from './components';
+import { createRenderer as createFelaRenderer } from 'fela';
 
 require('backend_reload');
 
@@ -37,14 +39,17 @@ if (module.hot) {
 // Commented out ("let HTML app be HTML app!")
 window.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('stylesheet');
-  const renderer = createRenderer(document.getElementById('font-stylesheet'));
+  // const renderer = createRenderer(document.getElementById('font-stylesheet'));
+  const renderer = createFelaRenderer(); 
   if (rootEl) {
     ReactDOM.render(
-      <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
-        <ApolloProvider store={store} client={client}>
-          <Component />
-        </ApolloProvider>
-      </ReactFela.Provider>
+      <ApolloProvider store={store} client={client}>
+        <ReactFela.Provider renderer={renderer}>
+          <ReduxProvider store={store} >
+            <Component />
+          </ReduxProvider>
+        </ReactFela.Provider>
+      </ApolloProvider>
       , rootEl);
   }
 });

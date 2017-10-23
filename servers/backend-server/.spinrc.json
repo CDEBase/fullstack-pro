@@ -24,7 +24,6 @@
         "stack": [
             "apollo",
             "ts",
-            "react",
             "webpack",
             "css"
         ],

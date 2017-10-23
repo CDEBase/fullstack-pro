@@ -8,16 +8,16 @@ import * as url from 'url';
 import { options as settings } from '../../../../../.spinrc.json';
 import { logger } from '@sample-stack/utils';
 import { websiteMiddleware } from './middleware';
-const queryMap = require('@sample-stack/graphql/extracted_queries.json');
+import { corsMiddleware } from './cors';
+import { SETTINGS } from '../../config';
+// const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
 let server;
 
 const app = express();
 
 // By default it uses backend_url port, which may conflict with graphql server.
-// By passing CLIENT_PORT we can run it on it own port.
-const { port, pathname } = url.parse(__BACKEND_URL__);
-const serverPort = process.env.CLIENT_PORT || port;
+const { port: serverPort, pathname } = url.parse(SETTINGS.XTERM_CLIENT_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku
 app.enable('trust proxy');

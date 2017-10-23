@@ -32,6 +32,9 @@
             "css"
         ],
         "backendUrl": "http://{ip}:8080/graphql",
+        "defines": {
+            "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
+        },
         "ssr": true,
         "webpackDll": true,
         "reactHotLoader": false,

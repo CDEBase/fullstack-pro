@@ -1,14 +1,14 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { SETTINGS } from '../config';
+import { SETTINGS } from '../../config';
 
-const port = SETTINGS.webpackDevPort;
+
+const port =  SETTINGS.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
-const CLIENT_URL = SETTINGS.XTERM_CLIENT_URL || __BACKEND_URL__;
+const GRAPHQL_URL = SETTINGS.GRAPHQL_URL || __BACKEND_URL__;
 
 const corsWhitelist = [
   appUrl,
-  CLIENT_URL,
 ];
 
 const corsOptions = {

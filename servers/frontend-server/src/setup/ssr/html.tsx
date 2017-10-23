@@ -1,10 +1,20 @@
+/// <reference path='../../../../../typings/index.d.ts' />
+
 import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
 import { Store } from 'redux';
 
-const Html = ({ content, state, assetMap, css, helmet }:
-    { content?: string, state: Store<any> | {}, assetMap?: string, css?: string, helmet?: HelmetData }) => {
+
+const Html = ({
+    content,
+    state,
+    fela,
+    assetMap,
+    css,
+    helmet,
+}:
+    { content?: any, state: any, assetMap?: string[], fela?: any, css?: string, helmet?: HelmetData }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
@@ -15,24 +25,17 @@ const Html = ({ content, state, assetMap, css, helmet }:
                 {helmet.meta.toComponent()}
                 {helmet.link.toComponent()}
                 <meta charSet="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="apple-touch-icon" sizes="180x180" href={`/${assetMap['apple-touch-icon.png']}`} />
-                <link rel="icon" type="image/png" href={`/${assetMap['favicon-32x32.png']}`} sizes="32x32" />
-                <link rel="icon" type="image/png" href={`/${assetMap['favicon-16x16.png']}`} sizes="16x16" />
-                <link rel="manifest" href={`/${assetMap['manifest.json']}`} />
-                <link rel="mask-icon" href={`/${assetMap['safari-pinned-tab.svg']}`} color="#5bbad5" />
-                <link rel="shortcut icon" href={`/${assetMap['favicon.ico']}`} />
-                <meta name="msapplication-config" content={`/${assetMap['browserconfig.xml']}`} />
-                <meta name="theme-color" content="#ffffff" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
                 {!__DEV__ && <link rel="stylesheet" type="text/css" href={`/${assetMap['index.css']}`} />}
-                {/* {!!__DEV__ && (
-                    <style
-                        dangerouslySetInnerHTML={{
-                            __html: styles._getCss()
-                        }}
-                    />
-                )} */}
-                {!!css && css}
+
+                <style
+                    dangerouslySetInnerHTML={{
+                        __html: `#content { height: 95vh; }`
+                    }}
+                />
+                <style id="stylesheet"></style>
+                <style id="font-stylesheet"></style>
+
             </head>
             <body {...bodyAttrs}>
                 <div id="content" dangerouslySetInnerHTML={{ __html: content || '' }} />

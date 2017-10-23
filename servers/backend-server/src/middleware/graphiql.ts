@@ -1,10 +1,10 @@
 import { graphiqlExpress } from 'graphql-server-express';
 import * as url from 'url';
-import { options as settings } from '../../../../..spinrc.json';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
+import { SETTINGS } from '../config';
 
-const { port, pathname, hostname } = url.parse(process.env.GRAPHQL_URL || __BACKEND_URL__);
+const { port, pathname, hostname } = url.parse(SETTINGS.GRAPHQL_URL || __BACKEND_URL__);
 
 const subscriptionUrl = `ws://${hostname}:${port}${pathname || GRAPHQL_ROUTE}`;
 

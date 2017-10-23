@@ -13,14 +13,13 @@ import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
-import { options as settings } from '../../../.spinrc.json';
-
+import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
 
 let server;
 const app = express();
 
-const { protocol, port: serverPort, pathname, hostname } = url.parse(process.env.GRAPHQL_URL || __BACKEND_URL__);
+const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.GRAPHQL_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
@@ -29,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 if (__DEV__) {
-    app.use('/', express.static(settings.dllBuildDir, { maxAge: '180 days' }));
+    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
 }
 
 if (__PERSIST_GQL__) {

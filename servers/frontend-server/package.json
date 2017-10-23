@@ -5,12 +5,16 @@
 	"private": true,
 	"main": "index.js",
 	"scripts": {
-		"prebuild": "npm run build:clean",
-		"build:clean": "rimraf dist",
-		"build": "spin build",
-		"start": "node dist/index.js",
 		"docker:build": "docker build . -t sample-stack-frontend:0.0.1",
 		"docker:run": "docker run -it sample-stack-frontend:0.0.1",
+		"prebuild": "npm run build:clean",
+		"build:clean": "rimraf dist",
+		"build": "cross-env NODE_ENV=production spin build",
+		"start": "node --harmony dist",
+		"start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env node --harmony dist",
+		"watch": "spin watch",
+		"watch:debug": "npm run watch -- -v",
+		"watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env spin watch",
 		"jest": "./node_modules/.bin/jest",
 		"test": "jest",
 		"test:debug": "npm test -- --runInBand",
@@ -27,13 +31,11 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"devDependencies": {
+		"cross-env": "^5.0.5",
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
 		"spinjs": "^0.4.15",
-		"webpack": "^3.7.1",
-		"webpack-dev-server": "^2.9.1",
-		"webpack-fail-plugin": "^2.0.0",
-		"webpack-visualizer-plugin": "^0.1.11"
+		"webpack": "^3.7.1"
 	},
 	"dependencies": {
 		"@sample-stack/core": "*",
