@@ -10,7 +10,7 @@ const { options : spin }: { options: __SPIN_OPTIONS__} = JSON.parse(fs.readFileS
 export const SETTINGS: __SETTINGS__ = {
     ...spin,
     ...PUBLIC_SETTINGS,
-    XTERM_CLIENT_URL: process.env.XTERM_CLIENT_URL,
+    CLIENT_URL: process.env.CLIENT_URL,
     NATS_URL: process.env.NATS_URL,
     NATS_USER: process.env.NATS_USER,
     NATS_PW: process.env.NATS_PW,

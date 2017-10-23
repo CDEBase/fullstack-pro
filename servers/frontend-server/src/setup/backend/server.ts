@@ -17,7 +17,7 @@ let server;
 const app = express();
 
 // By default it uses backend_url port, which may conflict with graphql server.
-const { port: serverPort, pathname } = url.parse(SETTINGS.XTERM_CLIENT_URL || __BACKEND_URL__);
+const { port: serverPort, pathname } = url.parse(SETTINGS.CLIENT_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku
 app.enable('trust proxy');

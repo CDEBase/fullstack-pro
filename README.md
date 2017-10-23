@@ -12,7 +12,7 @@ The idea is to create modules for each package so it can work independently as w
 
 Useful commands:
 ---
-|`command`|Description|
+|command|Description|
 |--------------------------|-----------|    
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
 |`npm start`(deprecated)|       - starts the web server and backend server. Use `npm run spin:watch`|
@@ -48,14 +48,16 @@ If you want to develop FullStack locally you must follow the following instructi
 * Fork or Clone this repository
 
 * Install the project in your computer
-
+1. Clone fullstack-pro locally
 ```
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
+2. Install dependencies.
 npm install
 ```
-to run server
-you can run both the client and server together by 
+3. Seed development database data
+npm run db:seed
+4. Start both client and server together
 ```
 npm run spin:watch
 ```
@@ -77,6 +79,28 @@ npm run watch
 ```
 [lerna-clean]: https://github.com/lerna/lerna#clean
 
+### Server Side Rendering
+Useful to run Frontend and Backend in two seperate servers. 
+to start frontend server
+```
+cd frontend-server
+npm run build
+npm start
+```
+to start backend server
+```
+cd backend-server
+npm run db:seed
+npm run build
+npm start
+```
+
+### Environment setting for non-development
+GRAPHQL_URL
+CLIENT_URL
+NATS_URL
+NATS_USER
+NATS_PW
 
 ## Troubleshoot
 To troubleshoot webpack configuration run
