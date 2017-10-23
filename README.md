@@ -96,12 +96,13 @@ npm start
 ```
 
 ### Environment setting for non-development
+```
 GRAPHQL_URL
 CLIENT_URL
 NATS_URL
 NATS_USER
 NATS_PW
-
+```
 ## Troubleshoot
 To troubleshoot webpack configuration run
 ```
