@@ -90,6 +90,7 @@ const dependencyPlatforms = {
     sqlite3: 'server',
     'styled-components': ['server', 'web'],
     'subscriptions-transport-ws': ['ios', 'android', 'web'],
+    'ws': ['server']    
 };
 
 module.exports = { server, web, android, ios, dependencyPlatforms };
