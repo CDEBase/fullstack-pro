@@ -6,7 +6,6 @@ import * as http from 'http';
 import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
-import { options as settings } from '../../../../../.spinrc.json';
 import { logger } from '@sample-stack/utils';
 import { websiteMiddleware } from './middleware';
 import { corsMiddleware } from './cors';
@@ -28,14 +27,14 @@ app.use(bodyParser.json());
 
 app.use(
     '/',
-    express.static(path.join(settings.frontendBuildDir, 'web'), {
+    express.static(path.join(SETTINGS.frontendBuildDir, 'web'), {
         maxAge: '180 days',
     }),
 );
 
 
 if (__DEV__) {
-    app.use('/', express.static(settings.dllBuildDir, { maxAge: '180 days' }));
+    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
 }
 
 app.use(websiteMiddleware);
