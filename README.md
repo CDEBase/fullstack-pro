@@ -52,11 +52,15 @@ If you want to develop FullStack locally you must follow the following instructi
 ```
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
+```
 2. Install dependencies.
+```
 npm install
 ```
 3. Seed development database data
+```
 npm run db:seed
+```
 4. Start both client and server together
 ```
 npm run spin:watch
