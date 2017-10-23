@@ -19,9 +19,9 @@
         }
     },
     "options": {
-        "backendBuildDir": "./dist",
-        "frontendBuildDir": "./dist",
-        "dllBuildDir": "build/dll",
+        "backendBuildDir": "dist",
+        "frontendBuildDir": "dist",
+        "dllBuildDir": "dist/.build/dll",
         "overridesConfig": "./tools/webpackAppConfig.js",
         "stack": [
             "apollo",
@@ -31,7 +31,7 @@
             "webpack",
             "css"
         ],
-        "backendUrl": "http://{ip}:8080/graphql",
+        "backendUrl": "http://{ip}:3010",
         "defines": {
             "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
         },
