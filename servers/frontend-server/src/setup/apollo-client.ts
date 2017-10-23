@@ -18,7 +18,7 @@ const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(PUBLIC_SE
 let networkInterface: NetworkInterface;
 if (__CLIENT__) {
     networkInterface = new SubscriptionClient(
-        (__CLIENT__)
+        (PUBLIC_SETTINGS.GRAPHQL_URL)
             .replace(/^https?/, 'ws')
         , {
             reconnect: true,
@@ -34,7 +34,7 @@ if (__CLIENT__) {
 }
 
 if (__PERSIST_GQL__) {
-//     networkInterface = addPersistedQueries(networkInterface, queryMap);
+    //     networkInterface = addPersistedQueries(networkInterface, queryMap);
 }
 // Hybrid WebSocket Transport
 // https://github.com/apollographql/subscriptions-transport-ws#hybrid-websocket-transport
