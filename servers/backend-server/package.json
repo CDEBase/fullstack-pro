@@ -59,7 +59,6 @@
 		"isomorphic-fetch": "^2.2.1",
 		"inversify": "^4.1.0",
 		"graphql": "^0.10.5",
-		"graphql-tools": "1.2.2",
 		"graphql-subscriptions": "^0.5.0",
 		"graphql-server-express": "^1.1.2",
 		"express": "^4.16.2",

@@ -31,12 +31,12 @@
             "webpack",
             "css"
         ],
-        "backendUrl": "http://{ip}:3010",
+        "backendUrl": "http://localhost:3010",
         "defines": {
             "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
         },
         "ssr": true,
-        "webpackDll": true,
+        "webpackDll": false,
         "reactHotLoader": false,
         "persistGraphQL": false,
         "frontendRefreshOnBackendChange": true
