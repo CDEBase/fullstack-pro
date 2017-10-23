@@ -95,7 +95,7 @@ npm run build
 npm start
 ```
 
-### Environment setting for non-development
+### Environment settings for non-development
 ```
 GRAPHQL_URL
 CLIENT_URL
