@@ -9,33 +9,42 @@ import { Component } from '../../components';
 import Helmet from 'react-helmet';
 import * as path from 'path';
 import * as fs from 'fs';
+const { renderToMarkup } = require('fela-dom');
+import { Provider as ReduxProvider } from 'react-redux';
 import { logger } from '@sample-stack/client-core';
 import { createApolloClient } from '../apollo-client';
+import * as ReactFela from 'react-fela';
+import createRenderer from './felaRenderer';
+import { SETTINGS } from '../../config';
 import { createReduxStore } from '../../redux-config';
-import { options as settings } from '../../../.spinrc.json';
-const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
+// const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
 
 let assetMap;
-async function renderServerSide(req, res, queryMap) {
+async function renderServerSide(req, res) {
 
     const client = createApolloClient();
 
     let initialState = {};
     const store = createReduxStore(initialState, client);
-
+    const renderer = createRenderer();    
     const component = (
         <ApolloProvider store={store} client={client}>
-            <Component />
+            <ReduxProvider store={store} >
+                <ReactFela.Provider renderer={renderer} >
+                    <Component />
+                </ReactFela.Provider>
+            </ReduxProvider>
         </ApolloProvider>
     );
 
+    const appCss = renderToMarkup(renderer);    
     await getDataFromTree(component);
     res.status(200);
     const html = ReactDOMServer.renderToString(component);
     const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
 
     if (__DEV__ || !assetMap) {
-        assetMap = JSON.parse(fs.readFileSync(path.join(settings.frontendBuildDir, 'web', 'assets.json')).toString());
+        assetMap = JSON.parse(fs.readFileSync(path.join(SETTINGS.frontendBuildDir, 'web', 'assets.json')).toString());
     }
     const apolloState = Object.assign({}, client.store.getState());
 
@@ -45,6 +54,7 @@ async function renderServerSide(req, res, queryMap) {
             state={apolloState}
             assetMap={assetMap}
             helmet={helmet}
+            css={appCss}
         />
     );
     res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
@@ -54,7 +64,7 @@ async function renderServerSide(req, res, queryMap) {
 export const websiteMiddleware = async (req, res, next) => {
     try {
         if (req.url.indexOf('.') < 0 && __SSR__) {
-            return renderServerSide(req, res, QUERY_MAP);
+            return renderServerSide(req, res);
         } else {
             return next();
         }
