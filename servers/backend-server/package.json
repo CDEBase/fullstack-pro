@@ -15,7 +15,7 @@
 		"test": "jest",
 		"test:watch": "npm test -- --watch",
 		"test:notify": "npm run test:watch -- --notify",
-		"docker:build": "docker build . -t sample-stack-backend:0.0.4",
+		"docker:build": "npm run build && docker build . -t sample-stack-backend:0.0.4",
 		"docker:run": "docker run -it sample-stack-backend:0.0.4",
 		"preupver": "npm test",
 		"upver": "standard-version",
