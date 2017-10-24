@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "webpack": "^3.7.1"
   },
   "dependencies": {
-    "@sample-stack/core": "*"
+    "@sample-stack/core": "^0.0.4"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
