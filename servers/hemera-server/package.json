@@ -14,7 +14,7 @@
     "author": "CDMBase LLC",
     "license": "ISC",
     "dependencies": {
-        "@sample-stack/hemera-counter": "*"
+        "@sample-stack/hemera-counter": "0.0.4"
     },
     "devDependencies": {
         "jest": "^21.1.0",
