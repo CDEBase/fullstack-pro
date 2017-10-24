@@ -44,12 +44,12 @@ describe('actions', () => {
     });
 
     describe('when API request succeeds', () => {
-      it('dispatches @@sample/SAVE_COUNT_SUCCESS', () => {
+      it('dispatches @@sample-stack/SAVE_COUNT_SUCCESS', () => {
         const { dispatch, reducer } = store();
         actions.saveCount({ value: 14 })(dispatch);
         return eventually(expectTypes(reducer, [
-          '@@sample/SAVE_COUNT_REQUEST',
-          '@@sample/SAVE_COUNT_SUCCESS',
+          '@@sample-stack/SAVE_COUNT_REQUEST',
+          '@@sample-stack/SAVE_COUNT_SUCCESS',
         ]));
       });
     });
@@ -59,16 +59,16 @@ describe('actions', () => {
         api.save.mockReturnValue(Promise.reject(new Error('something terrible happened')));
       });
 
-      it('dispatches @@sample/SAVE_COUNT_ERROR', () => {
+      it('dispatches @@sample-stack/SAVE_COUNT_ERROR', () => {
         const { dispatch, reducer } = store();
         actions.saveCount({ value: 14 })(dispatch);
         return eventually(expectTypes(reducer, [
-          '@@sample/SAVE_COUNT_REQUEST',
-          '@@sample/SAVE_COUNT_ERROR',
+          '@@sample-stack/SAVE_COUNT_REQUEST',
+          '@@sample-stack/SAVE_COUNT_ERROR',
         ]));
       });
 
-      it('includes error message with @@sample/SAVE_COUNT_ERROR', () => {
+      it('includes error message with @@sample-stack/SAVE_COUNT_ERROR', () => {
         const { dispatch, reducer } = store();
         actions.saveCount({ value: 14 })(dispatch);
         return eventually(() => {
@@ -77,7 +77,7 @@ describe('actions', () => {
         });
       });
 
-      it('includes request with @@sample/SAVE_COUNT_ERROR for convenience', () => {
+      it('includes request with @@sample-stack/SAVE_COUNT_ERROR for convenience', () => {
         const { dispatch, reducer } = store();
         actions.saveCount({ value: 14 })(dispatch);
         return eventually(() => {
@@ -98,12 +98,12 @@ describe('actions', () => {
     });
 
     describe('when API request succeeds', () => {
-      it('dispatches @sample/LOAD_COUNT_SUCCESS', () => {
+      it('dispatches @sample-stack/LOAD_COUNT_SUCCESS', () => {
         const { dispatch, reducer } = store();
         actions.loadCount(null)(dispatch);
         return eventually(expectTypes(reducer, [
-          '@@sample/LOAD_COUNT_REQUEST',
-          '@@sample/LOAD_COUNT_SUCCESS',
+          '@@sample-stack/LOAD_COUNT_REQUEST',
+          '@@sample-stack/LOAD_COUNT_SUCCESS',
         ]));
       });
 
@@ -121,16 +121,16 @@ describe('actions', () => {
         api.load.mockReturnValue(Promise.reject(new Error('something terrible happened')));
       });
 
-      it('dispatches @@sample/LOAD_COUNT_ERROR', () => {
+      it('dispatches @@sample-stack/LOAD_COUNT_ERROR', () => {
         const { dispatch, reducer } = store();
         actions.loadCount(null)(dispatch);
         return eventually(expectTypes(reducer, [
-          '@@sample/LOAD_COUNT_REQUEST',
-          '@@sample/LOAD_COUNT_ERROR',
+          '@@sample-stack/LOAD_COUNT_REQUEST',
+          '@@sample-stack/LOAD_COUNT_ERROR',
         ]));
       });
 
-      it('includes error message with @@sample/LOAD_COUNT_ERROR', () => {
+      it('includes error message with @@sample-stack/LOAD_COUNT_ERROR', () => {
         const { dispatch, reducer } = store();
         actions.loadCount(null)(dispatch);
         return eventually(() => {

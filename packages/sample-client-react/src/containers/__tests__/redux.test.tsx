@@ -5,7 +5,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { connect } from 'react-redux';
 import { pure, compose, flattenProp } from 'recompose';
 import { print } from 'graphql';
-import { combineReducers as loopCombine, install } from 'redux-loop';
 import gql from 'graphql-tag';
 
 declare function require(name: string);

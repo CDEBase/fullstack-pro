@@ -308,7 +308,7 @@
               "deprecationReason": null
             },
             {
-              "name": "countUpdated",
+              "name": "subscribeToCount",
               "description": "Subscription fired when anyone increases counter",
               "args": [],
               "type": {

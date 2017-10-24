@@ -1,14 +1,14 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { app as settings } from '../../../../app.json';
+import { SETTINGS } from '../config';
 
-
-
-const port = process.env.PORT || settings.webpackDevPort;
+const port = SETTINGS.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
+const CLIENT_URL = SETTINGS.CLIENT_URL || __BACKEND_URL__;
 
 const corsWhitelist = [
   appUrl,
+  CLIENT_URL,
 ];
 
 const corsOptions = {

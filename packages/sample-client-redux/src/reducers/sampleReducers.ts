@@ -4,10 +4,10 @@ import { Store } from './Store';
 
 function isSaving(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case '@@sample/SAVE_COUNT_REQUEST':
+    case '@@sample-stack/SAVE_COUNT_REQUEST':
       return true;
-    case '@@sample/SAVE_COUNT_SUCCESS':
-    case '@@sample/SAVE_COUNT_ERROR':
+    case '@@sample-stack/SAVE_COUNT_SUCCESS':
+    case '@@sample-stack/SAVE_COUNT_ERROR':
       return false;
     default:
       return state;
@@ -16,10 +16,10 @@ function isSaving(state: boolean = false, action: Action): boolean {
 
 function isLoading(state: boolean = false, action: Action): boolean {
   switch (action.type) {
-    case '@@sample/LOAD_COUNT_REQUEST':
+    case '@@sample-stack/LOAD_COUNT_REQUEST':
       return true;
-    case '@@sample/LOAD_COUNT_SUCCESS':
-    case '@@sample/LOAD_COUNT_ERROR':
+    case '@@sample-stack/LOAD_COUNT_SUCCESS':
+    case '@@sample-stack/LOAD_COUNT_ERROR':
       return false;
     default:
       return state;
@@ -28,11 +28,11 @@ function isLoading(state: boolean = false, action: Action): boolean {
 
 function error(state: string = '', action: Action): string {
   switch (action.type) {
-    case '@@sample/LOAD_COUNT_REQUEST':
-    case '@@sample/SAVE_COUNT_REQUEST':
+    case '@@sample-stack/LOAD_COUNT_REQUEST':
+    case '@@sample-stack/SAVE_COUNT_REQUEST':
       return '';
-    case '@@sample/LOAD_COUNT_ERROR':
-    case '@@sample/SAVE_COUNT_ERROR':
+    case '@@sample-stack/LOAD_COUNT_ERROR':
+    case '@@sample-stack/SAVE_COUNT_ERROR':
       return action.error.toString();
     default:
       return state;
@@ -45,14 +45,14 @@ const initialState: Store.Counter = {
 
 function counter(state: Store.Counter = initialState, action: Action): Store.Counter {
   switch (action.type) {
-    case '@@sample/INCREMENT_COUNTER':
+    case '@@sample-stack/INCREMENT_COUNTER':
       const { delta } = action;
       return { value: state.value + delta };
 
-    case '@@sample/RESET_COUNTER':
+    case '@@sample-stack/RESET_COUNTER':
       return { value: 0 };
 
-    case '@@sample/LOAD_COUNT_SUCCESS':
+    case '@@sample-stack/LOAD_COUNT_SUCCESS':
       return { value: action.response.value };
 
     default:
@@ -61,8 +61,8 @@ function counter(state: Store.Counter = initialState, action: Action): Store.Cou
 }
 
 export const reducers = {
-  '@sample/counter': counter,
-  '@sample/isSaving': isSaving,
-  '@sample/isLoading': isLoading,
-  '@sample/error': error,
+  '@sample-stack/counter': counter,
+  '@sample-stack/isSaving': isSaving,
+  '@sample-stack/isLoading': isLoading,
+  '@sample-stack/error': error,
 };

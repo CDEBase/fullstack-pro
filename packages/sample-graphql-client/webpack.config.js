@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: "commonjs2",
-    library: "@sample/graphql",
+    library: "@sample-stack/graphql-gql",
   },
   resolve: {
     extensions: ['.ts', '.graphql', '.gql'],
@@ -43,7 +43,7 @@ var webpack_opts = {
     {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-      use: "graphql-tag/loader"
+      use: ['graphql-tag/loader', 'persistgraphql-webpack-plugin/graphql-loader']
     },
     {
       test: /\.json?$/,

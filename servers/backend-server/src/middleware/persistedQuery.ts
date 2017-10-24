@@ -1,7 +1,7 @@
 import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
 
-const queryMap = require('persisted_queries.json');
+const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
 export const persistedQueryMiddleware = (req, res, next) => {
     const invertedMap = invert(queryMap);

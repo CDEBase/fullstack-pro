@@ -5,5 +5,5 @@ const settings: IConsoleLoggerSettings = {
     level: 'debug',
 };
 
-export const logger: Logger = ConsoleLogger.create('fullstack-server', settings);
+export const logger: Logger = ConsoleLogger.create('@sample-stack-server', settings);
 

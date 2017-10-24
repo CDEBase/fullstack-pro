@@ -7,20 +7,19 @@ import * as http from 'http';
 import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE, GRAPHQL_ROUTE } from './ENDPOINTS';
 import * as Webpack from 'webpack';
-
+import * as url from 'url';
 import { corsMiddleware } from './middleware/cors';
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
-import { app as settings } from '../../../app.json';
-
-import { logger } from '@sample/utils';
+import { SETTINGS } from './config';
+import { logger } from '@sample-stack/utils';
 
 let server;
 const app = express();
 
-const port = process.env.API_PORT || settings.apiPort;
+const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.GRAPHQL_URL || __BACKEND_URL__);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
@@ -28,9 +27,13 @@ app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (settings.persistGraphQL && process.env.NODE_ENV !== 'test') {
+if (__DEV__) {
+    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
+}
+
+if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
@@ -41,8 +44,8 @@ server = http.createServer(app);
 
 addGraphQLSubscriptions(server);
 
-server.listen(port, () => {
-    logger.info(`API is now running on port ${port}`);
+server.listen(serverPort, () => {
+    logger.info(`API is now running on port ${serverPort}`);
 });
 
 server.on('close', () => {

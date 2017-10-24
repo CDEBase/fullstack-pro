@@ -11,7 +11,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: "commonjs2",
-    library: '@sample/client-core'
+    library: '@sample-stack/client-core'
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -46,7 +46,7 @@ var webpack_opts = {
     },]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample/core": "@sample/core" }]
+  { "@sample-stack/core": "@sample-stack/core" }]
 };
 
 module.exports = webpack_opts;

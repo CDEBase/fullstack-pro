@@ -7,18 +7,21 @@
 	"scripts": {
 		"prepublish": "npm run build:clean",
 		"build:clean": "rimraf dist",
+		"build": "cross-env NODE_ENV=production spin build",
+		"start": "node --harmony dist",
+		"start:staging": "cross-env ENV_FILE=../../config/staging/staging.env node --harmony dist",
+		"watch": "spin watch",
+		"watch:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env spin watch",
 		"test": "jest",
 		"test:watch": "npm test -- --watch",
 		"test:notify": "npm run test:watch -- --notify",
 		"docker:build": "docker build . -t sample-stack-backend:0.0.1",
 		"docker:run": "docker run -it sample-stack-backend:0.0.1",
-		"start": "node dist/index.js",
-		"start:watch": "concurrently \"npm run build:watch\" \"node-dev dist/index.js\"",
 		"preupver": "npm test",
 		"upver": "standard-version",
-		"db:migrate": "../../node_modules/.bin/knex migrate:latest --cwd ../../ --knexfile ./knexfile.ts",
-		"db:migrate:rollback": "../../node_modules/.bin/knex migrate:rollback  --cwd ../../ --knexfile ./knexfile.ts",
-		"db:seed": "npm run db:migrate && ../../node_modules/.bin/knex seed:run  --cwd ../../ --knexfile ./knexfile.ts"
+		"db:migrate": "../../node_modules/.bin/knex migrate:latest --cwd . --knexfile ./knexfile.ts",
+		"db:migrate:rollback": "../../node_modules/.bin/knex migrate:rollback  --cwd . --knexfile ./knexfile.ts",
+		"db:seed": "npm run db:migrate && ../../node_modules/.bin/knex seed:run  --cwd . --knexfile ./knexfile.ts"
 	},
 	"keywords": [
 		"apollo",
@@ -41,9 +44,12 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
-		"@sample/schema": "*",
-		"@sample/server-core": "*",
-		"@sample/store": "*",
+		"@sample-stack/graphql-schema": "*",
+		"@sample-stack/server-core": "*",
+		"@sample-stack/core": "*",
+		"@sample-stack/store": "*",
+		"@sample-stack/graphql-gql": "*",
+		"@sample-stack/utils": "*",
 		"@cdm-logger/server": "^3.0.2",
 		"apollo-logger": "^0.1.0",
 		"reflect-metadata": "^0.1.10",
@@ -53,12 +59,11 @@
 		"isomorphic-fetch": "^2.2.1",
 		"inversify": "^4.1.0",
 		"graphql": "^0.10.5",
-		"graphql-tools": "1.2.2",
 		"graphql-subscriptions": "^0.5.0",
 		"graphql-server-express": "^1.1.2",
 		"express": "^4.16.2",
 		"cors": "^2.8.3",
-		"body-parser": "^1.18.1",
+		"body-parser": "^1.18.2",
 		"apollo-link": "^0.7.0"
 	},
 	"peerDependencies": {
@@ -72,10 +77,11 @@
 		"morgan": "*"
 	},
 	"devDependencies": {
-		"@sample/utils": "*",
+		"cross-env": "^5.0.5",
+		"spinjs": "^0.4.15",
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
-		"webpack": "^3.5.6"
+		"webpack": "^3.7.1"
 	},
 	"typings": "dist/main.d.ts",
 	"typescript": {

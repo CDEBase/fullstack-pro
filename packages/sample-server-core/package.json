@@ -47,6 +47,7 @@
   "devDependencies": {
     "@sample-stack/utils": "^0.0.3",
     "cross-env": "^5.0.5",
+    "@sample-stack/utils": "*",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"

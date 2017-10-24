@@ -8,10 +8,10 @@ import { Module } from 'webpack';
 import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@sample/utils';
+import { logger } from '@sample-stack/utils';
 import { container } from '../container';
-import { database } from '@sample/schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@sample/store';
+import { database } from '@sample-stack/graphql-schema';
+import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
 let subscriptionServer;
 
@@ -29,7 +29,7 @@ const addSubscriptions = httpServer => {
 
 const addGraphQLSubscriptions = httpServer => {
     if (module.hot && module.hot.data) {
-        const prevServer = module.hot.data['subscriptionServer'];
+        const prevServer = (module.hot.data as any).subscriptionServer;
         if (prevServer && prevServer.wsServer) {
             logger.debug('Reloading the subscription server.');
             prevServer.wsServer.close(() => {
@@ -44,7 +44,7 @@ const addGraphQLSubscriptions = httpServer => {
 if (module.hot) {
     module.hot.dispose(data => {
         try {
-            data['subscriptionServer'] = subscriptionServer;
+            (data as any).subscriptionServer = subscriptionServer;
         } catch (error) {
             logger.error(error.stack);
         }

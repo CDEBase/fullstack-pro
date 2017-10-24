@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -12,9 +13,17 @@ import waitOn from 'wait-on';
 import { ConcatSource, RawSource } from 'webpack-sources';
 
 import configs from './webpack.config';
-import { app as settings } from '../app.json';
+import { options as settings } from '../.spinrc.json';
 
 minilog.enable();
+
+process.on('uncaughtException', (ex) => {
+  console.error(ex);
+});
+
+process.on('unhandledRejection', reason => {
+  console.error(reason);
+});
 
 const logBack = minilog('webpack-for-backend');
 const logFront = minilog('webpack-for-frontend');
@@ -102,6 +111,7 @@ function startClient() {
         entry.unshift(
           `webpack-dev-server/client?http://localhost:${settings.webpackDevPort}/`,
           'webpack/hot/dev-server');
+          // `webpack-hot-middleware/client`);
       });
       clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin());
@@ -171,7 +181,7 @@ function startServer() {
           if (settings.frontendRefreshOnBackendChange) {
             for (let module of stats.compilation.modules) {
               if (module.built && module.resource &&
-                module.resource.indexOf(path.resolve('./src/server')) === 0) {
+                module.resource.indexOf(path.resolve('./backend-server/src')) === 0) {
                 // Force front-end refresh on back-end change
                 logBack.debug('Force front-end current page refresh, due to change in backend at:', module.resource);
                 increaseBackendReloadCount();

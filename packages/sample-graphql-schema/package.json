@@ -1,5 +1,5 @@
 {
-  "name": "@sample-stack/schema",
+  "name": "@sample-stack/graphql-schema",
   "version": "0.0.3",
   "description": "Sample Schema Module",
   "main": "lib/index.js",
@@ -53,8 +53,7 @@
     "webpack": "^3.7.1"
   },
   "peerDependencies": {
-    "@sample-stack/server-core": "^0.0.3",
-    "graphql": "^0.10.0 || ^0.11.0",
+    "lodash": "^4.17.4",
     "graphql-tools": "1.0.0",
     "lodash": "^4.17.4"
   },
