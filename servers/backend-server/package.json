@@ -77,7 +77,6 @@
 		"morgan": "*"
 	},
 	"devDependencies": {
-		"@sample-stack/utils": "*",
 		"cross-env": "^5.0.5",
 		"spinjs": "^0.4.15",
 		"jest": "^21.1.0",
