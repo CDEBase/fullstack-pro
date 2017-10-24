@@ -238,7 +238,7 @@
     "persistgraphql": "^0.3.10",
     "prop-types": "^15.5.8",
     "react": "^15.6.0",
-    "react-apollo": "^1.4.15",
+    "react-apollo": "^1.4.16",
     "react-dom": "^15.6.0",
     "react-fela": "^6.0.3",
     "react-helmet": "^5.2.0",
