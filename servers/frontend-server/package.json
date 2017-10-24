@@ -63,6 +63,7 @@
 		"fela-plugin-prefixer": "^5.0.12",
 		"fela-plugin-unit": "^5.0.11",
 		"fela-plugin-validator": "^5.0.11",
+		"immutability-helper": "^2.2.2",
 		"ramda": "^0.25.0",
 		"js-cookie": "^2.1.4",
 		"react": "^15.6.0",

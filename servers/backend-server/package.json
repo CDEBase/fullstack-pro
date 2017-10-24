@@ -51,6 +51,7 @@
 		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
 		"@cdm-logger/server": "^3.0.2",
+		"dotenv": "^4.0.0",		
 		"apollo-logger": "^0.1.0",
 		"reflect-metadata": "^0.1.10",
 		"lodash": "^4.17.4",
