@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -45,9 +45,9 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "peerDependencies": {
-    "@sample-stack/client-core": "^0.0.1",
-    "@sample-stack/client-redux": "^0.0.1",
-    "@sample-stack/graphql": "^0.0.1",
+    "@sample-stack/client-core": "^0.0.2",
+    "@sample-stack/client-redux": "^0.0.2",
+    "@sample-stack/graphql": "^0.0.2",
     "apollo-client": "^1.2.2",
     "react": ">=15.0.0",
     "react-apollo": "^1.2.0",
@@ -56,12 +56,12 @@
     "redux": ">=3.6.0"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.1",
-    "@sample-stack/client-redux": "^0.0.1",
-    "@sample-stack/graphql": "^0.0.1"
+    "@sample-stack/client-core": "^0.0.2",
+    "@sample-stack/client-redux": "^0.0.2",
+    "@sample-stack/graphql": "^0.0.2"
   },
   "devDependencies": {
-    "@sample-stack/schema": "^0.0.1",
+    "@sample-stack/schema": "^0.0.2",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
