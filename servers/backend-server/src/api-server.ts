@@ -11,7 +11,7 @@ import * as url from 'url';
 import { corsMiddleware } from './middleware/cors';
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
-import { persistedQueryMiddleware } from './middleware/persistedQuery';
+// import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
@@ -33,7 +33,7 @@ if (__DEV__) {
 
 if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
