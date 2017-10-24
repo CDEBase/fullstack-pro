@@ -50,6 +50,7 @@
 		"apollo-link": "^0.7.0",
 		"apollo-logger": "^0.1.0",
 		"browser-bunyan": "^0.4.0",
+		"persistgraphql": "^0.3.10",
 		"bunyan": "^1.8.10",
 		"dotenv": "^4.0.0",
 		"fela": "^6.0.3",
