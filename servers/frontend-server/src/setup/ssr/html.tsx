@@ -10,11 +10,12 @@ const Html = ({
     content,
     state,
     fela,
+    env,
     assetMap,
     css,
     helmet,
 }:
-    { content?: any, state: any, assetMap?: string[], fela?: any, css?: string, helmet?: HelmetData }) => {
+    { content?: any, state: any, assetMap?: string[], env: any, fela?: any, css?: string, helmet?: HelmetData }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
@@ -39,6 +40,14 @@ const Html = ({
             </head>
             <body {...bodyAttrs}>
                 <div id="content" dangerouslySetInnerHTML={{ __html: content || '' }} />
+                env && <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__ENV__=${serialize(env, {
+                            isJSON: true,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__APOLLO_STATE__=${serialize(state, {

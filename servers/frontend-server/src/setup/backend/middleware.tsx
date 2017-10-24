@@ -17,6 +17,8 @@ import * as ReactFela from 'react-fela';
 import createRenderer from './felaRenderer';
 import { SETTINGS } from '../../config';
 import { createReduxStore } from '../../redux-config';
+import publicEnv from '../../config/public-config';
+
 // const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
 
 let assetMap;
@@ -47,6 +49,9 @@ async function renderServerSide(req, res) {
         assetMap = JSON.parse(fs.readFileSync(path.join(SETTINGS.frontendBuildDir, 'web', 'assets.json')).toString());
     }
     const apolloState = Object.assign({}, client.store.getState());
+    const env = {
+        ...publicEnv
+    };
 
     const page = (
         <Html
@@ -55,6 +60,7 @@ async function renderServerSide(req, res) {
             assetMap={assetMap}
             helmet={helmet}
             css={appCss}
+            env={env}
         />
     );
     res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
