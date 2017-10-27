@@ -35,6 +35,7 @@
         "defines": {
             "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
         },
+        "useDefaultPostCss": true,
         "ssr": true,
         "webpackDll": false,
         "reactHotLoader": false,
