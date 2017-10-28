@@ -88,6 +88,7 @@
     "@types/zen-observable": "^0.5.3",
     "apollo-codegen": "^0.17.0",
     "apollo-test-utils": "^0.3.2",
+    "autoprefixer": "^7.1.6",
     "awesome-typescript-loader": "^3.2.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",

@@ -5,8 +5,7 @@ import * as express from 'express';
 import { SETTINGS } from '../config';
 
 const { protocol, port, pathname, hostname } = url.parse(SETTINGS.GRAPHQL_URL || __BACKEND_URL__);
-
-const subscriptionUrl = `${protocol === 'http'? 'ws': 'wss'}://${hostname}:${port}${pathname || GRAPHQL_ROUTE}`;
+const subscriptionUrl = `${protocol === 'http:'? 'ws': 'wss'}://${hostname}:${port}${pathname || GRAPHQL_ROUTE}`;
 
 export const graphiqlExpressMiddleware =
     graphiqlExpress({
