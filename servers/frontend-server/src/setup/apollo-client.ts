@@ -19,7 +19,7 @@ let networkInterface: NetworkInterface;
 if (__CLIENT__) {
     networkInterface = new SubscriptionClient(
         (PUBLIC_SETTINGS.GRAPHQL_URL)
-            .replace(/^https?/, 'ws')
+            .replace(/^http/, 'ws')
         , {
             reconnect: true,
         }) as NetworkInterface;
