@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -198,6 +198,7 @@
     "apollo-client": "^1.9.3",
     "apollo-link": "^0.7.0",
     "apollo-logger": "^0.1.0",
+    "app-root-path": "^2.0.1",
     "body-parser": "^1.18.2",
     "browser-bunyan": "^0.4.0",
     "bunyan": "^1.8.10",
@@ -244,10 +245,10 @@
     "react-fela": "^6.0.3",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.5",
+    "react-redux-typescript": "^2.3.0",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "react-transition-group": "^2.2.1",
-    "react-redux-typescript": "^2.3.0",
     "reactstrap": "^4.6.2",
     "recompose": "^0.26.0",
     "redux": "^3.6.0",

@@ -16,7 +16,7 @@
             "tsLoaderOptions": {
                 "configFileName": "./servers/backend-server/tsconfig.json"
             },
-            "enabled": true
+            "enabled": false
         },
         "android": {
             "stack": [
@@ -60,7 +60,7 @@
         "webpackDll": true,
         "webpackDevPort": 3000,
         "reactHotLoader": false,
-        "persistGraphQL": false,
+        "persistGraphQL": true,
         "frontendRefreshOnBackendChange": true,
         "apiPort": 8080
     }

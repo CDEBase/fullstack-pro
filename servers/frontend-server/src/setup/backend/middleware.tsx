@@ -19,8 +19,6 @@ import { SETTINGS } from '../../config';
 import { createReduxStore } from '../../redux-config';
 import publicEnv from '../../config/public-config';
 
-// const QUERY_MAP = require('@sample-stack/graphql/extracted_queries.json');
-
 let assetMap;
 async function renderServerSide(req, res) {
     try {

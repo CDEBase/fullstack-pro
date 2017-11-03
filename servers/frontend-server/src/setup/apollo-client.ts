@@ -8,10 +8,10 @@ import {
 } from 'react-apollo';
 import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
-// import { addPersistedQueries } from 'persistgraphql';
+import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
+var reqlib: any = require('app-root-path');
 
-// const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
 const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(PUBLIC_SETTINGS.GRAPHQL_URL);
 
@@ -34,7 +34,13 @@ if (__CLIENT__) {
 }
 
 if (__PERSIST_GQL__) {
-    //     networkInterface = addPersistedQueries(networkInterface, queryMap);
+    const queryMap = reqlib.require('@sample-stack/graphql-gql/extracted_queries.json');
+    if(queryMap) {
+        console.log(queryMap)
+        networkInterface = addPersistedQueries(networkInterface, queryMap);        
+    } else {
+        console.warn('extracted_queries not found');
+    }
 }
 // Hybrid WebSocket Transport
 // https://github.com/apollographql/subscriptions-transport-ws#hybrid-websocket-transport
