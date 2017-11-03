@@ -7,7 +7,8 @@
             },
             "openBrowser": true,
             "enabled": true,
-            "htmlTemplate": "./tools/html-plugin-template.ejs"            
+            "webpackDevPort": 3000,
+            "htmlTemplate": "./tools/html-plugin-template.ejs"
         },
         "server": {
             "stack": [
@@ -16,7 +17,7 @@
             "tsLoaderOptions": {
                 "configFileName": "./servers/backend-server/tsconfig.json"
             },
-            "enabled": false
+            "enabled": true
         },
         "android": {
             "stack": [
@@ -58,9 +59,8 @@
         "ssr": false,
         "useDefaultPostCss": true,
         "webpackDll": true,
-        "webpackDevPort": 3000,
         "reactHotLoader": false,
-        "persistGraphQL": true,
+        "persistGraphQL": false,
         "frontendRefreshOnBackendChange": true,
         "apiPort": 8080
     }
