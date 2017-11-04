@@ -68,7 +68,8 @@ async function renderServerSide(req, res) {
         res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
         res.end();
     } catch (err) {
-        logger.error('SERVER SIDE RENDER failed due to (%j) ', err);
+        logger.error('SERVER SIDE RENDER failed due to (%j) ', err.message);
+        logger.debug(err);
     }
 }
 export const websiteMiddleware = async (req, res, next) => {
