@@ -64,6 +64,7 @@ declare module "*.graphqls" {
 
 declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__{
   CLIENT_URL: string;
+  BACKEND_URL: string;
   NATS_URL: string,
   NATS_USER: string,
   NATS_PW: number | string,

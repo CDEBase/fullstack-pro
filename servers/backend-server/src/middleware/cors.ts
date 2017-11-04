@@ -4,7 +4,7 @@ import { SETTINGS } from '../config';
 
 const port = SETTINGS.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
-const CLIENT_URL = SETTINGS.CLIENT_URL || __BACKEND_URL__;
+const CLIENT_URL = SETTINGS.CLIENT_URL;
 
 const corsWhitelist = [
   appUrl,
