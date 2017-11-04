@@ -13,8 +13,8 @@ export const Component = () => (
         </div>
         <div>
             <h2>Apollo Graphql Test </h2>
-            {/* <CounterWithApollo />
-            <PersonList /> */}
+            <CounterWithApollo />
+            <PersonList />
         </div>
     </div>
 );
