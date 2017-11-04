@@ -1,12 +1,12 @@
 {
-	"name": "frontend-server",
-	"version": "0.0.1",
+	"name": "sample-frontend-server",
+	"version": "0.0.5",
 	"description": "Sample Client server",
 	"private": true,
 	"main": "index.js",
 	"scripts": {
-		"docker:build": "npm run build && docker build . -t sample-stack-frontend:0.0.4",
-		"docker:run": "docker run -it sample-stack-frontend:0.0.4",
+		"docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
+		"docker:run": "docker run -it $npm_package_name:$npm_package_version",
 		"prebuild": "npm run build:clean",
 		"build:clean": "rimraf dist",
 		"build": "cross-env NODE_ENV=production spin build",
