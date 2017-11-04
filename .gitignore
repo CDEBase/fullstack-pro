@@ -43,4 +43,4 @@ node_modules
 
 # IDE 
 .idea
-.DS_Store
+*.DS_Store

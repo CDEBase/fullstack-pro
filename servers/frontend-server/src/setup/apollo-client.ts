@@ -28,7 +28,7 @@ if (__CLIENT__) {
             credentials: 'same-origin',
         },
         batchInterval: 20,
-        uri: PUBLIC_SETTINGS.GRAPHQL_URL || '/graphql',
+        uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL || '/graphql',
     });
 }
 

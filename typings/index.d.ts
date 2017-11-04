@@ -39,6 +39,7 @@ declare interface __SPIN_OPTIONS__ {
 declare interface __PUBLIC_SETTINGS__ {
   "apolloLogging": boolean;
   GRAPHQL_URL: string;
+  LOCAL_GRAPHQL_URL?: string;
 }
 
 declare module "*spinrc.json" {
