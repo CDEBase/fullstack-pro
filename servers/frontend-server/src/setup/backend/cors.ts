@@ -5,10 +5,10 @@ import { SETTINGS } from '../../config';
 
 const port =  SETTINGS.webpackDevPort;
 const appUrl = `http://localhost:${port}`;
-const GRAPHQL_URL = SETTINGS.GRAPHQL_URL || __BACKEND_URL__;
 
 const corsWhitelist = [
   appUrl,
+  SETTINGS.CLIENT_URL,
 ];
 
 const corsOptions = {
