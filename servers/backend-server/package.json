@@ -1,6 +1,6 @@
 {
 	"name": "sample-stack-backend",
-	"version": "0.0.5",
+	"version": "0.0.7",
 	"description": "Starter kit for apollo server using webpack and typescript",
 	"main": "dist/index.js",
 	"private": true,
@@ -67,6 +67,7 @@
 		"graphql-subscriptions": "^0.5.0",
 		"graphql-tools": "2.5.1",
 		"graphql-nats-subscriptions": "^1.0.8",
+		"sqlite3": "^3.1.8",
 		"ws": "^3.2.0",
 		"graphql-server-express": "^1.1.2",
 		"express": "^4.16.2",

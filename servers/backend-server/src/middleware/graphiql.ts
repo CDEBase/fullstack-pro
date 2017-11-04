@@ -3,9 +3,10 @@ import * as url from 'url';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
 import { SETTINGS } from '../config';
+import { logger } from '@sample-stack/utils';
 
-const { protocol, port, pathname, hostname } = url.parse(SETTINGS.GRAPHQL_URL);
-const subscriptionUrl = `${protocol === 'http:' ? 'ws' : 'wss'}://${hostname}${port ? ':' + port : ''}${pathname || GRAPHQL_ROUTE}`;
+const subscriptionUrl = (SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws');
+logger.debug('subscriptionUrl used is (%s)', subscriptionUrl);
 
 export const graphiqlExpressMiddleware =
     graphiqlExpress({
