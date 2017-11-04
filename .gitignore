@@ -40,3 +40,7 @@ node_modules
 # Optional REPL history
 .node_repl_history
 .dist
+
+# IDE 
+.idea
+.DS_Store
