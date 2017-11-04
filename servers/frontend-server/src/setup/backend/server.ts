@@ -10,7 +10,6 @@ import { logger } from '@sample-stack/utils';
 import { websiteMiddleware } from './middleware';
 import { corsMiddleware } from './cors';
 import { SETTINGS } from '../../config';
-// const queryMap = require('@sample-stack/graphql/extracted_queries.json');
 
 let server;
 

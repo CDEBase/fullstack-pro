@@ -50,7 +50,8 @@
     "webpack": "^3.7.1"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.4"
+    "@sample-stack/core": "*",
+    "@sample-stack/client-core": "*"
   },
   "peerDependencies": {
     "apollo-client": ">=1.2.2",
