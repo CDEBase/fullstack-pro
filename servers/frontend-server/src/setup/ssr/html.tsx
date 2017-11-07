@@ -29,18 +29,20 @@ const Html = ({
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
                 {!__DEV__ && <link rel="stylesheet" type="text/css" href={`/${assetMap['index.css']}`} />}
 
-                <style
-                    dangerouslySetInnerHTML={{
-                        __html: `#content { height: 95vh; }`
-                    }}
-                />
-                <style id="stylesheet"></style>
-                <style id="font-stylesheet"></style>
+                <style id="stylesheet" />
+                <style id="font-stylesheet" />
 
             </head>
             <body {...bodyAttrs}>
-                <div id="content" dangerouslySetInnerHTML={{ __html: content || '' }} />
-                env && <script
+                <div className="demo">
+                    <div
+                        id="content"
+                        dangerouslySetInnerHTML={
+                            { __html: content ||
+                                'Try building the demo:<br/> ...and refreshing this page!' }}
+                    />
+                </div>
+                <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
                             isJSON: true,
