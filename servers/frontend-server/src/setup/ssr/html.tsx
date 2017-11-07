@@ -5,7 +5,6 @@ import * as serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
 import { Store } from 'redux';
 
-
 const Html = ({
     content,
     state,
@@ -29,11 +28,11 @@ const Html = ({
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
                 {!__DEV__ && <link rel="stylesheet" type="text/css" href={`/${assetMap['index.css']}`} />}
 
-                <style
+                {/* <style
                     dangerouslySetInnerHTML={{
-                        __html: `#content { height: 95vh; }`
+                        __html: styles._getCss(),
                     }}
-                />
+                /> */}
                 <style id="stylesheet"></style>
                 <style id="font-stylesheet"></style>
 
