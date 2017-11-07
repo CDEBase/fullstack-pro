@@ -31,10 +31,55 @@ const Html = ({
 
                 <style
                     dangerouslySetInnerHTML={{
-                        __html: `#content {
+                        __html: `.demo {
+                            height: 95vh;
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                        }
+
+                        .error {
+                            color: #a00;
+                            font-style: italic;
+                            text-align: center;
+                        }
+
+                        button {
+                            border: 1px solid #231f20;
+                            border-radius: 3px;
+                            background: #fff;
+                            margin: 10px;
+                            padding: 10px 20px;
+                            transition: all linear 0.2s;
+                        }
+
+                        button:focus {
+                            outline: none;
+                        }
+
+                        button:active {
+                            background-color: #1982d1;
+                            border: 1px solid #1982d1;
+                            color: #fff;
+                            transition: all linear 0.2s;
+                        }
+
+                        button[disabled] {
+                            border-color: #ccc;
+                            color: #ccc;
+                            font-style: italic;
+                        }
+
+                        button[disabled]:active {
+                            background: #fff;
+                            border-color: #ccc;
+                        }
+
+                        footer {
+                            position: fixed;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
                         }`,
                     }}
                 />
@@ -43,7 +88,14 @@ const Html = ({
 
             </head>
             <body {...bodyAttrs}>
-                <div id="content" dangerouslySetInnerHTML={{ __html: content || '' }} />
+                <div className="demo">
+                    <div
+                        id="content"
+                        dangerouslySetInnerHTML={
+                            { __html: content ||
+                                'Try building the demo:<br/> ...and refreshing this page!' }}
+                    />
+                </div>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
