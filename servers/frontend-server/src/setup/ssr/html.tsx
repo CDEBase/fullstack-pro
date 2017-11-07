@@ -31,16 +31,20 @@ const Html = ({
 
                 <style
                     dangerouslySetInnerHTML={{
-                        __html: `#content { height: 95vh; }`
+                        __html: `#content {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }`,
                     }}
                 />
-                <style id="stylesheet"></style>
-                <style id="font-stylesheet"></style>
+                <style id="stylesheet" />
+                <style id="font-stylesheet" />
 
             </head>
             <body {...bodyAttrs}>
                 <div id="content" dangerouslySetInnerHTML={{ __html: content || '' }} />
-                env && <script
+                <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
                             isJSON: true,
