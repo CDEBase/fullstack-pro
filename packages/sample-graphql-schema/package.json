@@ -24,6 +24,9 @@
       "src",
       "lib"
     ],
+    "modulePaths": [
+      "node_modules"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
