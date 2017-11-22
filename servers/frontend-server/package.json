@@ -1,5 +1,5 @@
 {
-	"name": "sample-stack-frontend",
+	"name": "sample-stack-frontend-server",
 	"version": "0.0.10",
 	"description": "Sample Client server",
 	"private": true,

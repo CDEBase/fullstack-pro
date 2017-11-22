@@ -10,6 +10,11 @@ type Subscription {
     dummy: Int
 }
 
+interface Node {
+      id: ID!
+}
+
+
 schema {
     query: Query
     mutation: Mutation
