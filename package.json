@@ -10,7 +10,7 @@
     "clean": "lerna clean",
     "start": "babel-node --presets es2015 tools/webpack.run watch",
     "spin:build": "cross-env NODE_ENV=production spin build",
-    "spin:watch": "spin watch",
+		"spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
     "spin:watch:debug": "npm run spin:watch -- -v",
     "spin:exp": "spin exp",
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",

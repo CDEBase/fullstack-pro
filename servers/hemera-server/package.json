@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "croos-env ENV_FILE=../../config/development/dev.env nodemon dist/main.js",
+        "start": "cross-env ENV_FILE=../../config/development/dev.env nodemon dist/main.js",
         "pretest": "npm run build",
         "build": "npm run build:clean && npm run build:dist",
         "build:watch": "npm run build:dist -- --watch",
@@ -17,6 +17,7 @@
         "@sample-stack/hemera-counter": "*"
     },
     "devDependencies": {
+        "cross-env": "^5.0.5",
         "jest": "^21.1.0",
         "rimraf": "^2.6.1",
         "nodemon": "^1.12.1",
