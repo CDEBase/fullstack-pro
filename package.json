@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.1.9",
+  "version": "0.2.0",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -8,9 +8,9 @@
     "lerna": "lerna bootstrap --hoist",
     "install": "npm run lerna",
     "clean": "lerna clean",
-    "start": "babel-node --presets es2015 tools/webpack.run watch",
+    "start": "npm run spin:watch",
     "spin:build": "cross-env NODE_ENV=production spin build",
-		"spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
+    "spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
     "spin:watch:debug": "npm run spin:watch -- -v",
     "spin:exp": "spin exp",
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
@@ -165,7 +165,7 @@
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.5.0",
-    "spinjs": "0.4.18",
+    "spinjs": "0.4.62",
     "standard-version": "^4.0.0",
     "style-loader": "^0.18.2",
     "tcomb": "^3.2.24",
