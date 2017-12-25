@@ -1,10 +1,10 @@
 // App-specific back-end Webpack config should be here
 const server = {
-     entry: {
-       index: [
-        './servers/backend-server/src/index.ts'        
-       ]
-     }
+    entry: {
+        index: [
+            './servers/backend-server/src/index.ts'
+        ]
+    }
 };
 
 // App-specific web front-end Webpack config should be here
@@ -28,22 +28,25 @@ const android = {
 
 // App-specific iOS React Native front-end Webpack config should be here
 const ios = {
-    //  entry: {
-    //    'index.mobile.bundle': [
-    //      require.resolve('./react-native-polyfill.js'),
-    //      './src/mobile/index.js'
-    //    ]
-    //  }
+    entry: {
+        'index.mobile.bundle': [
+            './servers/mobile/src/index.ts'
+        ]
+    }
 };
 
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
+    '@expo/vector-icons': ['ios', 'android'],
+    antd: 'web',
+    'antd-mobile': ['ios', 'android'],
     "app-root-path": 'server',
     "bunyan": 'server',
     "export-dir": 'server',
     "express": 'server',
     'body-parser': 'server',
     express: 'server',
+    expo: ['ios', 'android'],
     'graphql-server-express': 'server',
     'graphql-subscriptions': 'server',
     'graphql-tools': 'server',
@@ -64,8 +67,9 @@ const dependencyPlatforms = {
     "immutability-helper": 'web',
     "inversify": 'server',
     "morgan": 'server',
+    'native-base': ['ios', 'android'],
     "nats": 'server',
-    "nats-hemera":'server',
+    "nats-hemera": 'server',
     "nconf": 'server',
     "node-pre-gyp": 'server',
     "prop-types": 'web',
@@ -79,6 +83,7 @@ const dependencyPlatforms = {
     'react-helmet': 'web',
     'react-hot-loader': 'web',
     'react-native': ['ios', 'android'],
+    'react-native-web': 'web',
     'react-navigation': ['ios', 'android'],
     'react-redux': 'web',
     'react-router': 'web',

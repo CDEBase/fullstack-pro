@@ -90,7 +90,7 @@
 		"spinjs": "0.4.18",
 		"jest": "^21.1.0",
 		"rimraf": "^2.6.1",
-		"webpack": "^3.7.1"
+		"webpack": "^3.10.0"
 	},
 	"typings": "dist/main.d.ts",
 	"typescript": {

@@ -6,7 +6,7 @@
                 "configFileName": "./servers/frontend-server/tsconfig.json"
             },
             "openBrowser": true,
-            "enabled": true,
+            "enabled": false,
             "webpackDevPort": 3000,
             "htmlTemplate": "./tools/html-plugin-template.ejs"
         },
@@ -17,7 +17,7 @@
             "tsLoaderOptions": {
                 "configFileName": "./servers/backend-server/tsconfig.json"
             },
-            "enabled": true
+            "enabled": false
         },
         "android": {
             "stack": [
@@ -31,7 +31,10 @@
                 "react-native",
                 "ios"
             ],
-            "enabled": false
+            "tsLoaderOptions": {
+                "configFileName": "./servers/mobile/tsconfig.json"
+            },
+            "enabled": true
         },
         "test": {
             "stack": "server",
@@ -56,6 +59,7 @@
         "defines": {
             "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
         },
+        "enableNodeDebugger": true,
         "ssr": false,
         "useDefaultPostCss": true,
         "webpackDll": true,

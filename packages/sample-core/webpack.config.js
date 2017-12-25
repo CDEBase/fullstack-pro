@@ -38,7 +38,7 @@ var webpack_opts = {
   module: {
     rules: [{
       test: /\.ts$/,
-      loaders: 'ts-loader'
+      loader: 'ts-loader'
     }, {
       test: /\.json?$/,
       loader: 'json-loader'
