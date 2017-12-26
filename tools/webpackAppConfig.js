@@ -18,12 +18,11 @@ const web = {
 
 // App-specific Android React Native front-end Webpack config should be here
 const android = {
-    //  entry: {
-    //    'index.mobile.bundle': [
-    //      require.resolve('./react-native-polyfill.js'),
-    //      './src/mobile/index.js'
-    //    ]
-    //  }
+     entry: {
+        'index.mobile.bundle': [
+            './servers/mobile/src/index.ts'
+        ]
+     }
 };
 
 // App-specific iOS React Native front-end Webpack config should be here

@@ -1,15 +1,16 @@
 {
-    "expo": {
-      "name": "Apollo Universal Starter Kit",
-      "icon": "app.png",
-      "version": "1.0.0",
-      "slug": "apollo-universal-starter-kit",
-      "sdkVersion": "24.0.0",
-      "ios": {
-        "bundleIdentifier": "com.cdmbase.apollokit"
-      },
-      "android": {
-        "package": "com.cdmbase.apollokit"
-      }
+  "expo": {
+    "name": "CDMBASE Starter Kit",
+    "description": "Showcase of Expo app coded in TypeScript. Testbed for type definitions for the Expo APIs. Source code at https://github.com/janaagaard75/expo-and-typescript.",
+    "version": "1.0.0",
+    "slug": "fullstack-pro",
+    "sdkVersion": "24.0.0",
+    "icon": "./assets/icons/app-icon.png",
+    "ios": {
+      "bundleIdentifier": "com.cdmbase.apollokit"
+    },
+    "android": {
+      "package": "com.cdmbase.apollokit"
     }
   }
+}
