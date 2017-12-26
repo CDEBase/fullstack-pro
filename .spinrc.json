@@ -24,6 +24,9 @@
                 "react-native",
                 "android"
             ],
+            "tsLoaderOptions": {
+                "configFileName": "./servers/mobile/tsconfig.json"
+            },
             "enabled": false
         },
         "ios": {
@@ -31,9 +34,6 @@
                 "react-native",
                 "ios"
             ],
-            "tsLoaderOptions": {
-                "configFileName": "./servers/mobile/tsconfig.json"
-            },
             "enabled": true
         },
         "test": {
@@ -53,7 +53,8 @@
             "ts",
             "react",
             "webpack",
-            "css"
+            "css",
+            "es6"
         ],
         "backendUrl": "http://{ip}:8080/graphql",
         "defines": {

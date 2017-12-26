@@ -20,7 +20,7 @@ const web = {
 const android = {
      entry: {
         'index.mobile.bundle': [
-            './servers/mobile/src/index.ts'
+            './servers/mobile/src/index.js'
         ]
      }
 };
@@ -29,7 +29,7 @@ const android = {
 const ios = {
     entry: {
         'index.mobile.bundle': [
-            './servers/mobile/src/index.ts'
+            './servers/mobile/src/index.js'
         ]
     }
 };
