@@ -25,7 +25,8 @@ pipeline {
     stage ('helm'){
       steps{
         sh """
-          echo 'helm is not installed'
+          helm init
+          helm ls
         """
       }
     }
