@@ -8,6 +8,7 @@ pipeline {
           docker build -t frontend .
           docker images | grep frontend
           docker rmi frontend
+          gcloud projects list
         """
       }
     }
