@@ -4,7 +4,10 @@ pipeline {
     stage ('frontend server'){
       steps{
         sh """
-          docker ps
+          cd servers/frontend-server/
+          docker build -t frontend .
+          docker images | grep frontend
+          docker rmi frontend
         """
       }
     }
