@@ -11,5 +11,16 @@ pipeline {
         """
       }
     }
+    
+    stage ('backend server'){
+      steps{
+        sh """
+          cd servers/backend-server/
+          docker build -t backend .
+          docker images | grep end
+          docker rmi backend
+        """
+      }
+    }
   }
 }
