@@ -22,5 +22,12 @@ pipeline {
         """
       }
     }
+    stage ('helm'){
+      steps{
+        sh """
+          helm ls
+        """
+      }
+    }
   }
 }
