@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage ('frontend server'){
       steps{
-        echo frontend
+        echo "frontend"
         /*
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
@@ -18,7 +18,7 @@ pipeline {
     
     stage ('backend server'){
       steps{
-        echo backend
+        echo "backend"
         /*
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
