@@ -24,13 +24,5 @@ pipeline {
         """
       }
     }
-    stage ('helm'){
-      steps{
-        sh """
-          helm init
-          helm ls
-        """
-      }
-    }
   }
 }
