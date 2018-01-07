@@ -22,3 +22,15 @@ cat /var/jenkins_home/.ssh/id_rsa.pub
 - Choose SSH Username with private key
 - From the Jenkins master ~/.ssh
 - Give the key a username and choose this user name later on on the list
+
+# Authorizing jenkins to Google Container Registery
+#### 1- in google cloud console 
+  - Go to APIs and services 
+  - Credentials
+  - create credential 
+  - service account key 
+  - New Service account
+  - Add role Storage Admin
+  - generate key of type JSON
+> Copy the generated key to jenkins pod and user the 
+> key path to login to gcr with docker login command
