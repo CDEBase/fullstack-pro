@@ -48,6 +48,6 @@ def getVersion(){
   def pa = new ParametersAction([
     new StringParameterValue("Version", version)
   ])
-  echo version
+  Thread.currentThread().executable.addAction(pa)
 }
 
