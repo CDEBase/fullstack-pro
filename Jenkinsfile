@@ -13,9 +13,10 @@ pipeline {
           docker push gcr.io/stack-test-186501/frontend
           docker rmi gcr.io/stack-test-186501/frontend
         """
+            */
       }
     }
-    */
+
     stage ('backend server'){
       steps{
         echo "backend"
