@@ -32,7 +32,7 @@ pipeline {
   }
 post {
         success{
-          echo "success"
+          build job: 'kube-orchestration', parameters: [string(name: 'TAG', value: "${PACKAGE_VERSION}")]
             //build 'kube-orchestration'
         }
 }
