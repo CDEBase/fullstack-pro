@@ -37,5 +37,8 @@ import groovy.json.JsonSlurper
 def getVersion(){
   def inputFile = new File("./package.json")
   def InputJSON = new JsonSlurper().parseText(inputFile)
+  inputJson.each { k, v ->
+  println k
+}
   echo InputJson.version
 }
