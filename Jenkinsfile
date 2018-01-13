@@ -1,10 +1,14 @@
 pipeline {
   agent any
+  
+  environment {
+    PACKAGE_VERSION = getVersion()
+  }
+  
   stages {
     stage ('frontend server'){
       steps{
       //  sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
-        def PACKAGE_VERSION = getVersion()
         sh 'echo $PACKAGE_VERSION'
         /*
         sh """
