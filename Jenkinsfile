@@ -37,8 +37,7 @@ import groovy.json.JsonSlurper
 def getVersion(){
   def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
   def InputJSON = new JsonSlurper().parse(inputFile)
-  inputJson.each { k, v ->
+  InputJson.each { k, v ->
   println k
 }
-  echo InputJson.version
 }
