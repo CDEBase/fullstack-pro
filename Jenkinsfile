@@ -4,6 +4,7 @@ pipeline {
     stage ('frontend server'){
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
+        getVersion()
         sh """
           cd servers/frontend-server/
           docker build -t gcr.io/stack-test-186501/frontend .
@@ -30,4 +31,11 @@ post {
             build 'kube-orchestration'
         }
 }
+}
+
+import groovy.json.JsonSlurper
+def getVersion(){
+  def inputFile = new File(".\package.json")
+  def InputJSON = new JsonSlurper().parseText(inputFile)
+  echo InputJson.version
 }
