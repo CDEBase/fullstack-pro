@@ -5,7 +5,7 @@ pipeline {
       steps{
       //  sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         getVersion()
-        echo "global version is "%Version%
+        echo %Version%
         /*
         sh """
           cd servers/frontend-server/
