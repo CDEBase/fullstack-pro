@@ -5,6 +5,7 @@ pipeline {
       steps{
       //  sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh 'ls'
+        env
         getVersion()
         sh """
           cd servers/frontend-server/
