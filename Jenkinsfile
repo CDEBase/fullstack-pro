@@ -45,4 +45,5 @@ def getVersion(){
   def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
   def InputJSON = new JsonSlurper().parse(inputFile)
   def version = InputJSON.version
+  echo version
 }
