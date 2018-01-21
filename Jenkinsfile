@@ -37,29 +37,15 @@ pipeline {
       }
     }
   }
-  /*
+
 post {
         success{
-          build job: 'kube-orchestration', parameters: [string(name: 'TAG', value: "${PACKAGE_VERSION}")]
-            //build 'kube-orchestration'
+          build job: 'kube-orchestration', parameters: [string(name: 'FRONTEND_PACKAGE_NAME', value: "${FRONTEND_PACKAGE_NAME}"), string(name: 'FRONTEND_PACKAGE_VERSION', value: "${FRONTEND_PACKAGE_VERSION}"), string(name: 'BACKEND_PACKAGE_NAME', value: "${BACKEND_PACKAGE_NAME}"), string(name: 'BACKEND_PACKAGE_VERSION', value: "${BACKEND_PACKAGE_VERSION}")]
         }
 }
-*/
 }
 
 import groovy.json.JsonSlurper
-/*
-def getJSON(json_file_path){
-  //def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
-  def inputFile = new File(json_file_path)
-  def InputJSON = new JsonSlurper().parse(inputFile)
-  def version = InputJSON.version 
-  def name = InputJSON.name
-  def jsonReturnValue = {"name" : name, "version" : versio}
-return jsonReturnValue
-}
-*/
-
 def getVersion(json_file_path){
   def inputFile = new File(json_file_path)
   def InputJSON = new JsonSlurper().parse(inputFile)
