@@ -14,7 +14,7 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           npm install --global lerna
-          lerna --yes clean
+          lerna clean --yes
           npm install
           cd servers/frontend-server/
           npm run docker:build
