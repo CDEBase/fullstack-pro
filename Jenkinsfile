@@ -5,7 +5,7 @@ pipeline {
     FRONTEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
     FRONTEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
     BACKEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")                                       
-    BACKEND_PACKAGE_VERSION = getVersion/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")
+    BACKEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")
   }
   
   stages {
