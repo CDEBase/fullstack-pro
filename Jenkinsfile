@@ -13,11 +13,10 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
-        echo $FRONTEND_PACKAGE_NAME
-        echo $FRONTEND_PACKAGE_VERSION
           cd servers/frontend-server/
           npm install
           npm run docker:build
+          docker images
           docker push gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           docker rmi gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
         """
