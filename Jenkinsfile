@@ -2,10 +2,10 @@ pipeline {
   agent any
   
   environment {
-    FRONTEND_PACKAGE_NAME = getName(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json"))
-    FRONTEND_PACKAGE_VERSION = getVersion(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json"))
-    BACKEND_PACKAGE_NAME = getName(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json"))                                          
-    BACKEND_PACKAGE_VERSION = getVersion(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json"))                                          
+    FRONTEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
+    FRONTEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
+    BACKEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")                                       
+    BACKEND_PACKAGE_VERSION = getVersion/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")
   }
   
   stages {
@@ -47,6 +47,7 @@ post {
 }
 
 import groovy.json.JsonSlurper
+/*
 def getJSON(json_file_path){
   //def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
   def inputFile = new File(json_file_path)
@@ -56,15 +57,18 @@ def getJSON(json_file_path){
   def jsonReturnValue = {"name" : name, "version" : versio}
 return jsonReturnValue
 }
+*/
 
-def getVersion(json_object){
-  def InputJSON = new JsonSlurper().parse(json_object)
+def getVersion(json_file_path){
+  def inputFile = new File(json_file_path)
+  def InputJSON = new JsonSlurper().parse(inputFile)
   def version = InputJSON.version 
 return version
 }
 
-def getName(json_object){
-  def InputJSON = new JsonSlurper().parse(json_object)
+def getName(json_file_path){
+  def inputFile = new File(json_file_path)
+  def InputJSON = new JsonSlurper().parse(inputFile)
   def name = InputJSON.name 
 return name
 }
