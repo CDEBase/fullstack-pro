@@ -13,8 +13,8 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
-          cd servers/frontend-server/
           npm install
+          cd servers/frontend-server/
           npm run docker:build
           docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           docker push gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
@@ -27,8 +27,8 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
-          cd servers/backend-server/
           npm install
+          cd servers/backend-server/
           npm run docker:build
           docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           docker push gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
