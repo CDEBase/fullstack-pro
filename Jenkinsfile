@@ -2,7 +2,10 @@ pipeline {
   agent any
   
   environment {
-    PACKAGE_VERSION = getVersion()
+    FRONTEND_PACKAGE_NAME = getName(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json"))
+    FRONTEND_PACKAGE_VERSION = getVersion(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json"))
+    BACKEND_PACKAGE_NAME = getName(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json"))                                          
+    BACKEND_PACKAGE_VERSION = getVersion(getJSON("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json"))                                          
   }
   
   stages {
@@ -11,9 +14,11 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/frontend-server/
-          docker build -t gcr.io/stack-test-186501/frontend:$PACKAGE_VERSION .
-          docker push gcr.io/stack-test-186501/frontend:$PACKAGE_VERSION
-          docker rmi gcr.io/stack-test-186501/frontend:$PACKAGE_VERSION
+          #docker build -t gcr.io/stack-test-186501/frontend:$PACKAGE_VERSION .
+          docker rmi `docker images frontend`
+          npm run build && docker build . -t gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:FRONTEND_PACKAGE_VERSION 
+          docker push gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:FRONTEND_PACKAGE_VERSION
+          docker rmi gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:FRONTEND_PACKAGE_VERSION
         """
       }
     }
@@ -23,26 +28,43 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/backend-server/
-          docker build -t gcr.io/stack-test-186501/backend:$PACKAGE_VERSION .
-          docker push gcr.io/stack-test-186501/backend:$PACKAGE_VERSION
-          docker rmi gcr.io/stack-test-186501/backend:$PACKAGE_VERSION
+          #docker build -t gcr.io/stack-test-186501/backend:$PACKAGE_VERSION .
+          npm run build && docker build . -t gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION 
+          docker push gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+          docker rmi gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
         """
       }
     }
   }
+  /*
 post {
         success{
           build job: 'kube-orchestration', parameters: [string(name: 'TAG', value: "${PACKAGE_VERSION}")]
             //build 'kube-orchestration'
         }
 }
+*/
 }
 
 import groovy.json.JsonSlurper
-def getVersion(){
-  def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
+def getJSON(json_file_path){
+  //def inputFile = new File("/var/jenkins_home/workspace/fullstack-pro/package.json")
+  def inputFile = new File(json_file_path)
   def InputJSON = new JsonSlurper().parse(inputFile)
+  def version = InputJSON.version 
+  def name = InputJSON.name
+  def jsonReturnValue = {"name" : name, "version" : versio}
+return jsonReturnValue
+}
+
+def getVersion(json_object){
+  def InputJSON = new JsonSlurper().parse(json_object)
   def version = InputJSON.version 
 return version
 }
 
+def getName(json_object){
+  def InputJSON = new JsonSlurper().parse(json_object)
+  def name = InputJSON.name 
+return name
+}
