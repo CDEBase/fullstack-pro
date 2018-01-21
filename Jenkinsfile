@@ -14,7 +14,7 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/frontend-server/
-          npm run build && docker build . -t gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION 
+          npm run docker:build
           docker push gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           docker rmi gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
         """
@@ -26,7 +26,7 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/backend-server/
-          npm run build && docker build . -t gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION 
+          npm run docker:build
           docker push gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           docker rmi gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
         """
