@@ -13,6 +13,7 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
+          lerna clean
           npm install
           cd servers/frontend-server/
           npm run docker:build
@@ -27,6 +28,7 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
+          lerna clean
           npm install
           cd servers/backend-server/
           npm run docker:build
