@@ -100,6 +100,23 @@ npm run build
 npm start
 ```
 
+### Docker build
+Prior to it you need to run `npm install` from root directory.
+
+Build three docker images by following the steps:
+- Frontend Server
+```
+cd frontend-server
+npm run docker:build
+```
+- Backend Server
+```
+cd backend-server
+npm run docker:build
+```
+- hemera-server
+npm run docker:build
+
 ### Environment settings for non-development
 ```
 GRAPHQL_URL
