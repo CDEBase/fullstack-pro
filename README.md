@@ -115,7 +115,10 @@ cd backend-server
 npm run docker:build
 ```
 - hemera-server
+```
+cd hemera-server
 npm run docker:build
+```
 
 ### Environment settings for non-development
 ```
