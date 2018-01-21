@@ -30,7 +30,7 @@ pipeline {
       steps{
         sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
-          lerna clean
+          lerna clean --yes
           npm install
           npm run lerna
           cd servers/backend-server/
