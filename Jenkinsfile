@@ -16,6 +16,7 @@ pipeline {
           #npm install --global lerna
           lerna clean --yes
           npm install
+          npm run lerna
           cd servers/frontend-server/
           npm run docker:build
           docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
@@ -31,6 +32,7 @@ pipeline {
         sh """
           lerna clean
           npm install
+          npm run lerna
           cd servers/backend-server/
           npm run docker:build
           docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
