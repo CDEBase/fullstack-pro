@@ -3,8 +3,7 @@ require('dotenv').config({ path: process.env.ENV_FILE });
 
 const Hemera = require('nats-hemera');
 const HemeraJoi = require('hemera-joi');
-const ContainerHemera = require('@container-stack/microservice-hemera-plugin');
-// import { IManagerConfig, ConfigKind } from '@container-stack/core';
+const ContainerHemera = require('@sample-stack/microservice-hemera-plugin');
 
 // const HemeraZipkin = require('hemera-zipkin');
 
@@ -34,22 +33,6 @@ hemera.use(ContainerHemera, {
 hemera.ready(() => {
     // let Joi = hemera.exposition['hemera-joi'].joi;
 
-    // hemera.act({
-    //     topic: 'container-manager',
-    //     cmd: 'createWorkspace',
-    //     managerConfig: { workspaceId: 'test', kind: ConfigKind.CONFIG },
-    // }, async function (err, result) {
-    //     const payload = await result;
-    //     this.log.trace('payload received is (%j)', payload);
-    // });
 
-    // hemera.act({
-    //     topic: 'container-manager',
-    //     cmd: 'createWorkspace',
-    //     managerConfig: { workspaceId: 'test', kind: ConfigKind.CONFIG },
-    // }, async function (err, result) {
-    //     const payload = await result;
-    //     this.log.trace('payload received is (%j)', payload);
-    // });
 });
 
