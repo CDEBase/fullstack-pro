@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/server-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "xterm server services for Node",
   "main": "lib/index.js",
   "scripts": {
@@ -48,14 +48,14 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
-    "@sample-stack/utils": "^0.0.5",
+    "@sample-stack/utils": "^0.0.6",
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
   },
   "dependencies": {
-    "@sample-stack/core": "^0.0.5"
+    "@sample-stack/core": "^0.0.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

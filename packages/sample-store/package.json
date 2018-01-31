@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/store",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
