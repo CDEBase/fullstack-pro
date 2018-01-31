@@ -6,33 +6,39 @@ import * as Hemera from 'nats-hemera';
 import { pubsub } from './pubsub';
 
 import { database as DEFAULT_DB_CONFIG } from '../../../../config/development/settings.json';
-
+import { logger } from '@sample-stack/utils';
 const dbConfig = new DbConfig(DEFAULT_DB_CONFIG);
 let container = new Container();
 
-container.bind<DbConfig>('DefaultDbConfig').toConstantValue(dbConfig);
+try {
+    container.bind<DbConfig>('DefaultDbConfig').toConstantValue(dbConfig);
 
-// container...
-new RepositoryDiSetup().setup(container);
+    // container...
+    new RepositoryDiSetup().setup(container);
 
-if (process.env.NODE_ENV === 'development') {
-// development
-} else {
-// all other environment
-    const nats = NATS.connect({
-        'url': process.env.NATS_URL,
-        'user': process.env.NATS_USER,
-        'pass': process.env.NATS_PW,
-    });
+    if (process.env.NODE_ENV === 'development') {
+        // development
+    } else {
+        // all other environment
+        const nats = NATS.connect({
+            'url': process.env.NATS_URL,
+            'user': process.env.NATS_USER,
+            'pass': process.env.NATS_PW,
+        });
 
-    const hemera = new Hemera(nats, {
-        logLevel: process.env.HEMERA_LOG_LEVEL as Hemera.LogLevel || 'info',
-        childLogger: true,
-        tag: 'hemera-server',
-        timeout: 10000,
-    });
-    container.bind('Hemera').toConstantValue(hemera);
+        const hemera = new Hemera(nats, {
+            logLevel: process.env.HEMERA_LOG_LEVEL as Hemera.LogLevel || 'info',
+            childLogger: true,
+            tag: 'hemera-server',
+            timeout: 10000,
+        });
+        container.bind('Hemera').toConstantValue(hemera);
 
+    }
+} catch (err) {
+    logger.error('Server start failed when building the containers');
+    logger.error(err);
 }
+
 
 export { container };
