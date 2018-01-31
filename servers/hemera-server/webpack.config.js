@@ -16,7 +16,7 @@ var webpack_opts = {
   entry: './src/index.ts',
   target: 'node',
   output: {
-    filename: distPath('main.js'),
+    filename: distPath('index.js'),
     libraryTarget: "commonjs2"
   },
   resolve: {
