@@ -72,7 +72,7 @@
     "@types/jest": "^21.1.2",
     "@types/knex": "0.0.61",
     "@types/minimist": "^1.2.0",
-    "@types/nats-hemera": "^1.0.0",
+    "@types/nats-hemera": "^2.0.0",
     "@types/node": "^8.0.0",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.6.0",
