@@ -5,6 +5,9 @@ logs
 *.log
 npm-debug.log*
 
+# expo
+.expo 
+
 # Backup
 backup 
 
