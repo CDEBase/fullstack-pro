@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -48,10 +48,10 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "peerDependencies": {
-    "@sample-stack/client-core": "^0.0.6",
-    "@sample-stack/client-redux": "^0.0.6",
-    "@sample-stack/core": "^0.0.6",
-    "@sample-stack/graphql-gql": "^0.0.6",
+    "@sample-stack/client-core": "^0.0.7",
+    "@sample-stack/client-redux": "^0.0.7",
+    "@sample-stack/core": "^0.0.7",
+    "@sample-stack/graphql-gql": "^0.0.7",
     "apollo-client": "^1.2.2",
     "react": ">=15.0.0",
     "react-apollo": "^1.2.0",
@@ -60,13 +60,13 @@
     "redux": ">=3.6.0"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.6",
-    "@sample-stack/client-redux": "^0.0.6",
-    "@sample-stack/core": "^0.0.6",
-    "@sample-stack/graphql-gql": "^0.0.6"
+    "@sample-stack/client-core": "^0.0.7",
+    "@sample-stack/client-redux": "^0.0.7",
+    "@sample-stack/core": "^0.0.7",
+    "@sample-stack/graphql-gql": "^0.0.7"
   },
   "devDependencies": {
-    "@sample-stack/graphql-schema": "^0.0.6",
+    "@sample-stack/graphql-schema": "^0.0.7",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
