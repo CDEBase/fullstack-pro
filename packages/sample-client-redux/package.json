@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-redux",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
@@ -53,8 +53,8 @@
     "webpack": "^3.7.1"
   },
   "dependencies": {
-    "@sample-stack/core": "*",
-    "@sample-stack/client-core": "*"
+    "@sample-stack/client-core": "^0.0.5",
+    "@sample-stack/core": "^0.0.5"
   },
   "peerDependencies": {
     "apollo-client": ">=1.2.2",

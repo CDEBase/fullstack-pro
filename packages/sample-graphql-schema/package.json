@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/graphql-schema",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Sample Schema Module",
   "main": "lib/index.js",
   "publishConfig": {
@@ -45,11 +45,11 @@
   "author": "CDMBase LLC",
   "license": "MIT",
   "dependencies": {
-    "@sample-stack/server-core": "^0.0.4",
-    "@sample-stack/store": "^0.0.4"
+    "@sample-stack/server-core": "^0.0.5",
+    "@sample-stack/store": "^0.0.5"
   },
   "devDependencies": {
-    "@sample-stack/utils": "^0.0.4",
+    "@sample-stack/utils": "^0.0.5",
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
