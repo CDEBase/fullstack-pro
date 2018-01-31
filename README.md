@@ -63,10 +63,6 @@ npm run db:seed
 ```
 4. Start both client and server together
 ```
-npm run spin:watch
-```
-still supports backward compatibility as below
-```
 npm start
 ```
 The graphql server endpoints are
