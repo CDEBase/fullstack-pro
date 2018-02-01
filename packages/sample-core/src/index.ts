@@ -6,7 +6,6 @@ export interface PersonType {
     sex: string;
     matches: [PersonType];
 }
-
 export interface SomeType {
     testInt: number;
     testFloat: number;
