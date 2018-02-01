@@ -27,7 +27,16 @@
         "@sample-stack/core": "*",
         "@sample-stack/server-core": "*",
         "@sample-stack/hemera-counter": "*",
-        "@sample-stack/microservice-hemera-plugin": "*"
+        "@sample-stack/microservice-hemera-plugin": "*",
+        "dotenv": "^4.0.0",
+        "graphql-nats-subscriptions": "^1.0.8",
+        "nats": "^0.7.24",
+        "helmet": "^3.6.0",
+        "nats-hemera": "^3.1.7",
+        "hemera-joi": "^3.0.1",
+        "hemera-plugin": "0.1.1",
+        "inversify": "^4.1.0",
+        "reflect-metadata": "^0.1.10"
     },
     "devDependencies": {
         "cross-env": "^5.0.5",
