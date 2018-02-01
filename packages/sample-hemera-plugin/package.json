@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/hemera-counter",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
   "scripts": {

@@ -7,7 +7,7 @@
         "watch": "npm run start:dev",
         "start": "node dist/index.js",
         "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env nodemon dist",
-        "start:dev": "cross-env ENV_FILE=../../config/development/dev.env nodemon nodemon dist",
+        "start:dev": "cross-env ENV_FILE=../../config/development/dev.env nodemon dist",
         "docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
         "docker:run": "docker run -it $npm_package_name:$npm_package_version",
         "prebuild": "npm run build:clean",
@@ -24,6 +24,8 @@
     "author": "CDMBase LLC",
     "license": "ISC",
     "dependencies": {
+        "@sample-stack/core": "*",
+        "@sample-stack/server-core": "*",
         "@sample-stack/hemera-counter": "*",
         "@sample-stack/microservice-hemera-plugin": "*"
     },
@@ -35,6 +37,6 @@
         "webpack": "^3.7.1"
     },
     "optionalDependencies": {
-        "nats-hemera": ">1.5.0"
+        "nats-hemera": ">3.0.0"
     }
 }
