@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/microservice-hemera-plugin",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
   "scripts": {
@@ -40,14 +40,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@sample-stack/core": "*",
-    "@sample-stack/server-core": "*",
-    "@sample-stack/utils": "*"
+    "@sample-stack/core": "^0.0.8",
+    "@sample-stack/server-core": "^0.0.8",
+    "@sample-stack/utils": "^0.0.8"
   },
   "peerDependencies": {
-    "nats-hemera": "1.x",
+    "hemera-joi": "1.x",
     "hemera-plugin": "^0.0.2",
-    "hemera-joi": "1.x"
+    "nats-hemera": "1.x"
   },
   "devDependencies": {
     "jest": "^21.1.0",
