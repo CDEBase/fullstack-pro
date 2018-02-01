@@ -35,6 +35,7 @@
         "helmet": "^3.6.0",
         "nats-hemera": "^3.1.7",
         "hemera-joi": "^3.0.1",
+        "hemera-zipkin": "^3.0.1",
         "hemera-plugin": "0.1.1",
         "inversify": "^4.1.0",
         "reflect-metadata": "^0.1.10"
