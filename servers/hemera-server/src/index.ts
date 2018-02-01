@@ -1,20 +1,23 @@
 import 'reflect-metadata';
 require('dotenv').config({ path: process.env.ENV_FILE });
 
-const Hemera = require('nats-hemera');
+import * as Hemera from 'nats-hemera';
+import * as nats from 'nats';
 const HemeraJoi = require('hemera-joi');
-const ContainerHemera = require('@sample-stack/microservice-hemera-plugin');
+const ContainerHemera = require('@sample-stack/hemera-counter');
 
 // const HemeraZipkin = require('hemera-zipkin');
 
-const nats = require('nats').connect({
+const client = nats.connect({
     'url': process.env.NATS_URL,
     'user': process.env.NATS_USER,
     'pass': process.env.NATS_PW,
 });
 
-const hemera = new Hemera(nats, {
-    logLevel: 'trace',
+const logLevel = process.env.HEMERA_LOG_LEVEL as Hemera.LogLevel || 'info';
+
+const hemera = new Hemera(client, {
+    logLevel: logLevel,
     childLogger: true,
     tag: 'hemera-server',
     timeout: 10000,

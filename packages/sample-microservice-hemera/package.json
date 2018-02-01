@@ -1,11 +1,11 @@
 {
-  "name": "@sample-stack/hemera-counter",
+  "name": "@sample-stack/microservice-hemera-plugin",
   "version": "0.0.1",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
-    "test": "ENV=test ENV_FILE=../../config/development/dev.env jest",
+    "test": "ENV=test ENV_FILE=../../config/development/development.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
@@ -22,9 +22,6 @@
     "testEnvironment": "node",
     "roots": [
       "src"
-    ],
-    "modulePaths": [
-      "node_modules"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -43,15 +40,16 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@sample-stack/utils": "^0.0.7"
+    "@sample-stack/core": "*",
+    "@sample-stack/server-core": "*",
+    "@sample-stack/utils": "*"
   },
   "peerDependencies": {
-    "hemera-joi": "1.x",
-    "hemera-plugin": "0.x",
-    "nats-hemera": "1.x"
+    "nats-hemera": "1.x",
+    "hemera-plugin": "^0.0.2",
+    "hemera-joi": "1.x"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",
     "webpack": "^3.7.1"
