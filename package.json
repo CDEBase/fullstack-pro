@@ -5,6 +5,7 @@
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
+    "publish": "lerna publish",
     "lerna": "lerna bootstrap --hoist",
     "install": "npm run lerna",
     "clean": "lerna clean",
