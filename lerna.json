@@ -11,11 +11,10 @@
       "tag: internal": ":house: Internal"
     }
   },
-  "commands": {
-  },
+  "commands": {},
   "packages": [
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.8"
+  "version": "0.0.9"
 }

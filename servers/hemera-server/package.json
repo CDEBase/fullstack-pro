@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-hemera-server",
-    "version": "0.0.10",
+    "version": "0.0.9",
     "description": "",
     "main": "index.js",
     "private": true,
@@ -18,32 +18,32 @@
         "build:dist": "webpack",
         "build:clean": "rimraf dist",
         "jest": "./node_modules/.bin/jest",
-		"test": "jest",
-		"test:debug": "npm test -- --runInBand",
-		"test:watch": "npm test -- --watch"
+        "test": "jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch"
     },
     "author": "CDMBase LLC",
     "license": "ISC",
     "dependencies": {
-        "@sample-stack/core": "*",
-        "@sample-stack/server-core": "*",
+        "@sample-stack/core": "^0.0.9",
         "@sample-stack/hemera-counter": "*",
-        "@sample-stack/microservice-hemera-plugin": "*",
+        "@sample-stack/microservice-hemera-plugin": "^0.0.9",
+        "@sample-stack/server-core": "^0.0.9",
         "dotenv": "^4.0.0",
         "graphql-nats-subscriptions": "^1.0.8",
-        "nats": "^0.7.24",
         "helmet": "^3.6.0",
-        "nats-hemera": "^3.1.7",
         "hemera-joi": "^3.0.1",
         "hemera-plugin": "0.1.1",
         "inversify": "^4.1.0",
+        "nats": "^0.7.24",
+        "nats-hemera": "^3.1.7",
         "reflect-metadata": "^0.1.10"
     },
     "devDependencies": {
         "cross-env": "^5.0.5",
         "jest": "^21.1.0",
-        "rimraf": "^2.6.1",
         "nodemon": "^1.12.1",
+        "rimraf": "^2.6.1",
         "webpack": "^3.7.1"
     },
     "optionalDependencies": {
