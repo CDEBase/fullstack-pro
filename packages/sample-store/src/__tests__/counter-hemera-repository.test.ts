@@ -4,7 +4,7 @@ import * as Hemera from 'nats-hemera';
 import * as Nats from 'nats';
 import * as HemeraTestSuite from 'hemera-testsuite';
 import * as HemeraSqlStore from 'hemera-sql-store';
-import { CounterRepository } from '../repository/counter-hemera-repository';
+import { CounterRemoteRepository } from '../repository/counter-hemera-repository';
 import { createCounter, dropCounter } from '../../../../database-store';
 import * as knex from 'knex';
 import { logger } from '@sample-stack/utils';
@@ -18,8 +18,8 @@ describe('Hemera-sql-store', function () {
     let server;
     let hemera;
     let testDatabase = process.env.DB_DATABASE;
-    let testTable = CounterRepository.tableName;
-    let repo: CounterRepository;
+    let testTable = CounterRemoteRepository.tableName;
+    let repo: CounterRemoteRepository;
 
     beforeAll(async (done) => {
         server = HemeraTestSuite.start_server(PORT, () => {
@@ -43,7 +43,7 @@ describe('Hemera-sql-store', function () {
             });
             hemera.ready(async () => {
                 await createCounter(hemera.sqlStore.useDb(testDatabase));
-                repo = new CounterRepository(hemera);
+                repo = new CounterRemoteRepository(hemera);
                 done();
             });
         });

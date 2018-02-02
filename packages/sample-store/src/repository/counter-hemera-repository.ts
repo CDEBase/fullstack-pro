@@ -9,7 +9,7 @@ import * as Nats from 'nats';
 const NATS_HEMERA_DATBASE_MANAGER = 'sql-store';
 
 @injectable()
-export class CounterRepository implements ICounterRepository {
+export class CounterRemoteRepository implements ICounterRepository {
 
     constructor(
         @inject('Hemera') private hemera: Hemera,
@@ -24,7 +24,7 @@ export class CounterRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'findById',
-                collection: CounterRepository.tableName,
+                collection: CounterRemoteRepository.tableName,
                 id,
             },
         ) as Promise<ICount>;
@@ -35,7 +35,7 @@ export class CounterRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'find',
-                collection: CounterRepository.tableName,
+                collection: CounterRemoteRepository.tableName,
                 query: {},
             },
         );
@@ -46,7 +46,7 @@ export class CounterRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'create',
-                collection: CounterRepository.tableName,
+                collection: CounterRemoteRepository.tableName,
                 data,
             },
         );
@@ -75,7 +75,7 @@ export class CounterRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'update',
-                collection: CounterRepository.tableName,
+                collection: CounterRemoteRepository.tableName,
                 query: {
                     id: data.id,
                 },
