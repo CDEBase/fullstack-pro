@@ -1,10 +1,10 @@
 // App-specific back-end Webpack config should be here
 const server = {
-     entry: {
-       index: [
-        './servers/backend-server/src/index.ts'        
-       ]
-     }
+    entry: {
+        index: [
+            './servers/backend-server/src/index.ts'
+        ]
+    }
 };
 
 // App-specific web front-end Webpack config should be here
@@ -61,11 +61,13 @@ const dependencyPlatforms = {
     "helmet": 'server',
     "hemera-joi": 'server',
     "hemera-plugin": 'server',
+    "hemera-zipkin": 'server',
+    "hemera-sql-store": 'server',
     "immutability-helper": 'web',
     "inversify": 'server',
     "morgan": 'server',
     "nats": 'server',
-    "nats-hemera":'server',
+    "nats-hemera": 'server',
     "nconf": 'server',
     "node-pre-gyp": 'server',
     "prop-types": 'web',

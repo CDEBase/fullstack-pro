@@ -40,7 +40,6 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "devDependencies": {
-    "@sample-stack/utils": "*",
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
     "rimraf": "^2.6.1",

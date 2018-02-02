@@ -229,6 +229,8 @@
     "helmet": "^3.6.0",
     "hemera-joi": "^3.0.1",
     "hemera-plugin": "0.1.1",
+    "hemera-safe-promises": "0.0.2",
+    "hemera-sql-store": "^4.0.0",
     "hemera-zipkin": "^3.0.1",
     "immutability-helper": "^2.2.2",
     "inversify": "^4.1.0",

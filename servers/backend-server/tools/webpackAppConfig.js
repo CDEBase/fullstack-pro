@@ -15,8 +15,8 @@ const dependencyPlatforms = {
     'graphql-tools': 'server',
     'immutability-helper': ['ios', 'android', 'web'],
     'isomorphic-fetch': 'server',
-    // knex: 'server',
-    // mysql2: 'server',
+    knex: 'server',
+    mysql2: 'server',
     persistgraphql: ['server', 'web'],
     'react-dom': 'web',
     'react-helmet': 'web',
@@ -34,7 +34,7 @@ const dependencyPlatforms = {
     sqlite3: 'server',
     'styled-components': ['server', 'web'],
     'subscriptions-transport-ws': ['ios', 'android', 'web'],
-    // 'universal-cookie-express': 'server',
+    'universal-cookie-express': 'server',
 };
 
 module.exports = { server, dependencyPlatforms };

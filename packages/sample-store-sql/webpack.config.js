@@ -13,9 +13,6 @@ var webpack_opts = {
     library: "@sample-stack/store",
   },
   resolve: {
-    alias: {
-      'database-store': path.resolve(__dirname, '../../database-store')
-    },
     extensions: ['.ts', '.js'],
     modules: [
       'node_modules',

@@ -10,7 +10,7 @@ let _db: Knex;
 const getDb = (config: DbConfig): Knex => {
 
     if (!_db) {
-        _db = Knex(config.getConfiguration());
+        _db = Knex(config.getConfiguration())
     }
 
     return _db;

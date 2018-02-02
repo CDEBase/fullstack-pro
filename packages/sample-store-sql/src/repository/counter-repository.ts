@@ -20,11 +20,11 @@ export class CounterRepository extends AbstractRepository implements ICounterRep
     }
 
     public async create(dto: ICount): Promise<ICount> {
-        return await this.create(dto);
+        throw new Error('Method not implemented');
     }
 
     public async update(dto: ICount): Promise<ICount> {
-        return await this.getTable().update(dto);
+        throw new Error('Method not implemented');
     }
     public async getCount(): Promise<ICount> {
         return await this.getTable().first();
