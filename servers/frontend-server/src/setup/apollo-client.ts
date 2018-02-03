@@ -1,11 +1,13 @@
 /// <reference path='../../../../typings/index.d.ts' />
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
-import {
-    ApolloClient,
-    createNetworkInterface,
-    ApolloProvider, createBatchingNetworkInterface,
-    NetworkInterface,
-} from 'react-apollo';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { ApolloLink } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createApolloFetch } from 'apollo-fetch';
+import { getOperationAST } from 'graphql';
 import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
@@ -14,6 +16,36 @@ import { addApolloLogging } from 'apollo-logger';
 
 const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(PUBLIC_SETTINGS.GRAPHQL_URL);
 
+const fetch = createApolloFetch({
+    uri: PUBLIC_SETTINGS.GRAPHQL_URL,
+    // constructOptions: 
+});
+const cache = new InMemoryCache();
+
+const wsClient = new SubscriptionClient(
+    (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
+        reconnect: true,
+        // connectionParams,
+    },
+);
+
+wsClient.use([
+
+]);
+
+wsClient.onDisconnected(() => {
+
+});
+wsClient.onReconnected(() => {});
+
+let link = ApolloLink.split(
+    operation => {
+        const operationAST = getOperationAST(operation.query, operation.operationName);
+        return !!operationAST && operationAST.operation === 'subscription';
+    },
+    new WebSocketLink(wsClient) as any,
+    new BatchHttpLink({ fetch }) as any,
+);
 let networkInterface: NetworkInterface;
 if (__CLIENT__) {
     networkInterface = new SubscriptionClient(

@@ -9,7 +9,7 @@ import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@sample-stack/utils';
-import { container } from '../container';
+import { counterRepo } from '../container';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
@@ -20,7 +20,7 @@ const addSubscriptions = httpServer => {
         schema,
         execute,
         subscribe,
-        onConnect: () => ({ Count: container.get<ICounterRepository>(CounterTypes.ICounterRepository) }),
+        onConnect: () => ({ Count: counterRepo }),
     }, {
             server: httpServer,
             path: GRAPHQL_ROUTE,

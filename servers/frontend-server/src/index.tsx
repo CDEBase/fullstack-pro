@@ -8,7 +8,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Provider as ReduxProvider } from 'react-redux';
 import createRenderer from './setup/fela-renderer';
 import { createApolloClient } from './setup/apollo-client';
-import { createReduxStore } from './redux-config';
+import { createReduxStore, storeReducer } from './redux-config';
 import { Component } from './components';
 import { createRenderer as createFelaRenderer } from 'fela';
 
@@ -27,10 +27,18 @@ if (window.__APOLLO_STATE__) {
   initialState = window.__APOLLO_STATE__;
 }
 
-const store = createReduxStore(initialState, client);
-
+let store ;
+if (module.hot && module.hot.data && module.hot.data.store) {
+  // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
+  store = module.hot.data.store;
+  store.replaceReducer(storeReducer);
+} else {
+  store = createReduxStore(initialState);
+}
 if (module.hot) {
-  module.hot.dispose(() => {
+  module.hot.dispose(data => {
+    // console.log("Saving Redux store:", JSON.stringify(store.getState()));
+    data.store = store;
     // Force Apollo to fetch the latest data from the server
     delete window.__APOLLO_STATE__;
   });
@@ -43,13 +51,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const renderer = createFelaRenderer(); 
   if (rootEl) {
     ReactDOM.render(
-      <ApolloProvider store={store} client={client}>
+      <ReduxProvider store={store} >
+      <ApolloProvider client={client}>
         <ReactFela.Provider renderer={renderer}>
-          <ReduxProvider store={store} >
             <Component />
-          </ReduxProvider>
         </ReactFela.Provider>
       </ApolloProvider>
+      </ReduxProvider>
       , rootEl);
   }
 });

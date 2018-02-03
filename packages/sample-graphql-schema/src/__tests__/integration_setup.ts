@@ -1,7 +1,14 @@
 import * as WebSocket from 'ws';
-import { createNetworkInterface, ApolloClient } from 'apollo-client';
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
+import { getOperationAST } from 'graphql';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { WebSocketLink } from 'apollo-link-ws';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { ApolloLink } from 'apollo-link';
+import { createApolloFetch } from 'apollo-fetch';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addApolloLogging } from 'apollo-logger';
+import { LoggingLink } from 'apollo-logger';
 
 let server;
 let apollo;
@@ -9,16 +16,23 @@ let apollo;
 beforeAll(async () => {
 
 
-    const wsClient = new SubscriptionClient(`ws://localhost:${process.env['PORT']}`, {}, WebSocket);
-
-    const networkInterface = addGraphQLSubscriptions(
-        createNetworkInterface({ uri: `http://localhost:${process.env['PORT']}/graphql`}),
-        wsClient,
+    const fetch = createApolloFetch({ uri: `http://localhost:${process.env['PORT']}/graphql` });
+    const cache = new InMemoryCache();
+    let link = ApolloLink.split(
+        operation => {
+            const operationAST = getOperationAST(operation.query, operation.operationName);
+            return !!operationAST && operationAST.operation === 'subscription';
+        },
+        new WebSocketLink({
+            uri: `ws://localhost:${process.env['PORT']}/graphql`,
+            webSocketImpl: WebSocket,
+        }) as any,
+        new BatchHttpLink({ fetch }) as any,
     );
-
-    // apollo = new ApolloClient({
-    //     networkInterface: addApolloLogging(networkInterface),
-    // });
+    apollo = new ApolloClient({
+        link: ApolloLink.from((true ? [new LoggingLink()] : []).concat([link])),
+        cache,
+    });
 });
 
 afterAll(() => {

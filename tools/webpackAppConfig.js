@@ -43,6 +43,7 @@ const dependencyPlatforms = {
     "export-dir": 'server',
     "express": 'server',
     'body-parser': 'server',
+    'console': 'server',
     express: 'server',
     'graphql-server-express': 'server',
     'graphql-subscriptions': 'server',

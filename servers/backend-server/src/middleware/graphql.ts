@@ -4,7 +4,7 @@ import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
 import { logger } from '@sample-stack/utils';
 import * as express from 'express';
-import { container } from '../container';
+import { counterRepo } from '../container';
 import { schema } from '../api/schema';
 import { database  } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
@@ -20,7 +20,7 @@ export const graphqlExpressMiddleware =
                     persons,
                     findPerson,
                     addPerson,
-                    Count: container.get<ICounterRepository>(CounterTypes.ICounterRepository),
+                    Count: counterRepo,
                 },
             };
             return graphqlOptions;

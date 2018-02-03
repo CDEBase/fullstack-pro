@@ -54,24 +54,8 @@ export class CounterRemoteRepository implements ICounterRepository {
 
     // TODO Due to error not using asyn/await
     // https://github.com/hemerajs/hemera-sql-store/issues
-    // public async update(data: ICount): Promise<ICount> {
-    //     throw await this.hemera.act(
-    //         {
-    //             topic: NATS_HEMERA_DATBASE_MANAGER,
-    //             cmd: 'update',
-    //             collection: CounterRepository.tableName,
-    //             query: {
-    //                 id: data.id,
-    //             },
-    //             data: {
-    //                 amount: data.amount,
-    //             },
-    //         },
-    //     );
-    // }
-
-    public update(data: ICount) {
-        return this.hemera.act(
+    public async update(data: ICount): Promise<ICount> {
+        return await this.hemera.act(
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'update',
@@ -83,16 +67,32 @@ export class CounterRemoteRepository implements ICounterRepository {
                     amount: data.amount,
                 },
             },
-            (err, resp) => {
-                return new Promise((resolve, reject) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    resolve(resp);
-                });
-            },
         );
     }
+
+    // public update(data: ICount) {
+    //     return this.hemera.act(
+    //         {
+    //             topic: NATS_HEMERA_DATBASE_MANAGER,
+    //             cmd: 'update',
+    //             collection: CounterRemoteRepository.tableName,
+    //             query: {
+    //                 id: data.id,
+    //             },
+    //             data: {
+    //                 amount: data.amount,
+    //             },
+    //         },
+    //         (err, resp) => {
+    //             return new Promise((resolve, reject) => {
+    //                 if (err) {
+    //                     reject(err);
+    //                 }
+    //                 resolve(resp);
+    //             });
+    //         },
+    //     );
+    // }
     public async getCount(): Promise<ICount> {
         return this.getById(1);
     }
