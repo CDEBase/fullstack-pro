@@ -14,7 +14,7 @@
     "spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
     "spin:watch:debug": "npm run spin:watch -- -v",
     "spin:exp": "spin exp",
-    "watch": "lerna exec --no-sort --ignore *server --stream --parallel --flatten -- webpack --watch",
+    "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
     "prodBuild": "cross-env NODE_ENV=production babel-node --presets es2015 tools/webpack.run",
     "build": "npm run build:packages",
     "build:packages": "lerna run build --ignore *server",
