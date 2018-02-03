@@ -19,9 +19,15 @@
 		"docker:run": "docker run -it $npm_package_name:$npm_package_version",
 		"preupver": "npm test",
 		"upver": "standard-version",
-		"db:migrate": "../../node_modules/.bin/knex migrate:latest --cwd . --knexfile ./knexfile.ts",
-		"db:migrate:rollback": "../../node_modules/.bin/knex migrate:rollback  --cwd . --knexfile ./knexfile.ts",
-		"db:seed": "npm run db:migrate && ../../node_modules/.bin/knex seed:run  --cwd . --knexfile ./knexfile.ts"
+		"db:migrate": "knex migrate:latest --cwd . --knexfile ./knexfile.ts",
+		"db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./knexfile.ts",
+		"db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./knexfile.ts",
+		"stagedb:migrate": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate",
+		"stagedb:migrate:rollback":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
+		"stagedb:seed":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
+		"proddb:migrate": "NODE_ENV=staging npm run db:migrate",
+		"proddb:migrate:rollback":  "NODE_ENV=staging npm run db:migrate:rollback",
+		"proddb:seed":  "NODE_ENV=staging npm run db:seed"
 	},
 	"keywords": [
 		"apollo",

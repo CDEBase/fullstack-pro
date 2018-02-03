@@ -5,7 +5,7 @@ import * as Nats from 'nats';
 import * as HemeraTestSuite from 'hemera-testsuite';
 import * as HemeraSqlStore from 'hemera-sql-store';
 import { CounterRemoteRepository } from '../repository/counter-hemera-repository';
-import { createCounter, dropCounter } from '../../../../database-store';
+import { createCounter, dropCounter } from '../database-store/migrations/counter';
 import * as knex from 'knex';
 import { logger } from '@sample-stack/utils';
 require('dotenv').config({ path: process.env.ENV_FILE });

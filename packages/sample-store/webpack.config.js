@@ -3,19 +3,19 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var libPath = require('../../tools/webpack-util');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var webpack_opts = {
-  entry: './src/index.ts',
+  entry: {
+    index: './src/index.ts',
+  },
   target: 'node',
   output: {
-    filename: libPath('index.js'),
+    filename: libPath('[name].js'),
     libraryTarget: "commonjs2",
     library: "@sample-stack/store",
   },
   resolve: {
-    alias: {
-      'database-store': path.resolve(__dirname, '../../database-store')
-    },
     extensions: ['.ts', '.js'],
     modules: [
       'node_modules',
@@ -23,6 +23,12 @@ var webpack_opts = {
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/database-store/',
+        to: 'lib/store',
+      }
+    ]),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,
