@@ -57,6 +57,7 @@
 		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
 		"@cdm-logger/server": "^3.0.2",
+		"apollo-link": "^1.0.7",
 		"apollo-logger": "^0.1.0",
 		"app-root-path": "^2.0.1",
 		"body-parser": "^1.18.2",
@@ -79,8 +80,7 @@
 		"persistgraphql": "^0.3.11",
 		"reflect-metadata": "^0.1.12",
 		"sqlite3": "^3.1.8",
-		"ws": "^3.3.3",
-		"apollo-link": "^1.0.7"
+		"ws": "^3.3.3"
 	},
 	"peerDependencies": {
 		"subscriptions-transport-ws": "*",
