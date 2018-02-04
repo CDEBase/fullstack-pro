@@ -37,7 +37,7 @@
         "inversify": "^4.10.0",
         "nats": "^0.7.24",
         "nats-hemera": "^3.1.7",
-        "reflect-metadata": "^0.1.10"
+        "reflect-metadata": "^0.1.12"
     },
     "devDependencies": {
         "cross-env": "^5.1.3",

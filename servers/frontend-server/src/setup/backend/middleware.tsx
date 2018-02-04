@@ -25,16 +25,16 @@ async function renderServerSide(req, res) {
         const client = createApolloClient();
 
         let initialState = {};
-        const store = createReduxStore(initialState, client);
+        const store = createReduxStore(initialState);
         const renderer = createRenderer();
         const component = (
-            <ApolloProvider store={store} client={client}>
-                <ReduxProvider store={store} >
+            <ReduxProvider store={store} >
+                <ApolloProvider client={client}>
                     <ReactFela.Provider renderer={renderer} >
                         <Component />
                     </ReactFela.Provider>
-                </ReduxProvider>
-            </ApolloProvider>
+                </ApolloProvider>
+            </ReduxProvider>
         );
 
         const appCss = renderToMarkup(renderer);
