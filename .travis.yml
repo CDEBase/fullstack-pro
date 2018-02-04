@@ -8,12 +8,11 @@ install:
   - npm install
 os:
   - linux
+  - osx
 branches:
   only:
   - publish
 script:
-  - npm test
-  - npm run coverage
-  - coveralls < ./lcov.info || true # if coveralls doesn't have it covered
+  - npm run test
 # Allow Travis tests to run in containers.
 sudo: false
