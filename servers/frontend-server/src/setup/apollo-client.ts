@@ -22,30 +22,33 @@ const fetch = createApolloFetch({
 });
 const cache = new InMemoryCache();
 
-const wsClient = new SubscriptionClient(
-    (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
-        reconnect: true,
-        // connectionParams,
-    },
-);
+let link;
+if (__CLIENT__) {
+    const wsClient = new SubscriptionClient(
+        (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
+            reconnect: true,
+            // connectionParams,
+        },
+    );
 
-wsClient.use([
+    wsClient.use([
 
-]);
+    ]);
 
-wsClient.onDisconnected(() => {
+    wsClient.onDisconnected(() => {});
+    wsClient.onReconnected(() => {});
 
-});
-wsClient.onReconnected(() => {});
-
-let link = ApolloLink.split(
-    operation => {
-        const operationAST = getOperationAST(operation.query, operation.operationName);
-        return !!operationAST && operationAST.operation === 'subscription';
-    },
-    new WebSocketLink(wsClient) as any,
-    new BatchHttpLink({ fetch }) as any,
-);
+    link = ApolloLink.split(
+        operation => {
+            const operationAST = getOperationAST(operation.query, operation.operationName);
+            return !!operationAST && operationAST.operation === 'subscription';
+        },
+        new WebSocketLink(wsClient) as any,
+        new BatchHttpLink({ fetch }) as any,
+    );
+} else {
+    link = new BatchHttpLink({ fetch });
+}
 
 // TODO Setup PersistQueries
 // if (__PERSIST_GQL__) {
