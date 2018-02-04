@@ -1,4 +1,4 @@
-FROM node:8.4-alpine
+FROM node:8.9-alpine
 
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there
