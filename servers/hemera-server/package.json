@@ -35,8 +35,6 @@
         "hemera-joi": "^3.0.1",
         "hemera-plugin": "0.1.1",
         "inversify": "^4.10.0",
-        "nats": "^0.7.24",
-        "nats-hemera": "^3.1.7",
         "reflect-metadata": "^0.1.12"
     },
     "devDependencies": {

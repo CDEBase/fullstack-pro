@@ -74,13 +74,12 @@
 		"isomorphic-fetch": "^2.2.1",
 		"knex": "^0.13.0",
 		"lodash": "^4.17.4",
+		"subscriptions-transport-ws": "^0.9.5",
 		"morgan": "^1.8.1",
 		"nats": "^0.7.24",
-		"nats-hemera": "^3.1.7",
 		"persistgraphql": "^0.3.11",
 		"reflect-metadata": "^0.1.12",
 		"sqlite3": "^3.1.8",
-		"subscriptions-transport-ws": "^0.9.5",
 		"ws": "^3.3.3"
 	},
 	"peerDependencies": {

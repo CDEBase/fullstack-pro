@@ -59,7 +59,6 @@ if (__CLIENT__) {
 //     });
 // }
 
-
 // if (settings.apolloLogging) {
 //     networkInterface = addApolloLogging(networkInterface);
 // }
