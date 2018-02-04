@@ -1,4 +1,5 @@
 *
 !dist/
 !*.js
-!*.json
+!package.json
+!knexfile.ts

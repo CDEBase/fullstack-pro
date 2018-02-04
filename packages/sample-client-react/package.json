@@ -66,10 +66,15 @@
     "@sample-stack/graphql-gql": "^0.0.12"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@sample-stack/graphql-schema": "^0.0.12",
     "jest": "^21.1.0",
+=======
+    "@sample-stack/graphql-schema": "*",
+    "jest": "^22.1.0",
+>>>>>>> next
     "rimraf": "^2.6.1",
-    "webpack": "^3.7.1"
+    "webpack": "^3.10.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

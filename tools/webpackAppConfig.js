@@ -1,10 +1,10 @@
 // App-specific back-end Webpack config should be here
 const server = {
-     entry: {
-       index: [
-        './servers/backend-server/src/index.ts'        
-       ]
-     }
+    entry: {
+        index: [
+            './servers/backend-server/src/index.ts'
+        ]
+    }
 };
 
 // App-specific web front-end Webpack config should be here
@@ -39,10 +39,12 @@ const ios = {
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
     "app-root-path": 'server',
+    "apollo-engine": 'server',
     "bunyan": 'server',
     "export-dir": 'server',
     "express": 'server',
     'body-parser': 'server',
+    'console': 'server',
     express: 'server',
     'graphql-server-express': 'server',
     'graphql-subscriptions': 'server',
@@ -61,11 +63,15 @@ const dependencyPlatforms = {
     "helmet": 'server',
     "hemera-joi": 'server',
     "hemera-plugin": 'server',
+    
+    "hemera-safe-promises": 'server',
+    "hemera-zipkin": 'server',
+    "hemera-sql-store": 'server',
     "immutability-helper": 'web',
     "inversify": 'server',
     "morgan": 'server',
     "nats": 'server',
-    "nats-hemera":'server',
+    "nats-hemera": 'server',
     "nconf": 'server',
     "node-pre-gyp": 'server',
     "prop-types": 'web',

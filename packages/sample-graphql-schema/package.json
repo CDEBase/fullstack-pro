@@ -49,15 +49,27 @@
     "@sample-stack/store": "^0.0.12"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@sample-stack/utils": "^0.0.12",
     "cross-env": "^5.0.5",
     "jest": "^21.1.0",
+=======
+    "@sample-stack/utils": "*",
+    "cross-env": "^5.1.3",
+    "jest": "^22.1.0",
+>>>>>>> next
     "rimraf": "^2.6.1",
-    "webpack": "^3.7.1"
+    "webpack": "^3.10.0"
   },
   "peerDependencies": {
+<<<<<<< HEAD
     "graphql-tools": "1.0.0",
     "lodash": "^4.17.4"
+=======
+    "lodash": "^4.17.4",
+    "graphql-tools": ">2.0.0",
+    "graphql": "^0.10.0 || ^0.11.0"
+>>>>>>> next
   },
   "optionalDependencies": {
     "@types/graphql": "^0.11.3"

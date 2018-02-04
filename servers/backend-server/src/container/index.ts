@@ -1,2 +1,2 @@
-export * from './repository-facade';
+export * from './sample-facade';
 export * from './pubsub';

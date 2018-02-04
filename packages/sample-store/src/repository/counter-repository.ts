@@ -7,7 +7,7 @@ import { injectable } from 'inversify';
 export class CounterRepository extends AbstractRepository implements ICounterRepository {
 
     // Set the table name to count
-    protected tableName: string = 'count';
+    public static tableName: string = 'count';
 
     public async getById(id: number): Promise<ICount> {
         return await this.getTable()
@@ -20,11 +20,11 @@ export class CounterRepository extends AbstractRepository implements ICounterRep
     }
 
     public async create(dto: ICount): Promise<ICount> {
-        throw new Error('Method not implemented');
+        return await this.create(dto);
     }
 
     public async update(dto: ICount): Promise<ICount> {
-        throw new Error('Method not implemented');
+        return await this.getTable().update(dto);
     }
     public async getCount(): Promise<ICount> {
         return await this.getTable().first();
