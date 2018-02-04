@@ -57,6 +57,7 @@
 		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
 		"@cdm-logger/server": "^3.0.2",
+		"apollo-link": "^1.0.7",
 		"apollo-logger": "^0.1.0",
 		"app-root-path": "^2.0.1",
 		"body-parser": "^1.18.2",
