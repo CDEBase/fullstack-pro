@@ -52,6 +52,12 @@
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
 		"@cdm-logger/server": "^3.0.2",
+		"@sample-stack/graphql-schema": "*",
+		"@sample-stack/server-core": "*",
+		"@sample-stack/core": "*",
+		"@sample-stack/store": "*",
+		"@sample-stack/graphql-gql": "*",
+		"@sample-stack/utils": "*",
 		"dotenv": "^5.0.0",
 		"apollo-logger": "^0.1.0",
 		"app-root-path": "^2.0.1",
