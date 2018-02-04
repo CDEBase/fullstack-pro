@@ -22,7 +22,7 @@ export abstract class AbstractRepository {
     @inject('DefaultDbConfig')
     public dbConfig: DbConfig;
 
-    public static tableName: string;
+    public abstract readonly tableName: string;
 
     /**
      * Returns an instance of database
@@ -35,6 +35,6 @@ export abstract class AbstractRepository {
      * Returns a IQueryBuilder instance of Table
      */
     public getTable(): Knex.QueryBuilder {
-        return this.getDb().table(AbstractRepository.tableName);
+        return this.getDb().table(this.tableName);
     }
 }

@@ -2,12 +2,13 @@ import { AbstractRepository } from '../db-helpers';
 import { ICounterRepository } from './interfaces';
 import { ICount } from '../models';
 import { injectable } from 'inversify';
+import { Counter_Table } from '../database-store/migrations/counter';
 
 @injectable()
 export class CounterRepository extends AbstractRepository implements ICounterRepository {
 
     // Set the table name to count
-    public static tableName: string = 'count';
+    public readonly tableName: string = Counter_Table;
 
     public async getById(id: number): Promise<ICount> {
         return await this.getTable()
