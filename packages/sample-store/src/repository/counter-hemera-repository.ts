@@ -5,6 +5,7 @@ import { injectable, inject, named } from 'inversify';
 import * as Hemera from 'nats-hemera';
 import HemeraJoi from 'hemera-joi';
 import * as Nats from 'nats';
+import { Counter_Table } from '../database-store/migrations/counter';
 
 const NATS_HEMERA_DATBASE_MANAGER = 'sql-store';
 
@@ -16,7 +17,7 @@ export class CounterRemoteRepository implements ICounterRepository {
     ) {
     }
     // Set the table name to count
-    public static tableName: string = 'count';
+    public readonly tableName: string = Counter_Table;
     private topic = NATS_HEMERA_DATBASE_MANAGER;
 
     public async getById(id) {
@@ -24,7 +25,7 @@ export class CounterRemoteRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'findById',
-                collection: CounterRemoteRepository.tableName,
+                collection: this.tableName,
                 id,
             },
         ) as Promise<ICount>;
@@ -35,7 +36,7 @@ export class CounterRemoteRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'find',
-                collection: CounterRemoteRepository.tableName,
+                collection: this.tableName,
                 query: {},
             },
         );
@@ -46,7 +47,7 @@ export class CounterRemoteRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'create',
-                collection: CounterRemoteRepository.tableName,
+                collection: this.tableName,
                 data,
             },
         );
@@ -57,7 +58,7 @@ export class CounterRemoteRepository implements ICounterRepository {
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'update',
-                collection: CounterRemoteRepository.tableName,
+                collection: this.tableName,
                 query: {
                     id: data.id,
                 },

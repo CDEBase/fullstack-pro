@@ -5,9 +5,10 @@ import * as Nats from 'nats';
 import * as HemeraTestSuite from 'hemera-testsuite';
 import * as HemeraSqlStore from 'hemera-sql-store';
 import { CounterRemoteRepository } from '../repository/counter-hemera-repository';
-import { createCounter, dropCounter } from '../database-store/migrations/counter';
+import { createCounter, dropCounter, Counter_Table } from '../database-store/migrations/counter';
 import * as knex from 'knex';
 import { logger } from '@sample-stack/utils';
+
 require('dotenv').config({ path: process.env.ENV_FILE });
 
 import 'jest';
@@ -18,7 +19,7 @@ describe('Hemera-sql-store', function () {
     let server;
     let hemera;
     let testDatabase = process.env.DB_DATABASE;
-    let testTable = CounterRemoteRepository.tableName;
+    let testTable = Counter_Table;
     let repo: CounterRemoteRepository;
 
     beforeAll(async (done) => {
