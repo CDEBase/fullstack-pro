@@ -1,13 +1,29 @@
 var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
+var glob = require('glob');
 var fs = require('fs');
 var libPath = require('../../tools/webpack-util');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+var glob_entries1 = function (globPath) {
+  var files = glob.sync(globPath);
+  var entries = {};
+
+  for (var i = 0; i < files.length; i++) {
+    var entry = files[i];
+    var pathObj = path.parse(entry);
+    entries[path.join(pathObj.dir.replace(new RegExp('^\.\/src\/database-store', ''), 'store'), pathObj.name)] = entry;
+  }
+  return entries;
+};
+
 var webpack_opts = {
   entry: {
     index: './src/index.ts',
+    ...glob_entries1("./src/database-store/**/*.ts"),
+    // "store/migrations/counter": './src/database-store/migrations/counter.ts',
+    // "store/seeds/counter": './src/database-store/seeds/counter.ts',
   },
   target: 'node',
   output: {
@@ -26,7 +42,7 @@ var webpack_opts = {
     new CopyWebpackPlugin([
       {
         from: 'src/database-store/',
-        to: 'lib/store',
+        to: 'lib/store-1',
       }
     ]),
     new webpack.LoaderOptionsPlugin({
