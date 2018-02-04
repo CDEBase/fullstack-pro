@@ -19,7 +19,8 @@
 		"docker:run": "docker run -it $npm_package_name:$npm_package_version",
 		"preupver": "npm test",
 		"upver": "standard-version",
-		"db:migrate": "knex migrate:latest --cwd . --knexfile ./knexfile.ts",
+		"knex": "ts-node --no-project ./node_modules/.bin/knex",
+		"db:migrate": "npm run knex -- migrate:latest --cwd . --knexfile ./knexfile.ts",
 		"db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./knexfile.ts",
 		"db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./knexfile.ts",
 		"stagedb:migrate": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate",
@@ -95,6 +96,8 @@
 	"devDependencies": {
 		"cross-env": "^5.1.3",
 		"spinjs": "0.4.18",
+		"ts-node": "^4.1.0",
+		"typescript": "2.7.1",
 		"jest": "^22.1.0",
 		"rimraf": "^2.6.1",
 		"webpack": "^3.10.0"
