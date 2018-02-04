@@ -18,7 +18,7 @@ const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(PUBLIC_SE
 
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-    // constructOptions: 
+    // constructOptions:
 });
 const cache = new InMemoryCache();
 
