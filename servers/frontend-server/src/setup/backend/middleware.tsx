@@ -49,9 +49,9 @@ async function renderServerSide(req, res) {
         if (__DEV__ || !assetMap) {
             assetMap = JSON.parse(fs.readFileSync(path.join(SETTINGS.frontendBuildDir, 'web', 'assets.json')).toString());
         }
-        const apolloState = Object.assign({}, client.store.getState());
+        const apolloState = Object.assign({}, client.extract());
         const env = {
-            ...publicEnv
+            ...publicEnv,
         };
 
         const page = (
