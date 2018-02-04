@@ -10,7 +10,7 @@ let _db: Knex;
 const getDb = (config: DbConfig): Knex => {
 
     if (!_db) {
-        _db = Knex(config.getConfiguration())
+        _db = Knex(config.getConfiguration());
     }
 
     return _db;
@@ -22,7 +22,7 @@ export abstract class AbstractRepository {
     @inject('DefaultDbConfig')
     public dbConfig: DbConfig;
 
-    protected abstract tableName: string;
+    public abstract readonly tableName: string;
 
     /**
      * Returns an instance of database

@@ -1,20 +1,18 @@
 language: node_js
 node_js:
-  - "4.4"
-  - "6.2"
-  - "6.4"
-  - "6.5"
   - "8.4"
 install:
   - npm config set spin=false
   - npm install -g npm@5.2
   - npm install -g coveralls
   - npm install
-
+os:
+  - linux
+  - osx
+branches:
+  only:
+  - publish
 script:
-  - npm test
-  - npm run coverage
-  - coveralls < ./lcov.info || true # if coveralls doesn't have it covered
-
+  - npm run test
 # Allow Travis tests to run in containers.
 sudo: false

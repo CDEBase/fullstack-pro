@@ -11,3 +11,6 @@ export interface SomeType {
     testFloat: number;
     fixedString: string;
 }
+export enum TaggedType {
+    MICROSERVICE = 'MICROSERVICE',
+}

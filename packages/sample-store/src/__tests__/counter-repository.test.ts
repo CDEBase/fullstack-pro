@@ -2,7 +2,6 @@ import 'reflect-metadata';
 
 import * as Knex from 'knex';
 import { DbConfig } from '../db-helpers';
-import { RepositoryDiSetup } from '../repository-di-setup';
 import { Container } from 'inversify';
 import { ICounterRepository, CounterRepository } from '../repository';
 import { TYPES } from '../constants';
@@ -23,7 +22,7 @@ describe('DI Test', () => {
         container.bind<DbConfig>('DefaultDbConfig').toConstantValue(dbConfig);
 
         // container...
-        new RepositoryDiSetup().setup(container);
+        container.bind<ICounterRepository>(TYPES.ICounterRepository).to(CounterRepository);
 
     });
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { createBatchingNetworkInterface } from 'apollo-client';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { addApolloLogging } from 'apollo-logger';
 import { addPersistedQueries } from 'persistgraphql';
@@ -25,16 +24,16 @@ async function renderServerSide(req, res) {
         const client = createApolloClient();
 
         let initialState = {};
-        const store = createReduxStore(initialState, client);
+        const store = createReduxStore();
         const renderer = createRenderer();
         const component = (
-            <ApolloProvider store={store} client={client}>
-                <ReduxProvider store={store} >
+            <ReduxProvider store={store} >
+                <ApolloProvider client={client}>
                     <ReactFela.Provider renderer={renderer} >
                         <Component />
                     </ReactFela.Provider>
-                </ReduxProvider>
-            </ApolloProvider>
+                </ApolloProvider>
+            </ReduxProvider>
         );
 
         const appCss = renderToMarkup(renderer);
@@ -50,9 +49,9 @@ async function renderServerSide(req, res) {
         if (__DEV__ || !assetMap) {
             assetMap = JSON.parse(fs.readFileSync(path.join(SETTINGS.frontendBuildDir, 'web', 'assets.json')).toString());
         }
-        const apolloState = Object.assign({}, client.store.getState());
+        const apolloState = Object.assign({}, client.extract());
         const env = {
-            ...publicEnv
+            ...publicEnv,
         };
 
         const page = (
@@ -81,5 +80,6 @@ export const websiteMiddleware = async (req, res, next) => {
         }
     } catch (e) {
         logger.error('RENDERING ERROR:', e);
+        return next(e);
     }
 };

@@ -5,6 +5,7 @@ import * as Hemera from 'nats-hemera';
 import * as nats from 'nats';
 const HemeraJoi = require('hemera-joi');
 const HemeraZipkin = require('hemera-zipkin');
+const HemeraSql  = require('hemera-sql-store');
 
 const ContainerHemera = require('@sample-stack/hemera-counter');
 
@@ -25,6 +26,17 @@ const hemera = new Hemera(client, {
 });
 
 hemera.use(HemeraJoi);
+hemera.use(HemeraSql, {
+    knex: {
+        dialect: process.env.DB_TYPE,
+        connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
+        },
+    },
+});
 hemera.use(HemeraZipkin, {
     host: process.env.ZIPKIN_URL,
     port: process.env.ZIPKIN_PORT,

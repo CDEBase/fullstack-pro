@@ -51,9 +51,9 @@
     "hemera-joi": "1.x"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5",
-    "jest": "^21.1.0",
+    "cross-env": "^5.1.3",
+    "jest": "^22.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^3.7.1"
+    "webpack": "^3.10.0"
   }
 }

@@ -48,11 +48,11 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
-    "cross-env": "^5.0.5",
+    "cross-env": "^5.1.3",
     "@sample-stack/utils": "*",
-    "jest": "^21.1.0",
+    "jest": "^22.1.0",
     "rimraf": "^2.6.1",
-    "webpack": "^3.7.1"
+    "webpack": "^3.10.0"
   },
   "dependencies": {
     "@sample-stack/core": "*"
