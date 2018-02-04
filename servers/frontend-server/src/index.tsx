@@ -48,7 +48,7 @@ if (module.hot) {
 window.addEventListener('DOMContentLoaded', () => {
   const mountNode = document.getElementById('stylesheet');
   // const renderer = createRenderer(document.getElementById('font-stylesheet'));
-  const renderer = createFelaRenderer(); 
+  const renderer = createFelaRenderer();
   if (rootEl) {
     ReactDOM.render(
       <ReduxProvider store={store} >
