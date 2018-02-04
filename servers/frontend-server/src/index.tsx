@@ -21,19 +21,13 @@ const rootEl = document.getElementById('content');
 
 const client = createApolloClient();
 
-let initialState = {};
-
-if (window.__APOLLO_STATE__) {
-  initialState = window.__APOLLO_STATE__;
-}
-
 let store ;
 if (module.hot && module.hot.data && module.hot.data.store) {
   // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
   store = module.hot.data.store;
   store.replaceReducer(storeReducer);
 } else {
-  store = createReduxStore(initialState);
+  store = createReduxStore();
 }
 if (module.hot) {
   module.hot.dispose(data => {
