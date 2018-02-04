@@ -25,9 +25,9 @@
 		"stagedb:migrate": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate",
 		"stagedb:migrate:rollback":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
 		"stagedb:seed":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
-		"proddb:migrate": "NODE_ENV=staging npm run db:migrate",
-		"proddb:migrate:rollback":  "NODE_ENV=staging npm run db:migrate:rollback",
-		"proddb:seed":  "NODE_ENV=staging npm run db:seed"
+		"proddb:migrate": "NODE_ENV=production npm run db:migrate",
+		"proddb:migrate:rollback":  "NODE_ENV=production npm run db:migrate:rollback",
+		"proddb:seed":  "NODE_ENV=production npm run db:seed"
 	},
 	"keywords": [
 		"apollo",
