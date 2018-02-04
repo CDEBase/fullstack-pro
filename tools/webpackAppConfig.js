@@ -63,6 +63,8 @@ const dependencyPlatforms = {
     "helmet": 'server',
     "hemera-joi": 'server',
     "hemera-plugin": 'server',
+    
+    "hemera-safe-promises": 'server',
     "hemera-zipkin": 'server',
     "hemera-sql-store": 'server',
     "immutability-helper": 'web',

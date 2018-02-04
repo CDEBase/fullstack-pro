@@ -59,6 +59,7 @@
 		"@cdm-logger/server": "^3.0.2",
 		"dotenv": "^5.0.0",
 		"apollo-logger": "^0.1.0",
+		"app-root-path": "^2.0.1",
 		"reflect-metadata": "^0.1.10",
 		"lodash": "^4.17.4",
 		"knex": "^0.14.2",
