@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { createBatchingNetworkInterface } from 'apollo-client';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { addApolloLogging } from 'apollo-logger';
 import { addPersistedQueries } from 'persistgraphql';
@@ -25,7 +24,7 @@ async function renderServerSide(req, res) {
         const client = createApolloClient();
 
         let initialState = {};
-        const store = createReduxStore(initialState, client);
+        const store = createReduxStore();
         const renderer = createRenderer();
         const component = (
             <ApolloProvider store={store} client={client}>
@@ -81,5 +80,6 @@ export const websiteMiddleware = async (req, res, next) => {
         }
     } catch (e) {
         logger.error('RENDERING ERROR:', e);
+        return next(e);
     }
 };

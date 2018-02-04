@@ -22,64 +22,42 @@ const fetch = createApolloFetch({
 });
 const cache = new InMemoryCache();
 
-const wsClient = new SubscriptionClient(
-    (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
-        reconnect: true,
-        // connectionParams,
-    },
-);
-
-wsClient.use([
-
-]);
-
-wsClient.onDisconnected(() => {
-
-});
-wsClient.onReconnected(() => {});
-
-let link = ApolloLink.split(
-    operation => {
-        const operationAST = getOperationAST(operation.query, operation.operationName);
-        return !!operationAST && operationAST.operation === 'subscription';
-    },
-    new WebSocketLink(wsClient) as any,
-    new BatchHttpLink({ fetch }) as any,
-);
-let networkInterface: NetworkInterface;
+let link;
 if (__CLIENT__) {
-    networkInterface = new SubscriptionClient(
-        (PUBLIC_SETTINGS.GRAPHQL_URL)
-            .replace(/^http/, 'ws')
-        , {
+    const wsClient = new SubscriptionClient(
+        (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
             reconnect: true,
-        }) as NetworkInterface;
-} else {
-    networkInterface = createBatchingNetworkInterface({
-        opts: {
-            credentials: 'same-origin',
+            // connectionParams,
         },
-        batchInterval: 20,
-        uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL || '/graphql',
-    });
+    );
+
+    wsClient.use([
+
+    ]);
+
+    wsClient.onDisconnected(() => {});
+    wsClient.onReconnected(() => {});
+
+    link = ApolloLink.split(
+        operation => {
+            const operationAST = getOperationAST(operation.query, operation.operationName);
+            return !!operationAST && operationAST.operation === 'subscription';
+        },
+        new WebSocketLink(wsClient) as any,
+        new BatchHttpLink({ fetch }) as any,
+    );
+} else {
+    link = new BatchHttpLink({ fetch });
 }
 
-if (__PERSIST_GQL__) {
-    import('@sample-stack/graphql-gql/extracted_queries.json').then(queryMap => {
-        console.log(queryMap)
-        networkInterface = addPersistedQueries(networkInterface, queryMap);
-    }).catch(() => {
-        console.warn('extracted_queries not found');
-    })
-}
-// Hybrid WebSocket Transport
-// https://github.com/apollographql/subscriptions-transport-ws#hybrid-websocket-transport
-// let networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-//   networkInterface,
-//   wsClient,
-// );
-
-
+// TODO Setup PersistQueries
+// if (__PERSIST_GQL__) {
+//     import('@sample-stack/graphql-gql/extracted_queries.json').then(queryMap => {
+//         console.log(queryMap)
+//     }).catch(() => {
+//         console.warn('extracted_queries not found');
+//     });
+// }
 
 // if (settings.apolloLogging) {
 //     networkInterface = addApolloLogging(networkInterface);
@@ -93,20 +71,20 @@ const createApolloClient = () => {
             }
             return null;
         },
-        networkInterface,
-
+        link,
+        cache,
     };
     if (__SSR__) {
         if (__CLIENT__) {
             if (window.__APOLLO_STATE__) {
-                params.initialState = window.__APOLLO_STATE__;
+                cache.restore(window.__APOLLO_STATE__);
             }
             params.ssrForceFetchDelay = 100;
         } else {
             params.ssrMode = true;
         }
     }
-    return new ApolloClient(params);
+    return new ApolloClient<any>(params);
 };
 
 export { createApolloClient };

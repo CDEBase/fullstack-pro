@@ -32,7 +32,7 @@ export const storeReducer = combineReducers<StoreState.Counter | StoreState.Samp
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (initialStat) => {
+export const createReduxStore = () => {
     const store: Store<StoreState.Counter | StoreState.Sample> =
         createStore<StoreState.Counter | StoreState.Sample>(
             storeReducer,

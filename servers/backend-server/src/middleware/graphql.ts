@@ -6,7 +6,7 @@ import { logger } from '@sample-stack/utils';
 import * as express from 'express';
 import { counterRepo } from '../container';
 import { schema } from '../api/schema';
-import { database  } from '@sample-stack/graphql-schema';
+import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
 const { persons, findPerson, addPerson } = database;
@@ -21,6 +21,10 @@ export const graphqlExpressMiddleware =
                     findPerson,
                     addPerson,
                     Count: counterRepo,
+                },
+                formatError: error => {
+                    logger.error('GraphQL execution error:', error);
+                    return error;
                 },
             };
             return graphqlOptions;
