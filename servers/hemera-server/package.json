@@ -36,7 +36,9 @@
         "nats-hemera": "^3.1.7",
         "hemera-joi": "^3.0.1",
         "hemera-zipkin": "^3.0.1",
-        "hemera-plugin": "0.1.1",
+        "hemera-plugin": "0.1.1",    
+        "hemera-safe-promises": "0.0.2",
+        "hemera-sql-store": "^4.0.0",
         "inversify": "^4.10.0",
         "reflect-metadata": "^0.1.12"
     },
