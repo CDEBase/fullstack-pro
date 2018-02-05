@@ -6,6 +6,8 @@ pipeline {
     FRONTEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
     BACKEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")                                       
     BACKEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")
+    HEMERA_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/hemera-server/package.json")                                       
+    HEMERA_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/hemera-server/package.json")
   }
   
   stages {
@@ -42,6 +44,19 @@ pipeline {
           docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           docker push gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           docker rmi gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+        """
+      }
+    }
+
+    stage ('hemera server'){
+      steps{
+        sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
+        sh """
+          cd servers/hemera-server/
+          npm run docker:build
+          docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+          docker push gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+          docker rmi gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
         """
       }
     }
