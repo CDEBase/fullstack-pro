@@ -53,7 +53,7 @@
 		"@sample-stack/graphql-schema": "*",
 		"@sample-stack/server-core": "*",
 		"@sample-stack/core": "*",
-		"@sample-stack/store": "0.0.14",
+		"@sample-stack/store": "*",
 		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
 		"@cdm-logger/server": "^3.0.2",

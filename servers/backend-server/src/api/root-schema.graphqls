@@ -1,3 +1,4 @@
+scalar AnyObject
 type FieldError {
   field: String!
   message: String!
