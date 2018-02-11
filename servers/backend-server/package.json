@@ -23,11 +23,11 @@
 		"db:migrate:rollback": "knex -- migrate:rollback  --cwd . --knexfile ./knexfile.js",
 		"db:seed": "npm run db:migrate && knex -- seed:run  --cwd . --knexfile ./knexfile.js",
 		"stagedb:migrate": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate",
-		"stagedb:migrate:rollback":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
-		"stagedb:seed":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
+		"stagedb:migrate:rollback": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
+		"stagedb:seed": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
 		"proddb:migrate": "NODE_ENV=production npm run db:migrate",
-		"proddb:migrate:rollback":  "NODE_ENV=production npm run db:migrate:rollback",
-		"proddb:seed":  "NODE_ENV=production npm run db:seed"
+		"proddb:migrate:rollback": "NODE_ENV=production npm run db:migrate:rollback",
+		"proddb:seed": "NODE_ENV=production npm run db:seed"
 	},
 	"keywords": [
 		"apollo",
@@ -74,6 +74,7 @@
 		"knex": "^0.13.0",
 		"lodash": "^4.17.4",
 		"morgan": "^1.8.1",
+		"mysql": "^2.15.0",
 		"nats": "^0.7.24",
 		"nats-hemera": "^3.1.7",
 		"persistgraphql": "^0.3.11",
