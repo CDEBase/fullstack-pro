@@ -23,11 +23,11 @@
 		"db:migrate:rollback": "knex -- migrate:rollback  --cwd . --knexfile ./knexfile.js",
 		"db:seed": "npm run db:migrate && knex -- seed:run  --cwd . --knexfile ./knexfile.js",
 		"stagedb:migrate": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate",
-		"stagedb:migrate:rollback":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
-		"stagedb:seed":  "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
+		"stagedb:migrate:rollback": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:migrate:rollback",
+		"stagedb:seed": "cross-env ENV_FILE=../../config/staging/staging.env NODE_ENV=staging npm run db:seed",
 		"proddb:migrate": "NODE_ENV=production npm run db:migrate",
-		"proddb:migrate:rollback":  "NODE_ENV=production npm run db:migrate:rollback",
-		"proddb:seed":  "NODE_ENV=production npm run db:seed"
+		"proddb:migrate:rollback": "NODE_ENV=production npm run db:migrate:rollback",
+		"proddb:seed": "NODE_ENV=production npm run db:seed"
 	},
 	"keywords": [
 		"apollo",
@@ -50,13 +50,13 @@
 	},
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
+		"@cdm-logger/server": "^3.0.2",
+		"@sample-stack/core": "*",
+		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/graphql-schema": "*",
 		"@sample-stack/server-core": "*",
-		"@sample-stack/core": "*",
 		"@sample-stack/store": "*",
-		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/utils": "*",
-		"@cdm-logger/server": "^3.0.2",
 		"apollo-link": "^1.0.7",
 		"apollo-logger": "^0.1.0",
 		"app-root-path": "^2.0.1",
@@ -73,13 +73,14 @@
 		"isomorphic-fetch": "^2.2.1",
 		"knex": "^0.13.0",
 		"lodash": "^4.17.4",
-		"subscriptions-transport-ws": "^0.9.5",
 		"morgan": "^1.8.1",
+		"mysql": "^2.15.0",
 		"nats": "^0.7.24",
 		"nats-hemera": "^3.1.7",
 		"persistgraphql": "^0.3.11",
 		"reflect-metadata": "^0.1.12",
 		"sqlite3": "^3.1.8",
+		"subscriptions-transport-ws": "^0.9.5",
 		"ws": "^3.3.3"
 	},
 	"peerDependencies": {
