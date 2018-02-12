@@ -71,7 +71,7 @@ const dependencyPlatforms = {
     "ramda": "^0.25.0",
     "react": "^15.5.4",
     "react-apollo": 'web',
-    "redux": "^3.6.0",
+    "redux": "web",
     "reflect-metadata": 'server',
     "sequelize": 'server',
     'react-dom': 'web',
