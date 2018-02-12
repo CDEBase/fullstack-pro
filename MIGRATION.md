@@ -5,12 +5,13 @@ Migrating from 0.1.x to 0.2.0
 Before
 ---
 ```
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, ApolloError } from 'react-apollo';
 ```
 After
 ---
 ```
 import { graphql } from 'react-apollo';
+import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
 ```
 
