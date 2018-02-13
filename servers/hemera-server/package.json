@@ -31,7 +31,7 @@
         "@sample-stack/microservice-hemera-plugin": "*",
         "dotenv": "^5.0.0",
         "graphql-nats-subscriptions": "^1.1.0",
-        "nats": "^0.7.24",
+        "nats": "^0.7.25",
         "helmet": "^3.10.0",
         "nats-hemera": "^3.1.7",
         "hemera-joi": "^3.0.1",

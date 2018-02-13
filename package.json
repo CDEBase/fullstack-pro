@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -248,7 +248,7 @@
     "inversify": "^4.10.0",
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.13.0",
-    "nats": "^0.7.24",
+    "nats": "^0.7.25",
     "nats-hemera": "^3.1.7",
     "nconf": "^0.10.0",
     "node-pre-gyp": "~0.6.31",
