@@ -31,6 +31,7 @@
         "@sample-stack/server-core": "^0.0.15",
         "dotenv": "^5.0.0",
         "graphql-nats-subscriptions": "^1.1.0",
+        "nats": "^0.7.25",
         "helmet": "^3.10.0",
         "hemera-joi": "^3.0.1",
         "hemera-zipkin": "^3.0.1",

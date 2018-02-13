@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -181,7 +181,8 @@
     "tslint-react": "^3.0.0",
     "typescript": "2.7.1",
     "typescript-require": "^0.2.9-1",
-    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
+    "uglify-es": "3.3.9",
+    "uglifyjs-webpack-plugin": "1.1.8",
     "url-loader": "^0.6.2",
     "wait-on": "^2.0.2",
     "webpack": "^3.10.0",
@@ -248,7 +249,7 @@
     "inversify": "^4.10.0",
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.13.0",
-    "nats": "^0.7.24",
+    "nats": "^0.7.25",
     "nats-hemera": "^3.1.7",
     "nconf": "^0.10.0",
     "node-pre-gyp": "~0.6.31",

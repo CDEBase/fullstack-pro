@@ -4,7 +4,6 @@ var path = require('path');
 var glob = require('glob');
 var fs = require('fs');
 var libPath = require('../../tools/webpack-util');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var glob_entries1 = function (globPath) {
   var files = glob.sync(globPath);
@@ -22,8 +21,6 @@ var webpack_opts = {
   entry: {
     index: './src/index.ts',
     ...glob_entries1("./src/database-store/**/*.ts"),
-    // "store/migrations/counter": './src/database-store/migrations/counter.ts',
-    // "store/seeds/counter": './src/database-store/seeds/counter.ts',
   },
   target: 'node',
   output: {
@@ -39,12 +36,6 @@ var webpack_opts = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: 'src/database-store/',
-        to: 'lib/store-1',
-      }
-    ]),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,

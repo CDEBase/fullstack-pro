@@ -75,7 +75,7 @@
 		"lodash": "^4.17.4",
 		"morgan": "^1.8.1",
 		"mysql": "^2.15.0",
-		"nats": "^0.7.24",
+		"nats": "^0.7.25",
 		"nats-hemera": "^3.1.7",
 		"persistgraphql": "^0.3.11",
 		"reflect-metadata": "^0.1.12",
