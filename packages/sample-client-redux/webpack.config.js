@@ -40,9 +40,10 @@ var webpack_opts = {
       use: 'ts-loader'
     }]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample-stack/core": "@sample-stack/core" },
-  { "@sample-stack/client-core": "@sample-stack/client-core" }]
+  externals: [
+    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals()
+  ]
 };
 
 module.exports = webpack_opts;

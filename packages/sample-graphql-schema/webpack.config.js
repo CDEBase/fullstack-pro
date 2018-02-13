@@ -48,9 +48,10 @@ var webpack_opts = {
       use: 'raw-loader'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample-stack/core": "@sample-stack/core" },
-  { "@sample-stack/server-core": "@sample-stack/server-core" }]
+  externals: [
+    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals()
+  ]
 };
 
 module.exports = webpack_opts;
