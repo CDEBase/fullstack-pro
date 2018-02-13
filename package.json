@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -146,7 +146,6 @@
     "node-dev": "^3.1.3",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.12",
-    "npm-check-updates": "^2.14.0",
     "openurl": "^1.1.1",
     "persistgraphql-webpack-plugin": "^0.4.4",
     "postcss-loader": "^2.1.0",
