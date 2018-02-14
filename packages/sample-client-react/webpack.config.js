@@ -53,12 +53,10 @@ var webpack_opts = {
       loaders: 'css-loader'
     },]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" }),
-  { "@sample-stack/core": "@sample-stack/core" },
-  { "@sample-stack/client-core": "@sample-stack/client-core" },
-  { "@sample-stack/graphql-gql": "@sample-stack/graphql-gql" },
-  { "@sample-stack/graphql-schema": "@sample-stack/graphql-schema" },
-  { "@sample-stack/client-redux": "@sample-stack/client-redux" }]
+  externals: [
+    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals()
+  ]
 };
 
 module.exports = webpack_opts;
