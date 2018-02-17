@@ -14,8 +14,6 @@ pipeline {
     stage ('dependencies'){
       steps{
         sh """
-          #npm install --global lerna
-          lerna clean --yes
           npm install
           npm run lerna
                  """
