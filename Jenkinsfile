@@ -19,10 +19,15 @@ pipeline {
                  """
       }
     }
+  
+  stage ('docker login'){
+      steps{
+        sh 'docker login -u _json_key -p "$(cat /var/jenkins_home/cdmbase_keys/key.json)" https://gcr.io'
+      }
+    }
     
     stage ('frontend server'){
       steps{
-        sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/frontend-server/
           npm run docker:build
@@ -35,7 +40,6 @@ pipeline {
 
     stage ('backend server'){
       steps{
-        sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/backend-server/
           npm run docker:build
@@ -48,7 +52,6 @@ pipeline {
 
     stage ('hemera server'){
       steps{
-        sh 'docker login -u _json_key -p "$(cat /key.json)" https://gcr.io'
         sh """
           cd servers/hemera-server/
           npm run docker:build
