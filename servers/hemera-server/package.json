@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-hemera-server",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "description": "",
     "main": "index.js",
     "private": true,
@@ -26,12 +26,11 @@
     "license": "ISC",
     "dependencies": {
         "@sample-stack/core": "^0.0.16",
-        "@sample-stack/hemera-counter": "^0.0.16",
-        "@sample-stack/microservice-hemera-plugin": "^0.0.16",
-        "@sample-stack/server-core": "^0.0.16",
+        "@sample-stack/hemera-counter": "^0.0.17",
+        "@sample-stack/microservice-hemera-plugin": "^0.0.17",
+        "@sample-stack/server-core": "^0.0.17",
         "dotenv": "^5.0.0",
         "graphql-nats-subscriptions": "^1.1.0",
-        "nats": "0.7.24",
         "helmet": "^3.10.0",
         "hemera-joi": "^3.0.1",
         "hemera-plugin": "0.1.1",
@@ -39,6 +38,7 @@
         "hemera-sql-store": "^4.0.0",
         "hemera-zipkin": "^3.0.1",
         "inversify": "^4.10.0",
+        "nats": "0.7.24",
         "reflect-metadata": "^0.1.12"
     },
     "devDependencies": {
