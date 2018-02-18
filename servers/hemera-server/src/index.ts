@@ -16,7 +16,7 @@ const client = nats.connect({
     'pass': process.env.NATS_PW,
 });
 
-const logLevel = process.env.HEMERA_LOG_LEVEL as Hemera.LogLevel || 'info';
+const logLevel = process.env.HEMERA_LOG_LEVEL as Hemera.LogLevel || process.env.LOG_LEVEL as Hemera.LogLevel || 'info';
 
 const hemera = new Hemera(client, {
     logLevel: logLevel,
