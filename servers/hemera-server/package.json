@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-hemera-server",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "",
     "main": "index.js",
     "private": true,
@@ -25,10 +25,10 @@
     "author": "CDMBase LLC",
     "license": "ISC",
     "dependencies": {
-        "@sample-stack/core": "^0.0.16",
-        "@sample-stack/hemera-counter": "^0.0.17",
-        "@sample-stack/microservice-hemera-plugin": "^0.0.17",
-        "@sample-stack/server-core": "^0.0.17",
+        "@sample-stack/core": "^0.0.18",
+        "@sample-stack/hemera-counter": "^0.0.18",
+        "@sample-stack/microservice-hemera-plugin": "^0.0.18",
+        "@sample-stack/server-core": "^0.0.18",
         "dotenv": "^5.0.0",
         "graphql-nats-subscriptions": "^1.1.0",
         "helmet": "^3.10.0",
