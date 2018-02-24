@@ -49,6 +49,7 @@
 		"@sample-stack/utils": "*",
 		"apollo-cache-inmemory": "^1.1.7",
 		"apollo-client": "^2.2.2",
+		"apollo-fetch": "^0.7.0",
 		"apollo-link": "^1.0.7",
 		"apollo-link-batch-http": "^1.0.4",
 		"apollo-link-ws": "^1.0.4",
