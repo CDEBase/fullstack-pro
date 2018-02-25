@@ -69,6 +69,10 @@ pipeline {
           string(name: 'BACKEND_PACKAGE_NAME', value: "${BACKEND_PACKAGE_NAME}"), string(name: 'BACKEND_PACKAGE_VERSION', value: "${BACKEND_PACKAGE_VERSION}"),
           string(name: 'HEMERA_PACKAGE_NAME', value: "${HEMERA_PACKAGE_NAME}"), string(name: 'HEMERA_PACKAGE_VERSION', value: "${HEMERA_PACKAGE_VERSION}")
           ]
+          slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
+        }
+        failure{
+          slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
         }
     }
 }
