@@ -26,6 +26,8 @@ pipeline {
       }
     }
     
+stage("Docker Build") {
+    parallel {
     stage ('frontend server'){
       steps{
         sh """
@@ -62,7 +64,9 @@ pipeline {
       }
     }
   }
-
+}
+}
+  
     post {
         success{
           build job: 'kube-orchestration', parameters: [string(name: 'FRONTEND_PACKAGE_NAME', value: "${FRONTEND_PACKAGE_NAME}"), string(name: 'FRONTEND_PACKAGE_VERSION', value: "${FRONTEND_PACKAGE_VERSION}"), 
