@@ -56,6 +56,7 @@
 		"@sample-stack/graphql-schema": "*",
 		"@sample-stack/server-core": "*",
 		"@sample-stack/store": "*",
+		"@sample-stack/microservice-nats": "*",
 		"@sample-stack/utils": "*",
 		"apollo-link": "^1.0.7",
 		"apollo-logger": "^0.1.0",
