@@ -7,7 +7,7 @@ const HemeraJoi = require('hemera-joi');
 const HemeraZipkin = require('hemera-zipkin');
 const HemeraSql  = require('hemera-sql-store');
 
-const ContainerHemera = require('@sample-stack/hemera-counter');
+const ContainerHemera = require('@sample-stack/hemera-plugin');
 
 
 const client = nats.connect({

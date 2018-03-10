@@ -27,8 +27,8 @@
     "dependencies": {
         "@sample-stack/core": "*",
         "@sample-stack/server-core": "*",
-        "@sample-stack/hemera-counter": "*",
-        "@sample-stack/microservice-hemera-plugin": "*",
+        "@sample-stack/hemera-plugin": "*",
+        "@sample-stack/microservice-nats": "*",
         "dotenv": "^5.0.0",
         "graphql-nats-subscriptions": "^1.1.0",
            "nats": "0.7.24",

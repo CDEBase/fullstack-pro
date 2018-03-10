@@ -1,5 +1,5 @@
 {
-  "name": "@sample-stack/hemera-counter",
+  "name": "@sample-stack/hemera-plugin",
   "version": "0.0.1",
   "description": "This is Container Configuration Service hemera plugin",
   "main": "lib/index.js",
@@ -43,6 +43,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@sample-stack/core": "*",
+    "@sample-stack/server-core": "*",
     "@sample-stack/utils": "*"
   },
   "peerDependencies": {
