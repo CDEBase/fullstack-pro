@@ -36,6 +36,11 @@ declare interface __SPIN_OPTIONS__ {
   "persistGraphQL": boolean;
 }
 
+declare module NodeJS  {
+  interface Global {
+      env: any
+  }
+}
 declare interface __PUBLIC_SETTINGS__ {
   "apolloLogging": boolean;
   GRAPHQL_URL: string;
