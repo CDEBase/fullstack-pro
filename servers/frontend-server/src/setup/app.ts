@@ -1,4 +1,5 @@
 ///<reference types="webpack-env" />
+require('dotenv').config({ path: process.env.ENV_FILE });
 
 import { logger } from '@sample-stack/utils';
 import './backend/server';
