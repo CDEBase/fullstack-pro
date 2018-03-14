@@ -1,5 +1,4 @@
 ///<reference types="webpack-env" />
-
 import { logger } from '@sample-stack/utils';
 import './backend/server';
 

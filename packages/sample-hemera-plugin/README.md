@@ -1,4 +1,4 @@
-# hemera-counter
+# hemera-plugin
 
 Your plugin description
 
@@ -12,7 +12,7 @@ Your plugin description
 'use strict'
 
 const Hemera = require('nats-hemera')
-const plugin = require('hemera-counter')
+const plugin = require('hemera-plugin')
 const nats = require('nats').connect()
 
 const hemera = new Hemera(nats, {

@@ -10,7 +10,7 @@ var webpack_opts = {
   output: {
     filename: libPath('index.js'),
     libraryTarget: "commonjs2",
-    library: "@sample-stack/microservice-hemera-plugin",
+    library: "@sample-stack/microservice-nats",
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],

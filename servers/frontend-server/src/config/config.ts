@@ -1,7 +1,8 @@
 /// <reference path='../../../../typings/index.d.ts' />
+process.env.ENV_FILE && require('dotenv').config({ path: process.env.ENV_FILE });
+
 import * as fs from 'fs';
 import { PUBLIC_SETTINGS } from './public-config';
-process.env.ENV_FILE && require('dotenv').config({ path: process.env.ENV_FILE });
 
 const SPIN_CONFIG_NAME = '.spinrc.json';
 const { options : spin }: { options: __SPIN_OPTIONS__} = JSON.parse(fs.readFileSync(SPIN_CONFIG_NAME).toString());

@@ -11,7 +11,7 @@ const expect = Code.expect
 // prevent warning message of too much listeners
 process.setMaxListeners(0)
 
-describe('hemera-counter', function () {
+describe('hemera-plugin', function () {
   const PORT = 4222
   const topic = 'counter'
   let server
