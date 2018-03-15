@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/core",
-  "version": "0.0.18",
+  "version": "0.0.21",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
