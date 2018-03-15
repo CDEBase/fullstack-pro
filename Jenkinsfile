@@ -25,9 +25,9 @@ pipeline {
         sh 'docker login -u _json_key -p "$(cat /var/jenkins_home/cdmbase_keys/key.json)" https://gcr.io'
       }
     }
-  
-  stage("Docker Build") {
-    parallel {  
+    
+stage("Docker Build") {
+    parallel {
     stage ('frontend server'){
       steps{
         sh """
@@ -66,7 +66,7 @@ pipeline {
   }
 }
 }
-
+  
     post {
         success{
           build job: 'kube-orchestration', parameters: [string(name: 'FRONTEND_PACKAGE_NAME', value: "${FRONTEND_PACKAGE_NAME}"), string(name: 'FRONTEND_PACKAGE_VERSION', value: "${FRONTEND_PACKAGE_VERSION}"), 
