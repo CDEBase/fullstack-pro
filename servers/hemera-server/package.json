@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-hemera-server",
-    "version": "0.0.21",
+    "version": "0.0.1",
     "description": "",
     "main": "index.js",
     "private": true,
@@ -35,7 +35,8 @@
         "hemera-plugin": "0.1.1",
         "hemera-safe-promises": "0.0.2",
         "hemera-sql-store": "^4.0.0",
-        "hemera-zipkin": "^3.0.1",
+        "nats": "^0.7.26",
+        "nats-hemera": "^3.1.7",
         "inversify": "^4.10.0",
         "nats": "0.7.24",
         "reflect-metadata": "^0.1.12"
