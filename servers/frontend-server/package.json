@@ -6,7 +6,7 @@
 	"main": "index.js",
 	"scripts": {
 		"docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
-		"docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  --net=host -it $npm_package_name:$npm_package_version",
+		"docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  -p 3010:3010  -it $npm_package_name:$npm_package_version",
 		"prebuild": "npm run build:clean",
 		"build:clean": "rimraf dist",
 		"build": "cross-env NODE_ENV=production spin build",
