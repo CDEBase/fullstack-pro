@@ -13,7 +13,6 @@ import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
 
-console.log('both side ', PUBLIC_SETTINGS.GRAPHQL_URL)
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
     // constructOptions:
@@ -45,7 +44,6 @@ if (__CLIENT__) {
         new BatchHttpLink({ uri: PUBLIC_SETTINGS.GRAPHQL_URL }),
     );
 } else {
-    console.log('Server side apollo link', PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL);
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
