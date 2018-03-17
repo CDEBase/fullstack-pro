@@ -1,5 +1,4 @@
 /// <reference path='../../../../typings/index.d.ts' />
-process.env.ENV_FILE && require('dotenv').config({ path: process.env.ENV_FILE });
 
 import * as fs from 'fs';
 import { PUBLIC_SETTINGS } from './public-config';

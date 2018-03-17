@@ -15,13 +15,13 @@ const corsWhitelist = [
 const corsOptions = {
     origin: (origin, callback) => {
         if (corsWhitelist.indexOf(origin) !== -1) {
-            callback(null, true)
+            callback(null, true);
         } else {
             // TODO: only throw when in debug mode
             logger.error('url (%s) is not in the whitelist', origin);
             // callback(new Error('Not allowed by CORS'))
             logger.warn('allowing all origins temporarily, you need to disable it.');
-            callback(null, true)
+            callback(null, true);
         }
     },
     credentails: false,

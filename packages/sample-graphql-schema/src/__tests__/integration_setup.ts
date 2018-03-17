@@ -27,7 +27,7 @@ beforeAll(async () => {
             uri: `ws://localhost:${process.env['PORT']}/graphql`,
             webSocketImpl: WebSocket,
         }) as any,
-        new BatchHttpLink({ fetch }) as any,
+        new BatchHttpLink({ uri: `http://localhost:${process.env['PORT']}/graphql` }),
     );
     apollo = new ApolloClient({
         link: ApolloLink.from((true ? [new LoggingLink()] : []).concat([link])),
