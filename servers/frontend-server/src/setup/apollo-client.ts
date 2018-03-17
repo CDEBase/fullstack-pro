@@ -42,11 +42,11 @@ if (__CLIENT__) {
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL});
-    )
+        new BatchHttpLink({ uri: PUBLIC_SETTINGS.GRAPHQL_URL }),
+    );
 } else {
-    console.log('Server side apollo link',PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL );
-    link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL});
+    console.log('Server side apollo link', PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL);
+    link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
 // TODO Setup PersistQueries
