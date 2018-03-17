@@ -10,11 +10,15 @@ import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 
 const { persons, findPerson, addPerson } = database;
-
+let debug: boolean = false;
+if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {
+    debug = true;
+}
 export const graphqlExpressMiddleware =
     graphqlExpress((request: express.Request, response: express.Response) => {
         try {
             const graphqlOptions: GraphQLOptions = {
+                debug,
                 schema,
                 context: {
                     persons,

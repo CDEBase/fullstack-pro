@@ -13,9 +13,6 @@ import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
 
-
-const { protocol, port: GRAPHQL_PORT, pathname, hostname } = url.parse(PUBLIC_SETTINGS.GRAPHQL_URL);
-
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
     // constructOptions:
@@ -35,8 +32,8 @@ if (__CLIENT__) {
 
     ]);
 
-    wsClient.onDisconnected(() => {});
-    wsClient.onReconnected(() => {});
+    wsClient.onDisconnected(() => { });
+    wsClient.onReconnected(() => { });
 
     link = ApolloLink.split(
         operation => {
@@ -44,10 +41,10 @@ if (__CLIENT__) {
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({ fetch }) as any,
+        new BatchHttpLink({ uri: PUBLIC_SETTINGS.GRAPHQL_URL }),
     );
 } else {
-    link = new BatchHttpLink({ fetch });
+    link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
 // TODO Setup PersistQueries

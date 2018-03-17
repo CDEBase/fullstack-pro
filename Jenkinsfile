@@ -1,6 +1,8 @@
 pipeline {
   agent any
-  
+  parameters {
+    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
+  } 
   environment {
     FRONTEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
     FRONTEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
@@ -28,43 +30,43 @@ pipeline {
   
   stage("Docker Build") {
     parallel {  
-    stage ('frontend server'){
-      steps{
-        sh """
-          cd servers/frontend-server/
-          npm run docker:build
-          docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-          docker push gcr.io/stack-test-186501/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-          docker rmi gcr.io/stack-test-186501//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-        """
+      stage ('frontend server'){
+        steps{
+          sh """
+            cd servers/frontend-server/
+            npm run docker:build
+            docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
+            docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
+            docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
+          """
+        }
       }
-    }
 
-    stage ('backend server'){
-      steps{
-        sh """
-          cd servers/backend-server/
-          npm run docker:build
-          docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
-          docker push gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
-          docker rmi gcr.io/stack-test-186501/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
-        """
+      stage ('backend server'){
+        steps{
+          sh """
+            cd servers/backend-server/
+            npm run docker:build
+            docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+            docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+            docker rmi ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+          """
+        }
       }
-    }
 
-    stage ('hemera server'){
-      steps{
-        sh """
-          cd servers/hemera-server/
-          npm run docker:build
-          docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
-          docker push gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
-          docker rmi gcr.io/stack-test-186501/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
-        """
+      stage ('hemera server'){
+        steps{
+          sh """
+            cd servers/hemera-server/
+            npm run docker:build
+            docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+            docker push ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+            docker rmi ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+          """
+        }
       }
     }
   }
-}
 }
 
     post {
