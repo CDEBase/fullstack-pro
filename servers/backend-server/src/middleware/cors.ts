@@ -3,15 +3,14 @@ import * as express from 'express';
 import { SETTINGS } from '../config';
 import { logger } from '@sample-stack/utils';
 
-const port = SETTINGS.webpackDevPort;
-const appUrl = `http://localhost:${port}`;
 const CLIENT_URL = SETTINGS.CLIENT_URL;
+const BACKEND_URL = SETTINGS.BACKEND_URL;
 
 const corsWhitelist = [
-    appUrl,
+    BACKEND_URL,
     CLIENT_URL,
 ];
-
+logger.info('Cors whitelist: %j', corsWhitelist);
 const corsOptions = {
     origin: (origin, callback) => {
         if (corsWhitelist.indexOf(origin) !== -1) {
