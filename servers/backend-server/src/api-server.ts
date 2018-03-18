@@ -12,6 +12,7 @@ import { corsMiddleware } from './middleware/cors';
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
+import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
@@ -37,7 +38,9 @@ if (__PERSIST_GQL__) {
 app.use(corsMiddleware);
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
 app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
-
+if (__DEV__) {
+    app.use(errorMiddleware);
+}
 
 server = http.createServer(app);
 

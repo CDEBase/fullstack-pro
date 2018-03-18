@@ -54,7 +54,8 @@
         ],
         "backendUrl": "http://{ip}:8080/graphql",
         "defines": {
-            "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
+            "__GRAPHQL_URL__": "'http://localhost:8080/graphql'",
+            "__FRONTEND_BUILD_DIR__": "'.build'"
         },
         "ssr": false,
         "useDefaultPostCss": true,
