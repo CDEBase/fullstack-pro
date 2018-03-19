@@ -12,6 +12,7 @@ import { corsMiddleware } from './middleware/cors';
 import { graphqlExpressMiddleware } from './middleware/graphql';
 import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
+import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
@@ -20,26 +21,25 @@ let server;
 const app = express();
 
 const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.BACKEND_URL);
-try {
-    // Don't rate limit heroku
-    app.enable('trust proxy');
+// Don't rate limit heroku
+app.enable('trust proxy');
 
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-    if (__DEV__) {
-        app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
-    }
+if (__DEV__) {
+    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
+}
 
-    if (__PERSIST_GQL__) {
-        // PersistedQuery don't work yet
-        app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
-    }
-    app.use(corsMiddleware);
-    app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
-    app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
-} catch (err) {
-    console.log(err);
+if (__PERSIST_GQL__) {
+    // PersistedQuery don't work yet
+    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+}
+app.use(corsMiddleware);
+app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
+app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
+if (__DEV__) {
+    app.use(errorMiddleware);
 }
 
 server = http.createServer(app);

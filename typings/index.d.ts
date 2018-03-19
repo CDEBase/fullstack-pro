@@ -2,6 +2,7 @@ declare const __DEV__;
 declare const __BACKEND_URL__;
 declare const __GRAPHQL_URL__;
 declare const __PERSIST_GQL__;
+declare const __FRONTEND_BUILD_DIR__: string;
 declare const __SSR__;
 declare const __CLIENT__;
 declare const __SERVER__;
@@ -45,6 +46,7 @@ declare interface __PUBLIC_SETTINGS__ {
   "apolloLogging": boolean;
   GRAPHQL_URL: string;
   LOCAL_GRAPHQL_URL?: string;
+  LOG_LEVEL?: string;
 }
 
 declare module "*spinrc.json" {
