@@ -185,7 +185,7 @@
     "typescript": "2.7.1",
     "typescript-require": "^0.2.9-1",
     "uglify-es": "^3.3.9",
-    "uglifyjs-webpack-plugin": "1.1.8",
+    "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^1.0.1",
     "wait-on": "^2.0.2",
     "webpack": "^3.11.0",
