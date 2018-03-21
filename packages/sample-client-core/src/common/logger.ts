@@ -1,5 +1,3 @@
-/// <reference path='../../../../typings/index.d.ts' />
-
 import { ClientLogger } from '@cdm-logger/client';
 
 const logLevel = process.env.LOG_LEVEL || 'trace';
