@@ -58,6 +58,7 @@
 		"@sample-stack/store": "*",
 		"@sample-stack/microservice-nats": "*",
 		"@sample-stack/utils": "*",
+		"@sample-stack/counter": "*",
 		"apollo-link": "^1.2.1",
 		"apollo-logger": "^0.1.1",
 		"app-root-path": "^2.0.1",

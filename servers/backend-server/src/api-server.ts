@@ -16,9 +16,14 @@ import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
+import modules from '@sample-stack/counter/lib/server'; //TODO change
 
 let server;
 const app = express();
+
+for (const applyBeforeware of modules.beforewares) {
+    applyBeforeware(app);
+  }
 
 const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.BACKEND_URL);
 // Don't rate limit heroku
@@ -36,6 +41,11 @@ if (__PERSIST_GQL__) {
     app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
+
+for (const applyMiddleware of modules.middlewares) {
+    applyMiddleware(app);
+}
+
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
 app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
 if (__DEV__) {

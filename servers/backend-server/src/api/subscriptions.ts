@@ -12,6 +12,7 @@ import { logger } from '@sample-stack/utils';
 import { counterRepo } from '../container';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
+import modules from '@sample-stack/counter/lib/server'; //TODO change
 
 let subscriptionServer;
 
@@ -20,7 +21,11 @@ const addSubscriptions = httpServer => {
         schema,
         execute,
         subscribe,
-        onConnect: () => ({ Count: counterRepo }),
+        onConnect: (connectionParams, webSocket) => ({ Count: counterRepo, ...modules.createContext(null, connectionParams, webSocket) }),
+        onOperation: async (message, params, webSocket) => {
+            params.context = await modules.createContext(null, message.payload, webSocket);
+            return params;
+        },
     }, {
             server: httpServer,
             path: GRAPHQL_ROUTE,
