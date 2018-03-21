@@ -3,6 +3,7 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { BatchHttpLink } from 'apollo-link-batch-http';
+import { withClientState } from 'apollo-link-state';
 import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -12,11 +13,43 @@ import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
+import modules from '@sample-stack/counter/lib/browser'; //TODO change
 
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-    // constructOptions:
+    constructOptions: modules.constructFetchOptions,
 });
+
+for (const middleware of modules.middlewares) {
+    fetch.batchUse(({ requests, options }, next) => {
+        options.credentials = 'same-origin';
+        options.headers = options.headers || {};
+        const reqs = [...requests];
+        const innerNext = () => {
+            if (reqs.length > 0) {
+                const req = reqs.shift();
+                if (req) {
+                    middleware(req, options, innerNext);
+                }
+            } else {
+                next();
+            }
+        };
+        innerNext();
+    });
+}
+
+let connectionParams = {};
+for (const connectionParam of modules.connectionParams) {
+    Object.assign(connectionParams, connectionParam());
+}
+
+for (const afterware of modules.afterwares) {
+    fetch.batchUseAfter(({ response, options }, next) => {
+        afterware(response, options, next);
+    });
+}
+
 const cache = new InMemoryCache();
 
 let link;
@@ -29,7 +62,17 @@ if (__CLIENT__) {
     );
 
     wsClient.use([
+        {
+            applyMiddleware(operationOptions, next) {
+                let params = {};
+                for (const param of modules.connectionParams) {
+                    Object.assign(params, param());
+                }
 
+                Object.assign(operationOptions, params);
+                next();
+            },
+        },
     ]);
 
     wsClient.onDisconnected(() => { });
@@ -59,6 +102,7 @@ if (__CLIENT__) {
 // if (settings.apolloLogging) {
 //     networkInterface = addApolloLogging(networkInterface);
 // }
+const linkState = withClientState({ ...modules.resolvers, cache });
 
 const createApolloClient = () => {
     const params: any = {

@@ -8,6 +8,7 @@ import { counterRepo } from '../container';
 import { schema } from '../api/schema';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
+import modules from '@sample-stack/counter/lib/server'; //TODO change
 
 const { persons, findPerson, addPerson } = database;
 let debug: boolean = false;
@@ -15,12 +16,15 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 export const graphqlExpressMiddleware =
-    graphqlExpress((request: express.Request, response: express.Response) => {
+    graphqlExpress(async (request: express.Request, response: express.Response) => {
         try {
+            const context = await modules.createContext(request, response);
+
             const graphqlOptions: GraphQLOptions = {
                 debug,
                 schema,
                 context: {
+                    ...context,
                     persons,
                     findPerson,
                     addPerson,
