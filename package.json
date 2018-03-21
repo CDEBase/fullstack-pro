@@ -150,7 +150,7 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.12",
     "openurl": "^1.1.1",
-    "persistgraphql-webpack-plugin": "^0.4.4",
+    "persistgraphql-webpack-plugin": "^0.5.1",
     "postcss-loader": "^2.1.0",
     "prettier": "^1.10.2",
     "qrcode-terminal": "^0.11.0",
@@ -204,6 +204,7 @@
   "dependencies": {
     "@cdm-logger/client": "^3.1.1",
     "@cdm-logger/server": "^3.0.2",
+    "apollo-cache": "^1.1.6",
     "apollo-cache-inmemory": "^1.1.11",
     "apollo-client": "^2.2.7",
     "apollo-engine": "^1.0.2",

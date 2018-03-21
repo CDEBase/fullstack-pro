@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var libPath = require('../../tools/webpack-util');
+var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 
 var webpack_opts = {
   entry: {
@@ -23,6 +24,10 @@ var webpack_opts = {
     ]
   },
   plugins: [
+    new PersistGraphQLPlugin({
+      filename: 'persisted_queries.json',
+      moduleName: path.resolve('node_modules/persisted_queries.json')
+    }),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.tsx?$/,
@@ -45,7 +50,7 @@ var webpack_opts = {
     }, {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-      use: ['graphql-tag/loader', 'persistgraphql-webpack-plugin/graphql-loader']
+      use: ['graphql-tag/loader']
     }]
   },
   externals: [
