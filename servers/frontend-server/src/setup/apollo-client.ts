@@ -20,43 +20,40 @@ const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
     constructOptions: modules.constructFetchOptions,
 });
-if (modules.middlewares.length > 0) {
-    for (const middleware of modules.middlewares) {
-        fetch.batchUse(({ requests, options }, next) => {
-            options.credentials = 'same-origin';
-            options.headers = options.headers || {};
-            const reqs = [...requests];
-            const innerNext = (): void => {
-                if (reqs.length > 0) {
-                    const req = reqs.shift();
-                    if (req) {
-                        middleware(req, options, innerNext);
-                    }
-                } else {
-                    next();
+for (const middleware of modules.middlewares) {
+    fetch.batchUse(({ requests, options }, next) => {
+        options.credentials = 'same-origin';
+        options.headers = options.headers || {};
+        const reqs = [...requests];
+        const innerNext = (): void => {
+            if (reqs.length > 0) {
+                const req = reqs.shift();
+                if (req) {
+                    middleware(req, options, innerNext);
                 }
-            };
-            innerNext();
-        });
-    }
+            } else {
+                next();
+            }
+        };
+        innerNext();
+    });
 }
+
 
 
 let connectionParams = {};
-if (modules.connectionParams.length > 0) {
-    for (const connectionParam of modules.connectionParams) {
-        Object.assign(connectionParams, connectionParam());
-    }
+for (const connectionParam of modules.connectionParams) {
+    Object.assign(connectionParams, connectionParam());
 }
 
 
-if (modules.afterwares.length > 0) {
-    for (const afterware of modules.afterwares) {
-        fetch.batchUseAfter(({ response, options }, next) => {
-            afterware(response, options, next);
-        });
-    }
+
+for (const afterware of modules.afterwares) {
+    fetch.batchUseAfter(({ response, options }, next) => {
+        afterware(response, options, next);
+    });
 }
+
 
 const cache = new InMemoryCache();
 
@@ -92,7 +89,13 @@ if (__CLIENT__) {
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL }),
+        new BatchHttpLink({
+            uri: PUBLIC_SETTINGS.GRAPHQL_URL,
+            // fetchOptions: {
+            //     mode: 'no-cors',
+            // },
+            // fetch,
+        }),
     );
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
