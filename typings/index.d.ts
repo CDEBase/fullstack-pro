@@ -13,6 +13,7 @@ declare interface Window {
   __APOLLO_STATE__?: any;
   __INITIAL_STATE__?: any;
   __ENV__?: any;
+  __SERVER_ERROR__?: any;
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: <F extends Function>(f: F) => F;
 }
 declare module "*settings.json" {

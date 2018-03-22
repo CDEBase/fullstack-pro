@@ -204,6 +204,11 @@
   "dependencies": {
     "@cdm-logger/client": "^3.1.1",
     "@cdm-logger/server": "^3.0.2",
+    "@common-stack/client-core": "0.0.7",
+    "@common-stack/client-react": "0.0.7",
+    "@common-stack/client-redux": "0.0.7",
+    "@common-stack/core": "0.0.7",
+    "@common-stack/server-core": "0.0.7",
     "apollo-cache": "^1.1.6",
     "apollo-cache-inmemory": "^1.1.11",
     "apollo-client": "^2.2.7",
@@ -223,6 +228,7 @@
     "classnames": "^2.2.5",
     "cors": "^2.8.3",
     "dotenv": "^5.0.0",
+    "error-stack-parser": "^2.0.1",
     "export-dir": "^0.1.2",
     "fela": "6.1.5",
     "fela-beautifier": "^5.0.15",
@@ -280,6 +286,7 @@
     "rxjs": "^5.5.7",
     "sequelize": "^4.32.6",
     "serialize-javascript": "^1.4.0",
+    "sourcemapped-stacktrace": "^1.1.8",
     "sqlite3": "^3.1.13",
     "subscriptions-transport-ws": "^0.9.6"
   }

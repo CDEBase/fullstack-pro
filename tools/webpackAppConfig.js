@@ -38,6 +38,7 @@ const ios = {
 
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
+    "@common-stack/server-core": 'server',
     "app-root-path": 'server',
     "apollo-engine": 'server',
     "bunyan": 'server',

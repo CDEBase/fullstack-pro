@@ -1,7 +1,7 @@
 import Counter from './sql';
 
 import createResolvers from './resolvers';
-import Feature from '../connector';
+import { Feature } from '@common-stack/server-core';
 
 const graphqlFiles = (<any>require).context('', true, /\**.graphql?/);
 

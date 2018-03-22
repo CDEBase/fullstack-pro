@@ -13,41 +13,48 @@ import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
-import modules from '@sample-stack/counter/lib/browser'; //TODO change
+import modules from '@sample-stack/counter/lib/browser';
 
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
     constructOptions: modules.constructFetchOptions,
 });
-
-for (const middleware of modules.middlewares) {
-    fetch.batchUse(({ requests, options }, next) => {
-        options.credentials = 'same-origin';
-        options.headers = options.headers || {};
-        const reqs = [...requests];
-        const innerNext = () => {
-            if (reqs.length > 0) {
-                const req = reqs.shift();
-                if (req) {
-                    middleware(req, options, innerNext);
+if (modules.middlewares.length > 0) {
+    for (const middleware of modules.middlewares) {
+        fetch.batchUse(({ requests, options }, next) => {
+            options.credentials = 'same-origin';
+            options.headers = options.headers || {};
+            const reqs = [...requests];
+            const innerNext = (): void => {
+                if (reqs.length > 0) {
+                    const req = reqs.shift();
+                    if (req) {
+                        middleware(req, options, innerNext);
+                    }
+                } else {
+                    next();
                 }
-            } else {
-                next();
-            }
-        };
-        innerNext();
-    });
+            };
+            innerNext();
+        });
+    }
 }
+
 
 let connectionParams = {};
-for (const connectionParam of modules.connectionParams) {
-    Object.assign(connectionParams, connectionParam());
+if (modules.connectionParams.length > 0) {
+    for (const connectionParam of modules.connectionParams) {
+        Object.assign(connectionParams, connectionParam());
+    }
 }
 
-for (const afterware of modules.afterwares) {
-    fetch.batchUseAfter(({ response, options }, next) => {
-        afterware(response, options, next);
-    });
+
+if (modules.afterwares.length > 0) {
+    for (const afterware of modules.afterwares) {
+        fetch.batchUseAfter(({ response, options }, next) => {
+            afterware(response, options, next);
+        });
+    }
 }
 
 const cache = new InMemoryCache();
@@ -57,7 +64,7 @@ if (__CLIENT__) {
     const wsClient = new SubscriptionClient(
         (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
             reconnect: true,
-            // connectionParams,
+            connectionParams,
         },
     );
 
@@ -84,7 +91,7 @@ if (__CLIENT__) {
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({ uri: PUBLIC_SETTINGS.GRAPHQL_URL }),
+        new BatchHttpLink({ fetch }),
     );
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
@@ -112,7 +119,7 @@ const createApolloClient = () => {
             }
             return null;
         },
-        link,
+        link: ApolloLink.from([linkState, link]),
         cache,
     };
     if (__SSR__) {
