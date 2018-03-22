@@ -68,9 +68,10 @@ export default class Main extends React.Component<any, MainState> {
           <Provider store={store}>
             <ApolloProvider client={client}>
               <ConnectedRouter history={history}>
-                <Switch>
-                  {Routes}
-                </Switch>
+                {/* <Switch> */}
+                  {/* {Routes} */}
+                  <div> Test</div>
+                {/* </Switch> */}
               </ConnectedRouter>
             </ApolloProvider>
           </Provider>,

@@ -89,7 +89,7 @@
 		"react-redux-typescript": "^2.3.0",
 		"react-resizable": "^1.7.4",
 		"react-router-dom": "^4.2.2",
-		"react-router-redux": "^4.0.8",
+		"react-router-redux": "^5.0.0-alpha.8",
 		"react-transition-group": "^2.2.1",
 		"reactstrap": "^4.8.0",
 		"recompose": "^0.26.0",

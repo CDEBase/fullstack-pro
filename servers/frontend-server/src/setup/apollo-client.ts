@@ -15,6 +15,7 @@ import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
 import modules from '@sample-stack/counter/lib/browser';
 
+
 const fetch = createApolloFetch({
     uri: PUBLIC_SETTINGS.GRAPHQL_URL,
     constructOptions: modules.constructFetchOptions,
@@ -91,7 +92,7 @@ if (__CLIENT__) {
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({ fetch }),
+        new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL }),
     );
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
