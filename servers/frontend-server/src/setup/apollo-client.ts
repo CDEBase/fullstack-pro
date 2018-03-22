@@ -110,7 +110,7 @@ if (__CLIENT__) {
 // if (settings.apolloLogging) {
 //     networkInterface = addApolloLogging(networkInterface);
 // }
-const linkState = withClientState({ ...modules.resolvers, cache });
+const linkState = withClientState({ ...modules.getStateParams, cache });
 
 const createApolloClient = () => {
     const params: any = {

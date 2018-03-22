@@ -14,10 +14,10 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { Route } from 'react-router';
-
+import modules from '@sample-stack/counter/lib/browser';
 require('backend_reload');
 import './index.css';
-import Routes from './Routes';
+// import Routes from './Routes';
 
 const rootEl = document.getElementById('content');
 
@@ -53,9 +53,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 <ApolloProvider client={client}>
                     <ReactFela.Provider renderer={renderer}>
                         <ConnectedRouter history={history}>
-                            {/* <Switch> */}
-                                {Routes}
-                            {/* </Switch> */}
+                            <Switch>
+                                {modules.route}
+                            </Switch>
                         </ConnectedRouter>
                     </ReactFela.Provider>
                 </ApolloProvider>

@@ -99,7 +99,7 @@ const CounterWithApollo: any = compose(
     }),
   }),
   graphql(COUNTER_QUERY_CLIENT, {
-    props: ({ data: { counterState: { counter } } }: any) => ({ counterState: counter })
+    props: ({ data: { counterState: { counter } } }: any) => ({ counterState: counter }),
   }),
 )(Counter);
 
