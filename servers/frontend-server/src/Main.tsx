@@ -15,7 +15,9 @@ import modules from '@sample-stack/counter/lib/browser';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
-import Routes from './Routes';
+import createHistory from 'history/createBrowserHistory';
+
+// import Routes from './Routes';
 import { ServerError } from './Error';
 
 
@@ -43,6 +45,7 @@ if (module.hot) {
   });
 }
 
+const history: History = createHistory();
 
 export interface MainState {
   error?: ServerError;
@@ -53,7 +56,11 @@ export default class Main extends React.Component<any, MainState> {
   constructor(props: any) {
     super(props);
     const serverError: any = window.__SERVER_ERROR__;
-    this.state = serverError ? { error: new ServerError(serverError) } : {};
+    if (serverError) {
+      this.state = { error: new ServerError(serverError) };
+    } else {
+      this.state = {};
+    }
   }
 
   public componentDidCatch(error: ServerError, info: any) {
@@ -61,18 +68,21 @@ export default class Main extends React.Component<any, MainState> {
   }
 
   public render() {
+    const renderer = createFelaRenderer();
+
     return this.state.error ? (
       <RedBox error={this.state.error} />
     ) : (
         modules.getWrappedRoot(
           <Provider store={store}>
             <ApolloProvider client={client}>
-              <ConnectedRouter history={history}>
-                {/* <Switch> */}
-                  {/* {Routes} */}
-                  <div> Test</div>
-                {/* </Switch> */}
-              </ConnectedRouter>
+              <ReactFela.Provider renderer={renderer}>
+                <ConnectedRouter history={history}>
+                  <Switch>
+                    {modules.route}
+                  </Switch>
+                </ConnectedRouter>
+              </ReactFela.Provider>
             </ApolloProvider>
           </Provider>,
         )
@@ -80,4 +90,3 @@ export default class Main extends React.Component<any, MainState> {
   }
 }
 
-export { ServerError };
