@@ -17,6 +17,8 @@ import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
+import { hot, setConfig} from 'react-hot-loader';
+setConfig({ logLevel: 'debug' })
 
 
 import './index.css';
@@ -36,7 +38,7 @@ if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.
 }
 if ((module as any).hot) {
   (module as any).hot.dispose(data => {
-    console.log("Saving Redux store:", JSON.stringify(store.getState()));
+    // console.log("Saving Redux store:", JSON.stringify(store.getState()));
     data.store = store;
     // Force Apollo to fetch the latest data from the server
     delete window.__APOLLO_STATE__;
@@ -50,7 +52,7 @@ export interface MainState {
   info?: any;
 }
 
-export default class Main extends React.Component<any, MainState> {
+export class Main extends React.Component<any, MainState> {
   constructor(props: any) {
     super(props);
     const serverError: any = window.__SERVER_ERROR__;
@@ -86,3 +88,4 @@ export default class Main extends React.Component<any, MainState> {
   }
 }
 
+export default hot(module as any)(Main);
