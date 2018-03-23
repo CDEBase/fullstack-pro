@@ -11,14 +11,14 @@ import { createApolloClient } from './setup/apollo-client';
 import { createReduxStore, storeReducer } from './redux-config';
 import { Component } from './components';
 import { createRenderer as createFelaRenderer } from 'fela';
-import modules from '@sample-stack/counter/lib/browser';
+import { modules } from './modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
-
-// import Routes from './Routes';
 import { ServerError } from './Error';
+import { hot, setConfig} from 'react-hot-loader';
+setConfig({ logLevel: 'debug' })
 
 
 import './index.css';
@@ -29,15 +29,15 @@ const rootEl = document.getElementById('content');
 const client = createApolloClient();
 
 let store;
-if (module.hot && module.hot.data && module.hot.data.store) {
-  // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
-  store = module.hot.data.store;
+if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
+  // console.log("Restoring Redux store:", JSON.stringify((module as any).hot.data.store.getState()));
+  store = (module as any).hot.data.store;
   store.replaceReducer(storeReducer);
 } else {
   store = createReduxStore();
 }
-if (module.hot) {
-  module.hot.dispose(data => {
+if ((module as any).hot) {
+  (module as any).hot.dispose(data => {
     // console.log("Saving Redux store:", JSON.stringify(store.getState()));
     data.store = store;
     // Force Apollo to fetch the latest data from the server
@@ -52,7 +52,7 @@ export interface MainState {
   info?: any;
 }
 
-export default class Main extends React.Component<any, MainState> {
+export class Main extends React.Component<any, MainState> {
   constructor(props: any) {
     super(props);
     const serverError: any = window.__SERVER_ERROR__;
@@ -78,9 +78,7 @@ export default class Main extends React.Component<any, MainState> {
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer}>
                 <ConnectedRouter history={history}>
-                  <Switch>
-                    {modules.route}
-                  </Switch>
+                    {modules.router}
                 </ConnectedRouter>
               </ReactFela.Provider>
             </ApolloProvider>
@@ -90,3 +88,4 @@ export default class Main extends React.Component<any, MainState> {
   }
 }
 
+export default hot(module as any)(Main);

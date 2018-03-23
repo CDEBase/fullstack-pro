@@ -13,7 +13,7 @@ import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
 import { addApolloLogging } from 'apollo-logger';
-import modules from '@sample-stack/counter/lib/browser';
+import { modules } from '../modules';
 
 
 const fetch = createApolloFetch({

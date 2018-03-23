@@ -33,12 +33,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 if (__DEV__) {
-    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
+    app.use('/', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
 }
 
 if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
 

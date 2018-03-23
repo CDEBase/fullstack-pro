@@ -26,16 +26,16 @@ declare module "*settings.json" {
 }
 
 declare interface __SPIN_OPTIONS__ {
-  "backendBuildDir": string;
-  "frontendBuildDir": string;
-  "webpackDevPort": number,
-  "ssr": boolean;
-  "webpackDll": boolean;
-  "dllBuildDir": string;
-  "frontendRefreshOnBackendChange": boolean;
-  "reactHotLoader": boolean;
-  "debugSQL": boolean;
-  "persistGraphQL": boolean;
+  "backendBuildDir"?: string;
+  "frontendBuildDir"?: string;
+  "webpackDevPort"?: number,
+  "ssr"?: boolean;
+  "webpackDll"?: boolean;
+  "dllBuildDir"?: string;
+  "frontendRefreshOnBackendChange"?: boolean;
+  "reactHotLoader"?: boolean;
+  "debugSQL"?: boolean;
+  "persistGraphQL"?: boolean;
 }
 
 declare module NodeJS  {
