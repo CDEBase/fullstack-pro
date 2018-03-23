@@ -1,7 +1,7 @@
 {
   "name": "sample-stack",
   "private": true,
-  "version": "0.2.6",
+  "version": "0.3.0",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
@@ -14,6 +14,7 @@
     "install": "npm run lerna",
     "clean": "lerna clean",
     "start": "npm run spin:watch",
+    "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env spin watch",
     "spin:build": "cross-env NODE_ENV=production spin build",
     "spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
     "spin:watch:debug": "npm run spin:watch -- -v",

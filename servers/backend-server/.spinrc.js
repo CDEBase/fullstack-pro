@@ -48,6 +48,9 @@ const config = {
 
 config.options.devProxy = config.options.ssr;
 
+if (process.env.NODE_ENV === 'staging') {
+
+}
 if (process.env.NODE_ENV === 'production') {
     // Generating source maps for production will slowdown compilation for roughly 25%
     config.options.sourceMap = false;
@@ -56,8 +59,6 @@ if (process.env.NODE_ENV === 'production') {
 const extraDefines = {
     __SSR__: config.options.ssr,
     __PERSIST_GQL__: config.options.persistGraphQL,
-    __FRONTEND_BUILD_DIR__: `"../client/build"`,
-    __DLL_BUILD_DIR__: `"../client/build/dll"`
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);

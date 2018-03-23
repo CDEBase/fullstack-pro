@@ -8,10 +8,10 @@ const config = {
             tsLoaderOptions: {
                 configFileName: "./tsconfig.json"
             },
-            openBrowser: false,
+            webpackDevPort: 3000,
+            openBrowser: true,
             defines: {
                 __CLIENT__: true,
-
             },
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
@@ -25,9 +25,9 @@ const config = {
                 configFileName: "./tsconfig.json"
             },
             defines: {
-              __SERVER__: true,
+                __SERVER__: true,
             },
-            enabled: true
+            enabled: false
         },
         test: {
             stack: ['server'],
@@ -44,19 +44,19 @@ const config = {
             "react",
             "webpack",
             "css"
-        ], 
+        ],
         cache: '../../.cache',
         backendBuildDir: "dist",
         frontendBuildDir: "dist",
         dllBuildDir: "dist/.build/dll",
-        ssr: true,
-        backendUrl: "http://localhost:3010",
+        ssr: false,
+        backendUrl: "http://localhost:8080",
         webpackDll: false,
         reactHotLoader: false,
         persistGraphQL: false,
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
-        overridesConfig:  "./tools/webpackAppConfig.js",
+        overridesConfig: "./tools/webpackAppConfig.js",
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
@@ -64,17 +64,21 @@ const config = {
     }
 };
 
-config.options.devProxy = config.options.ssr;
-
+if (process.env.NODE_ENV === 'staging') {
+    config.builders.server.enabled = true;
+    config.options.ssr = true;
+    config.options.backendUrl = "http://localhost:3010";
+}
 if (process.env.NODE_ENV === 'production') {
     config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
     // Generating source maps for production will slowdown compilation for roughly 25%
     config.options.sourceMap = false;
 }
+config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
     __SSR__: config.options.ssr,
-    __PERSIST_GQL__:`'${config.options.persistGraphQL}'`,
+    __PERSIST_GQL__: `'${config.options.persistGraphQL}'`,
     __FRONTEND_BUILD_DIR__: `'${config.options.frontendBuildDir}'`,
     __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`
 };
