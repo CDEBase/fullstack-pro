@@ -1,4 +1,4 @@
-/// <reference path='../../../typings/index.d.ts' />
+/// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
 
 import * as React from 'react';
@@ -6,22 +6,22 @@ import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
-import createRenderer from './setup/fela-renderer';
-import { createApolloClient } from './setup/apollo-client';
-import { createReduxStore, storeReducer } from './redux-config';
-import { Component } from './components';
+import createRenderer from '../config/fela-renderer';
+import { createApolloClient } from '../config/apollo-client';
+import { createReduxStore, storeReducer } from '../config/redux-config';
+import { Component } from '../components';
 import { createRenderer as createFelaRenderer } from 'fela';
-import { modules } from './modules';
+import modules from '../modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
-import { hot, setConfig} from 'react-hot-loader';
-setConfig({ logLevel: 'debug' })
+import { hot, setConfig } from 'react-hot-loader';
+setConfig({ logLevel: 'debug' });
 
 
-import './index.css';
+import '../index.css';
 
 const rootEl = document.getElementById('content');
 
@@ -78,7 +78,7 @@ export class Main extends React.Component<any, MainState> {
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer}>
                 <ConnectedRouter history={history}>
-                    {modules.router}
+                  {modules.router}
                 </ConnectedRouter>
               </ReactFela.Provider>
             </ApolloProvider>

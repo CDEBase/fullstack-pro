@@ -36,11 +36,11 @@ const config = {
         webpackDll: false,
         reactHotLoader: false,
         persistGraphQL: false,
+        backendUrl: "http://{ip}:8080",
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
-            __BACKEND_URL__: '"http://localhost:8080"',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
         }
     }

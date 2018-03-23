@@ -2,7 +2,7 @@
 process.env.ENV_FILE && require('dotenv').config({ path: process.env.ENV_FILE });
 
 import { logger } from '@sample-stack/utils';
-import './backend/server';
+import './server';
 
 process.on('uncaughtException', ex => {
     logger.error(ex);

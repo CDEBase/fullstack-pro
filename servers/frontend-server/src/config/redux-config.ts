@@ -1,4 +1,4 @@
-/// <reference path='../../../typings/index.d.ts' />
+/// <reference path='../../../../typings/index.d.ts' />
 
 import {
     createStore, Store, applyMiddleware, Middleware, AnyAction,
@@ -10,7 +10,7 @@ import {
     reducers,
     Store as StoreState,
 } from '@sample-stack/client-redux';
-import { modules } from './modules';
+import modules from '../modules';
 
 /**
  * Add middleware that required for this app.

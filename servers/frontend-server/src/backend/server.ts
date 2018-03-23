@@ -7,9 +7,9 @@ import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
 import { logger } from '@sample-stack/utils';
-import { websiteMiddleware } from './middleware';
-import { corsMiddleware } from './cors';
-import { SETTINGS } from '../../config';
+import { websiteMiddleware } from './website';
+import { corsMiddleware } from './middlewares/cors';
+import { SETTINGS } from '../config';
 
 let server;
 
@@ -26,14 +26,14 @@ app.use(bodyParser.json());
 
 app.use(
     '/',
-    express.static(path.join(SETTINGS.frontendBuildDir, 'web'), {
+    express.static(path.join(__FRONTEND_BUILD_DIR__, 'web'), {
         maxAge: '180 days',
     }),
 );
 
 
 if (__DEV__) {
-    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
+    app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
 }
 
 app.use(websiteMiddleware);
@@ -59,7 +59,7 @@ if (module.hot) {
             logger.error(error.stack);
         }
     });
-    module.hot.accept(['./middleware'], () => {
+    module.hot.accept(['./website'], () => {
         logger.debug('...reloading middleware');
     });
 

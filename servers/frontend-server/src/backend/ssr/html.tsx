@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
 import { Store } from 'redux';
+import modules from '../../modules';
 
 const Html = ({
     content,
@@ -29,7 +30,11 @@ const Html = ({
                 {!__DEV__ && <link rel="stylesheet" type="text/css" href={`/${assetMap['index.css']}`} />}
                 <style id="stylesheet" />
                 <style id="font-stylesheet" />
-
+                {modules.scriptsInserts.map((script, i) => {
+                    if (script) {
+                        return <script key={i} src={script} />;
+                    }
+                })}
             </head>
             <body {...bodyAttrs}>
                 <div className="demo">
@@ -38,7 +43,7 @@ const Html = ({
                         dangerouslySetInnerHTML={
                             {
                                 __html: content ||
-                                'Try building the demo:<br/> ...and refreshing this page!',
+                                    'Try building the demo:<br/> ...and refreshing this page!',
                             }}
                     />
                 </div>

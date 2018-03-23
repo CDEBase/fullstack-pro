@@ -51,7 +51,6 @@ app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
 if (__DEV__) {
     app.use(errorMiddleware);
 }
-
 server = http.createServer(app);
 
 addGraphQLSubscriptions(server);

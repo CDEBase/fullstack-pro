@@ -8,13 +8,25 @@ const config = {
             tsLoaderOptions: {
                 configFileName: "./tsconfig.json"
             },
-            openBrowser: true,
+            openBrowser: false,
             defines: {
-                __CLIENT__: true
+                __CLIENT__: true,
+
             },
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
             waitOn: ['tcp:localhost:8080'],
+            enabled: true
+        },
+        server: {
+            entry: './src/backend/app.ts',
+            stack: ['server'],
+            tsLoaderOptions: {
+                configFileName: "./tsconfig.json"
+            },
+            defines: {
+              __SERVER__: true,
+            },
             enabled: true
         },
         test: {
@@ -37,15 +49,17 @@ const config = {
         backendBuildDir: "dist",
         frontendBuildDir: "dist",
         dllBuildDir: "dist/.build/dll",
-        ssr: false,
-        webpackDll: true,
+        ssr: true,
+        backendUrl: "http://localhost:3010",
+        webpackDll: false,
         reactHotLoader: false,
         persistGraphQL: false,
         frontendRefreshOnBackendChange: true,
+        nodeDebugger: false,
+        overridesConfig:  "./tools/webpackAppConfig.js",
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
-            __BACKEND_URL__: '"http://localhost:8080"',
-            __GRAPHQL_URL__: '"http://localhost:8080/graphql"'
+            __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
         }
     }
 };
@@ -53,14 +67,16 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 if (process.env.NODE_ENV === 'production') {
-    config.options.defines.__BACKEND_URL__ = '"http://localhost:8080/graphql"';
+    config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
     // Generating source maps for production will slowdown compilation for roughly 25%
     config.options.sourceMap = false;
 }
 
 const extraDefines = {
     __SSR__: config.options.ssr,
-    __PERSIST_GQL__: config.options.persistGraphQL
+    __PERSIST_GQL__:`'${config.options.persistGraphQL}'`,
+    __FRONTEND_BUILD_DIR__: `'${config.options.frontendBuildDir}'`,
+    __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
