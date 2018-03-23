@@ -38,7 +38,7 @@ if (__DEV__) {
 
 if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
 

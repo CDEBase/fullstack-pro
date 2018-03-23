@@ -60,7 +60,7 @@
         "ssr": false,
         "useDefaultPostCss": true,
         "webpackDll": true,
-        "reactHotLoader": false,
+        "reactHotLoader": true,
         "persistGraphQL": false,
         "frontendRefreshOnBackendChange": true,
         "apiPort": 8080

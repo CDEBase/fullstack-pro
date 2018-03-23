@@ -10,7 +10,7 @@ import {
     reducers,
     Store as StoreState,
 } from '@sample-stack/client-redux';
-import modules from '@sample-stack/counter/lib/browser';
+import { modules } from './modules';
 
 /**
  * Add middleware that required for this app.
