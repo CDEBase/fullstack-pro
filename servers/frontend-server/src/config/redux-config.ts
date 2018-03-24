@@ -5,17 +5,21 @@ import {
     GenericStoreEnhancer, compose, combineReducers,
 } from 'redux';
 import thunk from 'redux-thunk';
-import { routerReducer } from 'react-router-redux';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 import {
     reducers,
     Store as StoreState,
 } from '@sample-stack/client-redux';
 import modules from '../modules';
+import createHistory from 'history/createBrowserHistory';
+
+export const history = createHistory();
 
 /**
  * Add middleware that required for this app.
  */
 const middlewares: Middleware[] = [
+    routerMiddleware(history),
     thunk,
 ];
 

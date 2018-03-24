@@ -32,9 +32,9 @@ app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (__DEV__) {
-    app.use('/', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
-}
+// if (__DEV__) {
+//     app.use('/', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
+// }
 
 if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet

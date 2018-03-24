@@ -31,6 +31,7 @@ if (__DEV__) {
           });
           (module as any).hot.accept('./app/Main', () => {
             try {
+                console.log('Updating front-end');
                 frontendReloadCount = (frontendReloadCount || 0) + 1;
 
                 renderApp({ key: frontendReloadCount });

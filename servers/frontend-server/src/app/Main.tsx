@@ -1,6 +1,6 @@
 /// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
-
+import { hot } from 'react-hot-loader';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
@@ -17,8 +17,7 @@ import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
-import { hot, setConfig } from 'react-hot-loader';
-setConfig({ logLevel: 'debug' });
+
 
 
 import '../index.css';
@@ -29,15 +28,15 @@ const rootEl = document.getElementById('content');
 const client = createApolloClient();
 
 let store;
-if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
-  // console.log("Restoring Redux store:", JSON.stringify((module as any).hot.data.store.getState()));
-  store = (module as any).hot.data.store;
+if (module.hot && module.hot.data && module.hot.data.store) {
+  // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
+  store = module.hot.data.store;
   store.replaceReducer(storeReducer);
 } else {
   store = createReduxStore();
 }
-if ((module as any).hot) {
-  (module as any).hot.dispose(data => {
+if (module.hot) {
+  module.hot.dispose(data => {
     // console.log("Saving Redux store:", JSON.stringify(store.getState()));
     data.store = store;
     // Force Apollo to fetch the latest data from the server
@@ -69,7 +68,6 @@ export class Main extends React.Component<any, MainState> {
 
   public render() {
     const renderer = createFelaRenderer();
-
     return this.state.error ? (
       <RedBox error={this.state.error} />
     ) : (
@@ -88,4 +86,4 @@ export class Main extends React.Component<any, MainState> {
   }
 }
 
-export default hot(module as any)(Main);
+export default Main;

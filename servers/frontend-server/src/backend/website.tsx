@@ -45,11 +45,11 @@ async function renderServerSide(req, res) {
         const component = App();
         const appCss = renderToMarkup(renderer);
         await getDataFromTree(component as any);
-        // if (context.pageNotFound === true) {
-        //     res.status(404);
-        // } else {
+        if (context.pageNotFound === true) {
+            res.status(404);
+        } else {
             res.status(200);
-        // }
+        }
 
         const html = ReactDOMServer.renderToString(component as any);
 
