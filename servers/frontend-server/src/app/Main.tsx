@@ -1,14 +1,15 @@
 /// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
-import { hot } from 'react-hot-loader';
 import * as React from 'react';
+import { hot } from 'react-hot-loader';
+
 import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { createApolloClient } from '../config/apollo-client';
-import { createReduxStore, storeReducer } from '../config/redux-config';
+import { createReduxStore, storeReducer, history } from '../config/redux-config';
 import { Component } from '../components';
 import { createRenderer as createFelaRenderer } from 'fela';
 import modules from '../modules';
@@ -43,8 +44,6 @@ if (module.hot) {
     delete window.__APOLLO_STATE__;
   });
 }
-
-const history: History = createHistory();
 
 export interface MainState {
   error?: ServerError;
@@ -86,4 +85,4 @@ export class Main extends React.Component<any, MainState> {
   }
 }
 
-export default Main;
+export default hot(module)(Main);

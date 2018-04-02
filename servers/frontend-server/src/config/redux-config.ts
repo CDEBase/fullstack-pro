@@ -11,9 +11,8 @@ import {
     Store as StoreState,
 } from '@sample-stack/client-redux';
 import modules from '../modules';
-import createHistory from 'history/createBrowserHistory';
 
-export const history = createHistory();
+export const history = require('./router-history');
 
 /**
  * Add middleware that required for this app.
