@@ -21,7 +21,12 @@ const rootEl = document.getElementById('content');
 
 const client = createApolloClient();
 
-let store ;
+if (process.env.NODE_ENV === 'development' || __DEBUGGING__) {
+  window.__APOLLO_CLIENT__ = client;
+}
+
+
+let store;
 if (module.hot && module.hot.data && module.hot.data.store) {
   // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
   store = module.hot.data.store;
@@ -46,11 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
   if (rootEl) {
     ReactDOM.render(
       <ReduxProvider store={store} >
-      <ApolloProvider client={client}>
-        <ReactFela.Provider renderer={renderer}>
+        <ApolloProvider client={client}>
+          <ReactFela.Provider renderer={renderer}>
             <Component />
-        </ReactFela.Provider>
-      </ApolloProvider>
+          </ReactFela.Provider>
+        </ApolloProvider>
       </ReduxProvider>
       , rootEl);
   }

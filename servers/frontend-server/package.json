@@ -10,6 +10,7 @@
 		"prebuild": "npm run build:clean",
 		"build:clean": "rimraf dist",
 		"build": "cross-env NODE_ENV=production spin build",
+		"build:debug": "cross-env DEBUGGING=true NODE_ENV=production spin build",
 		"start": "node --harmony dist",
 		"start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env node --harmony dist",
 		"watch": "spin watch",
