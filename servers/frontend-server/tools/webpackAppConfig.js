@@ -6,7 +6,12 @@ const server = {
        index: [
         './src/setup/app.ts'        
        ]
-     }
+     },
+     plugins: [
+         new webpack.DefinePlugin({
+             __DEBUGGING__: JSON.stringify(debug),
+         })
+     ]
 };
 
 // App-specific web front-end Webpack config should be here
