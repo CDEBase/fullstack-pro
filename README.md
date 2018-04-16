@@ -136,5 +136,5 @@ In windows node-gyp need to be installed following below instructions.
 
 
 ## resource
-# Installing node-gyp
+### Installing node-gyp
 https://github.com/nodejs/node-gyp#installation
