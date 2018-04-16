@@ -130,11 +130,11 @@ To troubleshoot webpack configuration run
 npm run spin:watch:debug
 ```
 
-## known errors
+## Known errors
 In windows node-gyp need to be installed following below instructions.
 
 
 
-## resource
+## Resources
 ### Installing node-gyp
 https://github.com/nodejs/node-gyp#installation
