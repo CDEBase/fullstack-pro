@@ -174,7 +174,7 @@
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.5.0",
-    "spinjs": "https://github.com/veeramarni/spinjs.git",
+    "spinjs": "0.4.116",
     "standard-version": "^4.0.0",
     "style-loader": "^0.20.1",
     "tcomb": "^3.2.24",
