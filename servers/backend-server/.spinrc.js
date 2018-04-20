@@ -1,4 +1,6 @@
 const url = require('url');
+const path = require('path');
+process.env.ENV_FILE !== null && (require('dotenv')).config({ path: path.join('../../', process.env.ENV_FILE )});
 
 const config = {
     builders: {
@@ -58,7 +60,7 @@ if (process.env.NODE_ENV === 'production') {
 const extraDefines = {
     __SSR__: config.options.ssr,
     __PERSIST_GQL__: config.options.persistGraphQL,
-    __FRONTEND_BUILD_DIR__: `"../frontend-server/dist/build"`,
+    __FRONTEND_BUILD_DIR__: `"../frontend-server/dist/.build"`,
     __DLL_BUILD_DIR__: `"../frontend-server/dist/build/dll"`
 };
 
