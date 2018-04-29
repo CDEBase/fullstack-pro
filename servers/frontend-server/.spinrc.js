@@ -1,7 +1,7 @@
 const url = require('url');
 const path = require('path');
 
-process.env.ENV_FILE !== null && (require('dotenv')).config({ path: path.join('../../', process.env.ENV_FILE )});
+process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 
 const config = {
     builders: {
