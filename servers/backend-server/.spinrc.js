@@ -1,6 +1,6 @@
 const url = require('url');
 const path = require('path');
-process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
+var nodeExternals = require('webpack-node-externals');
 
 const config = {
     builders: {
@@ -50,7 +50,7 @@ const config = {
 
 config.options.devProxy = config.options.ssr;
 
-if (process.env.NODE_ENV === 'staging') {
+if (process.env.NODE_ENV === 'test') {
 }
 if (process.env.NODE_ENV === 'production') {
     // Generating source maps for production will slowdown compilation for roughly 25%

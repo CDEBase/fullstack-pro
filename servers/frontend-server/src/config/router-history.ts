@@ -1,3 +1,7 @@
 import createHistory from 'history/createBrowserHistory';
 
-module.exports = createHistory();
+if (typeof window !== 'undefined') {
+    module.exports = createHistory();
+} else {
+    module.exports = {};
+}

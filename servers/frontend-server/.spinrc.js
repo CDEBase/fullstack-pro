@@ -1,5 +1,6 @@
 const url = require('url');
 const path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 
@@ -30,7 +31,13 @@ const config = {
             defines: {
                 __SERVER__: true,
             },
-            enabled: false
+            enabled: false,
+            webpackConfig: {
+                externals: [
+                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/] }),
+                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                ],
+            }
         },
         test: {
             stack: ['server'],
@@ -66,7 +73,21 @@ const config = {
         }
     }
 };
-
+if (process.env.NODE_ENV === 'development') {
+    config.builders.web.webpackConfig = {
+        plugins: [
+            new Dotenv({
+                path: process.env.ENV_FILE
+            })
+        ],
+    }
+}
+if (process.env.SSR) {
+    config.builders.server.enabled = true;
+    config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
+    config.options.ssr = true;
+    config.options.backendUrl = "http://localhost:3010";
+}
 if (process.env.NODE_ENV !== 'development') {
     config.builders.server.enabled = true;
     config.options.ssr = true;

@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 
 
-var webpack_opts = {  
+var webpack_opts = {
   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
@@ -41,10 +41,8 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loader: 'json-loader'
-    },]
+    }
+    ]
   },
   externals: [
     nodeExternals({ modulesDir: "../../node_modules" }),

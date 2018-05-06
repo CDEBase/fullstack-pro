@@ -56,7 +56,7 @@
     "webpack": "^4.7.0"
   },
   "peerDependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "graphql-tools": ">2.0.0",
     "graphql": "^0.10.0 || ^0.11.0"
   },

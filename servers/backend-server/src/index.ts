@@ -1,6 +1,6 @@
 ///<reference types="webpack-env" />
+process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 import 'reflect-metadata';
-
 import { logger } from '@sample-stack/utils';
 import './api-server';
 
