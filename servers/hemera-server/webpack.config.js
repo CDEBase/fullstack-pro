@@ -3,20 +3,12 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-/* helper function to get into build directory */
-var distPath = function (name) {
-  if (undefined === name) {
-    return path.join('dist');
-  }
-
-  return path.join('dist', name);
-};
-
-var webpack_opts = {   mode: 'development',
+var webpack_opts = {   
+  mode: 'development',
   entry: './src/index.ts',
   target: 'node',
-var webpack_opts = {   mode: 'development',   mode: 'development',
-    filename: distPath('index.js'),
+  output: {
+    filename: 'index.js',
     libraryTarget: "commonjs2"
   },
   resolve: {
@@ -48,11 +40,7 @@ var webpack_opts = {   mode: 'development',   mode: 'development',
         test: /\.ts$/,
         use: 'awesome-typescript-loader',
         exclude: /(node_modules)/
-      },
-      {
-        test: /\.json$/,
-        use: 'json-loader'
-      },
+      }
     ]
   },
   externals: [nodeExternals({ modulesDir: "../../node_modules" })]
