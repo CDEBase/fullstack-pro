@@ -67,7 +67,7 @@ const config = {
     }
 };
 
-if (process.env.NODE_ENV === 'staging') {
+if (process.env.NODE_ENV !== 'development') {
     config.builders.server.enabled = true;
     config.options.ssr = true;
     config.options.backendUrl = "http://localhost:3010";
