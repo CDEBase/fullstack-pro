@@ -23,7 +23,7 @@ var webpack_opts = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("lib/styles.css"),
+    new ExtractTextPlugin("styles.css"),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.tsx?$/,
