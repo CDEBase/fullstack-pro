@@ -16,7 +16,7 @@
     "start": "npm run spin:watch",
     "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env spin watch",
     "spin:build": "cross-env NODE_ENV=production spin build",
-    "spin:watch": "cross-env ENV_FILE=config/development/dev.env spin watch",
+    "spin:watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env spin watch",
     "spin:watch:debug": "npm run spin:watch -- -v",
     "spin:exp": "spin exp",
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
