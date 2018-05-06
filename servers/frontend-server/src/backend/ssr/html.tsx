@@ -27,7 +27,7 @@ const Html = ({
                 {helmet.link.toComponent()}
                 <meta charSet="utf-8" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-                {!__DEV__ && <link rel="stylesheet" type="text/css" href={`/${assetMap['index.css']}`} />}
+                {!__DEV__ && <link rel="stylesheet" type="text/css" href={`${assetMap['index.css']}`} />}
                 <style id="stylesheet" />
                 <style id="font-stylesheet" />
                 {modules.scriptsInserts.map((script, i) => {
@@ -63,8 +63,8 @@ const Html = ({
                     }}
                     charSet="UTF-8"
                 />
-                {assetMap['vendor.js'] && <script src={`/${assetMap['vendor.js']}`} charSet="utf-8" />}
-                <script src={`/${assetMap['index.js']}`} charSet="utf-8" />
+                {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
+                <script src={`${assetMap['index.js']}`} charSet="utf-8" />
             </body>
         </html>
     );
