@@ -2,17 +2,19 @@ var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
+
 var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 
-var webpack_opts = {
+var webpack_opts = {   
+  mode: 'development',
   entry: {
     browser: './src/browser/index.ts',
     server: './src/server/index.ts',
   },
   target: 'node',
   output: {
-    filename: libPath('[name].js'),
+    path: path.join(__dirname, 'lib'),
+    filename: '[name].js',
     libraryTarget: "commonjs2",
     library: "@sample-stack/counter",
   },

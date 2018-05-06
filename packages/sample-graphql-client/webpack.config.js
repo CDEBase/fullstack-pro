@@ -3,13 +3,14 @@ var webpack = require('webpack');
 var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 var path = require('path');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
 
-var webpack_opts = {
+
+var webpack_opts = {   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
-    filename: libPath('index.js'),
+    path: path.join(__dirname, 'lib'),    
+    filename: 'index.js',
     libraryTarget: "commonjs2",
     library: "@sample-stack/graphql-gql",
   },

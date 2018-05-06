@@ -44,7 +44,7 @@
     "jest": "^22.4.2",
     "persistgraphql-webpack-plugin": "^0.5.1",
     "rimraf": "^2.6.1",
-    "webpack": "^3.11.0"
+    "webpack": "^4.7.0"
   },
   "dependencies": {
     "graphql-iso-date": "^3.5.0",

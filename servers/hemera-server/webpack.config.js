@@ -12,10 +12,10 @@ var distPath = function (name) {
   return path.join('dist', name);
 };
 
-var webpack_opts = {
+var webpack_opts = {   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
-  output: {
+var webpack_opts = {   mode: 'development',   mode: 'development',
     filename: distPath('index.js'),
     libraryTarget: "commonjs2"
   },

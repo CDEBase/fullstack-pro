@@ -97,12 +97,12 @@
 	},
 	"devDependencies": {
 		"cross-env": "^5.1.3",
-		"spinjs": "0.4.116",
+		"spinjs": "0.4.126",
 		"ts-node": "^4.1.0",
 		"typescript": "2.7.1",
 		"jest": "^22.4.2",
 		"rimraf": "^2.6.1",
-		"webpack": "^3.11.0"
+		"webpack": "^4.7.0"
 	},
 	"typings": "dist/main.d.ts",
 	"typescript": {

@@ -52,7 +52,7 @@
     "@sample-stack/utils": "*",
     "jest": "^22.4.2",
     "rimraf": "^2.6.1",
-    "webpack": "^3.11.0"
+    "webpack": "^4.7.0"
   },
   "dependencies": {
     "@sample-stack/core": "*"

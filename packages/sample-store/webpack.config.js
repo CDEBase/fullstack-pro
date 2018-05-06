@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 var glob = require('glob');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
+
 
 var glob_entries1 = function (globPath) {
   var files = glob.sync(globPath);
@@ -17,14 +17,16 @@ var glob_entries1 = function (globPath) {
   return entries;
 };
 
-var webpack_opts = {
+var webpack_opts = {   
+  mode: 'development',
   entry: {
     index: './src/index.ts',
     ...glob_entries1("./src/database-store/**/*.ts"),
   },
   target: 'node',
   output: {
-    filename: libPath('[name].js'),
+    path: path.join(__dirname, 'lib'),
+    filename: '[name].js',
     libraryTarget: "commonjs2",
     library: "@sample-stack/store",
   },

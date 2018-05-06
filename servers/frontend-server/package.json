@@ -36,9 +36,9 @@
 		"express": "^4.16.3",
 		"jest": "^22.4.2",
 		"rimraf": "^2.6.1",
-		"spinjs": "0.4.116",
+		"spinjs": "0.4.126",
 		"tslib": "^1.9.0",
-		"webpack": "^3.11.0"
+		"webpack": "^4.7.0"
 	},
 	"dependencies": {
 		"@cdm-logger/client": "^3.1.1",
