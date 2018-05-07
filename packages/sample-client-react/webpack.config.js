@@ -5,7 +5,7 @@ var fs = require('fs');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var webpack_opts = {   
+var webpack_opts = {
   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
@@ -63,10 +63,13 @@ var webpack_opts = {
         ]
       })
     },
-  ]
+    ]
   },
   externals: [
-    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals({
+      whitelist: [/.*\.css$/],
+      modulesDir: "../../node_modules"
+    }),
     nodeExternals()
   ]
 };
