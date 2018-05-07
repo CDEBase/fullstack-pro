@@ -1,5 +1,5 @@
 
-import { graphqlExpress, ExpressHandler } from 'graphql-server-express';
+import { graphqlExpress, ExpressHandler } from 'apollo-server-express';
 import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
 import { logger } from '@sample-stack/utils';
