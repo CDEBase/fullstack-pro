@@ -71,7 +71,7 @@ pipeline {
 
     post {
         success{
-          build job: 'kube-orchestration', parameters: [string(name: 'FRONTEND_PACKAGE_NAME', value: "${FRONTEND_PACKAGE_NAME}"), string(name: 'FRONTEND_PACKAGE_VERSION', value: "${FRONTEND_PACKAGE_VERSION}"), 
+          build job: 'kube-orchestration-microstack', parameters: [string(name: 'FRONTEND_PACKAGE_NAME', value: "${FRONTEND_PACKAGE_NAME}"), string(name: 'FRONTEND_PACKAGE_VERSION', value: "${FRONTEND_PACKAGE_VERSION}"), 
           string(name: 'BACKEND_PACKAGE_NAME', value: "${BACKEND_PACKAGE_NAME}"), string(name: 'BACKEND_PACKAGE_VERSION', value: "${BACKEND_PACKAGE_VERSION}"),
           string(name: 'HEMERA_PACKAGE_NAME', value: "${HEMERA_PACKAGE_NAME}"), string(name: 'HEMERA_PACKAGE_VERSION', value: "${HEMERA_PACKAGE_VERSION}")
           ]
