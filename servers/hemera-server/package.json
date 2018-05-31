@@ -38,7 +38,7 @@
         "hemera-safe-promises": "^0.0.2",
         "hemera-sql-store": "^4.0.0",
         "hemera-zipkin": "^3.1.0",
-        "inversify": "^4.11.1",
+        "inversify": "^4.13.0",
         "nats": "^0.8.4",
         "nats-hemera": "^3.5.1",
         "reflect-metadata": "^0.1.12"
