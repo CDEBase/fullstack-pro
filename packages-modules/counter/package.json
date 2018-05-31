@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "graphql-iso-date": "^3.5.0",
-    "graphql-tag": "^2.8.0"
+    "graphql-tag": "^2.9.2"
   },
   "peerDependencies": {},
   "typings": "lib/index.d.ts",
