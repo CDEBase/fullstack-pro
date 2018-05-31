@@ -3,6 +3,7 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { BatchHttpLink } from 'apollo-link-batch-http';
+import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
 import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -12,52 +13,21 @@ import { getOperationAST } from 'graphql';
 import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import { addPersistedQueries } from 'persistgraphql';
-import { addApolloLogging } from 'apollo-logger';
+// import { addApolloLogging } from 'apollo-logger';
 import modules from '../modules';
 
 
-const fetch = createApolloFetch({
-    uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-    constructOptions: modules.constructFetchOptions,
-});
 
 const cache = new InMemoryCache();
 
 let link;
 if (__CLIENT__) {
-    for (const middleware of modules.middlewares) {
-        fetch.batchUse(({ requests, options }, next) => {
-            options.credentials = 'same-origin';
-            options.headers = options.headers || {};
-            const reqs = [...requests];
-            const innerNext = (): void => {
-                if (reqs.length > 0) {
-                    const req = reqs.shift();
-                    if (req) {
-                        middleware(req, options, innerNext);
-                    }
-                } else {
-                    next();
-                }
-            };
-            innerNext();
-        });
-    }
-
-
 
     let connectionParams = {};
     for (const connectionParam of modules.connectionParams) {
         Object.assign(connectionParams, connectionParam());
     }
 
-
-
-    for (const afterware of modules.afterwares) {
-        fetch.batchUseAfter(({ response, options }, next) => {
-            afterware(response, options, next);
-        });
-    }
     const wsClient = new SubscriptionClient(
         (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
             reconnect: true,
@@ -84,16 +54,21 @@ if (__CLIENT__) {
 
     link = ApolloLink.split(
         operation => {
-            const operationAST = getOperationAST(operation.query, operation.operationName);
+            const operationAST = getOperationAST(operation.query as any, operation.operationName);
             return !!operationAST && operationAST.operation === 'subscription';
         },
         new WebSocketLink(wsClient) as any,
-        new BatchHttpLink({
+        new HttpLink({
             uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-            // fetchOptions: {
-            //     mode: 'no-cors',
-            // },
-            // fetch,
+            // fetch:
+            //     modules.createFetch && modules.createFetch(PUBLIC_SETTINGS.GRAPHQL_URL) ||
+            //     createApolloFetch({
+            //         uri: PUBLIC_SETTINGS.GRAPHQL_URL,
+            //         // constructOptions: (reqs, options) => ({
+            //         //     ...constructDefaultOptions(reqs, options),
+            //         //     credentials: 'include',
+            //         // }),
+            //     }),
         }),
     );
 } else {
@@ -112,7 +87,9 @@ if (__CLIENT__) {
 // if (settings.apolloLogging) {
 //     networkInterface = addApolloLogging(networkInterface);
 // }
-const linkState = withClientState({ ...modules.getStateParams, cache });
+const linkState = withClientState({ ...modules.resolvers, cache } as any);
+
+const links = [...modules.link, linkState, link];
 
 const createApolloClient = () => {
     const params: any = {
@@ -122,7 +99,7 @@ const createApolloClient = () => {
             }
             return null;
         },
-        link: ApolloLink.from([linkState, link]),
+        link: ApolloLink.from(links),
         cache,
     };
     if (__SSR__) {
@@ -135,7 +112,12 @@ const createApolloClient = () => {
             params.ssrMode = true;
         }
     }
-    return new ApolloClient<any>(params);
+    const client = new ApolloClient<any>(params);
+
+    if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
+        window.__APOLLO_CLIENT__ = client;
+    }
+    return client;
 };
 
 export { createApolloClient };

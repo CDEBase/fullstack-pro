@@ -1,6 +1,6 @@
-import { PubSub } from 'graphql-subscriptions';
+import { PubSub, PubSubEngine } from 'graphql-subscriptions';
 import { NatsPubSub } from 'graphql-nats-subscriptions';
-import { addApolloLogging } from 'apollo-logger';
+import { wrapPubSub } from 'apollo-logger';
 import { logger } from '@sample-stack/utils';
 import { SETTINGS } from '../config';
 import * as nats from 'nats';
@@ -13,4 +13,5 @@ export const client = () => nats.connect({
 });
 
 export const pubsub = process.env.NODE_ENV === 'development' ?
-    SETTINGS.apolloLogging ? addApolloLogging(new PubSub()) : new PubSub() : new NatsPubSub({ client: client(), logger });
+    SETTINGS.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.debug.bind(logger) }) :
+        new PubSub() : new NatsPubSub({ client: client(), logger });

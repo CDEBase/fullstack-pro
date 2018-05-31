@@ -9,9 +9,11 @@ declare const __CLIENT__;
 declare const __SERVER__;
 declare const __APOLLO_STATE__;
 declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+declare const __DEBUGGING__;
 
 declare interface Window {
   __APOLLO_STATE__?: any;
+  __APOLLO_CLIENT__?: any;
   __INITIAL_STATE__?: any;
   __ENV__?: any;
   __SERVER_ERROR__?: any;
