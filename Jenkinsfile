@@ -86,6 +86,8 @@ pipeline {
             --set backend.pullPolicy=Always \
             --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
           """
+          }
+      }
 }
 
     post {
