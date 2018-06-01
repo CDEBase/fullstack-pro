@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
-    string(name: 'NAMESPACE', defaultValue: 'defult', description: 'namespace')
+    string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name') 
   } 
