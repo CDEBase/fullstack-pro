@@ -74,7 +74,7 @@ pipeline {
       stage('Chart Deployment'){
         steps{
           sh """
-            helm repo add kube-orchestration https://9231da9aedb863f3c56329ca9d821252b247c9e2@raw.githubusercontent.com/cdmbase/kube-orchestration/master
+            helm repo add kube-orchestration https://da1e27391a9a8bf08f5405f37f0aaff5066f86b5@raw.githubusercontent.com/cdmbase/kube-orchestration/master
             helm repo update
             helm upgrade -i \
             --set frontend.image="${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}" \
