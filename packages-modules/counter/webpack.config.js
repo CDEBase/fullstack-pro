@@ -18,6 +18,9 @@ var webpack_opts = {
     libraryTarget: "commonjs2",
     library: "@sample-stack/counter",
   },
+  node: {
+    __dirname: false
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.graphql', '.gql'],
     modules: [

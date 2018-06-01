@@ -16,7 +16,7 @@ import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
-import modules from '@sample-stack/counter/lib/server'; //TODO change
+import modules from './modules';
 
 let server;
 const app = express();

@@ -3,7 +3,7 @@ import { makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema
 import * as _ from 'lodash';
 import { resolvers, typeDefs } from '@sample-stack/graphql-schema';
 import { logger } from '@sample-stack/utils';
-import modules from '@sample-stack/counter/lib/server';  //TODO change
+import modules from '../modules';
 import { IResolverOptions, IDirectiveOptions } from '@common-stack/server-core';
 
 import { GraphQLAnyObject } from './scalar';
@@ -21,7 +21,7 @@ const resolverOptions: IResolverOptions = {
   logger,
 };
 
-console.log(modules.schemas);
+console.log('schemas', modules.schemas);
 
 const schema: GraphQLSchema = makeExecutableSchema({
   resolvers: _.merge(resolvers(pubsub, logger), modules.createResolvers(resolverOptions)),

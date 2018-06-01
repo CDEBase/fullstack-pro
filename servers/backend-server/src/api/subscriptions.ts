@@ -12,7 +12,7 @@ import { logger } from '@sample-stack/utils';
 import { counterRepo } from '../container';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
-import modules from '@sample-stack/counter/lib/server'; //TODO change
+import modules from '../modules';
 
 let subscriptionServer;
 
