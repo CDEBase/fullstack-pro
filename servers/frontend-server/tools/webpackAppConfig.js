@@ -1,10 +1,17 @@
+const webpack = require('webpack');
+const debug = process.env.DEBUGGING || false;
 // App-specific back-end Webpack config should be here
 const server = {
      entry: {
        index: [
         './src/setup/app.ts'        
        ]
-     }
+     },
+     plugins: [
+         new webpack.DefinePlugin({
+             __DEBUGGING__: JSON.stringify(debug),
+         })
+     ]
 };
 
 // App-specific web front-end Webpack config should be here
@@ -13,7 +20,12 @@ const web = {
         index: [
             './src/index.tsx'
         ]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            __DEBUGGING__: debug,
+        }),
+    ],
 };
 
 // App-specific Android React Native front-end Webpack config should be here

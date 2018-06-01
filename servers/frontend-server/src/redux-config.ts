@@ -21,7 +21,8 @@ const enhancers: () => GenericStoreEnhancer[] = () => [
     applyMiddleware(...middlewares),
 ];
 
-const composeEnhancers: any = (process.env.NODE_ENV === 'development' &&
+const composeEnhancers: any = (
+    (process.env.NODE_ENV === 'development' || __DEBUGGING__) &&
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
