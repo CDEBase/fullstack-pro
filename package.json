@@ -16,6 +16,7 @@
     "install": "npm run lerna",
     "clean": "lerna clean",
     "start": "npm run spin:watch",
+    "start:envSSR": "cross-env SSR=true npm run spin:watch",
     "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env spin watch",
     "spin:build": "cross-env NODE_ENV=production spin build",
     "spin:watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env spin watch",
