@@ -89,27 +89,27 @@ const updateQueries = {
 };
 
 export const CounterWithApollo: React.ComponentClass = (compose(
-    graphql<addCountMutation>(ADD_COUNT_MUTATION, {
+    graphql<addCountMutation, {}, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             save: (amount) => {
                 return () => mutate({
                     variables: { amount },
                     updateQueries,
-                });
+                }as any);
             },
         }),
     }),
-    graphql<addCountMutation>(ADD_COUNT_MUTATION, {
+    graphql<addCountMutation, {}, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             increment: (amount) => {
                 return () => mutate({
                     variables: { amount },
                     updateQueries,
-                });
+                }as any);
             },
         }),
     }),
-)(graphql<countOptions, ICounterProps>(COUNT_QUERY, {
+)(graphql<countOptions, ICounterProps, {}, {}>(COUNT_QUERY, {
     name: 'countData',
     props: ({ countData }: any) => {
         const newlog = logger.child({ childName: 'UIController' });
@@ -136,5 +136,5 @@ export const CounterWithApollo: React.ComponentClass = (compose(
             error: countData.error,
         };
     },
-})(CounterComponent))
+})(CounterComponent as any))
 );
