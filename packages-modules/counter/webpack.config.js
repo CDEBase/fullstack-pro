@@ -56,7 +56,12 @@ var webpack_opts = {
       test: /\.graphql?/,
       exclude: /node_modules/,
       use: 'raw-loader',
-    }]
+    }, {
+      test: /\.(gql)$/,
+      exclude: /node_modules/,
+      use: ['graphql-tag/loader']
+    }
+    ]
   },
   externals: [
     nodeExternals({ modulesDir: "../../node_modules" }),
