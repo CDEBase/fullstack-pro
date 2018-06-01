@@ -81,7 +81,7 @@ pipeline {
             --set frontend.imageTag=${FRONTEND_PACKAGE_VERSION} \
             --set backend.image="${REPOSITORY_SERVER}/${BACKEND_PACKAGE_NAME}" \
             --set backend.imageTag=${BACKEND_PACKAGE_VERSION} \
-            --set settings.workspaceId=${WORKSPACE_ID} \
+            --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
