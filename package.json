@@ -31,6 +31,7 @@
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "test": "jest",
+    "test:watch": "npm test -- --watch",
     "posttest": "npm run lint",
     "coverage": "jest --coverage",
     "pretravis": "npm run compile",
