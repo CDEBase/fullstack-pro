@@ -1,6 +1,6 @@
 {
 	"name": "sample-stack-frontend-server",
-	"version": "0.0.28",
+	"version": "0.0.29",
 	"description": "Sample Client server",
 	"private": true,
 	"main": "index.js",
@@ -46,7 +46,7 @@
 		"@cdm-logger/client": "^3.1.1",
 		"@cdm-logger/server": "^3.0.2",
 		"@sample-stack/client-core": "^0.0.28",
-		"@sample-stack/client-react": "^0.0.28",
+		"@sample-stack/client-react": "^0.0.29",
 		"@sample-stack/client-redux": "^0.0.28",
 		"@sample-stack/core": "^0.0.26",
 		"@sample-stack/graphql-gql": "^0.0.26",
