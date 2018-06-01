@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 
-var webpack_opts = {   
+var webpack_opts = {
   mode: 'development',
   entry: {
     browser: './src/browser/index.tsx',
@@ -50,9 +50,9 @@ var webpack_opts = {
       test: /\.tsx?$/,
       loaders: 'ts-loader'
     }, {
-      test: /\.(graphql|gql)$/,
+      test: /\.graphql?/,
       exclude: /node_modules/,
-      use: ['graphql-tag/loader']
+      use: 'raw-loader',
     }]
   },
   externals: [

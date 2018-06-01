@@ -21,6 +21,7 @@ const resolverOptions: IResolverOptions = {
   logger,
 };
 
+console.log(modules.schemas);
 
 const schema: GraphQLSchema = makeExecutableSchema({
   resolvers: _.merge(resolvers(pubsub, logger), modules.createResolvers(resolverOptions)),
