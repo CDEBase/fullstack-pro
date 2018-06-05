@@ -1,6 +1,6 @@
 
 What is lerna?
---
+===
  It is a tool for managing JavaScript projects with multiple packages. More information can be found [here](https://github.com/lerna/lerna)
 
 
