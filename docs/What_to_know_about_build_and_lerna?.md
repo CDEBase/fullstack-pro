@@ -37,3 +37,7 @@ The outlier packages with different versions will get a normal, local node_modul
 - `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly.
 
 
+Adding packages as dependencies to sibling packages
+--
+When you add sibling package to one of the packages, you need to run `npm run lerna` symlink the packages that are dependencies of each other.
+
