@@ -13,7 +13,7 @@
     "postpublish": "git checkout master",
     "publish:force": "npm run publish -- --force-publish=*",
     "lerna": "lerna bootstrap --hoist",
-    "install": "npm run lerna",
+    "postinstall": "npm run lerna",
     "clean": "lerna clean",
     "start": "npm run spin:watch",
     "start:envSSR": "cross-env SSR=true npm run spin:watch",
