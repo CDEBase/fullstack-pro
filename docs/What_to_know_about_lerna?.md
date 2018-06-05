@@ -34,6 +34,6 @@ Note: We do not need to run `npm install` under any packages with `package.json`
 The outlier packages with different versions will get a normal, local node_modules installation of the necessary dependencies.
 - `npm run clean` - Removes the node_modules directory from all packages.
 - `npm run build` - It invokes `npm run build` in each packages parallely. 
-- `npm run watch` - Automatically builds the packages that are changed. Recommend to run this when coding, so you would know anything (compilation errors) breaks instantly.
+- `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly.
 
 
