@@ -44,7 +44,9 @@
   "jest": {
     "testEnvironment": "node",
     "roots": [
-      "packages"
+      "packages",
+      "packages-modules",
+      "servers"
     ],
     "moduleFileExtensions": [
       "ts",
