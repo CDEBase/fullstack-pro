@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { createApolloClient } from '../config/apollo-client';
 import { createReduxStore, storeReducer, history } from '../config/redux-config';
-import { Component } from '../components';
 import { createRenderer as createFelaRenderer } from 'fela';
 import modules from '../modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
