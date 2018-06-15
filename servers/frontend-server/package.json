@@ -45,6 +45,11 @@
 	"dependencies": {
 		"@cdm-logger/client": "^3.1.1",
 		"@cdm-logger/server": "^3.0.2",
+		"@common-stack/client-core": "0.0.14-28",
+		"@common-stack/client-react": "0.0.14-28",
+		"@common-stack/client-redux": "0.0.14-28",
+		"@common-stack/core": "0.0.14-28",
+		"@common-stack/server-core": "0.0.14-28",
 		"@sample-stack/client-core": "^0.0.30",
 		"@sample-stack/client-react": "^0.0.30",
 		"@sample-stack/client-redux": "^0.0.30",
