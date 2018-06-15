@@ -99,6 +99,7 @@
 		"react-dom": "^16.2.0",
 		"react-fela": "7.3.0",
 		"react-helmet": "^5.2.0",
+		"react-loadable": "^5.4.0",
 		"react-redux": "^5.0.7",
 		"react-redux-typescript": "^2.3.0",
 		"react-resizable": "^1.7.5",
