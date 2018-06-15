@@ -12,6 +12,7 @@
 		"build:clean": "rimraf dist",
 		"build": "cross-env NODE_ENV=production spin build",
 		"build:debug": "cross-env DEBUGGING=true NODE_ENV=production spin build",
+		"build:debug:verbose": "npm run build:debug -- -v",
 		"start": "node --harmony dist",
 		"start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env node --harmony dist",
 		"watch": "cross-env SSR=true NODE_ENV=development ENV_FILE=../../config/development/dev.env spin watch",
