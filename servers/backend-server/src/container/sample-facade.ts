@@ -3,7 +3,7 @@ import { Container } from 'inversify';
 import { DbConfig, repositoryModule, TYPES as RepoTypes, ICounterRepository } from '@sample-stack/store';
 import * as Hemera from 'nats-hemera';
 import { pubsub, client as natsClient } from './pubsub';
-import { TaggedType } from '@sample-stack/core';
+import { TaggedType } from '@common-stack/core';
 import { database as DEFAULT_DB_CONFIG } from '../../../../config/development/settings.json';
 import { logger } from '@sample-stack/utils';
 const dbConfig = new DbConfig(DEFAULT_DB_CONFIG);

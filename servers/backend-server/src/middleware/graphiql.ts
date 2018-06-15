@@ -1,4 +1,4 @@
-import { graphiqlExpress } from 'graphql-server-express';
+import { graphiqlExpress } from 'apollo-server-express';
 import * as url from 'url';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';

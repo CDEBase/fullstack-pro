@@ -9,6 +9,7 @@ const BACKEND_URL = SETTINGS.BACKEND_URL;
 const corsWhitelist = [
     BACKEND_URL,
     CLIENT_URL,
+    SETTINGS.GRAPHQL_URL,
 ];
 logger.info('Cors whitelist: %j', corsWhitelist);
 const corsOptions = {

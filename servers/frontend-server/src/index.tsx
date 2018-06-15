@@ -1,65 +1,43 @@
 /// <reference path='../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as ReactFela from 'react-fela';
-import { ApolloProvider } from 'react-apollo';
-import { Provider as ReduxProvider } from 'react-redux';
-import createRenderer from './setup/fela-renderer';
-import { createApolloClient } from './setup/apollo-client';
-import { createReduxStore, storeReducer } from './redux-config';
-import { Component } from './components';
-import { createRenderer as createFelaRenderer } from 'fela';
+import Main from './app/Main';
 
-require('backend_reload');
-
-import './index.css';
+// Virtual module, generated in-memory by spinjs, contains count of backend rebuilds
+// tslint:disable-next-line
+import 'backend_reload';
 
 const rootEl = document.getElementById('content');
+let frontendReloadCount = 0;
 
-
-const client = createApolloClient();
-
-if (process.env.NODE_ENV === 'development' || __DEBUGGING__) {
-  window.__APOLLO_CLIENT__ = client;
-}
-
-
-let store;
-if (module.hot && module.hot.data && module.hot.data.store) {
-  // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
-  store = module.hot.data.store;
-  store.replaceReducer(storeReducer);
-} else {
-  store = createReduxStore();
-}
-if (module.hot) {
-  module.hot.dispose(data => {
-    // console.log("Saving Redux store:", JSON.stringify(store.getState()));
-    data.store = store;
-    // Force Apollo to fetch the latest data from the server
-    delete window.__APOLLO_STATE__;
-  });
-}
-
-// Commented out ("let HTML app be HTML app!")
-window.addEventListener('DOMContentLoaded', () => {
-  const mountNode = document.getElementById('stylesheet');
-  // const renderer = createRenderer(document.getElementById('font-stylesheet'));
-  const renderer = createFelaRenderer();
-  if (rootEl) {
+const renderApp = ({ key }: { key: number }) =>
     ReactDOM.render(
-      <ReduxProvider store={store} >
-        <ApolloProvider client={client}>
-          <ReactFela.Provider renderer={renderer}>
-            <Component />
-          </ReactFela.Provider>
-        </ApolloProvider>
-      </ReduxProvider>
-      , rootEl);
-  }
-});
+        <Main key={key} />,
+        rootEl,
+    );
+renderApp({ key: frontendReloadCount });
+if (__DEV__) {
+    if ((module as any).hot) {
+        (module as any).hot.accept();
+        (module as any).hot.accept('backend_reload', () => {
+            // log.debug('Reloading front-end');
+            window.location.reload();
+        });
+        (module as any).hot.accept((err) => {
+            if (err) {
+              console.error('Cannot apply HMR update.', err);
+            }
+          });
+          (module as any).hot.accept('./app/Main', () => {
+            try {
+                console.log('Updating front-end');
+                frontendReloadCount = (frontendReloadCount || 0) + 1;
 
-
-
+                renderApp({ key: frontendReloadCount });
+            } catch (err) {
+                // log(err.stack);
+            }
+        });
+    }
+}

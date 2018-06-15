@@ -31,7 +31,7 @@ module.exports = {
     useNullAsDefault: true,
   },
 
-  staging: {
+  test: {
     client: DB_CLIENT,
     connection: connection,
     pool: {

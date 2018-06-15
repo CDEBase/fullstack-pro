@@ -2,13 +2,16 @@ var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var webpack_opts = {
+  mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
-    filename: libPath('index.js'),
+    path: path.join(__dirname, 'lib'),
+    filename: 'index.js',
     libraryTarget: "commonjs2",
     library: "@sample-stack/client-react"
   },
@@ -20,6 +23,7 @@ var webpack_opts = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin("styles.css"),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.tsx?$/,
@@ -48,13 +52,24 @@ var webpack_opts = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     },
+    { test: /\.svg$/, loader: 'url-loader?limit=10000' },
     {
       test: /\.css$/,
-      loaders: 'css-loader'
-    },]
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          { loader: 'postcss-loader', options: { config: { path: './src/postcss.config.js' } } }
+        ]
+      })
+    },
+    ]
   },
   externals: [
-    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals({
+      whitelist: [/.*\.css$/],
+      modulesDir: "../../node_modules"
+    }),
     nodeExternals()
   ]
 };

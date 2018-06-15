@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDirs": ["./src", "../../database"],
-    "outDir": "./lib",
+    "outDir": "../lib",
     "typeRoots": [
       "../../node_modules/@types"
     ]

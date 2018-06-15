@@ -1,14 +1,16 @@
 var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
+// var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 var path = require('path');
 var fs = require('fs');
-var libPath = require('../../tools/webpack-util');
 
-var webpack_opts = {
+
+var webpack_opts = {   mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
-    filename: libPath('index.js'),
+    path: path.join(__dirname, 'lib'),    
+    filename: 'index.js',
     libraryTarget: "commonjs2",
     library: "@sample-stack/graphql-gql",
   },
@@ -20,6 +22,10 @@ var webpack_opts = {
     ]
   },
   plugins: [
+    // new PersistGraphQLPlugin({
+    //   filename: 'persisted_queries.json',
+    //   moduleName: path.resolve('node_modules/persisted_queries.json')
+    // }),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,
@@ -43,7 +49,7 @@ var webpack_opts = {
     {
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
-      use: ['graphql-tag/loader', 'persistgraphql-webpack-plugin/graphql-loader']
+      use: ['graphql-tag/loader']
     },
     {
       test: /\.json?$/,

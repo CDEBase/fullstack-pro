@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
-    string(name: 'NAMESPACE', defaultValue: 'defult', description: 'namespace')
+    string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name') 
   } 
@@ -74,18 +74,19 @@ pipeline {
       stage('Chart Deployment'){
         steps{
           sh """
-            helm repo add kube-orchestration https://9231da9aedb863f3c56329ca9d821252b247c9e2@raw.githubusercontent.com/cdmbase/kube-orchestration/master
             helm repo update
             helm upgrade -i \
             --set frontend.image="${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}" \
             --set frontend.imageTag=${FRONTEND_PACKAGE_VERSION} \
             --set backend.image="${REPOSITORY_SERVER}/${BACKEND_PACKAGE_NAME}" \
             --set backend.imageTag=${BACKEND_PACKAGE_VERSION} \
-            --set settings.workspaceId=${WORKSPACE_ID} \
+            --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
           """
+          }
+      }
 }
 
     post {

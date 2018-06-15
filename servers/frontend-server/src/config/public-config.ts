@@ -21,6 +21,9 @@ for (const v of publicEnv) {
 
 export default env;
 
+if (isBrowser) {
+    process['env'] = env;
+}
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,
     GRAPHQL_URL: process.env.GRAPHQL_URL || env.GRAPHQL_URL || __GRAPHQL_URL__,
