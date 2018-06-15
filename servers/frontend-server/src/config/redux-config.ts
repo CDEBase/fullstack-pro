@@ -2,7 +2,7 @@
 
 import {
     createStore, Store, applyMiddleware, Middleware, AnyAction,
-    GenericStoreEnhancer, compose, combineReducers,
+    compose, combineReducers,
 } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
@@ -22,7 +22,7 @@ const middlewares: Middleware[] = [
     thunk,
 ];
 
-const enhancers: () => GenericStoreEnhancer[] = () => [
+const enhancers = () => [
     applyMiddleware(...middlewares),
 ];
 
@@ -42,7 +42,7 @@ export const storeReducer = combineReducers<StoreState.Counter | StoreState.Samp
  */
 export const createReduxStore = () => {
     const store: Store<StoreState.Counter | StoreState.Sample> =
-        createStore<StoreState.Counter | StoreState.Sample>(
+        createStore<StoreState.Counter | StoreState.Sample, any, any, any>(
             storeReducer,
             {} as StoreState.Sample,
             composeEnhancers(...enhancers()),

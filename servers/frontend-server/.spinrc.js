@@ -2,8 +2,7 @@ const url = require('url');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 var nodeExternals = require('webpack-node-externals');
-
-process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
+const debug = process.env.DEBUGGING || false;
 
 const config = {
     builders: {
