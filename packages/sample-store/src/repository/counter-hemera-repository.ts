@@ -13,26 +13,27 @@ const NATS_HEMERA_DATBASE_MANAGER = 'sql-store';
 export class CounterRemoteRepository implements ICounterRepository {
 
     constructor(
-        @inject('Hemera') private hemera: Hemera,
+        @inject('Hemera') private hemera: Hemera<any, any>,
     ) {
     }
     // Set the table name to count
     public readonly tableName: string = Counter_Table;
     private topic = NATS_HEMERA_DATBASE_MANAGER;
 
-    public async getById(id) {
-        return await this.hemera.act(
+    public async getById(id): Promise<ICount> {
+        const result = await this.hemera.act(
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'findById',
                 collection: this.tableName,
                 id,
             },
-        ) as Promise<ICount>;
+        );
+        return result.data;
     }
 
     public async find(filter: string, pageNumber: number = 1, count: number = 20): Promise<ICount[]> {
-        return await this.hemera.act(
+        const result = await this.hemera.act(
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'find',
@@ -40,10 +41,11 @@ export class CounterRemoteRepository implements ICounterRepository {
                 query: {},
             },
         );
+        return result.data;
     }
 
     public async create(data: ICount): Promise<ICount> {
-        return await this.hemera.act(
+        const result = await this.hemera.act(
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'create',
@@ -51,10 +53,11 @@ export class CounterRemoteRepository implements ICounterRepository {
                 data,
             },
         );
+        return result.data;
     }
 
     public async update(data: ICount): Promise<ICount> {
-        return await this.hemera.act(
+        const result = await this.hemera.act(
             {
                 topic: NATS_HEMERA_DATBASE_MANAGER,
                 cmd: 'update',
@@ -67,6 +70,7 @@ export class CounterRemoteRepository implements ICounterRepository {
                 },
             },
         );
+        return result.data;
     }
 
     public async getCount(): Promise<ICount> {

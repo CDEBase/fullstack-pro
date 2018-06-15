@@ -63,9 +63,9 @@
   },
   "devDependencies": {
     "@sample-stack/graphql-schema": "*",
-    "jest": "^22.4.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^4.7.0"
+     "jest": "^23.1.0",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.12.0"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
