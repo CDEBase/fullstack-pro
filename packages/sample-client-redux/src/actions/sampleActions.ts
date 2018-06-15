@@ -60,7 +60,7 @@ const _loadCount: ApiActionGroup<null, { value: number }> = {
 type apiFunc<Q, S> = (q: Q) => Promise<S>;
 
 function apiActionGroupFactory<Q, S>(x: ApiActionGroup<Q, S>, go: apiFunc<Q, S>) {
-  return (request: Q) => (dispatch: redux.Dispatch<Store.Sample>) => {
+  return (request: Q) => (dispatch: redux.Dispatch) => {
     dispatch(x.request(request));
     go(request)
       .then((response) => dispatch(x.success(response, request)))
