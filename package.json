@@ -184,7 +184,7 @@
     "source-list-map": "^2.0.0",
     "source-map-loader": "^0.2.3",
     "source-map-support": "^0.5.5",
-    "spinjs": "0.4.141",
+    "spinjs": "0.4.126",
     "standard-version": "^4.0.0",
     "style-loader": "^0.21.0",
     "tcomb": "^3.2.24",
