@@ -2,9 +2,8 @@ import * as React from 'react';
 import { graphql, compose } from 'react-apollo';
 import update from 'immutability-helper';
 
-import { connect } from 'react-redux';
+import { connect, Store } from 'react-redux';
 import CounterView from '../components/CounterView';
-
 import {
   COUNTER_QUERY, ADD_COUNTER, COUNTER_SUBSCRIPTION, COUNTER_QUERY_CLIENT, ADD_COUNTER_CLIENT,
 } from '../graphql';
@@ -57,7 +56,7 @@ class Counter extends React.Component<any, any> {
 const CounterWithApollo: any = compose(
   graphql(COUNTER_QUERY, {
     props({ data: { loading, error, counter, subscribeToMore } }: any) {
-      if (error) {throw new Error(error); }
+      if (error) { throw new Error(error); }
       return { loading, counter, subscribeToMore };
     },
   }),
@@ -104,7 +103,7 @@ const CounterWithApollo: any = compose(
 )(Counter);
 
 export default connect(
-  state => ({ reduxCount: state.counter.reduxCount }),
+  state => ({ reduxCount: (state as any).counter.reduxCount }),
   dispatch => ({
     onReduxIncrement(value) {
       return () =>
