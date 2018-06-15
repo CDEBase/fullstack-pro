@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter",
-  "version": "0.0.1",
+  "version": "0.0.30",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -52,7 +52,6 @@
     "graphql-iso-date": "^3.5.0",
     "graphql-tag": "^2.9.2"
   },
-  "peerDependencies": {},
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
