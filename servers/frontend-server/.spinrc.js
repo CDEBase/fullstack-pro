@@ -68,6 +68,11 @@ const config = {
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
         overridesConfig: "./tools/webpackAppConfig.js",
+        plugins: [
+            new Dotenv({
+                path: process.env.ENV_FILE
+            })
+        ],
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
@@ -105,7 +110,8 @@ const extraDefines = {
     __SSR__: config.options.ssr,
     __PERSIST_GQL__: `'${config.options.persistGraphQL}'`,
     __FRONTEND_BUILD_DIR__: `'${config.options.frontendBuildDir}'`,
-    __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`
+    __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`,
+    __DEBUGGING__: `'${debug}'`
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
