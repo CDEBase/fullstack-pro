@@ -1,6 +1,6 @@
 {
 	"name": "sample-stack-frontend-server",
-	"version": "0.0.10",
+	"version": "0.0.1",
 	"description": "Sample Client server",
 	"private": true,
 	"main": "index.js",
