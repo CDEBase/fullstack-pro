@@ -6,6 +6,7 @@ const dependencyPlatforms = {
     "export-dir": 'server',
     "express": 'server',
     'body-parser': 'server',
+    'envalid': 'server',
     express: 'server',
     'apollo-server-express': 'server',
     'graphql-subscriptions': 'server',

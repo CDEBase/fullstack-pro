@@ -31,6 +31,7 @@
         "@sample-stack/server-core": "*",
         "@sample-stack/utils": "*",
         "dotenv": "^5.0.0",
+        "envalid": "^4.1.4",
         "graphql-nats-subscriptions": "^1.1.0",
         "helmet": "^3.12.0",
         "hemera-joi": "^3.1.0",
