@@ -16,9 +16,14 @@ import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
 import { logger } from '@sample-stack/utils';
+import modules from './modules';
 
 let server;
 const app = express();
+
+for (const applyBeforeware of modules.beforewares) {
+    applyBeforeware(app);
+  }
 
 const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.BACKEND_URL);
 // Don't rate limit heroku
@@ -27,21 +32,25 @@ app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (__DEV__) {
-    app.use('/', express.static(SETTINGS.dllBuildDir, { maxAge: '180 days' }));
-}
+// if (__DEV__) {
+//     app.use('/', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
+// }
 
 if (__PERSIST_GQL__) {
     // PersistedQuery don't work yet
-    app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
+    // app.use(GRAPHQL_ROUTE, persistedQueryMiddleware);
 }
 app.use(corsMiddleware);
+
+for (const applyMiddleware of modules.middlewares) {
+    applyMiddleware(app);
+}
+
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
 app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
 if (__DEV__) {
     app.use(errorMiddleware);
 }
-
 server = http.createServer(app);
 
 addGraphQLSubscriptions(server);

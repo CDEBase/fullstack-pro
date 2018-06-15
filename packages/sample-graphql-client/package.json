@@ -49,7 +49,7 @@
     "jest": "^22.4.2",
     "persistgraphql": "^0.3.11",
     "rimraf": "^2.6.1",
-    "webpack": "^3.11.0"
+    "webpack": "^4.7.0"
   },
   "dependencies": {},
   "typings": "lib/index.d.ts",

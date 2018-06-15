@@ -17,7 +17,7 @@ const PersonListComponent: React.SFC<IPersonListProps> = ({ persons }) => (
 
 export const PersonList: React.ComponentClass<{}> =
     compose(
-        graphql<getPersonsQuery>(PERSONS_QUERY),
+        graphql<{}, getPersonsQuery, {}, {}>(PERSONS_QUERY),
         flattenProp('data'),
         pure,
     )(PersonListComponent);
