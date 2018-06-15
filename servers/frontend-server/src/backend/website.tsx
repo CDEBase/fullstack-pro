@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import { addApolloLogging } from 'apollo-logger';
+// import { addApolloLogging } from 'apollo-logger';
 import { addPersistedQueries } from 'persistgraphql';
 import { Html } from './ssr/html';
 import { Component } from '../components';
