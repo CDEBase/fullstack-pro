@@ -51,6 +51,11 @@
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
 		"@cdm-logger/server": "^3.0.2",
+		"@common-stack/client-core": "0.0.14-28",
+		"@common-stack/client-react": "0.0.14-28",
+		"@common-stack/client-redux": "0.0.14-28",
+		"@common-stack/core": "0.0.14-28",
+		"@common-stack/server-core": "0.0.14-28",
 		"@sample-stack/core": "*",
 		"@sample-stack/graphql-gql": "*",
 		"@sample-stack/graphql-schema": "*",
