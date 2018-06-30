@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.31",
+  "version": "0.0.32-0",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,13 +56,13 @@
     "redux": ">=3.6.0"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.31",
-    "@sample-stack/client-redux": "^0.0.31",
-    "@sample-stack/core": "^0.0.31",
-    "@sample-stack/graphql-gql": "^0.0.31"
+    "@sample-stack/client-core": "^0.0.32-0",
+    "@sample-stack/client-redux": "^0.0.32-0",
+    "@sample-stack/core": "^0.0.32-0",
+    "@sample-stack/graphql-gql": "^0.0.32-0"
   },
   "devDependencies": {
-    "@sample-stack/graphql-schema": "^0.0.31",
+    "@sample-stack/graphql-schema": "^0.0.32-0",
     "jest": "^22.4.2",
     "rimraf": "^2.6.1",
     "webpack": "^4.7.0"
