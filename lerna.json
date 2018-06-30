@@ -12,6 +12,9 @@
     }
   },
   "commands": {
+    "publish": {
+      "allowBranch": "publish"
+    }
   },
   "packages": [
     "packages/*",
