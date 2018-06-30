@@ -48,6 +48,12 @@ for (const applyMiddleware of modules.middlewares) {
 
 app.use(GRAPHQL_ROUTE, graphqlExpressMiddleware);
 app.use(GRAPHIQL_ROUTE, graphiqlExpressMiddleware);
+
+
+// TODO: Error handlers
+// app.use(module.errorHandlers)
+
+
 if (__DEV__) {
     app.use(errorMiddleware);
 }

@@ -15,16 +15,20 @@ let debug: boolean = false;
 if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {
     debug = true;
 }
+const serviceContext = modules.createServiceContext({});
+
 export const graphqlExpressMiddleware =
     graphqlExpress(async (request: express.Request, response: express.Response) => {
         try {
             const context = await modules.createContext(request, response);
+            const contextServices = await serviceContext(request, response);
 
             const graphqlOptions: GraphQLOptions = {
                 debug,
                 schema,
                 context: {
                     ...context,
+                    ...contextServices,
                     persons,
                     findPerson,
                     addPerson,
