@@ -6,7 +6,6 @@ import {
   Store,
 } from '@sample-stack/client-redux';
 import { connect } from 'react-redux';
-import { returntypeof } from 'react-redux-typescript';
 import * as redux from 'redux';
 import { CounterComponent, ICounterProps } from '../components';
 
@@ -31,12 +30,12 @@ const mapDispatchToProps = (dispatch: Function) => ({
     dispatch(saveCount({ value })),
 });
 
-const stateProps = returntypeof(mapStateToProps);
-const dispatchProps = returntypeof(mapDispatchToProps);
-type StateProps = typeof stateProps;
-type DispatchProps = typeof dispatchProps;
+// const stateProps = mapStateToProps;
+// const dispatchProps = returntypeof(mapDispatchToProps);
+// type StateProps = typeof stateProps;
+// type DispatchProps = typeof dispatchProps;
 
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/8787
 export const Counter: React.ComponentClass<CounterOwnProps> =
-connect<StateProps, DispatchProps, CounterOwnProps>(mapStateToProps, mapDispatchToProps)(CounterComponent);
+connect<any, any, CounterOwnProps>(mapStateToProps, mapDispatchToProps)(CounterComponent);
 
