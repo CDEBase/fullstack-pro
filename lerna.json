@@ -11,7 +11,11 @@
       "tag: internal": ":house: Internal"
     }
   },
-  "commands": {},
+  "commands": {
+    "publish": {
+      "allowBranch": "publish"
+    }
+  },
   "packages": [
     "packages/*",
     "servers/*",
