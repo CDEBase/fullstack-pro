@@ -13,7 +13,13 @@ const config = {
             defines: {
                 __SERVER__: true
             },
-            enabled: true
+            enabled: true,
+            webpackConfig: {
+                externals: [
+                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/] }),
+                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                ],
+            }
         },
         test: {
             stack: ['server'],
@@ -44,7 +50,8 @@ const config = {
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
-        }
+        },
+
     }
 };
 
@@ -60,7 +67,7 @@ if (process.env.NODE_ENV === 'production') {
 const extraDefines = {
     __SSR__: config.options.ssr,
     __PERSIST_GQL__: config.options.persistGraphQL,
-    __FRONTEND_BUILD_DIR__: `"../frontend-server/dist/.build"`,
+    __FRONTEND_BUILD_DIR__: `"../frontend-server/dist/web"`,
     __DLL_BUILD_DIR__: `"../frontend-server/dist/build/dll"`
 };
 
