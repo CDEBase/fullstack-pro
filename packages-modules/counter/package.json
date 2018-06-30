@@ -49,6 +49,8 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
+    "@common-stack/client-react": "*",
+    "@common-stack/server-core": "*",
     "graphql-iso-date": "^3.5.0",
     "graphql-tag": "^2.9.2"
   },
