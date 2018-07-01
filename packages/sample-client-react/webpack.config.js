@@ -43,9 +43,6 @@ var webpack_opts = {
     rules: [{
       test: /\.tsx?$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loaders: 'json-loader'
     },
     {
       test: /\.(graphql|gql)$/,
