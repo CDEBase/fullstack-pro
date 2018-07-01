@@ -20,7 +20,14 @@ const config = {
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
             waitOn: ['tcp:localhost:8080'],
-            enabled: true
+            enabled: true,
+            webpackConfig: {
+                plugins: [
+                    new Dotenv({
+                        path: process.env.ENV_FILE
+                    })
+                ],
+            }
         },
         server: {
             entry: './src/backend/app.ts',
@@ -67,11 +74,6 @@ const config = {
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
         overridesConfig: "./tools/webpackAppConfig.js",
-        plugins: [
-            new Dotenv({
-                path: process.env.ENV_FILE
-            })
-        ],
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',

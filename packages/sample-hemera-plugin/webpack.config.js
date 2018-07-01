@@ -4,7 +4,8 @@ var path = require('path');
 var fs = require('fs');
 
 
-var webpack_opts = {   mode: 'development',
+var webpack_opts = {   
+  mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
