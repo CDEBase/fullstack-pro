@@ -16,9 +16,6 @@ var webpack_opts = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [
-      'src',
-    ]
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

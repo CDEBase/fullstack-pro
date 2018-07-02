@@ -17,11 +17,7 @@ var webpack_opts = {
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.js'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.js']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

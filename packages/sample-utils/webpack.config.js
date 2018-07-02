@@ -15,11 +15,7 @@ var webpack_opts = {
     library: "@sample-stack/utils",
   },
   resolve: {
-    extensions: ['.ts', '.js'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.js']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

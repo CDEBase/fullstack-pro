@@ -16,10 +16,6 @@ var webpack_opts = {   mode: 'development',
   },
   resolve: {
     extensions: ['.ts', '.graphql', '.gql'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
   },
   plugins: [
     // new PersistGraphQLPlugin({
@@ -50,11 +46,7 @@ var webpack_opts = {   mode: 'development',
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
       use: ['graphql-tag/loader']
-    },
-    {
-      test: /\.json?$/,
-      use: 'json-loader'
-    },]
+    }]
   },
   externals: [
     nodeExternals({ modulesDir: "../../node_modules" }),

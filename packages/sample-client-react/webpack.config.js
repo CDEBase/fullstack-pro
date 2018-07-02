@@ -16,11 +16,7 @@ var webpack_opts = {
     library: "@sample-stack/client-react"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.tsx', '.js', '.css']
   },
   plugins: [
     new ExtractTextPlugin("styles.css"),

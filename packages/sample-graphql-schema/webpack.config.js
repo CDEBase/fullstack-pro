@@ -19,10 +19,6 @@ var webpack_opts = {
   },
   resolve: {
     extensions: ['.ts', '.js', '.graphql'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

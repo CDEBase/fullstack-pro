@@ -15,11 +15,7 @@ var webpack_opts = {
     library: "@sample-stack/hermera-plugin",
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.js', '.json']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

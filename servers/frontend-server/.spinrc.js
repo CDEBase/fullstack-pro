@@ -3,6 +3,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
+const merge = require('webpack-merge');
 
 const config = {
     builders: {
@@ -22,11 +23,7 @@ const config = {
             waitOn: ['tcp:localhost:8080'],
             enabled: true,
             webpackConfig: {
-                plugins: [
-                    new Dotenv({
-                        path: process.env.ENV_FILE
-                    })
-                ],
+                // for additional webpack configuration.
             }
         },
         server: {
@@ -80,14 +77,15 @@ const config = {
         }
     }
 };
-if (process.env.NODE_ENV === 'development') {
-    config.builders.web.webpackConfig = {
+if (process.env.NODE_ENV !== 'development') {
+    const envConfig = {
         plugins: [
             new Dotenv({
                 path: process.env.ENV_FILE
             })
         ],
     }
+    config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envConfig);
 }
 if (process.env.SSR) {
     config.builders.server.enabled = true;
