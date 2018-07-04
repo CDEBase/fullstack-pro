@@ -3,6 +3,7 @@ const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
 const merge = require('webpack-merge');
+const webpack = require('webpack');
 
 const config = {
     builders: {
