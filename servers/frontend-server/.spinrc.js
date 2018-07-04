@@ -1,6 +1,5 @@
 const url = require('url');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
 const merge = require('webpack-merge');
@@ -108,7 +107,12 @@ if (process.env.NODE_ENV !== 'production') {
 
     if (!config.options.ssr) {
         console.log('Warning! exposing env variables in UI, only run in development.');
-
+        var dotenv = require('dotenv-safe')
+            .config(
+                {
+                    path: process.env.ENV_FILE,
+                    example: '../../config/development/dev.env.sample'
+                });
         const envConfig = {
             plugins: [
                 new webpack.DefinePlugin({
