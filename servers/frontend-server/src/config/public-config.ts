@@ -12,7 +12,7 @@ const publicEnv = [
 ];
 
 const isBrowser = typeof window !== 'undefined';
-const base = (isBrowser ? window.__ENV__ : process.env) || {};
+const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
 
 const env: any = {};
 for (const v of publicEnv) {

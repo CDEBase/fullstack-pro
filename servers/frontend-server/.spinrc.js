@@ -77,16 +77,7 @@ const config = {
         }
     }
 };
-if (process.env.NODE_ENV !== 'development') {
-    const envConfig = {
-        plugins: [
-            new Dotenv({
-                path: process.env.ENV_FILE
-            })
-        ],
-    }
-    config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envConfig);
-}
+
 if (process.env.SSR) {
     config.builders.server.enabled = true;
     config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
@@ -112,6 +103,22 @@ const extraDefines = {
     __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`,
     __DEBUGGING__: `'${debug}'`
 };
+
+if (process.env.NODE_ENV !== 'production') {
+
+    if (!config.options.ssr) {
+        console.log('Warning! exposing env variables in UI, only run in development.');
+
+        const envConfig = {
+            plugins: [
+                new webpack.DefinePlugin({
+                    "__ENV__": JSON.stringify(dotenv.parsed)
+                }),
+            ],
+        }
+        config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envConfig);
+    }
+}
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
 

@@ -1,4 +1,5 @@
 declare const __DEV__;
+declare const __ENV__;
 declare const __BACKEND_URL__;
 declare const __GRAPHQL_URL__;
 declare const __PERSIST_GQL__;
