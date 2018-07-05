@@ -54,9 +54,6 @@
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
 		"@cdm-logger/server": "^3.0.2",
-		"@common-stack/client-core": "0.0.145",
-		"@common-stack/client-react": "0.0.145",
-		"@common-stack/client-redux": "0.0.145",
 		"@common-stack/core": "0.0.145",
 		"@common-stack/server-core": "0.0.145",
 		"@sample-stack/core": "*",
