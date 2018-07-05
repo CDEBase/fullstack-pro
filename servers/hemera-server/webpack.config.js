@@ -12,11 +12,7 @@ var webpack_opts = {
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.js', '.json']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
@@ -43,7 +39,10 @@ var webpack_opts = {
       }
     ]
   },
-  externals: [nodeExternals({ modulesDir: "../../node_modules" })]
+  externals: [
+    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals()
+  ]
 
 };
 
