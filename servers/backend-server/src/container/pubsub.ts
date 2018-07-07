@@ -5,7 +5,7 @@ import { logger } from '@sample-stack/utils';
 import { SETTINGS } from '../config';
 import * as nats from 'nats';
 
-export const client = () => nats.connect({
+export const client: () => nats.Client = () => nats.connect({
     'url': SETTINGS.NATS_URL,
     'user': SETTINGS.NATS_USER,
     'pass': SETTINGS.NATS_PW as string,
