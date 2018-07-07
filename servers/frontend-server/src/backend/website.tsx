@@ -64,6 +64,7 @@ async function renderServerSide(req, res) {
                 assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'web', 'assets.json')).toString());
             }
             const apolloState = Object.assign({}, client.extract());
+            const reduxState = Object.assign({}, store.getState());
             const env = {
                 ...publicEnv,
             };
@@ -75,6 +76,7 @@ async function renderServerSide(req, res) {
                     helmet={helmet}
                     css={appCss}
                     env={env}
+                    reduxState={reduxState}
                 />
             );
             res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);

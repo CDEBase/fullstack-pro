@@ -36,6 +36,14 @@ export const storeReducer = combineReducers<StoreState.Counter | StoreState.Samp
     ...reducers,
     ...modules.reducers,
 });
+
+// If we have preloaded state, save it.
+const initialState = __CLIENT__ ? window.__PRELOADED_STATE__ : {};
+// Delete it once we have it stored in a variable
+if (__CLIENT__) {
+    delete window.__PRELOADED_STATE__;
+}
+
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
@@ -44,7 +52,7 @@ export const createReduxStore = () => {
     const store: Store<StoreState.Counter | StoreState.Sample> =
         createStore<StoreState.Counter | StoreState.Sample, any, any, any>(
             storeReducer,
-            {} as StoreState.Sample,
+            initialState,
             composeEnhancers(...enhancers()),
         );
     return store;
