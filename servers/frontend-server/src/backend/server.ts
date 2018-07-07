@@ -9,6 +9,7 @@ import 'isomorphic-fetch';
 import { logger } from '@sample-stack/utils';
 import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
+import { errorMiddleware } from './middlewares/error';
 import { SETTINGS } from '../config';
 import * as cookiesMiddleware from 'universal-cookie-express';
 import modules from './modules';
@@ -40,6 +41,9 @@ if (__DEV__) {
 
 app.use(websiteMiddleware);
 
+if (__DEV__) {
+    app.use(errorMiddleware);
+}
 
 server = http.createServer(app);
 
