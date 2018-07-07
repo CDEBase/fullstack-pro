@@ -16,11 +16,7 @@ var webpack_opts = {
     library: "@sample-stack/client-react"
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.tsx', '.js', '.css']
   },
   plugins: [
     new ExtractTextPlugin("styles.css"),
@@ -43,9 +39,6 @@ var webpack_opts = {
     rules: [{
       test: /\.tsx?$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loaders: 'json-loader'
     },
     {
       test: /\.(graphql|gql)$/,

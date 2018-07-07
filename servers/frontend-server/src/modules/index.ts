@@ -1,2 +1,2 @@
-import modules from './modules';
+import modules from './module';
 export default modules;

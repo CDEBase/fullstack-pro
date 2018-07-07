@@ -4,7 +4,8 @@ var path = require('path');
 var fs = require('fs');
 
 
-var webpack_opts = {   mode: 'development',
+var webpack_opts = {   
+  mode: 'development',
   entry: './src/index.ts',
   target: 'node',
   output: {
@@ -14,11 +15,7 @@ var webpack_opts = {   mode: 'development',
     library: "@sample-stack/hermera-plugin",
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
-    modules: [
-      'node_modules',
-      'src',
-    ]
+    extensions: ['.ts', '.js', '.json']
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({

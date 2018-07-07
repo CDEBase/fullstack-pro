@@ -1,4 +1,5 @@
 declare const __DEV__;
+declare const __ENV__;
 declare const __BACKEND_URL__;
 declare const __GRAPHQL_URL__;
 declare const __PERSIST_GQL__;
@@ -14,6 +15,7 @@ declare const __DEBUGGING__;
 declare interface Window {
   __APOLLO_STATE__?: any;
   __APOLLO_CLIENT__?: any;
+  __PRELOADED_STATE__?: any;
   __INITIAL_STATE__?: any;
   __ENV__?: any;
   __SERVER_ERROR__?: any;

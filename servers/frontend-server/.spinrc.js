@@ -1,8 +1,9 @@
 const url = require('url');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
+const merge = require('webpack-merge');
+const webpack = require('webpack');
 
 const config = {
     builders: {
@@ -20,7 +21,10 @@ const config = {
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
             waitOn: ['tcp:localhost:8080'],
-            enabled: true
+            enabled: true,
+            webpackConfig: {
+                // for additional webpack configuration.
+            }
         },
         server: {
             entry: './src/backend/app.ts',
@@ -67,26 +71,13 @@ const config = {
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
         overridesConfig: "./tools/webpackAppConfig.js",
-        plugins: [
-            new Dotenv({
-                path: process.env.ENV_FILE
-            })
-        ],
         defines: {
             __DEV__: process.env.NODE_ENV !== 'production',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
         }
     }
 };
-if (process.env.NODE_ENV === 'development') {
-    config.builders.web.webpackConfig = {
-        plugins: [
-            new Dotenv({
-                path: process.env.ENV_FILE
-            })
-        ],
-    }
-}
+
 if (process.env.SSR) {
     config.builders.server.enabled = true;
     config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
@@ -112,6 +103,27 @@ const extraDefines = {
     __DLL_BUILD_DIR__: `'${config.options.dllBuildDir}'`,
     __DEBUGGING__: `'${debug}'`
 };
+
+if (process.env.NODE_ENV !== 'production') {
+
+    if (!config.options.ssr) {
+        console.log('Warning! exposing env variables in UI, only run in development.');
+        var dotenv = require('dotenv-safe')
+            .config(
+                {
+                    path: process.env.ENV_FILE,
+                    example: '../../config/development/dev.env.sample'
+                });
+        const envConfig = {
+            plugins: [
+                new webpack.DefinePlugin({
+                    "__ENV__": JSON.stringify(dotenv.parsed)
+                }),
+            ],
+        }
+        config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envConfig);
+    }
+}
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
 

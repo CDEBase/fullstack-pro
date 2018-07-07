@@ -9,13 +9,14 @@ import modules from '../../modules';
 const Html = ({
     content,
     state,
+    reduxState,
     fela,
     env,
     assetMap,
     css,
     helmet,
 }:
-    { content?: any, state: any, assetMap?: string[], env: any, fela?: any, css?: string, helmet?: HelmetData }) => {
+    { content?: any, state: any, reduxState: any, assetMap?: string[], env: any, fela?: any, css?: string, helmet?: HelmetData }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
@@ -58,6 +59,14 @@ const Html = ({
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__APOLLO_STATE__=${serialize(state, {
+                            isJSON: true,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__PRELOADED_STATE__=${serialize(reduxState, {
                             isJSON: true,
                         })};`,
                     }}

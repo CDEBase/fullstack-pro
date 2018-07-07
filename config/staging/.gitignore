@@ -1,0 +1,8 @@
+settings.json
+env.sh
+*.env
+*.sh
+*.json
+dev.json
+development-settings.json
+dev*.json
