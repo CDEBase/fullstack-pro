@@ -7,7 +7,7 @@ import * as express from 'express';
 import { schema } from '../api/schema';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
-import modules from '@sample-stack/counter/lib/server'; //TODO change
+import modules from '../modules';
 
 let debug: boolean = false;
 if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {

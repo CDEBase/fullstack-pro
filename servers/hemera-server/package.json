@@ -26,7 +26,7 @@
     "author": "CDMBase LLC",
     "license": "ISC",
     "dependencies": {
-        "@cdm-logger/server": "^3.0.2",
+        "@cdm-logger/server": "^5.0.4",
         "@sample-stack/core": "*",
         "@sample-stack/hemera-plugin": "*",
         "@sample-stack/server-core": "*",

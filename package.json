@@ -33,7 +33,7 @@
     "db:migrate": "knex migrate:latest --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
-    "test": "jest",
+    "test": "cross-env ENV_FILE=config/test/test.env jest",
     "test:watch": "npm test -- --watch",
     "posttest": "npm run lint",
     "coverage": "jest --coverage",
@@ -226,8 +226,8 @@
     "ws": "^3.3.3"
   },
   "dependencies": {
-    "@cdm-logger/client": "^3.1.1",
-    "@cdm-logger/server": "^3.0.2",
+    "@cdm-logger/client": "^5.0.5",
+    "@cdm-logger/server": "^5.0.4",
     "@common-stack/client-core": "0.0.151",
     "@common-stack/client-react": "0.0.151",
     "@common-stack/client-redux": "0.0.151",
