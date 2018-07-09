@@ -3,7 +3,7 @@ import * as url from 'url';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
 import { SETTINGS } from '../config';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@common-stack/server-core';
 
 const subscriptionUrl = (SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws');
 logger.debug('subscriptionUrl used is (%s)', subscriptionUrl);

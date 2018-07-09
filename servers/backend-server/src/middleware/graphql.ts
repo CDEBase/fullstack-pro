@@ -2,15 +2,13 @@
 import { graphqlExpress, ExpressHandler } from 'apollo-server-express';
 import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@common-stack/server-core';
 import * as express from 'express';
-import { counterRepo } from '../container';
 import { schema } from '../api/schema';
 import { database } from '@sample-stack/graphql-schema';
 import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 import modules from '@sample-stack/counter/lib/server'; //TODO change
 
-const { persons, findPerson, addPerson } = database;
 let debug: boolean = false;
 if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {
     debug = true;
@@ -29,10 +27,6 @@ export const graphqlExpressMiddleware =
                 context: {
                     ...context,
                     ...contextServices,
-                    persons,
-                    findPerson,
-                    addPerson,
-                    Count: counterRepo,
                 },
                 formatError: error => {
                     logger.error('GraphQL execution error:', error);

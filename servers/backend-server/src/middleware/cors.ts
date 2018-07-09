@@ -1,7 +1,7 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import { SETTINGS } from '../config';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@common-stack/server-core';
 
 const CLIENT_URL = SETTINGS.CLIENT_URL;
 const BACKEND_URL = SETTINGS.BACKEND_URL;

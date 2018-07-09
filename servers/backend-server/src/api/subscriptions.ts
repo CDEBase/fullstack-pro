@@ -8,10 +8,7 @@ import { Module } from 'webpack';
 import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@sample-stack/utils';
-import { counterRepo } from '../container';
-import { database } from '@sample-stack/graphql-schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
+import { logger } from '@common-stack/server-core';
 import modules from '../modules';
 
 let subscriptionServer;
@@ -21,7 +18,7 @@ const addSubscriptions = httpServer => {
         schema,
         execute,
         subscribe,
-        onConnect: (connectionParams, webSocket) => ({ Count: counterRepo, ...modules.createContext(null, connectionParams, webSocket) }),
+        onConnect: (connectionParams, webSocket) => ({ ...modules.createContext(null, connectionParams, webSocket) }),
         onOperation: async (message, params, webSocket) => {
             params.context = await modules.createContext(null, message.payload, webSocket);
             return params;

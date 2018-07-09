@@ -1,7 +1,7 @@
 import { PubSub, PubSubEngine } from 'graphql-subscriptions';
 import { NatsPubSub } from 'graphql-nats-subscriptions';
 import { wrapPubSub } from 'apollo-logger';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@common-stack/server-core';
 import { SETTINGS } from '../config';
 import * as nats from 'nats';
 

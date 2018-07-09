@@ -15,7 +15,7 @@ import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
 import { SETTINGS } from './config';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@common-stack/server-core';
 import modules from './modules';
 
 let server;
