@@ -5,8 +5,6 @@ import 'isomorphic-fetch';
 import { logger } from '@common-stack/server-core';
 import * as express from 'express';
 import { schema } from '../api/schema';
-import { database } from '@sample-stack/graphql-schema';
-import { ICounterRepository, TYPES as CounterTypes } from '@sample-stack/store';
 import modules from '../modules';
 
 let debug: boolean = false;
