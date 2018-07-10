@@ -74,7 +74,7 @@ export class Main extends React.Component<any, MainState> {
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer}>
                 <ConnectedRouter history={history}>
-                  {modules.route}
+                  {modules.getRouter()}
                 </ConnectedRouter>
               </ReactFela.Provider>
             </ApolloProvider>
