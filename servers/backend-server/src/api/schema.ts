@@ -9,7 +9,7 @@ import { IResolverOptions, IDirectiveOptions } from '@common-stack/server-core';
 import { GraphQLAnyObject } from './scalar';
 const rootSchemaDef = require('./root-schema.graphqls');
 // import rootSchemaDef from './root_schema.graphqls';
-
+import { settings } from '../modules/module';
 import { pubsub } from '../modules/pubsub';
 
 const DefaultResolver = {
@@ -18,6 +18,7 @@ const DefaultResolver = {
 
 const resolverOptions: IResolverOptions = {
   pubsub,
+  subscriptionID: `${settings.subTopic}`,
   logger,
 };
 

@@ -5,14 +5,12 @@ import 'isomorphic-fetch';
 import { logger } from '@common-stack/server-core';
 import * as express from 'express';
 import { schema } from '../api/schema';
-import modules from '../modules';
+import modules, { serviceContext} from '../modules';
 
 let debug: boolean = false;
 if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {
     debug = true;
 }
-const serviceContext = modules.createServiceContext({});
-
 export const graphqlExpressMiddleware =
     graphqlExpress(async (request: express.Request, response: express.Response) => {
         try {

@@ -9,7 +9,7 @@ import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@common-stack/server-core';
-import modules from '../modules';
+import modules, { serviceContext } from '../modules';
 
 let subscriptionServer;
 
@@ -20,7 +20,10 @@ const addSubscriptions = httpServer => {
         subscribe,
         onConnect: (connectionParams, webSocket) => ({ ...modules.createContext(null, connectionParams, webSocket) }),
         onOperation: async (message, params, webSocket) => {
-            params.context = await modules.createContext(null, message.payload, webSocket);
+            params.context = await {
+                ...modules.createContext(null, message.payload, webSocket),
+                ...serviceContext(null, message.payload, webSocket),
+            };
             return params;
         },
     }, {

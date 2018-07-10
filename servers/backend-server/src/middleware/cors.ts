@@ -1,15 +1,15 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { SETTINGS } from '../config';
+import { config } from '../config';
 import { logger } from '@common-stack/server-core';
 
-const CLIENT_URL = SETTINGS.CLIENT_URL;
-const BACKEND_URL = SETTINGS.BACKEND_URL;
+const CLIENT_URL = config.CLIENT_URL;
+const BACKEND_URL = config.BACKEND_URL;
 
 const corsWhitelist = [
     BACKEND_URL,
     CLIENT_URL,
-    SETTINGS.GRAPHQL_URL,
+    config.GRAPHQL_URL,
 ];
 logger.info('Cors whitelist: %j', corsWhitelist);
 const corsOptions = {

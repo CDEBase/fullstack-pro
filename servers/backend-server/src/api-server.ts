@@ -14,7 +14,7 @@ import { graphiqlExpressMiddleware } from './middleware/graphiql';
 import { persistedQueryMiddleware } from './middleware/persistedQuery';
 import { errorMiddleware } from './middleware/error';
 import { addGraphQLSubscriptions } from './api/subscriptions';
-import { SETTINGS } from './config';
+import { config } from './config';
 import { logger } from '@common-stack/server-core';
 import modules from './modules';
 
@@ -25,7 +25,7 @@ for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
   }
 
-const { protocol, port: serverPort, pathname, hostname } = url.parse(SETTINGS.BACKEND_URL);
+const { protocol, port: serverPort, pathname, hostname } = url.parse(config.BACKEND_URL);
 // Don't rate limit heroku
 app.enable('trust proxy');
 

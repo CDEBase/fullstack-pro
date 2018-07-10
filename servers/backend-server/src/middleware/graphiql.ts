@@ -2,10 +2,10 @@ import { graphiqlExpress } from 'apollo-server-express';
 import * as url from 'url';
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
 import * as express from 'express';
-import { SETTINGS } from '../config';
+import { config } from '../config';
 import { logger } from '@common-stack/server-core';
 
-const subscriptionUrl = (SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws');
+const subscriptionUrl = (config.GRAPHQL_URL).replace(/^http/, 'ws');
 logger.debug('subscriptionUrl used is (%s)', subscriptionUrl);
 
 export const graphiqlExpressMiddleware =

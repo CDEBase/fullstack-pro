@@ -19,6 +19,7 @@
 		"watch": "cross-env SSR=true NODE_ENV=development ENV_FILE=../../config/development/dev.env spin watch",
 		"watch:debug": "npm run watch -- -v",
 		"watch:test": "cross-env ENV_FILE=../../config/test/test.env spin watch",
+		"watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env spin watch",
 		"jest": "./node_modules/.bin/jest",
 		"test": "jest",
 		"test:debug": "npm test -- --runInBand",
