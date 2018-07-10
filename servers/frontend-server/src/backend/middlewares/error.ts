@@ -3,7 +3,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
-import { logger } from '@adminide-stack/utils';
+import { logger } from '@common-stack/server-core';
 
 
 let assetMap;

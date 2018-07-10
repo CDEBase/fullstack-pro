@@ -18,7 +18,10 @@ const addSubscriptions = httpServer => {
         schema,
         execute,
         subscribe,
-        onConnect: (connectionParams, webSocket) => ({ ...modules.createContext(null, connectionParams, webSocket) }),
+        onConnect: (connectionParams, webSocket) => ({
+            ...modules.createContext(null, connectionParams, webSocket),
+            ...serviceContext(null, connectionParams, webSocket),
+        }),
         onOperation: async (message, params, webSocket) => {
             params.context = await {
                 ...modules.createContext(null, message.payload, webSocket),
