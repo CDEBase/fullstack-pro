@@ -35,7 +35,7 @@ async function renderServerSide(req, res) {
                     <ApolloProvider client={client}>
                         <ReactFela.Provider renderer={renderer} >
                             <StaticRouter location={req.url} context={context}>
-                                {clientModules.router}
+                                {clientModules.getRouter()}
                             </StaticRouter>
                         </ReactFela.Provider>
                     </ApolloProvider>
