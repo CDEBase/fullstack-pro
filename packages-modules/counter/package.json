@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter",
-  "version": "0.0.37-0",
+  "version": "0.0.37-1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -57,5 +57,6 @@
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "91eca03e5201331c472cfb1f4c937f712f4fd26e"
 }
