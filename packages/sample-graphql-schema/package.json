@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/graphql-schema",
-  "version": "0.0.37-2",
+  "version": "0.0.37-3",
   "description": "Sample Schema Module",
   "main": "lib/index.js",
   "publishConfig": {
@@ -66,5 +66,5 @@
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "0844ea0c450a6939601f03f92c0c1ad3289722d1"
+  "gitHead": "c8de767fa8f8d3724ec0655f9b0589224b654d51"
 }

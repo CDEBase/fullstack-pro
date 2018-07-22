@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.37-2",
+  "version": "0.0.37-3",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,13 +56,13 @@
     "redux": ">=3.6.0"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.37-2",
-    "@sample-stack/client-redux": "^0.0.37-2",
+    "@sample-stack/client-core": "^0.0.37-3",
+    "@sample-stack/client-redux": "^0.0.37-3",
     "@sample-stack/core": "^0.0.36",
     "@sample-stack/graphql-gql": "^0.0.36"
   },
   "devDependencies": {
-    "@sample-stack/graphql-schema": "^0.0.37-2",
+    "@sample-stack/graphql-schema": "^0.0.37-3",
     "jest": "^22.4.2",
     "rimraf": "^2.6.1",
     "webpack": "^4.7.0"
@@ -71,5 +71,5 @@
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "0844ea0c450a6939601f03f92c0c1ad3289722d1"
+  "gitHead": "c8de767fa8f8d3724ec0655f9b0589224b654d51"
 }
