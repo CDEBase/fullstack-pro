@@ -10,7 +10,7 @@
     "publish": "npm run lerna:prepublish && lerna publish --cd-version=patch",
     "postpublish": "git checkout master",
     "publish:force": "npm run publish -- --force-publish=*",
-    "lerna:predevpublish": "git checkout prepublish && git merge -s recursive -X theirs develop",
+    "lerna:predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
     "devpublish": "npm run lerna:predevpublish && lerna publish --cd-version=prerelease",
     "postdevpublish": "git checkout develop",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
