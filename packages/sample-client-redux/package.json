@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-redux",
-  "version": "0.0.36",
+  "version": "0.0.37-0",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
@@ -53,7 +53,7 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.36",
+    "@sample-stack/client-core": "^0.0.37-0",
     "@sample-stack/core": "^0.0.36"
   },
   "peerDependencies": {

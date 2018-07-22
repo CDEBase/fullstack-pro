@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter",
-  "version": "0.0.36",
+  "version": "0.0.37-0",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
