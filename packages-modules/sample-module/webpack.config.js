@@ -14,7 +14,7 @@ var webpack_opts = {
     path: path.join(__dirname, 'lib'),
     filename: "[name].js",
     libraryTarget: "commonjs2",
-    library: "@sample-stack/module",
+    library: "@sample-stack/sample-module",
   },
   node: {
     __dirname: false
