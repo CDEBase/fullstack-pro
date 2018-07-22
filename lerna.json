@@ -13,7 +13,7 @@
   },
   "command": {
     "publish": {
-      "allowBranch": "publish"
+      "allowBranch": ["publish, prepublish"]
     }
   },
   "packages": [
