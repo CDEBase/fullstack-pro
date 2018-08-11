@@ -22,8 +22,8 @@ const resolverOptions: IResolverOptions = {
 };
 
 const schema: GraphQLSchema = makeExecutableSchema({
-  resolvers: _.merge(resolvers(pubsub, logger), modules.createResolvers(resolverOptions)),
-  typeDefs: [rootSchemaDef].concat(typeDefs).concat(modules.schemas) as Array<any>,
+  resolvers: { ...DefaultResolver, ...modules.createResolvers(resolverOptions)},
+  typeDefs: [rootSchemaDef].concat(modules.schemas) as Array<any>,
 });
 
 addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
