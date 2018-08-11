@@ -53,7 +53,7 @@
     "webpack": "^4.7.0"
   },
   "dependencies": {
-    "@sample-stack/core": "file:../sample-core"
+    "@sample-stack/core": "*"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
