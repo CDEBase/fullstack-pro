@@ -7,7 +7,7 @@ import {
     COUNT_SUBSCRIPTION, COUNT_QUERY, getCountQuery, addCountMutation,
     ADD_COUNT_MUTATION, subscribeToCountSubscription,
 } from '@sample-stack/graphql-gql';
-import { logger } from '@cdm-logger/browser';
+import { logger } from '@cdm-logger/client';
 type SubscriptionProps = {
     subscribeToMore: Function;
 };
