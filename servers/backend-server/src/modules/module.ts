@@ -1,5 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { Feature, logger } from '@common-stack/server-core';
+import { Feature } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import CounterModule from '@sample-stack/counter/lib/server';
 import { pubsub } from './pubsub';
 import { generateMongo } from '@common-stack/store-mongo';

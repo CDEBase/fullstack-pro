@@ -1,7 +1,7 @@
 import { GraphQLSchema } from 'graphql';
 import { makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema } from 'graphql-tools';
 import * as _ from 'lodash';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import modules from '../modules';
 import { IResolverOptions, IDirectiveOptions } from '@common-stack/server-core';
 

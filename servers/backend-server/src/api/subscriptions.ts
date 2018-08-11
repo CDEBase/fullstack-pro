@@ -8,7 +8,7 @@ import { Module } from 'webpack';
 import { schema } from './schema';
 
 import { GRAPHQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import modules, { serviceContext } from '../modules';
 
 let subscriptionServer;

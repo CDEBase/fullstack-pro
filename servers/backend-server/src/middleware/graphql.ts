@@ -2,7 +2,7 @@
 import { graphqlExpress, ExpressHandler } from 'apollo-server-express';
 import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import * as express from 'express';
 import { schema } from '../api/schema';
 import modules, { serviceContext} from '../modules';
