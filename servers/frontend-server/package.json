@@ -92,7 +92,7 @@
 		"fela-plugin-prefixer": "^5.0.19",
 		"fela-plugin-unit": "^5.0.17",
 		"fela-plugin-validator": "^5.2.0",
-		"graphql": "^0.11.7",
+		"graphql": "^0.12.0",
 		"immutability-helper": "^2.6.6",
 		"inversify": "^4.13.0",
 		"isomorphic-fetch": "^2.2.1",

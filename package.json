@@ -272,7 +272,7 @@
     "fela-plugin-prefixer": "^5.0.19",
     "fela-plugin-unit": "^5.0.17",
     "fela-plugin-validator": "^5.2.0",
-    "graphql": "^0.11.7",
+    "graphql": "^0.12.0",
     "graphql-auth": "^0.2.2",
     "graphql-iso-date": "^3.5.0",
     "graphql-nats-subscriptions": "^1.2.0",
