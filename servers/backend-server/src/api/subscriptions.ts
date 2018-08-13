@@ -28,12 +28,6 @@ const addSubscriptions = httpServer => {
         },
         onOperation: async (message: { payload: { id_token?: string } }, params, webSocket) => {
             logger.trace('onOperation message');
-            const { payload: { id_token } } = message;
-            if ((id_token !== null) === (params.context.user !== null)) {
-                return params;
-            }
-            const userId = null;
-            const scopes = null;
             const context = await modules.createContext(null, message.payload);
             const contextServices = await serviceContext(null, message.payload);
             return {
@@ -41,8 +35,6 @@ const addSubscriptions = httpServer => {
                 context: {
                     ...context,
                     ...contextServices,
-                    userId,
-                    scopes,
                 },
             };
         },
