@@ -73,7 +73,7 @@
 		"envalid": "^4.1.4",
 		"express": "^4.16.3",
 		"graphql": "^0.12.0",
-		"graphql-nats-subscriptions": "^1.1.0",
+		"graphql-nats-subscriptions": "^1.2.0",
 		"apollo-server-express": "^1.3.6",
 		"graphql-subscriptions": "^0.5.8",
 		"graphql-tools": "3.1.1",

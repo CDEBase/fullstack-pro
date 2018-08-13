@@ -18,16 +18,33 @@ const addSubscriptions = httpServer => {
         schema,
         execute,
         subscribe,
-        onConnect: (connectionParams, webSocket) => ({
-            ...modules.createContext(null, connectionParams, webSocket),
-            ...serviceContext(null, connectionParams, webSocket),
-        }),
-        onOperation: async (message, params, webSocket) => {
-            params.context = await {
-                ...modules.createContext(null, message.payload, webSocket),
-                ...serviceContext(null, message.payload, webSocket),
+        onConnect: async (connectionParams, webSocket) => {
+            const context = await modules.createContext(connectionParams, webSocket);
+            const contextServices = await serviceContext(connectionParams, webSocket);
+            return {
+                ...context,
+                ...contextServices,
             };
-            return params;
+        },
+        onOperation: async (message: { payload: { id_token?: string } }, params, webSocket) => {
+            logger.trace('onOperation message');
+            const { payload: { id_token } } = message;
+            if ((id_token !== null) === (params.context.user !== null)) {
+                return params;
+            }
+            const userId = null;
+            const scopes = null;
+            const context = await modules.createContext(null, message.payload);
+            const contextServices = await serviceContext(null, message.payload);
+            return {
+                ...params,
+                context: {
+                    ...context,
+                    ...contextServices,
+                    userId,
+                    scopes,
+                },
+            };
         },
     }, {
             server: httpServer,
