@@ -100,7 +100,7 @@
 		"lodash": "^4.17.10",
 		"persistgraphql": "^0.3.11",
 		"ramda": "^0.25.0",
-		"react": "^16.2.0",
+		"react": "^16.4.2",
 		"react-apollo": "^2.1.8",
 		"react-dom": "^16.2.0",
 		"react-fela": "7.3.0",
