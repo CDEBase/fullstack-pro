@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 require('dotenv').config({ path: process.env.ENV_FILE });
 
-import { logger } from '@sample-stack/utils';
+import { logger } from '@cdm-logger/server';
 import * as Hemera from 'nats-hemera';
 import * as nats from 'nats';
 import { config } from './config';

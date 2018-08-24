@@ -1,13 +1,13 @@
 
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
-    "@sample-stack/utils": 'server',
+    "@cdm-logger/server": 'server',
     "@sample-stack/core": "noddl",
     "@sample-stack/client-core": "noddl",
     "@sample-stack/client-react": "noddl",
     "@sample-stack/client-redux": "noddl",
     "@sample-stack/graphql-gql": "noddl",
-    "@sample-stack/utils": "noddl",
+    "@cdm-logger/server": "noddl",
     "@sample-stack/counter": "noddl",
     "bunyan": 'server',
     "export-dir": 'server',

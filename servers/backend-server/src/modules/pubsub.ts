@@ -1,7 +1,7 @@
 import { PubSub, PubSubEngine } from 'graphql-subscriptions';
 import { NatsPubSub } from 'graphql-nats-subscriptions';
 import { wrapPubSub } from 'apollo-logger';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import { config } from '../config';
 import { clientGen } from './nats-connection';
 

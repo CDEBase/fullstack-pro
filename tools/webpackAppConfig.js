@@ -1,7 +1,7 @@
 
 const dependencyPlatforms = {
     "@cdm-logger/server": 'server',
-    "@sample-stack/utils": 'server',
+    "@cdm-logger/server": 'server',
     "bunyan": 'server',
     "export-dir": 'server',
     "express": 'server',

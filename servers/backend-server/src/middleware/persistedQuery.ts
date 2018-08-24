@@ -1,6 +1,6 @@
 import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 
 var reqlib: any = require('app-root-path');
 

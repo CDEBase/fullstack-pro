@@ -11,7 +11,7 @@ import * as fs from 'fs';
 const { renderToMarkup } = require('fela-dom');
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@cdm-logger/server';
 import { createApolloClient } from '../config/apollo-client';
 import * as ReactFela from 'react-fela';
 import createRenderer from './felaRenderer';
