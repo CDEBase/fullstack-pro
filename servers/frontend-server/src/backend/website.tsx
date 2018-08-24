@@ -4,7 +4,7 @@ import { ApolloProvider, getDataFromTree } from 'react-apollo';
 // import { addApolloLogging } from 'apollo-logger';
 import { addPersistedQueries } from 'persistgraphql';
 import { Html } from './ssr/html';
-import { Component } from '../components';
+// import { Component } from '../components';
 import Helmet from 'react-helmet';
 import * as path from 'path';
 import * as fs from 'fs';
