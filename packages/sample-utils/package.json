@@ -1,5 +1,5 @@
 {
-  "name": "@cdm-logger/server",
+  "name": "@sample-stack/utils",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
