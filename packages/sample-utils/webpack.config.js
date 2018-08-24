@@ -12,7 +12,7 @@ var webpack_opts = {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
     libraryTarget: "commonjs2",
-    library: "@cdm-logger/server",
+    library: "@sample-stack/utils",
   },
   resolve: {
     extensions: ['.ts', '.js']
