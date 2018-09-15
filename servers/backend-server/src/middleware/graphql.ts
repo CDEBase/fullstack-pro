@@ -1,6 +1,5 @@
 
 import { graphqlExpress, ExpressHandler } from 'apollo-server-express';
-import { GraphQLOptions } from 'graphql-server-core';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
 import * as express from 'express';
