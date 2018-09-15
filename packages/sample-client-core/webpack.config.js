@@ -38,10 +38,7 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       loaders: 'ts-loader'
-    }, {
-      test: /\.json?$/,
-      loader: 'json'
-    },]
+    }]
   },
   externals: [
     nodeExternals({ modulesDir: "../../node_modules" }),
