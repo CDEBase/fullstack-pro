@@ -12,7 +12,6 @@ import { createApolloFetch } from 'apollo-fetch';
 import { getOperationAST } from 'graphql';
 import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
-import { addPersistedQueries } from 'persistgraphql';
 // import { addApolloLogging } from 'apollo-logger';
 import modules from '../modules';
 

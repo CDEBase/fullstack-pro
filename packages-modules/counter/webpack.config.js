@@ -3,7 +3,6 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 
 var webpack_opts = {
   mode: 'development',
@@ -29,10 +28,6 @@ var webpack_opts = {
     ]
   },
   plugins: [
-    // new PersistGraphQLPlugin({
-    //   filename: 'persisted_queries.json',
-    //   moduleName: path.resolve('node_modules/persisted_queries.json')
-    // }),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.tsx?$/,
