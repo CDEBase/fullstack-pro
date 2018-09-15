@@ -1,6 +1,5 @@
 var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
-// var PersistGraphQLPlugin = require('persistgraphql-webpack-plugin');
 var path = require('path');
 var fs = require('fs');
 
@@ -18,10 +17,6 @@ var webpack_opts = {   mode: 'development',
     extensions: ['.ts', '.graphql', '.gql'],
   },
   plugins: [
-    // new PersistGraphQLPlugin({
-    //   filename: 'persisted_queries.json',
-    //   moduleName: path.resolve('node_modules/persisted_queries.json')
-    // }),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,
