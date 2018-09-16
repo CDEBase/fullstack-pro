@@ -11,6 +11,10 @@ npm-debug.log*
 # Backup
 backup 
 
+# Spinjs cache
+.cache
+.awcache
+
 # Runtime data
 pids
 *.pid
