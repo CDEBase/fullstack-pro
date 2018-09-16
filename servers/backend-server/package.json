@@ -93,7 +93,7 @@
 	},
 	"devDependencies": {
 		"cross-env": "^5.1.3",
-		"spinjs": "0.4.126",
+		"spinjs": "0.4.159",
 		"ts-node": "^6.0.0",
 		"typescript": "2.8.3",
 		"jest": "^22.4.2",
