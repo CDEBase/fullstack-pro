@@ -1,10 +1,10 @@
 import * as cors from 'cors';
-import * as express from 'express';
-import { SETTINGS } from '../../config';
+import { config } from '../../config';
 import { logger } from '@common-stack/client-core';
 
-const CLIENT_URL = SETTINGS.CLIENT_URL;
-const BACKEND_URL = SETTINGS.BACKEND_URL;
+const CLIENT_URL = config.CLIENT_URL;
+const BACKEND_URL = config.BACKEND_URL;
+
 
 const corsWhitelist = [
     CLIENT_URL,

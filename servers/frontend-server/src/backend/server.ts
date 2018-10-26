@@ -10,7 +10,7 @@ import { logger } from '@cdm-logger/server';
 import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
-import { SETTINGS } from '../config';
+import { config } from '../config';
 import * as cookiesMiddleware from 'universal-cookie-express';
 import modules from './modules';
 
@@ -18,8 +18,15 @@ let server;
 
 const app = express();
 
+for (const applyBeforeware of modules.beforewares) {
+    applyBeforeware(app);
+}
+
+app.use(cookiesMiddleware());
+
+
 // By default it uses backend_url port, which may conflict with graphql server.
-const { port: serverPort } = url.parse(SETTINGS.BACKEND_URL);
+const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 
 // Don't rate limit heroku
 app.enable('trust proxy');

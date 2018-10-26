@@ -18,86 +18,91 @@ import modules from '../modules';
 
 
 const cache = new InMemoryCache();
+const schema = `
+type Query {}
+type Mutation {}
+`;
 
 let link;
 if (__CLIENT__) {
 
-    let connectionParams = {};
-    for (const connectionParam of modules.connectionParams) {
-        Object.assign(connectionParams, connectionParam());
-    }
+    let connectionParams = () => {
+        let param = {};
+        for (const connectionParam of modules.connectionParams) {
+            Object.assign(param, connectionParam());
+        }
+        return param;
+    };
 
-    const wsClient = new SubscriptionClient(
-        (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
+    const wsLink: any = new WebSocketLink({
+        uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
+        options: {
             reconnect: true,
+            timeout: 20000,
+            reconnectionAttempts: 10,
+            lazy: true,
             connectionParams,
-        },
-    );
-
-    wsClient.use([
-        {
-            applyMiddleware(operationOptions, next) {
-                let params = {};
-                for (const param of modules.connectionParams) {
-                    Object.assign(params, param());
+            connectionCallback: async (error) => {
+                if (error) {
+                    logger.trace('[connectionCallback error] %j', error);
+                    // error.message has to match what the server returns.
+                    if ((error as any).message === 'TokenExpired') {
+                        console.log('onTokenError about to call');
+                        await onTokenError(error);
+                        // Reset the WS connection for it to carry the new JWT.
+                        wsLink.subscriptionClient.close(false, false);
+                    }
                 }
-
-                Object.assign(operationOptions, params);
-                next();
+            },
+            onError: async (error) => {
+                logger.trace('[Subscription onError] %j', error);
+                // error.message has to match what the server returns.
+                if (error.message === 'TokenExpired') {
+                    await onTokenError(error);
+                    // Reset the WS connection for it to carry the new JWT.
+                    this.subscriptionClient.close(false, false);
+                }
             },
         },
-    ]);
+    });
 
-    wsClient.onDisconnected(() => { });
-    wsClient.onReconnected(() => { });
 
     link = ApolloLink.split(
-        operation => {
-            const operationAST = getOperationAST(operation.query as any, operation.operationName);
-            return !!operationAST && operationAST.operation === 'subscription';
+        ({ query, operationName }) => {
+            if (operationName.endsWith('_WS')) {
+                return true;
+            } else {
+                const operationAST = getOperationAST(query as any, operationName);
+                return !!operationAST && operationAST.operation === 'subscription';
+            }
         },
-        new WebSocketLink(wsClient) as any,
+        wsLink,
         new HttpLink({
             uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-            // fetch:
-            //     modules.createFetch && modules.createFetch(PUBLIC_SETTINGS.GRAPHQL_URL) ||
-            //     createApolloFetch({
-            //         uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-            //         // constructOptions: (reqs, options) => ({
-            //         //     ...constructDefaultOptions(reqs, options),
-            //         //     credentials: 'include',
-            //         // }),
-            //     }),
         }),
     );
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
-// TODO Setup PersistQueries
-// if (__PERSIST_GQL__) {
-//     import('@sample-stack/graphql-gql/extracted_queries.json').then(queryMap => {
-//         console.log(queryMap)
-//     }).catch(() => {
-//         console.warn('extracted_queries not found');
-//     });
-// }
 
-// if (settings.apolloLogging) {
-//     networkInterface = addApolloLogging(networkInterface);
-// }
-const linkState = withClientState({ ...modules.resolvers, cache } as any);
+const linkState = withClientState({
+    cache,
+    resolvers: _.merge(modules.resolvers),
+    typeDefs: schema.concat(modules.schema.join(`\n`)),
+} as any);
 
-const links = [...modules.link, linkState, link];
+const links = [...modules.link, linkState, /** ...modules.errorLink, */ link];
+
+// Add apollo logger during development only
+if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
+    links.unshift(apolloLogger);
+}
 
 const createApolloClient = () => {
     const params: any = {
-        dataIdFromObject: (result) => {
-            if (result.id && result.__typename) {
-                return result.__typename + result.id;
-            }
-            return null;
-        },
+        queryDeduplication: true,
+        dataIdFromObject: (result) => modules.getDataIdFromObject(result),
         link: ApolloLink.from(links),
         cache,
     };

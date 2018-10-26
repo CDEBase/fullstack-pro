@@ -21,9 +21,14 @@ const middlewares: Middleware[] = [
     routerMiddleware(history),
     thunk,
 ];
+const type = Symbol('command');
 
+export const commandMiddleware = store => next => action =>
+    action.type === type
+        ? action.executor(store.getState(), ...action.args)
+        : next(action);
 const enhancers = () => [
-    applyMiddleware(...middlewares),
+    applyMiddleware(...middlewares, commandMiddleware),
 ];
 
 const composeEnhancers: any = (
