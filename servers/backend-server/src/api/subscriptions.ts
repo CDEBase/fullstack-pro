@@ -27,16 +27,13 @@ const addSubscriptions = httpServer => {
             };
         },
         onOperation: async (message: { payload: { id_token?: string } }, params, webSocket) => {
-            logger.trace('onOperation message');
-            const context = await modules.createContext(null, message.payload);
-            const contextServices = await serviceContext(null, message.payload);
-            return {
-                ...params,
-                context: {
-                    ...context,
-                    ...contextServices,
-                },
+            const context = await modules.createContext(null, message.payload, webSocket);
+            const contextServices = await serviceContext(null, message.payload, webSocket);
+            params.context = {
+                ...context,
+                ...contextServices,
             };
+            return params;
         },
     }, {
             server: httpServer,

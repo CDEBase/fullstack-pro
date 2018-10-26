@@ -1,35 +1,54 @@
 
-import { graphqlExpress, ExpressHandler } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
 import * as express from 'express';
-import { schema } from '../api/schema';
-import modules, { serviceContext} from '../modules';
+import { localSchema, schemas } from '../api/schema';
+import modules, { serviceContext } from '../modules';
+import { formatError } from 'apollo-errors';
+
 
 let debug: boolean = false;
-if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug' ) {
+if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug') {
     debug = true;
 }
-export const graphqlExpressMiddleware =
-    graphqlExpress(async (request: express.Request, response: express.Response) => {
-        try {
-            const context = await modules.createContext(request, response);
-            const contextServices = await serviceContext(request, response);
 
-            const graphqlOptions: GraphQLOptions = {
-                debug,
-                schema,
-                context: {
-                    ...context,
+export const graphqlExpressMiddleware = () =>
+    new ApolloServer({
+        debug,
+        schema: localSchema,
+        subscriptions: {
+            onConnect: async (connectionParams, webSocket) => {
+                const context = await modules.createContext(connectionParams, webSocket);
+                const contextServices = await serviceContext(connectionParams, webSocket);
+                return {
                     ...contextServices,
-                },
-                formatError: error => {
-                    logger.error('GraphQL execution error:', error);
-                    return error;
-                },
+                    ...context,
+                };
+            },
+        },
+        dataSources: () => modules.createDataSource(),
+        context: async ({ req, res, connection }) => {
+            let context, contextServices;
+            try {
+                if (connection) {
+                    context = connection.context;
+                    contextServices = {};
+                } else {
+                    context = await modules.createContext(req, res);
+                    contextServices = await serviceContext(req, res);
+                }
+            } catch (err) {
+                logger.error('adding context to graphql failed due to [%o]', err);
+                throw  err;
+            }
+
+            return {
+                ...contextServices,
+                ...context,
             };
-            return graphqlOptions;
-        } catch (e) {
-            logger.error(e.stack);
-        }
+
+        },
+        formatError,
     });
+

@@ -28,11 +28,11 @@ const schema: GraphQLSchema = makeExecutableSchema({
 
 addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
 
-addMockFunctionsToSchema({
-  mocks: {},
-  preserveResolvers: true,
-  schema,
-});
+// addMockFunctionsToSchema({
+//   mocks: {},
+//   preserveResolvers: true,
+//   schema,
+// });
 
 
 export { schema };
