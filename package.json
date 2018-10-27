@@ -5,6 +5,7 @@
   "scripts": {
     "jest": "./node_modules/.bin/jest",
     "compile": "lerna exec -- npm run compile",
+    "cli": "node tools/cli",
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
     "lerna:prepublish": "git checkout publish && git merge -s recursive -X theirs master",
     "publish": "npm run lerna:prepublish && lerna publish --cd-version=patch",
