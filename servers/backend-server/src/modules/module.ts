@@ -3,14 +3,14 @@ import { Feature } from '@common-stack/server-core';
 import { logger } from '@cdm-logger/server';
 import CounterModule from '@sample-stack/counter/lib/server';
 import { pubsub } from './pubsub';
-import { generateMongo } from '@common-stack/store-mongo';
+// import { generateMongo } from '@common-stack/store-mongo';
 import * as NATS from 'nats';
 import * as Hemera from 'nats-hemera';
 import { config } from '../config';
 import { hemeraGen } from './nats-connection';
 
 export const settings = {
-    mongoConnection: generateMongo(config.MONGO_URL),
+    // mongoConnection: generateMongo(config.MONGO_URL),
     subTopic: `${config.NAMESPACE}/${config.CONNECTION_ID}`,
 };
 

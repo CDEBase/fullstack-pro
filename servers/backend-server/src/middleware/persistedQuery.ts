@@ -2,7 +2,7 @@ import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@cdm-logger/server';
 
-var reqlib: any = require('app-root-path');
+let reqlib: any = require('app-root-path');
 
 let persistCache = true;
 let queryMap;

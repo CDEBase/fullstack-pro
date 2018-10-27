@@ -1,10 +1,8 @@
 
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
-import * as express from 'express';
-import { localSchema, schemas } from '../api/schema';
-import modules, { serviceContext } from '../modules';
+import modules, { serviceContext } from './modules';
 import { formatError } from 'apollo-errors';
 
 
@@ -13,10 +11,11 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 
-export const graphqlExpressMiddleware = () =>
-    new ApolloServer({
+export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
+
+    let apolloServer = new ApolloServer({
         debug,
-        schema: localSchema,
+        schema,
         subscriptions: {
             onConnect: async (connectionParams, webSocket) => {
                 const context = await modules.createContext(connectionParams, webSocket);
@@ -40,7 +39,7 @@ export const graphqlExpressMiddleware = () =>
                 }
             } catch (err) {
                 logger.error('adding context to graphql failed due to [%o]', err);
-                throw  err;
+                throw err;
             }
 
             return {
@@ -51,4 +50,8 @@ export const graphqlExpressMiddleware = () =>
         },
         formatError,
     });
+    apolloServer.applyMiddleware({ app, disableHealthCheck: false, path: graphqlEndpoint });
+    apolloServer.installSubscriptionHandlers(httpServer);
 
+    return apolloServer;
+};

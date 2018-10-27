@@ -9,6 +9,16 @@
       "../../node_modules/@types/"
     ]
   },
+  "include": [
+    "../../typings/*.d.ts",
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": [
+      "../../typings/*.d.ts",
+      "**/*.ts",
+      "**/*.tsx"
+    ]
+  },
   "exclude": [
     "node_modules",
     "lib",
