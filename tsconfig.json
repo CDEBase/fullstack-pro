@@ -19,5 +19,11 @@
     "types": [
       "@types/node"
     ]
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": [
+      "**/*.ts",
+      "**/*.tsx"
+    ]
   }
 }

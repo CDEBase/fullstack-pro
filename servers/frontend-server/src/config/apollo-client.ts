@@ -8,13 +8,12 @@ import { withClientState } from 'apollo-link-state';
 import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { createApolloFetch } from 'apollo-fetch';
 import { getOperationAST } from 'graphql';
-import * as url from 'url';
 import { PUBLIC_SETTINGS } from '../config/public-config';
-// import { addApolloLogging } from 'apollo-logger';
 import modules from '../modules';
-
+import { logger } from '@cdm-logger/client';
+import apolloLogger from 'apollo-link-logger';
+import * as _ from 'lodash';
 
 
 const cache = new InMemoryCache();
@@ -48,7 +47,6 @@ if (__CLIENT__) {
                     // error.message has to match what the server returns.
                     if ((error as any).message === 'TokenExpired') {
                         console.log('onTokenError about to call');
-                        await onTokenError(error);
                         // Reset the WS connection for it to carry the new JWT.
                         wsLink.subscriptionClient.close(false, false);
                     }
@@ -58,7 +56,6 @@ if (__CLIENT__) {
                 logger.trace('[Subscription onError] %j', error);
                 // error.message has to match what the server returns.
                 if (error.message === 'TokenExpired') {
-                    await onTokenError(error);
                     // Reset the WS connection for it to carry the new JWT.
                     this.subscriptionClient.close(false, false);
                 }

@@ -43,9 +43,9 @@ declare interface __SPIN_OPTIONS__ {
   "persistGraphQL"?: boolean;
 }
 
-declare module NodeJS  {
+declare module NodeJS {
   interface Global {
-      env: any
+    env: any
   }
 }
 declare interface __PUBLIC_SETTINGS__ {
@@ -65,18 +65,21 @@ declare module "*.json" {
   export = value;
 }
 
-declare module "*.graphql" {
-  const value: any;
+declare module '*.graphql' {
+  import { DocumentNode } from 'graphql';
+
+  const value: DocumentNode;
   export = value;
 }
 
-declare module "*.graphqls" {
-  const value: any;
+declare module '*.graphqls' {
+
+  const value: String;
   export = value;
 }
 
 
-declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__{
+declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__ {
   CLIENT_URL: string;
   BACKEND_URL: string;
   NATS_URL: string,
@@ -87,10 +90,10 @@ declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__{
 // This definition is used before typings-for-css-modules-loader generates .d.ts files.
 // As soon as typings are found tsc will prefer them.
 declare module "*.css" {
-	interface IClassNames {
-		[className: string]: string;
-	}
+  interface IClassNames {
+    [className: string]: string;
+  }
 
-	const classNames: IClassNames;
-	export = classNames;
+  const classNames: IClassNames;
+  export = classNames;
 }

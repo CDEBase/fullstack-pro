@@ -14,6 +14,9 @@
   "command": {
     "publish": {
       "allowBranch": ["publish", "devpublish"]
+    },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]      
     }
   },
   "packages": [
