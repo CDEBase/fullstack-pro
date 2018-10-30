@@ -17,10 +17,19 @@ import { IResolverOptions } from '@common-stack/server-core';
 import * as rootSchemaDef from './root-schema.graphqls';
 import { settings } from '../modules/module';
 import { pubsub } from '../modules/pubsub';
+import * as ws from 'ws';
+import { getMainDefinition } from 'apollo-utilities';
+import { WebSocketLink } from 'apollo-link-ws';
+import { OperationDefinitionNode } from 'graphql';
+import { split } from 'apollo-link';
 
 const resolverOptions: IResolverOptions = {
     pubsub,
     subscriptionID: `${settings.subTopic}`,
+    logger,
+};
+
+const directiveOptions = {
     logger,
 };
 
@@ -31,13 +40,13 @@ export class GatewaySchemaBuilder {
         let schema, ownSchema;
         try {
             ownSchema = this.createOwnSchema();
-            let techSchema = await this.createRemoteSchema('finder-service');
+            let remoteSchema = await this.load();
             // techSchema = this.patchSchema(techSchema, 'TechService');
 
             schema = mergeSchemas({
                 schemas: [
                     ownSchema,
-                    techSchema,
+                    remoteSchema,
                 ],
             });
             addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
@@ -48,6 +57,17 @@ export class GatewaySchemaBuilder {
         }
 
         return schema;
+    }
+
+    private async load() {
+        const schemas = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < remoteSchemaDetails.length; i++) {
+            // eslint-disable-next-line no-await-in-loop
+            const schema = await this.loadRemoteSchema(remoteSchemaDetails[i]);
+            schemas.push(schema);
+        }
+        return schemas;
     }
 
     private async createRemoteSchema(service: string, iteration?: number): Promise<GraphQLSchema> {
@@ -66,7 +86,7 @@ export class GatewaySchemaBuilder {
                 }, timeout);
             }));
         }
-        // instead need to loop it 
+        // instead need to loop it
         // https://github.com/j-colter/graphql-gateway/blob/9c64d90a74727d2002d10b06f47e1f4a316070fc/src/schema.js#L50
         const url = services[0].uri;
         logger.info('fetch service [%s]', url);
@@ -80,12 +100,49 @@ export class GatewaySchemaBuilder {
         return makeRemoteExecutableSchema({
             schema: remoteSchema,
             link,
-        } as any);
+        });
 
 
     }
 
 
+    private async loadRemoteSchema({ uri, wsUri }) {
+        try {
+            const httpLink = new HttpLink({ uri, fetch });
+            let link = null;
+
+
+            if (wsUri) {
+                const wsLink = new WebSocketLink({
+                    uri: wsUri,
+                    options: {
+                        reconnect: true,
+                    },
+                    webSocketImpl: ws,
+                });
+                link = split(
+                    // split based on operatino type
+                    ({ query }) => {
+                        const { kind, operation } = getMainDefinition(query) as OperationDefinitionNode;
+                        return kind === 'OperationDefinition' && operation === 'subscription';
+                    },
+                    wsLink,
+                    httpLink,
+                );
+            } else {
+                link = httpLink;
+            }
+            const remoteSchema = await introspectSchema(link);
+            const executableSchema = makeRemoteExecutableSchema({
+                schema: remoteSchema,
+                link,
+            });
+            return executableSchema;
+        } catch (err) {
+            console.log('fetching schema error: ', err);
+            return {};
+        }
+    }
     private patchSchema(schema: GraphQLSchema, systemName: string) {
         return transformSchema(schema, [
             new RenameTypes((name: string) => (name === 'StatusInfo' ? `${systemName}StatusInfo` : undefined)),
@@ -100,7 +157,10 @@ export class GatewaySchemaBuilder {
         return makeExecutableSchema({
             resolvers: modules.createResolvers(resolverOptions),
             typeDefs: [rootSchemaDef].concat(modules.schemas) as any,
-            // directiveResolvers: modules.createDirectives(directiveOptions),
+            directiveResolvers: modules.createDirectives(directiveOptions),
+            resolverValidationOptions: {
+                requireResolversForResolveType: false,
+            },
         });
     }
 
