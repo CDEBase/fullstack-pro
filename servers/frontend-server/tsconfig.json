@@ -10,8 +10,8 @@
       "../../node_modules/@types"
     ]
   },
-  "files": [
-    "typings/index.d.ts"
+  "include": [
+    "../../typings/*.d.ts",
   ],
   "exclude": [
     "node_modules",

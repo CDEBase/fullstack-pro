@@ -8,9 +8,9 @@ import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
+import { rehydrate } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
 import { createReduxStore, storeReducer, history } from '../config/redux-config';
-import { createRenderer as createFelaRenderer } from 'fela';
 import modules from '../modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
@@ -18,11 +18,6 @@ import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
 
-
-
-import '../index.css';
-
-const rootEl = document.getElementById('content');
 
 
 const client = createApolloClient();
@@ -49,6 +44,8 @@ export interface MainState {
   info?: any;
 }
 
+const mountNode = document.getElementById('stylesheet');
+
 export class Main extends React.Component<any, MainState> {
   constructor(props: any) {
     super(props);
@@ -65,14 +62,16 @@ export class Main extends React.Component<any, MainState> {
   }
 
   public render() {
-    const renderer = createFelaRenderer();
+    const renderer = createRenderer();
+    rehydrate(renderer);
+
     return this.state.error ? (
       <RedBox error={this.state.error} />
     ) : (
         modules.getWrappedRoot(
           <Provider store={store}>
             <ApolloProvider client={client}>
-              <ReactFela.Provider renderer={renderer}>
+              <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
                 <ConnectedRouter history={history}>
                   {modules.getRouter()}
                 </ConnectedRouter>

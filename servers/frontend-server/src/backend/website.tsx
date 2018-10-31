@@ -13,7 +13,7 @@ import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { createApolloClient } from '../config/apollo-client';
 import * as ReactFela from 'react-fela';
-import createRenderer from './felaRenderer';
+import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules from '../modules';
