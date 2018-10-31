@@ -18,32 +18,34 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
         schema,
         subscriptions: {
             onConnect: async (connectionParams, webSocket) => {
-                const context = await modules.createContext(connectionParams, webSocket);
+                const pureContext = await modules.createContext(connectionParams, webSocket);
                 const contextServices = await serviceContext(connectionParams, webSocket);
+                // send context
                 return {
                     ...contextServices,
-                    ...context,
+                    ...pureContext,
                 };
             },
         },
         dataSources: () => modules.createDataSource(),
         context: async ({ req, res, connection }) => {
-            let context, contextServices;
+            let context;
             try {
                 if (connection) {
                     context = connection.context;
-                    contextServices = {};
                 } else {
-                    context = await modules.createContext(req, res);
-                    contextServices = await serviceContext(req, res);
+                    const pureContext = await modules.createContext(req, res);
+                    const contextServices = await serviceContext(req, res);
+                    context = {
+                        ...pureContext,
+                        ...contextServices,
+                    };
                 }
             } catch (err) {
                 logger.error('adding context to graphql failed due to [%o]', err);
                 throw err;
             }
-
             return {
-                ...contextServices,
                 ...context,
             };
 
