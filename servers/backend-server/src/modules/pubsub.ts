@@ -5,6 +5,6 @@ import { logger } from '@cdm-logger/server';
 import { config } from '../config';
 import { clientGen } from './nats-connection';
 
-export const pubsub = process.env.NODE_ENV === 'development' ?
+export const pubsub = config.NODE_ENV === 'development' ?
     config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.debug.bind(logger) }) :
         new PubSub() : new NatsPubSub({ client: clientGen(), logger });

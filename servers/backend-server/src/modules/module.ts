@@ -24,7 +24,7 @@ const defaultModule =
         bind('PubSub').toConstantValue(pubsub);
         bind('MongoOptions').toConstantValue({});
 
-        if (process.env.NODE_ENV !== 'development') {
+        if (config.NODE_ENV !== 'development') {
             bind('Hemera').toConstantValue(hemeraGen());
         }
     });
