@@ -1,7 +1,4 @@
 import { createRenderer, IRenderer } from 'fela';
-import logger from 'fela-plugin-logger';
-import perf from 'fela-perf';
-import beautifier from 'fela-beautifier';
 import webPreset from 'fela-preset-web';
 
 export default () => {
