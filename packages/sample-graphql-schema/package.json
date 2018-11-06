@@ -45,8 +45,8 @@
 	"author": "CDMBase LLC",
 	"license": "MIT",
 	"dependencies": {
-	  "@sample-stack/server-core": "*",
-	  "@sample-stack/store": "*"
+	  "@sample-stack/core": "*",
+	  "@sample-stack/server-core": "*"
 	},
 	"devDependencies": {
 	  "@sample-stack/utils": "*",
