@@ -2,7 +2,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
-import modules, { serviceContext } from './modules';
+import modules, { serviceContext, updateContainers } from './modules';
 import { formatError } from 'apollo-errors';
 
 
@@ -11,6 +11,7 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 
+const defaultPreferences = modules.createDefaultPreferences();
 export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
 
     let apolloServer = new ApolloServer({
@@ -20,10 +21,11 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
             onConnect: async (connectionParams, webSocket) => {
                 const pureContext = await modules.createContext(connectionParams, webSocket);
                 const contextServices = await serviceContext(connectionParams, webSocket);
-                // send context
                 return {
                     ...contextServices,
                     ...pureContext,
+                    preferences: defaultPreferences,
+                    update: updateContainers,
                 };
             },
         },
@@ -35,16 +37,19 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                     context = connection.context;
                 } else {
                     const pureContext = await modules.createContext(req, res);
-                    const contextServices = await serviceContext(req, res);
+                    const contextServices = await await serviceContext(req, res);
                     context = {
                         ...pureContext,
                         ...contextServices,
+                        preferences: defaultPreferences,
+                        update: updateContainers,
                     };
                 }
             } catch (err) {
                 logger.error('adding context to graphql failed due to [%o]', err);
                 throw err;
             }
+
             return {
                 ...context,
             };
