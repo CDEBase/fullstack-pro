@@ -14,6 +14,6 @@ export const updateContainers = (options) => {
             });
         });
     } else {
-        (modules as any).createServiceContext(settings, options);
+        modules.createServiceContext(settings, options);
     }
 };
