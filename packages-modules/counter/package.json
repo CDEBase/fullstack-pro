@@ -50,8 +50,7 @@
   "dependencies": {
     "@common-stack/client-react": "0.0.181",
     "@common-stack/server-core": "0.0.181",
-    "graphql-iso-date": "^3.5.0",
-    "graphql-tag": "^2.9.2"
+    "graphql-iso-date": "^3.6.1"
   },
   "peerDependencies": {},
   "typings": "lib/index.d.ts",
