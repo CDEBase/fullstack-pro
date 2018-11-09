@@ -48,8 +48,8 @@
     "webpack": "^4.19.0"
   },
   "dependencies": {
-    "@common-stack/client-react": "0.0.181",
-    "@common-stack/server-core": "0.0.181",
+    "@common-stack/client-react": "0.0.187",
+    "@common-stack/server-core": "0.0.187",
     "graphql-iso-date": "^3.6.1"
   },
   "peerDependencies": {},

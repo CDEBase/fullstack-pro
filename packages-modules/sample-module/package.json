@@ -47,7 +47,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@common-stack/server-core": "0.0.181",
+    "@common-stack/server-core": "0.0.187",
     "@sample-stack/client-react": "*",
     "@sample-stack/client-redux": "*",
     "@sample-stack/graphql-schema": "*",

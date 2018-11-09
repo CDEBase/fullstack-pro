@@ -16,7 +16,7 @@ import { logger } from '@common-stack/server-core';
 import { IResolverOptions } from '@common-stack/server-core';
 import * as rootSchemaDef from './root-schema.graphqls';
 import { settings } from '../modules/module';
-import { pubsub } from '../modules/pubsub';
+import { pubsubGen } from '../modules/pubsub';
 import * as ws from 'ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -24,7 +24,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { split } from 'apollo-link';
 
 const resolverOptions: IResolverOptions = {
-    pubsub,
+    pubsub: pubsubGen(),
     subscriptionID: `${settings.subTopic}`,
     logger,
 };
