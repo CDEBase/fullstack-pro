@@ -181,6 +181,7 @@
     "node-sass": "^4.9.0",
     "nodemon": "^1.17.4",
     "openurl": "^1.1.1",
+    "pm2": "^3.2.2",
     "postcss-loader": "^2.1.5",
     "prettier": "^1.12.1",
     "qrcode-terminal": "^0.12.0",

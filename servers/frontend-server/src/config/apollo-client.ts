@@ -1,6 +1,3 @@
-/// <reference path='../../../../typings/index.d.ts' />
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { HttpLink } from 'apollo-link-http';

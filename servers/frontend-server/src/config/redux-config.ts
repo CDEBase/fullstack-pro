@@ -6,6 +6,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { logger as reduxLogger } from 'redux-logger';
 import {
     reducers,
     Store as StoreState,
@@ -27,6 +28,10 @@ export const commandMiddleware = store => next => action =>
     action.type === type
         ? action.executor(store.getState(), ...action.args)
         : next(action);
+// Add redux logger during development only
+if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
+    middlewares.push(reduxLogger);
+}
 const enhancers = () => [
     applyMiddleware(...middlewares, commandMiddleware),
 ];
