@@ -39,12 +39,6 @@
   },
   "author": "CDMBase LLC",
   "license": "ISC",
-  "devDependencies": {
-    "jest": "^22.4.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^4.19.0"
-  },
-  "dependencies": {},
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"

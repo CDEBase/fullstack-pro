@@ -27,10 +27,10 @@
     "license": "ISC",
     "dependencies": {
         "@cdm-logger/server": "^5.0.4",
-        "@sample-stack/core": "*",
-        "@sample-stack/hemera-plugin": "*",
-        "@sample-stack/server-core": "*",
-        "@sample-stack/utils": "*",
+        "@sample-stack/core": "file:../../packages/sample-core",
+        "@sample-stack/hemera-plugin": "file:../../packages/sample-hemera-plugin",
+        "@sample-stack/server-core": "file:../../packages/sample-server-core",
+        "@sample-stack/utils": "file:../../packages/sample-utils",
         "dotenv": "^5.0.0",
         "envalid": "^4.1.4",
         "graphql-nats-subscriptions": "^1.3.0",
@@ -44,12 +44,5 @@
         "nats": "^0.8.4",
         "nats-hemera": "^3.5.1",
         "reflect-metadata": "^0.1.12"
-    },
-    "devDependencies": {
-        "cross-env": "^5.1.3",
-        "jest": "^22.4.2",
-        "rimraf": "^2.6.1",
-        "nodemon": "^1.17.4",
-        "webpack": "^4.19.0"
     }
 }

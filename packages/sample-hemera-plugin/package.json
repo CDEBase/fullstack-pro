@@ -4,58 +4,52 @@
 	"description": "This is Container Configuration Service hemera plugin",
 	"main": "lib/index.js",
 	"scripts": {
-	  "jest": "./node_modules/.bin/jest",
-	  "test": "ENV=test ENV_FILE=../../config/development/dev.env jest",
-	  "test:debug": "npm test -- --runInBand",
-	  "test:watch": "npm test -- --watch",
-	  "prepublish": "npm run build",
-	  "watch": "npm run build:lib:watch",
-	  "build": "npm run build:clean && npm run build:lib",
-	  "build:clean": "rimraf lib",
-	  "build:lib": "webpack",
-	  "build:lib:watch": "npm run build:lib -- --watch"
+		"jest": "./node_modules/.bin/jest",
+		"test": "ENV=test ENV_FILE=../../config/development/dev.env jest",
+		"test:debug": "npm test -- --runInBand",
+		"test:watch": "npm test -- --watch",
+		"prepublish": "npm run build",
+		"watch": "npm run build:lib:watch",
+		"build": "npm run build:clean && npm run build:lib",
+		"build:clean": "rimraf lib",
+		"build:lib": "webpack",
+		"build:lib:watch": "npm run build:lib -- --watch"
 	},
 	"publishConfig": {
-	  "access": "public"
+		"access": "public"
 	},
 	"jest": {
-	  "testEnvironment": "node",
-	  "roots": [
-		"src"
-	  ],
-	  "modulePaths": [
-		"node_modules"
-	  ],
-	  "moduleFileExtensions": [
-		"ts",
-		"tsx",
-		"js",
-		"json"
-	  ],
-	  "transform": {
-		"\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-	  },
-	  "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+		"testEnvironment": "node",
+		"roots": [
+			"src"
+		],
+		"modulePaths": [
+			"node_modules"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"json"
+		],
+		"transform": {
+			"\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+		},
+		"testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
 	},
 	"engines": {
-	  "node": ">=4.0.0"
+		"node": ">=4.0.0"
 	},
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
-	  "@sample-stack/core": "*",
-	  "@sample-stack/server-core": "*",
-	  "@sample-stack/utils": "*"
+		"@sample-stack/core": "file:../sample-core",
+		"@sample-stack/server-core": "file:../sample-server-core",
+		"@sample-stack/utils": "file:../sample-utils"
 	},
 	"peerDependencies": {
-	  "nats-hemera": "1.x",
-	  "hemera-plugin": "0.x",
-	  "hemera-joi": "1.x"
-	},
-	"devDependencies": {
-	  "cross-env": "^5.1.3",
-	  "jest": "^22.4.2",
-	  "rimraf": "^2.6.1",
-	  "webpack": "^4.19.0"
+		"hemera-joi": "1.x",
+		"hemera-plugin": "0.x",
+		"nats-hemera": "1.x"
 	}
-  }
+}

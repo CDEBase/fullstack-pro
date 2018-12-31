@@ -1,0 +1,40 @@
+{
+    "builders": {
+        "server": {
+            "stack": [
+                "server"
+            ],
+            "tsLoaderOptions": {
+                "configFileName": "./tsconfig.json"
+            },
+            "enabled": true
+        },
+        "test": {
+            "stack": "server",
+            "roles": [
+                "test"
+            ]
+        }
+    },
+    "options": {
+        "backendBuildDir": "dist",
+        "frontendBuildDir": "dist",
+        "dllBuildDir": "dist/.build/dll",
+        "overridesConfig": "tools/webpackAppConfig.js",
+        "stack": [
+            "apollo",
+            "ts",
+            "webpack",
+            "css"
+        ],
+        "backendUrl": "http://{ip}:8080",
+        "defines": {
+            "__GRAPHQL_URL__": "'http://localhost:8080/graphql'"
+        },
+        "ssr": false,
+        "webpackDll": false,
+        "reactHotLoader": false,
+        "persistGraphQL": false,
+        "frontendRefreshOnBackendChange": false
+    }
+}

@@ -8,8 +8,6 @@ npm-debug.log*
 # expo
 .expo 
 
-# Backup
-backup 
 
 # Spinjs cache
 .cache
