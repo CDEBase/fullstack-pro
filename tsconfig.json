@@ -21,10 +21,7 @@
       "@types/node"
     ]
   },
-  "awesomeTypescriptLoaderOptions": {
-    "reportFiles": [
-      "**/*.ts",
-      "**/*.tsx"
-    ]
-  }
+  "include": [
+    "./typings/*.d.ts"
+  ]
 }
