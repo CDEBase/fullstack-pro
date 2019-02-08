@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
-// import { addApolloLogging } from 'apollo-logger';
 import { Html } from './ssr/html';
-// import { Component } from '../components';
 import Helmet from 'react-helmet';
 import * as path from 'path';
 import * as fs from 'fs';

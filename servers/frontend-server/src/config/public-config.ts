@@ -23,6 +23,7 @@ export default env;
 
 if (isBrowser) {
     process['env'] = env;
+    process['ENV'] = env;
 }
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,

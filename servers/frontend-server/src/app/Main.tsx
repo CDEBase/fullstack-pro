@@ -11,13 +11,15 @@ import createRenderer from '../config/fela-renderer';
 import { rehydrate } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
 import { createReduxStore, storeReducer, history } from '../config/redux-config';
-import modules from '../modules';
+import modules, { MainRoute } from '../modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-import { Switch } from 'react-router-dom';
+// import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
 import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
-
+import { Route, Switch } from 'react-router' // react-router v4
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore, persistReducer } from 'redux-persist';
 
 
 const client = createApolloClient();
@@ -63,8 +65,9 @@ export class Main extends React.Component<any, MainState> {
 
   public render() {
     const renderer = createRenderer();
+    let persistor = persistStore(store);
     rehydrate(renderer);
-
+    console.log('--rotuers', modules.getRouter())
     return this.state.error ? (
       <RedBox error={this.state.error} />
     ) : (
@@ -72,9 +75,13 @@ export class Main extends React.Component<any, MainState> {
           <Provider store={store}>
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
-                <ConnectedRouter history={history}>
-                  {modules.getRouter()}
-                </ConnectedRouter>
+                <PersistGate persistor={persistor}>
+                  {modules.getWrappedRoot(
+                    <ConnectedRouter history={history}>
+                      {MainRoute}
+                    </ConnectedRouter>,
+                  )}
+                </PersistGate>
               </ReactFela.Provider>
             </ApolloProvider>
           </Provider>,
