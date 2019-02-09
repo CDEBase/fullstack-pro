@@ -5,7 +5,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { logger as reduxLogger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
 import modules from '../modules';
 import { persistReducer, WebStorage } from 'redux-persist';
@@ -13,6 +13,9 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 export const history = require('./router-history');
 
+const reduxLogger = createLogger({
+    collapsed: true,
+});
 
 const type = Symbol('command');
 export const commandMiddleware = store => next => action =>
