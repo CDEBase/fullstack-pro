@@ -51,11 +51,6 @@ declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__ {
   NATS_PW: number | string,
 }
 
-declare module NodeJS {
-  interface Global {
-    env: any
-  }
-}
 declare interface __PUBLIC_SETTINGS__ {
   "apolloLogging": boolean;
   GRAPHQL_URL: string;
@@ -65,7 +60,8 @@ declare interface __PUBLIC_SETTINGS__ {
 
 declare namespace NodeJS {
   export interface Process {
-    ENV?: ProcessEnv;
+      APP_ENV?: ProcessEnv;
+      env: ProcessEnv;
   }
 }
 
