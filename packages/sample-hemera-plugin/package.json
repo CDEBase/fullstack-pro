@@ -48,8 +48,8 @@
 		"@sample-stack/utils": "file:../sample-utils"
 	},
 	"peerDependencies": {
-		"hemera-joi": "1.x",
+		"hemera-joi": ">=5.x",
 		"hemera-plugin": "0.x",
-		"nats-hemera": "1.x"
+		"nats-hemera": ">=5.x"
 	}
 }

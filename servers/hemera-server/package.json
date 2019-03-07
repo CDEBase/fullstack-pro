@@ -42,7 +42,7 @@
         "hemera-zipkin": "^3.1.0",
         "inversify": "^4.13.0",
         "nats": "^0.8.4",
-        "nats-hemera": "^3.5.1",
+        nats-hemera": "^5.8.9",
         "reflect-metadata": "^0.1.12"
     }
 }

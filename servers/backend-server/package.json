@@ -92,7 +92,7 @@
 		"morgan": "^1.9.0",
 		"mysql": "^2.15.0",
 		"nats": "^0.8.4",
-		"nats-hemera": "^3.5.1",
+		nats-hemera": "^5.8.9",
 		"reflect-metadata": "^0.1.12",
 		"rxjs": "^6.3.3",
 		"rxjs-compat": "^6.3.3",
