@@ -5,7 +5,7 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFiles: [
     // needed for UI to mock canvas load
-    "jest-canvas-mock"
+    // "jest-canvas-mock"
   ],
   preset: "ts-jest",
   testMatch: null,
