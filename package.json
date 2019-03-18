@@ -115,7 +115,6 @@
     "@types/react-hot-loader": "^4.1.0",
     "@types/react-loadable": "^5.4.0",
     "@types/react-redux": "^6.0.2",
-    "@types/recompose": "^0.24.1",
     "@types/semver": "^5.5.0",
     "@types/sinon": "^4.1.0",
     "@types/webpack": "^3.8.4",

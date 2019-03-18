@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { branch, renderComponent } from 'recompose';
 
 interface Props {}
 

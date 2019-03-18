@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { pure, compose, flattenProp } from 'recompose';
 import { PERSONS_QUERY, getPersonsQuery } from '@sample-stack/graphql-gql';
 import { ApolloQueryResult } from 'apollo-client';
 
@@ -18,6 +17,5 @@ const PersonListComponent: React.SFC<IPersonListProps> = ({ persons }) => (
 export const PersonList: React.ComponentClass<{}> =
     compose(
         graphql<{}, getPersonsQuery, {}, {}>(PERSONS_QUERY),
-        flattenProp('data'),
-        pure,
+        // flattenProp('data'),
     )(PersonListComponent);

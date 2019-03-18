@@ -15,7 +15,6 @@ import modules, { MainRoute } from '../modules';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 // import { Switch } from 'react-router-dom';
 import RedBox from './RedBox';
-import createHistory from 'history/createBrowserHistory';
 import { ServerError } from './Error';
 import { Route, Switch } from 'react-router' // react-router v4
 import { PersistGate } from 'redux-persist/integration/react';
@@ -36,6 +35,7 @@ if (module.hot) {
   module.hot.dispose(data => {
     // console.log("Saving Redux store:", JSON.stringify(store.getState()));
     data.store = store;
+    data.history = history;
     // Force Apollo to fetch the latest data from the server
     delete window.__APOLLO_STATE__;
   });
