@@ -85,7 +85,7 @@
 		"fela-plugin-unit": "^5.0.17",
 		"fela-plugin-validator": "^5.2.0",
 		"fela-preset-web": "^8.0.8",
-		"graphql": "^14.0.2",
+		"graphql": "^14.1.1",
 		"graphql-tag": "^2.10.0",
 		"immutability-helper": "^2.6.6",
 		"inversify": "^5.0.1",
