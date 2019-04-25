@@ -4,8 +4,6 @@ import { logger } from '@cdm-logger/server';
 import CounterModule from '@sample-stack/counter/lib/server';
 import { pubsubGen } from './pubsub';
 // import { generateMongo } from '@common-stack/store-mongo';
-import * as NATS from 'nats';
-import * as Hemera from 'nats-hemera';
 import { config } from '../config';
 import { hemeraGen } from './nats-connection';
 

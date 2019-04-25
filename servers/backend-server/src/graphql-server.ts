@@ -37,7 +37,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                     context = connection.context;
                 } else {
                     const pureContext = await modules.createContext(req, res);
-                    const contextServices = await await serviceContext(req, res);
+                    const contextServices = await serviceContext(req, res);
                     context = {
                         ...pureContext,
                         ...contextServices,
