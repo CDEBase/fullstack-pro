@@ -48,12 +48,12 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "peerDependencies": {
-    "apollo-client": ">=2.0.0",
-    "react": ">=16.0.0",
-    "react-apollo": ">=2.0.0",
-    "react-dom": ">=16.0.0",
-    "react-router": ">=4.0.0",
-    "redux": ">=3.6.0"
+    "apollo-client": ">=2.5.1",
+    "react": ">=16.8.6",
+    "react-apollo": ">=2.5.5",
+    "react-dom": ">=16.8.6",
+    "react-router": ">=5.0.0",
+    "redux": ">=4.0.1"
   },
   "dependencies": {
     "@sample-stack/client-core": "file:../sample-client-core",

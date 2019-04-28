@@ -3,9 +3,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "../lib",
-    "typeRoots": [
-      "../../node_modules/@types"
-    ]
+    "declarationDir": "lib"
   },
   "exclude": [
     "node_modules",

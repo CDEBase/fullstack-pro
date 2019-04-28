@@ -52,8 +52,8 @@
     "@sample-stack/core": "file:../sample-core"
   },
   "peerDependencies": {
-    "apollo-client": ">=1.2.2",
-    "redux": ">=3.6.0"
+    "apollo-client": ">=2.5.1",
+    "redux": ">=4.0.1"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

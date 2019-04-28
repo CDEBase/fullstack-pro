@@ -1,11 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
     "rootDir": "./src",
     "outDir": "../lib",
-    "jsx": "react",
     "declarationDir": "lib"
   },
   "exclude": [

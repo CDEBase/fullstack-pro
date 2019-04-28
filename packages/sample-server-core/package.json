@@ -48,7 +48,6 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "devDependencies": {
-    "@sample-stack/utils": "file:../sample-utils"
   },
   "dependencies": {
     "@sample-stack/core": "file:../sample-core"

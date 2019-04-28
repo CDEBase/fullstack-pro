@@ -5,10 +5,7 @@
       "experimentalDecorators": true,
       "rootDir": "./src",
       "outDir": "../lib",
-      "typeRoots": [
-        "../../node_modules/@types"
-      ],
-      "skipLibCheck": true
+      "declarationDir": "lib"
     },
     "exclude": [
       "node_modules",

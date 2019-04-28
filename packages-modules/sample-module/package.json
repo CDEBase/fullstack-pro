@@ -48,7 +48,7 @@
     "@sample-stack/server-core": "file:../../packages/sample-server-core"
   },
   "peerDependencies": {
-    "graphql-tag": ">=2.0.0"
+    "graphql-tag": ">=2.10.1"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
