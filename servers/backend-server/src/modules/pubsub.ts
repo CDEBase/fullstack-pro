@@ -13,7 +13,7 @@ export const pubsubGen = () => {
     if (!pubsubInstance) {
         pubsubInstance = config.NODE_ENV === 'development' ?
             config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.trace.bind(logger) }) :
-                new PubSub() : new NatsPubSub({ client: clientGen(), logger });
+                new PubSub() : new NatsPubSub({ client: clientGen() as any, logger });
     }
 
     return pubsubInstance;

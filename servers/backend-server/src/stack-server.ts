@@ -19,7 +19,6 @@ export class StackServer {
     public async  initialize() {
         this.httpServer = http.createServer();
         this.schema = await schemaBuilder;
-
         this.startServer();
 
         function startListening(port) {

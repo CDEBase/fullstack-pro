@@ -2,7 +2,7 @@ import * as React from 'react';
 import { graphql, compose } from 'react-apollo';
 import update from 'immutability-helper';
 
-import { connect, Store } from 'react-redux';
+import { connect } from 'react-redux';
 import CounterView from '../components/CounterView';
 import {
   COUNTER_QUERY, ADD_COUNTER, COUNTER_SUBSCRIPTION, COUNTER_QUERY_CLIENT, ADD_COUNTER_CLIENT,

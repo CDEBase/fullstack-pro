@@ -1,24 +1,41 @@
-import { ApolloClient } from 'apollo-client';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { HttpLink } from 'apollo-link-http';
-import { withClientState } from 'apollo-link-state';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
+import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { onError } from 'apollo-link-error';
+import { ApolloLink, Observable } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
 import { getOperationAST } from 'graphql';
+import apolloLogger from 'apollo-link-logger';
+
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import apolloLogger from 'apollo-link-logger';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
+import { invariant } from 'ts-invariant';
 
-
+// TODO: add cache redirects to module
 const cache = new InMemoryCache();
 const schema = `
 type Query {}
 type Mutation {}
 `;
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+            // tslint:disable-next-line
+            invariant.warn(
+                `[GraphQL error]: Message: ${message}, Location: ` +
+                `${locations}, Path: ${path}`,
+            ),
+        );
+    }
+    if (networkError) {
+        // tslint:disable-next-line
+        invariant.warn(`[Network error]: ${networkError}`);
+    }
+});
 let link;
 if (__CLIENT__) {
 
@@ -30,7 +47,7 @@ if (__CLIENT__) {
         return param;
     };
 
-    const wsLink: any = new WebSocketLink({
+    const wsLink = new WebSocketLink({
         uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
         options: {
             reconnect: true,
@@ -45,7 +62,7 @@ if (__CLIENT__) {
                     if ((error as any).message === 'TokenExpired') {
                         console.log('onTokenError about to call');
                         // Reset the WS connection for it to carry the new JWT.
-                        wsLink.subscriptionClient.close(false, false);
+                        (wsLink as any).subscriptionClient.close(false, false);
                     }
                 }
             },
@@ -59,7 +76,6 @@ if (__CLIENT__) {
             },
         },
     });
-
 
     link = ApolloLink.split(
         ({ query, operationName }) => {
@@ -80,24 +96,24 @@ if (__CLIENT__) {
 }
 
 
-const linkState = withClientState({
-    cache,
-    resolvers: _.merge(modules.resolvers),
-    typeDefs: schema.concat(modules.schema.join(`\n`)),
-} as any);
-
-const links = [...modules.link, linkState, /** ...modules.errorLink, */ link];
+const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
 
 // Add apollo logger during development only
 if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
     links.unshift(apolloLogger);
 }
 
+let _apolloClient: ApolloClient<any>;
 const createApolloClient = () => {
-    const params: any = {
+    if (_apolloClient) {
+        // return quickly if client is already created.
+        return _apolloClient;
+    }
+    const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        dataIdFromObject: (result) => modules.getDataIdFromObject(result),
         link: ApolloLink.from(links),
+        resolvers: _.merge(modules.resolvers),
+        typeDefs: schema.concat(modules.schema.join(`\n`)),
         cache,
     };
     if (__SSR__) {
@@ -110,12 +126,14 @@ const createApolloClient = () => {
             params.ssrMode = true;
         }
     }
-    const client = new ApolloClient<any>(params);
-
+    _apolloClient = new ApolloClient<any>(params);
+    // cache.writeData({
+    //     data: modules.getStateParams.defaults,
+    // });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
-        window.__APOLLO_CLIENT__ = client;
+        window.__APOLLO_CLIENT__ = _apolloClient;
     }
-    return client;
+    return _apolloClient;
 };
 
 export { createApolloClient };

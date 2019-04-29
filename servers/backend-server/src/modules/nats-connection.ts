@@ -2,7 +2,7 @@ import { config } from '../config';
 import * as nats from 'nats';
 import * as Hemera from 'nats-hemera';
 
-let natsClient;
+let natsClient: nats.Client;
 let hemeraInstance;
 export const clientGen: () => nats.Client = () => {
 
@@ -18,7 +18,7 @@ export const clientGen: () => nats.Client = () => {
 };
 
 
-export const hemeraGen: () => Hemera = () => {
+export const hemeraGen: () => Hemera<any, any> = () => {
 
     if (!hemeraInstance) {
         hemeraInstance = new Hemera(clientGen(), {

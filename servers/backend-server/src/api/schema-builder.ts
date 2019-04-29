@@ -14,7 +14,7 @@ import { remoteSchemaDetails } from './remote-config';
 import modules from '../modules';
 import { logger } from '@common-stack/server-core';
 import { IResolverOptions } from '@common-stack/server-core';
-import * as rootSchemaDef from './root-schema.graphqls';
+import rootSchemaDef from './root-schema.graphqls';
 import { settings } from '../modules/module';
 import { pubsubGen } from '../modules/pubsub';
 import * as ws from 'ws';
@@ -52,7 +52,7 @@ export class GatewaySchemaBuilder {
             addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
 
         } catch (err) {
-            logger.warn('remote service is empty!');
+            logger.warn('errors when building schema::', err.message);
             schema = ownSchema;
         }
 

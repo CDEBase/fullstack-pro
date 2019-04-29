@@ -78,13 +78,13 @@ declare module '*.graphql' {
   import { DocumentNode } from 'graphql';
 
   const value: DocumentNode;
-  export = value;
+  export default value;
 }
 
 declare module '*.graphqls' {
 
   const value: String;
-  export = value;
+  export default value;
 }
 
 

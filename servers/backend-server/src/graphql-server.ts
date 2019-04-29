@@ -13,12 +13,12 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
 
 const defaultPreferences = modules.createDefaultPreferences();
 export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
-
     let apolloServer = new ApolloServer({
         debug,
         schema,
         subscriptions: {
             onConnect: async (connectionParams, webSocket) => {
+                console.log(`Subscription client connected using built-in SubscriptionServer.`)
                 const pureContext = await modules.createContext(connectionParams, webSocket);
                 const contextServices = await serviceContext(connectionParams, webSocket);
                 return {
@@ -28,9 +28,12 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                     update: updateContainers,
                 };
             },
+            onDisconnect: () => {
+                console.log('---disconnect');
+            },
         },
         dataSources: () => modules.createDataSource(),
-        context: async ({ req, res, connection }) => {
+        context: async ({ req, res, connection }: { req: Express.Request, res: Express.Response, connection: any}) => {
             let context;
             try {
                 if (connection) {
@@ -55,7 +58,6 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
             };
 
         },
-        formatError,
     });
     apolloServer.applyMiddleware({ app, disableHealthCheck: false, path: graphqlEndpoint });
     apolloServer.installSubscriptionHandlers(httpServer);

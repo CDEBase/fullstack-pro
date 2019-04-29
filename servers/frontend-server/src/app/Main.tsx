@@ -1,7 +1,7 @@
 /// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
 import * as React from 'react';
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 
 import * as ReactDOM from 'react-dom';
 import * as ReactFela from 'react-fela';
@@ -10,13 +10,18 @@ import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { rehydrate } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
-import { createReduxStore, storeReducer, history } from '../config/redux-config';
+import { rootEpic, epic$ } from '../config/epic-config';
+import {
+  createReduxStore,
+  storeReducer,
+  history,
+  epicMiddleware,
+  persistConfig,
+} from '../config/redux-config';
 import modules, { MainRoute } from '../modules';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-// import { Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 import RedBox from './RedBox';
 import { ServerError } from './Error';
-import { Route, Switch } from 'react-router' // react-router v4
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 
@@ -25,9 +30,11 @@ const client = createApolloClient();
 
 let store;
 if (module.hot && module.hot.data && module.hot.data.store) {
-  // console.log("Restoring Redux store:", JSON.stringify(module.hot.data.store.getState()));
+  // console.log('Restoring Redux store:', JSON.stringify(module.hot.data.store.getState()));
   store = module.hot.data.store;
-  store.replaceReducer(storeReducer);
+  // replace the reducers always as we don't have ablity to find
+  // new reducer added through our `modules`
+  store.replaceReducer(persistReducer(persistConfig, storeReducer(module.hot.data.history || history)));
 } else {
   store = createReduxStore();
 }
@@ -39,8 +46,17 @@ if (module.hot) {
     // Force Apollo to fetch the latest data from the server
     delete window.__APOLLO_STATE__;
   });
+  module.hot.accept('../config/epic-config', () => {
+    const nextRootEpic = require('../config/epic-config').rootEpic;
+    // First kill any running epics
+    store.dispatch({ type: 'EPIC_END' });
+    // Now setup the new one
+    epic$.next(nextRootEpic);
+  });
 }
-
+// run epic middleware
+// @todo need to correct types
+epicMiddleware.run(rootEpic as any);
 export interface MainState {
   error?: ServerError;
   info?: any;
@@ -67,7 +83,6 @@ export class Main extends React.Component<any, MainState> {
     const renderer = createRenderer();
     let persistor = persistStore(store);
     rehydrate(renderer);
-    console.log('--rotuers', modules.getRouter())
     return this.state.error ? (
       <RedBox error={this.state.error} />
     ) : (
@@ -78,6 +93,7 @@ export class Main extends React.Component<any, MainState> {
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
                     <ConnectedRouter history={history}>
+                    <div>Hello </div>
                       {MainRoute}
                     </ConnectedRouter>,
                   )}
@@ -90,4 +106,4 @@ export class Main extends React.Component<any, MainState> {
   }
 }
 
-export default hot(module)(Main);
+export default hot(Main);

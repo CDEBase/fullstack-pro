@@ -10,18 +10,19 @@ import storage from 'redux-persist/lib/storage';
 import modules from '../modules';
 import { persistReducer, WebStorage } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import { createEpicMiddleware } from 'redux-observable';
+import { createApolloClient } from './apollo-client';
 
 export const history = require('./router-history');
 
 const reduxLogger = createLogger({
     collapsed: true,
 });
-
-const type = Symbol('command');
-export const commandMiddleware = store => next => action =>
-    action.type === type
-        ? action.executor(store.getState(), ...action.args)
-        : next(action);
+export const epicMiddleware = createEpicMiddleware({
+    dependencies: {
+        apolloClient: createApolloClient(),
+    },
+});
 
 export const storeReducer = (hist) => combineReducers({
     router: connectRouter(hist),

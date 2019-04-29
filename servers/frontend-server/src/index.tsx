@@ -28,15 +28,17 @@ if (__DEV__) {
               console.error('Cannot apply HMR update.', err);
             }
           });
-          (module as any).hot.accept('./app/Main', () => {
-            try {
-                console.log('Updating front-end');
-                frontendReloadCount = (frontendReloadCount || 0) + 1;
+        //  React-hot-loader v4 doesn't require following code any more.
+        //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
+        //   (module as any).hot.accept('./app/Main', () => {
+        //     try {
+        //         console.log('Updating front-end');
+        //         frontendReloadCount = (frontendReloadCount || 0) + 1;
 
-                renderApp({ key: frontendReloadCount });
-            } catch (err) {
-                // log(err.stack);
-            }
-        });
+        //         renderApp({ key: frontendReloadCount });
+        //     } catch (err) {
+        //         // log(err.stack);
+        //     }
+        // });
     }
 }
