@@ -42,7 +42,8 @@ module.exports = {
     '^__mocks__/(.*)$': '<rootDir>/../../__mocks__/$1',
   },
   transformIgnorePatterns: [
-    "/node_modules/(?!(babel-runtime|antd)).*/"
+    "/node_modules/(?!(babel-runtime|antd)).*/",
+    "<rootDir>/node_modules/(?!lodash-es/.*)"
   ],
   clearMocks: true,
   globals: {

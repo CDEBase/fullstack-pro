@@ -11,7 +11,7 @@ import apolloLogger from 'apollo-link-logger';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import { merge } from 'lodash-es/merge';
+import merge  from 'lodash-es/merge';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
