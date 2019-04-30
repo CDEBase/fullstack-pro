@@ -1,6 +1,7 @@
 const url = require('url');
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
     builders: {
@@ -15,9 +16,18 @@ const config = {
             },
             enabled: true,
             webpackConfig: {
+                output: {
+                    filename: 'main.js',
+                },
+                plugins: [
+                    new CopyWebpackPlugin([{
+                        from: '../../tools/esm-wrapper.js',
+                        to: 'index.js',
+                    }]),
+                ],
                 externals: [
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/] }),
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals({}),
+                    nodeExternals({ modulesDir: "../../node_modules" })
                 ],
             }
         },

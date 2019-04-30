@@ -3,6 +3,7 @@ var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
     builders: {
@@ -23,6 +24,11 @@ const config = {
             enabled: true,
             webpackConfig: {
                 // for additional webpack configuration.
+                // resolve: {
+                //     alias: {
+                //       'react-dom': '@hot-loader/react-dom'
+                //     }
+                // }
             }
         },
         server: {
@@ -36,6 +42,15 @@ const config = {
             },
             enabled: false,
             webpackConfig: {
+                output: {
+                    filename: 'main.js',
+                },
+                plugins: [
+                    new CopyWebpackPlugin([{
+                        from: '../../tools/esm-wrapper.js',
+                        to: 'index.js',
+                    }]),
+                ],
                 externals: [
                     nodeExternals(),
                     nodeExternals({modulesDir: "../../node_modules" })
