@@ -24,11 +24,13 @@ const config = {
             enabled: true,
             webpackConfig: {
                 // for additional webpack configuration.
-                // resolve: {
-                //     alias: {
-                //       'react-dom': '@hot-loader/react-dom'
-                //     }
-                // }
+                resolve: process.env.NODE_ENV !== 'production'
+                    ? {
+                        alias: {
+                            'react-dom': '@hot-loader/react-dom'
+                        }
+                    }
+                    : {},
             }
         },
         server: {
@@ -53,7 +55,7 @@ const config = {
                 ],
                 externals: [
                     nodeExternals(),
-                    nodeExternals({modulesDir: "../../node_modules" })
+                    nodeExternals({ modulesDir: "../../node_modules" })
                 ],
             }
         },
