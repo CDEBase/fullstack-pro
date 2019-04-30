@@ -38,7 +38,7 @@ const config = {
             webpackConfig: {
                 externals: [
                     nodeExternals(),
-                    nodeExternals({ whitelist: [/babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals({modulesDir: "../../node_modules" })
                 ],
             }
         },

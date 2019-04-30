@@ -11,7 +11,7 @@ import apolloLogger from 'apollo-link-logger';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import * as _ from 'lodash-es';
+import { merge } from 'lodash-es/merge';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
@@ -111,7 +111,7 @@ const createApolloClient = () => {
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
         link: ApolloLink.from(links),
-        resolvers: _.merge(modules.resolvers),
+        resolvers: merge(modules.resolvers),
         typeDefs: schema.concat(modules.schema.join(`\n`)),
         cache,
     };

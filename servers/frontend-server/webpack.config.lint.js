@@ -1,1 +1,1 @@
-module.exports = require('spinjs').createWebpackConfig(__dirname, '.spinrc.js', 'web');
+module.exports = require('zenjs').createWebpackConfig(__dirname, '.zenrc.js', 'web');

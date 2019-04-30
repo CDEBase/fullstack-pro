@@ -30,7 +30,7 @@ declare module "*settings.json" {
   }
 }
 
-declare interface __SPIN_OPTIONS__ {
+declare interface __ZEN_OPTIONS__ {
   "backendBuildDir"?: string;
   "frontendBuildDir"?: string;
   "webpackDevPort"?: number,
@@ -43,7 +43,7 @@ declare interface __SPIN_OPTIONS__ {
   "persistGraphQL"?: boolean;
 }
 
-declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__ {
+declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
   CLIENT_URL: string;
   BACKEND_URL: string;
   NATS_URL: string,
@@ -65,8 +65,8 @@ declare namespace NodeJS {
   }
 }
 
-declare module "*spinrc.json" {
-  export const options: __SPIN_OPTIONS__
+declare module "*zenrc.json" {
+  export const options: __ZEN_OPTIONS__
 }
 
 declare module "*.json" {

@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Main from './app/Main';
 
-// Virtual module, generated in-memory by spinjs, contains count of backend rebuilds
+// Virtual module, generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 import 'backend_reload';
 
