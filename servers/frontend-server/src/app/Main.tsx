@@ -1,22 +1,20 @@
 /// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
-import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
-
-import * as ReactDOM from 'react-dom';
+import * as React from 'react';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { rehydrate } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
-import { rootEpic, epic$ } from '../config/epic-config';
+import { epic$, rootEpic } from '../config/epic-config';
 import {
   createReduxStore,
   storeReducer,
   history,
-  epicMiddleware,
   persistConfig,
+  epicMiddleware,
 } from '../config/redux-config';
 import modules, { MainRoute } from '../modules';
 import { ConnectedRouter } from 'connected-react-router';
@@ -47,6 +45,8 @@ if (module.hot) {
     delete window.__APOLLO_STATE__;
   });
   module.hot.accept('../config/epic-config', () => {
+    // we may need to reload epic always as we don't
+    // know whether it is updated using our `modules`
     const nextRootEpic = require('../config/epic-config').rootEpic;
     // First kill any running epics
     store.dispatch({ type: 'EPIC_END' });
@@ -54,14 +54,14 @@ if (module.hot) {
     epic$.next(nextRootEpic);
   });
 }
-// run epic middleware
-// @todo need to correct types
-epicMiddleware.run(rootEpic as any);
+
 export interface MainState {
   error?: ServerError;
   info?: any;
 }
 
+// @todo need to correct types
+epicMiddleware.run(rootEpic as any);
 const mountNode = document.getElementById('stylesheet');
 
 export class Main extends React.Component<any, MainState> {

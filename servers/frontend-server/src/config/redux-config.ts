@@ -12,6 +12,7 @@ import { persistReducer, WebStorage } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { createApolloClient } from './apollo-client';
+import { rootEpic } from '../config/epic-config';
 
 export const history = require('./router-history');
 
@@ -52,6 +53,7 @@ export const createReduxStore = (url = '/') => {
     const middlewares: Middleware[] = [
         thunk,
         routerMiddleware(newHistory),
+        epicMiddleware, // epic middleware
     ];
 
     // Add redux logger during development only
@@ -77,7 +79,6 @@ export const createReduxStore = (url = '/') => {
     if (__CLIENT__) {
         delete window.__PRELOADED_STATE__;
     }
-
 
     const store =
         createStore(

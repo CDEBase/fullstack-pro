@@ -15,7 +15,7 @@ import * as _ from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({ dataIdFromObject: (result) => modules.getDataIdFromObject(result)});
 const schema = `
 type Query {}
 type Mutation {}
@@ -38,7 +38,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 let link;
 if (__CLIENT__) {
-
     let connectionParams = () => {
         let param = {};
         for (const connectionParam of modules.connectionParams) {
@@ -79,12 +78,12 @@ if (__CLIENT__) {
 
     link = ApolloLink.split(
         ({ query, operationName }) => {
-            if (operationName.endsWith('_WS')) {
-                return true;
-            } else {
+            // if (operationName.endsWith('_WS')) {
+            //     return true;
+            // } else {
                 const operationAST = getOperationAST(query as any, operationName);
                 return !!operationAST && operationAST.operation === 'subscription';
-            }
+            // }
         },
         wsLink,
         new HttpLink({
@@ -99,9 +98,9 @@ if (__CLIENT__) {
 const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
 
 // Add apollo logger during development only
-if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
-    links.unshift(apolloLogger);
-}
+// if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
+//     links.unshift(apolloLogger);
+// }
 
 let _apolloClient: ApolloClient<any>;
 const createApolloClient = () => {
@@ -127,9 +126,11 @@ const createApolloClient = () => {
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-    // cache.writeData({
-    //     data: modules.getStateParams.defaults,
-    // });
+    cache.writeData({
+        data: {
+            ...modules.getStateParams.defaults,
+        },
+    });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
         window.__APOLLO_CLIENT__ = _apolloClient;
     }

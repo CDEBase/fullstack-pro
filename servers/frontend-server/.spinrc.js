@@ -1,4 +1,3 @@
-const url = require('url');
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
@@ -38,8 +37,8 @@ const config = {
             enabled: false,
             webpackConfig: {
                 externals: [
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/] }),
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals(),
+                    nodeExternals({ whitelist: [/babel-polyfill/], modulesDir: "../../node_modules" })
                 ],
             }
         },
