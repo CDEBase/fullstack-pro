@@ -86,5 +86,10 @@ export const createReduxStore = (url = '/') => {
             initialState,
             composeEnhancers(...enhancers()),
         );
+    if (__CLIENT__) {
+        // no SSR for now
+        epicMiddleware.run(rootEpic as any);
+    }
+
     return store;
 };
