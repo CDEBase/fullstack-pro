@@ -40,6 +40,9 @@ module.exports = {
     "graphql"],
   moduleNameMapper: {
     '^__mocks__/(.*)$': '<rootDir>/../../__mocks__/$1',
+    // we'll use commonjs version of lodash for tests 👌
+    // because we don't need to use any kind of tree shaking right?!
+    '^lodash-es$': '<rootDir>/node_modules/lodash/index.js'
   },
   transformIgnorePatterns: [
     "/node_modules/(?!(babel-runtime|antd)).*/",

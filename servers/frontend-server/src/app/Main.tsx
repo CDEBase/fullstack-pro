@@ -61,7 +61,7 @@ export interface MainState {
 }
 
 // @todo need to correct types
-epicMiddleware.run(rootEpic as any);
+// epicMiddleware.run(rootEpic as any);
 const mountNode = document.getElementById('stylesheet');
 
 export class Main extends React.Component<any, MainState> {

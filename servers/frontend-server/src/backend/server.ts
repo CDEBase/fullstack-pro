@@ -11,7 +11,7 @@ import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';
-import * as cookiesMiddleware from 'universal-cookie-express';
+const cookiesMiddleware = require('universal-cookie-express');
 import modules from './modules';
 
 let server;
