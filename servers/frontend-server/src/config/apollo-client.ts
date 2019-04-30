@@ -2,6 +2,7 @@ import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { BatchHttpLink } from 'apollo-link-batch-http';
+import { withClientState } from 'apollo-link-state';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, Observable } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -11,7 +12,7 @@ import apolloLogger from 'apollo-link-logger';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import merge  from 'lodash-es/merge';
+import  {merge}   from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
@@ -75,15 +76,14 @@ if (__CLIENT__) {
             },
         },
     });
-
     link = ApolloLink.split(
         ({ query, operationName }) => {
-            // if (operationName.endsWith('_WS')) {
-            //     return true;
-            // } else {
+            if (operationName.endsWith('_WS')) {
+                return true;
+            } else {
                 const operationAST = getOperationAST(query as any, operationName);
                 return !!operationAST && operationAST.operation === 'subscription';
-            // }
+            }
         },
         wsLink,
         new HttpLink({
@@ -94,13 +94,20 @@ if (__CLIENT__) {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
+const linkState = withClientState({
+    cache,
+    resolvers: modules.getStateParams.resolvers,
+    defaults: modules.getStateParams.defaults,
+    typeDefs: schema.concat(modules.getStateParams.typeDefs as string),
+});
+
 
 const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
 
 // Add apollo logger during development only
-// if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
-//     links.unshift(apolloLogger);
-// }
+if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
+    links.unshift(apolloLogger);
+}
 
 let _apolloClient: ApolloClient<any>;
 const createApolloClient = () => {
@@ -110,9 +117,8 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
+        dataIdFromObject: (result) => modules.getDataIdFromObject(result),
         link: ApolloLink.from(links),
-        resolvers: merge(modules.resolvers),
-        typeDefs: schema.concat(modules.schema.join(`\n`)),
         cache,
     };
     if (__SSR__) {
