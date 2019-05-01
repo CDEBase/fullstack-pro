@@ -102,7 +102,7 @@ const linkState = withClientState({
 });
 
 
-const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
+const links = [errorLink, ...modules.link, linkState, /** ...modules.errorLink, */ link];
 
 // Add apollo logger during development only
 if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
@@ -117,7 +117,7 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        dataIdFromObject: (result) => modules.getDataIdFromObject(result),
+        // dataIdFromObject: (result) => modules.getDataIdFromObject(result),
         link: ApolloLink.from(links),
         cache,
     };

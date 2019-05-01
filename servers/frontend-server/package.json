@@ -52,7 +52,7 @@
 		"@sample-stack/counter-module-browser": "file:../../packages-modules/counter/browser",
 		"@sample-stack/graphql-gql": "file:../../packages/sample-graphql-client",
 		"apollo-cache-inmemory": "^1.5.1",
-		"apollo-client": "^2.4.13",
+		"apollo-client": "2.4.13",
 		"apollo-fetch": "^0.7.0",
 		"apollo-link": "^1.2.11",
 		"apollo-link-batch-http": "^1.2.11",
@@ -118,7 +118,7 @@
 		"reselect": "^4.0.0",
 		"serialize-javascript": "^1.7.0",
 		"sourcemapped-stacktrace": "^1.1.9",
-		"subscriptions-transport-ws": "^0.9.16",
+		"subscriptions-transport-ws": "0.9.15",
 		"universal-cookie-express": "^3.1.0"
 	},
 	"jest": {
