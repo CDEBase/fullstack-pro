@@ -2,7 +2,7 @@ const defaultState = {
   reduxCount: 1,
 };
 
-export default function(state = defaultState, action) {
+export const reducers = function (state = defaultState, action) {
   switch (action.type) {
     case 'COUNTER_INCREMENT':
       return {
@@ -13,4 +13,5 @@ export default function(state = defaultState, action) {
     default:
       return state;
   }
-}
+};
+

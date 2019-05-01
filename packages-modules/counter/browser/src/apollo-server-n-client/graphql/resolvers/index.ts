@@ -1,4 +1,4 @@
-import {COUNTER_QUERY_CLIENT} from '../graphql';
+import {COUNTER_QUERY_CLIENT} from '../queries';
 
 const TYPE_NAME = 'CounterState';
 
@@ -38,7 +38,7 @@ const resolvers = {
   },
 };
 
-export default {
+export  {
   defaults,
   resolvers,
 };
