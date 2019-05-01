@@ -54,8 +54,8 @@
 	"homepage": "https://github.com/cdmbase/fullstack-pro#readme",
 	"dependencies": {
 		"@cdm-logger/server": "^5.0.5",
-		"@common-stack/core": "0.0.200",
-		"@common-stack/server-core": "0.0.200",
+		"@common-stack/core": "0.0.201",
+		"@common-stack/server-core": "0.0.201",
 		"@sample-stack/core": "file:../../packages/sample-core",
 		"@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
 		"@sample-stack/graphql-gql": "file:../../packages/sample-graphql-client",

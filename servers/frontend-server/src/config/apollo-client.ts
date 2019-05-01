@@ -12,11 +12,11 @@ import apolloLogger from 'apollo-link-logger';
 import { PUBLIC_SETTINGS } from '../config/public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import  {merge}   from 'lodash-es';
+import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
-const cache = new InMemoryCache({ dataIdFromObject: (result) => modules.getDataIdFromObject(result)});
+const cache = new InMemoryCache({ dataIdFromObject: (result) => modules.getDataIdFromObject(result) });
 const schema = `
 type Query {}
 type Mutation {}
@@ -93,14 +93,12 @@ if (__CLIENT__) {
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
-
 const linkState = withClientState({
     cache,
     resolvers: modules.getStateParams.resolvers,
     defaults: modules.getStateParams.defaults,
     typeDefs: schema.concat(modules.getStateParams.typeDefs as string),
 });
-
 
 const links = [errorLink, ...modules.link, linkState, /** ...modules.errorLink, */ link];
 

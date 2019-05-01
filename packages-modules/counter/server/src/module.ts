@@ -1,5 +1,4 @@
-import Counter from './sql';
-import * as path from 'path';
+import { counterMock } from './services';
 import schema from './schema/schema.graphql';
 import { resolver } from './resolvers';
 import { Feature } from '@common-stack/server-core';
@@ -7,5 +6,5 @@ import { Feature } from '@common-stack/server-core';
 export default new Feature({
     schema: schema,
     createResolversFunc: resolver,
-    createContextFunc: () => ({ Counter: new Counter() }),
-} as any);
+    createContextFunc: () => ({ counterMock: counterMock }), // note anything set here should be singleton.
+});

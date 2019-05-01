@@ -1,17 +1,21 @@
+import { IContext } from '../interfaces';
+
 const COUNTER_SUBSCRIPTION = 'counter_subscription';
 
-export const resolver = pubsub => ({
+
+
+export const resolver = (options) => ({
   Query: {
-    counter(obj, args, context) {
-      return context.Counter.counterQuery();
+    counter(obj, args, context: IContext) {
+      return context.counterMock.counterQuery();
     },
   },
   Mutation: {
-    async addCounter(obj, { amount }, context) {
-      await context.Counter.addCounter(amount);
-      const counter = await context.Counter.counterQuery();
+    async addCounter(obj, { amount }, context: IContext) {
+      await context.counterMock.addCounter(amount);
+      const counter = await context.counterMock.counterQuery();
 
-      pubsub.publish(COUNTER_SUBSCRIPTION, {
+      options.pubsub.publish(COUNTER_SUBSCRIPTION, {
         counterUpdated: { amount: counter.amount },
       });
 
@@ -20,7 +24,7 @@ export const resolver = pubsub => ({
   },
   Subscription: {
     counterUpdated: {
-      subscribe: () => pubsub.asyncIterator(COUNTER_SUBSCRIPTION),
+      subscribe: () => options.pubsub.asyncIterator(COUNTER_SUBSCRIPTION),
     },
   },
 });

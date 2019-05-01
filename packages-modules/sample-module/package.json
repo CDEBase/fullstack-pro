@@ -40,7 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@common-stack/server-core": "0.0.200",
+    "@common-stack/server-core": "0.0.201",
     "@sample-stack/client-react": "file:../../packages/sample-client-react",
     "@sample-stack/client-redux": "file:../../packages/sample-client-redux",
     "@sample-stack/graphql-schema": "file:../../packages/sample-graphql-schema",

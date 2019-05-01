@@ -75,15 +75,13 @@ declare module "*.json" {
 }
 
 declare module '*.graphql' {
-  import { DocumentNode } from 'graphql';
-
-  const value: DocumentNode;
+  const value: string;
   export default value;
 }
 
 declare module '*.graphqls' {
 
-  const value: String;
+  const value: string;
   export default value;
 }
 

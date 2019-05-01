@@ -38,7 +38,7 @@ const resolvers = {
   },
 };
 
-export  {
+export default {
   defaults,
   resolvers,
 };
