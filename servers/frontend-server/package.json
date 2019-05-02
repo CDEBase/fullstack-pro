@@ -51,6 +51,7 @@
 		"@sample-stack/core": "file:../../packages/sample-core",
 		"@sample-stack/counter-module-browser": "file:../../packages-modules/counter/browser",
 		"@sample-stack/graphql-gql": "file:../../packages/sample-graphql-client",
+		"antd": "^3.16.6",
 		"apollo-cache-inmemory": "^1.5.1",
 		"apollo-client": "2.4.13",
 		"apollo-fetch": "^0.7.0",

@@ -1,4 +1,5 @@
 ///<reference types="webpack-env" />
+import 'antd/dist/antd.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Main from './app/Main';

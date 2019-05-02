@@ -92,7 +92,7 @@ export class Main extends React.Component<any, MainState> {
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
                     <ConnectedRouter history={history}>
-                      {MainRoute}
+                      <MainRoute />
                     </ConnectedRouter>,
                   )}
                 </PersistGate>
