@@ -2,27 +2,27 @@ import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
 
 import Counter from './containers/Counter';
-import { Dashboard } from './containers/Dashboard';
+import { Dashboard } from '../common/components/Dashboard';
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
 export const counterPageStore: any[] = [
     {
         exact: false,
-        name: 'Counter',
-        path: '/counter',
+        icon: 'export',
+        key: 'dashboard',
+        component: Dashboard,
+        tab: 'Apollo Server & Client',
+        position: IMenuPosition.MIDDLE,
+        name: 'Apollo Server & Client',
+        path: '/apollo-server-n-client',
+    },
+    {
         key: 'counter',
+        name: 'Counter',
         icon: 'appstore-o',
         component: Counter,
         position: IMenuPosition.MIDDLE,
-    } as any,
-    {
-        path: '/',
-        name: 'Home',
-        icon: 'export',
-        key: 'dashboard',
-        exact: true,
-        component: Dashboard,
-        position: IMenuPosition.MIDDLE,
+        path: '/apollo-server-n-client/counter',
     },
 ];
 

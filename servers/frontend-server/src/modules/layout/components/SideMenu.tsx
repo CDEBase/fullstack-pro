@@ -196,21 +196,7 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
             const childrenItems = this.getNavMenuItems(item.children);
             if (childrenItems && childrenItems.length > 0) {
                 return (
-                    <SubMenu
-                        title={
-                            (item.position === IMenuPosition.BOTTOM ?
-                                this.getAvatar(item) :
-                                item.icon ? (
-                                    <span>
-                                        {this.getIcon(item.icon)}
-                                        <span>{name}</span>
-                                    </span>
-                                ) : (
-                                        item.name
-                                    )
-                            )}
-                        key={item.path}
-                    >
+                    <SubMenu title={item.name} key={item.path}>
                         {childrenItems}
                     </SubMenu>
                 );

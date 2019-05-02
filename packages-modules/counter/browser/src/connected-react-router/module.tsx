@@ -7,13 +7,11 @@ import NavBar from './components/NavBar';
 import NoMatch from './components/NoMatch';
 import { Home } from './components/Home';
 import { connectedReactRouter_counter } from './redux';
+import { filteredMenus, filteredRoutes } from './compute';
 
 export default new Feature({
-    routeConfig: [{
-        // [CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME]: { component: Home },
-        [CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO]: { component: Hello, exact: true },
-        [CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER]: { component: Counter, exact: true },
-    }] as IRouteData[],
-    reducer: { connectedReactRouter_counter },
     navItem: () => <NavBar />,
+    menuConfig: filteredMenus,
+    routeConfig: filteredRoutes,
+    reducer: { connectedReactRouter_counter },
 });
