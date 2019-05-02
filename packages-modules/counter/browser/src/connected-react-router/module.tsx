@@ -10,7 +10,7 @@ import { connectedReactRouter_counter } from './redux';
 import { filteredMenus, filteredRoutes } from './compute';
 
 export default new Feature({
-    navItem: () => <NavBar />,
+    navItem: () => <NavBar />, // although not used
     menuConfig: filteredMenus,
     routeConfig: filteredRoutes,
     reducer: { connectedReactRouter_counter },
