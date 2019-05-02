@@ -7,13 +7,15 @@ interface OwnProps {
     fontScale: number;
 }
 
-interface Styles {
-    container: any;
-    firstSection: any;
-    secondSection: any;
-    thirdSection: any;
-}
+// interface Styles {
+//     container: any;
+//     firstSection: any;
+//     secondSection: any;
+//     thirdSection: any;
+//     otherSelectors: any;
+// }
 
+type Styles = typeof stylesSheet;
 type Props = OwnProps & FelaWithStylesProps<OwnProps, Styles, Theme>;
 
 const ComplexComponent: React.FunctionComponent<Props> = props => {
@@ -22,18 +24,18 @@ const ComplexComponent: React.FunctionComponent<Props> = props => {
     return (
         <div>
             <div className={styles.container}>
-            <div className={styles.firstSection}>First Section</div>
-            <div className={styles.secondSection}>Second Section</div>
-            <div className={styles.thirdSection}>Third Section</div>
+                <div className={styles.firstSection}>First Section</div>
+                <div className={styles.secondSection}>Second Section</div>
+                <div className={styles.thirdSection}>Third Section</div>
             </div>
             <div>
                 <h3>Rules</h3>
                 {Object.entries(rules)
-                .map(([key, rule]) => (
-                    <div key={key}>
-                    {`${key}: ${JSON.stringify(rule(props))}`}
-                    </div>
-                ))}
+                    .map(([key, rule]) => (
+                        <div key={key}>
+                            {`${key}: ${JSON.stringify(rule(props))}`}
+                        </div>
+                    ))}
             </div>
             <div>
                 <h3>Theme</h3>
@@ -43,8 +45,7 @@ const ComplexComponent: React.FunctionComponent<Props> = props => {
 
     );
 };
-
-const complexComponentStyle: Rules<OwnProps, Styles, Theme> = ({fontScale, theme}) => ({
+const stylesSheet = {
     container: {
         display: 'flex',
         flexDirection: 'column',
@@ -54,15 +55,27 @@ const complexComponentStyle: Rules<OwnProps, Styles, Theme> = ({fontScale, theme
         backgroundColor: theme.color.primary,
         fontSize: `{5 * fontScale}px`,
     }),
-    secondSection: {
+    secondSection: ({ theme, fontScale }) => ({
         backgroundColor: theme.color.secondary,
         fontSize: `${7 * fontScale}px`,
-    },
-    thirdSection: {
+    }),
+    thirdSection: ({ theme, fontScale }) => ({
         backgroundColor: theme.color.additional,
         fontSize: `${10 * fontScale}px`,
+    }),
+    otherSelectors: {
+        // .a .sub-class
+        '& .sub-class': {
+            color: 'blue',
+            // they can contain nested objects e.g.
+            // .a .sub-class:hover
+            ':hover': {
+                color: 'black',
+            },
+        },
     },
-});
+};
+const complexComponentStyle: Rules<OwnProps, Styles, Theme> = () => (stylesSheet);
 
 export const Complex = connect(complexComponentStyle)(ComplexComponent);
 
