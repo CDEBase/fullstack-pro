@@ -251,8 +251,8 @@
     "@sample-stack/client-react": "file:packages/sample-client-react",
     "@sample-stack/client-redux": "file:packages/sample-client-redux",
     "@sample-stack/core": "file:packages/sample-core",
-    "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
     "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
+    "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
     "@sample-stack/graphql-gql": "file:packages/sample-graphql-client",
     "@sample-stack/graphql-schema": "file:packages/sample-graphql-schema",
     "@sample-stack/hemera-plugin": "file:packages/sample-hemera-plugin",
@@ -260,6 +260,7 @@
     "@sample-stack/sample-module": "file:packages-modules/sample-module",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
+    "antd": "^3.16.6",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
     "sample-stack-hemera-server": "file:servers/hemera-server"
