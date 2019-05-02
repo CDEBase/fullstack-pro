@@ -60,8 +60,6 @@ export interface MainState {
   info?: any;
 }
 
-// @todo need to correct types
-// epicMiddleware.run(rootEpic as any);
 const mountNode = document.getElementById('stylesheet');
 
 export class Main extends React.Component<any, MainState> {
@@ -87,13 +85,13 @@ export class Main extends React.Component<any, MainState> {
       <RedBox error={this.state.error} />
     ) : (
         modules.getWrappedRoot(
+          // tslint:disable-next-line:jsx-wrap-multiline
           <Provider store={store}>
             <ApolloProvider client={client}>
               <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
                     <ConnectedRouter history={history}>
-                    <div>Hello </div>
                       {MainRoute}
                     </ConnectedRouter>,
                   )}

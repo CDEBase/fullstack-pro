@@ -3,7 +3,6 @@ import { ApolloServer } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
 import modules, { serviceContext, updateContainers } from './modules';
-import { formatError } from 'apollo-errors';
 
 
 let debug: boolean = false;
@@ -18,7 +17,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
         schema,
         subscriptions: {
             onConnect: async (connectionParams, webSocket) => {
-                console.log(`Subscription client connected using built-in SubscriptionServer.`)
+                logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
                 const pureContext = await modules.createContext(connectionParams, webSocket);
                 const contextServices = await serviceContext(connectionParams, webSocket);
                 return {
@@ -28,9 +27,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                     update: updateContainers,
                 };
             },
-            onDisconnect: () => {
-                console.log('---disconnect');
-            },
+            // onDisconnect: () => {},
         },
         dataSources: () => modules.createDataSource(),
         context: async ({ req, res, connection }: { req: Express.Request, res: Express.Response, connection: any}) => {
