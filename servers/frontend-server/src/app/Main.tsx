@@ -6,7 +6,7 @@ import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
-import { rehydrate } from 'fela-dom';
+import { rehydrate, render } from 'fela-dom';
 import { createApolloClient } from '../config/apollo-client';
 import { epic$, rootEpic } from '../config/epic-config';
 import {
@@ -55,6 +55,12 @@ if (module.hot) {
   });
 }
 
+
+const createGlobalStyles = rules =>
+  Object.keys(rules).forEach(selector =>
+    renderer.renderStatic(rules[selector], selector));
+
+// createGlobalStyles()
 export interface MainState {
   error?: ServerError;
   info?: any;
@@ -88,7 +94,7 @@ export class Main extends React.Component<any, MainState> {
           // tslint:disable-next-line:jsx-wrap-multiline
           <Provider store={store}>
             <ApolloProvider client={client}>
-              <ReactFela.Provider renderer={renderer} mountNode={mountNode}>
+              <ReactFela.Provider mountNode={mountNode} renderer={renderer}>
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
                     <ConnectedRouter history={history}>

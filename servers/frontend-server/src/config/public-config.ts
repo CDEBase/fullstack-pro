@@ -5,6 +5,7 @@
  * not dependent on any other file that compromises the security.
  */
 const publicEnv = [
+    'NODE_ENV',
     'GRAPHQL_URL',
     'FACEBOOK_APP_ID',
     'GA_ID',

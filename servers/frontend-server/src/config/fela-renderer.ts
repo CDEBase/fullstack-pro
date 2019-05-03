@@ -2,13 +2,14 @@ import { createRenderer, IRenderer } from 'fela';
 import webPreset from 'fela-preset-web';
 
 export default () => {
-    const renderer = createRenderer({
-        plugins: [
-            ...webPreset,
-        ],
-    });
-    renderer.renderStatic(
-        `
+  const renderer = createRenderer({
+    plugins: [
+      ...webPreset,
+    ],
+    devMode: process.env.NODE_ENV ? process.env.NODE_ENV !== 'production' : false,
+  });
+  renderer.renderStatic(
+    `
         html, body, #demo, .content{
             height: 100%;
           }
@@ -52,8 +53,8 @@ export default () => {
             color: orangered;
           }
         `,
-    );
+  );
 
-    return renderer;
+  return renderer;
 };
 
