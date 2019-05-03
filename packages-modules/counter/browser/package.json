@@ -42,10 +42,12 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.16.6"
   },
   "peerDependencies": {
     "@common-stack/client-react": ">=0.0.201",
-    "@common-stack/core": ">=0.0.201"
+    "@common-stack/core": ">=0.0.201",
+    "antd": "^3.16.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
