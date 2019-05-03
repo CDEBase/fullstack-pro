@@ -55,12 +55,6 @@ if (module.hot) {
   });
 }
 
-
-const createGlobalStyles = rules =>
-  Object.keys(rules).forEach(selector =>
-    renderer.renderStatic(rules[selector], selector));
-
-// createGlobalStyles()
 export interface MainState {
   error?: ServerError;
   info?: any;
