@@ -83,6 +83,7 @@ const config = {
         backendUrl: "http://localhost:8080",
         webpackDll: true,
         reactHotLoader: true,
+        useDefaultPostCss: true,
         persistGraphQL: false,
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
