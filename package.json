@@ -220,6 +220,7 @@
     "source-map-support": "^0.5.12",
     "standard-version": "^5.0.2",
     "style-loader": "^0.23.1",
+    "svg-url-loader": "^2.3.2",
     "tcomb": "^3.2.29",
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.4.4",
