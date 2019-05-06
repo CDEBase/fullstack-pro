@@ -93,6 +93,9 @@ if (__CLIENT__) {
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
+
+console.log('---- resolvers', modules.getStateParams.resolvers);
+console.log('----default', modules.getStateParams.defaults);
 const linkState = withClientState({
     cache,
     resolvers: modules.getStateParams.resolvers,

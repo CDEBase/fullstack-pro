@@ -85,6 +85,16 @@ declare module '*.graphqls' {
   export default value;
 }
 
+declare module "*.svg" {
+  const content: any;
+  export default content;
+}
+
+declare module '*.gif' {
+  const fileName: string;
+  export = fileName;
+}
+
 
 // This definition is used before typings-for-css-modules-loader generates .d.ts files.
 // As soon as typings are found tsc will prefer them.
