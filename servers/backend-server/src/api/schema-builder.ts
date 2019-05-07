@@ -22,6 +22,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
 import { OperationDefinitionNode } from 'graphql';
 import { split } from 'apollo-link';
+import { resolvers as rootResolver } from './resolver';
 
 const resolverOptions: IResolverOptions = {
     pubsub: pubsubGen(),
@@ -155,7 +156,7 @@ export class GatewaySchemaBuilder {
 
     private createOwnSchema(): GraphQLSchema {
         return makeExecutableSchema({
-            resolvers: modules.createResolvers(resolverOptions),
+            resolvers: [rootResolver, modules.createResolvers(resolverOptions)],
             typeDefs: [rootSchemaDef].concat(modules.schemas) as any,
             directiveResolvers: modules.createDirectives(directiveOptions),
             resolverValidationOptions: {
