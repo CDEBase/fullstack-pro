@@ -2,7 +2,6 @@ import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { BatchHttpLink } from 'apollo-link-batch-http';
-import { withClientState } from 'apollo-link-state';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, Observable } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -94,16 +93,7 @@ if (__CLIENT__) {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
-console.log('---- resolvers', modules.getStateParams.resolvers);
-console.log('----default', modules.getStateParams.defaults);
-const linkState = withClientState({
-    cache,
-    resolvers: modules.getStateParams.resolvers,
-    defaults: modules.getStateParams.defaults,
-    typeDefs: schema.concat(modules.getStateParams.typeDefs as string),
-});
-
-const links = [errorLink, ...modules.link, linkState, /** ...modules.errorLink, */ link];
+const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
 
 // Add apollo logger during development only
 if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
@@ -118,7 +108,8 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        // dataIdFromObject: (result) => modules.getDataIdFromObject(result),
+        typeDefs: schema.concat(modules.getStateParams.typeDefs as string),
+        resolvers: modules.getStateParams.resolvers,
         link: ApolloLink.from(links),
         cache,
     };
