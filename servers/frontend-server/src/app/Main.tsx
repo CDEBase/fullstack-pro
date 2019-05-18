@@ -88,7 +88,7 @@ export class Main extends React.Component<any, MainState> {
           // tslint:disable-next-line:jsx-wrap-multiline
           <Provider store={store}>
             <ApolloProvider client={client}>
-              <ReactFela.Provider mountNode={mountNode} renderer={renderer}>
+              <ReactFela.RendererProvider mountNode={mountNode} renderer={renderer}>
                 <PersistGate persistor={persistor}>
                   {modules.getWrappedRoot(
                     <ConnectedRouter history={history}>
@@ -96,7 +96,7 @@ export class Main extends React.Component<any, MainState> {
                     </ConnectedRouter>,
                   )}
                 </PersistGate>
-              </ReactFela.Provider>
+              </ReactFela.RendererProvider>
             </ApolloProvider>
           </Provider>,
         )
