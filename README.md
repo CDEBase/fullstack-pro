@@ -127,11 +127,6 @@ To troubleshoot webpack configuration run
 npm run zen:watch:debug
 ```
 
-## Known errors
-In windows node-gyp need to be installed following below instructions.
-
-
-
 ## Resources
 ### Installing node-gyp
 https://github.com/nodejs/node-gyp#installation
