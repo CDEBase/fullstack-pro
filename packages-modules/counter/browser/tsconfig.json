@@ -12,5 +12,8 @@
     "lib",
     "dist",
     "webpack.config.js"
+  ],
+  "include": [
+    "./typings/*.d.ts"
   ]
 }

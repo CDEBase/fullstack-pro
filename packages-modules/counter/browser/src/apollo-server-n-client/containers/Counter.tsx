@@ -5,9 +5,9 @@ import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import CounterView from '../components/CounterView';
 import {
-  COUNTER_QUERY, ADD_COUNTER, COUNTER_SUBSCRIPTION, COUNTER_QUERY_CLIENT, ADD_COUNTER_CLIENT,
-} from '../graphql';
-
+  CounterQueryDocument, AddCounterDocument, OnCounterUpdatedDocument,
+  AddCounterStateDocument, CounterStateDocument,
+} from '../../common/generated-models';
 class Counter extends React.Component<any, any> {
   private subscription;
 
@@ -34,7 +34,7 @@ class Counter extends React.Component<any, any> {
   public subscribeToCount() {
     const { subscribeToMore } = this.props;
     this.subscription = subscribeToMore({
-      document: COUNTER_SUBSCRIPTION,
+      document: OnCounterUpdatedDocument,
       variables: {},
       updateQuery: (prev, { subscriptionData: { data: { counterUpdated: { amount } } } }) => {
         return update(prev, {
@@ -54,13 +54,13 @@ class Counter extends React.Component<any, any> {
 }
 
 const CounterWithApollo: any = compose(
-  graphql(COUNTER_QUERY, {
+  graphql(CounterQueryDocument, {
     props({ data: { loading, error, counter, subscribeToMore } }: any) {
       if (error) { throw new Error(error); }
       return { loading, counter, subscribeToMore };
     },
   }),
-  graphql(ADD_COUNTER, {
+  graphql(AddCounterDocument, {
     props: ({ ownProps, mutate }: any) => ({
       addCounter(amount) {
         return () =>
@@ -89,7 +89,7 @@ const CounterWithApollo: any = compose(
       },
     }),
   } as any),
-  graphql(ADD_COUNTER_CLIENT, {
+  graphql(AddCounterStateDocument, {
     props: ({ mutate }) => ({
       addCounterState: amount => () => {
         const { value }: any = mutate({ variables: { amount } });
@@ -97,7 +97,7 @@ const CounterWithApollo: any = compose(
       },
     } as any),
   }),
-  graphql(COUNTER_QUERY_CLIENT, {
+  graphql(CounterStateDocument, {
     props: ({ data: { counterState: { counter } } }: any) => ({ counterState: counter }),
   }),
 )(Counter);
