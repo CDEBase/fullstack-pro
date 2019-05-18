@@ -48,9 +48,9 @@ If you want to develop FullStack locally you must follow the following instructi
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
 ```
-2. Install dependencies.
+2. Install dependencies and build packages.
 ```
-npm install
+npm install && npm run build
 ```
 3. Setup environment file
 ```
