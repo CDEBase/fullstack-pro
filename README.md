@@ -55,11 +55,15 @@ cd fullstack-pro
 ```
 npm install
 ```
-3. Seed development database data
+3. Setup environment file
+```
+cp ./config/development/dev.env.sample ./config/development/dev.env
+```
+4. Seed development database data (not needed if it is not setup)
 ```
 npm run db:seed
 ```
-4. Start both client and server together
+5. Start both client and server together
 ```
 npm start
 ```
