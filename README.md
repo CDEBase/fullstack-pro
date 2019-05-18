@@ -43,9 +43,6 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
 
 If you want to develop FullStack locally you must follow the following instructions:
 
-* Fork or Clone this repository
-
-* Install the project in your computer
 1. Clone fullstack-pro locally
 ```
 git clone https://github.com/cdmbase/fullstack-pro
