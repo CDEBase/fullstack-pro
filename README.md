@@ -67,8 +67,6 @@ npm start
 The graphql server endpoints are
 >http://localhost:8080/graphql
 
->http://localhost:8080/graphiql
-
 The browser server endopoint is
 >http://localhost:3000
 
