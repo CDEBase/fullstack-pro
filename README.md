@@ -15,7 +15,7 @@ Useful commands:
 |command|Description|
 |--------------------------|-----------|    
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
-|`npm start`(deprecated)|       - starts the web server and backend server. Use `npm run zen:watch`|
+|`npm start`|       - starts the web server and backend server. Or Use `npm run zen:watch`|
 |`npm run zen:watch`|         - starts the web server and backend server in watch mode.|
 |`npm run zen:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
 |`npm run watch`|               - build the packages in watchmode (Useful for development)|
@@ -31,10 +31,8 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
      packages                    - Has the packages to organize the codebase into multi-package repositories.
          sample-core             - Core interfaces of the packages which can be shared between server and client.
          sample-server-core      - Core interfaces and its implementation code for Server.   
-         sample-client-core      - Core interfaces and its implementation code for Client.
-         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@sample-stack\client-core` or `@sample-stack\core`
+         sample-client-state     - Client State related code which consists of Redux and Graphql Gql
          sample-client-react     - React pure components and containers are defined. 
-         sample-graphql-client   - Graphql Quries and Mutation for Client.
          sample-graphql-schema   - Graphql Schema for Server.
      servers                     - Has the packages to organize the codebase into multi-package repositories.
          frontend-server         - Frontend Client Server. This is useful to show demo of this package.

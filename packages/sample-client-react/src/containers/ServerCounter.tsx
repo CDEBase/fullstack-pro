@@ -6,7 +6,8 @@ import { CounterComponent, ICounterProps } from '../components';
 import {
     COUNT_SUBSCRIPTION, COUNT_QUERY, getCountQuery, addCountMutation,
     ADD_COUNT_MUTATION, subscribeToCountSubscription,
-} from '@sample-stack/graphql-gql';
+    
+} from '@sample-stack/client-state';
 import { logger } from '@cdm-logger/client';
 type SubscriptionProps = {
     subscribeToMore: Function;

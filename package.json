@@ -249,13 +249,11 @@
     "ws": "^6.2.1"
   },
   "dependencies": {
-    "@sample-stack/client-core": "file:packages/sample-client-core",
     "@sample-stack/client-react": "file:packages/sample-client-react",
-    "@sample-stack/client-redux": "file:packages/sample-client-redux",
+    "@sample-stack/client-state": "file:packages/sample-client-state",
     "@sample-stack/core": "file:packages/sample-core",
     "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
     "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
-    "@sample-stack/graphql-gql": "file:packages/sample-graphql-client",
     "@sample-stack/graphql-schema": "file:packages/sample-graphql-schema",
     "@sample-stack/hemera-plugin": "file:packages/sample-hemera-plugin",
     "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",

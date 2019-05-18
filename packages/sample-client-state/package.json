@@ -1,11 +1,11 @@
 {
-  "name": "@sample-stack/sample-module",
+  "name": "@sample-stack/client-state",
   "version": "0.0.1",
-  "description": "Sample core for higher packages to depend on",
+  "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
@@ -13,7 +13,9 @@
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch"
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "apollo": "apollo client:codegen --target typescript --endpoint=http://localhost:8080/graphql --outputFlat src/schema.ts",
+    "apollo:download": "apollo service:download --endpoint=http://localhost:8080/graphql"
   },
   "publishConfig": {
     "access": "public"
@@ -37,18 +39,22 @@
     },
     "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmbase/fullstack-pro.git"
+  },
   "author": "CDMBase LLC",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cdmbase/fullstack-pro/issues"
+  },
+  "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@common-stack/server-core": "0.0.201",
-    "@sample-stack/client-react": "file:../../packages/sample-client-react",
-    "@sample-stack/client-state": "file:../../packages/sample-client-state",
-    "@sample-stack/graphql-schema": "file:../../packages/sample-graphql-schema",
-    "@sample-stack/microservice-nats": "file:../../packages/sample-microservice-nats",
-    "@sample-stack/server-core": "file:../../packages/sample-server-core"
+    "@sample-stack/core": "file:../sample-core"
   },
   "peerDependencies": {
-    "graphql-tag": ">=2.10.1"
+    "apollo-client": ">=2.4.0",
+    "redux": ">=4.0.1"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

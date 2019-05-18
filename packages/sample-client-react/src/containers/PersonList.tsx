@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { PERSONS_QUERY, getPersonsQuery } from '@sample-stack/graphql-gql';
+import { PERSONS_QUERY, getPersonsQuery } from '@sample-stack/client-state';
 import { ApolloQueryResult } from 'apollo-client';
 
 export interface IPersonListProps {

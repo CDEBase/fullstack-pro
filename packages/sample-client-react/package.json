@@ -56,10 +56,8 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@sample-stack/client-core": "file:../sample-client-core",
-    "@sample-stack/client-redux": "file:../sample-client-redux",
-    "@sample-stack/core": "file:../sample-core",
-    "@sample-stack/graphql-gql": "file:../sample-graphql-client"
+    "@sample-stack/client-state": "file:../sample-client-state",
+    "@sample-stack/core": "file:../sample-core"
   },
   "devDependencies": {
     "@sample-stack/graphql-schema": "file:../sample-graphql-schema"
