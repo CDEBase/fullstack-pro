@@ -56,6 +56,7 @@ declare interface __PUBLIC_SETTINGS__ {
   GRAPHQL_URL: string;
   LOCAL_GRAPHQL_URL?: string;
   LOG_LEVEL?: string;
+  GRAPHQL_SUBSCRIPTION_URL?: string;
 }
 
 declare namespace NodeJS {

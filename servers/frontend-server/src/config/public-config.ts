@@ -7,6 +7,7 @@
 const publicEnv = [
     'NODE_ENV',
     'GRAPHQL_URL',
+    'GRAPHQL_SUBSCRIPTION_URL',
     'FACEBOOK_APP_ID',
     'GA_ID',
     'LOG_LEVEL',
@@ -19,7 +20,9 @@ const env: any = {};
 for (const v of publicEnv) {
     env[v] = base[v];
 }
-
+// add subscription url for temporary
+env['GRAPHQL_URL'] = env.GRAPHQL_URL || __GRAPHQL_URL__;
+env['GRAPHQL_SUBSCRIPTION_URL'] = env['GRAPHQL_SUBSCRIPTION_URL'] || env['GRAPHQL_URL'].replace(/^http/, 'ws');
 export default env;
 
 if (isBrowser) {
@@ -29,6 +32,7 @@ if (isBrowser) {
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,
     GRAPHQL_URL: process.env.GRAPHQL_URL || env.GRAPHQL_URL || __GRAPHQL_URL__,
+    GRAPHQL_SUBSCRIPTION_URL: env.GRAPHQL_SUBSCRIPTION_URL,
     LOCAL_GRAPHQL_URL: process.env.LOCAL_GRAPHQL_URL || __GRAPHQL_URL__,
     LOG_LEVEL: process.env.LOG_LEVEL || 'trace',
 };

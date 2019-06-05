@@ -47,7 +47,7 @@ if (__CLIENT__) {
     };
 
     const wsLink = new WebSocketLink({
-        uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
+        uri: PUBLIC_SETTINGS.GRAPHQL_SUBSCRIPTION_URL,
         options: {
             reconnect: true,
             timeout: 20000,
