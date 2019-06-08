@@ -1,8 +1,22 @@
 overwrite: true
-schema: 
-  - "./servers/backend-server/src/api/root-schema.graphqls"
-  - "./packages-modules/counter/server/src/**/*.graphql"
+schema: "./servers/backend-server/schema.js"
 generates:
   typings/graphql.d.ts:
     plugins:
       - typescript-graphql-files-modules
+  packages-modules/counter/browser/src/generated-models.ts:
+    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    documents: "packages-modules/counter/browser/src/**/*.gql"
+    config:
+        noNamespaces: true
+        contextType: ./interfaces/context#MyContext
+        withMutationFn: false
+        withHOC: false
+        withComponent: false
+    plugins:
+      - add: |
+          /* tslint:disable */
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+      - typescript-react-apollo

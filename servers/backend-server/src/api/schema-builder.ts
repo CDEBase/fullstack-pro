@@ -155,9 +155,18 @@ export class GatewaySchemaBuilder {
     }
 
     private createOwnSchema(): GraphQLSchema {
+        const typeDefs = [rootSchemaDef].concat(modules.schemas);
+        if (__DEV__) {
+           const fs =  require('fs');
+           const writeData = `
+           const { buildSchema } = require('graphql');
+           module.exports = buildSchema(\`${typeDefs}\`);
+           `;
+           fs.writeFileSync('./schema.js', writeData);
+        }
         return makeExecutableSchema({
             resolvers: [rootResolver, modules.createResolvers(resolverOptions)],
-            typeDefs: [rootSchemaDef].concat(modules.schemas) as any,
+            typeDefs,
             directiveResolvers: modules.createDirectives(directiveOptions),
             resolverValidationOptions: {
                 requireResolversForResolveType: false,
