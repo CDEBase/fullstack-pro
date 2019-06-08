@@ -20,3 +20,18 @@ generates:
       - typescript-operations
       - typescript-resolvers
       - typescript-react-apollo
+  packages-modules/counter/browser/src/apollo-server-n-client/generated-model.tsx:
+    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    documents: "packages-modules/counter/browser/src/**/*.gql"
+    config:
+      withMutationFn: true
+      withHOC: true
+      withComponent: true
+    plugins:
+      - add: |
+          /* tslint:disable */
+          import { AddCounterStateMutation, AddCounterStateMutationVariables, AddCounterMutation,
+          AddCounterMutationVariables, CounterStateQuery, CounterStateQueryVariables,CounterQueryQueryVariables,
+          CounterQueryQuery, OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables,
+           } from '../common/generated-models'
+      - typescript-react-apollo
