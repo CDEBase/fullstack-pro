@@ -1,6 +1,4 @@
-
-           const { buildSchema } = require('graphql');
-           module.exports = buildSchema(`scalar AnyObject
+scalar AnyObject
 scalar JSON
 scalar JSONObject
 type FieldError {
@@ -52,5 +50,3 @@ extend type Subscription {
   # Subscription fired when anyone increases counter
   counterUpdated: Counter
 }
-`);
-           

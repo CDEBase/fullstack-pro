@@ -28,7 +28,12 @@ export type FieldError = {
 
 export type Mutation = {
   dummy?: Maybe<Scalars["Int"]>;
+  addCounter?: Maybe<Counter>;
   addCounterState?: Maybe<ClientCounter>;
+};
+
+export type MutationAddCounterArgs = {
+  amount?: Maybe<Scalars["Int"]>;
 };
 
 export type MutationAddCounterStateArgs = {
@@ -41,11 +46,50 @@ export type Node = {
 
 export type Query = {
   dummy?: Maybe<Scalars["Int"]>;
+  counter?: Maybe<Counter>;
   counterState?: Maybe<ClientCounter>;
 };
 
 export type Subscription = {
   dummy?: Maybe<Scalars["Int"]>;
+  counterUpdated?: Maybe<Counter>;
+};
+export type AddCounterStateMutationVariables = {
+  amount: Scalars["Int"];
+};
+
+export type AddCounterStateMutation = { __typename?: "Mutation" } & {
+  addCounterState: Maybe<
+    { __typename?: "ClientCounter" } & Pick<ClientCounter, "counter">
+  >;
+};
+
+export type AddCounterMutationVariables = {
+  amount: Scalars["Int"];
+};
+
+export type AddCounterMutation = { __typename?: "Mutation" } & {
+  addCounter: Maybe<{ __typename?: "Counter" } & Pick<Counter, "amount">>;
+};
+
+export type CounterStateQueryVariables = {};
+
+export type CounterStateQuery = { __typename?: "Query" } & {
+  counterState: Maybe<
+    { __typename?: "ClientCounter" } & Pick<ClientCounter, "counter">
+  >;
+};
+
+export type CounterQueryQueryVariables = {};
+
+export type CounterQueryQuery = { __typename?: "Query" } & {
+  counter: Maybe<{ __typename?: "Counter" } & Pick<Counter, "amount">>;
+};
+
+export type OnCounterUpdatedSubscriptionVariables = {};
+
+export type OnCounterUpdatedSubscription = { __typename?: "Subscription" } & {
+  counterUpdated: Maybe<{ __typename?: "Counter" } & Pick<Counter, "amount">>;
 };
 import { MyContext } from "./interfaces/context";
 
@@ -128,6 +172,7 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: {};
   Int: Scalars["Int"];
+  Counter: Counter;
   ClientCounter: ClientCounter;
   Mutation: {};
   Subscription: {};
@@ -139,7 +184,6 @@ export type ResolversTypes = {
   FieldError: FieldError;
   Node: Node;
   ID: Scalars["ID"];
-  Counter: Counter;
 };
 
 export interface AnyObjectScalarConfig
@@ -184,6 +228,12 @@ export type MutationResolvers<
   ParentType = ResolversTypes["Mutation"]
 > = {
   dummy?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  addCounter?: Resolver<
+    Maybe<ResolversTypes["Counter"]>,
+    ParentType,
+    ContextType,
+    MutationAddCounterArgs
+  >;
   addCounterState?: Resolver<
     Maybe<ResolversTypes["ClientCounter"]>,
     ParentType,
@@ -205,6 +255,7 @@ export type QueryResolvers<
   ParentType = ResolversTypes["Query"]
 > = {
   dummy?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  counter?: Resolver<Maybe<ResolversTypes["Counter"]>, ParentType, ContextType>;
   counterState?: Resolver<
     Maybe<ResolversTypes["ClientCounter"]>,
     ParentType,
@@ -218,6 +269,11 @@ export type SubscriptionResolvers<
 > = {
   dummy?: SubscriptionResolver<
     Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  counterUpdated?: SubscriptionResolver<
+    Maybe<ResolversTypes["Counter"]>,
     ParentType,
     ContextType
   >;
@@ -241,3 +297,42 @@ export type Resolvers<ContextType = MyContext> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = MyContext> = Resolvers<ContextType>;
+
+import gql from "graphql-tag";
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export const AddCounterStateDocument = gql`
+  mutation addCounterState($amount: Int!) {
+    addCounterState(amount: $amount) @client {
+      counter
+    }
+  }
+`;
+export const AddCounterDocument = gql`
+  mutation addCounter($amount: Int!) {
+    addCounter(amount: $amount) {
+      amount
+    }
+  }
+`;
+export const CounterStateDocument = gql`
+  query CounterState {
+    counterState @client {
+      counter
+    }
+  }
+`;
+export const CounterQueryDocument = gql`
+  query counterQuery {
+    counter {
+      amount
+    }
+  }
+`;
+export const OnCounterUpdatedDocument = gql`
+  subscription onCounterUpdated {
+    counterUpdated {
+      amount
+    }
+  }
+`;
