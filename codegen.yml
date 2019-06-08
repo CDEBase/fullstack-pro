@@ -1,5 +1,5 @@
 overwrite: true
-schema: "./servers/backend-server/schema.graphql"
+schema: "./servers/backend-server/generated-schema.graphql"
 generates:
   typings/graphql.d.ts:
     plugins:
