@@ -15,7 +15,7 @@
     "devpublish": "npm run lerna:predevpublish && lerna publish --cd-version=prerelease",
     "postdevpublish": "git checkout develop",
     "generateGraphql": "graphql-codegen",
-    "graphqlGenerate:counter": "graphql-codegen --config  ./packages-modules/counter/codegen.yml",
+    "generateGraphql:counter": "graphql-codegen --config  ./packages-modules/counter/codegen.yml",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "lerna": "lerna bootstrap --hoist",
     "clean": "lerna clean --yes && npm run build:clean && rimraf node_modules",
