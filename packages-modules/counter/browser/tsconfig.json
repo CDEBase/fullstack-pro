@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "declarationDir": "lib",
     "rootDir": "./src",
     "outDir": "../lib",

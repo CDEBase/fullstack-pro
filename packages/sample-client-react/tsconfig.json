@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "rootDir": "./src",
     "outDir": "../lib",
     "jsx": "react",

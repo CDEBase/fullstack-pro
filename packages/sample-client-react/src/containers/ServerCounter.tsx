@@ -1,12 +1,11 @@
 import * as React from 'react';
 import update from 'immutability-helper';
-import { graphql, compose } from 'react-apollo';
-import { ApolloQueryResult } from 'apollo-client';
+import { graphql } from 'react-apollo';
+import compose from 'lodash/flowRight';
 import { CounterComponent, ICounterProps } from '../components';
 import {
     COUNT_SUBSCRIPTION, COUNT_QUERY, getCountQuery, addCountMutation,
     ADD_COUNT_MUTATION, subscribeToCountSubscription,
-    
 } from '@sample-stack/client-state';
 import { logger } from '@cdm-logger/client';
 type SubscriptionProps = {

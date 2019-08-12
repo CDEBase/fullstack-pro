@@ -2,7 +2,7 @@ import * as H from 'history';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
-import * as pathToRegexp from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Icon, Avatar } from 'antd';
 import { IMenuPosition } from '@common-stack/client-react';
 

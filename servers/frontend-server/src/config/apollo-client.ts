@@ -65,14 +65,6 @@ if (__CLIENT__) {
                     }
                 }
             },
-            onError: async (error) => {
-                logger.trace('[Subscription onError] %j', error);
-                // error.message has to match what the server returns.
-                if (error.message === 'TokenExpired') {
-                    // Reset the WS connection for it to carry the new JWT.
-                    this.subscriptionClient.close(false, false);
-                }
-            },
         },
     });
     link = ApolloLink.split(

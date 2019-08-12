@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import update from 'immutability-helper';
-
+import compose from 'lodash/flowRight';
 import { connect } from 'react-redux';
 import CounterView from '../components/CounterView';
 import {

@@ -59,9 +59,6 @@
     "@sample-stack/client-state": "file:../sample-client-state",
     "@sample-stack/core": "file:../sample-core"
   },
-  "devDependencies": {
-    "@sample-stack/graphql-schema": "file:../sample-graphql-schema"
-  },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
