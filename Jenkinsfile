@@ -4,35 +4,35 @@ pipeline {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
-    string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name') 
-  } 
-  environment {
-    FRONTEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
-    FRONTEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/frontend-server/package.json")
-    BACKEND_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")                                       
-    BACKEND_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/backend-server/package.json")
-    HEMERA_PACKAGE_NAME = getName("/var/jenkins_home/workspace/fullstack-pro/servers/hemera-server/package.json")                                       
-    HEMERA_PACKAGE_VERSION = getVersion("/var/jenkins_home/workspace/fullstack-pro/servers/hemera-server/package.json")
+    string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
   }
-  
+  environment {
+    FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")
+    FRONTEND_PACKAGE_VERSION = getVersion("./servers/frontend-server/package.json")
+    BACKEND_PACKAGE_NAME = getName("./servers/backend-server/package.json")
+    BACKEND_PACKAGE_VERSION = getVersion("./servers/backend-server/package.json")
+    HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
+    HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
+  }
+
   stages {
     stage ('dependencies'){
       steps{
         sh """
           npm install
           npm run lerna
-                 """
+          """
       }
     }
-  
+
   stage ('docker login'){
       steps{
         sh 'docker login -u _json_key -p "$(cat /var/jenkins_home/cdmbase_keys/key.json)" https://gcr.io'
       }
     }
-  
+
   stage("Docker Build") {
-    parallel {  
+    parallel {
       stage ('frontend server'){
         steps{
           sh """
@@ -101,15 +101,15 @@ pipeline {
 
 import groovy.json.JsonSlurper
 def getVersion(json_file_path){
-  def inputFile = new File(json_file_path)
-  def InputJSON = new JsonSlurper().parse(inputFile)
-  def version = InputJSON.version 
+  def inputFile = readFile(json_file_path)
+  def InputJSON = new JsonSlurper().parseText(inputFile)
+  def version = InputJSON.version
 return version
 }
 
 def getName(json_file_path){
-  def inputFile = new File(json_file_path)
-  def InputJSON = new JsonSlurper().parse(inputFile)
-  def name = InputJSON.name 
+  def inputFile = readFile(json_file_path)
+  def InputJSON = new JsonSlurper().parseText(inputFile)
+  def name = InputJSON.name
 return name
 }
