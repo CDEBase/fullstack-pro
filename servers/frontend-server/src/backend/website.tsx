@@ -3,8 +3,8 @@ import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
-import * as path from 'path';
-import * as fs from 'fs';
+import path from 'path';
+import fs from 'fs';
 import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
@@ -27,6 +27,7 @@ async function renderServerSide(req, res) {
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
+                // tslint:disable-next-line:jsx-wrap-multiline
                 <ReduxProvider store={store} >
                     <ApolloProvider client={client}>
                         <ReactFela.Provider renderer={renderer} >

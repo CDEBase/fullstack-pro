@@ -1,6 +1,6 @@
 ///<reference types="webpack-env" />
 
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import * as path from 'path';
@@ -18,6 +18,7 @@ let server;
 
 const app = express();
 
+app.use(corsMiddleware);
 for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
 }
