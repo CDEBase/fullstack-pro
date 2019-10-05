@@ -21,6 +21,7 @@ pipeline {
     stage ('dependencies'){
       steps{
         sh """
+          $NODEJS_HOME/bin/npm cache clean --force
           $NODEJS_HOME/bin/npm install
           $NODEJS_HOME/bin/npm run lerna
           """
