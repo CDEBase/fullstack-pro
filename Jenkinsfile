@@ -13,17 +13,17 @@ pipeline {
     BACKEND_PACKAGE_VERSION = getVersion("./servers/backend-server/package.json")
     HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
     HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
-    NODEJS_HOME = tool 'nodejs'
-    PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
   }
 
   stages {
     stage ('dependencies'){
+     agent {
+         docker { image 'node:7-alpine' }
+     }
       steps{
         sh """
-          $NODEJS_HOME/bin/npm cache clean --force
-          $NODEJS_HOME/bin/npm install
-          $NODEJS_HOME/bin/npm run lerna
+          npm install
+          npm run lerna
           """
       }
     }
