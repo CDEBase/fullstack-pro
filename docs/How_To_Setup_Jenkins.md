@@ -1,5 +1,5 @@
 # Authorizing jenkins to access a repository
-#### 1- execute to the jenkins running pod and get teh publish ssh key
+#### 1- execute to the jenkins running pod and get the publish ssh key
 ```
 kubectl exec -it <pod_name> bash
 cat /var/jenkins_home/.ssh/id_rsa.pub
@@ -11,7 +11,7 @@ cat /var/jenkins_home/.ssh/id_rsa.pub
 #### 3- Go to jenkins
 - Create a new item
 - Choose pipeline
-- Provide teh repo name
+- Provide the repo name
 - go to pipeline
 - Choose pipeline script from SCM
 - Choose git
