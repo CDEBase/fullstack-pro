@@ -1,4 +1,7 @@
-# Redux Package
+# Client State Package
+
+All state managed will be done in this package. It not includes `Redux`,`Apollo Client`, `Redux-Epics` or anything that is used for managing the state.
+
 Redux npm package includes actions, action-types and reducers
 
   1. [TypeScript and Redux: getting started][article-1]
