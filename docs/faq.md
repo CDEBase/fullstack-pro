@@ -12,7 +12,7 @@ category: FAQ
 We use [lerna](https://github.com/lerna/lerna) for monorepo. For example all packages starts with `@sample-stack` are either under `packages` or `pacakges-modules` directories.
 
 
-### Why you have used `hot`?
+### Why you have used [hot](https://github.com/cdmbase/fullstack-pro/blob/master/servers/frontend-server/src/app/Main.tsx#L3)?
 
 It is used for `hot reloading`. Checkout out [React Hot Loader](https://github.com/gaearon/react-hot-loader)
 
