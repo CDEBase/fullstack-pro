@@ -7,7 +7,7 @@ category: FAQ
 ---
 
 
-### From where this '@sample-stack/client-state' comes  in packages/sample-client-react/src/containers/Counter.tsx?
+### From where this `@sample-stack/client-state` comes  in `packages/sample-client-react/src/containers/Counter.tsx`?
 
 We use [lerna](https://github.com/lerna/lerna) for monorepo. For example all packages starts with `@sample-stack` are either under `packages` or `pacakges-modules` directories.
 
