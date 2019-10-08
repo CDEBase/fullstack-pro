@@ -1,7 +1,7 @@
 /// <reference path='../../../../../typings/index.d.ts' />
 
 import * as React from 'react';
-import * as serialize from 'serialize-javascript';
+import serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
 import { Store } from 'redux';
 import modules from '../../modules';

@@ -22,7 +22,7 @@ export class Service {
 
     public async gracefulShutdown(signal) {
         try {
-            logger.info(`${signal} received. Closing connections, stopping server`)
+            logger.info(`${signal} received. Closing connections, stopping server`);
             await this.app.cleanup();
             logger.info('Shutting down');
         } catch (err) {
