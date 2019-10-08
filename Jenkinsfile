@@ -1,5 +1,34 @@
+import hudson.Util;
+def pod_label = "worker-${UUID.randomUUID().toString()}"
+
 pipeline {
-  agent any
+  agent {
+    kubernetes {
+      label pod_label
+      defaultContainer 'jenkins-slave'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-slave
+spec:
+  containers:
+  - name: jenkins-slave
+    image: onjectiondevops/preload-image:v1
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: docker
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: docker
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+"""
+    }
+  }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
@@ -17,9 +46,6 @@ pipeline {
 
   stages {
     stage ('dependencies'){
-     agent {
-         docker { image 'node:7-alpine' }
-     }
       steps{
         sh """
           npm install
