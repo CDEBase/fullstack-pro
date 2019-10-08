@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
   - name: jenkins-slave
-    image: onjectiondevops/preload-image:v1
+    image: onjectiondevops/preload-image:v2
     command:
     - cat
     tty: true
