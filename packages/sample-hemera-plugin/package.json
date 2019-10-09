@@ -1,6 +1,6 @@
 {
 	"name": "@sample-stack/hemera-plugin",
-	"version": "0.0.37-6",
+	"version": "0.0.37-7",
 	"description": "This is Container Configuration Service hemera plugin",
 	"main": "lib/index.js",
 	"scripts": {
@@ -43,13 +43,13 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
-		"@sample-stack/core": "^0.0.37-6",
-		"@sample-stack/server-core": "^0.0.37-6"
+		"@sample-stack/core": "^0.0.37-7",
+		"@sample-stack/server-core": "^0.0.37-7"
 	},
 	"peerDependencies": {
 		"hemera-joi": ">=6.x",
 		"hemera-plugin": "2.x",
 		"nats-hemera": ">=7.x"
 	},
-	"gitHead": "7eeeff7031617fa8e710fe9ae3801a82647643e8"
+	"gitHead": "2816408ac73d97d25987d1ef05d0ac7f182ea034"
 }
