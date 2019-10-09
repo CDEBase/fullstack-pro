@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.37-5",
+  "version": "0.0.37-6",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -53,5 +53,5 @@
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "4f814076d3d1260df3670f1ed2e8900ab029a8f8"
+  "gitHead": "7eeeff7031617fa8e710fe9ae3801a82647643e8"
 }
