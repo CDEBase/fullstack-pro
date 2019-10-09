@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.38-alpha.1](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-17...v0.0.38-alpha.1) (2019-10-09)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
+## [0.0.38-alpha.0](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-17...v0.0.38-alpha.0) (2019-10-09)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
+## [0.0.37](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-17...v0.0.37) (2019-10-09)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
+## [0.0.37-18](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-17...v0.0.37-18) (2019-10-09)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
 ## [0.0.37-17](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-16...v0.0.37-17) (2019-10-09)
 
 **Note:** Version bump only for package sample-stack

@@ -32,7 +32,7 @@
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "devpublish": "npm run lerna:predevpublish && lerna publish --cd-version=prerelease",
     "postdevpublish": "git checkout develop",
-    "devpublish:force": "npm run devpublish -- --force-publish=*",
+    "devpublish:force": "npm run devpublish -- --force-publish=* --yes --no-git-reset",
     "generateGraphql": "graphql-codegen",
     "generateGraphql:watch": "npm run generateGraphql -- --watch",
     "jest": "./node_modules/.bin/jest",
