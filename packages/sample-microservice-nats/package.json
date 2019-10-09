@@ -1,6 +1,6 @@
 {
 	"name": "@sample-stack/microservice-nats",
-	"version": "0.0.1",
+	"version": "0.0.37",
 	"description": "This is Container Configuration Service hemera plugin",
 	"main": "lib/index.js",
 	"scripts": {
