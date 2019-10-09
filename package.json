@@ -30,7 +30,7 @@
     "db:migrate": "knex migrate:latest --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "npm run db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
-    "devpublish": "npm run lerna:predevpublish && lerna publish from-package --cd-version=prerelease",
+    "devpublish": "npm run lerna:predevpublish && lerna publish --cd-version=prerelease",
     "postdevpublish": "git add . && git commit -m 'publish' && git checkout develop",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "generateGraphql": "graphql-codegen",
