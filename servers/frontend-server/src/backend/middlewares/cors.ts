@@ -1,10 +1,10 @@
-import * as cors from 'cors';
-import * as express from 'express';
-import { SETTINGS } from '../../config';
+import cors from 'cors';
+import { config } from '../../config';
 import { logger } from '@common-stack/client-core';
 
-const CLIENT_URL = SETTINGS.CLIENT_URL;
-const BACKEND_URL = SETTINGS.BACKEND_URL;
+const CLIENT_URL = config.CLIENT_URL;
+const BACKEND_URL = config.BACKEND_URL;
+
 
 const corsWhitelist = [
     CLIENT_URL,
@@ -12,7 +12,7 @@ const corsWhitelist = [
 ];
 logger.info('corsWhitelist (%j)', corsWhitelist);
 
-const corsOptions = {
+const corsOptions: cors.CorsOptions = {
     origin: (origin, callback) => {
         if (corsWhitelist.indexOf(origin) !== -1) {
             callback(null, true);
@@ -24,7 +24,7 @@ const corsOptions = {
             callback(null, true);
         }
     },
-    credentails: false,
+    credentials: false,
 };
 
 export const corsMiddleware = cors(corsOptions);

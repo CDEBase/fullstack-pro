@@ -1,5 +1,5 @@
 {
-  "lerna": "3.0.0-beta.20",
+  "lerna": "3.8.0",
   "changelog": {
     "repo": "cdmbase/lerna-bootstrap",
     "labels": {
@@ -13,16 +13,16 @@
   },
   "command": {
     "publish": {
-      "allowBranch": [
-        "publish",
-        "devpublish"
-      ]
+      "allowBranch": ["publish", "devpublish"]
+    },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]      
     }
   },
   "packages": [
     "packages/*",
     "servers/*",
-    "packages-modules/*"
+    "packages-modules/**"
   ],
   "version": "0.0.37-3"
 }

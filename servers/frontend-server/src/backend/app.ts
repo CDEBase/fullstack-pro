@@ -1,7 +1,7 @@
 ///<reference types="webpack-env" />
 process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 import './server';
 
 process.on('uncaughtException', ex => {

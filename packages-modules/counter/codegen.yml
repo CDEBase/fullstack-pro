@@ -1,0 +1,44 @@
+overwrite: true
+schema: 
+  - "servers/backend-server/src/api/root-schema.graphqls"
+  - "packages-modules/counter/browser/src/**/*.graphql"
+  - "packages-modules/counter/server/src/**/*.graphql"
+documents: 
+  - "packages-modules/counter/browser/src/**/*.gql"
+generates:
+  packages-modules/counter/browser/typings/graphql.d.ts:
+    plugins:
+      - typescript-graphql-files-modules
+  packages-modules/counter/browser/src/common/generated-models.ts:
+    config:
+        noNamespaces: true
+        contextType: ./interfaces/context#MyContext
+        withMutationFn: false
+        withHOC: false
+        withComponent: false
+    plugins:
+      - add: |
+          /* tslint:disable */
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+      - typescript-react-apollo
+  packages-modules/counter/server/src/generated-models.ts:
+    plugins:
+      - add: |
+          /* tslint:disable */
+      - typescript
+      - typescript-resolvers
+  packages-modules/counter/browser/src/apollo-server-n-client/generated-model.tsx:
+    config:
+      withMutationFn: true
+      withHOC: true
+      withComponent: true
+    plugins:
+      - add: |
+          /* tslint:disable */
+          import { AddCounterStateMutation, AddCounterStateMutationVariables, AddCounterMutation,
+          AddCounterMutationVariables, CounterStateQuery, CounterStateQueryVariables,CounterQueryQueryVariables,
+          CounterQueryQuery, OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables,
+           } from '../common/generated-models'
+      - typescript-react-apollo

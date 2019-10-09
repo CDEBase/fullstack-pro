@@ -3,13 +3,11 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "rootDir": "./src",
     "outDir": "../lib",
     "jsx": "react",
-    "typeRoots": [
-      "../../node_modules/@types"
-    ],
-    "skipLibCheck": true
+    "declarationDir": "lib"
   },
   "exclude": [
     "node_modules",

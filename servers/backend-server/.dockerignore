@@ -1,6 +1,6 @@
 *
 !dist/
 !*.js
-!.spinrc.json
+!.zenrc.json
 !package.json
 !knexfile.ts

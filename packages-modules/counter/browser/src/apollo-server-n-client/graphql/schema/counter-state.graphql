@@ -1,0 +1,11 @@
+
+type ClientCounter {
+    counter: Int
+}
+
+extend type Query {
+    counterState: ClientCounter
+}
+extend type Mutation {
+    addCounterState(amount: Int!): ClientCounter
+}

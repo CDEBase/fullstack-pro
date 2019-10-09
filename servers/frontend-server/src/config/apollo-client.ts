@@ -1,104 +1,110 @@
-/// <reference path='../../../../typings/index.d.ts' />
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { HttpLink } from 'apollo-link-http';
-import { withClientState } from 'apollo-link-state';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
+import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { createApolloFetch } from 'apollo-fetch';
+import { HttpLink } from 'apollo-link-http';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { onError } from 'apollo-link-error';
+import { ApolloLink, Observable } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
 import { getOperationAST } from 'graphql';
-import * as url from 'url';
+import apolloLogger from 'apollo-link-logger';
+
 import { PUBLIC_SETTINGS } from '../config/public-config';
-import { addPersistedQueries } from 'persistgraphql';
-// import { addApolloLogging } from 'apollo-logger';
 import modules from '../modules';
+import { logger } from '@cdm-logger/client';
+import { merge } from 'lodash-es';
+import { invariant } from 'ts-invariant';
 
+// TODO: add cache redirects to module
+const cache = new InMemoryCache({
+    dataIdFromObject: (result) => modules.getDataIdFromObject(result),
+    fragmentMatcher: modules.getStateParams().fragmentMatcher as any,
+ });
+const schema = `
+type Query {}
+type Mutation {}
+`;
 
-
-const cache = new InMemoryCache();
-
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+            // tslint:disable-next-line
+            invariant.warn(
+                `[GraphQL error]: Message: ${message}, Location: ` +
+                `${locations}, Path: ${path}`,
+            ),
+        );
+    }
+    if (networkError) {
+        // tslint:disable-next-line
+        invariant.warn(`[Network error]: ${networkError}`);
+    }
+});
 let link;
 if (__CLIENT__) {
+    let connectionParams = () => {
+        let param = {};
+        for (const connectionParam of modules.connectionParams) {
+            Object.assign(param, connectionParam());
+        }
+        return param;
+    };
 
-    let connectionParams = {};
-    for (const connectionParam of modules.connectionParams) {
-        Object.assign(connectionParams, connectionParam());
-    }
-
-    const wsClient = new SubscriptionClient(
-        (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'), {
+    const wsLink = new WebSocketLink({
+        uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
+        options: {
             reconnect: true,
+            timeout: 20000,
+            reconnectionAttempts: 10,
+            lazy: true,
             connectionParams,
-        },
-    );
-
-    wsClient.use([
-        {
-            applyMiddleware(operationOptions, next) {
-                let params = {};
-                for (const param of modules.connectionParams) {
-                    Object.assign(params, param());
+            connectionCallback: async (error) => {
+                if (error) {
+                    logger.trace('[connectionCallback error] %j', error);
+                    // error.message has to match what the server returns.
+                    if ((error as any).message === 'TokenExpired') {
+                        console.log('onTokenError about to call');
+                        // Reset the WS connection for it to carry the new JWT.
+                        (wsLink as any).subscriptionClient.close(false, false);
+                    }
                 }
-
-                Object.assign(operationOptions, params);
-                next();
             },
         },
-    ]);
-
-    wsClient.onDisconnected(() => { });
-    wsClient.onReconnected(() => { });
-
+    });
     link = ApolloLink.split(
-        operation => {
-            const operationAST = getOperationAST(operation.query as any, operation.operationName);
-            return !!operationAST && operationAST.operation === 'subscription';
+        ({ query, operationName }) => {
+            if (operationName.endsWith('_WS')) {
+                return true;
+            } else {
+                const operationAST = getOperationAST(query as any, operationName);
+                return !!operationAST && operationAST.operation === 'subscription';
+            }
         },
-        new WebSocketLink(wsClient) as any,
+        wsLink,
         new HttpLink({
             uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-            // fetch:
-            //     modules.createFetch && modules.createFetch(PUBLIC_SETTINGS.GRAPHQL_URL) ||
-            //     createApolloFetch({
-            //         uri: PUBLIC_SETTINGS.GRAPHQL_URL,
-            //         // constructOptions: (reqs, options) => ({
-            //         //     ...constructDefaultOptions(reqs, options),
-            //         //     credentials: 'include',
-            //         // }),
-            //     }),
         }),
     );
 } else {
     link = new BatchHttpLink({ uri: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL });
 }
 
-// TODO Setup PersistQueries
-// if (__PERSIST_GQL__) {
-//     import('@sample-stack/graphql-gql/extracted_queries.json').then(queryMap => {
-//         console.log(queryMap)
-//     }).catch(() => {
-//         console.warn('extracted_queries not found');
-//     });
-// }
+const links = [errorLink, ...modules.link, /** ...modules.errorLink, */ link];
 
-// if (settings.apolloLogging) {
-//     networkInterface = addApolloLogging(networkInterface);
-// }
-const linkState = withClientState({ ...modules.resolvers, cache } as any);
+// Add apollo logger during development only
+if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
+    links.unshift(apolloLogger);
+}
 
-const links = [...modules.link, linkState, link];
-
+let _apolloClient: ApolloClient<any>;
 const createApolloClient = () => {
-    const params: any = {
-        dataIdFromObject: (result) => {
-            if (result.id && result.__typename) {
-                return result.__typename + result.id;
-            }
-            return null;
-        },
+    if (_apolloClient) {
+        // return quickly if client is already created.
+        return _apolloClient;
+    }
+    const params: ApolloClientOptions<any> = {
+        queryDeduplication: true,
+        typeDefs: schema.concat(modules.getStateParams().typeDefs as string),
+        resolvers: modules.getStateParams().resolvers,
         link: ApolloLink.from(links),
         cache,
     };
@@ -112,12 +118,16 @@ const createApolloClient = () => {
             params.ssrMode = true;
         }
     }
-    const client = new ApolloClient<any>(params);
-
+    _apolloClient = new ApolloClient<any>(params);
+    cache.writeData({
+        data: {
+            ...modules.getStateParams().defaults,
+        },
+    });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
-        window.__APOLLO_CLIENT__ = client;
+        window.__APOLLO_CLIENT__ = _apolloClient;
     }
-    return client;
+    return _apolloClient;
 };
 
 export { createApolloClient };

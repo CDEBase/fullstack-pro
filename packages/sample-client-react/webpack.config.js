@@ -45,8 +45,15 @@ var webpack_opts = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     },
-    { test: /\.svg$/, loader: 'url-loader?limit=10000' },
     {
+      test: /\.svg$/,
+      use: {
+        loader: 'svg-url-loader',
+        options: {
+          noquotes: true,
+        }
+      }
+    },    {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',

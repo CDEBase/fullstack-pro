@@ -9,7 +9,6 @@ export const config = envalid.cleanEnv(process.env, {
     NATS_URL: str(),
     NATS_USER: str(),
     NATS_PW: str(),
-    FILE_ROOT_PATH: str(),
     HEMERA_LOG_LEVEL: str({ default: 'info' }),
     BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),

@@ -5,11 +5,13 @@ logs
 *.log
 npm-debug.log*
 
-# expo
+# remove unwanted
 .expo 
+.drawio-chrome
 
-# Backup
-backup 
+# Spinjs cache
+.cache
+.awcache
 
 # Runtime data
 pids

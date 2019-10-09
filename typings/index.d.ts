@@ -30,7 +30,7 @@ declare module "*settings.json" {
   }
 }
 
-declare interface __SPIN_OPTIONS__ {
+declare interface __ZEN_OPTIONS__ {
   "backendBuildDir"?: string;
   "frontendBuildDir"?: string;
   "webpackDevPort"?: number,
@@ -43,40 +43,7 @@ declare interface __SPIN_OPTIONS__ {
   "persistGraphQL"?: boolean;
 }
 
-declare module NodeJS  {
-  interface Global {
-      env: any
-  }
-}
-declare interface __PUBLIC_SETTINGS__ {
-  "apolloLogging": boolean;
-  GRAPHQL_URL: string;
-  LOCAL_GRAPHQL_URL?: string;
-  LOG_LEVEL?: string;
-}
-
-declare module "*spinrc.json" {
-  export const options: __SPIN_OPTIONS__
-}
-
-
-declare module "*.json" {
-  const value: any;
-  export = value;
-}
-
-declare module "*.graphql" {
-  const value: any;
-  export = value;
-}
-
-declare module "*.graphqls" {
-  const value: any;
-  export = value;
-}
-
-
-declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__{
+declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
   CLIENT_URL: string;
   BACKEND_URL: string;
   NATS_URL: string,
@@ -84,13 +51,58 @@ declare interface __SETTINGS__ extends __SPIN_OPTIONS__, __PUBLIC_SETTINGS__{
   NATS_PW: number | string,
 }
 
+declare interface __PUBLIC_SETTINGS__ {
+  "apolloLogging": boolean;
+  GRAPHQL_URL: string;
+  LOCAL_GRAPHQL_URL?: string;
+  LOG_LEVEL?: string;
+}
+
+declare namespace NodeJS {
+  export interface Process {
+      APP_ENV?: ProcessEnv;
+      env: ProcessEnv;
+  }
+}
+
+declare module "*zenrc.json" {
+  export const options: __ZEN_OPTIONS__
+}
+
+declare module "*.json" {
+  const value: any;
+  export = value;
+}
+
+declare module '*.graphql' {
+  const value: string;
+  export default value;
+}
+
+declare module '*.graphqls' {
+
+  const value: string;
+  export default value;
+}
+
+declare module "*.svg" {
+  const content: any;
+  export default content;
+}
+
+declare module '*.gif' {
+  const fileName: string;
+  export = fileName;
+}
+
+
 // This definition is used before typings-for-css-modules-loader generates .d.ts files.
 // As soon as typings are found tsc will prefer them.
 declare module "*.css" {
-	interface IClassNames {
-		[className: string]: string;
-	}
+  interface IClassNames {
+    [className: string]: string;
+  }
 
-	const classNames: IClassNames;
-	export = classNames;
+  const classNames: IClassNames;
+  export = classNames;
 }

@@ -3,7 +3,6 @@
 // import { mount, shallow } from 'enzyme';
 // import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import { connect } from 'react-redux';
-// import { pure, compose, flattenProp } from 'recompose';
 // import { print } from 'graphql';
 // import gql from 'graphql-tag';
 

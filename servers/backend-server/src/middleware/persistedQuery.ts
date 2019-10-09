@@ -1,13 +1,13 @@
 import { invert, isArray } from 'lodash';
 import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
-import { logger } from '@common-stack/server-core';
+import { logger } from '@cdm-logger/server';
 
-var reqlib: any = require('app-root-path');
+let reqlib: any = require('app-root-path');
 
 let persistCache = true;
 let queryMap;
 try {
-    queryMap = reqlib.require('@sample-stack/graphql-gql/extracted_queries.json');
+    queryMap = reqlib.require('@sample-stack/client-state/extracted_queries.json');
 
 } catch (err) {
     logger.warn('extracted_queries.json file is unavailable, disabling persist queries');

@@ -1,0 +1,55 @@
+{
+    "name": "@adminide-stack/$module$-browser",
+    "version": "0.0.1",
+    "description": "Sample core for higher packages to depend on",
+    "main": "lib/index.js",
+    "scripts": {
+        "jest": "./node_modules/.bin/jest",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "prepublish": "npm run build",
+        "watch": "npm run build:lib:watch",
+        "build": "npm run build:clean && npm run build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "webpack",
+        "build:lib:watch": "npm run build:lib -- --watch",
+        "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
+        "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.gql --schema schema.json --target typescript --output src/browser/graphql/schema.ts",
+        "githubschema:download": "./node_modules/.bin/apollo-codegen download-schema https://api.github.com/graphql --output githubapi-schema.json  --header 'Authorization: Bearer 0ec1b5e245de6061066262daf4aac2135fddd683'",
+        "githubschema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.gql --schema githubapi-schema.json --target typescript --output src/browser/graphql/github-schema.ts"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "roots": [
+            "src"
+        ],
+        "modulePaths": [
+            "node_modules"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "json"
+        ],
+        "transform": {
+            "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+        },
+        "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    },
+    "author": "CDMBase LLC",
+    "license": "ISC",
+    "devDependencies": {
+        "cross-env": "^5.2.0",
+        "jest": "^22.4.2",
+        "rimraf": "^2.6.1",
+        "webpack": "4.28.4"
+    },
+    "dependencies": {
+    },
+    "typings": "lib/index.d.ts",
+    "typescript": {
+        "definition": "lib/index.d.ts"
+    }
+}

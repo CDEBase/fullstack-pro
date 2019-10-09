@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`connector modules module configuredRoutes 1`] = `
+Array [
+  Object {
+    "component": [Function],
+    "exact": true,
+    "path": "/connected-react-router",
+    "routes": Array [
+      Object {
+        "component": [Function],
+        "exact": true,
+        "path": "/connected-react-router/hello",
+      },
+      Object {
+        "component": Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Counter)",
+          "type": [Function],
+        },
+        "exact": true,
+        "path": "/connected-react-router/counter",
+      },
+    ],
+  },
+]
+`;
+
+exports[`connector modules module routes 1`] = `
+<Switch>
+  <Route
+    exact={true}
+    path="/connected-react-router"
+    render={[Function]}
+  />
+</Switch>
+`;
