@@ -47,5 +47,6 @@
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "5af64654bebc0c2ce1c0978dda1dd82954ff6317"
 }

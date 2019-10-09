@@ -40,8 +40,8 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
-		"@sample-stack/core": "file:../sample-core",
-		"@sample-stack/server-core": "file:../sample-server-core"
+		"@sample-stack/core": "^0.0.37",
+		"@sample-stack/server-core": "^0.0.37"
 	},
 	"peerDependencies": {
 		"hemera-joi": ">6.x",
@@ -51,5 +51,6 @@
 	"typings": "lib/index.d.ts",
 	"typescript": {
 		"definition": "lib/index.d.ts"
-	}
+	},
+	"gitHead": "5af64654bebc0c2ce1c0978dda1dd82954ff6317"
 }
