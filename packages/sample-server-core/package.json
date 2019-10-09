@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/server-core",
-  "version": "0.0.36",
+  "version": "0.0.37-4",
   "description": "xterm server services for Node",
   "main": "lib/index.js",
   "scripts": {
@@ -47,8 +47,6 @@
     "url": "https://github.com/cdmbase/fullstack-pro/issues"
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
-  "devDependencies": {
-  },
   "dependencies": {
     "@sample-stack/core": "file:../sample-core"
   },

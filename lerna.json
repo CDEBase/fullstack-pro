@@ -13,16 +13,21 @@
   },
   "command": {
     "publish": {
-      "allowBranch": ["publish", "devpublish"]
+      "allowBranch": [
+        "publish",
+        "devpublish"
+      ]
     },
     "bootstrap": {
-      "npmClientArgs": ["--no-package-lock"]      
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
     }
   },
   "packages": [
+    "packages-modules/**",
     "packages/*",
-    "servers/*",
-    "packages-modules/**"
+    "servers/*"
   ],
-  "version": "0.0.37-3"
+  "version": "0.0.37-4"
 }
