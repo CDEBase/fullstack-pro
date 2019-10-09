@@ -12,6 +12,7 @@
   },
   "command": {
     "publish": {
+      "graphType": "all",
       "allowBranch": [
         "publish",
         "devpublish"

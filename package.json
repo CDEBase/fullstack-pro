@@ -39,7 +39,7 @@
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "postdevpublish": "git checkout develop",
     "prepublish": "git checkout publish && git merge -s recursive -X theirs master",
-    "publish": "npm run lerna:prepublish && lerna publish --ignore-scripts --cd-version=patch",
+    "publish": "lerna publish --ignore-scripts --cd-version=patch",
     "publish:force": "npm run publish -- --force-publish=*",
     "postpublish": "git checkout master",
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
