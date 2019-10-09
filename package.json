@@ -37,6 +37,7 @@
     "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
     "devpublish": "lerna publish --cd-version=prerelease",
     "postdevpublish": "git add . && git commit -m 'update chagne log' && git checkout develop",
+    "prepublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lint": "tslint ./packages/**/src/**/*.ts --exclude \"./packages/**/node_modules/**/*.ts\"",
     "postbootstrap": "npm run build",
     "prebootstrap": "lerna run prepare",
