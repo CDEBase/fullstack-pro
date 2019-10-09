@@ -1,5 +1,4 @@
 {
-  "lerna": "3.8.0",
   "changelog": {
     "repo": "cdmbase/lerna-bootstrap",
     "labels": {
@@ -42,5 +41,5 @@
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.37-5"
+  "version": "0.0.0"
 }
