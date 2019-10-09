@@ -27,7 +27,9 @@
     "version": {
       "allowBranch": [
         "master",
-        "develop"
+        "develop",
+        "publish",
+        "devpublish"
       ],
       "conventionalCommits": true,
       "gitTagVersion": false,
@@ -36,9 +38,9 @@
     }
   },
   "packages": [
+    "packages-modules/**",
     "packages/*",
-    "servers/*",
-    "packages-modules/**"
+    "servers/*"
   ],
-  "version": "0.0.0"
+  "version": "0.0.37-5"
 }
