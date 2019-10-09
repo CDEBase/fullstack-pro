@@ -42,5 +42,5 @@
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.37-7"
+  "version": "0.0.37-8"
 }
