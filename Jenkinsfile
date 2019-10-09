@@ -42,6 +42,7 @@ spec:
     BACKEND_PACKAGE_VERSION = getVersion("./servers/backend-server/package.json")
     HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
     HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
+    DOCKER_GCR_LOGIN_KEY = credentials('jenkins-gcr-login-key')
   }
 
   stages {
@@ -56,7 +57,9 @@ spec:
 
   stage ('docker login'){
       steps{
-        sh 'docker login -u _json_key -p "$(cat /var/jenkins_home/cdmbase_keys/key.json)" https://gcr.io'
+        sh '''
+          docker login --username _json_key --password-stdin < ''' + DOCKER_GCR_LOGIN_KEY + ''' https://gcr.io
+        '''
       }
     }
 
@@ -65,8 +68,8 @@ spec:
       stage ('frontend server'){
         steps{
           sh """
+            lerna exec --scope=*hemera-server npm run docker:build
             cd servers/frontend-server/
-            npm run docker:build
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
@@ -77,8 +80,8 @@ spec:
       stage ('backend server'){
         steps{
           sh """
+            lerna exec --scope=*hemera-server npm run docker:build
             cd servers/backend-server/
-            npm run docker:build
             docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
@@ -89,8 +92,8 @@ spec:
       stage ('hemera server'){
         steps{
           sh """
+            lerna exec --scope=*hemera-server npm run docker:build
             cd servers/hemera-server/
-            npm run docker:build
             docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
