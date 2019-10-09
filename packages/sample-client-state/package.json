@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-state",
-  "version": "0.0.38-alpha.3",
+  "version": "0.0.38-alpha.4",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@sample-stack/core": "^0.0.38-alpha.3"
+    "@sample-stack/core": "^0.0.38-alpha.4"
   },
   "peerDependencies": {
     "apollo-client": ">=2.4.0",
@@ -60,5 +60,5 @@
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "5473b30a26e72522b2331367b6bb9172134953ff"
+  "gitHead": "76517795deefdf751f73d403525ed4d84feb79b2"
 }

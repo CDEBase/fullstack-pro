@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/store",
-  "version": "0.0.38-alpha.3",
+  "version": "0.0.38-alpha.4",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -40,12 +40,12 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "^0.0.38-alpha.3",
+    "@sample-stack/core": "^0.0.38-alpha.4",
     "sequelize": "^5.7.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "5473b30a26e72522b2331367b6bb9172134953ff"
+  "gitHead": "76517795deefdf751f73d403525ed4d84feb79b2"
 }
