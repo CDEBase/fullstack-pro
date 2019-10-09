@@ -29,7 +29,10 @@
         "develop",
         "publish",
         "devpublish"
-      ]
+      ],
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "chore: release package(s)"
     }
   },
   "packages": [
@@ -37,5 +40,5 @@
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.0"
+  "version": "0.0.37-9"
 }
