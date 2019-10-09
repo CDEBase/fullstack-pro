@@ -32,6 +32,7 @@
       ],
       "conventionalCommits": true,
       "createRelease": "github",
+      "gitTagVersion": false,
       "message": "chore: release package(s)"
     }
   },
