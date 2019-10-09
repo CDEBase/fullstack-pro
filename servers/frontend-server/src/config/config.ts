@@ -1,13 +1,15 @@
-/// <reference path='../../../../typings/index.d.ts' />
+import * as envalid from 'envalid';
 
-import * as fs from 'fs';
-import { PUBLIC_SETTINGS } from './public-config';
 
-export const SETTINGS: __SETTINGS__ = {
-    ...PUBLIC_SETTINGS,
-    BACKEND_URL: process.env.BACKEND_URL || __BACKEND_URL__,
-    CLIENT_URL: process.env.CLIENT_URL || __BACKEND_URL__,
-    NATS_URL: process.env.NATS_URL,
-    NATS_USER: process.env.NATS_USER,
-    NATS_PW: process.env.NATS_PW,
-};
+const { str, bool, num } = envalid;
+
+export const config = envalid.cleanEnv(process.env, {
+    NODE_ENV: str({ default: 'production', choices: ['production', 'staging', 'development', 'test'] }),
+    BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
+    LOCAL_BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
+    LOCAL_GRAPHQL_URL: str({ default: __GRAPHQL_URL__ }),
+    GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
+    CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
+    CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
+    NAMESPACE: str({ default: 'default' }),
+});

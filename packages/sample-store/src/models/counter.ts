@@ -1,8 +1,8 @@
-import * as Sequelize from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 
 
-export default (sequelize: Sequelize, DataTypes: Sequelize.DataTypes) => {
+export default (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     const Count = sequelize.define('count', {
-        name: DataTypes.STRING,
+        name: dataTypes.STRING,
     });
 };

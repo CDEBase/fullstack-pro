@@ -48,24 +48,16 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "peerDependencies": {
-    "apollo-client": ">=2.0.0",
-    "react": ">=16.0.0",
-    "react-apollo": ">=2.0.0",
-    "react-dom": ">=16.0.0",
-    "react-router": ">=4.0.0",
-    "redux": ">=3.6.0"
+    "apollo-client": ">=2.4.0",
+    "react": ">=16.8.6",
+    "react-apollo": ">=2.5.5",
+    "react-dom": ">=16.8.6",
+    "react-router": ">=5.0.0",
+    "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@sample-stack/client-core": "^0.0.36",
-    "@sample-stack/client-redux": "^0.0.36",
-    "@sample-stack/core": "^0.0.36",
-    "@sample-stack/graphql-gql": "^0.0.36"
-  },
-  "devDependencies": {
-    "@sample-stack/graphql-schema": "^0.0.36",
-    "jest": "^22.4.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^4.7.0"
+    "@sample-stack/client-state": "file:../sample-client-state",
+    "@sample-stack/core": "file:../sample-core"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

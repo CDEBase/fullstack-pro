@@ -1,0 +1,20 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "declarationDir": "lib",
+    "rootDir": "./src",
+    "outDir": "../lib",
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "dist",
+    "webpack.config.js"
+  ],
+  "include": [
+    "./typings/*.d.ts"
+  ]
+}

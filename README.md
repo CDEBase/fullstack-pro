@@ -15,9 +15,9 @@ Useful commands:
 |command|Description|
 |--------------------------|-----------|    
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
-|`npm start`(deprecated)|       - starts the web server and backend server. Use `npm run spin:watch`|
-|`npm run spin:watch`|         - starts the web server and backend server in watch mode.|
-|`npm run spin:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
+|`npm start`|       - starts the web server and backend server. Or Use `npm run zen:watch`|
+|`npm run zen:watch`|         - starts the web server and backend server in watch mode.|
+|`npm run zen:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
 |`npm run watch`|               - build the packages in watchmode (Useful for development)|
 |`npm run lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
 |`npm run build`|               - build all the packages|
@@ -31,10 +31,8 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
      packages                    - Has the packages to organize the codebase into multi-package repositories.
          sample-core             - Core interfaces of the packages which can be shared between server and client.
          sample-server-core      - Core interfaces and its implementation code for Server.   
-         sample-client-core      - Core interfaces and its implementation code for Client.
-         sample-client-redux     - Redux's reducers and actions are defined. Which may use `@sample-stack\client-core` or `@sample-stack\core`
+         sample-client-state     - Client State related code which consists of Redux and Graphql Gql
          sample-client-react     - React pure components and containers are defined. 
-         sample-graphql-client   - Graphql Quries and Mutation for Client.
          sample-graphql-schema   - Graphql Schema for Server.
      servers                     - Has the packages to organize the codebase into multi-package repositories.
          frontend-server         - Frontend Client Server. This is useful to show demo of this package.
@@ -45,30 +43,29 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
 
 If you want to develop FullStack locally you must follow the following instructions:
 
-* Fork or Clone this repository
-
-* Install the project in your computer
 1. Clone fullstack-pro locally
 ```
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
 ```
-2. Install dependencies.
+2. Install dependencies and build packages.
 ```
-npm install
+npm install && npm run build
 ```
-3. Seed development database data
+3. Setup environment file
+```
+cp ./config/development/dev.env.sample ./config/development/dev.env
+```
+4. Seed development database data (not needed if it is not setup)
 ```
 npm run db:seed
 ```
-4. Start both client and server together
+5. Start both client and server together
 ```
 npm start
 ```
 The graphql server endpoints are
 >http://localhost:8080/graphql
-
->http://localhost:8080/graphiql
 
 The browser server endopoint is
 >http://localhost:3000
@@ -127,13 +124,8 @@ NATS_PW
 ## Troubleshoot
 To troubleshoot webpack configuration run
 ```
-npm run spin:watch:debug
+npm run zen:watch:debug
 ```
-
-## Known errors
-In windows node-gyp need to be installed following below instructions.
-
-
 
 ## Resources
 ### Installing node-gyp

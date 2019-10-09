@@ -4,7 +4,7 @@ import {
   saveCount,
   Action,
   Store,
-} from '@sample-stack/client-redux';
+} from '@sample-stack/client-state';
 import { connect } from 'react-redux';
 import * as redux from 'redux';
 import { CounterComponent, ICounterProps } from '../components';

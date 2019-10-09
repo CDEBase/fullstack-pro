@@ -1,21 +1,17 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
-// import { addApolloLogging } from 'apollo-logger';
-import { addPersistedQueries } from 'persistgraphql';
 import { Html } from './ssr/html';
-import { Component } from '../components';
 import Helmet from 'react-helmet';
-import * as path from 'path';
-import * as fs from 'fs';
-const { renderToMarkup } = require('fela-dom');
+import path from 'path';
+import fs from 'fs';
+import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { logger } from '@sample-stack/utils';
+import { logger } from '@cdm-logger/server';
 import { createApolloClient } from '../config/apollo-client';
 import * as ReactFela from 'react-fela';
-import createRenderer from './felaRenderer';
-import { SETTINGS } from '../config';
+import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules from '../modules';
@@ -23,7 +19,7 @@ import clientModules from '../modules';
 let assetMap;
 async function renderServerSide(req, res) {
     try {
-        // const  clientModules  = require('../modules');
+
         const client = createApolloClient();
 
         let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
@@ -31,29 +27,32 @@ async function renderServerSide(req, res) {
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
+                // tslint:disable-next-line:jsx-wrap-multiline
                 <ReduxProvider store={store} >
                     <ApolloProvider client={client}>
                         <ReactFela.Provider renderer={renderer} >
                             <StaticRouter location={req.url} context={context}>
-                                {clientModules.router}
+                                {clientModules.getRouter()}
                             </StaticRouter>
                         </ReactFela.Provider>
                     </ApolloProvider>
                 </ReduxProvider>,
                 req,
             );
-        const component = App();
-        const appCss = renderToMarkup(renderer);
-        await getDataFromTree(component as any);
+
+        await getDataFromTree(App as any);
         if (context.pageNotFound === true) {
             res.status(404);
         } else {
             res.status(200);
         }
 
-        const html = ReactDOMServer.renderToString(component as any);
+        const html = ReactDOMServer.renderToString(App as any);
 
+        // this comes after Html render otherwise we don't see fela rules generated
+        const appStyles = renderToSheetList(renderer);
 
+        // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
 
         if (context.url) {
@@ -74,7 +73,7 @@ async function renderServerSide(req, res) {
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmet}
-                    css={appCss}
+                    styleSheet={appStyles}
                     env={env}
                     reduxState={reduxState}
                 />

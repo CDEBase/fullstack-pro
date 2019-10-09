@@ -11,11 +11,11 @@
 // import gql from 'graphql-tag';
 
 // import { PersonList } from '../PersonList';
-// import { reducers, Store } from '@sample-stack/client-redux';
+// import { reducers, Store } from '@sample-stack/client-state';
 // import { ApolloProvider, graphql, createNetworkInterface } from 'react-apollo';
 // import { database } from '@sample-stack/graphql-schema';
 // import { mockNetworkInterface } from 'apollo-test-utils';
-// import { PERSONS_QUERY } from '@sample-stack/graphql-gql';
+// import { PERSONS_QUERY } from '@sample-stack/client-state';
 
 // describe('components/PersonList', () => {
 //   it('renders correctly', (done) => {

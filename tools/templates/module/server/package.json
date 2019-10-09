@@ -1,0 +1,52 @@
+{
+    "name": "@adminide-stack/$module$-server",
+    "version": "0.0.1",
+    "description": "Sample core for higher packages to depend on",
+    "main": "lib/index.js",
+    "scripts": {
+        "jest": "./node_modules/.bin/jest",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "prepublish": "npm run build",
+        "watch": "npm run build:lib:watch",
+        "build": "npm run build:clean && npm run build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "webpack",
+        "build:lib:watch": "npm run build:lib -- --watch"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "roots": [
+            "src"
+        ],
+        "modulePaths": [
+            "node_modules"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "json"
+        ],
+        "transform": {
+            "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+        },
+        "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    },
+    "author": "CDMBase LLC",
+    "license": "ISC",
+    "devDependencies": {
+        "apollo": "^2.9.0",
+        "cross-env": "^5.2.0",
+        "jest": "^22.4.2",
+        "rimraf": "^2.6.1",
+        "webpack": "4.28.4"
+    },
+    "typings": "lib/index.d.ts",
+    "typescript": {
+        "definition": "lib/index.d.ts"
+    },
+    "dependencies": {
+    }
+}

@@ -1,4 +1,6 @@
 scalar AnyObject
+scalar JSON
+scalar JSONObject
 type FieldError {
   field: String!
   message: String!
