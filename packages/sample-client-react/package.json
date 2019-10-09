@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.38-alpha.5",
+  "version": "0.0.38-alpha.9",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,12 +56,12 @@
     "redux": ">=4.0.1"
   },
   "dependencies": {
-    "@sample-stack/client-state": "^0.0.38-alpha.5",
-    "@sample-stack/core": "^0.0.38-alpha.5"
+    "@sample-stack/client-state": "^0.0.38-alpha.9",
+    "@sample-stack/core": "^0.0.38-alpha.9"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "7ca67a99b51f406b5f03eebba98a6b18adaaa59f"
+  "gitHead": "47e45a1688f2ba3317871da3df999831af796de6"
 }

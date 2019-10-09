@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-server",
-  "version": "0.0.38-alpha.5",
+  "version": "0.0.38-alpha.9",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -48,5 +48,5 @@
   "typescript": {
     "definition": "lib/index.d.ts"
   },
-  "gitHead": "7ca67a99b51f406b5f03eebba98a6b18adaaa59f"
+  "gitHead": "47e45a1688f2ba3317871da3df999831af796de6"
 }
