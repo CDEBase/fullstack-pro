@@ -41,5 +41,5 @@
     "packages/*",
     "servers/*"
   ],
-  "version": "0.0.38-alpha.9"
+  "version": "0.0.38-alpha.10"
 }
