@@ -37,7 +37,7 @@
     "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
     "devpublish": "lerna publish --ignore-scripts --cd-version=prerelease",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
-    "postdevpublish": "git add . && git commit -m 'update change log' && git checkout develop",
+    "postdevpublish": "git checkout develop",
     "prepublish": "git checkout publish && git merge -s recursive -X theirs master",
     "publish": "npm run lerna:prepublish && lerna publish --ignore-scripts --cd-version=patch",
     "publish:force": "npm run publish -- --force-publish=*",
