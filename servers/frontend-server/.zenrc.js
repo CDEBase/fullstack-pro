@@ -4,6 +4,7 @@ const debug = process.env.DEBUGGING || false;
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const config = {
     builders: {
@@ -23,6 +24,9 @@ const config = {
             waitOn: ['tcp:localhost:8080'],
             enabled: true,
             webpackConfig: {
+                plugins: [
+                    new LodashModuleReplacementPlugin
+                ],
                 // for additional webpack configuration.
                 resolve: process.env.NODE_ENV !== 'production'
                     ? {
@@ -52,6 +56,7 @@ const config = {
                         from: '../../tools/esm-wrapper.js',
                         to: 'index.js',
                     }]),
+                    new LodashModuleReplacementPlugin
                 ],
                 externals: [
                     nodeExternals(),

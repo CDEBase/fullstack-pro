@@ -55,8 +55,8 @@
   },
   "dependencies": {
     "@cdm-logger/server": "^5.0.5",
-    "@common-stack/core": "0.0.203",
-    "@common-stack/server-core": "0.0.203",
+    "@common-stack/core": "0.0.208",
+    "@common-stack/server-core": "0.0.208",
     "@sample-stack/core": "file:../../packages/sample-core",
     "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
     "@sample-stack/microservice-nats": "file:../../packages/sample-microservice-nats",

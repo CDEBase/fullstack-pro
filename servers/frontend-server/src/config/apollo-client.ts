@@ -15,7 +15,10 @@ import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
 // TODO: add cache redirects to module
-const cache = new InMemoryCache({ dataIdFromObject: (result) => modules.getDataIdFromObject(result) });
+const cache = new InMemoryCache({
+    dataIdFromObject: (result) => modules.getDataIdFromObject(result),
+    fragmentMatcher: modules.getStateParams().fragmentMatcher as any,
+ });
 const schema = `
 type Query {}
 type Mutation {}
@@ -100,8 +103,8 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        typeDefs: schema.concat(modules.getStateParams.typeDefs as string),
-        resolvers: modules.getStateParams.resolvers,
+        typeDefs: schema.concat(modules.getStateParams().typeDefs as string),
+        resolvers: modules.getStateParams().resolvers,
         link: ApolloLink.from(links),
         cache,
     };
@@ -118,7 +121,7 @@ const createApolloClient = () => {
     _apolloClient = new ApolloClient<any>(params);
     cache.writeData({
         data: {
-            ...modules.getStateParams.defaults,
+            ...modules.getStateParams().defaults,
         },
     });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {

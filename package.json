@@ -190,6 +190,7 @@
     "lint-staged": "^8.1.5",
     "lodash": "^4.17.11",
     "lodash-es": "^4.17.11",
+    "lodash-webpack-plugin": "^0.11.5",
     "mime": "^2.4.2",
     "mini-css-extract-plugin": "^0.6.0",
     "minilog": "^3.1.0",
