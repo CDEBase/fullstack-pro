@@ -16,12 +16,23 @@
       "allowBranch": [
         "publish",
         "devpublish"
-      ]
+      ],
+      "message": "chore(release): publish"
     },
     "bootstrap": {
       "npmClientArgs": [
         "--no-package-lock"
       ]
+    },
+    "version": {
+      "allowBranch": [
+        "master",
+        "develop"
+      ],
+      "conventionalCommits": true,
+      "gitTagVersion": false,
+      "noPush": true,
+      "git-remote": "devpublish"
     }
   },
   "packages": [
