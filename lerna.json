@@ -29,11 +29,7 @@
         "develop",
         "publish",
         "devpublish"
-      ],
-      "conventionalCommits": true,
-      "gitTagVersion": false,
-      "noPush": true,
-      "git-remote": "devpublish"
+      ]
     }
   },
   "packages": [
