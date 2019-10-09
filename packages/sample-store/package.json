@@ -40,11 +40,12 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "file:../sample-core",
+    "@sample-stack/core": "^0.0.37-4",
     "sequelize": "^5.7.6"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "4ae22e5116aa9e3ee804ecad3a90d33eff01cd63"
 }

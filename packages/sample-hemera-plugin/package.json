@@ -43,12 +43,13 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
-		"@sample-stack/core": "file:../sample-core",
-		"@sample-stack/server-core": "file:../sample-server-core"
+		"@sample-stack/core": "^0.0.37-4",
+		"@sample-stack/server-core": "^0.0.37-4"
 	},
 	"peerDependencies": {
 		"hemera-joi": ">=6.x",
 		"hemera-plugin": "2.x",
 		"nats-hemera": ">=7.x"
-	}
+	},
+	"gitHead": "4ae22e5116aa9e3ee804ecad3a90d33eff01cd63"
 }
