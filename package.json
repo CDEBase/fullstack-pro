@@ -186,7 +186,7 @@
     "jest-raw-loader": "^1.0.1",
     "jest-transform-graphql": "^2.1.0",
     "jsdom": "^15.0.0",
-    "lerna": "3.13.4",
+    "lerna": "3.16.5",
     "lint-staged": "^8.1.5",
     "lodash": "^4.17.11",
     "lodash-es": "^4.17.11",
