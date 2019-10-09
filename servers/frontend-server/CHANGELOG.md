@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.37-17](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-16...v0.0.37-17) (2019-10-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+
+
+
+
 ## [0.0.37-16](https://github.com/cdmbase/fullstack-pro/compare/v0.0.37-15...v0.0.37-16) (2019-10-09)
 
 **Note:** Version bump only for package sample-stack-frontend-server
