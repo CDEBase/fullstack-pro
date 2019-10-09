@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/server-core",
-  "version": "0.0.38-alpha.12",
+  "version": "0.0.38-alpha.13",
   "description": "xterm server services for Node",
   "main": "lib/index.js",
   "scripts": {
@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "dependencies": {
-    "@sample-stack/core": "^0.0.38-alpha.12"
+    "@sample-stack/core": "^0.0.38-alpha.13"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
