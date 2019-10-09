@@ -42,8 +42,8 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/client-react": "file:../../packages/sample-client-react",
-    "@sample-stack/client-state": "file:../../packages/sample-client-state",
+    "@sample-stack/client-react": "file:../../../packages/sample-client-react",
+    "@sample-stack/client-state": "file:../../../packages/sample-client-state",
     "antd": "^3.16.6"
   },
   "peerDependencies": {

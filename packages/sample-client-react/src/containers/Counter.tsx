@@ -36,6 +36,6 @@ const mapDispatchToProps = (dispatch: Function) => ({
 // type DispatchProps = typeof dispatchProps;
 
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/8787
-export const Counter: React.ComponentClass<CounterOwnProps> =
-connect<any, any, CounterOwnProps>(mapStateToProps, mapDispatchToProps)(CounterComponent);
+export const Counter =
+connect<any, any, any>(mapStateToProps, mapDispatchToProps)(CounterComponent);
 
