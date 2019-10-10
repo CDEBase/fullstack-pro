@@ -102,7 +102,8 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "pm2": "^3.5.0"
   },
   "typescript": {
     "definition": "dist/main.d.ts"
