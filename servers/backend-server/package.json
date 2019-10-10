@@ -54,6 +54,7 @@
     "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env zen watch"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "@cdm-logger/server": "^5.0.5",
     "@common-stack/core": "0.0.208",
     "@common-stack/server-core": "0.0.208",
