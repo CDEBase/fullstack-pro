@@ -2,7 +2,33 @@ import hudson.Util;
 def pod_label = "worker-${UUID.randomUUID().toString()}"
 
 pipeline {
-  agent any
+  agent {
+    kubernetes {
+      label pod_label
+      defaultContainer 'jenkins-slave'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-slave
+spec:
+  containers:
+  - name: jenkins-slave
+    image: onjectiondevops/preload-image:v2
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: docker
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: docker
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+"""
+    }
+  }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
@@ -17,19 +43,18 @@ pipeline {
     HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
     HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
     DOCKER_GCR_LOGIN_KEY = credentials('jenkins-gcr-login-key')
-    CLUSTER_KUBE_CONFIG = credentials('cluster-kube-config')
     NODEJS_HOME = tool 'nodejs'
-    DOCKER_HOME = tool 'docker'
-    PATH="${env.NODEJS_HOME}/bin:${env.DOCKER_HOME}/bin:${env.PATH}"
+    PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
   }
 
   stages {
     stage ('dependencies'){
       steps{
         sh """
-          ${NODEJS_HOME}/bin/npm install
-          ${NODEJS_HOME}/bin/npm install -g lerna
-          ${NODEJS_HOME}/bin/npm run lerna
+          $NODEJS_HOME/bin/npm install
+          $NODEJS_HOME/bin/npm run lerna
+          #npm install
+          #npm run lerna
           """
       }
     }
@@ -37,7 +62,7 @@ pipeline {
   stage ('docker login'){
       steps{
         sh '''
-          docker login -u _json_key -p "$(cat ''' + DOCKER_GCR_LOGIN_KEY + ''')" https://gcr.io
+          docker login --username _json_key --password-stdin < ''' + DOCKER_GCR_LOGIN_KEY + ''' https://gcr.io
         '''
       }
     }
@@ -47,38 +72,38 @@ pipeline {
       stage ('frontend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*hemera-server $NODEJS_HOME/bin/npm run docker:build
             cd servers/frontend-server/
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           """
+        }
       }
-     }
 
       stage ('backend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*hemera-server $NODEJS_HOME/bin/npm run docker:build
             cd servers/backend-server/
             docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           """
-      }
+        }
       }
 
       stage ('hemera server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*hemera-server $NODEJS_HOME/bin/npm run docker:build
             cd servers/hemera-server/
             docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
           """
+        }
       }
-     }
     }
   }
 
@@ -94,8 +119,8 @@ pipeline {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
-            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack \
-            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
+          """
           }
       }
 }
