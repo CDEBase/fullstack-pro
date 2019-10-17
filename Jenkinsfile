@@ -45,8 +45,7 @@ pipeline {
       stage ('frontend server'){
         steps{
           sh """
-            sleep 3000
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*frontend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/frontend-server/
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
@@ -58,8 +57,7 @@ pipeline {
       stage ('backend server'){
         steps{
           sh """
-            sleep 3000
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*backend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/backend-server/
             docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
@@ -71,7 +69,6 @@ pipeline {
       stage ('hemera server'){
         steps{
           sh """
-            sleep 3000
             lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/hemera-server/
             docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
