@@ -33,6 +33,7 @@ pipeline {
           ${NODEJS_HOME}/bin/npm install
           ${NODEJS_HOME}/bin/npm install -g lerna
           ${NODEJS_HOME}/bin/npm run lerna
+          ${NODEJS_HOME}/bin/npm run build
           """
       }
     }
