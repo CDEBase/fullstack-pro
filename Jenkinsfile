@@ -13,7 +13,7 @@ pipeline {
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     choice(choices: 'All\nDev\nStage\nAllwithForce', description: 'defining environment to deploy chart on', name: 'Env')
-  },
+  }
   environment {
     FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")
     FRONTEND_PACKAGE_VERSION = getVersion("./servers/frontend-server/package.json")
