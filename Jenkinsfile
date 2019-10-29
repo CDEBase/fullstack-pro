@@ -97,6 +97,7 @@ pipeline {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
+            --set ingress.domain=cdebase.io
             --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack \
             --kubeconfig=""" + CLUSTER_KUBE_CONFIG
           }
