@@ -1,6 +1,3 @@
-import hudson.Util;
-def pod_label = "worker-${UUID.randomUUID().toString()}"
-
 pipeline {
   agent any
   parameters {
@@ -26,6 +23,7 @@ pipeline {
     NODEJS_HOME = tool 'nodejs'
     DOCKER_HOME = tool 'docker'
     PATH="${env.NODEJS_HOME}/bin:${env.DOCKER_HOME}/bin:${env.PATH}"
+    PYTHON='/usr/bin/python'
   }
 
   stages {
@@ -52,7 +50,7 @@ pipeline {
       stage ('frontend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*frontend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/frontend-server/
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
@@ -64,7 +62,7 @@ pipeline {
       stage ('backend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*backend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/backend-server/
             docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
