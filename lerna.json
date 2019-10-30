@@ -32,7 +32,6 @@
         "devpublish"
       ],
       "conventionalCommits": true,
-      "createRelease": "github",
       "message": "chore: release package(s)"
     }
   },
