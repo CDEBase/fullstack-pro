@@ -82,6 +82,7 @@
     "envalid": "^5.0.0",
     "error-stack-parser": "^2.0.2",
     "esm": "^3.2.22",
+    "express": "^4.16.4",
     "fela": "10.2.4",
     "fela-beautifier": "^10.2.4",
     "fela-dom": "10.2.4",
