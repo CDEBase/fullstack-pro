@@ -27,7 +27,7 @@ const config = {
                 ],
                 externals: [
                     nodeExternals({}),
-                    nodeExternals({ whitelist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals({ whitelist: [/webpack\/hot/i], modulesDir: "../../node_modules" })
                 ],
             }
         },
@@ -41,9 +41,7 @@ const config = {
     },
     options: {
         stack: [
-            'apollo',
             'ts',
-            'css',
             'webpack'
         ],
         cache: '../../.cache',
@@ -52,7 +50,6 @@ const config = {
         frontendBuildDir: "dist",
         dllBuildDir: "dist/.build/dll",
         webpackDll: false,
-        reactHotLoader: false,
         persistGraphQL: false,
         backendUrl: "http://{ip}:8080",
         frontendRefreshOnBackendChange: true,
