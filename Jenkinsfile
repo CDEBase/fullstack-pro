@@ -33,6 +33,7 @@ pipeline {
           ${NODEJS_HOME}/bin/npm install
           ${NODEJS_HOME}/bin/npm install -g lerna
           ${NODEJS_HOME}/bin/npm run lerna
+          ${NODEJS_HOME}/bin/npm run build
           """
       }
     }
@@ -54,7 +55,7 @@ pipeline {
             cd servers/frontend-server/
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-            docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
+            docker rmi ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           """
       }
      }
@@ -106,9 +107,11 @@ pipeline {
 
     post {
         success{
+          deleteDir()
           slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
         }
         failure{
+          deleteDir()
           slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
         }
     }
