@@ -109,7 +109,7 @@
     "@graphql-codegen/typescript-operations": "^1.5.0",
     "@graphql-codegen/typescript-react-apollo": "^1.5.0",
     "@graphql-codegen/typescript-resolvers": "^1.5.0",
-    "@hot-loader/react-dom": "^16.8.6",
+    "@hot-loader/react-dom": "^16.10.2",
     "@larix/zen": "0.1.13",
     "@types/async": "^2.4.1",
     "@types/body-parser": "1.17.0",
