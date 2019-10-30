@@ -22,7 +22,6 @@
     "version": {
       "allowBranch": ["master", "develop", "publish", "devpublish"],
       "conventionalCommits": true,
-      "createRelease": "github",
       "message": "chore: release package(s)"
     }
   },
