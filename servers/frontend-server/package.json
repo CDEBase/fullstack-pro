@@ -128,6 +128,7 @@
     "universal-cookie-express": "^3.1.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "7.6.0",
     "cross-env": "^5.2.0",
     "pm2": "^3.5.0",
     "rimraf": "^2.6.3"
