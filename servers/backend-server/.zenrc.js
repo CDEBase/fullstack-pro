@@ -42,6 +42,7 @@ const config = {
     options: {
         stack: [
             'ts',
+            "apollo",
             'webpack'
         ],
         cache: '../../.cache',
