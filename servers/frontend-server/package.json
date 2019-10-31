@@ -123,6 +123,7 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "rxjs": "^6.5.1",
     "serialize-javascript": "^1.7.0",
     "sourcemapped-stacktrace": "^1.1.9",
     "subscriptions-transport-ws": "0.9.15",
