@@ -36,7 +36,7 @@
     "lerna": "lerna bootstrap --hoist",
     "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
     "devpublish": "lerna publish prerelease --ignore-scripts",
-    "devpublish:changed": "lerna changed --ignore-scripts",
+    "devpublish:push": "git push origin devpublish",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "postdevpublish": "git checkout develop",
     "lerna:prepublish": "git checkout publish && git merge -s recursive -X theirs master",
