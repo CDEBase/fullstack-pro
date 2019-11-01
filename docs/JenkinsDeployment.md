@@ -11,6 +11,6 @@ The branches used for Jenkins deployment will be `devpublish` for testing `devel
 All modification in `Jenkinsfile` should be done in `develop` branch. As these changes need to be merged to `devpublish` for jenkins to use, you can run following command.
 
 ```
-npm run devpublish
+npm run devpublish:push
 ```
 
