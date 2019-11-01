@@ -35,7 +35,7 @@
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap --hoist",
     "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
-    "devpublish": "lerna publish --ignore-scripts --cd-version=prerelease",
+    "devpublish": "lerna publish from-git --ignore-scripts",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "postdevpublish": "git checkout develop",
     "lerna:prepublish": "git checkout publish && git merge -s recursive -X theirs master",
