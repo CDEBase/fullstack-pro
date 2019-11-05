@@ -10,6 +10,7 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 
+const dataSources =  modules.createDataSource();
 const defaultPreferences = modules.createDefaultPreferences();
 export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
     let apolloServer = new ApolloServer({
@@ -29,12 +30,15 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
             },
             // onDisconnect: () => {},
         },
-        dataSources: () => modules.createDataSource(),
+        dataSources: () => dataSources,
         context: async ({ req, res, connection }: { req: Express.Request, res: Express.Response, connection: any}) => {
-            let context;
+            let context, addons = {};
             try {
                 if (connection) {
                     context = connection.context;
+                    addons = {
+                        dataSources: dataSources,
+                    };
                 } else {
                     const pureContext = await modules.createContext(req, res);
                     const contextServices = await serviceContext(req, res);
@@ -52,6 +56,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
 
             return {
                 ...context,
+                ...addons,
             };
 
         },
