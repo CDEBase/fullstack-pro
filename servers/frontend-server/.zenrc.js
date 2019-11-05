@@ -3,6 +3,7 @@ var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
@@ -10,7 +11,10 @@ const config = {
     builders: {
         web: {
             entry: './src/index.tsx',
-            stack: ['web'],
+            output: {
+                chunkFilename: '[name].bundle.js',
+            },
+            stack: ['web', 'react'],
             tsLoaderOptions: {
                 configFileName: "./tsconfig.json"
             },
@@ -18,6 +22,9 @@ const config = {
             openBrowser: true,
             defines: {
                 __CLIENT__: true,
+            },
+            test: {
+                role: ['build', 'watch']
             },
             htmlTemplate: "../../tools/html-plugin-template.ejs",
             // Wait for backend to start prior to letting webpack load frontend page
@@ -93,12 +100,26 @@ const config = {
         frontendRefreshOnBackendChange: true,
         nodeDebugger: false,
         overridesConfig: "./tools/webpackAppConfig.js",
+        plugins: [
+            new Dotenv({
+                path: process.env.ENV_FILE
+            })
+        ],
         defines: {
-            __DEV__: process.env.NODE_ENV !== 'production',
+            __DEV__: process.env.NODE_ENV === 'development',
             __GRAPHQL_URL__: '"http://localhost:8080/graphql"',
         }
     }
 };
+if (process.env.NODE_ENV === 'development') {
+    config.builders.web.webpackConfig = {
+        plugins: [
+            new Dotenv({
+                path: process.env.ENV_FILE
+            })
+        ],
+    }
+}
 
 if (process.env.SSR) {
     config.builders.server.enabled = true;
@@ -108,14 +129,17 @@ if (process.env.SSR) {
 }
 if (process.env.NODE_ENV !== 'development') {
     config.builders.server.enabled = true;
+    config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
     config.options.ssr = true;
     config.options.backendUrl = "http://localhost:3010";
 }
+
 if (process.env.NODE_ENV === 'production') {
-    config.options.defines.__BACKEND_URL__ = '"http://localhost:3010"';
     // Generating source maps for production will slowdown compilation for roughly 25%
     config.options.sourceMap = false;
 }
+
+
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
@@ -133,8 +157,9 @@ if (process.env.NODE_ENV !== 'production') {
         var dotenv = require('dotenv-safe')
             .config(
                 {
+                    allowEmptyValues: true,
                     path: process.env.ENV_FILE,
-                    example: '../../config/development/dev.env.sample'
+                    example: '../../config/development/dev.env',
                 });
         const envConfig = {
             plugins: [
