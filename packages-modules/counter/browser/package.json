@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.39-alpha.6",
+  "version": "0.0.39-alpha.7",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -42,8 +42,8 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/client-react": "^0.0.39-alpha.6",
-    "@sample-stack/client-state": "^0.0.39-alpha.6",
+    "@sample-stack/client-react": "^0.0.39-alpha.7",
+    "@sample-stack/client-state": "^0.0.39-alpha.7",
     "antd": "^3.16.6"
   },
   "peerDependencies": {
