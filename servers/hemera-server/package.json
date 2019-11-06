@@ -27,7 +27,7 @@
     "license": "ISC",
     "dependencies": {
         "@cdm-logger/server": "^5.0.5",
-        "@sample-stack/core": "0.0.39-alpha.7",
+        "@sample-stack/core": "^0.0.39-alpha.7",
         "@sample-stack/hemera-plugin": "^0.0.39-alpha.7",
         "@sample-stack/server-core": "^0.0.39-alpha.7",
         "dotenv": "^7.0.0",
