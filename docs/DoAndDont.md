@@ -22,7 +22,7 @@ Don't do it...
 
    `lerna add --scope=<package name> <package>`
 
-   Ideally, root `package.json` should have all the `devDependencies` of the project while `packages` & `servers` file references should be under `dependencies` section.
+   Ideally, root `package.json` should have all the `devDependencies` of the project while `packages` & `servers` file references should be under `dependencies` section as shown [here](https://github.com/cdmbase/fullstack-pro/blob/master/package.json#L67-L78).
 
    Sometimes we may need to `pin` a package as other dependencies can bring some older versions of the package we want to add. In that case we can pin the required package version by adding to the `pacakge.json`. But make sure you don't have different version of the package in `servers` or `packages` otherwise a duplciate package will be added to its `nodemodules`.
 
