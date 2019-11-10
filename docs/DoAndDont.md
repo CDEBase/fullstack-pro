@@ -6,7 +6,7 @@ Don't do it...
 1. `npm install <package>`
 
     Do not install dependencies as `npm install <package dependency>`.
-    We use `lerna` and the way it work for the project is by installing `dependencies` to the `packages` or `servers` that requires. In most cases,
+    We use `lerna` and the way it works for the project is by installing `dependencies` to the `packages` or `servers` that requires it. In most cases,
     you can just add the package to frontend or backend by running following
 
     > to add to the frontend server so browser gets it
