@@ -5,7 +5,7 @@ Don't do it...
 ---
 1. `npm install <package>`
 
-    Do not install dependencies as `npm install <package>`.
+    Do not install dependencies as `npm install <package dependency>`.
     We use `lerna` and the way it work for the project is by installing `dependencies` to the `packages` or `servers` that requires. In most cases,
     you can just add the package to frontend or backend by running following
 
@@ -26,6 +26,6 @@ Do
 ---
 1. Each package version should be uniform across the repository
 
-    Before adding a `<package>`, see if the package of different version exist. If it exist then update that version to the required version.
+    Before adding a `<package dependency>`, see if the package of different version exist. If it exist then update that version to the required version.
 
 2. You can edit one of the `packages` or `servers`'s `package.json` file directly to add a `dependencies` and then run `npm run lerna` to install them. This is a easy way to install a known version by adding to the target `pacakage.json` file.
