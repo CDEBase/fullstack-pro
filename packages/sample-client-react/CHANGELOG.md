@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.9](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.8...v0.0.39-alpha.9) (2019-11-12)
+
+**Note:** Version bump only for package @sample-stack/client-react
+
+
+
+
+
 ## [0.0.39-alpha.7](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.6...v0.0.39-alpha.7) (2019-11-05)
 
 **Note:** Version bump only for package @sample-stack/client-react
