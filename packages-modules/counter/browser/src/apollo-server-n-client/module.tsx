@@ -7,7 +7,6 @@ import { resolvers, defaults, schema } from './graphql';
 import { Feature } from '@common-stack/client-react';
 import { filteredMenus, filteredRoutes } from './compute';
 
-console.log('---SCHEMA ', schema);
 export default new Feature({
   menuConfig: filteredMenus,
   routeConfig: filteredRoutes,
