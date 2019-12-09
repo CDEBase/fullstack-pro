@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-backend-server",
-  "version": "0.0.1",
+  "version": "0.0.39-alpha.10",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [
@@ -26,7 +26,8 @@
   "main": "dist/index.js",
   "typings": "dist/main.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production zen build",
+    "zen:build": "zen build -x",
+    "build": "cross-env NODE_ENV=production npm run zen:build",
     "build:clean": "rimraf dist",
     "db:migrate": "knex -- migrate:latest --cwd . --knexfile ./knexfile.js",
     "db:migrate:rollback": "knex -- migrate:rollback  --cwd . --knexfile ./knexfile.js",
@@ -48,20 +49,21 @@
     "test:watch": "npm test -- --watch",
     "preupver": "npm test",
     "upver": "standard-version",
-    "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env zen watch",
-    "watch:debug": "npm run watch -- -v",
-    "watch:staging": "cross-env NODE_ENV=test ENV_FILE=../../config/staging/staging.env zen watch",
-    "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env zen watch"
+    "zen:watch": "zen watch -x",
+    "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch",
+    "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch -- -v",
+    "watch:staging": "cross-env NODE_ENV=test ENV_FILE=../../config/staging/staging.env npm run zen:watch",
+    "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env npm run zen:watch"
   },
   "dependencies": {
     "@cdm-logger/server": "^5.0.5",
     "@common-stack/core": "0.0.208",
     "@common-stack/server-core": "0.0.208",
-    "@sample-stack/core": "file:../../packages/sample-core",
-    "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
-    "@sample-stack/microservice-nats": "file:../../packages/sample-microservice-nats",
-    "@sample-stack/server-core": "file:../../packages/sample-server-core",
-    "@sample-stack/store": "file:../../packages/sample-store",
+    "@sample-stack/core": "^0.0.39-alpha.9",
+    "@sample-stack/counter-module-server": "^0.0.39-alpha.9",
+    "@sample-stack/microservice-nats": "^0.0.39-alpha.9",
+    "@sample-stack/server-core": "^0.0.39-alpha.9",
+    "@sample-stack/store": "^0.0.39-alpha.9",
     "apollo-datasource": "^0.6.3",
     "apollo-datasource-rest": "^0.6.6",
     "apollo-errors": "^1.9.0",

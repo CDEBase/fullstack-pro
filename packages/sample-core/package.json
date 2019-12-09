@@ -1,6 +1,6 @@
 {
 	"name": "@sample-stack/core",
-	"version": "0.0.1",
+	"version": "0.0.39-alpha.9",
 	"description": "Sample core for higher packages to depend on",
 	"main": "lib/index.js",
 	"scripts": {
@@ -42,5 +42,6 @@
 	"typings": "lib/index.d.ts",
 	"typescript": {
 		"definition": "lib/index.d.ts"
-	}
+	},
+	"gitHead": "47e45a1688f2ba3317871da3df999831af796de6"
 }

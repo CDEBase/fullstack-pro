@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -60,7 +60,7 @@
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
     "zen:build": "cross-env NODE_ENV=production zen build",
     "zen:exp": "zen exp",
-    "zen:watch": "zen watch",
+    "zen:watch": "zen  watch -x",
     "zen:watch:debug": "npm run zen:watch -- -v"
   },
   "dependencies": {
@@ -114,7 +114,7 @@
     "@graphql-codegen/typescript-react-apollo": "1.8.0",
     "@graphql-codegen/typescript-resolvers": "1.8.0",
     "@hot-loader/react-dom": "^16.10.2",
-    "@larix/zen": "0.1.32",
+    "@larix/zen": "0.1.34",
     "@types/async": "^2.4.1",
     "@types/body-parser": "1.17.0",
     "@types/bunyan": "^1.8.6",
