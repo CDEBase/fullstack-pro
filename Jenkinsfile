@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters {
-    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
+    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
@@ -18,44 +18,44 @@ pipeline {
     BACKEND_PACKAGE_VERSION = getVersion("./servers/backend-server/package.json")
     HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
     HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
-    DOCKER_GCR_LOGIN_KEY = credentials('jenkins-gcr-login-key')
-    CLUSTER_KUBE_CONFIG = credentials('cluster-kube-config')
-    NODEJS_HOME = tool 'nodejs'
-    DOCKER_HOME = tool 'docker'
-    PATH="${env.NODEJS_HOME}/bin:${env.DOCKER_HOME}/bin:${env.PATH}"
     PYTHON='/usr/bin/python'
+    GCR_KEY = credentials('jenkins-gcr-login-key')
+    GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
   }
+
+  tools {
+        nodejs 'nodejs'
+        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+    }
 
   stages {
     stage ('dependencies'){
       steps{
         sh """
-          ${NODEJS_HOME}/bin/npm install
-          ${NODEJS_HOME}/bin/npm install -g lerna
-          ${NODEJS_HOME}/bin/npm run lerna
-          ${NODEJS_HOME}/bin/npm run build
+          npm install
+          npm install -g lerna
+          npm run lerna
+          npm run build
           """
       }
     }
 
-  stage ('docker login'){
+    stage('Docker login'){
       steps{
-        sh '''
-          docker login -u _json_key -p "$(cat ''' + DOCKER_GCR_LOGIN_KEY + ''')" https://gcr.io
-        '''
+           sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
+        }
       }
-    }
 
   stage("Docker Build") {
     parallel {
       stage ('frontend server'){
         steps{
           sh """
-            lerna exec --scope=*frontend-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*frontend-server npm run docker:build
             cd servers/frontend-server/
-            docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-            docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
-            docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
+            docker tag ${FRONTEND_PACKAGE_NAME}:${FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}:${FRONTEND_PACKAGE_VERSION}
+            docker push ${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}:${FRONTEND_PACKAGE_VERSION}
+            docker rmi ${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}:${FRONTEND_PACKAGE_VERSION}
           """
       }
      }
@@ -63,11 +63,11 @@ pipeline {
       stage ('backend server'){
         steps{
           sh """
-            lerna exec --scope=*backend-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*backend-server npm run docker:build
             cd servers/backend-server/
-            docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
-            docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
-            docker rmi ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
+            docker tag ${BACKEND_PACKAGE_NAME}:${BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${BACKEND_PACKAGE_NAME}:${BACKEND_PACKAGE_VERSION}
+            docker push ${REPOSITORY_SERVER}/${BACKEND_PACKAGE_NAME}:${BACKEND_PACKAGE_VERSION}
+            docker rmi ${REPOSITORY_SERVER}/${BACKEND_PACKAGE_NAME}:${BACKEND_PACKAGE_VERSION}
           """
       }
       }
@@ -75,11 +75,11 @@ pipeline {
       stage ('hemera server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
+            lerna exec --scope=*hemera-server npm run docker:build
             cd servers/hemera-server/
-            docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
-            docker push ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
-            docker rmi ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
+            docker tag ${HEMERA_PACKAGE_NAME}:${HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${HEMERA_PACKAGE_NAME}:${HEMERA_PACKAGE_VERSION}
+            docker push ${REPOSITORY_SERVER}/${HEMERA_PACKAGE_NAME}:${HEMERA_PACKAGE_VERSION}
+            docker rmi ${REPOSITORY_SERVER}/${HEMERA_PACKAGE_NAME}:${HEMERA_PACKAGE_VERSION}
           """
       }
      }
@@ -89,6 +89,9 @@ pipeline {
       stage('Chart Deployment'){
         steps{
           sh """
+            gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
+            gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
+
             helm repo update
             helm upgrade -i \
             --set frontend.image="${REPOSITORY_SERVER}/${FRONTEND_PACKAGE_NAME}" \
@@ -99,8 +102,8 @@ pipeline {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=cdebase.io \
-            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack \
-            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
+            """
           }
       }
 }
