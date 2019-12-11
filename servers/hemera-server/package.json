@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-hemera-server",
-    "version": "0.0.38",
+    "version": "0.0.39",
     "description": "",
     "main": "index.js",
     "private": true,
@@ -48,5 +48,5 @@
         "cross-env": "^5.2.0",
         "pm2": "^3.5.0",
         "rimraf": "^2.6.3"
-      }
+    }
 }
