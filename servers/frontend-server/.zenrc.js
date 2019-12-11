@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const config = {
     builders: {
@@ -36,15 +37,16 @@ const config = {
                         // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
                         flattening: true
                       }),
+                      new ReactRefreshWebpackPlugin(),
                 ],
                 // for additional webpack configuration.
-                resolve: process.env.NODE_ENV !== 'production'
-                    ? {
-                        alias: {
-                            'react-dom': '@hot-loader/react-dom'
-                        }
-                    }
-                    : {},
+                // resolve: process.env.NODE_ENV !== 'production'
+                //     ? {
+                //         alias: {
+                //             'react-dom': '@hot-loader/react-dom'
+                //         }
+                //     }
+                //     : {},
             }
         },
         server: {
