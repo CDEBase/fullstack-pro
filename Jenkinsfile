@@ -1,39 +1,15 @@
-import hudson.Util;
-def pod_label = "worker-${UUID.randomUUID().toString()}"
-
 pipeline {
-  agent {
-    kubernetes {
-      label pod_label
-      defaultContainer 'jenkins-slave'
-      yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: jenkins-slave
-spec:
-  containers:
-  - name: jenkins-slave
-    image: onjectiondevops/preload-image:v2
-    command:
-    - cat
-    tty: true
-    volumeMounts:
-    - name: docker
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: docker
-    hostPath:
-      path: /var/run/docker.sock
-      type: Socket
-"""
-    }
-  }
+  agent any
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'container repository registry')
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'namespace')
+    string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
+    string(name: 'DEBUGGING', defaultValue: 'false', description: 'debugging')
+    string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
+    string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
+    choice(choices: 'All\nDev\nStage\nAllwithForce', description: 'defining environment to deploy chart on', name: 'Env')
   }
   environment {
     FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")
@@ -43,14 +19,21 @@ spec:
     HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
     HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
     DOCKER_GCR_LOGIN_KEY = credentials('jenkins-gcr-login-key')
+    CLUSTER_KUBE_CONFIG = credentials('cluster-kube-config')
+    NODEJS_HOME = tool 'nodejs'
+    DOCKER_HOME = tool 'docker'
+    PATH="${env.NODEJS_HOME}/bin:${env.DOCKER_HOME}/bin:${env.PATH}"
+    PYTHON='/usr/bin/python'
   }
 
   stages {
     stage ('dependencies'){
       steps{
         sh """
-          npm install
-          npm run lerna
+          ${NODEJS_HOME}/bin/npm install
+          ${NODEJS_HOME}/bin/npm install -g lerna
+          ${NODEJS_HOME}/bin/npm run lerna
+          ${NODEJS_HOME}/bin/npm run build
           """
       }
     }
@@ -58,7 +41,7 @@ spec:
   stage ('docker login'){
       steps{
         sh '''
-          docker login --username _json_key --password-stdin < ''' + DOCKER_GCR_LOGIN_KEY + ''' https://gcr.io
+          docker login -u _json_key -p "$(cat ''' + DOCKER_GCR_LOGIN_KEY + ''')" https://gcr.io
         '''
       }
     }
@@ -68,38 +51,38 @@ spec:
       stage ('frontend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server npm run docker:build
+            lerna exec --scope=*frontend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/frontend-server/
             docker tag $FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}//$FRONTEND_PACKAGE_NAME:$FRONTEND_PACKAGE_VERSION
           """
-        }
       }
+     }
 
       stage ('backend server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server npm run docker:build
+            lerna exec --scope=*backend-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/backend-server/
             docker tag $BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$BACKEND_PACKAGE_NAME:$BACKEND_PACKAGE_VERSION
           """
-        }
+      }
       }
 
       stage ('hemera server'){
         steps{
           sh """
-            lerna exec --scope=*hemera-server npm run docker:build
+            lerna exec --scope=*hemera-server ${NODEJS_HOME}/bin/npm run docker:build
             cd servers/hemera-server/
             docker tag $HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker push ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
             docker rmi ${REPOSITORY_SERVER}/$HEMERA_PACKAGE_NAME:$HEMERA_PACKAGE_VERSION
           """
-        }
       }
+     }
     }
   }
 
@@ -115,17 +98,20 @@ spec:
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
-            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
-          """
+            --set ingress.domain=cdebase.io \
+            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack \
+            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
           }
       }
 }
 
     post {
         success{
+          deleteDir()
           slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
         }
         failure{
+          deleteDir()
           slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
         }
     }

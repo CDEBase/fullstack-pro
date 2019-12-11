@@ -62,7 +62,8 @@
     "@sample-stack/microservice-nats": "file:../../packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:../../packages/sample-server-core",
     "@sample-stack/store": "file:../../packages/sample-store",
-    "apollo-datasource-rest": "^0.6.1",
+    "apollo-datasource": "^0.6.3",
+    "apollo-datasource-rest": "^0.6.6",
     "apollo-errors": "^1.9.0",
     "apollo-link": "^1.2.12",
     "apollo-link-batch-http": "^1.2.12",
@@ -71,11 +72,15 @@
     "apollo-link-http": "^1.5.15",
     "apollo-link-ws": "^1.0.18",
     "apollo-logger": "^0.3.2",
-    "apollo-server-core": "^2.4.8",
-    "apollo-server-express": "^2.4.8",
+    "apollo-server-cache-memcached": "^0.6.3",
+    "apollo-server-caching": "^0.5.0",
+    "apollo-server-core": "^2.9.7",
+    "apollo-server-express": "^2.9.7",
+    "apollo-server-plugin-response-cache": "^0.3.5",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dataloader": "^1.4.0",
     "dotenv": "^7.0.0",
     "envalid": "^5.0.0",
     "esm": "^3.2.22",
@@ -99,6 +104,11 @@
     "subscriptions-transport-ws": "0.9.15",
     "universal-cookie-express": "^3.1.0",
     "ws": "^6.2.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "pm2": "^3.5.0",
+    "rimraf": "^2.6.3"
   },
   "typescript": {
     "definition": "dist/main.d.ts"
