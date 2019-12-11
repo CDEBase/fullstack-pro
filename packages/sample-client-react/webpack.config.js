@@ -59,7 +59,17 @@ var webpack_opts = {
         fallback: 'style-loader',
         use: [
           { loader: 'css-loader', options: { importLoaders: 1 } },
-          { loader: 'postcss-loader', options: { config: { path: './src/postcss.config.js' } } }
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [
+                require("autoprefixer")({
+                  browsers: ["> 1%", "last 2 versions"]
+                })
+              ],
+              config: { path: "./src/postcss.config.js" }
+            }
+          }
         ]
       })
     },
