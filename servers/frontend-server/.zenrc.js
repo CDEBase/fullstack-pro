@@ -32,7 +32,10 @@ const config = {
             enabled: true,
             webpackConfig: {
                 plugins: [
-                    new LodashModuleReplacementPlugin
+                    new LodashModuleReplacementPlugin({
+                        // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
+                        flattening: true
+                      }),
                 ],
                 // for additional webpack configuration.
                 resolve: process.env.NODE_ENV !== 'production'
@@ -63,7 +66,10 @@ const config = {
                         from: '../../tools/esm-wrapper.js',
                         to: 'index.js',
                     }]),
-                    new LodashModuleReplacementPlugin
+                    new LodashModuleReplacementPlugin({
+                        // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
+                        flattening: true
+                      }),
                 ],
                 externals: [
                     nodeExternals(),
