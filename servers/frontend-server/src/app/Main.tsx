@@ -1,6 +1,5 @@
 /// <reference path='../../../../typings/index.d.ts' />
 ///<reference types="webpack-env" />
-import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import * as ReactFela from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
@@ -104,4 +103,4 @@ export class Main extends React.Component<any, MainState> {
   }
 }
 
-export default hot(Main);
+export default Main;
