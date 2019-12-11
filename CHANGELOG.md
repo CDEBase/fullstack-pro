@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.11](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.10...v0.0.39-alpha.11) (2019-12-11)
+
+
+### Reverts
+
+* Revert "browsers list" ([71acf23](https://github.com/cdmbase/fullstack-pro/commit/71acf23818f49ad86cc017588ad5a73477f767e8))
+
+
+
+
+
 ## [0.0.39-alpha.10](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.9...v0.0.39-alpha.10) (2019-11-12)
 
 **Note:** Version bump only for package sample-stack
