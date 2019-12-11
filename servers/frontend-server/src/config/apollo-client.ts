@@ -96,6 +96,11 @@ if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
 }
 
 let _apolloClient: ApolloClient<any>;
+
+const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
+
+const typeDefs = [schema, clientState.typeDefs].join('\n');
+
 const createApolloClient = () => {
     if (_apolloClient) {
         // return quickly if client is already created.
@@ -103,8 +108,8 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        typeDefs: schema.concat(modules.getStateParams().typeDefs as string),
-        resolvers: modules.getStateParams().resolvers,
+        typeDefs: typeDefs,
+        resolvers: clientState.resolvers,
         link: ApolloLink.from(links),
         cache,
     };
@@ -121,7 +126,7 @@ const createApolloClient = () => {
     _apolloClient = new ApolloClient<any>(params);
     cache.writeData({
         data: {
-            ...modules.getStateParams().defaults,
+            ...clientState.defaults,
         },
     });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
