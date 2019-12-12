@@ -14,6 +14,7 @@ pipeline {
 
   // Setup common + secret key variables for pipeline.
   environment {
+      BUILD_COMMAND = getBuildCommand()
       PYTHON='/usr/bin/python'
       GCR_KEY = credentials('jenkins-gcr-login-key')
       GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
@@ -29,6 +30,8 @@ pipeline {
     stage ('dependencies'){
       when { expression { params.ENV_CHOICE == 'allenv' } }
       steps{
+        load "./jenkins_variables.groovy"
+        echo "Hey .... ${BUILD_COMMAND}"
         sh """
           npm install
           npm install -g lerna
