@@ -8,8 +8,8 @@ pipeline {
       string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
       string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
       string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
-      booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
       choice choices: ['dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+      booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
   }
 
   // Setup common + secret key variables for pipeline.
