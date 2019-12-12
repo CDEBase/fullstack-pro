@@ -14,13 +14,6 @@ def getName(json_file_path){
 return name
 }
 
-def getBuildCommand(){
-  if(DEBUG.toBoolean()){
-    return 'build:debug'
-  } else {
-    return 'build'
-  }
-}
 
 // Variables for package name and versions
 env.FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")

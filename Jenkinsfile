@@ -150,3 +150,11 @@ pipeline {
         }
     }
 }
+
+def getBuildCommand(){
+  if(DEBUG.toBoolean()){
+    return 'build:debug'
+  } else {
+    return 'build'
+  }
+}
