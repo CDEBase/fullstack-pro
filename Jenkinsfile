@@ -6,9 +6,9 @@ pipeline {
       string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
       string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
       string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
-      string(name: 'DEBUGGING', defaultValue: 'false', description: 'debugging')
       string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
       string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
+      booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
       choice choices: ['dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
   }
 
@@ -55,7 +55,7 @@ pipeline {
         steps{
           load "./jenkins_variables.groovy"
           sh """
-            lerna exec --scope=*frontend-server npm run docker:build
+            lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
             cd servers/frontend-server/
             docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
@@ -69,7 +69,7 @@ pipeline {
         steps{
           load "./jenkins_variables.groovy"
           sh """
-            lerna exec --scope=*backend-server npm run docker:build
+            lerna exec --scope=*backend-server npm run docker:${BUILD_COMMAND}
             cd servers/backend-server/
             docker tag ${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
@@ -83,7 +83,7 @@ pipeline {
         steps{
           load "./jenkins_variables.groovy"
           sh """
-            lerna exec --scope=*hemera-server npm run docker:build
+            lerna exec --scope=*hemera-server npm run docker:${BUILD_COMMAND}
             cd servers/hemera-server/
             docker tag ${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
