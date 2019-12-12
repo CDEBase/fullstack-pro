@@ -30,8 +30,6 @@ pipeline {
     stage ('dependencies'){
       when { expression { params.ENV_CHOICE == 'allenv' } }
       steps{
-        load "./jenkins_variables.groovy"
-        echo "Hey .... ${BUILD_COMMAND}"
         sh """
           npm install
           npm install -g lerna
