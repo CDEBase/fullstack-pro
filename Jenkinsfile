@@ -99,18 +99,18 @@ pipeline {
                 beforeInput true
               }
 
-              input {
-                    message "Want to deploy fullstack-pro on dev cluster?"
-                    parameters {
-                         choice choices: ['yes', 'no'], description: 'Want to deploy micro service on dev?', name: 'DEV_DEPLOYMENT'
-                    }
-                }
+              //input {
+              //      message "Want to deploy fullstack-pro on dev cluster?"
+              //      parameters {
+              //           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on dev?', name: 'DEV_DEPLOYMENT'
+              //      }
+              //}
 
               // Stages only run if user select env 'dev' or 'allenv' .
               //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
               stages{
                 stage('Fullstack-pro Deployment'){
-                    when {environment name: 'DEV_DEPLOYMENT', value: 'yes'}
+                    //when {environment name: 'DEV_DEPLOYMENT', value: 'yes'}
                     steps{
                         load "./jenkins_variables.groovy"
                         sh """
