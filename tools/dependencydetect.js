@@ -30,7 +30,7 @@ glob(`${folder}package.json`, null, (err, files) => {
                                 const { version } = objVersion;
                                 dependencies[key] = version;
                                 const str = JSON.stringify(obj, null, 2);
-                                fs.writeFileSync(fileWrie, `${str}`,  'ascii');
+                                fs.writeFileSync(fileWrie, str,  'ascii');
                             });
                         });
                     });
