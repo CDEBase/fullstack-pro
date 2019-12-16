@@ -61,7 +61,8 @@
     "zen:build": "cross-env NODE_ENV=production zen build",
     "zen:exp": "zen exp",
     "zen:watch": "zen watch",
-    "zen:watch:debug": "npm run zen:watch -- -v"
+    "zen:watch:debug": "npm run zen:watch -- -v",
+    "testpublish:push": "node tools/dependencydetect.js"
   },
   "dependencies": {
     "@sample-stack/client-react": "file:packages/sample-client-react",

@@ -24,7 +24,7 @@ glob(`${folder}package.json`, null, (err, files) => {
 
                         files.forEach(file => {
                             fs.readFile(file, 'utf-8', (err, data) => {
-                                if (err) return console.log('Unable to scan directory: ' + err);
+                                if (err) return console.error('Unable to scan directory: ' + err);
 
                                 const objVersion = JSON.parse(data);
                                 const { version } = objVersion;
