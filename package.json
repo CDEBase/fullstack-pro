@@ -34,7 +34,7 @@
     "generateGraphql:watch": "npm run generateGraphql -- --watch",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap --hoist",
-    "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
+    "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop && node tools/update-dependency-version.js",
     "devpublish": "lerna publish prerelease --ignore-scripts",
     "devpublish:push": "npm run predevpublish && git push origin devpublish && npm run postdevpublish",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
