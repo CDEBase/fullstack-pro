@@ -34,11 +34,11 @@
     "generateGraphql:watch": "npm run generateGraphql -- --watch",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap --hoist",
-    "predevpublish": "git checkout devpublish && git merge -s recursive -X theirs develop",
+    "predevpublish": "git checkout testpublish && git merge -s recursive -X theirs testdevelop && node ./tools/dependencydetect.js",
     "devpublish": "lerna publish prerelease --ignore-scripts",
-    "devpublish:push": "npm run predevpublish && git push origin devpublish && npm run postdevpublish",
+    "devpublish:push": "npm run predevpublish && git push origin testpublish && npm run postdevpublish",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
-    "postdevpublish": "git checkout develop",
+    "postdevpublish": "git checkout testpublish",
     "prelernapublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
@@ -60,8 +60,9 @@
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
     "zen:build": "cross-env NODE_ENV=production zen build",
     "zen:exp": "zen exp",
-    "zen:watch": "zen  watch -x",
-    "zen:watch:debug": "npm run zen:watch -- -v"
+    "zen:watch": "zen watch",
+    "zen:watch:debug": "npm run zen:watch -- -v",
+    "testpublish:push": "node tools/dependencydetect.js"
   },
   "dependencies": {
     "@sample-stack/client-react": "file:packages/sample-client-react",
