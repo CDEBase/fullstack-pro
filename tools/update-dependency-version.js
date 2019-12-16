@@ -27,7 +27,7 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
 
                                 const objVersion = JSON.parse(data);
                                 const { version } = objVersion;
-                                dependencies[key] = version;
+                                dependencies[key] = `^${version};
                                 const str = JSON.stringify(obj, null, 2);
                                 fs.writeFileSync(fileWrie, str,  'ascii');
                             });
