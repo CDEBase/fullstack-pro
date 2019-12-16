@@ -15,7 +15,7 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
             const fileWrie = file
 
             for (let key in dependencies) {
-                if (dependencies[key].includes('file')){
+                if (dependencies[key].includes('file:')){
                     const folderRoad = dependencies[key].split(':');
                     const localFolder = folderRoad[1].slice(3);
                     glob(`${SERVER_FOLDER}/${localFolder}/package.json`, null, (err, files) => {
