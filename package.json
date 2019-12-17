@@ -62,7 +62,7 @@
     "zen:exp": "zen exp",
     "zen:watch": "zen watch",
     "zen:watch:debug": "npm run zen:watch -- -v",
-    "autocommit": "node tools/dependencydetect.js if [git status]; then git add . && git commit -m 'new version'"
+    "autocommit": "node tools/dependencydetect.js if[git status] then git add . && git commit -m 'new version'"
   },
   "dependencies": {
     "@sample-stack/client-react": "file:packages/sample-client-react",
