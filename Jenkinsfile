@@ -128,6 +128,18 @@ pipeline {
                           """
                     }
                 }
+
+                stage('Hemera Server Deployment'){
+                  steps{
+                    load "./jenkins_variables.groovy"
+                    sh """
+                        helm upgrade -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                        --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" charts/hemera
+                    """
+                  }
+                }
+
               }
             } // End of dev deployment code block.
 
