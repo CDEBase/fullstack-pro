@@ -54,7 +54,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
-            cd servers/frontend-server/
             docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
@@ -68,7 +67,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*backend-server npm run docker:${BUILD_COMMAND}
-            cd servers/backend-server/
             docker tag ${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
@@ -82,7 +80,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*hemera-server npm run docker:${BUILD_COMMAND}
-            cd servers/hemera-server/
             docker tag ${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
