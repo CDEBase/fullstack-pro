@@ -1,0 +1,15 @@
+{{- if .Values.external.service.nats.enabled  }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "nats.fullname" . }}
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    component: {{ template "nats.fullname" . }}
+spec:
+  type: ExternalName
+  externalName:  {{ .Values.external.service.nats.serviceName | quote }}
+  ports:
+  - port: {{ .Values.external.service.nats.port }}
+{{- end -}}
