@@ -39,8 +39,7 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
             }
         });
     });
-})
-git.status()
+    git.status()
     .then((status) => {
         if (status.modified.length){
             const fileArray = status.modified.filter(element =>  element.includes('package.json'));
@@ -50,3 +49,5 @@ git.status()
         } else console.log('no change');
     })
     .catch(err => console.error(err));
+})
+
