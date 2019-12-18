@@ -43,7 +43,6 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
 git.status()
     .then((status) => {
         if (status.modified.length){
-            git.commit('update version to ');
             const fileArray = status.modified.filter(element =>  element.includes('package.json'));
             const addArray = fileArray.map(element => `./${element}`)
             git.add(addArray);
