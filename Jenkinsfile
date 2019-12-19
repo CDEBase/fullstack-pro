@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
       string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
-      string(name: 'NAMESPACE', defaultValue: 'adminide', description: 'In which namespace micro services needs to be deploy', trim: true)
+      string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
       string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
       string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
       string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
