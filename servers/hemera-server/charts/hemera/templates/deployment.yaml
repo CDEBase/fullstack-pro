@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    draft: {{ default "draft-app" .Values.draft }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      annotations:
+        buildID: {{ default "builtwithhelm" .Values.buildID }}
+      labels:
+        draft: {{ default "draft-app" .Values.draft }}
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace 
+{{- if  .Values.external.service.mongodb.enabled }}
+          - name: MONGO_URL
+            value: "{{ template "mongodb_service" . }}"
+{{- end }}
+{{- if  .Values.external.service.redis.enabled }}
+          - name: REDIS_URL
+            value: "{{ template "redis_service" . }}"
+{{- end }}
+{{- if  .Values.external.service.zipkin.enabled }}
+          - name: ZIPKIN_URL
+            value: {{ template "zipkin_host" . }}
+          - name: ZIPKIN_PORT
+            value: {{ .Values.external.service.zipkin.port | quote }}
+{{- end }}
+{{- if  .Values.external.service.nats.enabled }}
+          - name: NATS_PW
+            value: {{ .Values.external.service.nats.password | quote }}
+          - name: NATS_URL
+            value: "{{ template "nats_service" . }}"
+          - name: NATS_USER
+            value: {{ .Values.external.service.nats.user | quote }}
+{{- end }}
+{{- range $name, $value := .Values.env }}
+{{- if not (empty $value) }}
+          - name: {{ $name | quote }}
+            value: {{ $value | quote }}
+{{- end }}
+{{- end }}
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}

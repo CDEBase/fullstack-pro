@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
       string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
-      string(name: 'NAMESPACE', defaultValue: 'adminide', description: 'In which namespace micro services needs to be deploy', trim: true)
+      string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
       string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
       string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
       string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
@@ -54,7 +54,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
-            cd servers/frontend-server/
             docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
@@ -68,7 +67,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*backend-server npm run docker:${BUILD_COMMAND}
-            cd servers/backend-server/
             docker tag ${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
@@ -82,7 +80,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           sh """
             lerna exec --scope=*hemera-server npm run docker:${BUILD_COMMAND}
-            cd servers/hemera-server/
             docker tag ${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
             docker push ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
             docker rmi ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
@@ -131,6 +128,19 @@ pipeline {
                           """
                     }
                 }
+
+                stage('Hemera Server Deployment'){
+                  steps{
+                    load "./jenkins_variables.groovy"
+                    sh """
+                        cd servers/hemera-server
+                        helm upgrade -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                        --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" charts/hemera
+                    """
+                  }
+                }
+
               }
             } // End of dev deployment code block.
 
