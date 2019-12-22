@@ -73,6 +73,8 @@
     "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
+    "install": "^0.13.0",
+    "npm": "^6.13.4",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
     "sample-stack-hemera-server": "file:servers/hemera-server"
@@ -202,6 +204,8 @@
     "mocha-steps": "^1.3.0",
     "mocha-webpack": "^1.1.0",
     "module": "^1.2.5",
+    "moleculer": "^0.13.12",
+    "moleculer-repl": "^0.6.2",
     "morgan": "^1.9.1",
     "nock": "^10.0.6",
     "node-dev": "^4.0.0",
