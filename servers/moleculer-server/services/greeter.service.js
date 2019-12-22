@@ -1,26 +1,18 @@
 'use strict';
-import { ServiceSchema } from 'moleculer';
-
-const GreeterService: ServiceSchema = {
+const GreeterService = {
     name: 'greeter',
-
     /**
      * Service settings
      */
-    settings: {
-
-    },
-
+    settings: {},
     /**
      * Service dependencies
      */
     dependencies: [],
-
     /**
      * Actions
      */
     actions: {
-
         /**
          * Say a 'Hello'
          *
@@ -29,7 +21,6 @@ const GreeterService: ServiceSchema = {
         hello() {
             return 'Hello Moleculer';
         },
-
         /**
          * Welcome a username
          *
@@ -44,41 +35,19 @@ const GreeterService: ServiceSchema = {
             },
         },
     },
-
     /**
      * Events
      */
-    events: {
-
-    },
-
+    events: {},
     /**
      * Methods
      */
-    methods: {
-
-    },
-
+    methods: {},
     /**
      * Service created lifecycle event handler
      */
     created() {
-
     },
-
-    /**
-     * Service started lifecycle event handler
-     */
-    // async started() {
-
-    // },
-
-    /**
-     * Service stopped lifecycle event handler
-     */
-    // async stopped() {
-
-    // },
 };
-
-export = GreeterService;
+module.exports = GreeterService;
+//# sourceMappingURL=greeter.service.js.map
