@@ -31,11 +31,12 @@
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env zen watch",
-    "watch:debug": "npm run watch -- -v",
+    "zen:watch": "zen watch -x",
+    "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch",
+    "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch -- -v",
     "watch:ssr": "cross-env SSR=true && npm run watch",
-    "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env zen watch",
-    "watch:test": "cross-env ENV_FILE=../../config/test/test.env zen watch"
+    "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env npm run zen:watch",
+    "watch:test": "cross-env ENV_FILE=../../config/test/test.env npm run zen:watch"
   },
   "jest": {
     "moduleFileExtensions": [
