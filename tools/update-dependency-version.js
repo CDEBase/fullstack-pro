@@ -1,6 +1,8 @@
 const glob = require('glob');
 const fs = require('fs');
 const SERVER_FOLDER = './servers';
+const simpleGit = require('simple-git/promise');
+const git = simpleGit();
 
 glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
 
@@ -15,7 +17,7 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
             const fileWrie = file
 
             for (let key in dependencies) {
-                if (dependencies[key].includes('file')){
+                if (dependencies[key].includes('file:')){
                     const folderRoad = dependencies[key].split(':');
                     const localFolder = folderRoad[1].slice(3);
                     glob(`${SERVER_FOLDER}/${localFolder}/package.json`, null, (err, files) => {
@@ -27,7 +29,7 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
 
                                 const objVersion = JSON.parse(data);
                                 const { version } = objVersion;
-                                dependencies[key] = version;
+                                dependencies[key] = `^${version}`;
                                 const str = JSON.stringify(obj, null, 2);
                                 fs.writeFileSync(fileWrie, str,  'ascii');
                             });
@@ -37,5 +39,14 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
             }
         });
     });
+    git.status()
+    .then((status) => {
+        if (status.modified.length){
+            const fileArray = status.modified.filter(element =>  element.includes('package.json'));
+            const addArray = fileArray.map(element => `./${element}`)
+            git.add(addArray);
+            git.commit('corrected packages version!');
+        } else console.log('no change');
+    })
+    .catch(err => console.error(err));
 })
-
