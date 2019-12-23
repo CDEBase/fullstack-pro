@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/server-core",
-  "version": "0.0.39-alpha.12",
+  "version": "0.0.39-alpha.15",
   "description": "xterm server services for Node",
   "main": "lib/index.js",
   "scripts": {
