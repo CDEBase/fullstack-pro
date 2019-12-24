@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-state",
-  "version": "0.0.39-alpha.16",
+  "version": "0.0.39-alpha.17",
   "description": "GraphQL for sample",
   "main": "lib/index.js",
   "scripts": {
