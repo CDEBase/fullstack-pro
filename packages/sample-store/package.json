@@ -40,8 +40,8 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "^0.0.39-alpha.16",
-    "sequelize": "^5.7.6"
+    "@sample-stack/core": "file:../sample-core",
+    "sequelize": "^5.21.3"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

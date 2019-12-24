@@ -1,9 +1,10 @@
 ///<reference types="webpack-env" />
-// tslint:disable-next-line
+// tslint:disable-next-line:no-unused-expression
 process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 import 'reflect-metadata';
 import { logger } from '@cdm-logger/server';
 import  { Service } from './service';
+declare var module: __WebpackModuleApi.Module;
 
 process.on('uncaughtException', (ex) => {
     logger.error(ex);
@@ -19,7 +20,6 @@ async function start() {
     await service.initalize();
     await service.start();
 }
-
 if (module.hot) {
     module.hot.status(event => {
         if (event === 'abort' || event === 'fail') {
@@ -36,3 +36,4 @@ if (module.hot) {
 }
 
 start();
+
