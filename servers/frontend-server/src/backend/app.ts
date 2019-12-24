@@ -1,4 +1,4 @@
-///<reference types="webpack-env" />
+// tslint:disable-next-line:no-unused-expression
 process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 
 import { logger } from '@cdm-logger/server';
@@ -13,8 +13,8 @@ process.on('unhandledRejection', reason => {
     logger.error(reason);
 });
 
-if (module.hot) {
-    module.hot.status(event => {
+if ((module as any).hot) {
+    (module as any).hot.status(event => {
         if (event === 'abort' || event === 'fail') {
             logger.error('HMR error status: ' + event);
             // Signal webpack.run.js to do full-reload of the back-end
@@ -22,5 +22,5 @@ if (module.hot) {
         }
     });
 
-    module.hot.accept();
+    (module as any).hot.accept();
 }

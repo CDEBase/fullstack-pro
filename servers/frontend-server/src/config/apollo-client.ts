@@ -104,7 +104,7 @@ const createApolloClient = () => {
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
         typeDefs: schema.concat(modules.getStateParams().typeDefs as string),
-        resolvers: modules.getStateParams().resolvers,
+        resolvers: modules.getStateParams().resolvers as any,
         link: ApolloLink.from(links),
         cache,
     };

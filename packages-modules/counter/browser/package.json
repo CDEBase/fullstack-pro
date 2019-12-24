@@ -44,12 +44,12 @@
   "dependencies": {
     "@sample-stack/client-react": "file:../../../packages/sample-client-react",
     "@sample-stack/client-state": "file:../../../packages/sample-client-state",
-    "antd": "^3.16.6"
+    "antd": "^3.26.4"
   },
   "peerDependencies": {
-    "@common-stack/client-react": ">=0.0.201",
-    "@common-stack/core": ">=0.0.201",
-    "antd": "^3.16.6"
+    "@common-stack/client-react": ">=0.0.209",
+    "@common-stack/core": ">=0.0.209",
+    "antd": "^3.26.4"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
