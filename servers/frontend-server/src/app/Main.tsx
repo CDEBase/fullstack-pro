@@ -21,7 +21,6 @@ import RedBox from './RedBox';
 import { ServerError } from './Error';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
-// declare var module: __WebpackModuleApi.Module;
 
 
 const client = createApolloClient();
