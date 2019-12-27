@@ -136,7 +136,7 @@ pipeline {
                         cd servers/hemera-server
                         helm upgrade -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                         --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" charts/hemera
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" kube-orchestration/hemera-server
                     """
                   }
                 }
