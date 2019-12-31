@@ -1,0 +1,63 @@
+[environments]
+  [environments.development]
+    name = "hemera-server"
+    namespace = "default"
+    wait = true
+    watch = false
+    watch-delay = 2
+    auto-connect = false
+    dockerfile = "Dockerfile"
+    chart = ""
+.LOG_LEVEL=trace",
+          "env.HEMERA_LOG_LEVEL=trace",
+          "env.CONNECTION_ID=v1",
+          "env.NATS_URL=nats://microstack-nats.main-system.svc.cluster.local:4222",
+          "env.NATS_USER=ruser",
+          "env.NATS_PW=T0pS3cr3t",
+          "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
+          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
+          "env.ZIPKIN_PORT=9411",
+          ]
+    chart = ""
+  [environments.staging]
+    name = "hemera-server"
+    namespace = "default"
+    wait = true
+    watch = false
+    watch-delay = 2
+    auto-connect = false
+    dockerfile = "Dockerfile"
+    set = ["env.LOG_LEVEL=info",
+          "env.HEMERA_LOG_LEVEL=info",
+          "env.CONNECTION_ID=v1",
+          "env.NATS_URL=nats://microstack-nats.main-system.svc.cluster.local:4222",
+          "env.NATS_USER=ruser",
+          "env.NATS_PW=T0pS3cr3t",
+          "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
+          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
+          "env.ZIPKIN_PORT=9411",
+          ]
+    chart = ""
+  [environments.production]
+    name = "hemera-server"
+    namespace = "default"
+    wait = true
+    watch = false
+    watch-delay = 2
+    auto-connect = false
+    dockerfile = "Dockerfile"
+    set = ["env.LOG_LEVEL=info",
+          "env.HEMERA_LOG_LEVEL=info",
+          "env.CONNECTION_ID=v1",
+          "env.NATS_URL=nats://adminide-idestack-nats.adminide.svc.cluster.local:4222",
+          "env.NATS_USER=ruser",
+          "env.NATS_PW=T0pS3cr3t",
+          "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
+          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
+          "env.ZIPKIN_PORT=9411",
+          ]
+    chart = ""
+

@@ -133,10 +133,9 @@ pipeline {
                   steps{
                     load "./jenkins_variables.groovy"
                     sh """
-                        cd servers/hemera-server
-                        helm upgrade -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                        helm upgrade -f ./hemera-dev-values.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                         --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" charts/hemera
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" kube-orchestration/hemera-server
                     """
                   }
                 }
@@ -151,10 +150,10 @@ pipeline {
             deleteDir()
         }
         success{
-          slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
+          slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job success. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
         }
         failure{
-          slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'", channel: 'idestack-automation')
+          slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
         }
     }
 }
