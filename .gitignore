@@ -1,5 +1,6 @@
 dist
 lib
+.npmrc
 # Logs
 logs
 *.log
