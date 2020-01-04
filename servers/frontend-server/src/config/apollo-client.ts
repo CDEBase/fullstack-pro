@@ -23,8 +23,7 @@ const cache = new InMemoryCache({
     fragmentMatcher: clientState.fragmentMatcher as any,
  });
 const schema = `
-type Query {}
-type Mutation {}
+
 `;
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
