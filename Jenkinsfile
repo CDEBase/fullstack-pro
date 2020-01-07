@@ -135,7 +135,7 @@ pipeline {
                     sh """
                         helm upgrade -f ./hemera-dev-values.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                         --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" kube-orchestration/hemera-server
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
                     """
                   }
                 }
