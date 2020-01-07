@@ -1,0 +1,15 @@
+{{- if .Values.external.service.redis.enabled  }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "redis.fullname" . }}
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    component: {{ template "redis.fullname" . }}
+spec:
+  type: ExternalName
+  externalName: {{ .Values.external.service.redis.serviceName | quote }}
+  ports:
+  - port: {{ .Values.external.service.redis.port }}
+{{- end -}}
