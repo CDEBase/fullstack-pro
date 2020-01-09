@@ -4,30 +4,31 @@ def GIT_BRANCH_NAME=getGitBranchName()
 pipeline {
   agent any
   parameters {
-      string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
-      string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
-      string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
-      string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspaceID')
-      string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
-      string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
-      string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
-      choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
-      booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
+    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
+    string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
+    string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
+    string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
+    string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name', trim: true)
+    string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
+    string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
+    // by default first value of the choice will be choosen
+    choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
   }
 
   // Setup common + secret key variables for pipeline.
   environment {
-      BUILD_COMMAND = getBuildCommand()
-      PYTHON='/usr/bin/python'
-      GCR_KEY = credentials('jenkins-gcr-login-key')
-      GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
+    BUILD_COMMAND = getBuildCommand()
+    PYTHON='/usr/bin/python'
+    GCR_KEY = credentials('jenkins-gcr-login-key')
+    GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
   }
 
   // Initialize npm and docker commands using plugins
   tools {
-        nodejs 'nodejs'
-        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-    }
+    nodejs 'nodejs'
+    'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+  }
 
   stages {
     stage('Unlock secrets'){ //unlock keys for all runs
