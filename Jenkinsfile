@@ -4,9 +4,9 @@ def GIT_BRANCH_NAME=getGitBranchName()
 pipeline {
   agent any
   parameters {
-    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Google container registry to pull/push images')
+    string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
-    string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id')
+    string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
@@ -112,7 +112,15 @@ pipeline {
       }
     }
 
-    stage("Docker Build") {
+    stage('Build Docker Images') {
+      when {
+        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+      }
+
+      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
+      environment{ deployment_env = 'dev' }
+      // Below code build stages only run when user select option: 'allenv'. Below jobs run parallel.
       parallel {
         stage ('frontend server'){
           when { expression { params.ENV_CHOICE == 'allenv' } }
@@ -172,9 +180,10 @@ pipeline {
     }
 
     stage('Dev deployment') {
+      environment{ deployment_env = 'dev' }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression {params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv'}
+        expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
@@ -238,8 +247,10 @@ pipeline {
     }
 
     stage('Stage deployment') {
+      environment{ deployment_env = 'stage'}
       when {
-        expression {params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv'}
+        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
         beforeInput true
       }
 
@@ -302,7 +313,9 @@ pipeline {
     }
 
     stage('Prod deployment') {
+      environment{ deployment_env = 'prod'}
       when {
+        expression { GIT_BRANCH_NAME == 'devpublish' }
         expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
