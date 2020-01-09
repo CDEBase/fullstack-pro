@@ -96,7 +96,7 @@ pipeline {
         script {
           GIT_BRANCH_NAME='devpublish'
         }
-        sshagent (credentials: ['adminIde-deploy-keys']) {
+        sshagent (credentials: ['github-deploy-keys']) {
           sh """
             git add -A
             git diff-index --quiet HEAD || git commit -m 'auto commit'
