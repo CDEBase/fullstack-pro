@@ -22,6 +22,7 @@ pipeline {
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
     GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
+    GIT_PR_BRANCH_NAME = getGitPrBranchName()
   }
 
   // Initialize npm and docker commands using plugins
@@ -128,6 +129,7 @@ pipeline {
             load "./jenkins_variables.groovy"
             sh """
               lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
+              cd servers/tracer-server/
               docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
@@ -141,6 +143,7 @@ pipeline {
             load "./jenkins_variables.groovy"
             sh """
               lerna exec --scope=*backend-server npm run docker:${BUILD_COMMAND}
+              cd servers/backend-server/
               docker tag ${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
               docker push ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
               docker rmi ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
@@ -154,6 +157,7 @@ pipeline {
             load "./jenkins_variables.groovy"
             sh """
               lerna exec --scope=*hemera-server npm run docker:${BUILD_COMMAND}
+              cd servers/hemera-server/
               docker tag ${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
               docker push ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
               docker rmi ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
@@ -382,6 +386,13 @@ def getBuildCommand(){
   } else {
     return 'build'
   }
+}
+
+def getGitPrBranchName() {
+  // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+  //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
+  //return branchName || ghprbSourceBranch
+  return ghprbSourceBranch
 }
 
 def getGitBranchName() { // we can place some conditions in future
