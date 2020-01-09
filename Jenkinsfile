@@ -8,7 +8,7 @@ pipeline {
       string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name')
       string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
       string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
-      choice choices: ['dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+      choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
       booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
   }
 
@@ -18,6 +18,7 @@ pipeline {
       PYTHON='/usr/bin/python'
       GCR_KEY = credentials('jenkins-gcr-login-key')
       GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
+      GIT_PR_BRANCH_NAME = getGitPrBranchName()
   }
 
   // Initialize npm and docker commands using plugins
@@ -90,6 +91,21 @@ pipeline {
   }
 
   // Below are dev stages
+            stage('Get Dev Secrets'){
+              when {
+                expression { GIT_BRANCH_NAME == 'devpublish' }
+                expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+                beforeInput true
+              }
+              steps{
+                sh """
+                  gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
+                  gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
+                  helm repo update
+                """
+              }
+            }
+
             stage('Dev deployment') {
               when {
                 expression {params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv'}
@@ -105,16 +121,12 @@ pipeline {
 
               // Stages only run if user select env 'dev' or 'allenv' .
               //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
-              stages{
+              parallel{
                 stage('Fullstack-pro Deployment'){
                     //when {environment name: 'DEV_DEPLOYMENT', value: 'yes'}
                     steps{
                         load "./jenkins_variables.groovy"
                         sh """
-                            gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-                            gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
-
-                            helm repo update
                             helm upgrade -i \
                             --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
                             --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
@@ -143,6 +155,137 @@ pipeline {
               }
             } // End of dev deployment code block.
 
+
+  // Below are stage code block
+            stage('Get Stage Secrets'){
+              when {
+                expression { GIT_BRANCH_NAME == 'devpublish' }
+                expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
+                beforeInput true
+              }
+              steps{
+                sh """
+                  gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
+                  gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
+                  helm repo update
+                """
+              }
+            }
+
+            stage('Stage deployment') {
+              when {
+                expression {params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv'}
+                beforeInput true
+              }
+
+              input {
+                    message "Want to deploy fullstack-pro on stage cluster?"
+                    parameters {
+                         choice choices: ['yes', 'no'], description: 'Want to deploy micro service on stage?', name: 'STAGE_DEPLOYMENT'
+                    }
+              }
+
+              // Stages only run if user select env 'stage' or 'allenv' .
+              //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
+              parallel{
+                stage('Fullstack-pro Deployment'){
+                    //when {environment name: 'STAGE_DEPLOYMENT', value: 'yes'}
+                    steps{
+                        load "./jenkins_variables.groovy"
+                        sh """
+                            helm upgrade -i \
+                            --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
+                            --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
+                            --set backend.image="${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}" \
+                            --set backend.imageTag=${env.BACKEND_PACKAGE_VERSION} \
+                            --set settings.workspaceId="${WORKSPACE_ID}" \
+                            --set frontend.pullPolicy=Always \
+                            --set backend.pullPolicy=Always \
+                            --set ingress.domain=cdebase.io \
+                            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
+                          """
+                    }
+                }
+
+                stage('Hemera Server Deployment'){
+                  steps{
+                    load "./jenkins_variables.groovy"
+                    sh """
+                        helm upgrade -f ./values-adminide-stage.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                        --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
+                    """
+                  }
+                }
+
+              }
+            } // End of Stage deployment code block.
+
+  // Below are production stages
+            stage('Get Prod Secrets'){
+              when {
+                expression { GIT_BRANCH_NAME == 'devpublish' }
+                expression { params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv' }
+                beforeInput true
+              }
+              steps{
+                sh """
+                  gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
+                  gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
+                  helm repo update
+                """
+              }
+            }
+
+            stage('Prod deployment') {
+              when {
+                expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
+                beforeInput true
+              }
+
+              input {
+                    message "Want to deploy fullstack-pro on prod cluster?"
+                    parameters {
+                         choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
+                    }
+              }
+
+              // Stages only run if user select env 'prod' or 'allenv' .
+              //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
+              parallel{
+                stage('Fullstack-pro Deployment'){
+                    //when {environment name: 'PROD_DEPLOYMENT', value: 'yes'}
+                    steps{
+                        load "./jenkins_variables.groovy"
+                        sh """
+                            helm upgrade -i \
+                            --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
+                            --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
+                            --set backend.image="${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}" \
+                            --set backend.imageTag=${env.BACKEND_PACKAGE_VERSION} \
+                            --set settings.workspaceId="${WORKSPACE_ID}" \
+                            --set frontend.pullPolicy=Always \
+                            --set backend.pullPolicy=Always \
+                            --set ingress.domain=cdebase.io \
+                            --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
+                          """
+                    }
+                }
+
+                stage('Hemera Server Deployment'){
+                  steps{
+                    load "./jenkins_variables.groovy"
+                    sh """
+                        helm upgrade -f ./values-adminide-prod.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                        --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
+                        --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
+                    """
+                  }
+                }
+
+              }
+            } // End of production deployment code block.
+
 }
 
     post {
@@ -164,4 +307,15 @@ def getBuildCommand(){
   } else {
     return 'build'
   }
+}
+
+def getGitPrBranchName() {
+    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+  //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
+  //return branchName || ghprbSourceBranch
+  return ghprbSourceBranch
+}
+
+def getGitBranchName() { // we can place some conditions in future
+  return ghprbSourceBranch
 }
