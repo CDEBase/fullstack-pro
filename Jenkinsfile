@@ -18,7 +18,6 @@ pipeline {
       PYTHON='/usr/bin/python'
       GCR_KEY = credentials('jenkins-gcr-login-key')
       GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
-      GIT_PR_BRANCH_NAME = getGitPrBranchName()
   }
 
   // Initialize npm and docker commands using plugins
@@ -307,15 +306,4 @@ def getBuildCommand(){
   } else {
     return 'build'
   }
-}
-
-def getGitPrBranchName() {
-    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
-  //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
-  //return branchName || ghprbSourceBranch
-  return ghprbSourceBranch
-}
-
-def getGitBranchName() { // we can place some conditions in future
-  return ghprbSourceBranch
 }
