@@ -48,7 +48,7 @@ pipeline {
       when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
-            sh ' echo "what is docker git version $GIT_BRANCH_NAME" -- ${params.ENV_CHOICE}'
+            sh ' echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"'
             git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
