@@ -1,3 +1,6 @@
+// Global Variable so it can be changed between stages
+def GIT_BRANCH_NAME=getGitBranchName()
+
 pipeline {
   agent any
   parameters {
@@ -306,4 +309,8 @@ def getBuildCommand(){
   } else {
     return 'build'
   }
+}
+
+def getGitBranchName() { // we can place some conditions in future
+  return ghprbSourceBranch
 }
