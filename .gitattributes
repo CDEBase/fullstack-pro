@@ -1,0 +1,2 @@
+values.secret.json filter=git-crypt diff=git-crypt
+.npmrc filter=git-crypt diff=git-crypt
