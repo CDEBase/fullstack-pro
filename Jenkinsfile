@@ -48,7 +48,7 @@ pipeline {
       when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
-            sh ' echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"'
+            echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
             git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
@@ -112,7 +112,6 @@ pipeline {
         expression { GIT_BRANCH_NAME == 'devpublish' }
       }
       steps{
-        sh ' echo "what is docker git version $GIT_BRANCH_NAME"'
         sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
       }
     }
