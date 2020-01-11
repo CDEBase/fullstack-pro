@@ -99,7 +99,7 @@ pipeline {
         sshagent (credentials: ['github-deploy-keys']) {
           sh """
             git add -A
-            git diff-index --quite HEAD || git commit -am 'auto commit'
+            git diff-index --quiet HEAD || git commit -am 'auto commit'
             npm run devpublish:auto
             git push origin develop
             git checkout devpublish
