@@ -32,6 +32,15 @@ pipeline {
   }
 
   stages {
+
+    stage('define environment') {
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-deploy-keys', url: 'git@github.com:cdmbase/fullstack-pro.git']]])
+        // env.NODEJS_HOME = "${tool 'node_v8'}"
+  	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
+  	    //sh 'npm --version'
+      }
+    }
     stage('Unlock secrets'){ //unlock keys for all runs
       environment{ deployment_env = 'dev' }
       steps{
@@ -227,7 +236,7 @@ pipeline {
           steps{
             load "./jenkins_variables.groovy"
             sh """
-                helm upgrade -f ./hemera-dev-values.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                helm upgrade -f ./servers/hemera-server/charts/hemera-server/values-dev.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                 --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
                 --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
             """
