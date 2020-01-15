@@ -236,7 +236,7 @@ pipeline {
           steps{
             load "./jenkins_variables.groovy"
             sh """
-                helm upgrade -f ./hemera-dev-values.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                helm upgrade -f ./servers/hemera-server/charts/hemera-server/values-dev.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                 --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
                 --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
             """
