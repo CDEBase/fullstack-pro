@@ -35,6 +35,7 @@ pipeline {
     stage('Unlock secrets'){ //unlock keys for all runs
       environment{ deployment_env = 'dev' }
       steps{
+        sh 'printenv'
         sh 'git-crypt unlock'
         load "./jenkins_variables.groovy"
         sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
@@ -48,7 +49,6 @@ pipeline {
       when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
-            echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
             git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
@@ -392,12 +392,20 @@ def getBuildCommand(){
 }
 
 def getGitPrBranchName() {
-  // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
-  return ghprbSourceBranch
+  if(env.ghprbSourceBranch){
+    return ghprbSourceBranch
+  } else {
+    return 'develop'
+  }
 }
 
-def getGitBranchName() { // we can place some conditions in future
-  return ghprbSourceBranch
+def getGitBranchName(){ // we can place some conditions in future
+  if(env.ghprbSourceBranch){
+    return ghprbSourceBranch
+  } else {
+    return 'develop'
+  }
 }
