@@ -14,6 +14,12 @@ def getName(json_file_path){
 return name
 }
 
+def getSecrets(json_file_path, env, var){
+  def inputFile = new File(json_file_path)
+  def InputJSON = new JsonSlurper().parse(inputFile)
+  def secret = InputJSON."${env}"."${var}"
+return secret
+}
 
 // Variables for package name and versions
 env.FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")

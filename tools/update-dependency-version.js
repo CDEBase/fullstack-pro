@@ -39,14 +39,18 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
             }
         });
     });
-    git.status()
-    .then((status) => {
-        if (status.modified.length){
-            const fileArray = status.modified.filter(element =>  element.includes('package.json'));
-            const addArray = fileArray.map(element => `./${element}`)
-            git.add(addArray);
-            git.commit('corrected packages version!');
-        } else console.log('no change');
+    git.add('.')
+    .then(() => {
+        git.status()
+        .then((status) => {
+            if (status.modified.length){
+                const fileArray = status.modified.filter(element =>  element.includes('package.json'));
+                const addArray = fileArray.map(element => `./${element}`)
+                git.add(addArray);
+                git.commit('corrected packages version!');
+            } else console.log('no change');
+        })
+        .catch(err => console.error(err));
     })
     .catch(err => console.error(err));
 })
