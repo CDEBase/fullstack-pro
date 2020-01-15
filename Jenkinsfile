@@ -36,9 +36,9 @@ pipeline {
     stage('define environment') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-deploy-keys', url: 'git@github.com:cdmbase/fullstack-pro.git']]])
-        env.NODEJS_HOME = "${tool 'node_v8'}"
-  	    env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-  	    sh 'npm --version'
+        // env.NODEJS_HOME = "${tool 'node_v8'}"
+  	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
+  	    //sh 'npm --version'
       }
     }
     stage('Unlock secrets'){ //unlock keys for all runs
