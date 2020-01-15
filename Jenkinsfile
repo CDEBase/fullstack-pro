@@ -136,7 +136,6 @@ pipeline {
       // Below code build stages only run when user select option: 'allenv'. Below jobs run parallel.
       parallel {
         stage ('frontend server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
@@ -150,7 +149,6 @@ pipeline {
         }
 
         stage ('backend server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
@@ -164,7 +162,6 @@ pipeline {
         }
 
         stage ('hemera server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
