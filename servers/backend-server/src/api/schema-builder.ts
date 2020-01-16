@@ -8,7 +8,7 @@ import {
     RenameTypes, transformSchema,
     addErrorLoggingToSchema,
 } from 'graphql-tools';
-import fetch from 'node-fetch';
+const fetch =  require('node-fetch');
 import { HttpLink } from 'apollo-link-http';
 import { remoteSchemaDetails } from './remote-config';
 import modules from '../modules';
