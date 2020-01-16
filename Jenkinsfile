@@ -140,7 +140,7 @@ pipeline {
             load "./jenkins_variables.groovy"
             sh """
               lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
-              cd servers/tracer-server/
+              cd servers/frontend-server/
               docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
