@@ -26,5 +26,5 @@
     }
   },
   "packages": ["packages-modules/**", "packages/*", "servers/*"],
-  "version": "0.0.38"
+  "version": "0.0.0"
 }

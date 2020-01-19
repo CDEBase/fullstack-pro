@@ -11,6 +11,12 @@ pipeline {
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
+    string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
+    string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
+    string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
+    string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'github-deploy-keys', description: 'jenkins credential id of git deploy secret')
+    string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
+    string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
     // by default first value of the choice will be choosen
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
@@ -35,7 +41,7 @@ pipeline {
 
     stage('define environment') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-deploy-keys', url: 'git@github.com:cdmbase/fullstack-pro.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         // env.NODEJS_HOME = "${tool 'node_v8'}"
   	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
   	    //sh 'npm --version'
@@ -105,7 +111,7 @@ pipeline {
         script {
           GIT_BRANCH_NAME='devpublish'
         }
-        sshagent (credentials: ['github-deploy-keys']) {
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
             git diff-index --quiet HEAD || git commit -am 'auto commit'
@@ -404,7 +410,7 @@ def getGitPrBranchName() {
   if(env.ghprbSourceBranch){
     return ghprbSourceBranch
   } else {
-    return 'develop'
+    return params.REPOSITORY_BRANCH
   }
 }
 
@@ -412,6 +418,6 @@ def getGitBranchName(){ // we can place some conditions in future
   if(env.ghprbSourceBranch){
     return ghprbSourceBranch
   } else {
-    return 'develop'
+    return params.REPOSITORY_BRANCH
   }
 }
