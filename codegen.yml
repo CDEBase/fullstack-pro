@@ -9,7 +9,6 @@ generates:
     documents: "packages-modules/counter/browser/src/**/*.gql"
     config:
         noNamespaces: true
-        contextType: ./interfaces/context#MyContext
         withMutationFn: false
         withHOC: false
         withComponent: false
@@ -27,6 +26,11 @@ generates:
       withMutationFn: true
       withHOC: true
       withComponent: true
+      withHooks: true
+    preset: import-types-preset
+    presetConfig:
+      typesPath: "../generated-models"
+      importTypesNamespace: SchemaTypes
     plugins:
       - add: |
           /* tslint:disable */
