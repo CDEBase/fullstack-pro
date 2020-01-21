@@ -1,0 +1,12 @@
+env:
+  CONNECTION_ID: v1
+  LOG_LEVEL: info
+  HEMERA_LOG_LEVEL: info
+  NATS_URL: "nats://adminide-idestack-nats.adminide.svc.cluster.local:4222"
+  NATS_USER: "ruser"
+  NATS_PW: "T0pS3cr3t"
+  REDIS_URL: "redis://adminide-idestack-redis.adminide.svc.cluster.local:6379"
+  MONGO_URL: "mongodb://adminide-idestack-mongodb.adminide.svc.cluster.local:27017/idestack"
+  ZIPKIN_URL: "adminide-idestack-zipkin.adminide.svc.cluster.local"
+  ZIPKIN_PORT: "9411"
+  PROMETHEUS_API_URL: "https://prometheus.blancboard.com/"

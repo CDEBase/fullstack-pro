@@ -11,6 +11,12 @@ pipeline {
     string(name: 'UNIQUE_NAME', defaultValue: 'fullstack-pro', description: 'chart name', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
+    string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
+    string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
+    string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
+    string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'github-deploy-keys', description: 'jenkins credential id of git deploy secret')
+    string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
+    string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
     // by default first value of the choice will be choosen
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
@@ -35,7 +41,7 @@ pipeline {
 
     stage('define environment') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-deploy-keys', url: 'git@github.com:cdmbase/fullstack-pro.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         // env.NODEJS_HOME = "${tool 'node_v8'}"
   	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
   	    //sh 'npm --version'
@@ -44,6 +50,7 @@ pipeline {
     stage('Unlock secrets'){ //unlock keys for all runs
       environment{ deployment_env = 'dev' }
       steps{
+        sh 'printenv'
         sh 'git-crypt unlock'
         load "./jenkins_variables.groovy"
         sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
@@ -57,7 +64,6 @@ pipeline {
       when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
-            echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
             git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
@@ -105,7 +111,7 @@ pipeline {
         script {
           GIT_BRANCH_NAME='devpublish'
         }
-        sshagent (credentials: ['github-deploy-keys']) {
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
             git diff-index --quiet HEAD || git commit -am 'auto commit'
@@ -136,12 +142,11 @@ pipeline {
       // Below code build stages only run when user select option: 'allenv'. Below jobs run parallel.
       parallel {
         stage ('frontend server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
               lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
-              cd servers/tracer-server/
+              cd servers/frontend-server/
               docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
               docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
@@ -150,7 +155,6 @@ pipeline {
         }
 
         stage ('backend server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
@@ -164,7 +168,6 @@ pipeline {
         }
 
         stage ('hemera server'){
-          when { expression { params.ENV_CHOICE == 'allenv' } }
           steps{
             load "./jenkins_variables.groovy"
             sh """
@@ -236,7 +239,7 @@ pipeline {
           steps{
             load "./jenkins_variables.groovy"
             sh """
-                helm upgrade -f ./hemera-dev-values.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
+                helm upgrade -f ./servers/hemera-server/charts/hemera-server/values-dev.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
                 --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
                 --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
             """
@@ -401,12 +404,20 @@ def getBuildCommand(){
 }
 
 def getGitPrBranchName() {
-  // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
-  return ghprbSourceBranch
+  if(env.ghprbSourceBranch){
+    return ghprbSourceBranch
+  } else {
+    return params.REPOSITORY_BRANCH
+  }
 }
 
-def getGitBranchName() { // we can place some conditions in future
-  return ghprbSourceBranch
+def getGitBranchName(){ // we can place some conditions in future
+  if(env.ghprbSourceBranch){
+    return ghprbSourceBranch
+  } else {
+    return params.REPOSITORY_BRANCH
+  }
 }

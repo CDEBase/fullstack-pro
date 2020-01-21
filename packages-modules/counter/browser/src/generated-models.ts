@@ -1,7 +1,6 @@
 /* tslint:disable */
 
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { MyContext } from './interfaces/context';
 import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 export type Maybe<T> = T | null;
@@ -27,6 +26,7 @@ export type ClientCounter = {
 
 export type Counter = {
    __typename?: 'Counter',
+  /** Current amount */
   amount: Scalars['Int'],
 };
 
@@ -41,6 +41,7 @@ export type FieldError = {
 export type Mutation = {
    __typename?: 'Mutation',
   dummy?: Maybe<Scalars['Int']>,
+  /** Increase counter value, returns current counter amount */
   addCounter?: Maybe<Counter>,
   addCounterState?: Maybe<ClientCounter>,
 };
@@ -62,6 +63,7 @@ export type Node = {
 export type Query = {
    __typename?: 'Query',
   dummy?: Maybe<Scalars['Int']>,
+  /** Counter */
   counter?: Maybe<Counter>,
   counterState?: Maybe<ClientCounter>,
 };
@@ -69,6 +71,7 @@ export type Query = {
 export type Subscription = {
    __typename?: 'Subscription',
   dummy?: Maybe<Scalars['Int']>,
+  /** Subscription fired when anyone increases counter */
   counterUpdated?: Maybe<Counter>,
 };
 
@@ -91,6 +94,19 @@ export type AddCounterMutationVariables = {
 
 
 export type AddCounterMutation = (
+  { __typename?: 'Mutation' }
+  & { addCounter: Maybe<(
+    { __typename?: 'Counter' }
+    & Pick<Counter, 'amount'>
+  )> }
+);
+
+export type AddCounter_WsMutationVariables = {
+  amount: Scalars['Int']
+};
+
+
+export type AddCounter_WsMutation = (
   { __typename?: 'Mutation' }
   & { addCounter: Maybe<(
     { __typename?: 'Counter' }
@@ -240,15 +256,15 @@ export interface AnyObjectScalarConfig extends GraphQLScalarTypeConfig<Resolvers
   name: 'AnyObject'
 }
 
-export type ClientCounterResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
+export type ClientCounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
   counter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
 };
 
-export type CounterResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter']> = {
+export type CounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter']> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
-export type FieldErrorResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['FieldError'] = ResolversParentTypes['FieldError']> = {
+export type FieldErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['FieldError'] = ResolversParentTypes['FieldError']> = {
   field?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
@@ -261,29 +277,29 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
   name: 'JSONObject'
 }
 
-export type MutationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddCounterArgs>,
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>,
 };
 
-export type NodeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
+export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
   __resolveType: TypeResolveFn<null, ParentType, ContextType>,
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
 };
 
-export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
   counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>,
 };
 
-export type SubscriptionResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   dummy?: SubscriptionResolver<Maybe<ResolversTypes['Int']>, "dummy", ParentType, ContextType>,
   counterUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "counterUpdated", ParentType, ContextType>,
 };
 
-export type Resolvers<ContextType = MyContext> = {
+export type Resolvers<ContextType = any> = {
   AnyObject?: GraphQLScalarType,
   ClientCounter?: ClientCounterResolvers<ContextType>,
   Counter?: CounterResolvers<ContextType>,
@@ -301,7 +317,7 @@ export type Resolvers<ContextType = MyContext> = {
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
 */
-export type IResolvers<ContextType = MyContext> = Resolvers<ContextType>;
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 
 export const AddCounterStateDocument = gql`
@@ -322,6 +338,15 @@ export const AddCounterDocument = gql`
     `;
 export type AddCounterMutationResult = ApolloReactCommon.MutationResult<AddCounterMutation>;
 export type AddCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCounterMutation, AddCounterMutationVariables>;
+export const AddCounter_WsDocument = gql`
+    mutation AddCounter_WS($amount: Int!) {
+  addCounter(amount: $amount) {
+    amount
+  }
+}
+    `;
+export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<AddCounter_WsMutation>;
+export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>;
 export const CounterStateDocument = gql`
     query CounterState {
   counterState @client {

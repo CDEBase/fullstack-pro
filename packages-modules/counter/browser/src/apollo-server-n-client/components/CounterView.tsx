@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import { useAddCounter_WsMutation } from '../generated-model';
+
 
 const CounterView = ({
   loading,
@@ -10,6 +12,8 @@ const CounterView = ({
   counterState,
   addCounterState,
 }: any) => {
+
+  const [ addCounterWs ] = useAddCounter_WsMutation();
   const renderMetaData = () => (
     <Helmet>
       <title>Counter</title>
@@ -36,6 +40,9 @@ const CounterView = ({
           </p>
           <button id="graphql-button" color="primary" onClick={addCounter(1)}>
             Click to increase counter
+          </button>
+          <button id="graphql-button" color="primary" onClick={() => addCounterWs({variables: { amount: 1 }})}>
+            Click to increase counter via websocket
           </button>
         </section>
         <section>
