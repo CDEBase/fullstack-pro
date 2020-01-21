@@ -36,5 +36,5 @@
     }
   },
   "packages": ["packages-modules/**", "packages/*", "servers/*"],
-  "version": "0.0.39-alpha.20"
+  "version": "0.0.39-alpha.30"
 }
