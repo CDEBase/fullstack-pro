@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import * as Nats from 'nats';
 import { injectable } from 'inversify';
 import * as Mongoose from 'mongoose';
 
@@ -42,7 +43,20 @@ export class HealthCheck {
   }
 
   public async nats(host?: string, topic?: string): Promise<boolean> {
-    return true;
+    return new Promise((resolve, reject) => {
+      try {
+        const client = Nats.connect(host ? { url: host } : {
+          url: process.env.NATS_URL,
+          user: process.env.NATS_USER,
+          pass: process.env.NATS_PW,
+      });
+
+      client.on('error', (err) => reject(err));
+      client.on('connect', () => resolve(true));
+      } catch (e) {
+        throw new Error(e);
+      }
+    });
   }
 
   public async custom(host?: string): Promise<boolean> {

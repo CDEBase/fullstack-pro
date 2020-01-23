@@ -18,5 +18,5 @@ export default new Feature({
     createContainerFunc: [createContainer],
     createServiceFunc: (container: interfaces.Container) => ({
         healthcheck: container.get<HealthCheck>(HealthCheck),
-    }), // note anything set here should be singleton.
+    }),
 });
