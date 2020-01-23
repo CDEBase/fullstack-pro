@@ -60,6 +60,7 @@
     "@common-stack/server-core": "0.0.209",
     "@sample-stack/core": "file:../../packages/sample-core",
     "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
+    "@sample-stack/healthcheck-server": "file:../../packages-modules/healthcheck/server",
     "@sample-stack/microservice-nats": "file:../../packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:../../packages/sample-server-core",
     "@sample-stack/store": "file:../../packages/sample-store",

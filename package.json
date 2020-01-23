@@ -65,6 +65,7 @@
     "zen:watch:debug": "npm run zen:watch -- -v"
   },
   "dependencies": {
+    "@hmcts/nodejs-healthcheck": "^1.5.1",
     "@sample-stack/client-react": "file:packages/sample-client-react",
     "@sample-stack/client-state": "file:packages/sample-client-state",
     "@sample-stack/core": "file:packages/sample-core",
@@ -74,6 +75,10 @@
     "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
+    "ioredis": "^4.14.1",
+    "mongo-healthcheck": "^2.0.1",
+    "mongoose": "^5.8.9",
+    "redis-healthcheck": "^0.1.1",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
     "sample-stack-hemera-server": "file:servers/hemera-server"

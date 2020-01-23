@@ -50,3 +50,19 @@ extend type Subscription {
   # Subscription fired when anyone increases counter
   counterUpdated: Counter
 }
+,enum HealthCheckType {
+  Nats
+  Redis
+  Mongo
+  Custom
+}
+
+input HealthCheckRequest {
+  host: String
+  topic: String
+  type: HealthCheckType!
+}
+
+extend type Query {
+  health(request: HealthCheckRequest!): Boolean
+}
