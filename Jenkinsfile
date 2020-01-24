@@ -115,7 +115,9 @@ pipeline {
           sh """
             git add -A
             git diff-index --quiet HEAD || git commit -am 'auto commit'
-            npm run devpublish:auto
+            # npm run devpublish:auto
+            git push origin devpublish
+            git pull origin devpublish
             git push origin develop
             git checkout devpublish
           """
@@ -207,7 +209,7 @@ pipeline {
       }
 
       //input {
-      //      message "Want to deploy fullstack-pro on dev cluster?"
+      //      message "Want to deploy Workbench-Stack on dev cluster?"
       //      parameters {
       //           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on dev?', name: 'DEV_DEPLOYMENT'
       //      }
@@ -216,7 +218,7 @@ pipeline {
        // Stages only run if user select env 'dev' or 'allenv' .
       //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
       parallel{
-        stage('Fullstack-pro Deployment'){
+        stage('Workbench-Stack Deployment'){
           //when {environment name: 'DEV_DEPLOYMENT', value: 'yes'}
           steps{
             load "./jenkins_variables.groovy"
@@ -274,7 +276,7 @@ pipeline {
       }
 
       input {
-        message "Want to deploy fullstack-pro on stage cluster?"
+        message "Want to deploy Workbench-Stack on stage cluster?"
         parameters {
           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on stage?', name: 'STAGE_DEPLOYMENT'
         }
@@ -283,7 +285,7 @@ pipeline {
       // Stages only run if user select env 'stage' or 'allenv' .
       // NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
       parallel{
-        stage('Fullstack-pro Deployment'){
+        stage('Workbench-Stack Deployment'){
           //when {environment name: 'STAGE_DEPLOYMENT', value: 'yes'}
           steps{
             load "./jenkins_variables.groovy"
@@ -340,7 +342,7 @@ pipeline {
       }
 
       input {
-        message "Want to deploy fullstack-pro on prod cluster?"
+        message "Want to deploy Workbench-Stack on prod cluster?"
         parameters {
           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
         }
@@ -349,7 +351,7 @@ pipeline {
       // Stages only run if user select env 'prod' or 'allenv' .
       //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
       parallel{
-        stage('Fullstack-pro Deployment'){
+        stage('Workbench-Stack Deployment'){
           //when {environment name: 'PROD_DEPLOYMENT', value: 'yes'}
           steps{
             load "./jenkins_variables.groovy"
