@@ -47,10 +47,10 @@ pipeline {
   	    //sh 'npm --version'
       }
     }
+
     stage('Unlock secrets'){ //unlock keys for all runs
       environment{ deployment_env = 'dev' }
       steps{
-        sh 'printenv'
         sh 'git-crypt unlock'
         load "./jenkins_variables.groovy"
         sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
@@ -64,6 +64,7 @@ pipeline {
       when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
+            echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
             git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
@@ -73,12 +74,15 @@ pipeline {
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Build packages'){
-      when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
-       steps{
-          sh """
-            npm run build
-          """
-       }
+      when {
+        expression { GIT_BRANCH_NAME != 'devpublish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' }
+      }
+      steps{
+        sh """
+          npm run build
+        """
+      }
     }
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge PR to `develop` branch and publish'){
@@ -115,6 +119,8 @@ pipeline {
           sh """
             git add -A
             git diff-index --quiet HEAD || git commit -am 'auto commit'
+            git fetch origin develop
+            git checkout develop
             npm run devpublish:auto
             git push origin develop
             git checkout devpublish
@@ -139,47 +145,16 @@ pipeline {
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
       environment{ deployment_env = 'dev' }
-      // Below code build stages only run when user select option: 'allenv'. Below jobs run parallel.
-      parallel {
-        stage ('frontend server'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-              lerna exec --scope=*frontend-server npm run docker:${BUILD_COMMAND}
-              cd servers/frontend-server/
-              docker tag ${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
-              docker push ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
-              docker rmi ${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}:${env.FRONTEND_PACKAGE_VERSION}
-            """
+        steps{
+          load "./jenkins_variables.groovy"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateBuildStage(it)]
+            }
+            parallel parallelStagesMap
           }
         }
-
-        stage ('backend server'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-              lerna exec --scope=*backend-server npm run docker:${BUILD_COMMAND}
-              cd servers/backend-server/
-              docker tag ${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
-              docker push ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
-              docker rmi ${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}:${env.BACKEND_PACKAGE_VERSION}
-            """
-          }
-        }
-
-        stage ('hemera server'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-              lerna exec --scope=*hemera-server npm run docker:${BUILD_COMMAND}
-              cd servers/hemera-server/
-              docker tag ${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION} ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
-              docker push ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
-              docker rmi ${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}:${env.HEMERA_PACKAGE_VERSION}
-            """
-          }
-        }
-      }
     }
 
   // Below are dev stages
@@ -206,51 +181,23 @@ pipeline {
         beforeInput true
       }
 
-      //input {
-      //      message "Want to deploy fullstack-pro on dev cluster?"
-      //      parameters {
-      //           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on dev?', name: 'DEV_DEPLOYMENT'
-      //      }
-      //}
-
-       // Stages only run if user select env 'dev' or 'allenv' .
-      //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
-      parallel{
-        stage('Fullstack-pro Deployment'){
-          //when {environment name: 'DEV_DEPLOYMENT', value: 'yes'}
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -i \
-                --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
-                --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
-                --set backend.image="${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}" \
-                --set backend.imageTag=${env.BACKEND_PACKAGE_VERSION} \
-                --set settings.workspaceId="${WORKSPACE_ID}" \
-                --set frontend.pullPolicy=Always \
-                --set backend.pullPolicy=Always \
-                --set ingress.domain=cdebase.io \
-                --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
-              """
+      steps {
+        script {
+          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+          def parallelStagesMap = servers.collectEntries {
+           ["${it}" : generateStage(it)]
           }
-        }
-
-        stage('Hemera Server Deployment'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -f ./servers/hemera-server/charts/hemera-server/values-dev.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
-                --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
-            """
-          }
+          parallel parallelStagesMap
         }
       }
-    } // End of dev deployment code block.
 
+    } // End of dev deployment code block.
 
   // Below are stage code block
     stage('Get Stage Secrets'){
+      options {
+         timeout(time: 30, unit: 'SECONDS')
+       }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
         expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
@@ -266,10 +213,13 @@ pipeline {
     }
 
     stage('Stage deployment') {
+      options {
+         timeout(time: 300, unit: 'SECONDS')
+       }
       environment{ deployment_env = 'stage'}
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
+        expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
 
@@ -280,40 +230,17 @@ pipeline {
         }
       }
 
-      // Stages only run if user select env 'stage' or 'allenv' .
-      // NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
-      parallel{
-        stage('Fullstack-pro Deployment'){
-          //when {environment name: 'STAGE_DEPLOYMENT', value: 'yes'}
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -i \
-                --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
-                --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
-                --set backend.image="${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}" \
-                --set backend.imageTag=${env.BACKEND_PACKAGE_VERSION} \
-                --set settings.workspaceId="${WORKSPACE_ID}" \
-                --set frontend.pullPolicy=Always \
-                --set backend.pullPolicy=Always \
-                --set ingress.domain=cdebase.io \
-                --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
-              """
+      steps {
+        load "./jenkins_variables.groovy"
+        script {
+          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+          def parallelStagesMap = servers.collectEntries {
+           ["${it}" : generateStage(it)]
           }
-        }
-
-        stage('Hemera Server Deployment'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -f ./values-adminide-stage.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
-                --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
-            """
-          }
+          parallel parallelStagesMap
         }
       }
-    } // End of Stage deployment code block.
+    } // End of staging deployment code block.
 
   // Below are production stages
     stage('Get Prod Secrets'){
@@ -330,8 +257,10 @@ pipeline {
         """
       }
     }
-
     stage('Prod deployment') {
+      options {
+          timeout(time: 300, unit: 'SECONDS')
+      }
       environment{ deployment_env = 'prod'}
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
@@ -346,40 +275,18 @@ pipeline {
         }
       }
 
-      // Stages only run if user select env 'prod' or 'allenv' .
-      //NOTE: All jobs will run sequentially to prevent deployment on wrong cluster.
-      parallel{
-        stage('Fullstack-pro Deployment'){
-          //when {environment name: 'PROD_DEPLOYMENT', value: 'yes'}
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -i \
-                --set frontend.image="${REPOSITORY_SERVER}/${env.FRONTEND_PACKAGE_NAME}" \
-                --set frontend.imageTag=${env.FRONTEND_PACKAGE_VERSION} \
-                --set backend.image="${REPOSITORY_SERVER}/${env.BACKEND_PACKAGE_NAME}" \
-                --set backend.imageTag=${env.BACKEND_PACKAGE_VERSION} \
-                --set settings.workspaceId="${WORKSPACE_ID}" \
-                --set frontend.pullPolicy=Always \
-                --set backend.pullPolicy=Always \
-                --set ingress.domain=cdebase.io \
-                --namespace=${NAMESPACE} ${UNIQUE_NAME} kube-orchestration/idestack
-              """
+      steps {
+        load "./jenkins_variables.groovy"
+        script {
+          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+          def parallelStagesMap = servers.collectEntries {
+           ["${it}" : generateStage(it)]
           }
-        }
-
-        stage('Hemera Server Deployment'){
-          steps{
-            load "./jenkins_variables.groovy"
-            sh """
-                helm upgrade -f ./values-adminide-prod.yaml -i ${UNIQUE_NAME}-hemera-server --namespace=${NAMESPACE} \
-                --set image.repository="${REPOSITORY_SERVER}/${env.HEMERA_PACKAGE_NAME}" \
-                --set image.tag="${env.HEMERA_PACKAGE_VERSION}" ./servers/hemera-server/charts/hemera-server
-            """
-          }
+          parallel parallelStagesMap
         }
       }
     } // End of production deployment code block.
+
   }
 
   post {
@@ -407,7 +314,7 @@ def getGitPrBranchName() {
     // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
-  if(ghprbSourceBranch){
+  if(env.ghprbSourceBranch){
     return ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
@@ -415,9 +322,108 @@ def getGitPrBranchName() {
 }
 
 def getGitBranchName(){ // we can place some conditions in future
-  if(ghprbSourceBranch){
+  if(env.ghprbSourceBranch){
     return ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
+}
+
+@NonCPS
+def getDirs(path){
+  def currentDir = new File(path)
+  def dirs = []
+  currentDir.eachDir() {
+      dirs << it.name
+  }
+  return dirs
+}
+
+def generateStage(server) {
+  return {
+    stage("stage: ${server}") {
+      echo "This is ${server}."
+      def filterExist = "${server}".contains(params.EXCLUDE_SETTING_NAMESPACE_FILTER)
+      def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
+      def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
+      def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
+      // deploy anything matching `*backend-server` or `*frontend-server` to use idestack chart
+      try{
+        if ("${server}".endsWith("backend-server") | "${server}".endsWith("frontend-server")) {
+          echo "${server} deployment skipped"
+
+          if ("${server}".endsWith("frontend-server")){
+            deployment_flag = " --set backend.enabled='false' --set external.enabled='true' "
+          }
+
+          if ("${server}".endsWith("backend-server")){
+            deployment_flag = " --set frontend.enabled='false' --set external.enabled='false' "
+          }
+
+          sh """
+            helm upgrade -i \
+            ${deployment_flag} \
+            --set frontend.image="${REPOSITORY_SERVER}/${name}" \
+            --set frontend.imageTag=${version} \
+            --set backend.image="${REPOSITORY_SERVER}/${name}" \
+            --set backend.imageTag=${version} \
+            --set settings.workspaceId="${WORKSPACE_ID}" \
+            --set frontend.pullPolicy=Always \
+            --set backend.pullPolicy=Always \
+            --set ingress.domain=${params.DOMAIN_NAME} \
+            --namespace=${env.NAMESPACE} ${UNIQUE_NAME}-${server} kube-orchestration/idestack
+          """
+        } else {
+          sh """
+            cd servers/${server}
+            helm upgrade -i ${server}-api --namespace=${env.NAMESPACE} \
+            --set image.repository=${REPOSITORY_SERVER}/${name} \
+            --set image.tag=${version} \
+            charts/chart
+          """
+        }
+      } catch (Exception err) {
+        slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage deployment ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${err.toString()}", channel: 'idestack-automation')
+        println err
+        throw(err)
+      }
+    }
+  }
+}
+
+// Docker build parllel loop
+def generateBuildStage(server) {
+  return {
+    stage("stage: ${server}") {
+     try{
+      echo "This is ${server}."
+      def name = getName(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
+      def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
+        sh """
+            lerna exec --scope=*${server} npm run docker:${env.BUILD_COMMAND}
+            docker tag ${name}:${version} ${REPOSITORY_SERVER}/${name}:${version}
+            docker push ${REPOSITORY_SERVER}/${name}:${version}
+            docker rmi ${REPOSITORY_SERVER}/${name}:${version}
+        """
+      } catch (e) {
+        slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage docker-build ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${e}", channel: 'idestack-automation')
+        throw(e)
+      }
+    }
+  }
+}
+
+import groovy.json.JsonSlurper
+def getVersion(json_file_path){
+  def inputFile = readFile(json_file_path)
+  def InputJSON = new JsonSlurper().parseText(inputFile)
+  def version = InputJSON.version
+return version
+}
+
+def getName(json_file_path){
+  def inputFile = readFile(json_file_path)
+  def InputJSON = new JsonSlurper().parseText(inputFile)
+  def name = InputJSON.name
+return name
 }

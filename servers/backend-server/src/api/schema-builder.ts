@@ -155,7 +155,7 @@ export class GatewaySchemaBuilder {
     }
 
     private createOwnSchema(): GraphQLSchema {
-        const typeDefs = [rootSchemaDef].concat(modules.schemas);
+        const typeDefs = [rootSchemaDef, modules.schemas].join('\n');
         if (__DEV__) {
            const fs =  require('fs');
            const writeData = `${typeDefs}`;
