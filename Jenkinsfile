@@ -53,7 +53,8 @@ pipeline {
       steps{
         sh 'git-crypt unlock'
         load "./jenkins_variables.groovy"
-        sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
+        // if we need to load stag configuration for different location.
+        // sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
       }
     }
 
@@ -339,7 +340,7 @@ def getDirs(path){
   return dirs
 }
 
-def generateStage(server) {
+def generateStage(server, environmentType) {
   return {
     stage("stage: ${server}") {
       echo "This is ${server}."
@@ -347,6 +348,7 @@ def generateStage(server) {
       def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
       def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
+      def valuesFile = "values-${environmentType}"
       // deploy anything matching `*backend-server` or `*frontend-server` to use idestack chart
       try{
         if ("${server}".endsWith("backend-server") | "${server}".endsWith("frontend-server")) {
@@ -363,6 +365,7 @@ def generateStage(server) {
           sh """
             helm upgrade -i \
             ${deployment_flag} \
+            -f "${valuesFile}"
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
             --set backend.image="${REPOSITORY_SERVER}/${name}" \
@@ -377,6 +380,7 @@ def generateStage(server) {
           sh """
             cd servers/${server}
             helm upgrade -i ${server}-api --namespace=${env.NAMESPACE} \
+            -f "servers/${server}/charts/${valuesFile}"
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
