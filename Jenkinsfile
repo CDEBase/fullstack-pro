@@ -186,7 +186,7 @@ pipeline {
         script {
           def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
           def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it)]
+           ["${it}" : generateStage(it, deployment_env)]
           }
           parallel parallelStagesMap
         }
@@ -236,7 +236,7 @@ pipeline {
         script {
           def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
           def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it)]
+           ["${it}" : generateStage(it, deployment_env)]
           }
           parallel parallelStagesMap
         }
@@ -281,7 +281,7 @@ pipeline {
         script {
           def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
           def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it)]
+           ["${it}" : generateStage(it, deployment_env)]
           }
           parallel parallelStagesMap
         }
