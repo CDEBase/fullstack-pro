@@ -314,19 +314,19 @@ def getGitPrBranchName() {
     // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
-  #if(ghprbSourceBranch){
-  #  return ghprbSourceBranch
-  #} else {
+  // if(ghprbSourceBranch){
+  //  return ghprbSourceBranch
+  //} else {
     return params.REPOSITORY_BRANCH
-  #}
+  //}
 }
 
 def getGitBranchName(){ // we can place some conditions in future
-  # if(ghprbSourceBranch){
-  #  return ghprbSourceBranch
-  #} else {
+  // if(ghprbSourceBranch){
+//  return ghprbSourceBranch
+  //} else {
     return params.REPOSITORY_BRANCH
-  #}
+  //}
 }
 
 @NonCPS
