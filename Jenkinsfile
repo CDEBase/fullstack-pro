@@ -224,7 +224,7 @@ pipeline {
       }
 
       input {
-        message "Want to deploy fullstack-pro on stage cluster?"
+        message "Want to deploy ${params.NAMESPACE} on stage cluster?"
         parameters {
           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on stage?', name: 'STAGE_DEPLOYMENT'
         }
@@ -269,7 +269,7 @@ pipeline {
       }
 
       input {
-        message "Want to deploy fullstack-pro on prod cluster?"
+        message "Want to deploy ${NAMESPACE} on prod cluster?"
         parameters {
           choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
         }
@@ -315,7 +315,7 @@ def getGitPrBranchName() {
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
@@ -323,7 +323,7 @@ def getGitPrBranchName() {
 
 def getGitBranchName(){ // we can place some conditions in future
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
