@@ -348,7 +348,7 @@ def generateStage(server, environmentType) {
       def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
       def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
-      def valuesFile = "values-${environmentType}"
+      def valuesFile = "values-${environmentType}.yaml"
       // deploy anything matching `*backend-server` or `*frontend-server` to use idestack chart
       try{
         if ("${server}".endsWith("backend-server") | "${server}".endsWith("frontend-server")) {
