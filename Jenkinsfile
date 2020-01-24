@@ -365,7 +365,7 @@ def generateStage(server, environmentType) {
           sh """
             helm upgrade -i \
             ${deployment_flag} \
-            -f "${valuesFile}"
+            -f "${valuesFile}" \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
             --set backend.image="${REPOSITORY_SERVER}/${name}" \
@@ -380,7 +380,7 @@ def generateStage(server, environmentType) {
           sh """
             cd servers/${server}
             helm upgrade -i ${server}-api --namespace=${env.NAMESPACE} \
-            -f "servers/${server}/charts/${valuesFile}"
+            -f "servers/${server}/charts/${valuesFile}" \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
