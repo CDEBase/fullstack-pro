@@ -20,11 +20,3 @@ def getSecrets(json_file_path, env, var){
   def secret = InputJSON."${env}"."${var}"
 return secret
 }
-
-// Variables for package name and versions
-env.FRONTEND_PACKAGE_NAME = getName("./servers/frontend-server/package.json")
-env.FRONTEND_PACKAGE_VERSION = getVersion("./servers/frontend-server/package.json")
-env.BACKEND_PACKAGE_NAME = getName("./servers/backend-server/package.json")
-env.BACKEND_PACKAGE_VERSION = getVersion("./servers/backend-server/package.json")
-env.HEMERA_PACKAGE_NAME = getName("./servers/hemera-server/package.json")
-env.HEMERA_PACKAGE_VERSION = getVersion("./servers/hemera-server/package.json")
