@@ -380,7 +380,7 @@ def generateStage(server, environmentType) {
           sh """
             cd servers/${server}
             helm upgrade -i ${server}-api --namespace=${env.NAMESPACE} \
-            -f "servers/${server}/charts/${valuesFile}" \
+            -f "charts/chart/${valuesFile}" \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
