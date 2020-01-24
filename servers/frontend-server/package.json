@@ -16,10 +16,11 @@
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run build:clean",
-    "build": "cross-env NODE_ENV=production zen build",
+    "zen:build": "zen build -x",
+    "build": "cross-env NODE_ENV=production npm run zen:build",
     "build:clean": "rimraf dist",
-    "build:debug": "cross-env DEBUGGING=true NODE_ENV=production zen build",
-    "build:debug:verbose": "npm run build:debug -- -v",
+    "build:debug": "cross-env DEBUGGING=true NODE_ENV=production npm run zen:build",
+    "build:debug:verbose": "cross-env DEBUGGING=true NODE_ENV=production npm run zen:build -- -v",
     "docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
     "docker:build:debug": "npm run build:debug && docker build . -t $npm_package_name:$npm_package_version",
     "docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  -p 3010:3010  -it $npm_package_name:$npm_package_version",
@@ -56,10 +57,10 @@
     "@common-stack/client-react": "0.0.209",
     "@common-stack/core": "0.0.209",
     "@common-stack/server-core": "0.0.209",
-    "@sample-stack/client-react": "file:../../packages/sample-client-react",
-    "@sample-stack/client-state": "file:../../packages/sample-client-state",
-    "@sample-stack/core": "file:../../packages/sample-core",
-    "@sample-stack/counter-module-browser": "file:../../packages-modules/counter/browser",
+    "@sample-stack/client-react": "^0.0.39-alpha.17",
+    "@sample-stack/client-state": "^0.0.39-alpha.17",
+    "@sample-stack/core": "^0.0.39-alpha.16",
+    "@sample-stack/counter-module-browser": "^0.0.39-alpha.17",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-fetch": "^0.7.0",
@@ -136,7 +137,7 @@
     "@babel/polyfill": "7.7.0",
     "cross-env": "^6.0.3",
     "pm2": "^4.2.1",
-    "rimraf": "^3.0.0",
-    "raf": "3.4.1"
+    "raf": "3.4.1",
+    "rimraf": "^3.0.0"
   }
 }
