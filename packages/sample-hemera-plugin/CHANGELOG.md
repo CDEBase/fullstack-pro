@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.31](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.22...v0.0.39-alpha.31) (2020-01-24)
+
+**Note:** Version bump only for package @sample-stack/hemera-plugin
+
+
+
+
+
 ## [0.0.39-alpha.16](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.15...v0.0.39-alpha.16) (2019-12-23)
 
 **Note:** Version bump only for package @sample-stack/hemera-plugin
