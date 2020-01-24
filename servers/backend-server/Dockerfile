@@ -1,6 +1,8 @@
 # The official nodejs docker image
 FROM node:10.15.3
+
 ENV PYTHON /usr/bin/python
+
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there
 # This way, dependnecies are cached without the need of cacheing all files.
