@@ -13,18 +13,28 @@
   "command": {
     "publish": {
       "graphType": "all",
-      "allowBranch": ["publish", "devpublish"],
+      "allowBranch": [
+        "publish",
+        "devpublish"
+      ],
       "message": "chore(release): publish"
     },
     "bootstrap": {
-      "npmClientArgs": ["--no-package-lock"]
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
     },
     "version": {
-      "allowBranch": ["master", "develop", "publish", "devpublish"],
+      "allowBranch": [
+        "master",
+        "develop",
+        "publish",
+        "devpublish"
+      ],
       "conventionalCommits": true,
       "message": "chore: release package(s)"
     }
   },
   "packages": ["packages-modules/**", "packages/*", "servers/*"],
-  "version": "0.0.0"
+  "version": "0.0.39-alpha.30"
 }
