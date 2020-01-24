@@ -98,11 +98,6 @@ if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
 }
 
 let _apolloClient: ApolloClient<any>;
-
-const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
-
-const typeDefs = [schema, clientState.typeDefs].join('\n');
-
 const createApolloClient = () => {
     if (_apolloClient) {
         // return quickly if client is already created.
