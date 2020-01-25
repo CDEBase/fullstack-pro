@@ -41,7 +41,9 @@ pipeline {
 
     stage('define environment') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], 
+        doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], 
+        submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         sh "git checkout ${env.GIT_PR_BRANCH_NAME}"
 
         // env.NODEJS_HOME = "${tool 'node_v8'}"
