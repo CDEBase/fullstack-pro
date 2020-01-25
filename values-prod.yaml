@@ -3,7 +3,6 @@ env:
   HEMERA_LOG_LEVEL: info
   CONNECTION_ID: v1
   FILE_ROOT_PATH: /usr/src/app
-  GRAPHQL_URL: "https://ideback-default-test.cdebase.io/graphql"
   CONFIG_PATH: "/tmp"
   AUTH0_CLIENT_ID: ""
   AUTH0_CLIENT_SECRET: ""
