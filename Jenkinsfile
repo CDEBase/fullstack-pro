@@ -364,8 +364,10 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${deployment_flag} \
             -f "${valuesFile}" \
+            ${UNIQUE_NAME}-${server} \
+            ${namespace} \
+            ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
             --set backend.image="${REPOSITORY_SERVER}/${name}" \
@@ -374,13 +376,14 @@ def generateStage(server, environmentType) {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=${params.DOMAIN_NAME} \
-            --namespace=${env.NAMESPACE} ${UNIQUE_NAME}-${server} kube-orchestration/idestack
+            kube-orchestration/idestack
           """
         } else {
           sh """
             cd servers/${server}
-            helm upgrade -i ${server}-api --namespace=${env.NAMESPACE} \
+            helm upgrade -i ${server}-api \
             -f "charts/chart/${valuesFile}" \
+            ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
