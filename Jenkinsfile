@@ -365,7 +365,7 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server} \
+            ${UNIQUE_NAME} \
             -f "${valuesFile}" \
             ${namespace} \
             ${deployment_flag} \
