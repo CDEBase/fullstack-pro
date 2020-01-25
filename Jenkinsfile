@@ -362,7 +362,7 @@ def generateStage(server, environmentType) {
           }
 
           if ("${server}".endsWith("backend-server")){
-            deployment_flag = " --set frontend.enabled='false' --set external.enabled='false' "
+            deployment_flag = " --set frontend.enabled='false' --set external.enabled='false' --set ingress.enabled=false "
           }
 
           sh """
