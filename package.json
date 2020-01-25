@@ -81,7 +81,6 @@
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
-    "@babel/polyfill": "7.7.0",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-proposal-decorators": "^7.7.4",
     "@babel/plugin-proposal-export-default-from": "^7.7.4",
@@ -99,6 +98,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.7.5",
     "@babel/plugin-transform-regenerator": "^7.7.5",
     "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/polyfill": "7.7.0",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-flow": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
@@ -125,6 +125,7 @@
     "@types/enzyme": "^3.10.4",
     "@types/express": "^4.17.2",
     "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/ioredis": "^4.14.4",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/jest": "^24.0.24",
     "@types/lodash-es": "^4.17.3",

@@ -2,7 +2,7 @@ import Redis from 'ioredis';
 import * as Nats from 'nats';
 import { injectable } from 'inversify';
 import * as Mongoose from 'mongoose';
-
+import { config } from '../config';
 import * as RedisHealthcheck from 'redis-healthcheck';
 import * as MongoHealthcheck from 'mongo-healthcheck';
 import * as NodejsHealthcheck from '@hmcts/nodejs-healthcheck';
@@ -10,11 +10,13 @@ import * as NodejsHealthcheck from '@hmcts/nodejs-healthcheck';
 @injectable()
 export class HealthCheck {
   public async redis(host?: string): Promise<boolean> {
-    const client = new Redis({ host: host || process.env.REDIS_URL });
+    const redisClient = config.REDIS_CLUSTER_ENABLED ? new Redis.Cluster(config.REDIS_CLUSTER_URL)
+    : new Redis(config.REDIS_URL);
 
+    console.log('----REDIS CLIENT', redisClient);
     return new Promise((resolve, reject) => {
       const redisHealthcheck = RedisHealthcheck({
-        client,
+        client: redisClient,
         name: host,
         memoryThreshold: 10485760,
       });
@@ -30,7 +32,7 @@ export class HealthCheck {
   }
 
   public async mongo(host?: string): Promise<boolean> {
-    const connection = Mongoose.connect(host || process.env.MONGO_URL);
+    const connection = Mongoose.connect(config.MONGO_URL);
 
     return connection
       .then(conn => {
@@ -45,10 +47,10 @@ export class HealthCheck {
   public async nats(host?: string, topic?: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       try {
-        const client = Nats.connect(host ? { url: host } : {
-          url: process.env.NATS_URL,
-          user: process.env.NATS_USER,
-          pass: process.env.NATS_PW,
+        const client = Nats.connect({
+          url: config.NATS_URL,
+          user: config.NATS_USER,
+          pass: config.NATS_PW,
       });
 
       client.on('error', (err) => reject(err));
