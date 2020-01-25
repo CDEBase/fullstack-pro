@@ -42,6 +42,8 @@ pipeline {
     stage('define environment') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
+        sh "git checkout ${env.GIT_PR_BRANCH_NAME}"
+
         // env.NODEJS_HOME = "${tool 'node_v8'}"
   	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
   	    //sh 'npm --version'
@@ -66,7 +68,6 @@ pipeline {
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
-            git checkout ${env.GIT_PR_BRANCH_NAME}
             npm install
             npm run lerna
           """
