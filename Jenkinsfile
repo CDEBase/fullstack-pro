@@ -365,8 +365,8 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            -f "${valuesFile}" \
             ${UNIQUE_NAME}-${server} \
+            -f "${valuesFile}" \
             ${namespace} \
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
