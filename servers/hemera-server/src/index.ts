@@ -41,11 +41,11 @@ try {
             },
         },
     });
-    hemera.use(HemeraZipkin, {
-        host: process.env.ZIPKIN_URL,
-        port: process.env.ZIPKIN_PORT,
-        sampling: 1,
-    });
+    // hemera.use(HemeraZipkin, {
+    //     host: process.env.ZIPKIN_URL,
+    //     port: process.env.ZIPKIN_PORT,
+    //     sampling: 1,
+    // });
     hemera.use(ContainerHemera, {
         subTopic,
     });
