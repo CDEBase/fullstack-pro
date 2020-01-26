@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.38](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.37...v0.0.39-alpha.38) (2020-01-26)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
 ## [0.0.39-alpha.37](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.36...v0.0.39-alpha.37) (2020-01-25)
 
 **Note:** Version bump only for package sample-stack
