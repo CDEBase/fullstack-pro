@@ -7,6 +7,8 @@ import * as RedisHealthcheck from 'redis-healthcheck';
 import * as MongoHealthcheck from 'mongo-healthcheck';
 import * as NodejsHealthcheck from '@hmcts/nodejs-healthcheck';
 
+
+console.log('get Config', config);
 @injectable()
 export class HealthCheck {
   public async redis(host?: string): Promise<boolean> {
