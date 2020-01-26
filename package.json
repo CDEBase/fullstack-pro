@@ -74,6 +74,7 @@
     "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
+    "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
     "sample-stack-hemera-server": "file:servers/hemera-server"

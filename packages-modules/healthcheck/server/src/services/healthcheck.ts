@@ -1,4 +1,4 @@
-import Redis from 'ioredis';
+import * as Redis from 'ioredis';
 import * as Nats from 'nats';
 import { injectable } from 'inversify';
 import * as Mongoose from 'mongoose';
