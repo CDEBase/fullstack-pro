@@ -12,7 +12,7 @@ export const config = envalid.cleanEnv(process.env, {
     REDIS_CLUSTER_URL: json({devDefault: '[{"port":6379,"host":"localhost"}]',  example: '[{"port":6379,"host":"localhost"}]'}),
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),
-    REDIS_SENTINEL_ENABLED: bool({ devDefault: false }),
+    REDIS_SENTINEL_ENABLED: bool({ devDefault: true }),
     HEMERA_LOG_LEVEL: str({ default: 'info' }),
     BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
