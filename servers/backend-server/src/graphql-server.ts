@@ -11,8 +11,8 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 
-const redisCache = config.REDIS_CLUSTER_ENABLED ? new RedisClusterCache(config.REDIS_CLUSTER_URL as any[]) 
-: new RedisCache(config.REDIS_URL as any);
+const redisCache = config.REDIS_CLUSTER_ENABLED ? new RedisClusterCache(config.REDIS_CLUSTER_URL as any[])
+: config.REDIS_SENTINEL_ENABLED ? new RedisCache(config.REDIS_CLUSTER_URL) : new RedisCache(config.REDIS_URL as any);
 const dataSources =  modules.createDataSource();
 const defaultPreferences = modules.createDefaultPreferences();
 const constructDataSourcesForSubscriptions = (context) => {
