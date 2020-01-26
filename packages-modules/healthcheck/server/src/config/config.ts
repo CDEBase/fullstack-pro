@@ -12,8 +12,4 @@ export const config = envalid.cleanEnv(process.env, {
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),
     REDIS_SENTINEL_ENABLED: bool({ devDefault: false }),
-    BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
-    GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
-    CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
-    CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
 });

@@ -13,7 +13,6 @@ export class HealthCheck {
     const redisClient = config.REDIS_CLUSTER_ENABLED ? new Redis.Cluster(config.REDIS_CLUSTER_URL)
     : new Redis(config.REDIS_URL);
 
-    console.log('----REDIS CLIENT', redisClient);
     return new Promise((resolve, reject) => {
       const redisHealthcheck = RedisHealthcheck({
         client: redisClient,

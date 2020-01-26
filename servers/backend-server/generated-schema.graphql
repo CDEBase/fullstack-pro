@@ -27,7 +27,8 @@ schema {
     query: Query
     mutation: Mutation
     subscription: Subscription
-},# Database counter
+}
+# Database counter
 type Counter {
   # Current amount
   amount: Int!
