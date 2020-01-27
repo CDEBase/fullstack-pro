@@ -13,7 +13,7 @@ console.log('get Config', config);
 export class HealthCheck {
   public async redis(host?: string): Promise<boolean> {
     const redisClient = config.REDIS_CLUSTER_ENABLED ? new Redis.Cluster(config.REDIS_CLUSTER_URL)
-    : new Redis(config.REDIS_URL);
+    : config.REDIS_SENTINEL_ENABLED ? new Redis(config.REDIS_CLUSTER_URL) : new Redis(config.REDIS_URL);
 
     return new Promise((resolve, reject) => {
       const redisHealthcheck = RedisHealthcheck({
