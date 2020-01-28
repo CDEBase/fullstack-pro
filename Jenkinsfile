@@ -172,8 +172,6 @@ pipeline {
       }
       steps{
         sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
           helm repo update
         """
       }
