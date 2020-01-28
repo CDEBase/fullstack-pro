@@ -41,8 +41,8 @@ pipeline {
 
     stage('define environment') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], 
-        doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], 
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]],
+        doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']],
         submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         sh "git checkout ${env.GIT_PR_BRANCH_NAME}"
 
@@ -203,14 +203,14 @@ pipeline {
          timeout(time: 30, unit: 'SECONDS')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == 'develop' }
         expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
         beforeInput true
       }
       steps{
         sh """
           gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
+          gcloud container clusters get-credentials stage-cluster --zone us-central1-a
           helm repo update
         """
       }
@@ -222,7 +222,7 @@ pipeline {
        }
       environment{ deployment_env = 'stage'}
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == 'develop' }
         expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
