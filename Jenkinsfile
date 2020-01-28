@@ -29,6 +29,8 @@ pipeline {
     GCR_KEY = credentials('jenkins-gcr-login-key')
     GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
+    DEV_CLUSTER_KUBE_CONFIG = credentials('dev-cluster-kube-config')
+    STAGE_CLUSTER_KUBE_CONFIG = credentials('stage-cluster-kube-config')
   }
 
   // Initialize npm and docker commands using plugins
@@ -209,8 +211,6 @@ pipeline {
       }
       steps{
         sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials stage-cluster --zone us-central1-a
           helm repo update
         """
       }
@@ -365,6 +365,9 @@ def generateStage(server, environmentType) {
             deployment_flag = " --set frontend.enabled='false' --set external.enabled='false' --set ingress.enabled=false "
           }
 
+          if ("$environmentType" == 'dev'){ CLUSTER_KUBE_CONFIG = DEV_CLUSTER_KUBE_CONFIG }
+          if ("$environmentType" == 'stage'){ CLUSTER_KUBE_CONFIG = STAGE_CLUSTER_KUBE_CONFIG }
+
           sh """
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
@@ -379,8 +382,9 @@ def generateStage(server, environmentType) {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=${params.DOMAIN_NAME} \
-            kube-orchestration/idestack
-          """
+              kube-orchestration/idestack \
+            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+
         } else {
           sh """
             cd servers/${server}
@@ -390,7 +394,8 @@ def generateStage(server, environmentType) {
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
-          """
+            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+
         }
       } catch (Exception err) {
         slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage deployment ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${err.toString()}", channel: 'idestack-automation')
