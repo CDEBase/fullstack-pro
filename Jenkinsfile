@@ -319,7 +319,7 @@ def getGitPrBranchName() {
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
@@ -327,7 +327,7 @@ def getGitPrBranchName() {
 
 def getGitBranchName(){ // we can place some conditions in future
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
