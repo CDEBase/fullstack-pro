@@ -29,8 +29,6 @@ pipeline {
     GCR_KEY = credentials('jenkins-gcr-login-key')
     GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
-    DEV_CLUSTER_KUBE_CONFIG = credentials('dev-cluster-kube-config')
-    STAGE_CLUSTER_KUBE_CONFIG = credentials('stage-cluster-kube-config')
   }
 
   // Initialize npm and docker commands using plugins
@@ -166,7 +164,7 @@ pipeline {
   // Below are dev stages
     stage('Get Dev Secrets'){
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == 'develop' }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
@@ -180,18 +178,20 @@ pipeline {
     stage('Dev deployment') {
       environment{ deployment_env = 'dev' }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == 'develop' }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
       steps {
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+       withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
         }
       }
 
@@ -234,12 +234,14 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+              ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
         }
       }
     } // End of staging deployment code block.
@@ -279,13 +281,15 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+        withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
-        }
+       }
       }
     } // End of production deployment code block.
 
@@ -363,9 +367,6 @@ def generateStage(server, environmentType) {
             deployment_flag = " --set frontend.enabled='false' --set external.enabled='false' --set ingress.enabled=false "
           }
 
-          if ("$environmentType" == 'dev'){ CLUSTER_KUBE_CONFIG = DEV_CLUSTER_KUBE_CONFIG }
-          if ("$environmentType" == 'stage'){ CLUSTER_KUBE_CONFIG = STAGE_CLUSTER_KUBE_CONFIG }
-
           sh """
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
@@ -380,8 +381,8 @@ def generateStage(server, environmentType) {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=${params.DOMAIN_NAME} \
-              kube-orchestration/idestack \
-            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+              kube-orchestration/idestack
+            """
 
         } else {
           sh """
@@ -392,7 +393,7 @@ def generateStage(server, environmentType) {
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
             charts/chart
-            --kubeconfig=""" + CLUSTER_KUBE_CONFIG
+          """
 
         }
       } catch (Exception err) {
