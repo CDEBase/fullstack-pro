@@ -162,19 +162,6 @@ pipeline {
     }
 
   // Below are dev stages
-    stage('Get Dev Secrets'){
-      when {
-        expression { GIT_BRANCH_NAME == 'develop' }
-        expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          helm repo update
-        """
-      }
-    }
-
     stage('Dev deployment') {
       environment{ deployment_env = 'dev' }
       when {
@@ -185,6 +172,7 @@ pipeline {
 
       steps {
        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+          sh "helm repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -194,7 +182,6 @@ pipeline {
           }
         }
       }
-
     } // End of dev deployment code block.
 
   // Below are stage code block
