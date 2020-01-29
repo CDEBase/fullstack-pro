@@ -41,8 +41,8 @@ pipeline {
 
     stage('define environment') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]], 
-        doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], 
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]],
+        doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']],
         submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         sh "git checkout ${env.GIT_PR_BRANCH_NAME}"
 
@@ -162,21 +162,6 @@ pipeline {
     }
 
   // Below are dev stages
-    stage('Get Dev Secrets'){
-      when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
-          helm repo update
-        """
-      }
-    }
-
     stage('Dev deployment') {
       environment{ deployment_env = 'dev' }
       when {
@@ -186,36 +171,20 @@ pipeline {
       }
 
       steps {
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+       withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+          sh "helm repo update"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
         }
       }
-
     } // End of dev deployment code block.
 
   // Below are stage code block
-    stage('Get Stage Secrets'){
-      options {
-         timeout(time: 30, unit: 'SECONDS')
-       }
-      when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
-          helm repo update
-        """
-      }
-    }
-
     stage('Stage deployment') {
       options {
          timeout(time: 300, unit: 'SECONDS')
@@ -236,31 +205,20 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
+          sh "helm repo update"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+              ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
         }
       }
     } // End of staging deployment code block.
 
   // Below are production stages
-    stage('Get Prod Secrets'){
-      when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
-          helm repo update
-        """
-      }
-    }
     stage('Prod deployment') {
       options {
           timeout(time: 300, unit: 'SECONDS')
@@ -281,13 +239,16 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        script {
-          def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-          def parallelStagesMap = servers.collectEntries {
-           ["${it}" : generateStage(it, deployment_env)]
+        withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
+         sh "helm repo update"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
           }
-          parallel parallelStagesMap
-        }
+       }
       }
     } // End of production deployment code block.
 
@@ -319,7 +280,7 @@ def getGitPrBranchName() {
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
@@ -327,7 +288,7 @@ def getGitPrBranchName() {
 
 def getGitBranchName(){ // we can place some conditions in future
   if(env.ghprbSourceBranch){
-    return ghprbSourceBranch
+    return env.ghprbSourceBranch
   } else {
     return params.REPOSITORY_BRANCH
   }
@@ -379,8 +340,9 @@ def generateStage(server, environmentType) {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=${params.DOMAIN_NAME} \
-            kube-orchestration/idestack
-          """
+              kube-orchestration/idestack
+            """
+
         } else {
           sh """
             cd servers/${server}
@@ -391,6 +353,7 @@ def generateStage(server, environmentType) {
             --set image.tag=${version} \
             charts/chart
           """
+
         }
       } catch (Exception err) {
         slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage deployment ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${err.toString()}", channel: 'idestack-automation')
