@@ -185,22 +185,6 @@ pipeline {
     } // End of dev deployment code block.
 
   // Below are stage code block
-    stage('Get Stage Secrets'){
-      options {
-         timeout(time: 30, unit: 'SECONDS')
-       }
-      when {
-        expression { GIT_BRANCH_NAME == 'develop' }
-        expression { params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          helm repo update
-        """
-      }
-    }
-
     stage('Stage deployment') {
       options {
          timeout(time: 300, unit: 'SECONDS')
@@ -222,6 +206,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
+          sh "helm repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -234,20 +219,6 @@ pipeline {
     } // End of staging deployment code block.
 
   // Below are production stages
-    stage('Get Prod Secrets'){
-      when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv' }
-        beforeInput true
-      }
-      steps{
-        sh """
-          gcloud auth activate-service-account --key-file """ + GCLOUDSECRETKEY + """
-          gcloud container clusters get-credentials deployment-cluster --zone us-central1-a
-          helm repo update
-        """
-      }
-    }
     stage('Prod deployment') {
       options {
           timeout(time: 300, unit: 'SECONDS')
@@ -269,6 +240,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
+         sh "helm repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
