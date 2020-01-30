@@ -27,7 +27,8 @@ schema {
     query: Query
     mutation: Mutation
     subscription: Subscription
-},# Database counter
+}
+# Database counter
 type Counter {
   # Current amount
   amount: Int!
@@ -49,4 +50,20 @@ extend type Mutation {
 extend type Subscription {
   # Subscription fired when anyone increases counter
   counterUpdated: Counter
+}
+,enum HealthCheckType {
+  Nats
+  Redis
+  Mongo
+  Custom
+}
+
+input HealthCheckRequest {
+  host: String
+  topic: String
+  type: HealthCheckType!
+}
+
+extend type Query {
+  health(request: HealthCheckRequest!): Boolean
 }

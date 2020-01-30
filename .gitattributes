@@ -1,0 +1,5 @@
+values.secret.json filter=git-crypt diff=git-crypt
+.npmrc filter=git-crypt diff=git-crypt
+values-dev.yaml filter=git-crypt diff=git-crypt
+values-stage.yaml filter=git-crypt diff=git-crypt
+values-prod.yaml filter=git-crypt diff=git-crypt

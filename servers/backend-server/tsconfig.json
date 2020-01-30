@@ -4,10 +4,7 @@
     "sourceMap": true,
     "declaration": false,
     "rootDirs": ["./src","../knexfile.ts"],
-    "outDir": "./dist",
-    "typeRoots": [
-      "../../node_modules/@types/"
-    ]
+    "outDir": "./dist"
   },
   "include": [
     "../../typings/*.d.ts",

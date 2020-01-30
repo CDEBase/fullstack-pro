@@ -1,5 +1,7 @@
 # The official nodejs docker image
-FROM node:8.9.4
+FROM node:10.15.3
+
+ENV PYTHON /usr/bin/python
 
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there

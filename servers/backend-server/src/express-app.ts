@@ -3,6 +3,7 @@ import * as express from 'express';
 const cookiesMiddleware = require('universal-cookie-express');
 import modules from './modules';
 import { errorMiddleware } from './middleware/error';
+import { contextServicesMiddleware } from './middleware/services';
 
 
 
@@ -16,6 +17,7 @@ export function expressApp(options, middlewares) {
     // Don't rate limit heroku
     app.enable('trust proxy');
 
+    app.use(contextServicesMiddleware);
 
     // app.use(corsMiddleware);
     app.use(function (req, res, next) {

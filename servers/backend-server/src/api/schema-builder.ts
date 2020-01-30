@@ -8,7 +8,7 @@ import {
     RenameTypes, transformSchema,
     addErrorLoggingToSchema,
 } from 'graphql-tools';
-import fetch from 'node-fetch';
+const fetch =  require('node-fetch');
 import { HttpLink } from 'apollo-link-http';
 import { remoteSchemaDetails } from './remote-config';
 import modules from '../modules';
@@ -155,7 +155,7 @@ export class GatewaySchemaBuilder {
     }
 
     private createOwnSchema(): GraphQLSchema {
-        const typeDefs = [rootSchemaDef].concat(modules.schemas);
+        const typeDefs = [rootSchemaDef, modules.schemas].join('\n');
         if (__DEV__) {
            const fs =  require('fs');
            const writeData = `${typeDefs}`;

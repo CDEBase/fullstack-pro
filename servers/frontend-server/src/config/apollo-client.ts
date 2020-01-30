@@ -14,14 +14,16 @@ import { logger } from '@cdm-logger/client';
 import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
+
+const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
+
 // TODO: add cache redirects to module
 const cache = new InMemoryCache({
     dataIdFromObject: (result) => modules.getDataIdFromObject(result),
-    fragmentMatcher: modules.getStateParams().fragmentMatcher as any,
+    fragmentMatcher: clientState.fragmentMatcher as any,
  });
 const schema = `
-type Query {}
-type Mutation {}
+
 `;
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -103,8 +105,8 @@ const createApolloClient = () => {
     }
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        typeDefs: schema.concat(modules.getStateParams().typeDefs as string),
-        resolvers: modules.getStateParams().resolvers,
+        typeDefs: schema.concat(<string>clientState.typeDefs),
+        resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
         cache,
     };
@@ -121,7 +123,7 @@ const createApolloClient = () => {
     _apolloClient = new ApolloClient<any>(params);
     cache.writeData({
         data: {
-            ...modules.getStateParams().defaults,
+            ...clientState.defaults,
         },
     });
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {

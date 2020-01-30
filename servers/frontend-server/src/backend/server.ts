@@ -1,5 +1,3 @@
-///<reference types="webpack-env" />
-
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
@@ -63,8 +61,8 @@ server.on('close', () => {
     server = undefined;
 });
 
-if (module.hot) {
-    module.hot.dispose(() => {
+if ((module as any).hot) {
+    (module as any).hot.dispose(() => {
         try {
             if (server) {
                 server.close();
@@ -73,11 +71,11 @@ if (module.hot) {
             logger.error(error.stack);
         }
     });
-    module.hot.accept(['./website'], () => {
+    (module as any).hot.accept(['./website'], () => {
         logger.debug('...reloading middleware');
     });
 
-    module.hot.accept();
+    (module as any).hot.accept();
 }
 
 

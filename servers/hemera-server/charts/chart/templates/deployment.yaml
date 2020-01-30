@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       annotations:
-        buildID: {{ default "builtwithhelm" .Values.buildID }}
+        buildID: {{ .Values.buildID }}
       labels:
         draft: {{ default "draft-app" .Values.draft }}
         app: {{ template "fullname" . }}

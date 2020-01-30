@@ -44,7 +44,7 @@
   "dependencies": {
   },
   "peerDependencies": {
-    "@common-stack/server-core": ">=0.0.201"
+    "@common-stack/server-core": ">=0.0.209"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

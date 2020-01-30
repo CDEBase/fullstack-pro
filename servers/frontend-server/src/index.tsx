@@ -1,10 +1,9 @@
-///<reference types="webpack-env" />
 import 'antd/dist/antd.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Main from './app/Main';
 
-// Virtual module, generated in-memory by zenjs, contains count of backend rebuilds
+// Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 import 'backend_reload';
 

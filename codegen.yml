@@ -2,6 +2,8 @@ overwrite: true
 schema: "./servers/backend-server/generated-schema.graphql"
 generates:
   typings/graphql.d.ts:
+    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    documents: "packages-modules/counter/browser/src/**/*.gql"
     plugins:
       - typescript-graphql-files-modules
   packages-modules/counter/browser/src/generated-models.ts:
@@ -9,7 +11,6 @@ generates:
     documents: "packages-modules/counter/browser/src/**/*.gql"
     config:
         noNamespaces: true
-        contextType: ./interfaces/context#MyContext
         withMutationFn: false
         withHOC: false
         withComponent: false
@@ -27,6 +28,11 @@ generates:
       withMutationFn: true
       withHOC: true
       withComponent: true
+      withHooks: true
+    preset: import-types-preset
+    presetConfig:
+      typesPath: "../generated-models"
+      importTypesNamespace: SchemaTypes
     plugins:
       - add: |
           /* tslint:disable */
