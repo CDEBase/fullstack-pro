@@ -163,7 +163,10 @@ pipeline {
 
   // Below are dev stages
     stage('Dev deployment') {
-      environment{ deployment_env = 'dev' }
+      environment{
+          deployment_env = 'dev'
+          DOMAIN_NAME = 'cdebase.io'
+      }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
@@ -189,7 +192,10 @@ pipeline {
       options {
          timeout(time: 300, unit: 'SECONDS')
        }
-      environment{ deployment_env = 'stage'}
+      environment{
+      deployment_env = 'stage'
+      DOMAIN_NAME = 'stage.cdebase.io'
+      }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
         expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
@@ -339,7 +345,7 @@ def generateStage(server, environmentType) {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
-            --set ingress.domain=${params.DOMAIN_NAME} \
+            --set ingress.domain=${env.DOMAIN_NAME} \
               kube-orchestration/idestack
             """
 
