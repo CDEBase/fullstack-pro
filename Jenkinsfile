@@ -12,7 +12,7 @@ pipeline {
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
-    string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
+    string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm3 charts')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'github-deploy-keys', description: 'jenkins credential id of git deploy secret')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
@@ -175,7 +175,7 @@ pipeline {
 
       steps {
        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
-          sh "helm repo update"
+          sh "helm3 repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -212,7 +212,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
-          sh "helm repo update"
+          sh "helm3 repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -246,7 +246,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
-         sh "helm repo update"
+         sh "helm3 repo update"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -333,7 +333,7 @@ def generateStage(server, environmentType) {
           }
 
           sh """
-            helm upgrade -i \
+            helm3 upgrade -i \
             ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
             ${namespace} \
@@ -352,7 +352,7 @@ def generateStage(server, environmentType) {
         } else {
           sh """
             cd servers/${server}
-            helm upgrade -i ${server}-api \
+            helm3 upgrade -i ${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
