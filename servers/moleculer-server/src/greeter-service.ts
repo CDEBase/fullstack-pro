@@ -1,5 +1,5 @@
 
-
+import ZipkinService from 'moleculer-zipkin';
 import { Service, ServiceBroker } from 'moleculer';
 
 
@@ -9,11 +9,13 @@ export class GreeterService extends Service {
 
     constructor(broker: ServiceBroker) {
         super(broker);
-        this.name = SERVICE_NAME;
         this.parseServiceSchema({
             name: SERVICE_NAME,
             version: 2,
-            settings: {},
+            mixins: [ZipkinService],
+            settings: {
+
+            },
             actions: {
                 hello: this.hello,
                 welcome: {

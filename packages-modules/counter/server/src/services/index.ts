@@ -1,1 +1,2 @@
-export * from './counter-mock';
+export * from './counter-mock-service';
+export * from './counter-moleculer-service';

@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "My Moleculer microservices project",
   "scripts": {
-    "dev": "ts-node ../../node_modules/moleculer/bin/moleculer-runner.js --hot --repl --config moleculer.config.ts services/**/*.service.ts",
     "cli":"moleculer connect NATS",
     "watch": "npm run start:dev",
-    "start": "moleculer-runner dist/index.js",
+    "start": "node dist/index.js",
     "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env nodemon dist",
     "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env node --harmony dist",
     "start:dev": "cross-env ENV_FILE=../../config/development/dev.env nodemon dist",
@@ -33,7 +32,8 @@
   },
   "dependencies": {
     "nats": "^1.2.10",
-    "moleculer": "^0.13.0"
+    "moleculer": "^0.13.0",
+    "moleculer-zipkin": "0.2.2"
   },
   "engines": {
     "node": ">= 8.x.x"
