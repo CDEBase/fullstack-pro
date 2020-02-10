@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 require('dotenv').config({ path: process.env.ENV_FILE });
 import { ServiceBroker } from 'moleculer';
-import brokerConfig from './moleculer.config';
+import * as brokerConfig from './moleculer.config';
 import { createServices } from './create-services';
 import { NATS_MOLECULER_COUNTER_SERIVCE } from '@sample-stack/counter-module-server';
 import { config } from './config';
