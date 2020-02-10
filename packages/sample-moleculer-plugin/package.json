@@ -1,6 +1,6 @@
 {
   "name": "samle-moleculer-plugin",
-  "version": "0.1.0",
+  "version": "0.0.39-alpha.42",
   "description": "sample-stack",
   "main": "index.js",
   "scripts": {

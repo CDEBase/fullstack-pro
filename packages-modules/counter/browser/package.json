@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.39-alpha.31",
+  "version": "0.0.39-alpha.42",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-backend-server",
-  "version": "0.0.39-alpha.41",
+  "version": "0.0.39-alpha.42",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [
@@ -60,7 +60,7 @@
     "@common-stack/core": "0.0.209",
     "@common-stack/server-core": "0.0.209",
     "@sample-stack/core": "^0.0.39-alpha.31",
-    "@sample-stack/counter-module-server": "^0.0.39-alpha.31",
+    "@sample-stack/counter-module-server": "^0.0.39-alpha.42",
     "@sample-stack/healthcheck-server": "^0.0.39-alpha.41",
     "@sample-stack/microservice-nats": "^0.0.39-alpha.31",
     "@sample-stack/server-core": "^0.0.39-alpha.31",
