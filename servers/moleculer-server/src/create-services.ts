@@ -12,8 +12,6 @@ import CounterModule, { CounterMoleculerService } from '@sample-stack/counter-mo
 
 export async function createServices(broker: ServiceBroker, client: nats.Client, settings: { name: string }) {
 
-    console.log('---SETTINGS', settings);
-
     const defaultModule =
         () => new ContainerModule((bind: interfaces.Bind) => {
             bind('Logger').toConstantValue(logger);
@@ -46,7 +44,6 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
     );
 
     const container: Container = await modules.createHemeraContainers(settings);
-    console.log('----CONTAINER', modules);
 
     broker.createService(CounterMoleculerService, { ...settings, container });
 }
