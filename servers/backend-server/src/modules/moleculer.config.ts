@@ -19,11 +19,10 @@ import { config } from '../config';
  */
  const brokerConfig: BrokerOptions = {
     // Namespace of nodes to segment your nodes on the same network.
-    // namespace: config.NAMESPACE,
-    namespace: null,
+    namespace: config.NAMESPACE,
+    // namespace: null,
     // Unique node identifier. Must be unique in a namespace.
-    // nodeID: config.CONNECTION_ID,
-    nodeID: null,
+    nodeID: config.CONNECTION_ID,
 
     // Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.13/logging.html
     logger: true,

@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 require('dotenv').config({ path: process.env.ENV_FILE });
-import { GreeterService } from './greeter-service';
 import { ServiceBroker } from 'moleculer';
 import brokerConfig from './moleculer.config';
 import { createServices } from './create-services';
