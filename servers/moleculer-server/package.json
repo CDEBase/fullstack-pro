@@ -1,0 +1,41 @@
+{
+  "name": "sample-stack-moleculer-server",
+  "version": "1.0.0",
+  "description": "My Moleculer microservices project",
+  "scripts": {
+    "cli":"moleculer connect NATS",
+    "watch": "npm run start:dev",
+    "start": "node dist/index.js",
+    "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env nodemon dist",
+    "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env node --harmony dist",
+    "start:dev": "cross-env ENV_FILE=../../config/development/dev.env nodemon dist",
+    "docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
+    "docker:run": "docker run -it --env-file ../../config/staging/docker-staging.env  $npm_package_name:$npm_package_version",
+    "prebuild": "npm run build:clean",
+    "pretest": "npm run build",
+    "build": "cross-env NODE_ENV=production npm run build:dist",
+    "build:watch": "npm run build:dist -- --watch",
+    "build:dist": "webpack",
+    "build:clean": "rimraf dist",
+    "jest": "./node_modules/.bin/jest",
+    "test": "jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.24"
+  },
+  "dependencies": {
+    "nats": "^1.2.10",
+    "moleculer": "^0.13.0",
+    "moleculer-zipkin": "0.2.2"
+  },
+  "engines": {
+    "node": ">= 8.x.x"
+  }
+}

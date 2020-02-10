@@ -1,6 +1,9 @@
+import { injectable } from 'inversify';
 import { ICounterService } from '../interfaces';
 
-export class CounterMock implements ICounterService {
+
+@injectable()
+export class CounterMockService implements ICounterService {
 
   private _amount: number;
 
@@ -24,6 +27,6 @@ export class CounterMock implements ICounterService {
 }
 
 // to make this instance singleton.
-const counterMock = new CounterMock();
+const counterMock = new CounterMockService();
 
 export { counterMock };

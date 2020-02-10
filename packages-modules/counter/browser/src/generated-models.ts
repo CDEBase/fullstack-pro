@@ -24,9 +24,10 @@ export type ClientCounter = {
   counter?: Maybe<Scalars['Int']>,
 };
 
+/**  Database counter  */
 export type Counter = {
    __typename?: 'Counter',
-  /** Current amount */
+  /**  Current amount  */
   amount: Scalars['Int'],
 };
 
@@ -36,18 +37,37 @@ export type FieldError = {
   message: Scalars['String'],
 };
 
+export type HealthCheckRequest = {
+  host?: Maybe<Scalars['String']>,
+  topic?: Maybe<Scalars['String']>,
+  type: HealthCheckType,
+};
+
+export enum HealthCheckType {
+  Nats = 'Nats',
+  Redis = 'Redis',
+  Mongo = 'Mongo',
+  Custom = 'Custom'
+}
+
 
 
 export type Mutation = {
    __typename?: 'Mutation',
   dummy?: Maybe<Scalars['Int']>,
-  /** Increase counter value, returns current counter amount */
+  /**  Increase counter value returns current counter amount  */
   addCounter?: Maybe<Counter>,
+  addMoleculerCounter?: Maybe<Counter>,
   addCounterState?: Maybe<ClientCounter>,
 };
 
 
 export type MutationAddCounterArgs = {
+  amount?: Maybe<Scalars['Int']>
+};
+
+
+export type MutationAddMoleculerCounterArgs = {
   amount?: Maybe<Scalars['Int']>
 };
 
@@ -63,16 +83,25 @@ export type Node = {
 export type Query = {
    __typename?: 'Query',
   dummy?: Maybe<Scalars['Int']>,
-  /** Counter */
+  /**  Counter  */
   counter?: Maybe<Counter>,
+  /**  Moleculer Counter  */
+  moleculerCounter?: Maybe<Counter>,
+  health?: Maybe<Scalars['Boolean']>,
   counterState?: Maybe<ClientCounter>,
+};
+
+
+export type QueryHealthArgs = {
+  request: HealthCheckRequest
 };
 
 export type Subscription = {
    __typename?: 'Subscription',
   dummy?: Maybe<Scalars['Int']>,
-  /** Subscription fired when anyone increases counter */
+  /**  Subscription fired when anyone increases counter  */
   counterUpdated?: Maybe<Counter>,
+  moleculerCounterUpdate?: Maybe<Counter>,
 };
 
 export type AddCounterStateMutationVariables = {
@@ -221,11 +250,13 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Counter: ResolverTypeWrapper<Counter>,
+  HealthCheckRequest: HealthCheckRequest,
+  String: ResolverTypeWrapper<Scalars['String']>,
+  HealthCheckType: HealthCheckType,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   ClientCounter: ResolverTypeWrapper<ClientCounter>,
   Mutation: ResolverTypeWrapper<{}>,
   Subscription: ResolverTypeWrapper<{}>,
-  String: ResolverTypeWrapper<Scalars['String']>,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   AnyObject: ResolverTypeWrapper<Scalars['AnyObject']>,
   JSON: ResolverTypeWrapper<Scalars['JSON']>,
   JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>,
@@ -239,11 +270,13 @@ export type ResolversParentTypes = {
   Query: {},
   Int: Scalars['Int'],
   Counter: Counter,
+  HealthCheckRequest: HealthCheckRequest,
+  String: Scalars['String'],
+  HealthCheckType: HealthCheckType,
+  Boolean: Scalars['Boolean'],
   ClientCounter: ClientCounter,
   Mutation: {},
   Subscription: {},
-  String: Scalars['String'],
-  Boolean: Scalars['Boolean'],
   AnyObject: Scalars['AnyObject'],
   JSON: Scalars['JSON'],
   JSONObject: Scalars['JSONObject'],
@@ -280,6 +313,7 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddCounterArgs>,
+  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddMoleculerCounterArgs>,
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>,
 };
 
@@ -291,12 +325,15 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
+  moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
+  health?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryHealthArgs, 'request'>>,
   counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>,
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   dummy?: SubscriptionResolver<Maybe<ResolversTypes['Int']>, "dummy", ParentType, ContextType>,
   counterUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "counterUpdated", ParentType, ContextType>,
+  moleculerCounterUpdate?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "moleculerCounterUpdate", ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
