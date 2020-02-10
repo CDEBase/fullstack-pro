@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@cdm-logger/server": "^5.0.5",
-    "@sample-stack/core": "file:../../packages/sample-core",
-    "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
-    "@sample-stack/server-core": "file:../../packages/sample-server-core",
+    "@sample-stack/core": "^0.0.39-alpha.31",
+    "@sample-stack/counter-module-server": "^0.0.39-alpha.42",
+    "@sample-stack/server-core": "^0.0.39-alpha.31",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.0",
     "graphql-nats-subscriptions": "^1.4.1",
