@@ -6,7 +6,7 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE, TYPES } from '../const
 export class CounterMoleculerService extends Service {
 
     private counterMock: ICounterService;
-    constructor(broker: ServiceBroker, { container }: { container: Container }) {
+    constructor(broker: ServiceBroker, { container, ...settings }: { container: Container } & { subTopic: string }) {
         super(broker);
 
         const topic = NATS_MOLECULER_COUNTER_SERIVCE;

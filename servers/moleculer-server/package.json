@@ -31,7 +31,10 @@
     "@types/bluebird": "^3.5.24"
   },
   "dependencies": {
-    "nats": "^1.2.10",
+    "@sample-stack/core": "file:../../packages/sample-core",
+    "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
+    "@sample-stack/server-core": "file:../../packages/sample-server-core",
+    "nats": "^1.3.2",
     "moleculer": "^0.13.0",
     "moleculer-zipkin": "0.2.2"
   },

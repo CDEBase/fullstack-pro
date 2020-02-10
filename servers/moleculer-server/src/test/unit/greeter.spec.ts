@@ -1,34 +1,34 @@
 'use strict';
 
-import { ServiceBroker, Errors } from 'moleculer';
-import TestService from '../../greeter.service';
+// import { ServiceBroker, Errors } from 'moleculer';
+// import TestService from '../../greeter.service';
 
-describe("Test 'greeter' service", () => {
-    let broker = new ServiceBroker();
-    broker.createService(TestService);
+// describe("Test 'greeter' service", () => {
+//     let broker = new ServiceBroker();
+//     broker.createService(TestService);
 
-    beforeAll(() => broker.start());
-    afterAll(() => broker.stop());
+//     beforeAll(() => broker.start());
+//     afterAll(() => broker.stop());
 
-    describe("Test 'greeter.hello' action", () => {
+//     describe("Test 'greeter.hello' action", () => {
 
-        it("should return with 'Hello Moleculer'", () => {
-            expect(broker.call("greeter.hello")).resolves.toBe("Hello Moleculer");
-        });
+//         it("should return with 'Hello Moleculer'", () => {
+//             expect(broker.call("greeter.hello")).resolves.toBe("Hello Moleculer");
+//         });
 
-    });
+//     });
 
-    describe("Test 'greeter.welcome' action", () => {
+//     describe("Test 'greeter.welcome' action", () => {
 
-        it("should return with 'Welcome'", () => {
-            expect(broker.call("greeter.welcome", { name: "Adam" })).resolves.toBe("Welcome, Adam");
-        });
+//         it("should return with 'Welcome'", () => {
+//             expect(broker.call("greeter.welcome", { name: "Adam" })).resolves.toBe("Welcome, Adam");
+//         });
 
-        it("should reject an ValidationError", () => {
-            expect(broker.call("greeter.welcome")).rejects.toBeInstanceOf(Errors.ValidationError);
-        });
+//         it("should reject an ValidationError", () => {
+//             expect(broker.call("greeter.welcome")).rejects.toBeInstanceOf(Errors.ValidationError);
+//         });
 
-    });
+//     });
 
-});
+// });
 

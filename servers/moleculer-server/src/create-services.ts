@@ -12,8 +12,6 @@ import CounterModule, { CounterMoleculerService } from '@sample-stack/counter-mo
 
 export async function createServices(broker: ServiceBroker, client: nats.Client, settings: { name: string }) {
 
-    console.log('---SETTINGS', settings);
-
     const defaultModule =
         () => new ContainerModule((bind: interfaces.Bind) => {
             bind('Logger').toConstantValue(logger);
@@ -22,9 +20,6 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
             bind('Environment').toConstantValue(config.NODE_ENV || 'development');
             bind('PubSub').toConstantValue(pubsub);
             bind('MongoOptions').toConstantValue({});
-            // if (config.NODE_ENV !== 'development') {
-            //     bind('Hemera').toConstantValue(hemeraGen());
-            // }
         });
 
     const pubsub = new NatsPubSub({ client, logger });
@@ -46,7 +41,6 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
     );
 
     const container: Container = await modules.createHemeraContainers(settings);
-    console.log('----CONTAINER', modules);
 
     broker.createService(CounterMoleculerService, { ...settings, container });
 }
