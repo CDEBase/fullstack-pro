@@ -12,7 +12,7 @@ import { TaggedType } from '@common-stack/core';
 
 export const settings = {
     // mongoConnection: generateMongo(config.MONGO_URL),
-    subTopic: `${config.NAMESPACE}/${config.CONNECTION_ID}`,
+    subTopic: `${config.NAMESPACE}.${config.CONNECTION_ID}`,
 };
 
 

@@ -20,9 +20,6 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
             bind('Environment').toConstantValue(config.NODE_ENV || 'development');
             bind('PubSub').toConstantValue(pubsub);
             bind('MongoOptions').toConstantValue({});
-            // if (config.NODE_ENV !== 'development') {
-            //     bind('Hemera').toConstantValue(hemeraGen());
-            // }
         });
 
     const pubsub = new NatsPubSub({ client, logger });
