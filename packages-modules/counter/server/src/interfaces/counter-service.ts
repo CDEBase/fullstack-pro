@@ -1,12 +1,9 @@
 
-
-export interface ICounterResult {
-    amount: number;
-}
+import { Counter } from '../generated-models';
 
 export interface ICounterService {
 
-    counterQuery(): ICounterResult;
+    counterQuery(): Counter | PromiseLike<Counter> | Promise<Counter>;
 
     addCounter(amount?: number);
 }

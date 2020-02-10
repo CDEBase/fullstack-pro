@@ -1,23 +1,29 @@
-# Database counter
+""" Database counter """
 type Counter {
-  # Current amount
+  """ Current amount """
   amount: Int!
 }
 
 extend type Query {
-  # Counter
+  """ Counter """
   counter: Counter
+  """ Moleculer Counter """
+  moleculerCounter: Counter
 }
 
 extend type Mutation {
-  # Increase counter value, returns current counter amount
+  """ Increase counter value returns current counter amount """
   addCounter(
-    # Amount to add to counter
+    """ Amount to add to counter """
     amount: Int
   ): Counter
+
+  addMoleculerCounter(amount: Int): Counter
 }
 
 extend type Subscription {
-  # Subscription fired when anyone increases counter
+  """ Subscription fired when anyone increases counter """
   counterUpdated: Counter
+
+  moleculerCounterUpdate: Counter
 }

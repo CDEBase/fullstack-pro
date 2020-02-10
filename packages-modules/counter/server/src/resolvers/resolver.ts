@@ -1,19 +1,23 @@
 import { IContext } from '../interfaces';
+import { IResolvers, Counter } from '../generated-models';
 
 const COUNTER_SUBSCRIPTION = 'counter_subscription';
 
 
 
-export const resolver = (options) => ({
+export const resolver: (options: any) => IResolvers<IContext> = (options) => ({
   Query: {
-    counter(obj, args, context: IContext) {
-      return context.counterMock.counterQuery();
+    counter(obj, args, context ) {
+      return context.counterMockService.counterQuery() as Counter;
+    },
+    moleculerCounter(obj, args, context) {
+      return context.counterMockProxyService.counterQuery();
     },
   },
   Mutation: {
-    async addCounter(obj, { amount }, context: IContext) {
-      await context.counterMock.addCounter(amount);
-      const counter = await context.counterMock.counterQuery();
+    async addCounter(obj, { amount }, context ) {
+      await context.counterMockService.addCounter(amount);
+      const counter = await context.counterMockService.counterQuery();
 
       options.pubsub.publish(COUNTER_SUBSCRIPTION, {
         counterUpdated: { amount: counter.amount },
@@ -21,9 +25,22 @@ export const resolver = (options) => ({
 
       return counter;
     },
+    async addMoleculerCounter(obj, { amount },  { counterMockProxyService } ) {
+      await counterMockProxyService.addCounter(amount);
+      const counter = await counterMockProxyService.counterQuery();
+
+      options.pubsub.publish(COUNTER_SUBSCRIPTION, {
+        moleculerCounterUpdate: { amount: counter.amount },
+      });
+
+      return counter;
+    },
   },
   Subscription: {
     counterUpdated: {
+      subscribe: () => options.pubsub.asyncIterator(COUNTER_SUBSCRIPTION),
+    },
+    moleculerCounterUpdate: {
       subscribe: () => options.pubsub.asyncIterator(COUNTER_SUBSCRIPTION),
     },
   },
