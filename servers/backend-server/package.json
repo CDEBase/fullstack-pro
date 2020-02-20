@@ -26,7 +26,7 @@
   "main": "dist/index.js",
   "typings": "dist/main.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production zen build",
+    "build": "cross-env NODE_ENV=production zen build -x",
     "build:clean": "rimraf dist",
     "db:migrate": "knex -- migrate:latest --cwd . --knexfile ./knexfile.js",
     "db:migrate:rollback": "knex -- migrate:rollback  --cwd . --knexfile ./knexfile.js",
