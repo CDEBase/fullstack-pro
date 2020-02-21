@@ -1,8 +1,5 @@
 FROM node:10-alpine
 
-RUN mkdir /app
-WORKDIR /app
-
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there
 # This way, dependnecies are cached without the need of cacheing all files.
