@@ -24,6 +24,7 @@ env:
   LOG_LEVEL: info
   HEMERA_LOG_LEVEL: info
 external:
+  name: idestack
   service: 
     mongodb:
       generateEnv: true

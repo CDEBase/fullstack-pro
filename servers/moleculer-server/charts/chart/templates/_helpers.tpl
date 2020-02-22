@@ -50,7 +50,7 @@ Create a default fully qualified zipkin name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "zipkin.fullname" -}}
-{{- printf "%s-%s" .Release.Name "zipkin" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Namespace .Values.external.name "zipkin" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 
@@ -59,7 +59,7 @@ Create a default fully qualified nats name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "nats.fullname" -}}
-{{- printf "%s-%s" .Release.Name "nats" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Namespace .Values.external.name "nats" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -67,7 +67,7 @@ Create a default fully qualified mysql name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "mongodb.fullname" -}}
-{{- printf "%s-%s" .Release.Name "mongodb" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Namespace .Values.external.name "mongodb" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -75,7 +75,7 @@ Create a default fully qualified zipkin name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "redis.fullname" -}}
-{{- printf "%s-%s" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Namespace .Values.external.name "redis" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 
