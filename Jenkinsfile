@@ -322,7 +322,7 @@ def generateStage(server, environmentType) {
       // deploy anything matching `*backend-server` or `*frontend-server` to use idestack chart
       try{
         if ("${server}".endsWith("backend-server") | "${server}".endsWith("frontend-server")) {
-          echo "${server} deployment skipped"
+          echo "add deployment flag to - ${server} "
 
           if ("${server}".endsWith("frontend-server")){
             deployment_flag = " --set backend.enabled='false' --set external.enabled='true' "
@@ -352,7 +352,8 @@ def generateStage(server, environmentType) {
         } else {
           sh """
             cd servers/${server}
-            helm upgrade -i ${server}-api \
+            helm upgrade -i \
+            ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
