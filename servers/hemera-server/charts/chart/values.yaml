@@ -23,28 +23,3 @@ env:
   BRIGADE_PROJECT_ID: "brigade-fc500e5f406ddcff3c0cc1e1e39ecfe605e4c1e34d45b36ce15d6c"
   LOG_LEVEL: info
   HEMERA_LOG_LEVEL: info
-external:
-  service: 
-    mongodb:
-      generateEnv: true
-      enabled: false
-      serviceName: microstack-mongodb.main-system.svc.cluster.local
-      port: 27017
-      dbname: idestack
-    nats:
-      generateEnv: true
-      enabled: false
-      serviceName: microstack-nats.main-system.svc.cluster.local
-      user: ruser
-      password: "T0pS3cr3t"
-      port: 4222
-    zipkin:
-      generateEnv: true
-      enabled: false
-      serviceName: microstack-zipkin.main-system.svc.cluster.local
-      port: 9411
-    redis:
-      generateEnv: true
-      enabled: false
-      serviceName: microstack-redis-ha-haproxy.main-system.svc.cluster.local
-      port: 6379
