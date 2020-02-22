@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-hemera-server",
-  "version": "0.0.39-alpha.50",
+  "version": "0.0.39-alpha.51",
   "description": "",
   "main": "index.js",
   "private": true,

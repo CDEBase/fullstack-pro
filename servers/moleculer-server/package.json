@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-moleculer-server",
-  "version": "0.0.39-alpha.50",
+  "version": "0.0.39-alpha.51",
   "description": "My Moleculer microservices project",
   "scripts": {
     "cli": "moleculer connect NATS",
@@ -37,8 +37,8 @@
     "@cdm-logger/client": "^5.0.7",
     "@cdm-logger/server": "^5.0.5",
     "@cdmbase/graphql-type-uri": "^0.4.1",
-    "@common-stack/core": "0.0.209",
     "@common-stack/client-core": "0.0.209",
+    "@common-stack/core": "0.0.209",
     "@common-stack/server-core": "0.0.209",
     "@sample-stack/core": "^0.0.39-alpha.31",
     "@sample-stack/counter-module-server": "^0.0.39-alpha.43",
