@@ -24,21 +24,21 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace 
-{{- if  .Values.external.service.mongodb.enabled }}
+{{- if  or .Values.external.service.mongodb.generateEnv .Values.external.service.mongodb.enabled }}
           - name: MONGO_URL
             value: "{{ template "mongodb_service" . }}"
 {{- end }}
-{{- if  .Values.external.service.redis.enabled }}
+{{- if  or .Values.external.service.redis.generateEnv .Values.external.service.redis.enabled }}
           - name: REDIS_URL
             value: "{{ template "redis_service" . }}"
 {{- end }}
-{{- if  .Values.external.service.zipkin.enabled }}
+{{- if  or .Values.external.service.zipkin.generateEnv .Values.external.service.zipkin.enabled }}
           - name: ZIPKIN_URL
             value: {{ template "zipkin_host" . }}
           - name: ZIPKIN_PORT
             value: {{ .Values.external.service.zipkin.port | quote }}
 {{- end }}
-{{- if  .Values.external.service.nats.enabled }}
+{{- if  or .Values.external.service.nats.generateEnv .Values.external.service.nats.enabled }}
           - name: NATS_PW
             value: {{ .Values.external.service.nats.password | quote }}
           - name: NATS_URL
