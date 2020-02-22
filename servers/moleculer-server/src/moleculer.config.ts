@@ -26,7 +26,7 @@ import { config } from './config';
     // Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.13/logging.html
     logger: true,
     // Log level for built-in console logger. Available values: trace, debug, info, warn, error, fatal
-    logLevel: 'info',
+    logLevel: config.LOG_LEVEL as any,
     // Log formatter for built-in console logger. Available values: default, simple, short. It can be also a `Function`.
     logFormatter: 'default',
     // Custom object & array printer for built-in console logger.
@@ -34,7 +34,14 @@ import { config } from './config';
 
     // Define transporter.
     // More info: https://moleculer.services/docs/0.13/networking.html
-    transporter: 'NATS',
+    transporter: {
+        type: 'NATS',
+        options: {
+            url: config.NATS_URL,
+            user: config.NATS_USER,
+            pass: config.NATS_PW,
+        },
+    },
 
     // Define a serializer.
     // Available values: 'JSON', 'Avro', 'ProtoBuf', 'MsgPack', 'Notepack', 'Thrift'.
