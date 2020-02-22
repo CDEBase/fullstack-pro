@@ -35,7 +35,7 @@ external:
     nats:
       generateEnv: true
       enabled: false
-      serviceName: microstack-nats.main-system.svc.cluster.local
+      serviceName: microstack-nats-stable-client.main-system.svc.cluster.local
       user: ruser
       password: "T0pS3cr3t"
       port: 4222
