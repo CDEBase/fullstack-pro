@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
-import modules, { serviceContext, updateContainers } from './modules';
+import modules, { serviceContext } from './modules';
 import { config } from './config';
 
 let debug: boolean = false;
@@ -40,7 +40,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                     ...contextServices,
                     ...pureContext,
                     preferences: defaultPreferences,
-                    update: updateContainers,
+                    // update: updateContainers,
                 };
             },
             // onDisconnect: () => {},
@@ -62,7 +62,7 @@ export const graphqlServer = (app, schema, httpServer, graphqlEndpoint) => {
                         ...pureContext,
                         ...contextServices,
                         preferences: defaultPreferences,
-                        update: updateContainers,
+                        // update: updateContainers,
                     };
                 }
             } catch (err) {

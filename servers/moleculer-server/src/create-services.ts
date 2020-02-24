@@ -7,7 +7,7 @@ import { Feature } from '@common-stack/server-core';
 import * as nats from 'nats';
 import { logger } from '@cdm-logger/server';
 import { config } from './config';
-import CounterModule, { CounterMoleculerService } from '@sample-stack/counter-module-server';
+import CounterModule, { CounterMockMicroservice } from '@sample-stack/counter-module-server';
 
 
 export async function createServices(broker: ServiceBroker, client: nats.Client, settings: { name: string }) {
@@ -26,12 +26,13 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
 
     const defaultServiceGen = (container: interfaces.Container) => ({
         apollo: container.get('ApolloClient'),
-        connectionManager: container.get('ConnectionManager'),
+        // connectionManager: container.get('ConnectionManager'),
     });
 
     const DefaultFeature = new Feature({
         createServiceFunc: defaultServiceGen,
         createContainerFunc: [defaultModule],
+        createHemeraContainerFunc: [defaultModule],
     });
 
 
@@ -42,5 +43,5 @@ export async function createServices(broker: ServiceBroker, client: nats.Client,
 
     const container: Container = await modules.createHemeraContainers(settings);
 
-    broker.createService(CounterMoleculerService, { ...settings, container });
+    broker.createService(CounterMockMicroservice, { ...settings, container });
 }

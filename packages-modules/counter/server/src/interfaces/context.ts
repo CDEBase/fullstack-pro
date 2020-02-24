@@ -6,5 +6,5 @@ export interface IContext extends  IService {
 
 export interface IService {
     counterMockService: ICounterService;
-    counterMockProxyService: ICounterService;
+    counterMockProxyService?: ICounterService;
 }

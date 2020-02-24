@@ -7,7 +7,7 @@ import { config } from './config';
  *
  * More info about options:
  *         https://moleculer.services/docs/0.14/configuration.html
- * 
+ *
  *
  * Overwrite options in production:
  * ================================

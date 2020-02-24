@@ -1,4 +1,5 @@
 var nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
@@ -18,6 +19,10 @@ var webpack_opts = {
     extensions: ['.ts', '.js', '.json']
   },
   plugins: [
+    new CopyWebpackPlugin([{
+      from: '../../tools/esm-wrapper.js',
+      to: 'index.js',
+    }]),
     new webpack.LoaderOptionsPlugin({
       options: {
         test: /\.ts$/,

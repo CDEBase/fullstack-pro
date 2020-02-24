@@ -3,7 +3,11 @@ import { injectable, inject, Container } from 'inversify';
 import { ICounterService } from '../interfaces';
 import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE, TYPES } from '../constants';
 
-export class CounterMoleculerService extends Service {
+/**
+ * Exposes CounterMock services by registering to the Moleculer Broker.
+ * Note: This class is not injectable.
+ */
+export class CounterMockMicroservice extends Service {
 
     private counterMock: ICounterService;
     constructor(broker: ServiceBroker, { container, ...settings }: { container: Container } & { subTopic: string }) {
