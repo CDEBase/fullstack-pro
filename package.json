@@ -70,14 +70,13 @@
     "@sample-stack/core": "file:packages/sample-core",
     "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
     "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
-    "@sample-stack/hemera-plugin": "file:packages/sample-hemera-plugin",
     "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-hemera-server": "file:servers/hemera-server"
+    "sample-stack-moleculer-server": "file:servers/moleculer-server"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
