@@ -99,7 +99,7 @@
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.20.4",
     "lodash": "^4.17.15",
-    "moleculer": "^0.13.0",
+    "moleculer": "^0.14.2",
     "moleculer-zipkin": "0.2.2",
     "mongoose": "^5.8.9",
     "morgan": "^1.9.1",
