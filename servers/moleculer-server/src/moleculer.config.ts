@@ -7,7 +7,7 @@ import { config } from './config';
  *
  * More info about options:
  *         https://moleculer.services/docs/0.14/configuration.html
- * 
+ *
  *
  * Overwrite options in production:
  * ================================
@@ -36,7 +36,7 @@ const brokerConfig: BrokerOptions = {
             colors: true,
             // Print module names with different colors (like docker-compose for containers)
             moduleColors: false,
-            // Line formatter. It can be 'json', 'short', 
+            // Line formatter. It can be 'json', 'short',
             // 'simple', 'full', a `Function` or a template string like '{timestamp} {level} {nodeID}/{mod}: {msg}'
             formatter: 'full',
             // Custom object printer. If not defined, it uses the `util.inspect` method.
