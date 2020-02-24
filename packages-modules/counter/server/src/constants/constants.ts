@@ -12,5 +12,6 @@ export enum CounterCommands {
 
 export const TYPES = {
     CounterMockService: Symbol('CounterMockService'),
-    CouterMockProxySerice: Symbol('CouterMockProxySerice'),
+    CounterMockMicroservice: Symbol('CounterMockMicroservice'),
+    CounterMockRemoteService: Symbol('CounterMockRemoteService'),
 };

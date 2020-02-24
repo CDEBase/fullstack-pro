@@ -9,7 +9,7 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE } from '../constants';
  * Proxies all calls to CounterMock service through Moleculer Borker
  */
 @injectable()
-export class CouterMockProxySerice implements ICounterService {
+export class CounterMockProxyService implements ICounterService {
 
     constructor(
         @inject('MoleculerBroker')

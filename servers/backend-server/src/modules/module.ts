@@ -6,7 +6,6 @@ import HealthCheckModule from '@sample-stack/healthcheck-server';
 import { pubsubGen } from './pubsub';
 // import { generateMongo } from '@common-stack/store-mongo';
 import { config } from '../config';
-import { hemeraGen } from './nats-connection';
 import { broker } from './moleculer-broker';
 import { TaggedType } from '@common-stack/core';
 
@@ -26,7 +25,6 @@ const defaultModule =
         bind('MongoOptions').toConstantValue({});
 
         if (config.NODE_ENV !== 'development') {
-            bind('Hemera').toConstantValue(hemeraGen());
             bind('MoleculerBroker').toConstantValue(broker);
         }
     });
