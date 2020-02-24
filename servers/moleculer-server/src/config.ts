@@ -1,4 +1,5 @@
 import * as envalid from 'envalid';
+process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
 
 
 const { str } = envalid;
