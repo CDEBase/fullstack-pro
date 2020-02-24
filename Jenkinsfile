@@ -358,6 +358,7 @@ def generateStage(server, environmentType) {
             ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
+            --set fullnameOverride=""
             charts/chart
           """
 
