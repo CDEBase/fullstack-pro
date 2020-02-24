@@ -5,10 +5,13 @@ var fs = require('fs');
 
 var webpack_opts = {   
   mode: 'development',
-  entry: './src/index.ts',
+  entry: {
+    main: './src/index.ts',
+    'moleculer.config': './src/moleculer.config.ts',
+  },
   target: 'node',
   output: {
-    filename: 'index.js',
+    filename: "[name].js",
     libraryTarget: "commonjs2"
   },
   resolve: {
