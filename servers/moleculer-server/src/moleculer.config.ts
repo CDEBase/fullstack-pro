@@ -162,7 +162,7 @@ const brokerConfig: BrokerOptions = {
 
     // Enable/disable built-in metrics function. More info: https://moleculer.services/docs/0.14/metrics.html
     metrics: {
-        enabled: false,
+        enabled: true,
         // Available built-in reporters: 'Console', 'CSV', 'Event', 'Prometheus', 'Datadog', 'StatsD'
         reporter: {
             type: 'Prometheus',
@@ -204,7 +204,7 @@ const brokerConfig: BrokerOptions = {
     // Register internal middlewares. More info: https://moleculer.services/docs/0.13/middlewares.html#Internal-middlewares
     internalMiddlewares: true,
 
-    // Watch the loaded services and hot reload if they changed. 
+    // Watch the loaded services and hot reload if they changed.
     // You can also enable it in Moleculer Runner with `--hot` argument
     hotReload: false,
 
