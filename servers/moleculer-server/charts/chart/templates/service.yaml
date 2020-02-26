@@ -11,5 +11,9 @@ spec:
     targetPort: {{ .Values.service.internalPort }}
     protocol: TCP
     name: {{ .Values.service.name }}
+  - port: 3030
+    targetPort: 3030
+    protocol: TCP
+    name: metrics
   selector:
     app: {{ template "fullname" . }}
