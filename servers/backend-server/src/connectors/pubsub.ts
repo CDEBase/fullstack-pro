@@ -8,7 +8,6 @@ import * as nats from 'nats';
 
 
 export const pubsubGen = (client: nats.Client) => {
-    console.log('----NODE ENV FOR PUBUSBGENT', config.NODE_ENV, client)
     return config.NODE_ENV === 'development' ?
         config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.trace.bind(logger) }) :
             new PubSub() : new NatsPubSub({ client, logger });
