@@ -41,8 +41,8 @@ export class ConnectionBroker {
         return this._mongoConnector.connect();
     }
 
-    public get redisConnection() {
-        return this._redisConnector.connect();
+    public get redisDataloaderClient() {
+        return this._redisConnector.getRedisDataloaderClient();
     }
 
     public get natsConnection() {

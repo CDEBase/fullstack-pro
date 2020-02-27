@@ -25,18 +25,27 @@ export class RedisConnector {
         this.opts = _.defaultsDeep(opts, {
             prefix: null,
         });
-        this.logger = logger.child({className: 'RedisConnector'});
+        this.logger = logger.child({ className: 'RedisConnector' });
     }
 
     /**
-     * Return redis or redis.cluster client
+     * Connect to the server
+     *
+     * @memberof RedisConnector
+     */
+    public connect() {
+        return new Promise((resolve, reject) => {
+            reject('this method not implemented');
+        });
+    }
+
+
+    /**
+     * Return redis or redis.cluster Dataloader Client
      *
      * @memberof RedisConnection
      */
-    public connect() {
-        if (this.client) {
-            return this.client;
-        }
+    public getRedisDataloaderClient() {
         let client: RedisClusterCache | RedisCache;
         if (config.REDIS_CLUSTER_ENABLED) {
             if (!config.REDIS_CLUSTER_URL) {
@@ -49,7 +58,7 @@ export class RedisConnector {
                 this.logger.info('Setting Redis connection');
                 client = new RedisCache(config.REDIS_URL as any || this.opts);
             }
-            return this.client = client;
+            return client;
         }
     }
 
