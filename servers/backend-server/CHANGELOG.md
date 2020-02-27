@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.61](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.60...v0.0.39-alpha.61) (2020-02-27)
+
+**Note:** Version bump only for package sample-stack-backend-server
+
+
+
+
+
+## [0.0.39-alpha.60](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.59...v0.0.39-alpha.60) (2020-02-27)
+
+**Note:** Version bump only for package sample-stack-backend-server
+
+
+
+
+
+## [0.0.39-alpha.59](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.58...v0.0.39-alpha.59) (2020-02-27)
+
+
+### Features
+
+* **Better streamline of code and use molecuer service:** Moleculer Service and app fixes ([6555252](https://github.com/cdmbase/fullstack-pro/commit/6555252275514c7e72598e03ff0775cb5d9fa04e))
+
+
+
+
+
+## [0.0.39-alpha.55](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.54...v0.0.39-alpha.55) (2020-02-24)
+
+**Note:** Version bump only for package sample-stack-backend-server
+
+
+
+
+
 ## [0.0.39-alpha.54](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.53...v0.0.39-alpha.54) (2020-02-24)
 
 **Note:** Version bump only for package sample-stack-backend-server
