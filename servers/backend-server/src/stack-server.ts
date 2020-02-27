@@ -67,7 +67,7 @@ export class StackServer {
 
         this.connectionBroker = new ConnectionBroker();
         const redisClient = this.connectionBroker.redisConnection;
-        const natsClient = this.connectionBroker.natsConnection;
+        const natsClient =  await this.connectionBroker.natsConnection;
         const mongoClient = await this.connectionBroker.mongoConnection;
 
         this.microserviceBroker = new ServiceBroker({ ...brokerConfig });
