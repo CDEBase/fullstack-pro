@@ -41,7 +41,7 @@ export class GraphqlServer {
     private httpServer: http.Server;
 
     private logger: ILogger;
-    constructor(app: Express, httpServer: http.Server, private cache: RedisCache, private serviceBroker: {
+    constructor(app: Express, httpServer: http.Server, private cache: RedisCache | RedisClusterCache, private serviceBroker: {
         serviceContext: any,
         dataSource: any,
         defaultPreferences: any,
