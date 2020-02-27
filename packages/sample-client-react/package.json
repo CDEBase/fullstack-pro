@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/client-react",
-  "version": "0.0.39-alpha.31",
+  "version": "0.0.39-alpha.63",
   "description": "browser plugin for git",
   "main": "lib/index.js",
   "scripts": {
@@ -56,8 +56,8 @@
     "redux": ">=4.0.5"
   },
   "dependencies": {
-    "@sample-stack/client-state": "^0.0.39-alpha.31",
-    "@sample-stack/core": "^0.0.39-alpha.31"
+    "@sample-stack/client-state": "^0.0.39-alpha.63",
+    "@sample-stack/core": "^0.0.39-alpha.63"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

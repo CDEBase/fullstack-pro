@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-moleculer-server",
-  "version": "0.0.39-alpha.58",
+  "version": "0.0.39-alpha.63",
   "description": "My Moleculer microservices project",
   "scripts": {
     "cli": "moleculer connect --config ./dist/moleculer.config.js",
@@ -44,9 +44,9 @@
     "@common-stack/client-core": "0.0.209",
     "@common-stack/core": "0.0.209",
     "@common-stack/server-core": "0.0.209",
-    "@sample-stack/core": "^0.0.39-alpha.31",
-    "@sample-stack/counter-module-server": "^0.0.39-alpha.55",
-    "@sample-stack/server-core": "^0.0.39-alpha.31",
+    "@sample-stack/core": "^0.0.39-alpha.63",
+    "@sample-stack/counter-module-server": "^0.0.39-alpha.63",
+    "@sample-stack/server-core": "^0.0.39-alpha.63",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.0",
     "esm": "^3.2.25",
