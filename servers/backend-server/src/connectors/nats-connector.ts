@@ -1,24 +1,7 @@
-import { config } from '../config';
 import * as nats from 'nats';
 import * as _ from 'lodash';
 import { logger } from '@cdm-logger/server';
 import * as ILogger from 'bunyan';
-
-
-
-let natsClient: nats.Client;
-export const clientGen: () => nats.Client = () => {
-
-    if (!natsClient) {
-        natsClient = nats.connect({
-            'url': config.NATS_URL,
-            'user': config.NATS_USER,
-            'pass': config.NATS_PW as string,
-            reconnectTimeWait: 1000,
-        });
-    }
-    return natsClient;
-};
 
 
 export class NatsConnector {
@@ -30,11 +13,9 @@ export class NatsConnector {
     private connected: boolean;
 
     constructor(opts: nats.ClientOpts) {
-        this.opts = _.defaultsDeep(opts, {
-            'url': config.NATS_URL,
-            'user': config.NATS_USER,
-            'pass': config.NATS_PW,
-        });
+        console.log('---OPTIONS OF NATS ', opts);
+        this.opts = _.defaultsDeep(opts, {});
+        console.log('---OPTS---', this.opts);
         this.logger = logger.child({className: 'NatsConnector'});
     }
     /**

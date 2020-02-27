@@ -37,7 +37,7 @@ export class RedisConnector {
         if (this.client) {
             return this.client;
         }
-        let client;
+        let client: RedisClusterCache | RedisCache;
         if (config.REDIS_CLUSTER_ENABLED) {
             if (!config.REDIS_CLUSTER_URL) {
                 if (!config.REDIS_CLUSTER_URL) {
