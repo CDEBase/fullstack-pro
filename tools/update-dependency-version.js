@@ -18,9 +18,9 @@ glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
 
             for (let key in dependencies) {
                 if (dependencies[key].includes('file:')){
-                    const folderRoad = dependencies[key].split(':');
-                    const localFolder = folderRoad[1].slice(3);
-                    glob(`${SERVER_FOLDER}/${localFolder}/package.json`, null, (err, files) => {
+                    const folderRoad = dependencies[key].split('file:');
+                    const localFolder = folderRoad[1];
+                    glob(`${localFolder}/package.json`, null, (err, files) => {
                         if (err) return console.error('Unable to scan directory: ' + err);
 
                         files.forEach(file => {
