@@ -1,12 +1,8 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { Feature } from '@common-stack/server-core';
-import { logger } from '@cdm-logger/server';
 import CounterModule from '@sample-stack/counter-module-server';
 import HealthCheckModule from '@sample-stack/healthcheck-server';
-import { pubsubGen } from './pubsub';
-// import { generateMongo } from '@common-stack/store-mongo';
 import { config } from '../config';
-import { broker } from './moleculer-broker';
 import { TaggedType } from '@common-stack/core';
 
 export const settings = {
@@ -17,16 +13,9 @@ export const settings = {
 
 const defaultModule =
     () => new ContainerModule((bind: interfaces.Bind) => {
-        bind('Logger').toConstantValue(logger);
         bind('Settings').toConstantValue(settings).whenTargetTagged('default', true);
         bind('Settings').toConstantValue(settings).whenTargetTagged(TaggedType.MICROSERVICE, true);
-        bind('Environment').toConstantValue(config.NODE_ENV || 'development');
-        bind('PubSub').toConstantValue(pubsubGen());
         bind('MongoOptions').toConstantValue({});
-
-        if (config.NODE_ENV !== 'development') {
-            bind('MoleculerBroker').toConstantValue(broker);
-        }
     });
 
 

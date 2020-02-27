@@ -11,12 +11,10 @@ import {
 const fetch =  require('node-fetch');
 import { HttpLink } from 'apollo-link-http';
 import { remoteSchemaDetails } from './remote-config';
-import modules from '../modules';
 import { logger } from '@common-stack/server-core';
 import { IResolverOptions } from '@common-stack/server-core';
 import rootSchemaDef from './root-schema.graphqls';
 import { settings } from '../modules/module';
-import { pubsubGen } from '../modules/pubsub';
 import * as ws from 'ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -24,18 +22,12 @@ import { OperationDefinitionNode } from 'graphql';
 import { split } from 'apollo-link';
 import { resolvers as rootResolver } from './resolver';
 
-const resolverOptions: IResolverOptions = {
-    pubsub: pubsubGen(),
-    subscriptionID: `${settings.subTopic}`,
-    logger,
-};
-
-const directiveOptions = {
-    logger,
-};
 
 export class GatewaySchemaBuilder {
 
+    constructor(private options: {schema: string, resolvers, directives, logger}) {
+
+    }
 
     public async build(): Promise<GraphQLSchema> {
         let schema, ownSchema;
@@ -140,7 +132,7 @@ export class GatewaySchemaBuilder {
             });
             return executableSchema;
         } catch (err) {
-            console.log('fetching schema error: ', err);
+            this.options.logger.error('fetching schema error: ', err);
             return {};
         }
     }
@@ -155,16 +147,16 @@ export class GatewaySchemaBuilder {
     }
 
     private createOwnSchema(): GraphQLSchema {
-        const typeDefs = [rootSchemaDef, modules.schemas].join('\n');
+        const typeDefs = [rootSchemaDef, this.options.schema].join('\n');
         if (__DEV__) {
            const fs =  require('fs');
            const writeData = `${typeDefs}`;
            fs.writeFileSync('./generated-schema.graphql', writeData);
         }
         return makeExecutableSchema({
-            resolvers: [rootResolver, modules.createResolvers(resolverOptions)],
+            resolvers: [rootResolver, this.options.resolvers],
             typeDefs,
-            directiveResolvers: modules.createDirectives(directiveOptions),
+            directiveResolvers: this.options.directives,
             resolverValidationOptions: {
                 requireResolversForResolveType: false,
             },

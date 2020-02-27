@@ -3,17 +3,17 @@ import { NatsPubSub } from 'graphql-nats-subscriptions';
 import { wrapPubSub } from 'apollo-logger';
 import { logger } from '@cdm-logger/server';
 import { config } from '../config';
-import { clientGen } from './nats-connection';
+import * as nats from 'nats';
 
 let pubsubInstance;
 
 
-export const pubsubGen = () => {
+export const pubsubGen = (client: nats.Client) => {
 
     if (!pubsubInstance) {
         pubsubInstance = config.NODE_ENV === 'development' ?
             config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.trace.bind(logger) }) :
-                new PubSub() : new NatsPubSub({ client: clientGen() as any, logger });
+                new PubSub() : new NatsPubSub({ client, logger });
     }
 
     return pubsubInstance;
