@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.4.11",
+  "version": "0.5.0",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -70,14 +70,12 @@
     "@sample-stack/core": "file:packages/sample-core",
     "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
     "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
-    "@sample-stack/hemera-plugin": "file:packages/sample-hemera-plugin",
-    "@sample-stack/microservice-nats": "file:packages/sample-microservice-nats",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-hemera-server": "file:servers/hemera-server"
+    "sample-stack-moleculer-server": "file:servers/moleculer-server"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
@@ -132,7 +130,6 @@
     "@types/lodash-es": "^4.17.3",
     "@types/minimist": "^1.2.0",
     "@types/mongoose": "^5.5.35",
-    "@types/nats-hemera": "^5.0.0",
     "@types/node": "13.1.0",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.17",
@@ -173,7 +170,6 @@
     "file-loader": "^5.0.2",
     "freeport-async": "^2.0.0",
     "fs-extra": "^8.1.0",
-    "hemera-testsuite": "^4.1.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.20.0",

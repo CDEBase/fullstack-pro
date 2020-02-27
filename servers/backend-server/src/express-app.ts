@@ -7,7 +7,7 @@ import { contextServicesMiddleware } from './middleware/services';
 
 
 
-export function expressApp(options, middlewares) {
+export function expressApp(options, middlewares = null) {
     const app: express.Express = express();
 
     for (const applyBeforeware of modules.beforewares) {
@@ -17,7 +17,9 @@ export function expressApp(options, middlewares) {
     // Don't rate limit heroku
     app.enable('trust proxy');
 
-    app.use(contextServicesMiddleware);
+    if (middlewares !== null) {
+        app.use(middlewares);
+    }
 
     // app.use(corsMiddleware);
     app.use(function (req, res, next) {

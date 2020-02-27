@@ -16,6 +16,7 @@ export class Service {
     }
 
     public async start() {
+        await this.app.start();
         await this.app.httpServer.startListening(serverPort);
         logger.info(`API is now running on port ${serverPort}`);
     }

@@ -1,0 +1,51 @@
+{
+  "name": "samle-moleculer-plugin",
+  "version": "0.1.0",
+  "description": "sample-stack",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon examples/index.js",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "lint": "eslint --ext=.js src test",
+    "deps": "npm-check -u",
+    "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "keywords": [
+    "moleculer",
+    "microservice"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veeramarni/samle-moleculer-plugin.git"
+  },
+  "author": "MoleculerJS",
+  "license": "MIT",
+  "peerDependencies": {
+    "moleculer": "^0.13.0"
+  },
+  "devDependencies": {
+    "benchmarkify": "^2.1.2",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
+    "moleculer": "^0.14.2",
+    "nodemon": "^1.19.4",
+    "npm-check": "^5.9.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "rootDir": "./src",
+    "roots": [
+      "../test"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/services/"
+    ]
+  },
+  "engines": {
+    "node": ">= 8.x.x"
+  }
+}
