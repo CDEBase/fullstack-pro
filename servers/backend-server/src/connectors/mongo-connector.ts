@@ -27,11 +27,11 @@ export class MongoConnector {
      *
      * @memberof MongoConnector
      */
-    public connect() {
+    public async connect(): Promise<mongoose.Connection> {
         if (this.client) {
             return this.client;
         }
-        const conn = mongoose.createConnection(this.uri, this.opts);
+        const conn =  mongoose.createConnection(this.uri, this.opts);
 
         conn.then(result => {
             this.client = conn;

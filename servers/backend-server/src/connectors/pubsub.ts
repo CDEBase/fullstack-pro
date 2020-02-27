@@ -5,16 +5,11 @@ import { logger } from '@cdm-logger/server';
 import { config } from '../config';
 import * as nats from 'nats';
 
-let pubsubInstance;
 
 
 export const pubsubGen = (client: nats.Client) => {
+    return config.NODE_ENV === 'development' ?
+        config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.trace.bind(logger) }) :
+            new PubSub() : new NatsPubSub({ client, logger });
 
-    if (!pubsubInstance) {
-        pubsubInstance = config.NODE_ENV === 'development' ?
-            config.apolloLogging ? wrapPubSub(new PubSub(), { logger: logger.trace.bind(logger) }) :
-                new PubSub() : new NatsPubSub({ client, logger });
-    }
-
-    return pubsubInstance;
 };
