@@ -2,6 +2,7 @@
   "name": "sample-stack-moleculer-server",
   "version": "1.0.0",
   "description": "My Moleculer microservices project",
+  "private": true,
   "scripts": {
     "cli": "moleculer connect --config ./dist/moleculer.config.js",
     "cli:dev": " cross-env ENV_FILE=../../config/development/dev.env npm run cli",
