@@ -4,8 +4,7 @@ const SERVER_FOLDER = './servers';
 const simpleGit = require('simple-git/promise');
 const git = simpleGit();
 
-glob(`${SERVER_FOLDER}/**/package.json`, null, (err, files) => {
-
+glob(`./+(servers|packages|packages-modules)/**/package.json`, null, (err, files) => {
     if (err) return console.error('Unable to scan directory: ' + err);
 
     files.forEach(file => {
