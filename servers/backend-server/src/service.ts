@@ -9,7 +9,7 @@ export class Service {
 
     private app: StackServer;
 
-    public async initalize() {
+    public async initialize() {
 
         this.app = new StackServer();
         await this.app.initialize();
