@@ -77,7 +77,7 @@ export class StackServer {
             },
          });
 
-        const pubsub = this.connectionBroker.graphqlPubsub;
+        const pubsub = await this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
             createContainerFunc: [
                 () => infraModule({
