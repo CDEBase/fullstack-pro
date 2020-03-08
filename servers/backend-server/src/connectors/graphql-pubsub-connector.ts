@@ -31,6 +31,7 @@ export class GraphqlPubSubConnector {
         if (opts === undefined || opts.type === undefined) {
             this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
         }
+        this.logger = opts.logger.child({className: 'GraphqlPubSubConnector'});
     }
 
     public getClient() {

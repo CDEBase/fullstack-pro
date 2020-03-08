@@ -62,7 +62,7 @@ export class ConnectionBroker {
     }
 
     public get graphqlPubsub() {
-        return this._graphqlPubsubConnector;
+        return this._graphqlPubsubConnector.getClient();
     }
 
     public async stop() {
