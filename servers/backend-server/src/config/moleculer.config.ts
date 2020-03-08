@@ -53,12 +53,13 @@ const brokerConfig: BrokerOptions = {
     // More info: https://moleculer.services/docs/0.14/networking.html
     // Note: During the development, you don't need to define it because all services will be loaded locally.
     // In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-    transporter: {
+    transporter: (config.NODE_ENV === 'development') ? 'TCP' : {
         type: 'NATS',
         options: {
             url: config.NATS_URL,
             user: config.NATS_USER,
             pass: config.NATS_PW,
+            reconnectTimeWait: 1000,
         },
     },
 

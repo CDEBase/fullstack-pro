@@ -3,7 +3,8 @@ import { MongoConnector } from './mongo-connector';
 import { NatsConnector } from './nats-connector';
 import { RedisConnector } from './redis-connector';
 import { config } from '../config';
-import { logger } from '@cdm-logger/server';
+import { GraphqlPubSubConnector } from './graphql-pubsub-connector';
+import { Transporter, GenericObject } from 'moleculer';
 import * as ILogger from 'bunyan';
 
 /**
@@ -19,19 +20,30 @@ export class ConnectionBroker {
     private _redisConnector: RedisConnector;
 
     private _natsConnector: NatsConnector;
+
+    private _graphqlPubsubConnector: GraphqlPubSubConnector;
+
     /**
      * Creates an instance of ConnectionBroker.
      * @param {*} options
      * @memberof ConnectionBroker
      */
-    constructor(options?: any) {
+    constructor(transporter: string | GenericObject, logger: ILogger) {
 
-        this._natsConnector = new NatsConnector({
-            'url': config.NATS_URL,
-            'user': config.NATS_USER,
-            'pass': config.NATS_PW as string,
-            reconnectTimeWait: 1000,
-        });
+        if (typeof transporter === 'string') {
+            if (transporter === 'TCP') {
+                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger});
+            } else if (transporter === 'NATS') {
+                this._natsConnector = new NatsConnector({});
+                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'NATS'});
+            }
+        } else {
+            if (transporter.type === 'NATS') {
+                this._natsConnector = new NatsConnector(transporter.options);
+                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, ...transporter});
+            }
+        }
+
         this._mongoConnector = new MongoConnector(config.MONGO_URL);
         this._redisConnector = new RedisConnector(); // TODO pass constructor options
     }
@@ -49,10 +61,13 @@ export class ConnectionBroker {
         return this._natsConnector.connect();
     }
 
+    public get graphqlPubsub() {
+        return this._graphqlPubsubConnector;
+    }
+
     public async stop() {
-        await this._mongoConnector.disconnect();
-        await this._redisConnector.disconnect();
-        await this._natsConnector.disconnect();
+        this._mongoConnector && await this._mongoConnector.disconnect();
+        this._redisConnector && await this._redisConnector.disconnect();
+        this._natsConnector &&  await this._natsConnector.disconnect();
     }
 }
-

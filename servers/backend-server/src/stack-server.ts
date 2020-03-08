@@ -10,7 +10,6 @@ import { Feature } from '@common-stack/server-core';
 import { ContainerModule, interfaces } from 'inversify';
 import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
-import { pubsubGen } from './connectors/pubsub';
 import modules, { settings } from './modules';
 import { contextServicesMiddleware } from './middleware/services';
 function startListening(port) {
@@ -25,10 +24,7 @@ const infraModule =
         bind('Logger').toConstantValue(logger);
         bind('Environment').toConstantValue(config.NODE_ENV || 'development');
         bind('PubSub').toConstantValue(pubsub);
-
-        if (config.NODE_ENV !== 'development') {
-            bind('MoleculerBroker').toConstantValue(broker);
-        }
+        bind('MoleculerBroker').toConstantValue(broker);
     });
 
 
@@ -65,17 +61,29 @@ export class StackServer {
             this.httpServer = undefined;
         });
 
-        this.connectionBroker = new ConnectionBroker();
+        this.connectionBroker = new ConnectionBroker(brokerConfig.transporter, this.logger);
         const redisClient = this.connectionBroker.redisDataloaderClient;
-        const natsClient =  await this.connectionBroker.natsConnection;
         const mongoClient = await this.connectionBroker.mongoConnection;
 
-        this.microserviceBroker = new ServiceBroker({ ...brokerConfig });
+        this.microserviceBroker = new ServiceBroker({
+            ...brokerConfig,
+            started: async () => {
+                await modules.preStart({});
+                await modules.postStart({});
+            },
+            // created,
+            created: async () => {
 
-        const pubsub = pubsubGen(natsClient);
+            },
+         });
+
+        const pubsub = this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
             createContainerFunc: [
-                () => infraModule({ broker: this.microserviceBroker, pubsub, logger: serverLogger })],
+                () => infraModule({
+                    broker: this.microserviceBroker,
+                    pubsub, logger: serverLogger,
+                })],
         });
         const allModules = new Feature(InfraStructureFeature, modules);
         const serviceBroker = {
@@ -93,6 +101,13 @@ export class StackServer {
             }),
             directives: allModules.createDirectives({ logger: this.logger }),
         };
+        if (config.NODE_ENV === 'development') {
+            allModules.loadClientMoleculerService({
+                broker: this.microserviceBroker,
+                container: await allModules.createHemeraContainers(settings),
+                settings: settings,
+            });
+        }
 
 
         this.app.use((req: any, res: any, next) => {
