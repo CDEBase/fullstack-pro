@@ -17,7 +17,7 @@ process.on('unhandledRejection', reason => {
 const service = new Service();
 
 async function start() {
-    await service.initalize();
+    await service.initialize();
     await service.start();
 }
 if (module.hot) {

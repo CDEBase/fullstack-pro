@@ -12,10 +12,10 @@ import { ICounterService } from '../interfaces';
 export const localCounterModule: (settings) => interfaces.ContainerModule =
     (settings) => new ContainerModule((bind: interfaces.Bind) => {
 
-        bind<ICounterService>(TYPES.CounterMockService)
-            .to(CounterMockService)
-            .inSingletonScope()
-            .whenTargetIsDefault();
+        // bind<ICounterService>(TYPES.CounterMockService)
+        //     .to(CounterMockService)
+        //     .inSingletonScope()
+        //     .whenTargetIsDefault();
 
         bind<ICounterService>(TYPES.CounterMockService)
             .to(CounterMockProxyService)
