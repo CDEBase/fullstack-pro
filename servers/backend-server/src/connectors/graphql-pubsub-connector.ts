@@ -31,17 +31,20 @@ export class GraphqlPubSubConnector {
         if (opts === undefined || opts.type === undefined) {
             this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
         }
+        this.opts = opts;
         this.logger = opts.logger.child({className: 'GraphqlPubSubConnector'});
     }
 
-    public getClient() {
+    public async getClient() {
         if (this.opts.type === 'TCP') {
             if (this.opts.apolloLogging) {
                 return this.client = wrapPubSub(new PubSub(), { logger: this.logger.trace.bind(this.logger) });
             }
             return this.client = new PubSub();
         } else if (this.opts.type === 'NATS') {
-            return this.client = new NatsPubSub({ client: this.opts.options, logger });
+            // console.log('--this.copts', this.opts.client)
+            const natsClient = await this.opts.client.connect();
+            return this.client = new NatsPubSub({ client: natsClient, logger });
         } else {
             this.logger.warn('Did not defined known transporter [%s], return default pubsub', this.opts.type);
             return this.client = new PubSub();
