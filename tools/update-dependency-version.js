@@ -4,7 +4,7 @@ const SERVER_FOLDER = './servers';
 const simpleGit = require('simple-git/promise');
 const git = simpleGit();
 
-glob(`./+(servers|packages|packages-modules)/**/package.json`, null, (err, files) => {
+glob(`./+(servers)/**/package.json`, null, (err, files) => {
     if (err) return console.error('Unable to scan directory: ' + err);
 
     files.forEach(file => {
@@ -18,7 +18,8 @@ glob(`./+(servers|packages|packages-modules)/**/package.json`, null, (err, files
             for (let key in dependencies) {
                 if (dependencies[key].includes('file:')){
                     const folderRoad = dependencies[key].split('file:');
-                    const localFolder = folderRoad[1];
+                    const localFolder = folderRoad[1].replace(/(\.\.\/)/g,'');
+                    console.log('--Folder', localFolder)
                     glob(`${localFolder}/package.json`, null, (err, files) => {
                         if (err) return console.error('Unable to scan directory: ' + err);
 
