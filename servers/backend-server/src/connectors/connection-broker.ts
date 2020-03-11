@@ -35,7 +35,7 @@ export class ConnectionBroker {
                 this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger});
             } else if (transporter === 'NATS') {
                 this._natsConnector = new NatsConnector({});
-                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'NATS'});
+                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'NATS', client: this._natsConnector});
             }
         } else {
             if (transporter.type === 'NATS') {
