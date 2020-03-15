@@ -8,7 +8,7 @@ var webpack_opts = {
   mode: 'development',
   entry: {
     main: './src/index.ts',
-    'moleculer.config': './src/moleculer.config.ts',
+    'moleculer.config': './src/config/moleculer.config.ts',
   },
   target: 'node',
   output: {
