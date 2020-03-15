@@ -1,36 +1,32 @@
+///<reference types="webpack-env" />
+
 import 'reflect-metadata';
-require('dotenv').config({ path: process.env.ENV_FILE });
-import { ServiceBroker } from 'moleculer';
-import * as brokerConfig from './moleculer.config';
-import { createServices } from './create-services';
-import { NATS_MOLECULER_COUNTER_SERIVCE } from '@sample-stack/counter-module-server';
-import { config } from './config';
-import * as nats from 'nats';
-
-const client = nats.connect({
-    'url': config.NATS_URL,
-    'user': config.NATS_USER,
-    'pass': config.NATS_PW,
-});
+import { StackServer } from './stack-server';
+import { logger } from '@cdm-logger/server';
 
 
-const subTopic = `${config.NAMESPACE}/${config.CONNECTION_ID}`; // PrefernceUpdateHemera/filesServer/namespace/connection_id
+declare var module: __WebpackModuleApi.Module;
 
-const settings: any & { name: string } = {
-    name: NATS_MOLECULER_COUNTER_SERIVCE,
-    rootFilePath: config.FILE_ROOT_PATH,
-    connectionId: config.CONNECTION_ID,
-    namespace: config.NAMESPACE,
-    subTopic,
-    logger: config.LOG_LEVEL,
-    workspaceId: config.CONNECTION_ID || 'DEFAULT',
-    graphqlUrl: config.GRAPHQL_URL,
-    configPath: process.env.CONFIG_PATH,
-};
 
-let broker = new ServiceBroker({ ...brokerConfig });
+const service = new StackServer();
+async function start() {
+    await service.initialize();
+    await service.start();
+}
 
-createServices(broker, client, settings).then(() => {
-    broker.start();
-});
+if (module.hot) {
+    module.hot.status(event => {
+        if (event === 'abort' || event === 'fail') {
+            logger.error('HMR error status: ' + event);
+            // Signal webpack.run.js to do full-reload of the back-end
+            service.cleanup();
+        }
+        // adddintionally when event is idle due to external modules
+        if (event === 'idle') {
+            service.cleanup();
+        }
+    });
+    module.hot.accept();
+}
 
+start();

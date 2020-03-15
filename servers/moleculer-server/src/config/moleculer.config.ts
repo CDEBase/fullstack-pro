@@ -36,7 +36,7 @@ const brokerConfig: BrokerOptions = {
             colors: true,
             // Print module names with different colors (like docker-compose for containers)
             moduleColors: false,
-            // Line formatter. It can be 'json', 'short',
+            // Line formatter. It can be 'json', 'short', 
             // 'simple', 'full', a `Function` or a template string like '{timestamp} {level} {nodeID}/{mod}: {msg}'
             formatter: 'full',
             // Custom object printer. If not defined, it uses the `util.inspect` method.
@@ -53,12 +53,13 @@ const brokerConfig: BrokerOptions = {
     // More info: https://moleculer.services/docs/0.14/networking.html
     // Note: During the development, you don't need to define it because all services will be loaded locally.
     // In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-    transporter: {
+    transporter: (config.NODE_ENV === 'development') ? 'TCP' : {
         type: 'NATS',
         options: {
             url: config.NATS_URL,
             user: config.NATS_USER,
             pass: config.NATS_PW,
+            reconnectTimeWait: 1000,
         },
     },
 
@@ -162,7 +163,7 @@ const brokerConfig: BrokerOptions = {
 
     // Enable/disable built-in metrics function. More info: https://moleculer.services/docs/0.14/metrics.html
     metrics: {
-        enabled: true,
+        enabled: false,
         // Available built-in reporters: 'Console', 'CSV', 'Event', 'Prometheus', 'Datadog', 'StatsD'
         reporter: {
             type: 'Prometheus',
@@ -204,7 +205,7 @@ const brokerConfig: BrokerOptions = {
     // Register internal middlewares. More info: https://moleculer.services/docs/0.13/middlewares.html#Internal-middlewares
     internalMiddlewares: true,
 
-    // Watch the loaded services and hot reload if they changed.
+    // Watch the loaded services and hot reload if they changed. 
     // You can also enable it in Moleculer Runner with `--hot` argument
     hotReload: false,
 
