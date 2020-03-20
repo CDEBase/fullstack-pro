@@ -53,7 +53,7 @@ export class StackServer {
     private logger: ILogger;
     private connectionBroker: ConnectionBroker;
     private microserviceBroker: ServiceBroker;
-
+    private multiPathWebsocket: WebsocketMultiPathServer;
     constructor() {
         this.logger = serverLogger.child({ className: 'StackServer' });
     }
@@ -141,8 +141,8 @@ export class StackServer {
                 .catch((err) => next());
         });
 
-        const multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
-        this.httpServer = multiPathWebsocket.httpServerUpgrade(this.httpServer);
+        this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
+        this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
         const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
 
 
@@ -154,6 +154,9 @@ export class StackServer {
     }
 
     public async cleanup() {
+        if (this.multiPathWebsocket) {
+            this.multiPathWebsocket.close();
+        }
         if (this.httpServer) {
             await this.httpServer.close();
         }
