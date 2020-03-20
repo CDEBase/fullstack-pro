@@ -1,11 +1,8 @@
 
 import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
 import 'isomorphic-fetch';
-// import modules, { serviceContext } from './modules';
 import { Express } from 'express';
 import * as http from 'http';
-import { GatewaySchemaBuilder } from '../api/schema-builder';
-import { GraphQLSchema } from 'graphql';
 import { GRAPHQL_ROUTE } from '../constants';
 import * as ILogger from 'bunyan';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';

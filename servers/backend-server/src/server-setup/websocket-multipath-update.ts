@@ -6,7 +6,7 @@ import { GRAPHQL_ROUTE } from '../constants';
 import { GraphqlSubscriptionServer } from './graphql-subscription-server';
 import * as WebSocket from 'ws';
 import { IModuleService } from '../interfaces';
-
+import { Server } from 'http';
 
 interface WebSocketsCache {
     [key: string]: WebSocket.Server;
@@ -37,7 +37,7 @@ export class WebsocketMultiPathServer {
 
     }
 
-    public httpServerUpgrade(httpServer) {
+    public httpServerUpgrade(httpServer: Server) {
         httpServer.on('upgrade', (request, socket, head) => {
             console.log('----ON UPGRADE CALLED')
             const pathname = url.parse(request.url).pathname;

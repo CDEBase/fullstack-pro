@@ -1,8 +1,6 @@
 
 import { SubscriptionServer, ConnectionContext } from 'subscriptions-transport-ws';
 import { execute, subscribe, GraphQLSchema } from 'graphql';
-
-import { Server } from 'http';
 import * as ILogger from 'bunyan';
 import { IModuleService } from '../interfaces';
 
