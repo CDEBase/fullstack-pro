@@ -141,9 +141,6 @@ export class StackServer {
                 .catch((err) => next());
         });
 
-
-        // const graphqlSubscriptionServer = new GraphqlSubscriptionServer(serviceBroker);
-        // this.httpServerUpdate(graphqlSubscriptionServer.create().server);
         const multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
         this.httpServer = multiPathWebsocket.httpServerUpgrade(this.httpServer);
         const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
@@ -168,20 +165,4 @@ export class StackServer {
         }
     }
 
-
-    private httpServerUpdate(subscriptionWs) {
-
-        this.httpServer.on('upgrade', (request, socket, head) => {
-            const wsPath = url.parse(request.url).pathname;
-
-            const wss1 = subscriptionWs;
-            console.log('--- WS PATTH SEervices: ', wsPath);
-            if (wsPath === GRAPHQL_ROUTE) {
-                socket.handler = true;
-                wss1.handleUpgrade(request, socket, head, ws => {
-                    wss1.emit('connection', ws, request);
-                });
-            }
-        });
-    }
 }
