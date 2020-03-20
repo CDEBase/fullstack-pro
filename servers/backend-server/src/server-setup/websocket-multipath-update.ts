@@ -30,7 +30,7 @@ export class WebsocketMultiPathServer {
 
             if (!this.webSockets[key]) {
                 this.webSockets[key] = new WebSocket.Server({ noServer: true });
-                this.webSockets[key].on('connection', {});
+                this.webSockets[key].on('connection', () => {});
             }
         }
         console.log('---WeBSOCKETS ', this.webSockets)
@@ -43,16 +43,17 @@ export class WebsocketMultiPathServer {
             const pathname = url.parse(request.url).pathname;
 
             if (!this.webSockets[pathname]) {
+                console.log('Destroying.....pathname', pathname)
                 // this.webSockets[pathname] = new WebSocket.Server({ noServer: true });
                 // this.webSockets[pathname].on('connection', {});
                 // need to destroy
-                socket.destroy();
+                // socket.destroy();
             }
 
             // code to run when a new connection is made
             this.webSockets[pathname].handleUpgrade(request, socket, head, (ws) => {
                 console.log('---HANDLE UPGRADE')
-                this.webSockets[pathname].emit('connection', ws);
+                this.webSockets[pathname].emit('connection', ws, request);
             });
         });
         return httpServer;

@@ -142,13 +142,12 @@ export class StackServer {
         });
 
 
-        const graphqlSubscriptionServer = new GraphqlSubscriptionServer(serviceBroker);
-        this.httpServerUpdate(graphqlSubscriptionServer.create().server);
-
-        // Initialize an express app, apply the apollo middleware, and mount the app to the http server
+        // const graphqlSubscriptionServer = new GraphqlSubscriptionServer(serviceBroker);
+        // this.httpServerUpdate(graphqlSubscriptionServer.create().server);
+        const multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
+        this.httpServer = multiPathWebsocket.httpServerUpgrade(this.httpServer);
         const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
-        // const multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
-        // multiPathWebsocket.httpServerUpgrade(this.httpServer);
+
 
         await graphqlServer.initialize();
     }
