@@ -25,7 +25,7 @@ import { resolvers as rootResolver } from './resolver';
 
 export class GatewaySchemaBuilder {
 
-    constructor(private options: {schema: string, resolvers, directives, logger}) {
+    constructor(private options: {schema: string | string[], resolvers, directives, logger}) {
 
     }
 

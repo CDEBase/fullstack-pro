@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as express from 'express';
 import { expressApp } from './express-app';
-import { GraphqlServer } from './graphql-server';
+import { GraphqlServer } from './server-setup/graphql-server';
 import { config } from './config';
 import { logger as serverLogger } from '@cdm-logger/server';
 import * as ILogger from 'bunyan';
@@ -11,7 +11,17 @@ import { ContainerModule, interfaces } from 'inversify';
 import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
+import { GatewaySchemaBuilder } from './api/schema-builder';
+import { GraphqlSubscriptionServer } from './server-setup/graphql-subscription-server';
+
 import { contextServicesMiddleware } from './middleware/services';
+import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
+import { IModuleService } from './interfaces';
+import * as url from 'url';
+import { GRAPHQL_ROUTE } from './constants';
+
+
+
 function startListening(port) {
     let server = this;
     return new Promise((resolve) => {
@@ -65,6 +75,7 @@ export class StackServer {
         const redisClient = this.connectionBroker.redisDataloaderClient;
         const mongoClient = await this.connectionBroker.mongoConnection;
 
+        // Moleculer Broker Setup
         this.microserviceBroker = new ServiceBroker({
             ...brokerConfig,
             started: async () => {
@@ -75,7 +86,7 @@ export class StackServer {
             created: async () => {
 
             },
-         });
+        });
 
         const pubsub = await this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
@@ -86,13 +97,8 @@ export class StackServer {
                 })],
         });
         const allModules = new Feature(InfraStructureFeature, modules);
-        const serviceBroker = {
-            serviceContainer: await allModules.createContainers(settings),
-            serviceContext: allModules.createServiceContext(settings),
-            dataSource: allModules.createDataSource(),
-            defaultPreferences: allModules.createDefaultPreferences(),
-            createContext: async (req, res) => await allModules.createContext(req, res),
-            logger: serverLogger,
+
+        const executableSchema = await (new GatewaySchemaBuilder({
             schema: allModules.schemas,
             resolvers: allModules.createResolvers({
                 pubsub,
@@ -100,6 +106,17 @@ export class StackServer {
                 subscriptionID: `${settings.subTopic}`,
             }),
             directives: allModules.createDirectives({ logger: this.logger }),
+            logger: serverLogger,
+        })).build();
+        // has dependencies on `pubsub` and `MoleculerBroker`
+        const serviceBroker: IModuleService = {
+            serviceContainer: await allModules.createContainers(settings),
+            serviceContext: allModules.createServiceContext(settings),
+            dataSource: allModules.createDataSource(),
+            defaultPreferences: allModules.createDefaultPreferences(),
+            createContext: async (req, res) => await allModules.createContext(req, res),
+            logger: serverLogger,
+            schema: executableSchema,
         };
         if (config.NODE_ENV === 'development') {
             allModules.loadClientMoleculerService({
@@ -124,14 +141,19 @@ export class StackServer {
                 .catch((err) => next());
         });
 
+
+        const graphqlSubscriptionServer = new GraphqlSubscriptionServer(serviceBroker);
+        this.httpServerUpdate(graphqlSubscriptionServer.create().server);
+
         // Initialize an express app, apply the apollo middleware, and mount the app to the http server
-        const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker);
+        const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
+        // const multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
+        // multiPathWebsocket.httpServerUpgrade(this.httpServer);
+
         await graphqlServer.initialize();
     }
 
     public async start() {
-
-
         await this.microserviceBroker.start();
     }
 
@@ -145,5 +167,22 @@ export class StackServer {
         if (this.microserviceBroker) {
             await this.microserviceBroker.stop();
         }
+    }
+
+
+    private httpServerUpdate(subscriptionWs) {
+
+        this.httpServer.on('upgrade', (request, socket, head) => {
+            const wsPath = url.parse(request.url).pathname;
+
+            const wss1 = subscriptionWs;
+            console.log('--- WS PATTH SEervices: ', wsPath);
+            if (wsPath === GRAPHQL_ROUTE) {
+                socket.handler = true;
+                wss1.handleUpgrade(request, socket, head, ws => {
+                    wss1.emit('connection', ws, request);
+                });
+            }
+        });
     }
 }
