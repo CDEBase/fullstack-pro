@@ -6,7 +6,7 @@ import { GRAPHQL_ROUTE } from '../constants';
 import { GraphqlSubscriptionServer } from './graphql-subscription-server';
 import * as WebSocket from 'ws';
 import { IModuleService } from '../interfaces';
-
+import { Server } from 'http';
 
 interface WebSocketsCache {
     [key: string]: WebSocket.Server;
@@ -30,29 +30,29 @@ export class WebsocketMultiPathServer {
 
             if (!this.webSockets[key]) {
                 this.webSockets[key] = new WebSocket.Server({ noServer: true });
-                this.webSockets[key].on('connection', () => {});
+                this.webSockets[key].on('connection', (ws, request) => {
+                    Promise.all([
+                        moduleService.createContext(request, null),
+                        moduleService.serviceContext(request, null),
+                    ])
+                    .then(multiplePathConfig[key](ws));
+                });
             }
         }
-        console.log('---WeBSOCKETS ', this.webSockets)
-
     }
 
-    public httpServerUpgrade(httpServer) {
+
+    public httpServerUpgrade(httpServer: Server) {
         httpServer.on('upgrade', (request, socket, head) => {
-            console.log('----ON UPGRADE CALLED')
             const pathname = url.parse(request.url).pathname;
 
             if (!this.webSockets[pathname]) {
-                console.log('Destroying.....pathname', pathname)
-                // this.webSockets[pathname] = new WebSocket.Server({ noServer: true });
-                // this.webSockets[pathname].on('connection', {});
                 // need to destroy
-                // socket.destroy();
+                socket.destroy();
             }
 
             // code to run when a new connection is made
             this.webSockets[pathname].handleUpgrade(request, socket, head, (ws) => {
-                console.log('---HANDLE UPGRADE')
                 this.webSockets[pathname].emit('connection', ws, request);
             });
         });

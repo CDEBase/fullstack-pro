@@ -12,13 +12,11 @@ import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
 import { GatewaySchemaBuilder } from './api/schema-builder';
-import { GraphqlSubscriptionServer } from './server-setup/graphql-subscription-server';
-
 import { contextServicesMiddleware } from './middleware/services';
 import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
 import { IModuleService } from './interfaces';
-import * as url from 'url';
-import { GRAPHQL_ROUTE } from './constants';
+import * as _ from 'lodash';
+
 
 
 
@@ -141,8 +139,13 @@ export class StackServer {
                 .catch((err) => next());
         });
 
-        this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker);
-        this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
+        const customWebsocket = allModules.getWebsocketConfig();
+        const customWebsocketEnable = !_.isEmpty(customWebsocket);
+
+        if (customWebsocketEnable) {
+            this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker, customWebsocket);
+            this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
+        }
         const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
 
 
