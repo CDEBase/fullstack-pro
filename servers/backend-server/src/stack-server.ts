@@ -15,6 +15,7 @@ import { GatewaySchemaBuilder } from './api/schema-builder';
 import { contextServicesMiddleware } from './middleware/services';
 import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
 import { IModuleService } from './interfaces';
+import { CommonType } from '@common-stack/core';
 import * as _ from 'lodash';
 
 
@@ -30,10 +31,15 @@ function startListening(port) {
 const infraModule =
     ({ broker, pubsub, logger }) => new ContainerModule((bind: interfaces.Bind) => {
         bind('Logger').toConstantValue(logger);
+        bind(CommonType.LOGGER).toConstantValue(logger);
         bind('Environment').toConstantValue(config.NODE_ENV || 'development');
+        bind(CommonType.ENVIRONMENT).toConstantValue(config.NODE_ENV || 'development');
         bind('PubSub').toConstantValue(pubsub);
+        bind(CommonType.PUBSUB).toConstantValue(pubsub);
         bind('MoleculerBroker').toConstantValue(broker);
+        bind(CommonType.MOLECULER_BROKER).toConstantValue(broker);
     });
+
 
 
 
@@ -146,7 +152,7 @@ export class StackServer {
             this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker, customWebsocket);
             this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
         }
-        const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, false);
+        const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, !customWebsocketEnable);
 
 
         await graphqlServer.initialize();
