@@ -30,20 +30,25 @@ export class WebsocketMultiPathServer {
 
             if (!this.webSockets[key]) {
                 this.webSockets[key] = new WebSocket.Server({ noServer: true });
-                this.webSockets[key].on('connection', () => {});
+                this.webSockets[key].on('connection', (ws, request) => {
+                    Promise.all([
+                        moduleService.createContext(request, null),
+                        moduleService.serviceContext(request, null),
+                    ])
+                    .then(multiplePathConfig[key](ws));
+                });
             }
         }
     }
+
 
     public httpServerUpgrade(httpServer: Server) {
         httpServer.on('upgrade', (request, socket, head) => {
             const pathname = url.parse(request.url).pathname;
 
             if (!this.webSockets[pathname]) {
-                // this.webSockets[pathname] = new WebSocket.Server({ noServer: true });
-                // this.webSockets[pathname].on('connection', {});
                 // need to destroy
-                // socket.destroy();
+                socket.destroy();
             }
 
             // code to run when a new connection is made
@@ -55,11 +60,8 @@ export class WebsocketMultiPathServer {
     }
 
     public close() {
+        // tslint:disable-next-line:forin
         for (let key in this.webSockets) {
-            if (key === GRAPHQL_ROUTE){
-                this.graphqlSubscriptionServer.disconnect();
-            }
-            // close all other websockets
             this.webSockets[key].close();
         }
     }
