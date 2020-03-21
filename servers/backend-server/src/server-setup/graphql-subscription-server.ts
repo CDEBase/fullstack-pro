@@ -1,16 +1,23 @@
 
-import { SubscriptionServer, ConnectionContext } from 'subscriptions-transport-ws';
-import { execute, subscribe, GraphQLSchema } from 'graphql';
+import { SubscriptionServer, ConnectionContext, ExecutionParams } from 'subscriptions-transport-ws';
+import { execute, subscribe, ExecutionResult } from 'graphql';
 import * as ILogger from 'bunyan';
 import { IModuleService } from '../interfaces';
-
+// import { GraphQLServerOptions } from 'apollo-server-core';
+import { formatApolloErrors } from 'apollo-server-errors';
+import { GraphQLServerOptions } from 'apollo-server-core/dist/graphqlOptions';
+import { Context } from 'apollo-server-core';
 export class GraphqlSubscriptionServer {
 
     private subscriptionServer: SubscriptionServer;
+    private context: Context;
     private logger: ILogger;
+
+
     constructor(
         private moduleService: IModuleService,
-        ) {
+        private requestOptions: Partial<GraphQLServerOptions<any>> = Object.create(null),
+    ) {
 
         this.logger = this.moduleService.logger.child({ className: 'GraphqlSubscriptionServer' });
     }
@@ -38,14 +45,29 @@ export class GraphqlSubscriptionServer {
                         this.logger.error(e);
                     }
                 },
-                // onOperation: async (message: any, params: any, webSocket: any) => {
-                //     try {
-                //         params.context = await this.moduleService.createContext(null, null, message.payload, webSocket);
-                //         return params;
-                //     } catch (e) {
-                //         this.logger.error(e);
-                //     }
-                // },
+                onOperation: async (message: { payload: any }, connection: ExecutionParams) => {
+                    connection.formatResponse = (value: ExecutionResult) => ({
+                        ...value,
+                        errors:
+                            value.errors &&
+                            formatApolloErrors([...value.errors], {
+                                formatter: this.requestOptions.formatError,
+                                debug: this.requestOptions.debug,
+                            }),
+                    });
+                    let context: Context = this.context ? this.context : { connection };
+                    try {
+                        context =
+                            typeof this.context === 'function' ? await this.context({ connection, payload: message.payload }) : context;
+                    } catch (e) {
+                        throw formatApolloErrors([e], {
+                            formatter: this.requestOptions.formatError,
+                            debug: this.requestOptions.debug,
+                        })[0];
+                    }
+
+                    return { ...connection }; //TODO: we didn't add `context` 
+                },
             }, {
             noServer: true,
         },
