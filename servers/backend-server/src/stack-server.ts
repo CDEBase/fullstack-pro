@@ -128,16 +128,24 @@ export class StackServer {
             directives: allModules.createDirectives({ logger: this.logger }),
             logger: serverLogger,
         })).build();
-        // has dependencies on `pubsub` and `MoleculerBroker`
+
+        // set the service container
+        this.serviceContainer = await allModules.createContainers({ ...settings, mongoConnection: mongoClient });
+        const createServiceContext = allModules.createServiceContext({ ...settings, mongoConnection: mongoClient });
         const serviceBroker: IModuleService = {
-            serviceContainer: await allModules.createContainers({ ...settings, mongoConnection: mongoClient }),
-            serviceContext: allModules.createServiceContext({ ...settings, mongoConnection: mongoClient }),
+            serviceContainer: this.serviceContainer,
+            serviceContext: createServiceContext,
             dataSource: allModules.createDataSource(),
             defaultPreferences: allModules.createDefaultPreferences(),
             createContext: async (req, res) => await allModules.createContext(req, res),
             logger: serverLogger,
             schema: executableSchema,
         };
+        allModules.loadMainMoleculerService({
+            broker: this.microserviceBroker,
+            container: this.serviceContainer,
+            settings: settings,
+        });
         if (config.NODE_ENV === 'development') {
             this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
             allModules.loadClientMoleculerService({
