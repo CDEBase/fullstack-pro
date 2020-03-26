@@ -118,13 +118,15 @@ const config = {
     }
 };
 if (process.env.NODE_ENV === 'development') {
-    config.builders.web.webpackConfig = {
+    const dotEnvPlugin = {
         plugins: [
             new Dotenv({
                 path: process.env.ENV_FILE
             })
         ],
     }
+    config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, dotEnvPlugin);
+
 }
 
 if (process.env.SSR) {
@@ -167,17 +169,16 @@ if (process.env.NODE_ENV !== 'production') {
                     path: process.env.ENV_FILE,
                     example: '../../config/development/dev.env',
                 });
-        const envConfig = {
+        const envPlugin = {
             plugins: [
                 new webpack.DefinePlugin({
                     "__ENV__": JSON.stringify(dotenv.parsed)
                 }),
             ],
         }
-        config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envConfig);
+        config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envPlugin);
     }
 }
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
-
 module.exports = config;
