@@ -7,7 +7,7 @@ import { logger as serverLogger } from '@cdm-logger/server';
 import * as ILogger from 'bunyan';
 import { ConnectionBroker } from './connectors/connection-broker';
 import { Feature } from '@common-stack/server-core';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, interfaces, Container } from 'inversify';
 import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
@@ -58,6 +58,10 @@ export class StackServer {
     private connectionBroker: ConnectionBroker;
     private microserviceBroker: ServiceBroker;
     private multiPathWebsocket: WebsocketMultiPathServer;
+
+    private serviceContainer: Container;
+    private micorserviceContainer: Container;
+
     constructor() {
         this.logger = serverLogger.child({ className: 'StackServer' });
     }
@@ -106,6 +110,11 @@ export class StackServer {
                     broker: this.microserviceBroker,
                     pubsub, logger: serverLogger,
                 })],
+            createHemeraContainerFunc: [
+                () => infraModule({
+                    broker: this.microserviceBroker,
+                    pubsub, logger: serverLogger,
+                })],
         });
         const allModules = new Feature(InfraStructureFeature, modules);
 
@@ -121,8 +130,8 @@ export class StackServer {
         })).build();
         // has dependencies on `pubsub` and `MoleculerBroker`
         const serviceBroker: IModuleService = {
-            serviceContainer: await allModules.createContainers(settings),
-            serviceContext: allModules.createServiceContext(settings),
+            serviceContainer: await allModules.createContainers({ ...settings, mongoConnection: mongoClient }),
+            serviceContext: allModules.createServiceContext({ ...settings, mongoConnection: mongoClient }),
             dataSource: allModules.createDataSource(),
             defaultPreferences: allModules.createDefaultPreferences(),
             createContext: async (req, res) => await allModules.createContext(req, res),
@@ -130,9 +139,10 @@ export class StackServer {
             schema: executableSchema,
         };
         if (config.NODE_ENV === 'development') {
+            this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
             allModules.loadClientMoleculerService({
                 broker: this.microserviceBroker,
-                container: await allModules.createHemeraContainers(settings),
+                container: this.micorserviceContainer,
                 settings: settings,
             });
         }
