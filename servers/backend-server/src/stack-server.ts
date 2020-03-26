@@ -83,8 +83,15 @@ export class StackServer {
         this.microserviceBroker = new ServiceBroker({
             ...brokerConfig,
             started: async () => {
-                await modules.preStart({});
-                await modules.postStart({});
+                await modules.preStart(this.serviceContainer);
+                if (config.NODE_ENV === 'development') {
+                    await modules.microservicePreStart(this.micorserviceContainer);
+                }
+
+                await modules.postStart(this.serviceContainer);
+                if (config.NODE_ENV === 'development') {
+                    await modules.microservicePostStart(this.micorserviceContainer);
+                }
             },
             // created,
             created: async () => {
