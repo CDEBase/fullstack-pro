@@ -56,8 +56,8 @@ export class StackServer {
         this.microserviceBroker = new ServiceBroker({
             ...brokerConfig,
             started: async () => {
-                await modules.microservicePreStart(this.micorserviceContainer);
-                await modules.microservicePostStart(this.micorserviceContainer);
+                await modules.microservicePreStart(this.microserviceContainer);
+                await modules.microservicePostStart(this.microserviceContainer);
 
             },
         });
@@ -72,13 +72,13 @@ export class StackServer {
                 )],
         });
         const allModules = new Feature(InfraStructureFeature, modules);
-        this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
+        this.microserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
         const serviceBroker = {
             microserviceContainer: this.microserviceContainer,
             logger: this.logger,
         };
         // set the service container
-        this.micorserviceContainer = serviceBroker.microserviceContainer;
+        this.microserviceContainer = serviceBroker.microserviceContainer;
         allModules.loadClientMoleculerService({
             broker: this.microserviceBroker,
             container: this.microserviceContainer,
