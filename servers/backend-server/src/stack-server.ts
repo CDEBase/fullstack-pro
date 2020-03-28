@@ -7,7 +7,7 @@ import { logger as serverLogger } from '@cdm-logger/server';
 import * as ILogger from 'bunyan';
 import { ConnectionBroker } from './connectors/connection-broker';
 import { Feature } from '@common-stack/server-core';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, interfaces, Container } from 'inversify';
 import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
@@ -58,6 +58,10 @@ export class StackServer {
     private connectionBroker: ConnectionBroker;
     private microserviceBroker: ServiceBroker;
     private multiPathWebsocket: WebsocketMultiPathServer;
+
+    private serviceContainer: Container;
+    private micorserviceContainer: Container;
+
     constructor() {
         this.logger = serverLogger.child({ className: 'StackServer' });
     }
@@ -83,8 +87,15 @@ export class StackServer {
         this.microserviceBroker = new ServiceBroker({
             ...brokerConfig,
             started: async () => {
-                await modules.preStart({});
-                await modules.postStart({});
+                await modules.preStart(this.serviceContainer);
+                if (config.NODE_ENV === 'development') {
+                    await modules.microservicePreStart(this.micorserviceContainer);
+                }
+
+                await modules.postStart(this.serviceContainer);
+                if (config.NODE_ENV === 'development') {
+                    await modules.microservicePostStart(this.micorserviceContainer);
+                }
             },
             // created,
             created: async () => {
@@ -95,6 +106,11 @@ export class StackServer {
         const pubsub = await this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
             createContainerFunc: [
+                () => infraModule({
+                    broker: this.microserviceBroker,
+                    pubsub, logger: serverLogger,
+                })],
+            createHemeraContainerFunc: [
                 () => infraModule({
                     broker: this.microserviceBroker,
                     pubsub, logger: serverLogger,
@@ -112,20 +128,29 @@ export class StackServer {
             directives: allModules.createDirectives({ logger: this.logger }),
             logger: serverLogger,
         })).build();
-        // has dependencies on `pubsub` and `MoleculerBroker`
+
+        // set the service container
+        this.serviceContainer = await allModules.createContainers({ ...settings, mongoConnection: mongoClient });
+        const createServiceContext = allModules.createServiceContext({ ...settings, mongoConnection: mongoClient });
         const serviceBroker: IModuleService = {
-            serviceContainer: await allModules.createContainers(settings),
-            serviceContext: allModules.createServiceContext(settings),
+            serviceContainer: this.serviceContainer,
+            serviceContext: createServiceContext,
             dataSource: allModules.createDataSource(),
             defaultPreferences: allModules.createDefaultPreferences(),
             createContext: async (req, res) => await allModules.createContext(req, res),
             logger: serverLogger,
             schema: executableSchema,
         };
+        allModules.loadMainMoleculerService({
+            broker: this.microserviceBroker,
+            container: this.serviceContainer,
+            settings: settings,
+        });
         if (config.NODE_ENV === 'development') {
+            this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
             allModules.loadClientMoleculerService({
                 broker: this.microserviceBroker,
-                container: await allModules.createHemeraContainers(settings),
+                container: this.micorserviceContainer,
                 settings: settings,
             });
         }

@@ -10,7 +10,7 @@ export { settings };
 //                 topic: `UPDATE_CONTAINER_${el.toUpperCase()}`,
 //                 cmd: `UPDATE_CONTAINER_${el.toUpperCase()}`,
 //             });
-//         });
+//         });'
 //     } else {
 //         modules.createServiceContext(settings, options);
 //     }
