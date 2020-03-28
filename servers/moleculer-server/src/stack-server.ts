@@ -40,7 +40,7 @@ export class StackServer {
     private microserviceBroker: ServiceBroker;
 
     private serviceContainer: Container;
-    private micorserviceContainer: Container;
+    private microserviceContainer: Container;
     constructor() {
         this.logger = serverLogger.child({ className: 'StackServer' });
     }
@@ -48,7 +48,6 @@ export class StackServer {
     public async  initialize() {
         this.logger.info('StackServer initializing');
 
-        let serviceBroker;
         this.connectionBroker = new ConnectionBroker(brokerConfig.transporter, this.logger);
         const redisClient = this.connectionBroker.redisDataloaderClient;
 
@@ -73,15 +72,16 @@ export class StackServer {
                 )],
         });
         const allModules = new Feature(InfraStructureFeature, modules);
-        serviceBroker = {
-            microserviceContainer: await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient }),
+        this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
+        const serviceBroker = {
+            microserviceContainer: this.microserviceContainer,
             logger: this.logger,
         };
         // set the service container
         this.micorserviceContainer = serviceBroker.microserviceContainer;
         allModules.loadClientMoleculerService({
             broker: this.microserviceBroker,
-            container: serviceBroker.microserviceContainer,
+            container: this.microserviceContainer,
             settings: settings,
         });
 
@@ -89,8 +89,6 @@ export class StackServer {
     }
 
     public async start() {
-
-
         await this.microserviceBroker.start();
     }
 
