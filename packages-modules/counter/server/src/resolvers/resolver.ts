@@ -8,7 +8,12 @@ const COUNTER_SUBSCRIPTION = 'counter_subscription';
 export const resolver: (options: any) => IResolvers<IContext> = (options) => ({
   Query: {
     counter(obj, args, context ) {
+      console.log('----CONTEXT', context.dataSources);
       return context.counterMockService.counterQuery() as Counter;
+    },
+    counterCache(obj, args, context ) {
+      console.log('----CONTEXT', context.dataSources);
+      return context.dataSources.counterCache.counterQuery() as Counter;
     },
     moleculerCounter(obj, args, context) {
       return context.counterMockProxyService.counterQuery();

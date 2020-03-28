@@ -85,6 +85,8 @@ export type Query = {
   dummy?: Maybe<Scalars['Int']>,
   /**  Counter  */
   counter?: Maybe<Counter>,
+  /**  Counter from Datasource  */
+  counterCache?: Maybe<Counter>,
   /**  Moleculer Counter  */
   moleculerCounter?: Maybe<Counter>,
   health?: Maybe<Scalars['Boolean']>,
@@ -325,6 +327,7 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
+  counterCache?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
   moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>,
   health?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryHealthArgs, 'request'>>,
   counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>,

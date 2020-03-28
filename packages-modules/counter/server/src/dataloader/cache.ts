@@ -2,38 +2,32 @@ import * as DataLoader from 'dataloader';
 import { KeyValueCache } from 'apollo-server-caching';
 import { config } from '../config';
 import { logger } from '@cdm-logger/server';
+import { ICounterService } from '../interfaces';
+import { Counter } from '../generated-models';
 
 
-
+const KEY = 'COUNTER';
 export const setupCaching
-    = ({ textFileService, cache }: { textFileService: ICustomTextFileService, cache: KeyValueCache<ITextFileContent> }) => {
-        const loader = new DataLoader<URI, ITextFileContent>((resources) => {
-            return textFileService.read(resources[0])
+    = ({ counterService, cache }: { counterService: ICounterService, cache: KeyValueCache<string> }) => {
+        const loader = new DataLoader<string, Counter>((args) => {
+            return (counterService.counterQuery() as Promise<Counter>)
                 .then(data => [data]);
         }, { batch: false });
-        let cachedTextFileService: ICacheTextFileService = {};
-        cachedTextFileService.readCache = async (resource, options) => {
+        let cachedCounterService: ICounterService = { } as ICounterService;
+        cachedCounterService.counterQuery = async () => {
             // stores as file:///tmp/tmp.txt
-            const key = URI.from(resource).toString();
-           
+            const key = KEY;
             const cacheDoc = await cache.get(key);
-            console.log('---CACHE_-', cacheDoc);
+
             if (cacheDoc) {
                 logger.trace('  document pulled from cache, [%s]', JSON.stringify(cacheDoc));
-                console.log(JSON.stringify(cacheDoc.toString()))
-
-                if (cacheDoc.etag === options.etag) {
-                    return cacheDoc;
-                } else {
-                    console.warn('Files cache is found but etag do not match');
-                }
+                return JSON.parse(cacheDoc);
             }
             try {
-                const doc = await loader.load(resource);
-                console.log('resolveContent:>>>', { cacheDoc, doc });
+                const doc = await loader.load(KEY);
 
                 // https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-caching#apollo-server-caching
-                cache.set(key, doc, { ttl: config.FILES_TTL });
+                await cache.set(key, JSON.stringify(doc), { ttl: config.FILES_TTL });
                 return doc;
             } catch (e) {
                 console.log('error: ', e);
@@ -41,17 +35,5 @@ export const setupCaching
             }
         };
 
-        cachedTextFileService.writeCache = (resource, value, options) => {
-            const key = URI.from(resource).toString();
-            cache.delete(key);
-            return textFileService.write(resource, value, options);
-        };
-
-        cachedTextFileService.deleteCache = (resource, options) => {
-            const key = URI.from(resource).toString();
-            cache.delete(key);
-            return textFileService.delete(resource, options);
-        };
-
-        return cachedTextFileService;
+        return cachedCounterService;
     };
