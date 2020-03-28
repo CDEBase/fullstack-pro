@@ -14,44 +14,28 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
 }
 
 
-const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
-    const intializeDataSource = (instance) => {
-        instance.initialize({ context, cache });
-        return instance;
-    };
-    // tslint:disable-next-line:forin
-    for (let prop in dataSources) {
-        // tslint:disable-next-line:no-console
-        intializeDataSource(dataSources[prop]);
-    }
-    return dataSources;
-};
-
-
 export class GraphqlServer {
 
-
-
-    private app: Express;
-
-    private httpServer: http.Server;
-
     private logger: ILogger;
-    constructor(app: Express, httpServer: http.Server, private cache: RedisCache | RedisClusterCache,
-        private moduleService: IModuleService, private enableSubscription = true) {
+    constructor(
+        private app: Express,
+        private httpServer: http.Server,
+        private cache: RedisCache | RedisClusterCache,
+        private moduleService: IModuleService,
+        private enableSubscription = true,
+    ) {
         this.logger = this.moduleService.logger.child({ className: 'GraphqlServer' });
-        this.app = app;
-        this.httpServer = httpServer;
     }
 
 
     public async initialize() {
-        this.logger.info('GraphqlServer initialize');
+        this.logger.info('GraphqlServer initializing...');
         const apolloServer = this.configureApolloServer();
         apolloServer.applyMiddleware({ app: this.app, disableHealthCheck: false, path: GRAPHQL_ROUTE });
         if (this.enableSubscription) {
             apolloServer.installSubscriptionHandlers(this.httpServer);
         }
+        this.logger.info('GraphqlServer initialized');
     }
 
     private configureApolloServer(): ApolloServer {
@@ -65,10 +49,10 @@ export class GraphqlServer {
                 try {
                     if (connection) {
                         context = connection.context;
-                        addons = {
-                            dataSources: constructDataSourcesForSubscriptions
-                                (connection.context, this.cache, this.moduleService.dataSource),
-                        };
+                        // addons = {
+                        //     dataSources: constructDataSourcesForSubscriptions
+                        //         (connection.context, this.cache, this.moduleService.dataSource),
+                        // };
                     } else {
                         const pureContext = await this.moduleService.createContext(req, res);
                         const contextServices = await this.moduleService.serviceContext(req, res);
