@@ -7,6 +7,10 @@ type Counter {
 extend type Query {
   """ Counter """
   counter: Counter
+
+  """ Counter from Datasource """
+  counterCache: Counter
+
   """ Moleculer Counter """
   moleculerCounter: Counter
 }
