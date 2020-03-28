@@ -6,10 +6,17 @@ import { CounterMockMicroservice } from './services';
 import { Feature } from '@common-stack/server-core';
 import { interfaces } from 'inversify';
 import { TYPES } from './constants';
+import { CounterDataSource } from './dataloader';
 
 const counterServiceGen = (container: interfaces.Container): IService => {
     return {
         counterMockService: container.getNamed<ICounterService>(TYPES.CounterMockService, 'proxy'),
+    };
+};
+
+const dataSources: (container: interfaces.Container) => any = () => {
+    return {
+        counterCache: new CounterDataSource(),
     };
 };
 
@@ -19,6 +26,7 @@ export default new Feature({
     createResolversFunc: resolver,
     createServiceFunc: counterServiceGen,
     // createContextFunc: () => ({ counterMock: counterMock }), // note anything set here should be singleton.
+    createDataSourceFunc: dataSources,
     createHemeraContainerFunc: [externalCounterModule],
     addBrokerClientServiceClass: [CounterMockMicroservice],
     addBrokerMainServiceClass: [],
