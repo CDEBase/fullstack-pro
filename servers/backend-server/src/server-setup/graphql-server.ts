@@ -64,6 +64,7 @@ export class GraphqlServer {
                     if (connection) {
                         context = connection.context;
                         addons = {
+                            // @workaround for apollo server issue #1526
                             dataSources: constructDataSourcesForSubscriptions
                                 (connection.context, this.cache, this.moduleService.dataSource),
                         };
