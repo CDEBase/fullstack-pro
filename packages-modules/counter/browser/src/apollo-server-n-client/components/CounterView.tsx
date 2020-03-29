@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useAddCounter_WsMutation, useCounterCacheQueryQuery } from '../generated-model';
+import { useAddCounter_WsMutation, useSyncCachedCounterMutation , useCounterCacheQueryLazyQuery} from '../generated-model';
 
 
 const CounterView = ({
@@ -12,16 +12,16 @@ const CounterView = ({
   counterState,
   addCounterState,
 }: any) => {
-  const { loading: counterCacheLoading, data } = useCounterCacheQueryQuery();
+  const [getCounter] = useCounterCacheQueryLazyQuery({ fetchPolicy: 'network-only'});
   const [ addCounterWs ] = useAddCounter_WsMutation();
+  const [ syncCachedCounter ] = useSyncCachedCounterMutation();
   const renderMetaData = () => (
     <Helmet>
       <title>Counter</title>
       <meta name="description" content="Counter example page" />
     </Helmet>
   );
-    console.log('--coutnerCache', counterCacheLoading, data)
-  if (loading || counterCacheLoading) {
+  if (loading) {
     return (
       <div>
         {renderMetaData()}
@@ -34,7 +34,7 @@ const CounterView = ({
         {renderMetaData()}
         <section>
           <p>
-            Current counter, is {counter.amount} and cached data {data.counterCache.amount}. This is being stored
+            Current counter, is {counter.amount} and cached data. This is being stored
             server-side in the database and using Apollo subscription for
             real-time updates.
           </p>
@@ -44,6 +44,17 @@ const CounterView = ({
           <button id="graphql-button" color="primary" onClick={() => addCounterWs({variables: { amount: 1 }})}>
             Click to increase counter via websocket
           </button>
+        </section>
+        <section>
+          <p>
+            Get Chached Counter
+            <button id="get-cached-counter" onClick={() => getCounter()}>
+              Click to get cached counter
+            </button>
+            <button id="sync-cached-counter" onClick={() => syncCachedCounter()}>
+              Synch Counter with Cache
+            </button>
+          </p>
         </section>
         <section>
           <p>

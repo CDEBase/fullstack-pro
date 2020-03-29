@@ -57,6 +57,9 @@ export type Mutation = {
   dummy?: Maybe<Scalars['Int']>,
   /**  Increase counter value returns current counter amount  */
   addCounter?: Maybe<Counter>,
+  /**  sync cached counter with current value  */
+  syncCachedCounter?: Maybe<Scalars['Boolean']>,
+  /**  add Counter  */
   addMoleculerCounter?: Maybe<Counter>,
   addCounterState?: Maybe<ClientCounter>,
 };
@@ -143,6 +146,14 @@ export type AddCounter_WsMutation = (
     { __typename?: 'Counter' }
     & Pick<Counter, 'amount'>
   )> }
+);
+
+export type SyncCachedCounterMutationVariables = {};
+
+
+export type SyncCachedCounterMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'syncCachedCounter'>
 );
 
 export type CounterCacheQueryQueryVariables = {};
@@ -326,6 +337,7 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddCounterArgs>,
+  syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddMoleculerCounterArgs>,
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>,
 };
@@ -398,6 +410,13 @@ export const AddCounter_WsDocument = gql`
     `;
 export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>;
+export const SyncCachedCounterDocument = gql`
+    mutation SyncCachedCounter {
+  syncCachedCounter
+}
+    `;
+export type SyncCachedCounterMutationResult = ApolloReactCommon.MutationResult<SyncCachedCounterMutation>;
+export type SyncCachedCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>;
 export const CounterCacheQueryDocument = gql`
     query counterCacheQuery {
   counterCache {

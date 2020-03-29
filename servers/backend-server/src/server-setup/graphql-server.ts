@@ -13,6 +13,20 @@ if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LO
     debug = true;
 }
 
+// @workaround as the `dataSources` not available in Subscription (websocket) Context.
+// https://github.com/apollographql/apollo-server/issues/1526 need to revisit in Apollo-Server v3.
+const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
+    const intializeDataSource = (instance) => {
+        instance.initialize({ context, cache });
+    };
+    // tslint:disable-next-line:forin
+    for (let prop in dataSources) {
+        // tslint:disable-next-line:no-console
+        intializeDataSource(dataSources[prop]);
+    }
+    return dataSources;
+};
+
 
 export class GraphqlServer {
 
@@ -49,10 +63,11 @@ export class GraphqlServer {
                 try {
                     if (connection) {
                         context = connection.context;
-                        // addons = {
-                        //     dataSources: constructDataSourcesForSubscriptions
-                        //         (connection.context, this.cache, this.moduleService.dataSource),
-                        // };
+                        addons = {
+                            // @workaround for apollo server issue #1526
+                            dataSources: constructDataSourcesForSubscriptions
+                                (connection.context, this.cache, this.moduleService.dataSource),
+                        };
                     } else {
                         const pureContext = await this.moduleService.createContext(req, res);
                         const contextServices = await this.moduleService.serviceContext(req, res);

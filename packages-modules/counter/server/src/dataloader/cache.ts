@@ -34,6 +34,12 @@ export const setupCaching
                 return null;
             }
         };
+        // it does syncing of counter
+        cachedCounterService.addCounter = async () => {
+            cache.delete(KEY);
+            const newCounter = await loader.load(KEY);
+            await cache.set(KEY, JSON.stringify(newCounter), { ttl: config.FILES_TTL });
+        };
 
         return cachedCounterService;
     };
