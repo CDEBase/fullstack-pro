@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-moleculer-server",
-  "version": "0.0.39-alpha.83",
+  "version": "0.0.39-alpha.85",
   "description": "My Moleculer microservices project",
   "private": true,
   "scripts": {
@@ -53,7 +53,6 @@
     "apollo-server-cache-redis": "^1.1.5",
     "apollo-server-caching": "^0.5.0",
     "apollo-server-errors": "^2.4.0",
-    "apollo-datasource": "^0.7.0",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.0",
     "esm": "^3.2.25",
