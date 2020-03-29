@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-frontend-server",
-  "version": "0.0.39-alpha.84",
+  "version": "0.0.39-alpha.86",
   "private": true,
   "description": "Sample Client server",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
@@ -60,7 +60,7 @@
     "@sample-stack/client-react": "^0.0.39-alpha.63",
     "@sample-stack/client-state": "^0.0.39-alpha.63",
     "@sample-stack/core": "^0.0.39-alpha.63",
-    "@sample-stack/counter-module-browser": "^0.0.39-alpha.84",
+    "@sample-stack/counter-module-browser": "^0.0.39-alpha.86",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-fetch": "^0.7.0",
