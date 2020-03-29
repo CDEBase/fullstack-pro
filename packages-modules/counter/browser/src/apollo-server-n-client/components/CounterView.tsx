@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useAddCounter_WsMutation } from '../generated-model';
+import { useAddCounter_WsMutation, useCounterCacheQueryQuery } from '../generated-model';
 
 
 const CounterView = ({
@@ -12,7 +12,7 @@ const CounterView = ({
   counterState,
   addCounterState,
 }: any) => {
-
+  const { loading: counterCacheLoading, data } = useCounterCacheQueryQuery();
   const [ addCounterWs ] = useAddCounter_WsMutation();
   const renderMetaData = () => (
     <Helmet>
@@ -20,8 +20,8 @@ const CounterView = ({
       <meta name="description" content="Counter example page" />
     </Helmet>
   );
-
-  if (loading) {
+    console.log('--coutnerCache', counterCacheLoading, data)
+  if (loading || counterCacheLoading) {
     return (
       <div>
         {renderMetaData()}
@@ -34,7 +34,7 @@ const CounterView = ({
         {renderMetaData()}
         <section>
           <p>
-            Current counter, is {counter.amount}. This is being stored
+            Current counter, is {counter.amount} and cached data {data.counterCache.amount}. This is being stored
             server-side in the database and using Apollo subscription for
             real-time updates.
           </p>
