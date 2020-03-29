@@ -1,9 +1,5 @@
 /* tslint:disable */
-import { AddCounterStateMutation, AddCounterStateMutationVariables, AddCounterMutation,
-AddCounterMutationVariables, CounterStateQuery, CounterStateQueryVariables,CounterQueryQueryVariables,
-CounterQueryQuery, OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables,
-SyncCachedCounterMutationVariables, SyncCachedCounterMutation, 
- } from '../common/generated-models'
+
 
 import * as SchemaTypes from '../generated-models';
 
