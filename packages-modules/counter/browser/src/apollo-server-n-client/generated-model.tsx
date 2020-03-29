@@ -21,6 +21,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 
 
+
 export const AddCounterStateDocument = gql`
     mutation addCounterState($amount: Int!) {
   addCounterState(amount: $amount) @client {
@@ -168,6 +169,55 @@ export function useAddCounter_WsMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
 export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
+export const CounterCacheQueryDocument = gql`
+    query counterCacheQuery {
+  counterCache {
+    amount
+  }
+}
+    `;
+export type CounterCacheQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>, 'query'>;
+
+    export const CounterCacheQueryComponent = (props: CounterCacheQueryComponentProps) => (
+      <ApolloReactComponents.Query<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> query={CounterCacheQueryDocument} {...props} />
+    );
+    
+export type CounterCacheQueryProps<TChildProps = {}> = ApolloReactHoc.DataProps<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> | TChildProps;
+export function withCounterCacheQuery<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SchemaTypes.CounterCacheQueryQuery,
+  SchemaTypes.CounterCacheQueryQueryVariables,
+  CounterCacheQueryProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables, CounterCacheQueryProps<TChildProps>>(CounterCacheQueryDocument, {
+      alias: 'counterCacheQuery',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useCounterCacheQueryQuery__
+ *
+ * To run a query within a React component, call `useCounterCacheQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCounterCacheQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCounterCacheQueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCounterCacheQueryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
+        return ApolloReactHooks.useQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, baseOptions);
+      }
+export function useCounterCacheQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, baseOptions);
+        }
+export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
+export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
+export type CounterCacheQueryQueryResult = ApolloReactCommon.QueryResult<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>;
 export const CounterStateDocument = gql`
     query CounterState {
   counterState @client {

@@ -145,6 +145,17 @@ export type AddCounter_WsMutation = (
   )> }
 );
 
+export type CounterCacheQueryQueryVariables = {};
+
+
+export type CounterCacheQueryQuery = (
+  { __typename?: 'Query' }
+  & { counterCache: Maybe<(
+    { __typename?: 'Counter' }
+    & Pick<Counter, 'amount'>
+  )> }
+);
+
 export type CounterStateQueryVariables = {};
 
 
@@ -387,6 +398,14 @@ export const AddCounter_WsDocument = gql`
     `;
 export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>;
+export const CounterCacheQueryDocument = gql`
+    query counterCacheQuery {
+  counterCache {
+    amount
+  }
+}
+    `;
+export type CounterCacheQueryQueryResult = ApolloReactCommon.QueryResult<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>;
 export const CounterStateDocument = gql`
     query CounterState {
   counterState @client {

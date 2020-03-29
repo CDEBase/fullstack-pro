@@ -17,6 +17,24 @@ declare module '*/AddCounter.gql' {
 }
     
 
+declare module '*/AddCounter_WS.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const AddCounter_WS: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/CounterCacheQuery_WS.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const counterCacheQuery: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/CounterQuery.client.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
