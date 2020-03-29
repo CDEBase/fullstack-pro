@@ -2,6 +2,7 @@
 import { AddCounterStateMutation, AddCounterStateMutationVariables, AddCounterMutation,
 AddCounterMutationVariables, CounterStateQuery, CounterStateQueryVariables,CounterQueryQueryVariables,
 CounterQueryQuery, OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables,
+SyncCachedCounterMutationVariables, SyncCachedCounterMutation, 
  } from '../common/generated-models'
 
 import * as SchemaTypes from '../generated-models';
@@ -13,6 +14,7 @@ import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
 
 
 
@@ -169,6 +171,52 @@ export function useAddCounter_WsMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
 export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
+export const SyncCachedCounterDocument = gql`
+    mutation SyncCachedCounter {
+  syncCachedCounter
+}
+    `;
+export type SyncCachedCounterMutationFn = ApolloReactCommon.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
+export type SyncCachedCounterComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>, 'mutation'>;
+
+    export const SyncCachedCounterComponent = (props: SyncCachedCounterComponentProps) => (
+      <ApolloReactComponents.Mutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> mutation={SyncCachedCounterDocument} {...props} />
+    );
+    
+export type SyncCachedCounterProps<TChildProps = {}> = ApolloReactHoc.MutateProps<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> | TChildProps;
+export function withSyncCachedCounter<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  SchemaTypes.SyncCachedCounterMutation,
+  SchemaTypes.SyncCachedCounterMutationVariables,
+  SyncCachedCounterProps<TChildProps>>) {
+    return ApolloReactHoc.withMutation<TProps, SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables, SyncCachedCounterProps<TChildProps>>(SyncCachedCounterDocument, {
+      alias: 'syncCachedCounter',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useSyncCachedCounterMutation__
+ *
+ * To run a mutation, you first call `useSyncCachedCounterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSyncCachedCounterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [syncCachedCounterMutation, { data, loading, error }] = useSyncCachedCounterMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSyncCachedCounterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>) {
+        return ApolloReactHooks.useMutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>(SyncCachedCounterDocument, baseOptions);
+      }
+export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
+export type SyncCachedCounterMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.SyncCachedCounterMutation>;
+export type SyncCachedCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
 export const CounterCacheQueryDocument = gql`
     query counterCacheQuery {
   counterCache {

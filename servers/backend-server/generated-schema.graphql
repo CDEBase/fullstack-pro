@@ -52,6 +52,10 @@ extend type Mutation {
     amount: Int
   ): Counter
 
+  """ sync cached counter with current value """
+  syncCachedCounter: Boolean
+
+  """ add Counter """
   addMoleculerCounter(amount: Int): Counter
 }
 

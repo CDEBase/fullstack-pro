@@ -40,6 +40,10 @@ export const resolver: (options: any) => IResolvers<IContext> = (options) => ({
 
       return counter;
     },
+    async syncCachedCounter(obj, args, context) {
+      await context.dataSources.counterCache.addCounter();
+      return true;
+    },
   },
   Subscription: {
     counterUpdated: {

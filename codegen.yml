@@ -39,5 +39,6 @@ generates:
           import { AddCounterStateMutation, AddCounterStateMutationVariables, AddCounterMutation,
           AddCounterMutationVariables, CounterStateQuery, CounterStateQueryVariables,CounterQueryQueryVariables,
           CounterQueryQuery, OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables,
+          SyncCachedCounterMutationVariables, SyncCachedCounterMutation, 
            } from '../common/generated-models'
       - typescript-react-apollo

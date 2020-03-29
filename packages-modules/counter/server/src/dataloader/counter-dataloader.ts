@@ -23,7 +23,7 @@ export class CounterDataSource extends DataSource<IService> implements ICounterS
         return this.cacheCounterService.counterQuery();
     }
     public addCounter(amount?: number) {
-        throw new Error("Method not implemented.");
+        return this.cacheCounterService.addCounter();
     }
 
     public initialize(config: DataSourceConfig<IContext>) {
