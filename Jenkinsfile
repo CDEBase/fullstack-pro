@@ -14,7 +14,7 @@ pipeline {
     string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
-    string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'github-deploy-keys', description: 'jenkins credential id of git deploy secret')
+    string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
     string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
     // by default first value of the choice will be choosen
@@ -27,7 +27,6 @@ pipeline {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
-    GCLOUDSECRETKEY = credentials('jenkins_gcp_access_key')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
   }
 
@@ -55,7 +54,11 @@ pipeline {
     stage('Unlock secrets'){ //unlock keys for all runs
       environment{ deployment_env = 'dev' }
       steps{
-        sh 'git-crypt unlock'
+        sh '''
+           gpg --import /tmp/gpg-public-key/gpg-public-key.pub
+           gpg --import /tmp/gpg-private-key/gpg-private-key.key
+           git-crypt unlock
+        '''
         load "./jenkins_variables.groovy"
         // if we need to load stag configuration for different location.
         // sh "curl -H 'Authorization: token ${env.GITHUB_ACCESS_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/cdmbase/kube-orchestration/master/idestack/values-stage.yaml"
@@ -153,6 +156,7 @@ pipeline {
           load "./jenkins_variables.groovy"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            //def servers = ["backend-server", "frontend-server", "moleculer-server"]
             def parallelStagesMap = servers.collectEntries {
              ["${it}" : generateBuildStage(it)]
             }
@@ -301,13 +305,23 @@ def getGitBranchName(){ // we can place some conditions in future
 }
 
 @NonCPS
-def getDirs(path){
+def getDirs1(path){
   def currentDir = new File(path)
   def dirs = []
   currentDir.eachDir() {
       dirs << it.name
   }
   return dirs
+}
+
+// Below function to work in Jenkins slave
+def getDirs(path){
+    def currentDir = sh(script: "ls -CF "+path+" | tr '/' ' '", returnStdout: true)
+    def dirs = []
+    (currentDir.split()).each {
+      dirs << "${it}"
+    }
+    return dirs
 }
 
 def generateStage(server, environmentType) {
