@@ -156,7 +156,6 @@ pipeline {
           load "./jenkins_variables.groovy"
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-            //def servers = ["backend-server", "frontend-server", "moleculer-server"]
             def parallelStagesMap = servers.collectEntries {
              ["${it}" : generateBuildStage(it)]
             }
