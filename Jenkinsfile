@@ -304,6 +304,7 @@ def getGitBranchName(){ // we can place some conditions in future
 }
 
 @NonCPS
+//TODO: Fix below get method for Jenkins slave if possible.
 def getDirs1(path){
   def currentDir = new File(path)
   def dirs = []
