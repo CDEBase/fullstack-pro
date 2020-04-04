@@ -174,7 +174,7 @@ export class StackServer {
         const customWebsocketEnable = !_.isEmpty(customWebsocket);
 
         if (customWebsocketEnable) {
-            this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker, customWebsocket);
+            this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker, redisClient, customWebsocket);
             this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
         }
         const graphqlServer = new GraphqlServer(this.app, this.httpServer, redisClient, serviceBroker, !customWebsocketEnable);

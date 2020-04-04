@@ -7,6 +7,23 @@ import { IModuleService } from '../interfaces';
 import { formatApolloErrors } from 'apollo-server-errors';
 import { GraphQLServerOptions } from 'apollo-server-core/dist/graphqlOptions';
 import { Context } from 'apollo-server-core';
+import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
+
+
+// @workaround as the `dataSources` not available in Subscription (websocket) Context.
+// https://github.com/apollographql/apollo-server/issues/1526 need to revisit in Apollo-Server v3.
+const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
+    const intializeDataSource = (instance) => {
+        instance.initialize({ context, cache });
+    };
+    // tslint:disable-next-line:forin
+    for (let prop in dataSources) {
+        // tslint:disable-next-line:no-console
+        intializeDataSource(dataSources[prop]);
+    }
+    return dataSources;
+};
+
 export class GraphqlSubscriptionServer {
 
     private subscriptionServer: SubscriptionServer;
@@ -16,6 +33,7 @@ export class GraphqlSubscriptionServer {
 
     constructor(
         private moduleService: IModuleService,
+        private cache: RedisCache | RedisClusterCache,
         private requestOptions: Partial<GraphQLServerOptions<any>> = Object.create(null),
     ) {
 
@@ -33,13 +51,20 @@ export class GraphqlSubscriptionServer {
                         this.logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
                         const pureContext = await this.moduleService.createContext(connectionParams, webSocket);
                         const contextServices = await this.moduleService.serviceContext(connectionParams, webSocket);
-
-                        return {
+                        const context = {
                             ...contextServices,
                             ...pureContext,
                             preferences: this.moduleService.defaultPreferences,
                             // update: updateContainers,
                             wsCtx: ctx,
+                        };
+                        const addons = {
+                            dataSources: constructDataSourcesForSubscriptions
+                                (context, this.cache, this.moduleService.dataSource),
+                        };
+                        return {
+                            ...context,
+                            ...addons,
                         };
                     } catch (e) {
                         this.logger.error(e);
@@ -66,7 +91,7 @@ export class GraphqlSubscriptionServer {
                         })[0];
                     }
 
-                    return { ...connection }; //TODO: we didn't add `context` 
+                    return { ...connection }; //TODO: we didn't add `context`
                 },
             }, {
             noServer: true,

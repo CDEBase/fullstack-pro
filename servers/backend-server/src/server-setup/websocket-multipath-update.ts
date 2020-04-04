@@ -7,6 +7,7 @@ import { GraphqlSubscriptionServer } from './graphql-subscription-server';
 import * as WebSocket from 'ws';
 import { IModuleService } from '../interfaces';
 import { Server } from 'http';
+import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 
 interface WebSocketsCache {
     [key: string]: WebSocket.Server;
@@ -21,9 +22,10 @@ export class WebsocketMultiPathServer {
     private graphqlSubscriptionServer: GraphqlSubscriptionServer;
     constructor(
         moduleService: IModuleService,
+        cache: RedisCache | RedisClusterCache,
         multiplePathConfig?: MultiWebsocketConfig,
     ) {
-        this.graphqlSubscriptionServer = new GraphqlSubscriptionServer(moduleService);
+        this.graphqlSubscriptionServer = new GraphqlSubscriptionServer(moduleService, cache);
         this.webSockets[GRAPHQL_ROUTE] = this.graphqlSubscriptionServer.create().server;
         for (let key in multiplePathConfig) {
             if (!multiplePathConfig.hasOwnProperty(key)) { continue; }
@@ -66,5 +68,3 @@ export class WebsocketMultiPathServer {
         }
     }
 }
-
-
