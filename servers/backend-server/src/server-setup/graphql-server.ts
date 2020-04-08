@@ -63,11 +63,18 @@ export class GraphqlServer {
                 try {
                     if (connection) {
                         context = connection.context;
-                        addons = {
-                            // @workaround for apollo server issue #1526
-                            dataSources: constructDataSourcesForSubscriptions
-                                (connection.context, this.cache, this.moduleService.dataSource),
-                        };
+                        if (!context.dataSources) {
+                            addons = {
+                                // @workaround for apollo server issue #1526
+                                dataSources: constructDataSourcesForSubscriptions
+                                    (connection.context, this.cache, this.moduleService.dataSource),
+                            };
+                        } else {
+                            addons = {
+                                // @workaround for apollo server issue #1526
+                                dataSources: context.dataSources,
+                            };
+                        }
                     } else {
                         const pureContext = await this.moduleService.createContext(req, res);
                         const contextServices = await this.moduleService.serviceContext(req, res);
