@@ -28,6 +28,7 @@ pipeline {
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
+    GITHUB_HELM_REPO_TOKEN = credentials('github-helm-repo-access-token')
   }
 
   // Initialize npm and docker commands using plugins
@@ -178,7 +179,10 @@ pipeline {
 
       steps {
        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
-          sh "helm repo update"
+         sh """
+           helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+           helm repo update
+         """
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -215,7 +219,10 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
-          sh "helm repo update"
+          sh """
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo update
+          """
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -249,7 +256,10 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
-         sh "helm repo update"
+          sh """
+             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+             helm repo update
+           """
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
