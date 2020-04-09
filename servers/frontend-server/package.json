@@ -31,12 +31,12 @@
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "zen:watch": "zen watch -x",
     "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch",
     "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch -- -v",
     "watch:ssr": "cross-env SSR=true && npm run watch",
     "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env npm run zen:watch",
-    "watch:test": "cross-env ENV_FILE=../../config/test/test.env npm run zen:watch"
+    "watch:test": "cross-env ENV_FILE=../../config/test/test.env npm run zen:watch",
+    "zen:watch": "zen watch -x"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -136,7 +136,7 @@
     "@babel/polyfill": "7.7.0",
     "cross-env": "^6.0.3",
     "pm2": "^4.2.1",
-    "rimraf": "^3.0.0",
-    "raf": "3.4.1"
+    "raf": "3.4.1",
+    "rimraf": "^3.0.0"
   }
 }

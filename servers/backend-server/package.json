@@ -27,8 +27,8 @@
   "typings": "dist/main.d.ts",
   "scripts": {
     "build": "cross-env NODE_ENV=production zen build -x",
-    "build:debug": "cross-env NODE_ENV=development zen build -x",
     "build:clean": "rimraf dist",
+    "build:debug": "cross-env NODE_ENV=development zen build -x",
     "db:migrate": "knex -- migrate:latest --cwd . --knexfile ./knexfile.js",
     "db:migrate:rollback": "knex -- migrate:rollback  --cwd . --knexfile ./knexfile.js",
     "db:seed": "npm run db:migrate && knex -- seed:run  --cwd . --knexfile ./knexfile.js",
@@ -51,11 +51,11 @@
     "test:watch": "npm test -- --watch",
     "preupver": "npm test",
     "upver": "standard-version",
-    "zen:watch": "zen watch -x",
     "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch",
     "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env npm run zen:watch -- -v",
     "watch:staging": "cross-env NODE_ENV=test ENV_FILE=../../config/staging/staging.env npm run zen:watch",
-    "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env npm run zen:watch"
+    "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env npm run zen:watch",
+    "zen:watch": "zen watch -x"
   },
   "dependencies": {
     "@cdm-logger/server": "^5.0.5",

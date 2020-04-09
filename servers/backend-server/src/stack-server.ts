@@ -12,13 +12,10 @@ import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
 import { GatewaySchemaBuilder } from './api/schema-builder';
-import { contextServicesMiddleware } from './middleware/services';
 import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
 import { IModuleService } from './interfaces';
 import { CommonType } from '@common-stack/core';
 import * as _ from 'lodash';
-
-
 
 
 function startListening(port) {
@@ -39,9 +36,6 @@ const infraModule =
         bind('MoleculerBroker').toConstantValue(broker);
         bind(CommonType.MOLECULER_BROKER).toConstantValue(broker);
     });
-
-
-
 
 
 /**
@@ -68,16 +62,6 @@ export class StackServer {
 
     public async  initialize() {
         this.logger.info('StackServer initializing');
-        this.httpServer = http.createServer();
-        this.app = expressApp({}, null);
-
-
-
-        this.httpServer.startListening = startListening.bind(this.httpServer);
-        this.httpServer.on('request', this.app);
-        this.httpServer.on('close', () => {
-            this.httpServer = undefined;
-        });
 
         this.connectionBroker = new ConnectionBroker(brokerConfig.transporter, this.logger);
         const redisClient = this.connectionBroker.redisDataloaderClient;
@@ -155,19 +139,16 @@ export class StackServer {
             });
         }
 
+        // intialize Servers
+        this.httpServer = http.createServer();
+        this.app = await expressApp(serviceBroker, null, this.httpServer);
 
-        this.app.use((req: any, res: any, next) => {
-            Promise.all([
-                serviceBroker.createContext,
-                serviceBroker.serviceContext(req, res),
-            ])
-                .then(([context, services]) => {
-                    req.context = context;
-                    req.services = services;
 
-                    next();
-                })
-                .catch((err) => next());
+
+        this.httpServer.startListening = startListening.bind(this.httpServer);
+        this.httpServer.on('request', this.app);
+        this.httpServer.on('close', () => {
+            this.httpServer = undefined;
         });
 
         const customWebsocket = allModules.getWebsocketConfig();
@@ -201,5 +182,4 @@ export class StackServer {
             await this.microserviceBroker.stop();
         }
     }
-
 }
