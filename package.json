@@ -72,7 +72,6 @@
     "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
     "@sample-stack/server-core": "file:packages/sample-server-core",
     "@sample-stack/store": "file:packages/sample-store",
-    "apollo-cache-persist": "^0.1.1",
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",

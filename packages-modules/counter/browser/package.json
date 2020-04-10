@@ -44,7 +44,8 @@
   "dependencies": {
     "@sample-stack/client-react": "file:../../../packages/sample-client-react",
     "@sample-stack/client-state": "file:../../../packages/sample-client-state",
-    "antd": "^3.26.4"
+    "antd": "^3.26.4",
+    "apollo-cache-persist": "^0.1.1"
   },
   "peerDependencies": {
     "@common-stack/client-react": ">=0.0.209",
