@@ -13,6 +13,8 @@ import modules from '../modules';
 import { logger } from '@cdm-logger/client';
 import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
+import storage from 'redux-persist/lib/storage';
+import { persistCache } from 'apollo-cache-persist';
 
 
 const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
@@ -120,6 +122,10 @@ const createApolloClient = () => {
             params.ssrMode = true;
         }
     }
+     persistCache({
+        cache,
+        storage,
+    });
     _apolloClient = new ApolloClient<any>(params);
     cache.writeData({
         data: {
