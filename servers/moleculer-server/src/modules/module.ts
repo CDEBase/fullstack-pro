@@ -27,13 +27,7 @@ const defaultModule =
         bind('MongoOptions').toConstantValue({});
     });
 
-const defaultServiceGen = (container: interfaces.Container) => ({
-    apollo: container.get('ApolloClient'),
-    // connectionManager: container.get('ConnectionManager'),
-});
-
 const DefaultFeature = new Feature({
-    createServiceFunc: defaultServiceGen,
     createContainerFunc: [defaultModule],
     createHemeraContainerFunc: [defaultModule],
 });
