@@ -1,6 +1,5 @@
 import { PubSub, PubSubEngine } from 'graphql-subscriptions';
 import { NatsPubSub } from 'graphql-nats-subscriptions';
-import { wrapPubSub } from 'apollo-logger';
 import { logger } from '@cdm-logger/server';
 import { ClientOpts } from 'nats';
 import * as ILogger from 'bunyan';
@@ -37,9 +36,6 @@ export class GraphqlPubSubConnector {
 
     public async getClient() {
         if (this.opts.type === 'TCP') {
-            if (this.opts.apolloLogging) {
-                return this.client = wrapPubSub(new PubSub(), { logger: this.logger.trace.bind(this.logger) });
-            }
             return this.client = new PubSub();
         } else if (this.opts.type === 'NATS') {
             // console.log('--this.copts', this.opts.client)
