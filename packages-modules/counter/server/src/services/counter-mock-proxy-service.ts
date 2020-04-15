@@ -32,6 +32,6 @@ export class CounterMockProxyService implements ICounterService {
         return this.broker.call(this.fullActionName(CounterCommands.ADD_COUNTER), { amount });
     }
     private fullActionName(subCommand: string) {
-        return `${this.topic}.${subCommand}`;
+        return `${this.settings.subTopic}.${this.topic}.${subCommand}`;
     }
 }

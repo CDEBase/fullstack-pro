@@ -5,7 +5,7 @@ import { NATS_MOLECULER_COUNTER_SERIVCE } from '@sample-stack/counter-module-ser
 import { Feature } from '@common-stack/server-core';
 
 
-const subTopic = `${config.NAMESPACE}/${config.CONNECTION_ID}`; // PrefernceUpdateHemera/filesServer/namespace/connection_id
+const subTopic = config.CONNECTION_ID; // version.topic.action
 
 export const settings: any & { name: string } = {
     name: NATS_MOLECULER_COUNTER_SERIVCE,
@@ -27,13 +27,7 @@ const defaultModule =
         bind('MongoOptions').toConstantValue({});
     });
 
-const defaultServiceGen = (container: interfaces.Container) => ({
-    apollo: container.get('ApolloClient'),
-    // connectionManager: container.get('ConnectionManager'),
-});
-
 const DefaultFeature = new Feature({
-    createServiceFunc: defaultServiceGen,
     createContainerFunc: [defaultModule],
     createHemeraContainerFunc: [defaultModule],
 });
