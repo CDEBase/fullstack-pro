@@ -114,7 +114,7 @@ pipeline {
 
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
-    // Build will be ignore with tag '[auto commit]'
+    // Build will be ignore with tag '[skip ci]'
     stage ('Publish packages'){
       when {
         expression { GIT_BRANCH_NAME == 'develop' }
@@ -127,7 +127,7 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff-index --quiet HEAD || git commit -am '[skip ci]'
+            git diff-index --quiet HEAD || git commit -am '[skip ci] auto build'
             git fetch origin develop
             git checkout develop
             npm run devpublish:auto
