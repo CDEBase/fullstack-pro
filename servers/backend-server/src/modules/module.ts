@@ -21,6 +21,7 @@ const defaultModule =
 
 const DefaultFeature = new Feature({
     createContainerFunc: [defaultModule],
+    createHemeraContainerFunc: [defaultModule],
 });
 
 
