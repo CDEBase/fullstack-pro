@@ -2,7 +2,7 @@ import schema from './schema/schema.graphql';
 import { ICounterService, IService } from './interfaces';
 import { resolver } from './resolvers';
 import { localCounterModule, externalCounterModule } from './containers';
-import { CounterMockMicroservice } from './services';
+import { CounterMockMoleculerService } from './services';
 import { Feature } from '@common-stack/server-core';
 import { interfaces } from 'inversify';
 import { TYPES } from './constants';
@@ -28,6 +28,6 @@ export default new Feature({
     // createContextFunc: () => ({ counterMock: counterMock }), // note anything set here should be singleton.
     createDataSourceFunc: dataSources,
     createHemeraContainerFunc: [externalCounterModule],
-    addBrokerClientServiceClass: [CounterMockMicroservice],
+    addBrokerClientServiceClass: [CounterMockMoleculerService],
     addBrokerMainServiceClass: [],
 });

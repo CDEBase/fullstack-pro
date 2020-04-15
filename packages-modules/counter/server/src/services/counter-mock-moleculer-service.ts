@@ -7,16 +7,17 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE, TYPES } from '../const
  * Exposes CounterMock services by registering to the Moleculer Broker.
  * Note: This class is not injectable.
  */
-export class CounterMockMicroservice extends Service {
+export class CounterMockMoleculerService extends Service {
 
     private counterMock: ICounterService;
     constructor(broker: ServiceBroker, { container, ...settings }: { container: Container } & { subTopic: string }) {
         super(broker);
-
+        const { subTopic } = settings;
         const topic = NATS_MOLECULER_COUNTER_SERIVCE;
         this.counterMock = container.get<ICounterService>(TYPES.CounterMockService);
         this.parseServiceSchema({
             name: topic,
+            version: subTopic,
             actions: {
                 [CounterCommands.ADD_COUNTER]: {
                     handler: async (ctx: Context<{ amount?: number }>) => {
