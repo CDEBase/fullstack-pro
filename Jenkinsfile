@@ -114,6 +114,7 @@ pipeline {
 
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
+    // Build will be ignore with tag '[auto commit]'
     stage ('Publish packages'){
       when {
         expression { GIT_BRANCH_NAME == 'develop' }
