@@ -85,7 +85,7 @@ export class StackServer {
             created: async () => {
 
             },
-        }, { subTopic: settings.subTopic});
+        });
 
         const pubsub = await this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
