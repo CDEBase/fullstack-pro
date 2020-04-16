@@ -10,9 +10,10 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE, TYPES } from '../const
 export class CounterMockMoleculerService extends Service {
 
     private counterMock: ICounterService;
-    constructor(broker: ServiceBroker, { container, ...settings }: { container: Container } & { subTopic: string }) {
+    constructor(broker: ServiceBroker, { container, settings }: { container: Container } & { settings: any  }) {
         super(broker);
         const { subTopic } = settings;
+        console.log('---SUBTOPIC ', subTopic);
         const topic = NATS_MOLECULER_COUNTER_SERIVCE;
         this.counterMock = container.get<ICounterService>(TYPES.CounterMockService);
         this.parseServiceSchema({
