@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.95](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.94...v0.0.39-alpha.95) (2020-04-27)
+
+
+### Reverts
+
+* Revert "dep break" ([e09ba1e](https://github.com/cdmbase/fullstack-pro/commit/e09ba1e1738f091c7071c807abeeb5f30978a271))
+* Revert "test dep failure" ([4ca474d](https://github.com/cdmbase/fullstack-pro/commit/4ca474dda8ffa7f2bc999a0dc1f391d3343d3761))
+
+
+
+
+
 ## [0.0.39-alpha.94](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.93...v0.0.39-alpha.94) (2020-04-27)
 
 
