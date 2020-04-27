@@ -7,6 +7,7 @@ import { Feature } from '@common-stack/server-core';
 import { interfaces } from 'inversify';
 import { TYPES } from './constants';
 import { CounterDataSource } from './dataloader';
+import { withScalars } from 'apollo-link-scalars';
 
 const counterServiceGen = (container: interfaces.Container): IService => {
     return {
@@ -14,6 +15,7 @@ const counterServiceGen = (container: interfaces.Container): IService => {
     };
 };
 
+console.log(withScalars());
 const dataSources: (container: interfaces.Container) => any = () => {
     return {
         counterCache: new CounterDataSource(),
