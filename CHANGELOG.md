@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.94](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.93...v0.0.39-alpha.94) (2020-04-27)
+
+
+### Reverts
+
+* Revert "test dep issue" ([62708fd](https://github.com/cdmbase/fullstack-pro/commit/62708fd86327a610e7879365a8a04514063268d8))
+
+
+
+
+
 ## [0.0.39-alpha.93](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.92...v0.0.39-alpha.93) (2020-04-27)
 
 
