@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.93](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.92...v0.0.39-alpha.93) (2020-04-27)
+
+
+### Reverts
+
+* Revert "remvoe a dep to test docker build" ([7ff9733](https://github.com/cdmbase/fullstack-pro/commit/7ff9733275e88bd78562ed3612369ae598f52a3d))
+
+
+
+
+
 ## [0.0.39-alpha.92](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.91...v0.0.39-alpha.92) (2020-04-27)
 
 **Note:** Version bump only for package sample-stack-frontend-server
