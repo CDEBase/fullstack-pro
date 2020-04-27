@@ -77,6 +77,7 @@
     "browser-bunyan": "^1.5.3",
     "bunyan": "^1.8.12",
     "classnames": "^2.2.6",
+    "connected-react-router": "^6.6.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.0",
