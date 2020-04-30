@@ -147,6 +147,9 @@ pipeline {
     }
 
     stage('Build Docker Images') {
+      options {
+         timeout(time: 120, unit: 'MINUTES')
+       }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
