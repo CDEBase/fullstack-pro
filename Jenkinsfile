@@ -20,6 +20,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
+    string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
   // Setup common + secret key variables for pipeline.
@@ -148,7 +149,7 @@ pipeline {
 
     stage('Build Docker Images') {
       options {
-         timeout(time: 120, unit: 'MINUTES')
+         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
         expression { GIT_BRANCH_NAME == 'devpublish' }
