@@ -3,12 +3,12 @@ import { Layout } from 'antd';
 import { Route, Switch } from 'react-router';
 import counterModules from '@sample-stack/counter-module-browser';
 import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
-import { withScalars} from 'apollo-link-scalar';
+
 import { SiderMenu } from './layout';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-console.log(withScalars);
+console.log(features.getMenus());
 
 export const MainRoute = props => (
     <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
