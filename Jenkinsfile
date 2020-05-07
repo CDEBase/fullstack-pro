@@ -42,6 +42,7 @@ pipeline {
 
     stage('define environment') {
       steps {
+        scmSkip(deleteBuild: true, skipPattern:'.*ci.*skip.*')
         checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]],
         doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']],
         submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
