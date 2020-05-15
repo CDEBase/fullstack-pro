@@ -20,7 +20,7 @@
     "build:clean": "rimraf dist",
     "build:debug": "cross-env DEBUGGING=true NODE_ENV=production zen build",
     "build:debug:verbose": "npm run build:debug -- -v",
-    "docker:build": "npm run build && docker build . -t $npm_package_name:$npm_package_version",
+    "docker:build": "cross-env NODE_OPTIONS='--max_old_space_size=4096' npm run build && docker build . -t $npm_package_name:$npm_package_version",
     "docker:build:debug": "npm run build:debug && docker build . -t $npm_package_name:$npm_package_version",
     "docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  -p 3010:3010  -it $npm_package_name:$npm_package_version",
     "jest": "./node_modules/.bin/jest",
