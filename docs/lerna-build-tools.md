@@ -41,3 +41,7 @@ Adding packages as dependencies to sibling packages
 --
 When you add sibling package to one of the packages, you need to run `npm run lerna` symlink the packages that are dependencies of each other.
 
+Updating specific packages
+---
+lerna exec "ncu -u --newest -f /@sample-stack*/"
+

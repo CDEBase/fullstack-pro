@@ -16,7 +16,10 @@ let server;
 
 const app = express();
 
+
 app.use(corsMiddleware);
+app.options('*', corsMiddleware);
+
 for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
 }
