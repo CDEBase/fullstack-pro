@@ -54,7 +54,7 @@ export class StackServer {
     private multiPathWebsocket: WebsocketMultiPathServer;
 
     private serviceContainer: Container;
-    private micorserviceContainer: Container;
+    private microserviceContainer: Container;
 
     constructor() {
         this.logger = serverLogger.child({ className: 'StackServer' });
@@ -73,12 +73,12 @@ export class StackServer {
             started: async () => {
                 await modules.preStart(this.serviceContainer);
                 if (config.NODE_ENV === 'development') {
-                    await modules.microservicePreStart(this.micorserviceContainer);
+                    await modules.microservicePreStart(this.microserviceContainer);
                 }
 
                 await modules.postStart(this.serviceContainer);
                 if (config.NODE_ENV === 'development') {
-                    await modules.microservicePostStart(this.micorserviceContainer);
+                    await modules.microservicePostStart(this.microserviceContainer);
                 }
             },
             // created,
@@ -131,10 +131,10 @@ export class StackServer {
             settings: settings,
         });
         if (config.NODE_ENV === 'development') {
-            this.micorserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
+            this.microserviceContainer = await allModules.createHemeraContainers({ ...settings, mongoConnection: mongoClient });
             allModules.loadClientMoleculerService({
                 broker: this.microserviceBroker,
-                container: this.micorserviceContainer,
+                container: this.microserviceContainer,
                 settings: settings,
             });
         }
