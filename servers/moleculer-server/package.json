@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-moleculer-server",
-  "version": "0.0.39-alpha.90",
+  "version": "0.0.39-alpha.99",
   "private": true,
   "description": "My Moleculer microservices project",
   "keywords": [
@@ -40,7 +40,7 @@
     "@common-stack/core": "0.0.220",
     "@common-stack/server-core": "0.0.220",
     "@sample-stack/core": "^0.0.39-alpha.63",
-    "@sample-stack/counter-module-server": "^0.0.39-alpha.90",
+    "@sample-stack/counter-module-server": "^0.0.39-alpha.99",
     "@sample-stack/server-core": "^0.0.39-alpha.63",
     "apollo-datasource": "^0.7.0",
     "apollo-logger": "^0.3.3",

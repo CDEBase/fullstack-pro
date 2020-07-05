@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39-alpha.99](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.98...v0.0.39-alpha.99) (2020-07-05)
+
+
+### Reverts
+
+* Revert "udpate redis typefix" ([a262508](https://github.com/cdmbase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
+
+
+
+
+
 ## [0.0.39-alpha.98](https://github.com/cdmbase/fullstack-pro/compare/v0.0.39-alpha.97...v0.0.39-alpha.98) (2020-06-04)
 
 **Note:** Version bump only for package sample-stack
