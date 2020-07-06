@@ -12,7 +12,7 @@ const CounterView = ({
   counterState,
   addCounterState,
 }: any) => {
-  const [getCounter] = useCounterCacheQueryLazyQuery({ fetchPolicy: 'network-only'});
+  const [getCounter, {loading: getCounterLoading, data}] = useCounterCacheQueryLazyQuery({fetchPolicy: 'network-only'}); 
   const [ addCounterWs ] = useAddCounter_WsMutation();
   const [ syncCachedCounter ] = useSyncCachedCounterMutation();
   const renderMetaData = () => (
@@ -47,7 +47,9 @@ const CounterView = ({
         </section>
         <section>
           <p>
-            Get Chached Counter
+            Get Counter Cache 
+            {getCounterLoading ? "Loading..." : data ? <span style={{fontStyle: 'bold'}}> {data.counterCache.amount}</span> : null}
+            <br/> 
             <button id="get-cached-counter" onClick={() => getCounter()}>
               Click to get cached counter
             </button>
