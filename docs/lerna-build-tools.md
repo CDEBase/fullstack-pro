@@ -35,7 +35,7 @@ The outlier packages with different versions will get a normal, local node_modul
 - `npm run clean` - Removes the `node_modules` directory from all packages.
 - `npm run clean:force` - Removes the `node_modules` directory from all packages as well as `package-lock.json` file.
 - `npm run build` - It invokes `npm run build` in each packages parallely. 
-- `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly. You may also see `Error: ENOSPC: System limit for number of file watchers reached` if you OS is not configured with high open files. Check [Not Enough Watchers]() section for futher information.
+- `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly. You may also see `Error: ENOSPC: System limit for number of file watchers reached` if you OS is not configured with high open files. Check [Not Enough Watchers](#not-enough-watchers) section for futher information.
 
 Not Enough Watchers
 ----
