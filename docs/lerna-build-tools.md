@@ -36,6 +36,23 @@ The outlier packages with different versions will get a normal, local node_modul
 - `npm run build` - It invokes `npm run build` in each packages parallely. 
 - `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly.
 
+Not Enough Watchers
+----
+Based on the project, we may have multiple `packages` and `packages-modules` to watch for file changes in order to automatically apply the changes in the browser. 
+When we have more modules to watch, we need laptop resource to support it. If the laptop OS is configured with default `open files`, we need to increase it. 
+Follow notes from webpack to change OS configuration to increase file watchers https://webpack.js.org/configuration/watch/#not-enough-watchers
+
+But, in case, if you are working in only one or two modules and need to watch them only then you can run below command on each packages, 
+respectively. 
+
+`lerna exec --scope=<package name> npm run watch`
+
+example: run them in different command tabs for all (package1, package2, pacakge3) packages to watch.
+
+```
+lerna exec --scope=@sample-stack/counter-module-browser npm run watch
+lerna exec --scope=@sample-stack/counter-module-server npm run watch
+```
 
 Adding packages as dependencies to sibling packages
 --
