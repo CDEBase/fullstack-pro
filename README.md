@@ -49,9 +49,19 @@ git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
 ```
 2. Install dependencies and build packages.
+
+    a. make sure `python` version `2.7.16` or higher in `^2` version installed.
+
+    b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
+
+    c. Node version supported is `10.15.3` and `npm` version is `6.4.1`.
+
+    d. Insall and build packages using following command. Run from the root folder of this project.
 ```
-npm install && npm run build
+    npm install && npm run build
 ```
+    
+
 3. Setup environment file
 ```
 cp ./config/development/dev.env.sample ./config/development/dev.env

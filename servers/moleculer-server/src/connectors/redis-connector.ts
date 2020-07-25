@@ -52,7 +52,7 @@ export class RedisConnector {
                 throw new Error(`No nodes defined for cluster, ${config.REDIS_CLUSTER_URL}`);
             }
             this.logger.info('Setting Redis.Cluster connection');
-            client = new RedisClusterCache(config.REDIS_CLUSTER_URL || this.opts);
+            client = new RedisClusterCache(config.REDIS_CLUSTER_URL as any, this.opts);
         } else {
             this.logger.info('Setting Redis connection');
             client = new RedisCache(config.REDIS_URL as any || this.opts);
