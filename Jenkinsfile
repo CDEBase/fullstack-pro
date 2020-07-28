@@ -17,7 +17,9 @@ pipeline {
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
     string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
+
     // by default first value of the choice will be choosen
+    choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'GIT_MERGE_STRATEGY'
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -132,7 +134,7 @@ pipeline {
             git diff-index --quiet HEAD || git commit -am 'auto build\r\n[skip ci]'
             git fetch origin develop
             git checkout develop
-            npm run devpublish:auto
+            npm run devpublish:${params.GIT_MERGE_STRATEGY}
             git push origin develop
             git checkout devpublish
           """
