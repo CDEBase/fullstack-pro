@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-backend-server",
-  "version": "0.0.39-alpha.100",
+  "version": "0.0.39-alpha.102",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [
