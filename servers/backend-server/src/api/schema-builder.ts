@@ -45,7 +45,7 @@ export class GatewaySchemaBuilder {
             addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
 
         } catch (err) {
-            logger.warn('errors when building schema::', err.message);
+            logger.error('[Graphql Schema Errors] when building schema::', err.message);
             schema = ownSchema;
         }
 
