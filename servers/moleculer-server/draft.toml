@@ -15,7 +15,7 @@
           "env.NATS_USER=ruser",
           "env.NATS_PW=T0pS3cr3t",
           "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
-          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.MONGO_URL=mongodb://mongo-ha-mongodb-replicaset.main-system.svc.cluster.local:27017/idestack",
           "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
           "env.ZIPKIN_PORT=9411",
           ]
@@ -35,7 +35,7 @@
           "env.NATS_USER=ruser",
           "env.NATS_PW=T0pS3cr3t",
           "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
-          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.MONGO_URL=mongodb://mongo-ha-mongodb-replicaset.main-system.svc.cluster.local:27017/idestack",
           "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
           "env.ZIPKIN_PORT=9411",
           ]
@@ -55,7 +55,7 @@
           "env.NATS_USER=ruser",
           "env.NATS_PW=T0pS3cr3t",
           "env.REDIS_URL=redis://microstack-redis-cache.main-system.svc.cluster.local:6379",
-          "env.MONGO_URL=mongodb://microstack-mongodb.main-system.svc.cluster.local:27017/idestack",
+          "env.MONGO_URL=mongodb://mongo-ha-mongodb-replicaset.main-system.svc.cluster.local:27017/idestack",
           "env.ZIPKIN_URL=microstack-zipkin.main-system.svc.cluster.local",
           "env.ZIPKIN_PORT=9411",
           ]
