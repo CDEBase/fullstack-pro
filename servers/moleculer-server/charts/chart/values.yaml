@@ -29,7 +29,7 @@ external:
     mongodb:
       generateEnv: true
       enabled: false
-      serviceName: microstack-mongodb.main-system.svc.cluster.local
+      serviceName: mongo-ha-mongodb-replicaset.main-system.svc.cluster.local
       port: 27017
       dbname: idestack
     nats:
