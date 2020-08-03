@@ -1,18 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "preserveConstEnums": true,
     "rootDir": "./src",
     "outDir": "../lib",
-    "jsx": "react",
     "declarationDir": "lib"
   },
   "exclude": [
     "node_modules",
     "lib",
     "dist",
-    "webpack.config.js"
-  ]
+    "webpack.config.js",
+  ],
 }

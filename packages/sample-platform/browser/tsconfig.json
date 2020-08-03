@@ -1,6 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
     "rootDir": "./src",
     "outDir": "../lib",
     "declarationDir": "lib"

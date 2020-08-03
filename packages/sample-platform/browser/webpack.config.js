@@ -1,25 +1,28 @@
+var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var nodeExternals = require('webpack-node-externals');
 
 
-var webpack_opts = {   
+var webpack_opts = {
   mode: 'development',
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   target: 'node',
   output: {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: "commonjs2",
+  },
+  node: {
+    __dirname: false
   },
   resolve: {
-    extensions: ['.ts', '.js', '.graphql', '.gql', '.graphqls'],
+    extensions: ['.ts', '.tsx', '.graphql', '.gql'],
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       options: {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         ts: {
           compiler: 'typescript',
           configFile: 'tsconfig.json'
@@ -34,23 +37,21 @@ var webpack_opts = {
   devtool: 'source-map',
   module: {
     rules: [{
-      test: /\.ts$/,
-      use: 'ts-loader'
-    },
-    {
-      test: /\.(gql)$/,
-      exclude: /node_modules/,
-      use: ['graphql-tag/loader']
-    },
-    {
+      test: /\.tsx?$/,
+      loaders: 'ts-loader'
+    }, {
       test: /\.graphql?/,
       exclude: /node_modules/,
       use: 'raw-loader',
+    }, {
+      test: /\.(gql)$/,
+      exclude: /node_modules/,
+      use: ['graphql-tag/loader']
     }
-  ]
+    ]
   },
   externals: [
-    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals({ modulesDir: "../../../node_modules" }),
     nodeExternals()
   ]
 };

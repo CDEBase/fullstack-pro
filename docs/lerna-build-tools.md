@@ -22,6 +22,7 @@ Things to know about current package structure
     "build": "npm run build:packages",
     "build:packages": "lerna run build --ignore *server",
     "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
+    "watch-packages": "lerna exec --no-sort  --scope @sample-stack/platform* --scope @sample-stack/react-shared-components --scope @sample-stack/core --stream --parallel 'webpack --watch'",
     ...
 }
 ```
@@ -36,6 +37,10 @@ The outlier packages with different versions will get a normal, local node_modul
 - `npm run clean:force` - Removes the `node_modules` directory from all packages as well as `package-lock.json` file.
 - `npm run build` - It invokes `npm run build` in each packages parallely. 
 - `npm run watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly. You may also see `Error: ENOSPC: System limit for number of file watchers reached` if you OS is not configured with high open files. Check [Not Enough Watchers](#not-enough-watchers) section for futher information.
+- `npm run watch-packages` - Abutomatically builds the dependent packages mostly under `packages` folder. 
+- `npm run watch-packages -- --scope @sample-stack/counter-module-*` - By adding package module you like to watch along with the dependent packages. If you have more packages to watch keep adding with `-- --scope packageA* --scope packageB`
+
+
 
 Not Enough Watchers
 ----

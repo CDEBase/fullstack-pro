@@ -1,6 +1,7 @@
 var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
+var glob = require('glob');
 var fs = require('fs');
 
 
@@ -13,11 +14,10 @@ var webpack_opts = {
   output: {
     path: path.join(__dirname, 'lib'),
     filename: "[name].js",
-    library: '@sample-stack/server-core',
     libraryTarget: "commonjs2"
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ejs', '.ts', '.tsx', '.graphql', '.gql'],
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
@@ -39,10 +39,22 @@ var webpack_opts = {
     rules: [{
       test: /\.ts$/,
       loaders: 'ts-loader'
-    }]
+    }, {
+      test: /\.graphql?/,
+      exclude: /node_modules/,
+      use: 'raw-loader',
+    }, {
+      test: /\.(gql)$/,
+      exclude: /node_modules/,
+      use: ['graphql-tag/loader']
+    }, {
+      test: /\.ejs$/,
+      exclude: /node_modules/,
+      use: 'raw-loader',
+    },]
   },
   externals: [
-    nodeExternals({ modulesDir: "../../node_modules" }),
+    nodeExternals({ modulesDir: "../../../node_modules" }),
     nodeExternals()
   ]
 };

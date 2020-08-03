@@ -6,7 +6,7 @@
 // import { createStore, combineReducers } from 'redux';
 // import configureStore from 'redux-mock-store';
 // import { Counter } from '../Counter';
-// import { reducers, Store } from '@sample-stack/client-state';
+// import { reducers, Store } from '@sample-stack/platform-browser';
 // import { Provider } from 'react-redux';
 // import './setup';
 
