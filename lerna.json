@@ -35,6 +35,10 @@
       "message": "chore: release package(s)"
     }
   },
-  "packages": ["packages-modules/**", "packages/**", "servers/*"],
-  "version": "0.0.0"
+  "packages": [
+    "packages-modules/**",
+    "packages/**",
+    "servers/*"
+  ],
+  "version": "0.0.1-alpha.0"
 }
