@@ -11,9 +11,11 @@ To run a individual package in watch mode
 
 More details on how to use [lerna exec](https://github.com/lerna/lerna/tree/master/commands/exec#options)
 
->Example:
 
-Just to start the frontend-server
+
+### How to Start Backend and Frontend seperately.
+
+To start the frontend-server
 
 `lerna exec --scope=*frontend-server npm run watch`
 

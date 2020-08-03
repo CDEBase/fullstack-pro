@@ -39,104 +39,12 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          backend-server          - Backend apollo server. 
     
 
-## Getting Started
+## [Project Setup](docs/Project_Setup.md)
 
-If you want to develop FullStack locally you must follow the following instructions:
+In Order to get started with the development you need to go through the 
+documentation first
 
-1. Clone fullstack-pro locally
-```
-git clone https://github.com/cdmbase/fullstack-pro
-cd fullstack-pro
-```
-2. Install dependencies and build packages.
+- [Getting Started with lerna](./docs/lerna-build-tools.md)
+- [Running the servers](./docs/How_to_Run_Various_Options.md)
+- [Dos and Dont](./docs/DoAndDont.md)
 
-    a. make sure `python` version `2.7.16` or higher in `^2` version installed.
-
-    b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
-
-    c. Node version supported is `10.15.3` and `npm` version is `6.4.1`.
-
-    d. Insall and build packages using following command. Run from the root folder of this project.
-```
-    npm install && npm run build
-```
-    
-
-3. Setup environment file
-```
-cp ./config/development/dev.env.sample ./config/development/dev.env
-```
-4. Seed development database data (not needed if it is not setup)
-```
-npm run db:seed
-```
-5. Start both client and server together
-```
-npm start
-```
-The graphql server endpoints are
->http://localhost:8080/graphql
-
-The browser server endopoint is
->http://localhost:3000
-
-To run build with watch. Useful for auto reloading changes into the server to be productive during development.
-```
-npm run watch
-```
-[lerna-clean]: https://github.com/lerna/lerna#clean
-
-### Server Side Rendering
-Useful to run Frontend and Backend in two seperate servers. 
-
-to start frontend server
-```
-cd frontend-server
-npm run build
-npm start
-```
-to start backend server
-```
-cd backend-server
-npm run db:seed
-npm run build
-npm start
-```
-
-### Docker build
-Prior to it you need to run `npm install` from root directory.
-
-Build three docker images by following the steps:
-- Frontend Server
-```
-cd frontend-server
-npm run docker:build
-```
-- Backend Server
-```
-cd backend-server
-npm run docker:build
-```
-- hemera-server
-```
-cd hemera-server
-npm run docker:build
-```
-
-### Environment settings for non-development
-```
-GRAPHQL_URL
-CLIENT_URL
-NATS_URL
-NATS_USER
-NATS_PW
-```
-## Troubleshoot
-To troubleshoot webpack configuration run
-```
-npm run zen:watch:debug
-```
-
-## Resources
-### Installing node-gyp
-https://github.com/nodejs/node-gyp#installation
