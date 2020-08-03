@@ -4,7 +4,7 @@ const SERVER_FOLDER = './servers';
 const simpleGit = require('simple-git/promise');
 const git = simpleGit();
 
-glob(`./+(servers)/**/package.json`, null, (err, files) => {
+glob(`./+(servers|packages|packages-modules)/**/package.json`, null, (err, files) => {
     if (err) return console.error('Unable to scan directory: ' + err);
 
     files.forEach(file => {
@@ -18,11 +18,20 @@ glob(`./+(servers)/**/package.json`, null, (err, files) => {
             for (let key in dependencies) {
                 if (dependencies[key].includes('file:')){
                     const folderRoad = dependencies[key].split('file:');
-                    const localFolder = folderRoad[1].replace(/(\.\.\/)/g,'');
+                    let localFolder = folderRoad[1].replace(/(\.\.\/)/g,'');
+                    try {
+                        fs.readdirSync(localFolder)
+                    } catch (err) {
+                        console.log('--- err', err.message);
+                        // then find relative dir
+                        const subDirPath = file.split('/');
+                        localFolder = `${subDirPath[1]}/${localFolder}`
+                    }
+                    
                     console.log('--Folder', localFolder)
                     glob(`${localFolder}/package.json`, null, (err, files) => {
                         if (err) return console.error('Unable to scan directory: ' + err);
-
+                        console.log(files)
                         files.forEach(file => {
                             fs.readFile(file, 'utf-8', (err, data) => {
                                 if (err) return console.error('Unable to scan directory: ' + err);
