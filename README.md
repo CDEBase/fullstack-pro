@@ -33,8 +33,7 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          sample-platform/server      - Core platform interfaces and its implementation code for Server.   
          sample-platform/browser     - Core platform browser State related code which consists of Redux and Graphql Gql. It can contains UI Components as well.
          sample-platform/react-shared-components     - React pure components and containers are defined. 
-         sample-graphql-schema   - Graphql Schema for Server.
-     servers                     - Has the packages to organize the codebase into multi-package repositories.
+     servers                     - Has the servers to organize the codebase into multi-package repositories.
          frontend-server         - Frontend Client Server. This is useful to show demo of this package.
          backend-server          - Backend apollo server. 
     
