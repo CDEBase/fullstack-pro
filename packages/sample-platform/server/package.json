@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/platform-server",
-  "version": "0.0.39-alpha.103",
+  "version": "0.0.39-alpha.104",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "^0.0.39-alpha.103"
+    "@sample-stack/core": "^0.0.39-alpha.104"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
