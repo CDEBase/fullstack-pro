@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { graphql } from 'react-apollo';
 import compose from 'lodash/flowRight';
-import { PERSONS_QUERY } from '@sample-stack/platform-browser';
+import { PERSONS_QUERY } from '../graphql';
 
 export interface IPersonListProps {
     persons;
