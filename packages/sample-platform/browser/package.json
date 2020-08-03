@@ -1,11 +1,11 @@
 {
-  "name": "@sample-stack/counter-module-browser",
+  "name": "@sample-stack/platform-browser",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
     "jest": "./node_modules/.bin/jest",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build",
@@ -13,9 +13,7 @@
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch",
-    "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
-    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts"
+    "build:lib:watch": "npm run build:lib -- --watch"
   },
   "publishConfig": {
     "access": "public"
@@ -42,13 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
-    "antd": "^3.26.4"
-  },
-  "peerDependencies": {
-    "@common-stack/client-react": ">=0.0.209",
-    "@common-stack/core": ">=0.0.209",
-    "antd": "^3.26.4"
+    "@sample-stack/core": "file:../../sample-core"
   },
   "typings": "lib/index.d.ts",
   "typescript": {

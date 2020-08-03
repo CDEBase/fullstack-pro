@@ -64,7 +64,7 @@
     "@sample-stack/core": "file:../../packages/sample-core",
     "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
     "@sample-stack/healthcheck-server": "file:../../packages-modules/healthcheck/server",
-    "@sample-stack/server-core": "file:../../packages/sample-server-core",
+    "@sample-stack/platform-server": "file:../../packages/sample-platform/server",
     "@sample-stack/store": "file:../../packages/sample-store",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.8.0",

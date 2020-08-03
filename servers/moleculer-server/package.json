@@ -41,7 +41,7 @@
     "@common-stack/server-core": "0.0.220",
     "@sample-stack/core": "file:../../packages/sample-core",
     "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
-    "@sample-stack/server-core": "file:../../packages/sample-server-core",
+    "@sample-stack/platform-server": "file:../../packages/sample-platform/server",
     "apollo-datasource": "^0.7.0",
     "apollo-logger": "^0.3.3",
     "apollo-server-cache-memcached": "^0.6.3",

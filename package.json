@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -65,12 +65,11 @@
     "zen:watch:debug": "npm run zen:watch -- -v"
   },
   "dependencies": {
-    "@sample-stack/client-react": "file:packages/sample-client-react",
-    "@sample-stack/client-state": "file:packages/sample-client-state",
+    "@sample-stack/platform-browser": "file:packages/sample-platform/browser",
     "@sample-stack/core": "file:packages/sample-core",
     "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
     "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
-    "@sample-stack/server-core": "file:packages/sample-server-core",
+    "@sample-stack/platform-server": "file:packages/sample-platform/server",
     "@sample-stack/store": "file:packages/sample-store",
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",

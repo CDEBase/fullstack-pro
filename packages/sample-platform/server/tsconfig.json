@@ -1,0 +1,16 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "preserveConstEnums": true,
+    "rootDir": "./src",
+    "outDir": "../lib",
+    "declarationDir": "lib"
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "dist",
+    "webpack.config.js",
+  ],
+}
