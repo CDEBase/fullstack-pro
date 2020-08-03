@@ -40,6 +40,7 @@ npm start
 ```
 Alternatively, if you need to run `backend` and `frontend` on its respective terminal instead of one terminal then follow [How to Start Backend and Frontend seperately](./How_to_Run_Various_Options.md#how-to-start-backend-and-frontend-seperately)
 
+### Server Enpoints: 
 The graphql server endpoints are
 >http://localhost:8080/graphql
 
@@ -93,8 +94,8 @@ Install redis and setup an instance with default settings on default port,
 * Install Redis on a Linux, OS X, or a similar Posix operating system
 
 ## Advance Options
-### Server Side Rendering
-Useful to run Frontend and Backend in two seperate servers. 
+### To test Production build and run
+You need to run Frontend and Backend in two seperate servers. 
 
 to start frontend server
 ```
@@ -107,8 +108,13 @@ lerna exec --scope=*backend-server npm run build
 lerna exec --scope=*backend-server npm run start:dev
 ```
 
-### Docker build
-Prior to it you need to run `npm install` from root directory.
+Note: you can pass `:<env>` next to `start` to use env config.
+- dev: to use `/config/development/dev.env`
+- stage: to use `/config/staging/staging.env`
+
+
+
+### Docker build and run
 
 Build three docker images by following the steps:
 - Frontend Server
@@ -126,6 +132,8 @@ lerna exec --scope=*backend-server npm run docker:run
 lerna exec --scope=*moleculer-server npm run docker:build
 lerna exec --scope=*moleculer-server npm run docker:run
 ```
+
+Note: It uses `/config/staging/staging.env` for environment variables.
 
 ### Environment settings for non-development
 ```
