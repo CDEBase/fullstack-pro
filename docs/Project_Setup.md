@@ -38,7 +38,7 @@ You may need to set personalized values in the `dev.env` file.
 ```
 npm start
 ```
-Alternatively, if you need to run `backend` and `frontend` on its respective terminal instead of since terminal then follow [How to Start Backend and Frontend seperately](./How_to_Run_Various_Options.md#how-to-start-backend-and-frontend-seperately)
+Alternatively, if you need to run `backend` and `frontend` on its respective terminal instead of one terminal then follow [How to Start Backend and Frontend seperately](./How_to_Run_Various_Options.md#how-to-start-backend-and-frontend-seperately)
 
 The graphql server endpoints are
 >http://localhost:8080/graphql
