@@ -3,10 +3,7 @@ import update from 'immutability-helper';
 import { graphql } from 'react-apollo';
 import compose from 'lodash/flowRight';
 import { CounterComponent, ICounterProps } from '../components';
-import {
-    COUNT_SUBSCRIPTION, COUNT_QUERY, getCountQuery, addCountMutation,
-    ADD_COUNT_MUTATION, subscribeToCountSubscription,
-} from '@sample-stack/platform-browser';
+import { COUNT_SUBSCRIPTION, COUNT_QUERY, ADD_COUNT_MUTATION,} from '../graphql';
 import { logger } from '@cdm-logger/client';
 type SubscriptionProps = {
     subscribeToMore: Function;
@@ -71,7 +68,7 @@ type SubscriptionProps = {
 //     });
 // },
 
-type countOptions = getCountQuery & subscribeToCountSubscription & {
+type countOptions = any & {
     countData: any;
 };
 
@@ -89,7 +86,7 @@ const updateQueries = {
 };
 
 export const CounterWithApollo: React.ComponentClass = (compose(
-    graphql<{}, addCountMutation, {}, {}>(ADD_COUNT_MUTATION, {
+    graphql<{}, any, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             save: (amount) => {
                 return () => mutate({
@@ -102,7 +99,7 @@ export const CounterWithApollo: React.ComponentClass = (compose(
             },
         }),
     }),
-    graphql<{}, addCountMutation, {}, {}>(ADD_COUNT_MUTATION, {
+    graphql<{}, any, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             increment: (amount) => {
                 return () => mutate({

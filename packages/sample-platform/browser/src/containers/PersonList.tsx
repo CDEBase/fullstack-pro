@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { graphql } from 'react-apollo';
 import compose from 'lodash/flowRight';
-import { PERSONS_QUERY, getPersonsQuery } from '@sample-stack/platform-browser';
+import { PERSONS_QUERY } from '@sample-stack/platform-browser';
 
 export interface IPersonListProps {
     persons;
@@ -15,6 +15,6 @@ const PersonListComponent: React.SFC<IPersonListProps> = ({ persons }) => (
 
 export const PersonList: React.ComponentClass<{}> =
     compose(
-        graphql<{}, getPersonsQuery, {}, {}>(PERSONS_QUERY),
+        graphql<{}, any, {}, {}>(PERSONS_QUERY),
         // flattenProp('data'),
     )(PersonListComponent);

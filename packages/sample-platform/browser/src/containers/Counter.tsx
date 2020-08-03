@@ -4,7 +4,7 @@ import {
   saveCount,
   Action,
   Store,
-} from '@sample-stack/platform-browser';
+} from '../redux';
 import { connect } from 'react-redux';
 import * as redux from 'redux';
 import { CounterComponent, ICounterProps } from '../components';

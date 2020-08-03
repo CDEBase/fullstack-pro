@@ -40,6 +40,7 @@
     "devpublish:push": "npm run predevpublish && git push origin devpublish && npm run postdevpublish",
     "devpublish:force": "npm run devpublish -- --force-publish=*",
     "postdevpublish": "git checkout develop",
+    "watch-packages": "lerna exec --no-sort  --scope @sample-stack/platform* --scope @sample-stack/react-shared-components --scope @sample-stack/core --stream --parallel 'webpack --watch'",
     "prelernapublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
