@@ -12,7 +12,7 @@ To run a individual package in watch mode
 More details on how to use [lerna exec](https://github.com/lerna/lerna/tree/master/commands/exec#options)
 
 
-To run any command on the packages
+To run any command on a package <package_name>
 
 `lerna exec --scope=<package_name> <command>`
 
