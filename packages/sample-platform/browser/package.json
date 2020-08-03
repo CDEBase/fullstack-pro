@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/platform-browser",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.39-alpha.102",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "^0.0.1-alpha.0"
+    "@sample-stack/core": "^0.0.39-alpha.102"
   },
   "typings": "lib/index.d.ts",
   "typescript": {
