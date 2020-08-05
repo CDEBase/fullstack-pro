@@ -159,6 +159,7 @@
     "connect": "^3.7.0",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^6.0.3",
+    "csstype": "3.0.2",
     "css-loader": "^3.4.0",
     "dotenv-safe": "^8.2.0",
     "dotenv-webpack": "^1.7.0",
