@@ -56,7 +56,7 @@ To run build with watch for dependent packages, for auto reloading changes into 
 npm run watch-packages
 ```
 
-If you also need to watch along with it, you can as many scopes as required like below. 
+If you also need to watch along with it, you can use as many scopes as required like below. 
 
 ```
 npm run watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
