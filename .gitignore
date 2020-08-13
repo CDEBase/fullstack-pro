@@ -13,6 +13,9 @@ npm-debug.log*
 .cache
 .awcache
 
+# Jest Env
+globalConfig.json
+
 # Runtime data
 pids
 *.pid
