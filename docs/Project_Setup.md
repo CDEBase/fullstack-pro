@@ -56,7 +56,7 @@ To run build with watch for dependent packages, for auto reloading changes into 
 npm run watch-packages
 ```
 
-If you also need to watch along with it, you can as many scopes as required like below. 
+If you also need to watch along with it, you can use as many scopes as required like below. 
 
 ```
 npm run watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
@@ -80,7 +80,7 @@ lerna exec --scope=<package name> npm run watch
 
 Most of the changes at code level can be taken using `git` command.
 
-But in some cases when `packages` are added or versions in `packages.json` are updated, to avoid getting installed duplicate pacakges due to monrepo architecture you need to first clean existing `node_modules` and reinstall again. This can be done with following command.
+But in some cases when `lerna's packages` are added or versions in `packages.json` are updated, to avoid getting installed duplicate pacakges due to monrepo architecture you need to first clean existing `node_modules` and reinstall again. This can be done with following command.
 
 ```
 npm run clean:force && git pull <branch_name> && npm install && npm run build
