@@ -1,5 +1,5 @@
-import { IContext } from '../interfaces';
-import { IResolvers, Counter } from '../generated-models';
+import { IContext } from '../../interfaces';
+import { IResolvers, Counter } from '../../generated-models';
 
 const COUNTER_SUBSCRIPTION = 'counter_subscription';
 

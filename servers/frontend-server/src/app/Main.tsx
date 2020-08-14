@@ -22,6 +22,9 @@ import { ServerError } from './Error';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 
+import { BrowserRouter as Router } from "react-router-dom";
+import Auth0ProviderWithHistory from "../../../../packages-modules/counter/browser/src/autho/auth-provider-with-history";
+
 
 const client = createApolloClient();
 
@@ -90,7 +93,9 @@ export class Main extends React.Component<any, MainState> {
                     {modules.getWrappedRoot(
                       (
                         <ConnectedRouter history={history}>
-                          <MainRoute />
+                          <Auth0ProviderWithHistory>
+                            <MainRoute />
+                            </Auth0ProviderWithHistory>
                         </ConnectedRouter>
                       ),
                     )}

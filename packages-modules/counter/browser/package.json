@@ -42,8 +42,12 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
+    "@auth0/auth0-react": "^1.0.0",
     "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
-    "antd": "^3.26.4"
+    "@types/antd": "^1.0.0",
+    "antd": "^3.26.4",
+    "auth0-js": "^9.13.4",
+    "jwt-decode": "^2.2.0"
   },
   "peerDependencies": {
     "@common-stack/client-react": ">=0.0.209",
