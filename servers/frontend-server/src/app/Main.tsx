@@ -23,8 +23,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 
 import { BrowserRouter as Router } from "react-router-dom";
-import Auth0ProviderWithHistory from "../../../../packages-modules/counter/browser/src/autho/auth-provider-with-history";
-
+import  Auth0ProviderWithHistory from "@sample-stack/counter-module-browser/src/autho/auth-provider-with-history";
 
 const client = createApolloClient();
 
