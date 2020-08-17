@@ -5,6 +5,7 @@ import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 import { Home } from "../common/components/Home";
 import LoginForm from "../autho/login";
+import RegistrationForm from "../autho/signup";
 import Profile from "../autho/profile";
 import LogoutButton from "../autho/logout-button";
 import { getFilteredMenus, getFilteredRoutes } from "../utils";
@@ -42,9 +43,17 @@ export const commonPageStore: any[] = [
     component: LogoutButton,
     position: IMenuPosition.MIDDLE,
   },
+  {
+    path: "/signup",
+    key: "signup",
+    exact: true,
+    name: "signup",
+    component: RegistrationForm,
+    position: IMenuPosition.MIDDLE,
+  },
 ];
 
-const selectedRoutesAndMenus = ["home", "login", "profile", "logout"];
+const selectedRoutesAndMenus = ["home", "login", "profile", "logout", "signup"];
 
 // get menus
 const filteredMenus = getFilteredMenus(commonPageStore, selectedRoutesAndMenus);

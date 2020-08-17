@@ -4,6 +4,7 @@ import auth0 from 'auth0-js'
 import auth from './initAuth'
 
 export default class AuthService extends EventEmitter {
+  auth0: any
   constructor(clientId, domain) {
     super()
     // Configure Auth0
@@ -11,16 +12,18 @@ export default class AuthService extends EventEmitter {
       clientID: clientId,
       domain: domain,
       responseType: 'token id_token',
-      redirectUri: `${window.location.origin}/`
+      // redirectUri: `${window.location.origin}/`
+      redirectUri: "http://localhost:3000/login-complete"
     })
 this.login = this.login.bind(this)
     this.signup = this.signup.bind(this)
     this.loginWithGoogle = this.loginWithGoogle.bind(this)
   }
-login(email, password) {
+login(username, password) {
+  console.log(username, password);
     this.auth0.client.login({
       realm: 'Username-Password-Authentication',
-      email,
+      username,
       password
     }, (err, authResult) => {
       if (err) {
@@ -29,13 +32,13 @@ login(email, password) {
       }
       if (authResult && authResult.idToken && authResult.accessToken) {
         this.setToken(authResult.accessToken, authResult.idToken)
-        window.location = window.location.origin //redirect to main page
+        window.location.href = window.location.origin //redirect to main page
       }
     })
   }
 signup(email, password){
     this.auth0.redirect.signupAndLogin({
-      connection: 'react-auth0',
+      connection: 'Username-Password-Authentication',
       email,
       password,
     }, function(err) {

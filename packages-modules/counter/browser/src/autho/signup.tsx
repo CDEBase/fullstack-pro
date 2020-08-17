@@ -7,12 +7,10 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const style = { background: "#fff", padding: "20px"}
 
-const LoginForm: React.FC = () => {
+const RegistrationForm: React.FC = () => {
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');   
   const [password , setPassword] = useState('');
-  // const [isButtonDisable, setIsButtonDisable] = useState(true);
-  // const [isRemember, setIsRemember] = useState('');
   
   const { loginWithRedirect } = useAuth0();
   const onFinish = values => {
@@ -21,8 +19,13 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (event:any, data:any) => {
     event.preventDefault();
-    auth.login(email,password);
+    auth.signup(email,password);
   }
+
+  // const loginWithGoogle = (e:any) => {
+  //   e.preventDefault();
+  //   auth.loginWithGoogle();
+  // }
 
   return (
     <Row style={{marginTop: "50px"}}>
@@ -36,7 +39,7 @@ const LoginForm: React.FC = () => {
         onFinish={onFinish}
         style={style}
       >
-        <h2 style={{textAlign: "center"}}>Login</h2>
+        <h2 style={{textAlign: "center"}}>Signup</h2>
         <Form.Item
           rules={[
             {
@@ -68,26 +71,16 @@ const LoginForm: React.FC = () => {
             onChange={ e => setPassword(e.target.value)}
           />
         </Form.Item>
-        <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <a  href="">
-            Forgot password
-          </a>
-        </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button" style={{width: "100%"}} >
-            Log in
+            Sign Up
           </Button>
           <span style={{ textAlign: "center", display: "block" }}>OR</span>
 
           <Button type="primary" htmlType="submit" onClick={() => loginWithRedirect()} className="login-form-button" style={{width: "100%"}} >
             Continue with Google
           </Button>
-          DOn't have an account? <a href="/signup">register now!</a>
         </Form.Item>
       </Form>
         </Col>
@@ -96,4 +89,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;
