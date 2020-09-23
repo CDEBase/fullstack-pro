@@ -66,5 +66,5 @@ When you add sibling package to one of the packages, you need to run `npm run le
 
 Updating specific packages
 ---
-lerna exec "ncu -u --newest --timeout 10000 -f /@sample-stack*/"
+lerna exec "ncu -u --newest --timeout 60000 -f /@sample-stack*/"
 
