@@ -4,10 +4,9 @@ import * as _ from 'lodash';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import * as IORedis from 'ioredis';
 import { logger } from '@cdm-logger/server';
-import * as ILogger from 'bunyan';
-
 import { config } from '../config';
-
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 export class RedisConnector {
 

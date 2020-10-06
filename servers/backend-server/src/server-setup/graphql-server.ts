@@ -4,9 +4,10 @@ import 'isomorphic-fetch';
 import { Express } from 'express';
 import * as http from 'http';
 import { GRAPHQL_ROUTE } from '../constants';
-import * as ILogger from 'bunyan';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { IModuleService } from '../interfaces';
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 let debug: boolean = false;
 if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug') {

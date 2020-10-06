@@ -5,7 +5,8 @@ import { RedisConnector } from './redis-connector';
 import { config } from '../config';
 import { GraphqlPubSubConnector } from './graphql-pubsub-connector';
 import { Transporter, GenericObject } from 'moleculer';
-import * as ILogger from 'bunyan';
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 /**
  *  Connection broker class

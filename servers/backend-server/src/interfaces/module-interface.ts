@@ -1,8 +1,6 @@
-
-
-import * as ILogger from 'bunyan';
 import { GraphQLSchema } from 'graphql';
-
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 
 export interface IModuleService {

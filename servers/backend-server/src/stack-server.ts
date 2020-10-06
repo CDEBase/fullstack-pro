@@ -4,7 +4,6 @@ import { expressApp } from './express-app';
 import { GraphqlServer } from './server-setup/graphql-server';
 import { config } from './config';
 import { logger as serverLogger } from '@cdm-logger/server';
-import * as ILogger from 'bunyan';
 import { ConnectionBroker } from './connectors/connection-broker';
 import { Feature } from '@common-stack/server-core';
 import { ContainerModule, interfaces, Container } from 'inversify';
@@ -16,6 +15,8 @@ import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-upd
 import { IModuleService } from './interfaces';
 import { CommonType } from '@common-stack/core';
 import * as _ from 'lodash';
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 
 function startListening(port) {
