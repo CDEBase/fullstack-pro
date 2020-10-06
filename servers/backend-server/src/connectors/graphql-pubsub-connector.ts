@@ -3,8 +3,9 @@ import { NatsPubSub } from 'graphql-nats-subscriptions';
 import { wrapPubSub } from 'apollo-logger';
 import { logger } from '@cdm-logger/server';
 import { ClientOpts } from 'nats';
-import * as ILogger from 'bunyan';
 import { Transporter, GenericObject } from 'moleculer';
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 
 

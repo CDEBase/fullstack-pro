@@ -2,8 +2,8 @@ import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 import { Db } from 'mongodb';
 import { logger } from '@cdm-logger/server';
-import * as ILogger from 'bunyan';
-
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 
 export class MongoConnector {

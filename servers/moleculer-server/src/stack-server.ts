@@ -1,7 +1,6 @@
 
 import { config } from './config';
 import { logger as serverLogger } from '@cdm-logger/server';
-import * as ILogger from 'bunyan';
 import { ConnectionBroker } from './connectors/connection-broker';
 import { Feature } from '@common-stack/server-core';
 import { ContainerModule, interfaces, Container } from 'inversify';
@@ -9,6 +8,8 @@ import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
 import { CommonType } from '@common-stack/core';
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 
 function infraModule( broker, pubsub, logger) {
