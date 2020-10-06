@@ -42,7 +42,7 @@ export class GatewaySchemaBuilder {
                     remoteSchema,
                 ],
             });
-            addErrorLoggingToSchema(schema, { log: (e) => logger.error(e) });
+            addErrorLoggingToSchema(schema, { log: (e) => logger.error(e as Error) });
 
         } catch (err) {
             logger.error('[Graphql Schema Errors] when building schema::', err.message);
