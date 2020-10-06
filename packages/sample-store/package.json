@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/store",
-  "version": "0.0.39-alpha.108",
+  "version": "0.0.39-alpha.109",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   "author": "CDMBase LLC",
   "license": "ISC",
   "dependencies": {
-    "@sample-stack/core": "^0.0.39-alpha.108",
+    "@sample-stack/core": "^0.0.39-alpha.109",
     "sequelize": "^5.21.3"
   },
   "typings": "lib/index.d.ts",
