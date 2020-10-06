@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-server",
-  "version": "0.0.39-alpha.106",
+  "version": "0.0.39-alpha.107",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
