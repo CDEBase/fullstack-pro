@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/healthcheck-server",
-  "version": "0.0.39-alpha.107",
+  "version": "0.0.39-alpha.108",
   "description": "Sample core for higher packages to depend on",
   "main": "lib/index.js",
   "scripts": {
