@@ -1,8 +1,8 @@
 import * as nats from 'nats';
 import * as _ from 'lodash';
 import { logger } from '@cdm-logger/server';
-import * as ILogger from 'bunyan';
-
+import { CdmLogger } from '@cdm-logger/core';
+type ILogger = CdmLogger.ILogger;
 
 export class NatsConnector {
 

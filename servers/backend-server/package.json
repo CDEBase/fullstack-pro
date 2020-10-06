@@ -58,9 +58,9 @@
     "zen:watch": "zen watch -x"
   },
   "dependencies": {
-    "@cdm-logger/server": "^5.0.5",
-    "@common-stack/core": "0.0.220",
-    "@common-stack/server-core": "0.0.220",
+    "@cdm-logger/server": "^6.0.0",
+    "@common-stack/core": "0.0.229",
+    "@common-stack/server-core": "0.0.229",
     "@sample-stack/core": "file:../../packages/sample-core",
     "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
     "@sample-stack/healthcheck-server": "file:../../packages-modules/healthcheck/server",
