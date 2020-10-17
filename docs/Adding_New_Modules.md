@@ -50,6 +50,7 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
         }
     }
     ```
+    Add any additional dependencies that this module needed.
 
 4. Then, to use the new module add to `servers` and main `package.json`
 
