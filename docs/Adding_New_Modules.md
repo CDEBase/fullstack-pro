@@ -75,6 +75,8 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
     "dependencies": {
         ....
         "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
+        ....
+    }
     ```
 
 Notes:
