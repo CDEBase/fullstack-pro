@@ -20,7 +20,7 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
     touch packages-modules/counter/servers/src/package.json
     ```
 
-2. Copy folloing files from the existing modules,
+2. Copy following files from the existing modules,
 
     From one of the existing moudles, copy the following files into the new module. Make sure the browser's module are copied from another existing browsers location and similarly for server's module.
 
@@ -51,7 +51,7 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
     }
     ```
 
-4. Then, to use the new module add to servers and main package.json
+4. Then, to use the new module add to `servers` and main `package.json`
 
     a. In root `package.json` file add the new module where you have existing modules
     ```json
