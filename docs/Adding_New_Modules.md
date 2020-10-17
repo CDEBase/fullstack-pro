@@ -1,4 +1,4 @@
-# Importing Modules with Apollo Universal Starter Kit
+# Adding Modules with FullStack Pro Kit
 
 In this guide, we explain how you can add new modules with FullStack-pro Kit.
 
