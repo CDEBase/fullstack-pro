@@ -2,45 +2,43 @@
   "name": "@sample-stack/counter-module-browser",
   "version": "0.0.1",
   "description": "Sample core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
-    "jest": "./node_modules/.bin/jest",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "prepublish": "npm run build",
-    "watch": "npm run build:lib:watch",
     "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
     "build:lib:watch": "npm run build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "npm run build",
     "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
-    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts"
-  },
-  "publishConfig": {
-    "access": "public"
+    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "npm run build:lib:watch"
   },
   "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "src"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",
       "json"
     ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
+    }
   },
-  "author": "CDMBase LLC",
-  "license": "ISC",
   "dependencies": {
     "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
     "antd": "^3.26.4"
@@ -50,7 +48,9 @@
     "@common-stack/core": ">=0.0.229",
     "antd": "^3.26.4"
   },
-  "typings": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "typescript": {
     "definition": "lib/index.d.ts"
   }

@@ -1,46 +1,46 @@
 {
-	"name": "@sample-stack/core",
-	"version": "0.0.1",
-	"description": "Sample core for higher packages to depend on",
-	"main": "lib/index.js",
-	"scripts": {
-		"jest": "./node_modules/.bin/jest",
-		"test": "cross-env ENV_FILE=../../config/test/test.env jest",
-		"test:debug": "npm test -- --runInBand",
-		"test:watch": "npm test -- --watch",
-		"prepublish": "npm run build",
-		"watch": "npm run build:lib:watch",
-		"build": "npm run build:clean && npm run build:lib",
-		"build:clean": "rimraf lib",
-		"build:lib": "webpack",
-		"build:lib:watch": "npm run build:lib -- --watch"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"jest": {
-		"testEnvironment": "node",
-		"roots": [
-			"src"
-		],
-		"modulePaths": [
-			"node_modules"
-		],
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js",
-			"json"
-		],
-		"transform": {
-			"\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-		},
-		"testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
-	},
-	"author": "CDMBase LLC",
-	"license": "ISC",
-	"typings": "lib/index.d.ts",
-	"typescript": {
-		"definition": "lib/index.d.ts"
-	}
+  "name": "@sample-stack/core",
+  "version": "0.0.1",
+  "description": "Sample core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "webpack",
+    "build:lib:watch": "npm run build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "npm run build",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "npm run build:lib:watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
 }
