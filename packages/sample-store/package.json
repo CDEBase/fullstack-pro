@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/store",
-  "version": "0.0.39-alpha.112",
+  "version": "0.0.39-alpha.114",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -41,8 +41,6 @@
     "@sample-stack/core": "^0.0.39-alpha.112",
     "sequelize": "^5.21.3"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "publishConfig": {
     "access": "public"
   },
