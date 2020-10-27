@@ -14,10 +14,17 @@ import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
-import clientModules from '../modules';
+// import clientModules from '../modules';
+import { GraphQLSchema } from 'graphql';
+import { Feature } from '@common-stack/client-react';
+import { SchemaLink } from 'apollo-link-schema';
 
 let assetMap;
-async function renderServerSide(req, res) {
+async function renderServerSide(req, res, schema: GraphQLSchema, modules: Feature) {
+    const schemaLink = new SchemaLink({
+        schema,
+        context: { ...(await modules.createContext(req, res), req, res)}
+    })
     try {
 
         const client = createApolloClient();
@@ -86,7 +93,7 @@ async function renderServerSide(req, res) {
         logger.debug(err);
     }
 }
-export const websiteMiddleware = async (req, res, next) => {
+export const websiteMiddleware = (schema: GraphQLSchema, modules: Feature) => async (req, res, next) => {
     try {
         if (req.path.indexOf('.') < 0 && __SSR__) {
             return await renderServerSide(req, res);
