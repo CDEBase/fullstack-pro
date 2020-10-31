@@ -33,7 +33,7 @@ export class ConnectionBroker {
 
         if (typeof transporter === 'string') {
             if (transporter === 'TCP') {
-                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'TCP' });
+                this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'TCP', apolloLogging: config.apolloLogging });
             } else if (transporter === 'NATS') {
                 this._natsConnector = new NatsConnector({});
                 this._graphqlPubsubConnector = new GraphqlPubSubConnector({ logger, type: 'NATS', client: this._natsConnector});
