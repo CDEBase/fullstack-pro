@@ -40,19 +40,18 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "^0.0.39-alpha.114",
-    "antd": "^3.26.4"
+    "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
+    "antd": "^4.8.2"
   },
   "peerDependencies": {
-    "@common-stack/client-react": ">=0.0.229",
-    "@common-stack/core": ">=0.0.229",
-    "antd": "^3.26.4"
+    "@common-stack/client-react": ">=0.0.246",
+    "@common-stack/core": ">=0.0.246",
+    "antd": "^4.8.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "typescript": {
     "definition": "lib/index.d.ts"
-  },
-  "gitHead": "cb0b38813560218606bbe4a17eb27a84b03925f2"
+  }
 }
