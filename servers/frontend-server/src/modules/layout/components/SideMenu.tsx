@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Icon, Avatar } from 'antd';
 import { IMenuPosition } from '@common-stack/client-react';
 
 const { Sider } = Layout;

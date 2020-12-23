@@ -41,12 +41,12 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
-    "antd": "^4.8.2"
+    "antd": "^3.26.4"
   },
   "peerDependencies": {
-    "@common-stack/client-react": ">=0.0.246",
-    "@common-stack/core": ">=0.0.246",
-    "antd": "^4.8.2"
+    "@common-stack/client-react": ">=0.0.229",
+    "@common-stack/core": ">=0.0.229",
+    "antd": "^3.26.4"
   },
   "publishConfig": {
     "access": "public"
