@@ -14,7 +14,7 @@ cd fullstack-pro
 
     b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
 
-    c. Node version supported is `10.15.3` and `npm` version is `6.4.1`.
+    c. Node version supported is `12.18.4` and `npm` version is `6.14.6`.
 
     d. Insall and build packages using following command. Run from the root folder of this project.
 ```
