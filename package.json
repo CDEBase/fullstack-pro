@@ -76,7 +76,8 @@
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-moleculer-server": "file:servers/moleculer-server"
+    "sample-stack-moleculer-server": "file:servers/moleculer-server",
+    "sample-stack-mobile": "file:servers/mobile"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
