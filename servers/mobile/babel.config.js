@@ -1,5 +1,5 @@
 module.exports = function bpe(api) {
-    //   api.cache(true);
+    //api.cache(true);
     const presets = [
       'babel-preset-expo',
       'module:metro-react-native-babel-preset',

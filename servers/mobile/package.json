@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "author": "SysGears INC",
-  "main": "src",
+  "main": "src/App",
   "scripts": {
     "clean": "rimraf build .expo .tmp",
     "cli": "node ../../tools/cli",
