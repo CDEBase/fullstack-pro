@@ -4342,7 +4342,7 @@
 "@sample-stack/counter-module-browser@file:packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../../home/divine/.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-b1a180cb-ebe9-433d-9fcd-049937d395e8-1613133510609/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-f4d6dbc7-46e0-4ba2-bdd0-4da47c38d808-1613401267593/packages/sample-platform/browser"
     antd "^3.26.4"
 
 "@sample-stack/counter-module-server@file:packages-modules/counter/server":
@@ -4358,17 +4358,17 @@
 "@sample-stack/platform-browser@file:packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-ad28e2a3-77ee-4d1c-ba50-98f4bf21239e-1613133510600/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-browser-0.0.1-03386f85-48c7-4fae-a4ff-4ac86ef974ef-1613401267590/node_modules/sample-core"
 
 "@sample-stack/platform-server@file:packages/sample-platform/server":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-@sample-stack-platform-server-0.0.1-eb2f909c-7222-4745-b876-39eb977c9542-1613133510751/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-server-0.0.1-6b8a5bf7-d28d-47e7-a385-f0a2f658dfc8-1613401267674/node_modules/sample-core"
 
 "@sample-stack/store@file:packages/sample-store":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-@sample-stack-store-0.0.1-7241c91f-51b3-4460-bef0-08851a8257ba-1613133510755/node_modules/@sample-stack/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-store-0.0.1-2c7393c9-a288-4e36-b798-c75e37bc85be-1613401267677/node_modules/@sample-stack/sample-core"
     sequelize "^5.21.3"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -23251,6 +23251,13 @@ react-native-credit-card-input@^0.4.1:
     prop-types "^15.6.0"
     react-native-flip-card "^3.4.1"
 
+react-native-dotenv@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.3.tgz#ec70186d2b1491b0519647c53bf91f34395377a3"
+  integrity sha512-Fibw5q6vy91aRwol7yO6U9Om+EyE7Vs4pO70AYGRkDuMkaQ4EIyYw9mmiPcKo6VFCwlpE8y1AZImxoKREFASXA==
+  dependencies:
+    dotenv "^8.0.0"
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -24789,11 +24796,11 @@ safe-regex@^1.1.0:
     "@cdm-logger/server" "^6.0.0"
     "@common-stack/core" "0.0.229"
     "@common-stack/server-core" "0.0.229"
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-2fddf9c5-dc41-4355-bfb8-d05d7adaaf16-1613133510778/packages/sample-core"
-    "@sample-stack/counter-module-server" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-2fddf9c5-dc41-4355-bfb8-d05d7adaaf16-1613133510778/packages-modules/counter/server"
-    "@sample-stack/healthcheck-server" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-2fddf9c5-dc41-4355-bfb8-d05d7adaaf16-1613133510778/packages-modules/healthcheck/server"
-    "@sample-stack/platform-server" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-2fddf9c5-dc41-4355-bfb8-d05d7adaaf16-1613133510778/packages/sample-platform/server"
-    "@sample-stack/store" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-2fddf9c5-dc41-4355-bfb8-d05d7adaaf16-1613133510778/packages/sample-store"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-fe8f17fb-a887-4c16-ad6a-9deb0bd2d5c8-1613401267688/packages/sample-core"
+    "@sample-stack/counter-module-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-fe8f17fb-a887-4c16-ad6a-9deb0bd2d5c8-1613401267688/packages-modules/counter/server"
+    "@sample-stack/healthcheck-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-fe8f17fb-a887-4c16-ad6a-9deb0bd2d5c8-1613401267688/packages-modules/healthcheck/server"
+    "@sample-stack/platform-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-fe8f17fb-a887-4c16-ad6a-9deb0bd2d5c8-1613401267688/packages/sample-platform/server"
+    "@sample-stack/store" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-fe8f17fb-a887-4c16-ad6a-9deb0bd2d5c8-1613401267688/packages/sample-store"
     apollo-datasource "^0.7.0"
     apollo-datasource-rest "^0.8.0"
     apollo-errors "^1.9.0"
@@ -24851,9 +24858,9 @@ safe-regex@^1.1.0:
     "@common-stack/client-react" "0.0.229"
     "@common-stack/core" "0.0.229"
     "@common-stack/server-core" "0.0.229"
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-68e3c855-a2e0-4109-84a8-fe8984250422-1613133511066/packages/sample-core"
-    "@sample-stack/counter-module-browser" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-68e3c855-a2e0-4109-84a8-fe8984250422-1613133511066/packages-modules/counter/browser"
-    "@sample-stack/platform-browser" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-68e3c855-a2e0-4109-84a8-fe8984250422-1613133511066/packages/sample-platform/browser"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-a611415b-b41e-4ffb-af92-22d31ad62c16-1613401267843/packages/sample-core"
+    "@sample-stack/counter-module-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-a611415b-b41e-4ffb-af92-22d31ad62c16-1613401267843/packages-modules/counter/browser"
+    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-a611415b-b41e-4ffb-af92-22d31ad62c16-1613401267843/packages/sample-platform/browser"
     apollo-cache-inmemory "^1.6.5"
     apollo-client "^2.6.8"
     apollo-fetch "^0.7.0"
@@ -24983,6 +24990,7 @@ safe-regex@^1.1.0:
     react-i18next "^10.12.2"
     react-native "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
     react-native-credit-card-input "^0.4.1"
+    react-native-dotenv "^2.5.3"
     react-native-elements "^3.2.0"
     react-native-gesture-handler "~1.8.0"
     react-native-keyboard-aware-scroll-view "^0.9.3"
@@ -25019,9 +25027,9 @@ safe-regex@^1.1.0:
     "@common-stack/client-core" "0.0.229"
     "@common-stack/core" "0.0.229"
     "@common-stack/server-core" "0.0.229"
-    "@sample-stack/core" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-87456c91-1aba-4a67-81db-f2d81137fe36-1613133511164/packages/sample-core"
-    "@sample-stack/counter-module-server" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-87456c91-1aba-4a67-81db-f2d81137fe36-1613133511164/packages-modules/counter/server"
-    "@sample-stack/platform-server" "file:../../../../home/divine/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-87456c91-1aba-4a67-81db-f2d81137fe36-1613133511164/packages/sample-platform/server"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-693817e7-1698-4cfa-b189-2d12bb27b4b7-1613401267892/packages/sample-core"
+    "@sample-stack/counter-module-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-693817e7-1698-4cfa-b189-2d12bb27b4b7-1613401267892/packages-modules/counter/server"
+    "@sample-stack/platform-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-693817e7-1698-4cfa-b189-2d12bb27b4b7-1613401267892/packages/sample-platform/server"
     apollo-datasource "^0.7.0"
     apollo-logger "^0.3.3"
     apollo-server-cache-memcached "^0.6.3"
