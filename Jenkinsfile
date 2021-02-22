@@ -2,7 +2,11 @@
 def GIT_BRANCH_NAME=getGitBranchName()
 
 pipeline {
-  agent any
+  agent {
+    kubernetes{
+      label 'jenkins-slave-v3'
+    }
+  }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
@@ -186,9 +190,8 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {
          sh """
-            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
@@ -229,9 +232,8 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
+        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
           sh """
-            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
