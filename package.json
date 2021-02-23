@@ -24,7 +24,7 @@
     "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
     "check-updates": "lerna exec ./node_modules/.bin/npm-check-updates -- -u",
     "clean": "lerna clean --yes && yarn build:clean && rimraf node_modules",
-    "clean:force": "rimraf package-lock.json && yarn clean",
+    "clean:force": "rimraf package-lock.json yarn.lock && yarn clean",
     "cli": "node tools/cli",
     "compile": "lerna exec -- yarn compile",
     "coverage": "jest --coverage",
@@ -81,7 +81,6 @@
     "dataloader": "^2.0.0",
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-mobile": "file:servers/mobile",
     "sample-stack-moleculer-server": "file:servers/moleculer-server"
   },
   "devDependencies": {
@@ -140,9 +139,9 @@
     "@types/mongoose": "^5.5.35",
     "@types/node": "13.1.0",
     "@types/prop-types": "^15.7.3",
-    "@types/react": "^16.9.17",
+    "@types/react": "^17.0.2",
     "@types/react-addons-test-utils": "^0.14.25",
-    "@types/react-dom": "^16.9.4",
+    "@types/react-dom": "^17.0.1",
     "@types/react-helmet": "^5.0.14",
     "@types/react-loadable": "^5.5.3",
     "@types/react-redux": "^7.1.5",

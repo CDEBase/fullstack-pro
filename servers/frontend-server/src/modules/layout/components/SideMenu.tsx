@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
-import { Layout, Menu, Icon, Avatar } from 'antd';
+import { Layout, Menu, Avatar } from 'antd';
 import { IMenuPosition } from '@common-stack/client-react';
 
 const { Sider } = Layout;
@@ -131,7 +131,7 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
     private getIcon(icon) {
         const { styles = {} } = this.props;
         if (typeof icon === 'string' && icon.indexOf('http') === 0) {
-            return < img src={icon} alt="icon" className={styles.icon} />;
+            return <img src={icon} alt="icon" className={styles.icon} />;
         } if (typeof icon === 'string') {
             return <div data-type={icon} style={styles.icon} />;
         }
