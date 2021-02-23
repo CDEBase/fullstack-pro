@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "jsx": "react",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["../../typings/*.d.ts"],
+  "exclude": ["node_modules", "lib", "dist", "webpack.config.js"]
+}
