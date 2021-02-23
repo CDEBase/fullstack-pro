@@ -7,7 +7,8 @@
     "declaration": false,
     "jsx": "react",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "skipLibCheck": true
   },
   "include": ["../../typings/*.d.ts"],
   "exclude": ["node_modules", "lib", "dist", "webpack.config.js"]

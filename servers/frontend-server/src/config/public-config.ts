@@ -23,7 +23,7 @@ for (const v of publicEnv) {
 export default env;
 
 if (isBrowser) {
-    process.env = env;
+    process[env] = env;
     process.APP_ENV = env;
 }
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
