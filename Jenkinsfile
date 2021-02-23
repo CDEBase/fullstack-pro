@@ -2,7 +2,11 @@
 def GIT_BRANCH_NAME=getGitBranchName()
 
 pipeline {
-  agent any
+  agent {
+    kubernetes{
+      label 'jenkins-slave-v3'
+    }
+  }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
     string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
@@ -20,6 +24,7 @@ pipeline {
 
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
+    choice choices: ['0.1.22', '0.2.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -186,11 +191,13 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {
          sh """
-           helm init --client-only
-           helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
-           helm repo update
+            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
+            helm repo add stable https://charts.helm.sh/stable
+            helm repo add incubator https://charts.helm.sh/incubator
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo update
          """
           script {
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
@@ -227,9 +234,11 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.193.45.188']) {
+        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
           sh """
-            helm init --client-only
+            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
+            helm repo add stable https://charts.helm.sh/stable
+            helm repo add incubator https://charts.helm.sh/incubator
             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
             helm repo update
           """
@@ -381,6 +390,7 @@ def generateStage(server, environmentType) {
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
             --set ingress.domain=${env.DOMAIN_NAME} \
+            --version=${IDESTACK_CHART_VERSION} \
               kube-orchestration/idestack
             """
 
