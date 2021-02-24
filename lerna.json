@@ -25,6 +25,8 @@
       "message": "chore: release package(s)"
     }
   },
+  "npmCLient": "yarn",
+  "useWorkspaces": true,
   "packages": ["packages-modules/**", "packages/**", "servers/*"],
   "version": "0.0.0"
 }
