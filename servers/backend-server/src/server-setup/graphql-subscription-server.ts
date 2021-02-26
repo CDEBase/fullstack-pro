@@ -44,7 +44,7 @@ export class GraphqlSubscriptionServer {
     public create() {
         this.subscriptionServer = SubscriptionServer.create(
             {
-                schema: this.moduleService.schema,
+                schema: this.moduleService.schema as any,
                 execute,
                 subscribe,
                 onConnect: async (connectionParams: any, webSocket: any, ctx: ConnectionContext) => {

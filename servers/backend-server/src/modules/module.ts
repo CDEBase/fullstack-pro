@@ -1,7 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { Feature } from '@common-stack/server-core';
 import CounterModule from '@sample-stack/counter-module-server';
-import HealthCheckModule from '@sample-stack/healthcheck-server';
 import { config } from '../config';
 import { TaggedType } from '@common-stack/core';
 
@@ -25,4 +24,4 @@ const DefaultFeature = new Feature({
 });
 
 
-export default new Feature(DefaultFeature, CounterModule, HealthCheckModule);
+export default new Feature(DefaultFeature, CounterModule);

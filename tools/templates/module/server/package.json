@@ -41,7 +41,7 @@
         "cross-env": "^5.2.0",
         "jest": "^22.4.2",
         "rimraf": "^2.6.1",
-        "webpack": "4.43.0"
+        "webpack": "4.46.0"
     },
     "typings": "lib/index.d.ts",
     "typescript": {
