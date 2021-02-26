@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
+    "@sample-stack/platform-browser": "^0.0.39-alpha.122",
     "antd": "^4.5.2"
   },
   "publishConfig": {
