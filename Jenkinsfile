@@ -193,7 +193,6 @@ pipeline {
       steps {
        withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {
          sh """
-            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
@@ -236,7 +235,6 @@ pipeline {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
           sh """
-            helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
