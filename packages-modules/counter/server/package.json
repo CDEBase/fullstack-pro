@@ -7,18 +7,18 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run build:clean && npm run build:lib",
+    "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch",
+    "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
-    "prepublish": "npm run build",
+    "prepublish": "yarn build",
     "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
     "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
     "test": "cross-env ENV_FILE=../../config/test/test.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "watch": "npm run build:lib:watch"
+    "watch": "yarn build:lib:watch"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -41,7 +41,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@common-stack/server-core": ">=0.0.246"
+    "@common-stack/server-core": ">=0.0.229"
   },
   "publishConfig": {
     "access": "public"
