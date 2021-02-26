@@ -83,7 +83,7 @@ pipeline {
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
-            npm install
+            yarn
             yarn lerna
           """
        }
