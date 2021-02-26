@@ -8,12 +8,12 @@
         "test": "cross-env ENV_FILE=../../config/test/test.env jest",
         "test:debug": "npm test -- --runInBand",
         "test:watch": "npm test -- --watch",
-        "prepublish": "yarn build",
-        "watch": "yarn build:lib:watch",
-        "build": "yarn build:clean && yarn build:lib",
+        "prepublish": "npm run build",
+        "watch": "npm run build:lib:watch",
+        "build": "npm run build:clean && npm run build:lib",
         "build:clean": "rimraf lib",
         "build:lib": "webpack",
-        "build:lib:watch": "yarn build:lib -- --watch"
+        "build:lib:watch": "npm run build:lib -- --watch"
     },
     "jest": {
         "testEnvironment": "node",
@@ -41,7 +41,7 @@
         "cross-env": "^5.2.0",
         "jest": "^22.4.2",
         "rimraf": "^2.6.1",
-        "webpack": "4.43.0"
+        "webpack": "4.46.0"
     },
     "typings": "lib/index.d.ts",
     "typescript": {
