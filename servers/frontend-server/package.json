@@ -125,7 +125,7 @@
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
     "rxjs-hooks": "^0.5.2",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^4.0.0",
     "sourcemapped-stacktrace": "^1.1.11",
     "subscriptions-transport-ws": "0.9.18",
     "universal-cookie-express": "^4.0.1"

@@ -1285,11 +1285,6 @@
     bunyan "^1.8.10"
     bunyan-prettystream-circularsafe "^0.3.1"
 
-"@cdmbase/graphql-type-uri@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@cdmbase/graphql-type-uri/-/graphql-type-uri-0.4.1.tgz#81c15941c55075d9377efd36f2248c66e6f1cf19"
-  integrity sha512-zJKxsqex4XdbzxDa4R0UYoU6Az5xwGCq3VyzUoinXyCzdvCaZ6TiXoI2tm/ykj4e7DeYo8rGhnumNPES9jdr4Q==
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -3118,7 +3113,7 @@
 "@sample-stack/counter-module-browser@file:packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-82330efb-bfba-4edd-b71a-73a4a14e4539-1614338833317/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../../usr/local/share/.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-ce66131e-885c-45df-9b81-4ef91cb9c13d-1614357736284/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/counter-module-server@file:packages-modules/counter/server":
@@ -3134,17 +3129,17 @@
 "@sample-stack/platform-browser@file:packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-browser-0.0.1-ba368542-6d56-4e9c-95a8-e593abafc862-1614338833319/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-2a8be3db-9dd9-4ea3-92f5-1a8f1a2b94b5-1614357736354/node_modules/sample-core"
 
 "@sample-stack/platform-server@file:packages/sample-platform/server":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-server-0.0.1-927c0208-5646-4947-bae2-d87b01e261d9-1614338833834/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-@sample-stack-platform-server-0.0.1-eac5c368-3870-4ed8-bb11-3193a8e03f42-1614357736360/node_modules/sample-core"
 
 "@sample-stack/store@file:packages/sample-store":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-store-0.0.1-d38b4b8d-ad35-4d34-8cc4-43f5035a3554-1614338833835/node_modules/@sample-stack/sample-core"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-@sample-stack-store-0.0.1-3c67640a-136b-423e-8f43-b575a0778800-1614357736362/node_modules/@sample-stack/sample-core"
     sequelize "^5.21.3"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -16958,11 +16953,6 @@ react-addons-shallow-compare@^15.6.2:
   dependencies:
     object-assign "^4.1.0"
 
-react-addons-test-utils@^15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
-  integrity sha1-wStu/cIkfBDae4dw0YUICnsEcVY=
-
 react-apollo@^3.1.3:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-3.1.5.tgz#36692d393c47e7ccc37f0a885c7cc5a8b4961c91"
@@ -18194,11 +18184,11 @@ safe-regex@^1.1.0:
     "@cdm-logger/server" "^6.0.0"
     "@common-stack/core" "0.0.251"
     "@common-stack/server-core" "0.0.251"
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-964fba76-43aa-4623-a62e-0e7a4587fa2b-1614338834303/packages/sample-core"
-    "@sample-stack/counter-module-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-964fba76-43aa-4623-a62e-0e7a4587fa2b-1614338834303/packages-modules/counter/server"
-    "@sample-stack/healthcheck-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-964fba76-43aa-4623-a62e-0e7a4587fa2b-1614338834303/packages-modules/healthcheck/server"
-    "@sample-stack/platform-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-964fba76-43aa-4623-a62e-0e7a4587fa2b-1614338834303/packages/sample-platform/server"
-    "@sample-stack/store" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-backend-server-0.0.1-964fba76-43aa-4623-a62e-0e7a4587fa2b-1614338834303/packages/sample-store"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-e4245926-15e8-42f7-bacf-f73d4aaaaa71-1614357736371/packages/sample-core"
+    "@sample-stack/counter-module-server" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-e4245926-15e8-42f7-bacf-f73d4aaaaa71-1614357736371/packages-modules/counter/server"
+    "@sample-stack/healthcheck-server" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-e4245926-15e8-42f7-bacf-f73d4aaaaa71-1614357736371/packages-modules/healthcheck/server"
+    "@sample-stack/platform-server" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-e4245926-15e8-42f7-bacf-f73d4aaaaa71-1614357736371/packages/sample-platform/server"
+    "@sample-stack/store" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-backend-server-0.0.1-e4245926-15e8-42f7-bacf-f73d4aaaaa71-1614357736371/packages/sample-store"
     apollo-datasource "^0.7.0"
     apollo-datasource-rest "^0.8.0"
     apollo-errors "^1.9.0"
@@ -18254,9 +18244,9 @@ safe-regex@^1.1.0:
     "@common-stack/client-react" "0.0.251"
     "@common-stack/core" "0.0.251"
     "@common-stack/server-core" "0.0.251"
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-30ad14a7-0e73-4bf3-8f00-6b16b0a8f232-1614338836403/packages/sample-core"
-    "@sample-stack/counter-module-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-30ad14a7-0e73-4bf3-8f00-6b16b0a8f232-1614338836403/packages-modules/counter/browser"
-    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-frontend-server-0.0.1-30ad14a7-0e73-4bf3-8f00-6b16b0a8f232-1614338836403/packages/sample-platform/browser"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-547be79b-fb46-4467-a03f-69251e18e124-1614357736565/packages/sample-core"
+    "@sample-stack/counter-module-browser" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-547be79b-fb46-4467-a03f-69251e18e124-1614357736565/packages-modules/counter/browser"
+    "@sample-stack/platform-browser" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-frontend-server-0.0.1-547be79b-fb46-4467-a03f-69251e18e124-1614357736565/packages/sample-platform/browser"
     apollo-cache-inmemory "^1.6.5"
     apollo-client "^2.6.8"
     apollo-fetch "^0.7.0"
@@ -18323,7 +18313,7 @@ safe-regex@^1.1.0:
     rxjs "^6.5.3"
     rxjs-compat "^6.5.3"
     rxjs-hooks "^0.5.2"
-    serialize-javascript "^2.1.2"
+    serialize-javascript "^4.0.0"
     sourcemapped-stacktrace "^1.1.11"
     subscriptions-transport-ws "0.9.18"
     universal-cookie-express "^4.0.1"
@@ -18333,13 +18323,12 @@ safe-regex@^1.1.0:
   dependencies:
     "@cdm-logger/client" "^5.0.7"
     "@cdm-logger/server" "^6.0.0"
-    "@cdmbase/graphql-type-uri" "^0.4.1"
     "@common-stack/client-core" "0.0.251"
     "@common-stack/core" "0.0.251"
     "@common-stack/server-core" "0.0.251"
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-6f7d542b-84bc-4ede-b809-ce7bfdaea767-1614338838089/packages/sample-core"
-    "@sample-stack/counter-module-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-6f7d542b-84bc-4ede-b809-ce7bfdaea767-1614338838089/packages-modules/counter/server"
-    "@sample-stack/platform-server" "file:../../../../../../Library/Caches/Yarn/v6/npm-sample-stack-moleculer-server-1.0.0-6f7d542b-84bc-4ede-b809-ce7bfdaea767-1614338838089/packages/sample-platform/server"
+    "@sample-stack/core" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-692e0c67-25e3-4288-84c7-4f51fe58f271-1614357736632/packages/sample-core"
+    "@sample-stack/counter-module-server" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-692e0c67-25e3-4288-84c7-4f51fe58f271-1614357736632/packages-modules/counter/server"
+    "@sample-stack/platform-server" "file:../../../../usr/local/share/.cache/yarn/v6/npm-sample-stack-moleculer-server-1.0.0-692e0c67-25e3-4288-84c7-4f51fe58f271-1614357736632/packages/sample-platform/server"
     apollo-datasource "^0.7.0"
     apollo-logger "^0.3.3"
     apollo-server-cache-memcached "^0.6.7"
@@ -18613,11 +18602,6 @@ serialize-javascript@^1.7.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.9.1.tgz#cfc200aef77b600c47da9bb8149c943e798c2fdb"
   integrity sha512-0Vb/54WJ6k5v8sSWN09S0ora+Hnr+cX40r9F170nT+mSkaxltoE/7R3OrIdBSUv1OoiobH1QoWQbCnAO+e8J1A==
-
-serialize-javascript@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-2.1.2.tgz#ecec53b0e0317bdc95ef76ab7074b7384785fa61"
-  integrity sha512-rs9OggEUF0V4jUSecXazOYsLfu7OGK2qIn3c7IPBiffz32XniEp/TX9Xmc9LQfK2nQ2QKHvZ2oygKUGU0lG4jQ==
 
 serialize-javascript@^4.0.0:
   version "4.0.0"
