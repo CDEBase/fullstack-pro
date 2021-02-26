@@ -32,4 +32,4 @@ Do
 
     Before adding a `<package dependency>`, see if the package of different version exist. If it exist then update that version to the required version.
 
-2. You can edit one of the `packages` or `servers`'s `package.json` file directly to add a `dependencies` and then run `yarn lerna` to install them. This is a easy way to install a known version by adding to the target `pacakage.json` file.
+2. You can edit one of the `packages` or `servers`'s `package.json` file directly to add a `dependencies` and then run `npm run lerna` to install them. This is a easy way to install a known version by adding to the target `pacakage.json` file.

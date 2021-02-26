@@ -7,16 +7,16 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn build:clean && yarn build:lib",
+    "build": "npm run build:clean && npm run build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "yarn build:lib -- --watch",
+    "build:lib:watch": "npm run build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
-    "prepublish": "yarn build",
+    "prepublish": "npm run build",
     "test": "jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "watch": "yarn build:lib:watch"
+    "watch": "npm run build:lib:watch"
   },
   "jest": {
     "moduleFileExtensions": [

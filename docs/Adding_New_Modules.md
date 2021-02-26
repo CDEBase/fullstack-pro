@@ -81,4 +81,4 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
 
 Notes:
 
-- You may have to rerun `yarn watch` to pickup new modules
+- You may have to rerun `npm run watch` to pickup new modules

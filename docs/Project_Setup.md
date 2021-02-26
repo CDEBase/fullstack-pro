@@ -18,7 +18,7 @@ cd fullstack-pro
 
     d. Insall and build packages using following command. Run from the root folder of this project.
 ```
-    npm install && yarn build
+    npm install && npm run build
 ```
     
 3. Setup environment file
@@ -53,25 +53,25 @@ The browser server endopoint is
 To run build with watch for dependent packages, for auto reloading changes into the server to be productive during development.
 
 ```
-yarn watch-packages
+npm run watch-packages
 ```
 
 If you also need to watch along with it, you can use as many scopes as required like below. 
 
 ```
-yarn watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
+npm run watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
 ```
 
 To run build with watch for all the packages. Note: This will run watch on all packages under `packages-modules` and may saturate the resources in your laptop instead run above `watch-packages` command.
 
 ```
-yarn watch
+npm run watch
 ```
 
 Sometimes if we have to run `build` or `watch` you can use the `lerna` [command](https://github.com/lerna/lerna/tree/master/commands/exec#usage) for the targeted packages
 
 ```
-lerna exec --scope=<package name> yarn watch
+lerna exec --scope=<package name> npm run watch
 ```
 
 - here `<package name>` will be the package you working on currently. If you have multiple packages, then you need to run it multiple times for each package in its respective terminal.
@@ -83,7 +83,7 @@ Most of the changes at code level can be taken using `git` command.
 But in some cases when `lerna's packages` are added or versions in `packages.json` are updated, to avoid getting installed duplicate pacakges due to monrepo architecture you need to first clean existing `node_modules` and reinstall again. This can be done with following command.
 
 ```
-yarn clean:force && git pull <branch_name> && npm install && yarn build
+npm run clean:force && git pull <branch_name> && npm install && npm run build
 ```
 - here <branch_name> should be replaced with the branch you getting updates.
 
@@ -99,13 +99,13 @@ You need to run Frontend and Backend in two seperate servers.
 
 to start frontend server
 ```
-lerna exec --scope=*frontend-server yarn build
-lerna exec --scope=*frontend-server yarn start:dev
+lerna exec --scope=*frontend-server npm run build
+lerna exec --scope=*frontend-server npm run start:dev
 ```
 to start backend server
 ```
-lerna exec --scope=*backend-server yarn build
-lerna exec --scope=*backend-server yarn start:dev
+lerna exec --scope=*backend-server npm run build
+lerna exec --scope=*backend-server npm run start:dev
 ```
 
 Note: you can pass `:<env>` next to `start` to use env config.
@@ -119,18 +119,18 @@ Note: you can pass `:<env>` next to `start` to use env config.
 Build three docker images by following the steps:
 - Frontend Server
 ```
-lerna exec --scope=*frontend-server yarn docker:build
-lerna exec --scope=*frontend-server yarn docker:run
+lerna exec --scope=*frontend-server npm run docker:build
+lerna exec --scope=*frontend-server npm run docker:run
 ```
 - Backend Server
 ```
-lerna exec --scope=*backend-server yarn docker:build
-lerna exec --scope=*backend-server yarn docker:run
+lerna exec --scope=*backend-server npm run docker:build
+lerna exec --scope=*backend-server npm run docker:run
 ```
 - moleculer-server
 ```
-lerna exec --scope=*moleculer-server yarn docker:build
-lerna exec --scope=*moleculer-server yarn docker:run
+lerna exec --scope=*moleculer-server npm run docker:build
+lerna exec --scope=*moleculer-server npm run docker:run
 ```
 
 Note: It uses `/config/staging/staging.env` for environment variables.
@@ -146,5 +146,5 @@ NATS_PW
 ## Troubleshoot
 To troubleshoot webpack configuration run
 ```
-yarn zen:watch:debug
+npm run zen:watch:debug
 ```
