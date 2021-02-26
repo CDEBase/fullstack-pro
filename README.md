@@ -15,12 +15,12 @@ Useful commands:
 |command|Description|
 |--------------------------|-----------|    
 |`lerna clean`|                 - removes the node_modules directory from all packages. |
-|`npm start`|       - starts the web server and backend server. Or Use `npm run zen:watch`|
-|`npm run zen:watch`|         - starts the web server and backend server in watch mode.|
-|`npm run zen:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
-|`npm run watch`|               - build the packages in watchmode (Useful for development)|
-|`npm run lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
-|`npm run build`|               - build all the packages|
+|`npm start`|       - starts the web server and backend server. Or Use `yarn zen:watch`|
+|`yarn zen:watch`|         - starts the web server and backend server in watch mode.|
+|`yarn zen:watch:debug`|    - starts the web server and backend server in debug and watch mode.|
+|`yarn watch`|               - build the packages in watchmode (Useful for development)|
+|`yarn lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
+|`yarn build`|               - build all the packages|
 |`npm install`|                - runs `lerna` and `build`|
 |`lerna publish`|               - publishes packages in the current Lerna project. |
 

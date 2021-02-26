@@ -19,6 +19,6 @@ export const config = envalid.cleanEnv(process.env, {
     CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
     CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
     NAMESPACE: str({ default: 'default' }),
-    apolloLogging: bool({ default: false, devDefault: true }),
+    apolloLogging: bool({ default: false }),
 });
 
