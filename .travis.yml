@@ -13,6 +13,6 @@ branches:
   only:
   - publish
 script:
-  - npm run test
+  - yarn test
 # Allow Travis tests to run in containers.
 sudo: false
