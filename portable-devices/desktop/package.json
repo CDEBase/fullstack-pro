@@ -78,8 +78,8 @@
     "fela-plugin-unit": "^11.0.2",
     "fela-plugin-validator": "^11.0.2",
     "fela-preset-web": "^11.0.2",
-    "graphql": "^14.5.8",
-    "graphql-tag": "^2.10.1",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.11.0",
     "history": "^4.10.1",
     "immutability-helper": "^3.0.1",
     "inversify": "^5.0.1",
@@ -110,7 +110,7 @@
     "rxjs-compat": "^6.5.3",
     "rxjs-hooks": "^0.5.2",
     "source-map-support": "^0.5.19",
-    "subscriptions-transport-ws": "0.9.16"
+    "subscriptions-transport-ws": "0.9.18"
   },
   "devDependencies": {
     "electron": "^11.2.0",
