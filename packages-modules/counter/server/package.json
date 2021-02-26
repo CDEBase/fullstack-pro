@@ -39,7 +39,6 @@
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     }
   },
-  "dependencies": {},
   "peerDependencies": {
     "@common-stack/server-core": ">=0.0.251"
   },

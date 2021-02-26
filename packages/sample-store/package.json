@@ -41,8 +41,6 @@
     "@sample-stack/core": "file:../sample-core",
     "sequelize": "^5.21.3"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "publishConfig": {
     "access": "public"
   },
