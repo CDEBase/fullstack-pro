@@ -82,7 +82,6 @@
     "sample-stack-backend-server": "file:servers/backend-server",
     "sample-stack-desktop": "file:portable-devices/desktop",
     "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-mobile": "file:portable-devices/mobile",
     "sample-stack-moleculer-server": "file:servers/moleculer-server"
   },
   "devDependencies": {
