@@ -9,13 +9,11 @@ const subTopic = config.CONNECTION_ID; // version.topic.action
 
 export const settings: any & { name: string } = {
     name: NATS_MOLECULER_COUNTER_SERIVCE,
-    rootFilePath: config.FILE_ROOT_PATH,
     connectionId: config.CONNECTION_ID,
     namespace: config.NAMESPACE,
     subTopic,
     logger: config.LOG_LEVEL,
     workspaceId: config.CONNECTION_ID || 'DEFAULT',
-    graphqlUrl: config.GRAPHQL_URL,
     configPath: process.env.CONFIG_PATH,
 };
 

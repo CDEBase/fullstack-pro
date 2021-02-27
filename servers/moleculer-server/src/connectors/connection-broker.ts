@@ -45,7 +45,7 @@ export class ConnectionBroker {
             }
         }
 
-        this._mongoConnector = new MongoConnector(config.MONGO_URL);
+        this._mongoConnector = new MongoConnector(config.MONGO_URL as any);
         this._redisConnector = new RedisConnector(); // TODO pass constructor options
     }
 
