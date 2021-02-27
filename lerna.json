@@ -26,6 +26,11 @@
     }
   },
   "npmCLient": "npm",
-  "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/**"],
+  "packages": [
+    "packages-modules/**", 
+    "packages/**", 
+    "servers/*", 
+    "portable-devices/desktop"
+  ],
   "version": "0.0.0"
 }
