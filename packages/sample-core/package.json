@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/core",
-  "version": "0.0.39-alpha.125",
+  "version": "0.0.40-alpha.1",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
