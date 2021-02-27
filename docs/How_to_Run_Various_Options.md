@@ -3,11 +3,11 @@
 
 ### To run all packages in watch mode
 
-`yarn watch`
+`npm run watch`
 
 Note: It only run `packages` and `packages-modules` only in watch mode. Servers should be run seperately.
 
-Also check out `yarn watch-packages` to run watch on required packages. 
+Also check out `npm run watch-packages` to run watch on required packages. 
 
 
 ### To run build with watch for dependent packages
@@ -15,19 +15,19 @@ Also check out `yarn watch-packages` to run watch on required packages.
 For auto reloading changes into the server to be productive during development.
 
 ```
-yarn watch-packages
+npm run watch-packages
 ```
 
 If you also need to watch along with it, you can as many scopes as required like below. 
 
 ```
-yarn watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
+npm run watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
 ```
 
 
 ### To run a individual package in watch mode
 
-`lerna exec --scope=<package name> yarn watch`
+`lerna exec --scope=<package name> npm run watch`
 
 More details on how to use [lerna exec](https://github.com/lerna/lerna/tree/master/commands/exec#options)
 
@@ -41,31 +41,31 @@ To run any command on a package <package_name>
 
 To start the frontend-server
 
-`lerna exec --scope=*frontend-server yarn watch`
+`lerna exec --scope=*frontend-server npm run watch`
 
 To just start the backend-server
 
-`lerna exec --scope=*backend-server yarn watch`
+`lerna exec --scope=*backend-server npm run watch`
 
 
 ### To run Frontend Server in SSR Mode
 
-`yarn start:envSSR`
+`npm run start:envSSR`
 
 
 ### To run Frontend with production build in development
 
 build the package
 
-`lerna exec --scope=*frontend-server yarn build`
+`lerna exec --scope=*frontend-server npm run build`
 
 start the server with `dev` environment file
 
-`lerna exec --scope=*frontend-server yarn start:dev`
+`lerna exec --scope=*frontend-server npm run start:dev`
 
 Make sure backend is also running in seperate terminal
 
-`lerna exec --scope=*backend-server yarn watch`
+`lerna exec --scope=*backend-server npm run watch`
 
 
 

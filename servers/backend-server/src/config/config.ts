@@ -9,6 +9,8 @@ export const config = envalid.cleanEnv(process.env, {
     NATS_URL: str(),
     NATS_USER: str(),
     NATS_PW: str(),
+    MONGO_URL: str(),
+    LOG_LEVEL: str({ default: 'info', choices: ['info', 'debug', 'trace'] }),
     REDIS_CLUSTER_URL: json({devDefault: '[{"port":6379,"host":"localhost"}]',  example: '[{"port":6379,"host":"localhost"}]'}),
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),

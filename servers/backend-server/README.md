@@ -19,11 +19,11 @@ Please note that you will need to rename the library name in some files:
 
 Useful commands:
 ----
-    yarn build       - build the library files (Required for start:watch)
-    yarn build:watch - build the library files in watchmode (Useful for development)
+    npm run build       - build the library files (Required for start:watch)
+    npm run build:watch - build the library files in watchmode (Useful for development)
     npm test            - run tests once
-    yarn test:watch  - run tests in watchmode (Useful for development)
-    yarn test:growl  - run tests in watchmode with growl notification (even more useful for development)
+    npm run test:watch  - run tests in watchmode (Useful for development)
+    npm run test:growl  - run tests in watchmode with growl notification (even more useful for development)
 
 How to run it:
 ----
@@ -67,7 +67,7 @@ Setup
 ----
 Create a database and fill the data
 ```
-yarn db:seed         
+npm run db:seed         
 ```
 What files to be customized? 
 ----

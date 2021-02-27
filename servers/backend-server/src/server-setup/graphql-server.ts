@@ -56,7 +56,7 @@ export class GraphqlServer {
     private configureApolloServer(): ApolloServer {
         const serverConfig: ApolloServerExpressConfig = {
             debug,
-            schema: this.moduleService.schema,
+            schema: this.moduleService.schema as any,
             dataSources: () => this.moduleService.dataSource,
             cache: this.cache,
             context: async ({ req, res, connection }: { req: Express.Request, res: Express.Response, connection: any }) => {
