@@ -15,7 +15,7 @@
   "scripts": {
     "build": "npm run build:packages",
     "build:clean": "lerna exec npm run build:clean",
-    "build:packages": "lerna run build --ignore *server",
+    "build:packages": "lerna run build --ignore *server --ignore *desktop",
     "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
     "check-updates": "lerna exec ./node_modules/.bin/npm-check-updates -- -u",
     "clean": "lerna clean --yes && npm run build:clean && rimraf node_modules",
@@ -270,8 +270,8 @@
     "ws": "^7.2.1"
   },
   "engines": {
-    "node": ">=10.15.3 < 14.0.0",
-    "npm": ">=6.x <=7.x"
+    "node": ">=12.18.4 < 14.0.0",
+    "npm": ">6.x <=7.x"
   },
   "cacheDirectories": [
     ".cache"
