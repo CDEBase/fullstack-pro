@@ -185,7 +185,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'namespace-login' }
+        expression { GIT_BRANCH_NAME == 'devpublish' }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
