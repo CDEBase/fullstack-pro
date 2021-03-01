@@ -185,13 +185,17 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == 'namespace-login' }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
       steps {
        withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {
+
+         nameSpaceCheck = sh(script: "kubectl get ns -q | tr '\\n' ','", returnStdout: true)
+         if !(isProductionReleaseExists.contains(param.NAMESPACE)) { sh "kubectl create ns " + param.NAMESPACE }
+
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -234,6 +238,10 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+          
+          nameSpaceCheck = sh(script: "kubectl get ns -q | tr '\\n' ','", returnStdout: true)
+          if !(isProductionReleaseExists.contains(param.NAMESPACE)) { sh "kubectl create ns " + param.NAMESPACE }
+
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -273,6 +281,8 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
+          nameSpaceCheck = sh(script: "kubectl get ns -q | tr '\\n' ','", returnStdout: true)
+          if !(isProductionReleaseExists.contains(param.NAMESPACE)) { sh "kubectl create ns " + param.NAMESPACE }
           sh """
              helm init --client-only
              helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
