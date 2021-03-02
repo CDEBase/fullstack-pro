@@ -201,7 +201,7 @@ pipeline {
           script {
 
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns + " params.NAMESPACE }
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -247,7 +247,7 @@ pipeline {
           """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns + " params.NAMESPACE }
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -289,7 +289,7 @@ pipeline {
            """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns + " params.NAMESPACE }
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
             
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
