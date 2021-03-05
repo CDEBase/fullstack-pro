@@ -191,7 +191,7 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -199,6 +199,10 @@ pipeline {
             helm repo update
          """
           script {
+
+            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
              ["${it}" : generateStage(it, deployment_env)]
@@ -234,6 +238,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+          
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -241,6 +246,9 @@ pipeline {
             helm repo update
           """
           script {
+            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
               ["${it}" : generateStage(it, deployment_env)]
@@ -274,11 +282,15 @@ pipeline {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://0.0.0.0']) {
           sh """
-             helm init --client-only
+             helm repo add stable https://charts.helm.sh/stable
+             helm repo add incubator https://charts.helm.sh/incubator
              helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
              helm repo update
            """
           script {
+            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
              ["${it}" : generateStage(it, deployment_env)]
