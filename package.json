@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -16,7 +16,7 @@
     "build": "npm run build:packages",
     "build:clean": "lerna exec npm run build:clean",
     "build:packages": "lerna run build --ignore *server --ignore *desktop",
-    "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
+    "build:packages:watch": "lerna run build:lib:watch --ignore *server --ignore *desktop --stream",
     "check-updates": "lerna exec ./node_modules/.bin/npm-check-updates -- -u",
     "clean": "lerna clean --yes && npm run build:clean && rimraf node_modules",
     "clean:force": "rimraf package-lock.json yarn.lock && npm run clean",
@@ -56,7 +56,7 @@
     "pretravis": "npm run compile",
     "travis": "istanbul cover -x \"*.test.js\" _mocha -- --timeout 5000 --full-trace ./test/tests.js",
     "posttravis": "npm run lint",
-    "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
+    "watch": "lerna exec --no-sort --ignore *server --ignore *desktop --stream --parallel -- webpack --watch",
     "watch-packages": "lerna exec --no-sort  --scope @sample-stack/platform* --scope @sample-stack/react-shared-components --scope @sample-stack/core --stream --parallel 'webpack --watch'",
     "zen:build": "cross-env NODE_ENV=production zen build",
     "zen:exp": "zen exp",
