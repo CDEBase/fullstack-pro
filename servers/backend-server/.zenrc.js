@@ -9,7 +9,7 @@ const config = {
             entry: './src/index.ts',
             stack: ['server'],
             tsLoaderOptions: {
-                "configFileName": "./tsconfig.json"
+                // "configFile": "./tsconfig.json"
             },
             defines: {
                 __SERVER__: true

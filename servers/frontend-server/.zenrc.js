@@ -16,7 +16,7 @@ const config = {
             },
             stack: ['web', 'react'],
             tsLoaderOptions: {
-                configFileName: "./tsconfig.json"
+                // "configFile": "./tsconfig.json"
             },
             webpackDevPort: 3000,
             openBrowser: true,
