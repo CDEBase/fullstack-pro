@@ -51,7 +51,7 @@ const config = {
             entry: './src/backend/app.ts',
             stack: ['server'],
             tsLoaderOptions: {
-                configFileName: "./tsconfig.json"
+                // configFileName: "./tsconfig.json"
             },
             defines: {
                 __SERVER__: true,
