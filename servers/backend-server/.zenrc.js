@@ -20,10 +20,12 @@ const config = {
                     filename: 'main.js',
                 },
                 plugins: [
-                    new CopyWebpackPlugin([{
-                        from: '../../tools/esm-wrapper.js',
-                        to: 'index.js',
-                    }]),
+                    new CopyWebpackPlugin({
+                        patterns: [{
+                            from: '../../tools/esm-wrapper.js',
+                            to: 'index.js',
+                        }],
+                    }),
                 ],
                 externals: [
                     nodeExternals({}),
