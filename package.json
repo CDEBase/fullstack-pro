@@ -259,7 +259,7 @@
     "webpack-dev-server": "3.10.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-manifest-plugin": "^2.2.0",
-    "webpack-merge":"^5.4.0",
+    "webpack-merge": "^5.4.0",
     "webpack-node-externals": "^1.7.2",
     "webpack-sources": "^1.4.3",
     "webpack-virtual-modules": "^0.2.1",
