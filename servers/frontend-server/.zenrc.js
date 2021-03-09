@@ -1,7 +1,7 @@
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
