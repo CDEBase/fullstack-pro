@@ -3,28 +3,24 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { onError } from 'apollo-link-error';
-import { ApolloLink, Observable } from 'apollo-link';
+import { ApolloLink } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getOperationAST } from 'graphql';
 import apolloLogger from 'apollo-link-logger';
-
-import { PUBLIC_SETTINGS } from '../config/public-config';
+import { PUBLIC_SETTINGS } from './public-config';
 import modules from '../modules';
 import { logger } from '@cdm-logger/client';
-import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
 
-
-const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
+const clientState = modules.getStateParams({ resolverContex: () => modules.createService({}, {}) });
 
 // TODO: add cache redirects to module
-const cache = new InMemoryCache({
+export const cache = new InMemoryCache({
     dataIdFromObject: (result) => modules.getDataIdFromObject(result),
     fragmentMatcher: clientState.fragmentMatcher as any,
- });
-const schema = `
+});
 
-`;
+const schema = ``;
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
@@ -74,7 +70,7 @@ if (__CLIENT__) {
     });
     link = ApolloLink.split(
         ({ query, operationName }) => {
-            if (operationName.endsWith('_WS')) {
+            if (operationName && operationName.endsWith('_WS')) {
                 return true;
             } else {
                 const operationAST = getOperationAST(query as any, operationName);
@@ -103,12 +99,13 @@ const createApolloClient = () => {
         // return quickly if client is already created.
         return _apolloClient;
     }
+
     const params: ApolloClientOptions<any> = {
+        cache,
         queryDeduplication: true,
         typeDefs: schema.concat(<string>clientState.typeDefs),
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
-        cache,
     };
     if (__SSR__) {
         if (__CLIENT__) {
@@ -121,6 +118,7 @@ const createApolloClient = () => {
         }
     }
     _apolloClient = new ApolloClient<any>(params);
+
     cache.writeData({
         data: {
             ...clientState.defaults,

@@ -5,16 +5,15 @@ import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
-import { rehydrate, render } from 'fela-dom';
-import { createApolloClient } from '../config/apollo-client';
-import { epic$, rootEpic } from '../config/epic-config';
+import { rehydrate } from 'fela-dom';
+import { epic$ } from '../config/epic-config';
 import {
   createReduxStore,
   storeReducer,
   history,
   persistConfig,
-  epicMiddleware,
 } from '../config/redux-config';
+import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
 import { ConnectedRouter } from 'connected-react-router';
 import RedBox from './RedBox';
@@ -23,7 +22,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 
 
-const client = createApolloClient();
+const { apolloClient: client } = createClientContainer();
 
 let store;
 if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
