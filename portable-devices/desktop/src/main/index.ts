@@ -1,76 +1,77 @@
+const isDev = (process.env.NODE_ENV === 'development');
 
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- */
-import { app, BrowserWindow } from 'electron';
-import * as path from 'path';
-import { config } from '../config';
-import { format as formatUrl } from 'url';
+let installExtension = null;
+if (isDev) {
+    installExtension = require('electron-devtools-installer');
+}
+
+import { app, ipcMain, Menu } from 'electron';
+import TrayWindow from './windows/tray-window';
+import MainWindow from './windows/main-window';
+import AboutWindow from './windows/about-window';
+import TrayIcon from './tray-icon';
+import { menuTemplate } from './menu-template';
 
 
-const isDevelopment = config.isDevelopment;
+let tray: TrayWindow = null;
+let main: MainWindow = null;
+let about: AboutWindow = null;
 
-// Global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow: BrowserWindow | undefined;
+let trayIcon: TrayIcon = null;
 
-const createMainWindow = () => {
-  // Create the browser window.
-  const window = new BrowserWindow({webPreferences: {nodeIntegration: true,  webSecurity: false}});
-  if (isDevelopment) {
-    window.webContents.openDevTools()
-  }
+// We hide dock, because we do not want to show our app as common app. 
+// We want to display our app as a Tray-lik app (like Dropbox, Skitch or ets).
+app.dock.hide();
 
-console.log('---ISDEVEO', config.isDev, config.isDevelopment);
-  if (isDevelopment) {
-    // window.loadURL(`http://localhost:${config.ELECTRON_WEBPACK_WDS_PORT}`);
-    window.loadURL(formatUrl({
-      protocol: "http",
-      slashes: true,
-      hostname: config.ELECTRON_WEBPACK_WDS_HOST,
-      port: config.ELECTRON_WEBPACK_WDS_PORT,
-    }));
 
-  }
-  else {
-    window.loadURL(formatUrl({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file',
-      slashes: true
-    }))
+// This event will be emitted when Electron has finished initialization.
+app.on('ready', function () {
+    if (isDev) {
+        installExtentions();
+    }
 
-  }
+    tray = new TrayWindow();
+    main = new MainWindow();
+    about = new AboutWindow();
 
-  window.on('closed', () => {
-    mainWindow = null
-  });
+    trayIcon = new TrayIcon(tray.window);
 
-  window.webContents.on('devtools-opened', () => {
-    window.focus()
-    setImmediate(() => {
-      window.focus()
-    });
-  });
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(main)));
 
-  return window;
-};
-
-// Quit application when all windows are closed
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications to stay open until the user explicitly quits
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
 });
 
-app.on('activate', () => {
-  // On macOS it is common to re-create a window even after all windows have been closed
-  if (!mainWindow) {
-    mainWindow = createMainWindow()
-  }
+// Custom event created to close the app from Tray Window.
+// The ipcMain module is used to handle events from a renderer process (web page).
+ipcMain.on('quit-app', function () {
+    console.log('--QUIT_APP')
+    main.window.close();
+    tray.window.close(); // Standart Event of the BrowserWindow object.
+    about.window.close();
+    app.quit(); // Standart event of the app - that will close our app.
 });
 
-// Create main BrowserWindow when electron is ready
-app.on('ready', () => {
-  mainWindow = createMainWindow()
+// Custom events MAIN WINDOW
+ipcMain.on('show-main-window-event', function () {
+    main.window.show();
+    app.dock.show();
 });
+
+
+// Custom events ABOUT WINDOW
+ipcMain.on('show-about-window-event', function () {
+    about.window.show();
+});
+
+
+// Custom events TRAY WINDOW
+ipcMain.on('update-title-tray-window-event', function (event, title) {
+    trayIcon.updateTitle(title);
+});
+
+
+
+const installExtentions = function () {
+    installExtension['default'](installExtension['REDUX_DEVTOOLS']);
+    installExtension['default'](installExtension['REACT_DEVELOPER_TOOLS']);
+}
+

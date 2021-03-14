@@ -1,5 +1,5 @@
 {
-  "title": "ClockifyApp",
+  "title": "SampleDesktop",
   "renderer": {
     "dll": [],
     "webpackConfig": "webpack.renderer.additions.js"

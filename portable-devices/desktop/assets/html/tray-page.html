@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type='text/javascript'>
+      window.ipcRenderer = require('electron').ipcRenderer;
+    </script>
+  </head>
+
+  <body>
+    <button id='my-button'>X</button>
+    <button id='my-second-button'>Set rundom!</button>
+    <button id='notify'>Notify!</button>
+    <button id='about'>Open About</button>
+    <button id='main'>Open Main</button>
+
+      <script type='text/javascript'>
+     document.getElementById("my-button").addEventListener("click", function (e) {
+        ipcRenderer.send('quit-app');
+      });
+
+     document.getElementById("about").addEventListener("click", function (e) {
+        ipcRenderer.send('show-about-window-event');
+      });
+
+     document.getElementById("main").addEventListener("click", function (e) {
+        ipcRenderer.send('show-main-window-event');
+      });
+
+
+      var textArray = ['First', 'Second', 'Third'];
+
+      document.getElementById('my-second-button').addEventListener("click", function (e) {
+        console.log('clicked----tray second button')
+        var randomIndex = Math.floor(Math.random() * textArray.length);
+        var randomString = textArray[randomIndex];
+        // On click we send event to Main Process (index.js file) with a random string.
+        ipcRenderer.send('update-title-tray-window-event', randomString);
+      });
+
+
+
+      document.getElementById("notify").addEventListener("click", function (e) {
+        let notif = new window.Notification( 'My First Notification', {
+          body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, maxime explicabo dolores tenetur'
+        })
+
+        notif.onclick = function () {
+          window.ipcRenderer.send('show-main-window-event')
+        }
+      });
+
+
+
+  </script>
+  </body>
+</html>
