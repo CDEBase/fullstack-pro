@@ -13,10 +13,8 @@ export default class TrayWindow {
         // Creation of the new window.
         this.window = new BrowserWindow({
             show: false, // Initially, we should hide it, in such way will remove blink-effect.
-            height: 500,
-            width: 270,
-            // x: 120,
-            // y: 200,
+            height: 210,
+            width: 225,
             // This option will remove frame buttons. 
             // By default window has standart header buttons (close, hide, minimize). 
             // We should change this option because we want to display our window like
@@ -24,7 +22,6 @@ export default class TrayWindow {
             frame: false,
             backgroundColor: '#E4ECEF',
             resizable: false,
-            
         });
 
         const htmlPath = formatUrl({
@@ -33,7 +30,8 @@ export default class TrayWindow {
             slashes: false
           });
         this.window.loadURL(htmlPath);
-        
+
+
         // Object BrowserWindow has a lot of standart events
         // We will hide Tray window on blur. To emulate standart behavior of the tray-like apps.
         this.window.on('blur', () => {
