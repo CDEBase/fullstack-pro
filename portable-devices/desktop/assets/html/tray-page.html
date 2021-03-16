@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <style type="text/css">
+      .info{
+        padding-left: 194px;
+      }
+      .story{
+        display: flex;
+        height: 30px;
+      }
+      .story i{
+          margin-top: 4px;
+          margin-left: 5px;
+          height: 30px;
+          padding-top: 10px;
+      }
+      .story h2{
+          margin-top: 2px;
+          margin-left: 5px;
+      }
+      .txt_story{
+          padding-top: 2px;
+          margin-left: 30px;
+      }
+      </style> 
+
     <script type='text/javascript'>
       window.ipcRenderer = require('electron').ipcRenderer;
     </script>
   </head>
 
   <body>
+
+    <div>
+      <i class="fa fa-list-alt" aria-hidden="true" style="font-size:24px"></i>
+      <i class="fa fa-info-circle info" aria-hidden="true" style="font-size:24px"></i>
+    </div>
+    <hr />
+
+    <div class="story">
+      <i class="fa fa-circle-thin" aria-hidden="true" style="font-size:20px"></i>
+      <h2>Story 1</h2>
+    </div>
+    <div class="txt_story">Can't wait to tray load</div>
+    <hr />
+
+    <div class="story">
+      <i class="fa fa-circle-thin" aria-hidden="true" style="font-size:20px"></i>
+      <h2>Story 2</h2>
+    </div>
+    <div class="txt_story">Can't wait to tray load</div>
+    <hr />
+
+    <div class="story">
+      <i class="fa fa-circle-thin" aria-hidden="true" style="font-size:20px"></i>
+      <h2>Story 3</h2>
+    </div>
+    <div class="txt_story">Can't wait to tray load</div>
+    <hr />
+    <div>
+      <i class="fa fa-play-circle-o" aria-hidden="true" style="font-size:24px"></i>
+      <i class="fa fa-pause-circle-o" aria-hidden="true" style="font-size:24px"></i>
+      <i class="fa fa-times" aria-hidden="true" style="font-size:24px; margin-left: 170px;"></i>
+    </div>
+
     <button id='my-button'>X</button>
     <button id='my-second-button'>Set rundom!</button>
     <button id='notify'>Notify!</button>
