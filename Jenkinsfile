@@ -436,7 +436,7 @@ def generateBuildStage(server) {
       def name = getName(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
         sh """
-            if [ ${BUILD_STRATEGY} == 'yarn' ];
+            if [ $BUILD_STRATEGY = 'yarn' ]
             then lerna exec --scope=*${server} yarn docker:${env.BUILD_COMMAND}; 
             else lerna exec --scope=*${server} npm run docker:${env.BUILD_COMMAND};
             fi
