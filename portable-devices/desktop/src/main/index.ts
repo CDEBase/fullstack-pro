@@ -10,7 +10,7 @@ import TrayWindow from './windows/tray-window';
 import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
-import { menuTemplate } from './menu-template';
+import { template } from './menu-template';
 
 
 let tray: TrayWindow = null;
@@ -36,7 +36,7 @@ app.on('ready', function () {
 
     trayIcon = new TrayIcon(tray.window);
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(main)));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
 });
 
@@ -56,6 +56,10 @@ ipcMain.on('show-main-window-event', function () {
     app.dock.show();
 });
 
+ipcMain.on('about-window', function () {
+    console.log("###################")
+    about.window.show();
+});
 
 // Custom events ABOUT WINDOW
 ipcMain.on('show-about-window-event', function () {

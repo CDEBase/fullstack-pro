@@ -50,6 +50,10 @@ let config = {
         tray: [
             'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
             './src/renderer/tray-main.tsx',
+        ],
+        about: [
+            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+            './src/renderer/about.tsx',
         ]
     },
     plugins: [
