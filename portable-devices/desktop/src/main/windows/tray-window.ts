@@ -19,7 +19,7 @@ export default class TrayWindow {
             // By default window has standart header buttons (close, hide, minimize). 
             // We should change this option because we want to display our window like
             // Tray Window not like common-like window.
-            frame: false,
+            // frame: false,
             backgroundColor: '#E4ECEF',
             resizable: false,
         });

@@ -2,7 +2,7 @@
 <html>
   <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
     <style type="text/css">
       .info{
@@ -26,7 +26,7 @@
           padding-top: 2px;
           margin-left: 30px;
       }
-      </style> 
+      </style>  -->
 
     <script type='text/javascript'>
       window.ipcRenderer = require('electron').ipcRenderer;
@@ -35,7 +35,27 @@
 
   <body>
 
-    <div>
+    <div id='app'></div>
+
+
+    <script>
+      var bundlePath = '../renderer/tray.js';
+
+      // if (process.env.NODE_ENV === 'development') {
+        bundlePath = 'http://localhost:9080/tray.js';
+      // }
+
+      var js_script = document.createElement('script');
+      js_script.src = bundlePath;
+      js_script.async = true;
+      document.body.appendChild(js_script);
+    </script>
+
+<div>
+  TEST --------------
+</div>
+
+    <!-- <div>
       <i class="fa fa-list-alt" aria-hidden="true" style="font-size:24px"></i>
       <i class="fa fa-info-circle info" aria-hidden="true" style="font-size:24px"></i>
     </div>
@@ -107,10 +127,10 @@
         notif.onclick = function () {
           window.ipcRenderer.send('show-main-window-event')
         }
-      });
+      }); -->
 
 
 
-  </script>
+  <!-- </script> -->
   </body>
 </html>

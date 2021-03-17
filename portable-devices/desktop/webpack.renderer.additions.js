@@ -42,6 +42,16 @@ const options = {
 }
 let config = {
     target: 'electron-renderer',
+    entry: {
+        renderer: [
+            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+            './src/renderer/index.tsx',
+        ],
+        tray: [
+            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
+            './src/renderer/tray-main.tsx',
+        ]
+    },
     plugins: [
         new Dotenv({
             path: process.env.ENV_FILE
