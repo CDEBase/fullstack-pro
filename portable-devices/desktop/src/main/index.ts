@@ -10,7 +10,7 @@ import TrayWindow from './windows/tray-window';
 import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
-import { menuTemplate } from './menu-template';
+import { template } from './menu-template';
 
 
 let tray: TrayWindow = null;
@@ -21,7 +21,7 @@ let trayIcon: TrayIcon = null;
 
 // We hide dock, because we do not want to show our app as common app. 
 // We want to display our app as a Tray-lik app (like Dropbox, Skitch or ets).
-app.dock.hide();
+// app.dock.hide();
 
 
 // This event will be emitted when Electron has finished initialization.
@@ -36,7 +36,7 @@ app.on('ready', function () {
 
     trayIcon = new TrayIcon(tray.window);
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate(main)));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
 });
 
@@ -56,6 +56,10 @@ ipcMain.on('show-main-window-event', function () {
     app.dock.show();
 });
 
+ipcMain.on('about-window', function () {
+    console.log("###################")
+    about.window.show();
+});
 
 // Custom events ABOUT WINDOW
 ipcMain.on('show-about-window-event', function () {

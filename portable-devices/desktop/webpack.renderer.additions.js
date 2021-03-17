@@ -44,7 +44,15 @@ const options = {
 let config = {
     target: 'electron-renderer',
     entry: {
-        tray: './src/renderer/tray.tsx',
+        renderer: [
+            './src/renderer/main.tsx',
+        ],
+        tray: [
+            './src/renderer/tray-main.tsx',
+        ],
+        about: [
+            './src/renderer/about.tsx',
+        ]
     },
     output: {
         filename: '[name].js',

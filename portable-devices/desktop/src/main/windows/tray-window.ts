@@ -15,13 +15,13 @@ export default class TrayWindow {
         // Creation of the new window.
         this.window = new BrowserWindow({
             show: false, // Initially, we should hide it, in such way will remove blink-effect.
-            height: 210,
-            width: 225,
+            height: 500,
+            width: 270,
             // This option will remove frame buttons. 
             // By default window has standart header buttons (close, hide, minimize). 
             // We should change this option because we want to display our window like
             // Tray Window not like common-like window.
-            frame: false,
+            // frame: false,
             backgroundColor: '#E4ECEF',
             resizable: false,
         });
