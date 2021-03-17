@@ -140,7 +140,7 @@ pipeline {
             git diff-index --quiet HEAD || git commit -am 'auto build\r\n[skip ci]'
             git fetch origin develop
             git checkout develop
-            if [ $BUILD_STRATEGY = 'yarn' ]
+            if [ $BUILD_STRATEGY = 'yarn' ]; then
             yarn devpublish:${params.NPM_PUBLISH_STRATEGY}; 
             else npm run devpublish:${params.NPM_PUBLISH_STRATEGY};
             fi
