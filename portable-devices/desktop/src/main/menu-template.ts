@@ -2,33 +2,6 @@ import { format as formatUrl } from 'url';
 import { app, shell, ipcMain, MenuItem, Menu, BrowserWindow } from 'electron';
 import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
-import path from 'path';
-
-const createModal = (parentWindow, width, height) => {
-    let modal = new BrowserWindow({
-      width: width,
-      height: height,
-      modal: true,
-      parent: parentWindow,
-      webPreferences: {
-        nodeIntegration: true
-      }
-    })
-  
-    const htmlPath = formatUrl({
-        pathname: path.join(__dirname, 'about-page.html'),
-        protocol: 'file',
-        slashes: false
-    });
-
-    modal.loadFile(htmlPath)
-  
-    return modal;
-  
-  }
-
-
-
 
 export const template: Electron.MenuItemConstructorOptions[] = [{
         label: 'Edit',
@@ -68,13 +41,10 @@ export const template: Electron.MenuItemConstructorOptions[] = [{
             }
         },{
             label: 'about',
-            click(menuItem, browserWindow, event){
+            click(){
                 console.log("================Clicked About====================")
-                // ipcRenderer.send('about-window');
-                // browserWindow.webContents.send('show-about-window-event');
-                // console.log("================After Clicked About====================")
-                // require('electron').shell.openExternal('http://localhost:3000/');
-                createModal(MainWindow,600,800);
+                const about = new AboutWindow();
+                about.window.show();
             }
         }]
     }
