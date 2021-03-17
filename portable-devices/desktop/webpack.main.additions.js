@@ -1,4 +1,3 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
@@ -20,20 +19,6 @@ let config = {
             ],
     },
     plugins: [
-        new CopyWebpackPlugin({
-            patterns: [{
-                from: 'assets/html/tray-page.html',
-                to: 'tray-page.html',
-            }, {
-                from: 'assets/html/about-page.html',
-                to: 'about-page.html',
-            }, {
-                from: 'assets/html/main-page.html',
-                to: 'main-page.html',
-            },
-
-            ]
-        }),
         new BundleAnalyzerPlugin({
             analyzerMode:
                 process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',

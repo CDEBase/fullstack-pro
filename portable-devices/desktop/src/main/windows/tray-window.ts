@@ -1,8 +1,10 @@
 import * as path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 import { format as formatUrl } from 'url';
+import { config } from '../../config';
 
 
+const TRAY_HTML_PAGE = 'tray-page.html'
 
 export default class TrayWindow {
 
@@ -24,13 +26,30 @@ export default class TrayWindow {
             resizable: false,
         });
 
-        const htmlPath = formatUrl({
-            pathname: path.join(__dirname, 'tray-page.html'),
-            protocol: 'file',
-            slashes: false
-          });
-        this.window.loadURL(htmlPath);
-
+        if (config.isDevelopment) {
+            this.window.webContents.openDevTools()
+            this.window.webContents.on('devtools-opened', () => {
+                this.window.focus()
+                setImmediate(() => {
+                    this.window.focus()
+                });
+            });
+            const htmlDevPath = formatUrl({
+                protocol: "http",
+                slashes: true,
+                hostname: config.ELECTRON_WEBPACK_WDS_HOST,
+                port: config.ELECTRON_WEBPACK_WDS_PORT,
+                pathname: TRAY_HTML_PAGE,
+            });
+            this.window.loadURL(htmlDevPath);
+        } else {
+            const htmlPath = formatUrl({
+                pathname: path.join(__dirname, TRAY_HTML_PAGE),
+                protocol: 'file',
+                slashes: true,
+            });
+            this.window.loadURL(htmlPath);
+        }
 
         // Object BrowserWindow has a lot of standart events
         // We will hide Tray window on blur. To emulate standart behavior of the tray-like apps.

@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
-  </head>
+<head>
+  <meta charset="utf-8">
+  <title>SampleDesktop</title>
+  <script>require("source-map-support/source-map-support.js").install()</script>
+  <link href="styles.css" rel="stylesheet">
+</head>
 
-  <body>
-MAIN APP PAGE
-  </body>
+<body>
+  MAIN APP PAGE
+  <div id="app" />
+  <script type='text/javascript'>
+    var bundlePath = './renderer.js';
+    if (process.env.NODE_ENV === 'development') {
+      bundlePath = 'http://localhost:9080/renderer.js';
+    }
+
+    var js_script = document.createElement('script');
+    js_script.src = bundlePath;
+    js_script.async = true;
+    document.body.appendChild(js_script);
+
+  </script>
+</body>
+
 </html>
