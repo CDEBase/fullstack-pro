@@ -8,7 +8,7 @@ import * as React from "react";
 import { Button, ColorSchemeName } from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../types/app-types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import DrawerNavigation from "./DrawerNavigation";
 
