@@ -156,7 +156,7 @@
     "@types/webpack-env": "^1.14.1",
     "@types/zen-observable": "^0.8.0",
     "apollo": "^2.21.2",
-    "apollo-server-testing": "^2.11.0",
+    "apollo-server-testing": "^2.21.1",
     "autoprefixer": "^9.7.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
