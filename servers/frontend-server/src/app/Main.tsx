@@ -51,12 +51,7 @@ if ((module as any).hot) {
   });
 }
 
-export interface MainState {
-  error?: ServerError;
-  info?: any;
-}
-
-export class Main extends React.Component<any, MainState> {
+export class Main extends React.Component<{}, {}> {
 
   public render() {
     const renderer = createRenderer();
