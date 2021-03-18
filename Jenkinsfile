@@ -24,6 +24,7 @@ pipeline {
 
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
+    choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.2.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
@@ -139,7 +140,10 @@ pipeline {
             git diff-index --quiet HEAD || git commit -am 'auto build\r\n[skip ci]'
             git fetch origin develop
             git checkout develop
-            npm run devpublish:${params.NPM_PUBLISH_STRATEGY}
+            if [ $BUILD_STRATEGY = 'yarn' ]; then
+            yarn devpublish:${params.NPM_PUBLISH_STRATEGY}; 
+            else npm run devpublish:${params.NPM_PUBLISH_STRATEGY};
+            fi
             git push origin develop
             git checkout devpublish
           """
@@ -435,7 +439,10 @@ def generateBuildStage(server) {
       def name = getName(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
         sh """
-            lerna exec --scope=*${server} npm run docker:${env.BUILD_COMMAND}
+            if [ $BUILD_STRATEGY = 'yarn' ]
+            then lerna exec --scope=*${server} yarn docker:${env.BUILD_COMMAND}; 
+            else lerna exec --scope=*${server} npm run docker:${env.BUILD_COMMAND};
+            fi
             docker tag ${name}:${version} ${REPOSITORY_SERVER}/${name}:${version}
             docker push ${REPOSITORY_SERVER}/${name}:${version}
             docker rmi ${REPOSITORY_SERVER}/${name}:${version}
