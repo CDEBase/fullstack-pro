@@ -84,8 +84,8 @@ pipeline {
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
-            npm install
-            npm run lerna
+            ${params.BUILD_STRATEGY} install
+            ${params.BUILD_STRATEGY} run lerna
           """
        }
     }
@@ -98,7 +98,7 @@ pipeline {
       }
       steps{
         sh """
-          npm run build
+          ${params.BUILD_STRATEGY} run build
         """
       }
     }
@@ -112,9 +112,9 @@ pipeline {
         sh """
           git checkout develop
           git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging'
-          npm install
-          npm run lerna
-          npm run build
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
         """
         script {
           GIT_BRANCH_NAME = 'develop'
@@ -140,10 +140,7 @@ pipeline {
             git diff-index --quiet HEAD || git commit -am 'auto build\r\n[skip ci]'
             git fetch origin develop
             git checkout develop
-            if [ $BUILD_STRATEGY = 'yarn' ]; then
-            yarn devpublish:${params.NPM_PUBLISH_STRATEGY}; 
-            else npm run devpublish:${params.NPM_PUBLISH_STRATEGY};
-            fi
+            ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
             git push origin develop
             git checkout devpublish
           """
@@ -439,10 +436,7 @@ def generateBuildStage(server) {
       def name = getName(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
         sh """
-            if [ $BUILD_STRATEGY = 'yarn' ]
-            then lerna exec --scope=*${server} yarn docker:${env.BUILD_COMMAND}; 
-            else lerna exec --scope=*${server} npm run docker:${env.BUILD_COMMAND};
-            fi
+            lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run docker:${env.BUILD_COMMAND};
             docker tag ${name}:${version} ${REPOSITORY_SERVER}/${name}:${version}
             docker push ${REPOSITORY_SERVER}/${name}:${version}
             docker rmi ${REPOSITORY_SERVER}/${name}:${version}
