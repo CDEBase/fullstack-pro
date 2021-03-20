@@ -11,7 +11,11 @@ function CounterScreen(
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
+      <Button
+        onPress={() => navigation.goBack()}
+        title="Go back home"
+        testID="go-back-home-btn"
+      />
 
       <View style={{ marginTop: 20 }}>
         <View style={{ marginBottom: 20 }}>
@@ -21,10 +25,15 @@ function CounterScreen(
         <Button
           onPress={() => setCounter((c) => c + 1)}
           title="Increment Counter"
+          testID="inc-btn"
         />
 
         <View style={{ marginTop: 10 }}>
-          <Button onPress={() => setCounter(0)} title="Reset Counter" />
+          <Button
+            onPress={() => setCounter(0)}
+            title="Reset Counter"
+            testID="reset-btn"
+          />
         </View>
       </View>
     </View>
