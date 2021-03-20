@@ -18,7 +18,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 import { ErrorBoundary } from './ErrorBoundary';
+// import { getInitialStateRenderer } from 'electron-redux';
 
+// const initialState = getInitialStateRenderer();
 
 const { apolloClient: client } = createClientContainer();
 
@@ -30,7 +32,7 @@ if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.
   // new reducer added through our `modules`
   store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
 } else {
-  store = createReduxStore();
+store = createReduxStore('renderer');
 }
 if ((module as any).hot) {
   (module as any).hot.dispose(data => {

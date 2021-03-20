@@ -1,6 +1,7 @@
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 var dotenv = require('dotenv-safe')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const options = {
     stack: [
@@ -43,18 +44,11 @@ const options = {
 let config = {
     target: 'electron-renderer',
     entry: {
-        renderer: [
-            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-            './src/renderer/index.tsx',
-        ],
-        tray: [
-            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-            './src/renderer/tray-main.tsx',
-        ],
-        about: [
-            'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
-            './src/renderer/about.tsx',
-        ]
+        tray: './src/renderer/tray.tsx',
+        
+    },
+    output: {
+        filename: '[name].js',
     },
     plugins: [
         new Dotenv({
@@ -74,6 +68,20 @@ let config = {
         ),
         new webpack.DefinePlugin({
             "__ENV__": JSON.stringify(dotenv.parsed)
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: 'assets/html/tray-page.html',
+                to: 'tray-page.html',
+            }, {
+                from: 'assets/html/about-page.html',
+                to: 'about-page.html',
+            }, {
+                from: 'assets/html/main-page.html',
+                to: 'main-page.html',
+            },
+
+            ]
         }),
     ],
     // defines: {

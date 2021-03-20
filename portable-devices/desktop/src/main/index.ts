@@ -5,13 +5,13 @@ if (isDev) {
     installExtension = require('electron-devtools-installer');
 }
 
-import { app, ipcMain, Menu } from 'electron';
+import { app, ipcMain, Menu, webContents } from 'electron';
 import TrayWindow from './windows/tray-window';
 import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
-
+import moduleName from 'module'
 
 let tray: TrayWindow = null;
 let main: MainWindow = null;
@@ -49,6 +49,10 @@ ipcMain.on('quit-app', function () {
     about.window.close();
     app.quit(); // Standart event of the app - that will close our app.
 });
+
+ipcMain.on('startjob',async(event,i)=>{
+    console.log("===================",i)
+})
 
 // Custom events MAIN WINDOW
 ipcMain.on('show-main-window-event', function () {

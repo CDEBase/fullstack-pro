@@ -66,6 +66,7 @@
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "electron-positioner": "^4.1.0",
+    "electron-redux": "^1.5.4",
     "envalid": "^7.0.0",
     "fela": "11.6.0",
     "fela-beautifier": "^11.6.0",
