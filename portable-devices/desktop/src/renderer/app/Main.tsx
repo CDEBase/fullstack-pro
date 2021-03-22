@@ -1,4 +1,3 @@
-/// <reference path='../../../../typings/index.d.ts' />
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
@@ -16,11 +15,12 @@ import {
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
 import { ConnectedRouter } from 'connected-react-router';
-import RedBox from './RedBox';
-import { ServerError } from './Error';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
+import { ErrorBoundary } from './ErrorBoundary';
+// import { getInitialStateRenderer } from 'electron-redux';
 
+// const initialState = getInitialStateRenderer();
 
 const { apolloClient: client } = createClientContainer();
 
@@ -32,7 +32,7 @@ if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.
   // new reducer added through our `modules`
   store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
 } else {
-  store = createReduxStore();
+store = createReduxStore('renderer');
 }
 if ((module as any).hot) {
   (module as any).hot.dispose(data => {
@@ -53,12 +53,7 @@ if ((module as any).hot) {
   });
 }
 
-export interface MainState {
-  error?: ServerError;
-  info?: any;
-}
-
-export class Main extends React.Component<any, MainState> {
+export class Main extends React.Component<{}, {}> {
 
   public render() {
     const renderer = createRenderer();

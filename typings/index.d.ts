@@ -85,12 +85,27 @@ declare module '*.graphqls' {
   export default value;
 }
 
+declare module '*.png' {
+  const content: any;
+  export default content;
+}
+
+declare module '*.jpg' {
+  const content: any;
+  export default content;
+}
+
 declare module "*.svg" {
   const content: any;
   export default content;
 }
 
 declare module '*.gif' {
+  const fileName: string;
+  export = fileName;
+}
+
+declare module '*.html' {
   const fileName: string;
   export = fileName;
 }
