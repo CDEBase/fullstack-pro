@@ -5,25 +5,22 @@ import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
-import { rehydrate, render } from 'fela-dom';
-import { createApolloClient } from '../config/apollo-client';
-import { epic$, rootEpic } from '../config/epic-config';
+import { rehydrate } from 'fela-dom';
+import { epic$ } from '../config/epic-config';
 import {
   createReduxStore,
   storeReducer,
   history,
   persistConfig,
-  epicMiddleware,
 } from '../config/redux-config';
+import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
 import { ConnectedRouter } from 'connected-react-router';
-import RedBox from './RedBox';
-import { ServerError } from './Error';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
+import { ErrorBoundary } from './ErrorBoundary';
 
-
-const client = createApolloClient();
+const { apolloClient: client } = createClientContainer();
 
 let store;
 if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
@@ -54,53 +51,31 @@ if ((module as any).hot) {
   });
 }
 
-export interface MainState {
-  error?: ServerError;
-  info?: any;
-}
-
-export class Main extends React.Component<any, MainState> {
-  constructor(props: any) {
-    super(props);
-    const serverError: any = window.__SERVER_ERROR__;
-    if (serverError) {
-      this.state = { error: new ServerError(serverError) };
-    } else {
-      this.state = {};
-    }
-  }
-
-  public componentDidCatch(error: ServerError, info: any) {
-    this.setState({ error, info });
-  }
+export class Main extends React.Component<{}, {}> {
 
   public render() {
     const renderer = createRenderer();
     let persistor = persistStore(store);
     rehydrate(renderer);
-    return this.state.error ? (
-      <RedBox error={this.state.error} />
-    ) : (
-        modules.getWrappedRoot(
-          (
-            <Provider store={store}>
-              <ApolloProvider client={client}>
-                <RendererProvider renderer={renderer}>
-                  <PersistGate persistor={persistor}>
-                    {modules.getWrappedRoot(
-                      (
-                        <ConnectedRouter history={history}>
-                          <MainRoute />
-                        </ConnectedRouter>
-                      ),
-                    )}
-                  </PersistGate>
-                </RendererProvider>
-              </ApolloProvider>
-            </Provider>
-          ),
-        )
-      );
+    return (
+      <ErrorBoundary>
+        <Provider store={store}>
+          <ApolloProvider client={client}>
+            <RendererProvider renderer={renderer}>
+              <PersistGate persistor={persistor}>
+                {modules.getWrappedRoot(
+                  (
+                    <ConnectedRouter history={history}>
+                      <MainRoute />
+                    </ConnectedRouter>
+                  ),
+                )}
+              </PersistGate>
+            </RendererProvider>
+          </ApolloProvider>
+        </Provider>
+      </ErrorBoundary>
+    );
   }
 }
 

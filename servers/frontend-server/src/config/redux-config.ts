@@ -5,24 +5,24 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { createLogger } from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
 import modules from '../modules';
-import { persistReducer, WebStorage } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
-import { createApolloClient } from './apollo-client';
+import { createClientContainer } from './client.service';
 import { rootEpic } from '../config/epic-config';
-
+    
 export const history = require('./router-history');
 
-const reduxLogger = createLogger({
-    collapsed: true,
-});
+const { apolloClient, services, logger } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
-        apolloClient: createApolloClient(),
-    },
+        apolloClient,
+        routes: modules.getConfiguredRoutes(),
+        services,
+        logger
+    }, 
 });
 
 export const storeReducer = (hist) => combineReducers({
@@ -34,8 +34,8 @@ export const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
+    // Don't add `user` state to persist as it creates problems.
     whitelist: [
-        'user',
     ],
 };
 
@@ -58,7 +58,9 @@ export const createReduxStore = (url = '/') => {
 
     // Add redux logger during development only
     if ((process.env.NODE_ENV === 'development' || __DEBUGGING__) && __CLIENT__) {
-        middlewares.push(reduxLogger);
+        const { createLogger } = require('redux-logger');
+
+        middlewares.push(createLogger({ collapsed: true }));
     }
 
     const enhancers: () => StoreEnhancer<any>[] = () => [
@@ -75,6 +77,7 @@ export const createReduxStore = (url = '/') => {
 
     // If we have preloaded state, save it.
     const initialState = __CLIENT__ ? { ...window.__PRELOADED_STATE__ } : {};
+
     // Delete it once we have it stored in a variable
     if (__CLIENT__) {
         delete window.__PRELOADED_STATE__;
@@ -83,7 +86,7 @@ export const createReduxStore = (url = '/') => {
     const store =
         createStore(
             persistedReducer,
-            initialState,
+            initialState as any,
             composeEnhancers(...enhancers()),
         );
     if (__CLIENT__) {
