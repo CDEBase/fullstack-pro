@@ -27,8 +27,13 @@ const mapStateToProps = (state: State) => ({
     });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    increment: () => dispatch(increment()),
-    decrement: () => dispatch(decrement()),
+    increment: () => { 
+        console.log('increment button clicked')
+        return dispatch(increment())},
+    decrement: () => {
+        console.log('decrement button clicked')
+        return dispatch(decrement())
+    },
 });
 
 export const Counter =  connect<StateProps, DispatchProps, RouteComponentProps<any>>(mapStateToProps, mapDispatchToProps)(CounterComponent);

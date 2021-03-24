@@ -12,8 +12,7 @@
 </head>
 
 <body>
-  Tray APP PAGE  111
-  <!-- let count=0 -->
+  Tray APP PAGE
   <br />
   Counter : <div id="counter_disp"></div>
    <button onclick="increment()"> + </button> 
@@ -26,40 +25,18 @@
      }
      var i = localStorage.getItem('counter');
      document.getElementById("counter_disp").innerText = i
+
          function increment(){
-           
-          var i = localStorage.getItem('counter');
-          console.log("=========###########=====",i)
-          i++;
-          localStorage.setItem('counter',i)
-          console.log("========New value=======",i)
-          document.getElementById("counter_disp").innerText = i
-          ipcRenderer.send('startjob',i);
+           console.log('-------Increment button clicked-------')
+            ipcRenderer.send('increment_counter');
          }
          function decrement(){
-          var i = localStorage.getItem('counter');
-          console.log("=========###########=====",i)
-          i--;
-          localStorage.setItem('counter',i)
-          console.log("========New value=======",i)
-          document.getElementById("counter_disp").innerText = i
-          ipcRenderer.send('startjob',i);
+          console.log('-------Descrement button clicked--------')
+            ipcRenderer.send('decrement_counter');
          }
         
-
-        // console.log("==========increment============")
-        // ipcRenderer.send('startjob');
-        // console.log("==========After ipc============")
-      
    </script>
-   <!-- <script>
-    (function() {
-      const script = document.createElement('script');
-      script.src = './tray-page.js';
-      document.write(script.outerHTML);
-    }());
-  </script> -->
-  <script type='text/javascript'>
+   <script type='text/javascript'>
     var bundlePath = './tray.js';
     if (process.env.NODE_ENV === 'development') {
       bundlePath = 'http://localhost:9080/tray.js';

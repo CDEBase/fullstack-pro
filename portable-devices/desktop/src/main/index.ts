@@ -11,13 +11,27 @@ import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
-import moduleName from 'module'
+import { createReduxStore } from '../renderer/config/redux-config'
+
+const {
+    forwardToRenderer,
+    triggerAlias,
+    replayActionMain,
+    createAliasedAction,
+  } = require('electron-redux');
+
+const { createStore, applyMiddleware } = require('redux');
+
+import { connectedReactRouter_counter } from '../redux/reducers'
+const store  = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
+replayActionMain(store);
+createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 let tray: TrayWindow = null;
 let main: MainWindow = null;
 let about: AboutWindow = null;
 
-let trayIcon: TrayIcon = null;
+let trayIcon:TrayIcon = null;
 
 // We hide dock, because we do not want to show our app as common app. 
 // We want to display our app as a Tray-lik app (like Dropbox, Skitch or ets).
@@ -50,8 +64,16 @@ ipcMain.on('quit-app', function () {
     app.quit(); // Standart event of the app - that will close our app.
 });
 
-ipcMain.on('startjob',async(event,i)=>{
-    console.log("===================",i)
+ipcMain.on('increment_counter',async()=>{
+    replayActionMain(store);
+    createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
+    console.log("===========AFTER Increment========")
+})
+
+ipcMain.on('decrement_counter',async()=>{
+    replayActionMain(store);
+    createAliasedAction('DECREMENT_ALIASED', () => ({ type: 'DECREMENT' }));
+    console.log("===========AFTER Decrement========")
 })
 
 // Custom events MAIN WINDOW

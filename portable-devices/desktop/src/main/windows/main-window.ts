@@ -18,7 +18,12 @@ export default class MainWindow {
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
-            webPreferences: { nodeIntegration: true, webSecurity: false }
+            webPreferences: { 
+                nodeIntegration: true, 
+                webSecurity: false,
+                enableRemoteModule: true,
+            
+            }
         });
 
         if (config.isDevelopment) {
