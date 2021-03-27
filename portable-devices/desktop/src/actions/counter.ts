@@ -1,4 +1,4 @@
-import { CONNECTED_REACT_ROUTER_ACTION_TYPES } from '../../constants';
+import { CONNECTED_REACT_ROUTER_ACTION_TYPES } from '../constants';
 
 export const increment = () => ({
     type: CONNECTED_REACT_ROUTER_ACTION_TYPES.INCREMENT,

@@ -8,35 +8,22 @@
   <link href="styles.css" rel="stylesheet"> 
   <script type='text/javascript'>
     window.ipcRenderer = require('electron').ipcRenderer;
-  </script> 
-</head>
+    </script> 
+    <script>
+      window.onload = (event) =>{
+        var i = localStorage.getItem('counter');
+        document.getElementById("counter_disp").innerText = i
+      }
+    </script>
+  </head>
 
 <body>
-  Tray APP PAGE
+  Tray APP PAGE 
   <br />
-  Counter : <div id="counter_disp"></div>
-   <button onclick="increment()"> + </button> 
-   <button onclick="decrement()"> - </button> 
-   <div id="app" />
-   <script>
-     window.onload = (event) =>{
-      var i = localStorage.getItem('counter');
-     document.getElementById("counter_disp").innerText = i
-     }
-     var i = localStorage.getItem('counter');
-     document.getElementById("counter_disp").innerText = i
 
-         function increment(){
-           console.log('-------Increment button clicked-------')
-            ipcRenderer.send('increment_counter');
-         }
-         function decrement(){
-          console.log('-------Descrement button clicked--------')
-            ipcRenderer.send('decrement_counter');
-         }
-        
-   </script>
-   <script type='text/javascript'>
+  <div id="app"></div>
+   
+    <script type='text/javascript'>
     var bundlePath = './tray.js';
     if (process.env.NODE_ENV === 'development') {
       bundlePath = 'http://localhost:9080/tray.js';

@@ -22,7 +22,7 @@ const {
 
 const { createStore, applyMiddleware } = require('redux');
 
-import { connectedReactRouter_counter } from '../redux/reducers'
+import { connectedReactRouter_counter } from '../reducers'
 const store  = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
 replayActionMain(store);
 createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
@@ -64,17 +64,6 @@ ipcMain.on('quit-app', function () {
     app.quit(); // Standart event of the app - that will close our app.
 });
 
-ipcMain.on('increment_counter',async()=>{
-    replayActionMain(store);
-    createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
-    console.log("===========AFTER Increment========")
-})
-
-ipcMain.on('decrement_counter',async()=>{
-    replayActionMain(store);
-    createAliasedAction('DECREMENT_ALIASED', () => ({ type: 'DECREMENT' }));
-    console.log("===========AFTER Decrement========")
-})
 
 // Custom events MAIN WINDOW
 ipcMain.on('show-main-window-event', function () {

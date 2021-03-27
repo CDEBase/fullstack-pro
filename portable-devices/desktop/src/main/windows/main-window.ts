@@ -43,7 +43,7 @@ export default class MainWindow {
                 pathname: MAIN_HTML_PAGE,
             });
             this.window.loadURL(htmlDevPath);
-        } else {
+            } else {
             const htmlPath = formatUrl({
                 pathname: path.join(__dirname, MAIN_HTML_PAGE),
                 protocol: 'file',

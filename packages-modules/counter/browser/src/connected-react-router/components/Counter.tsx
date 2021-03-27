@@ -23,12 +23,12 @@ interface DispatchProps {
 }
 
 const mapStateToProps = (state: State) => ({
-    count: state.connectedReactRouter_counter,
-    });
+    count: state.connectedReactRouter_counter, 
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    increment: () => { 
-        console.log('increment button clicked')
+    increment: () => {
+        console.log('increment button clicked') 
         return dispatch(increment())},
     decrement: () => {
         console.log('decrement button clicked')

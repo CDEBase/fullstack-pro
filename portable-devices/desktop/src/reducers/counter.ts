@@ -1,7 +1,10 @@
 import { Action } from 'redux';
-import { CONNECTED_REACT_ROUTER_ACTION_TYPES } from '../../constants';
+import { CONNECTED_REACT_ROUTER_ACTION_TYPES } from '../constants';
 
 const connectedReactRouter_counter = (state = 0, action: Action) => {
+    if (typeof state === 'undefined') {
+        return 0;
+      }
     switch (action.type) {
         case CONNECTED_REACT_ROUTER_ACTION_TYPES.INCREMENT:
             return state + 1;
@@ -13,3 +16,4 @@ const connectedReactRouter_counter = (state = 0, action: Action) => {
 };
 
 export { connectedReactRouter_counter };
+
