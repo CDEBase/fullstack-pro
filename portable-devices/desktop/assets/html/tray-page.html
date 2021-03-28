@@ -6,9 +6,13 @@
     window.ipcRenderer = require('electron').ipcRenderer;
   </script>
 </head>
+
 <body>
   Tray APP PAGE
-  <div id="app" />
+  <br />
+
+  <div id="app"></div>
+
   <script type='text/javascript'>
     var bundlePath = './tray.js';
     if (process.env.NODE_ENV === 'development') {

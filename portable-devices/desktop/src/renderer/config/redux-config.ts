@@ -76,7 +76,7 @@ export const createReduxStore = (scope = 'main',url = '/') => {
     }
 
     // this one code belongs to the electron-redux
-    
+    console.log('----SCOPE====', scope)
     if (scope === 'renderer') {
         
         middlewares = [
@@ -104,7 +104,7 @@ export const createReduxStore = (scope = 'main',url = '/') => {
         __CLIENT__ &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-    const rootReducer = storeReducer(newHistory);
+    const rootReducer: any = storeReducer(newHistory);
     const persistedReducer = persistReducer(persistConfig, rootReducer);
 
     // If we have preloaded state, save it.
