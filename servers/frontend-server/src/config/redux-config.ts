@@ -15,12 +15,13 @@ import { rootEpic } from '../config/epic-config';
     
 export const history = require('./router-history');
 
-const { apolloClient, services } = createClientContainer();
+const { apolloClient, services, logger } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
         apolloClient,
         routes: modules.getConfiguredRoutes(),
         services,
+        logger
     }, 
 });
 

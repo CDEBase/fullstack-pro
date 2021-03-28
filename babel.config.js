@@ -5,6 +5,7 @@ module.exports = {
           "react-hot-loader/babel",
         '@babel/plugin-transform-modules-commonjs',
         '@babel/plugin-transform-destructuring',
+        "@babel/plugin-transform-for-of",
         '@babel/plugin-transform-regenerator',
         '@babel/plugin-transform-runtime',
         "@babel/plugin-syntax-dynamic-import",

@@ -1,7 +1,6 @@
 import modules, { MainRoute} from './module';
 import { logger } from '@cdm-logger/client';
 import { ClientTypes } from '@common-stack/client-react';
-
 class UtilityClass {
     // tslint:disable-next-line:no-shadowed-variable
     constructor(private modules) {
@@ -19,5 +18,4 @@ container.bind(ClientTypes.Logger).toConstantValue(logger);
 container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
 
 export default modules;
-export { MainRoute, container };
-
+export { MainRoute, container, logger };

@@ -51,7 +51,6 @@ if ((module as any).hot) {
   });
 }
 
-
 export class Main extends React.Component<{}, {}> {
 
   public render() {

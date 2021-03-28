@@ -6,6 +6,12 @@
   
   Solution: - Delete `.awcache` and `dist` folders under `servers/backend-server` and `servers/frontend-server` and restart the servers.
 
+3. OS X: "Error: EMFILE: too many open files, watch"
+Follow https://github.com/facebook/create-react-app/issues/4540
+
+```
+brew install watchman
+```
 
 2. Macbook Catalina: `Zsh` latest macos comes with `Zsh` as the default shell. We seeing some issues to start the project with it. Please use `bash` to run project.
 
