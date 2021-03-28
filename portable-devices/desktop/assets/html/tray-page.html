@@ -2,10 +2,6 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>SampleDesktop</title>
-  <script>require("source-map-support/source-map-support.js").install()</script>
-  <link href="styles.css" rel="stylesheet">
   <script type='text/javascript'>
     window.ipcRenderer = require('electron').ipcRenderer;
   </script>
@@ -13,7 +9,10 @@
 
 <body>
   Tray APP PAGE
-  <div id="app" />
+  <br />
+
+  <div id="app"></div>
+
   <script type='text/javascript'>
     var bundlePath = './tray.js';
     if (process.env.NODE_ENV === 'development') {

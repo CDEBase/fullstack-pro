@@ -18,7 +18,12 @@ export default class MainWindow {
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
-            webPreferences: { nodeIntegration: true, webSecurity: false }
+            webPreferences: { 
+                nodeIntegration: true, 
+                webSecurity: false,
+                enableRemoteModule: true,
+            
+            }
         });
 
         if (config.isDevelopment) {
@@ -38,7 +43,7 @@ export default class MainWindow {
                 pathname: MAIN_HTML_PAGE,
             });
             this.window.loadURL(htmlDevPath);
-        } else {
+            } else {
             const htmlPath = formatUrl({
                 pathname: path.join(__dirname, MAIN_HTML_PAGE),
                 protocol: 'file',

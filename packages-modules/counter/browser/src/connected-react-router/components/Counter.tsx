@@ -24,7 +24,7 @@ interface DispatchProps {
 
 const mapStateToProps = (state: State) => ({
     count: state.connectedReactRouter_counter,
-});
+    });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     increment: () => dispatch(increment()),
