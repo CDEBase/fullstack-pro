@@ -14,4 +14,5 @@ export default new Feature({
     menuConfig: filteredMenus,
     routeConfig: filteredRoutes,
     reducer: { connectedReactRouter_counter },
+    
 });

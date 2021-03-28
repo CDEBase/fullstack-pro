@@ -6,54 +6,21 @@
     window.ipcRenderer = require('electron').ipcRenderer;
   </script>
 </head>
-
 <body>
-
-  <div id='app'></div>
-
-
-  <script>
-    var bundlePath = '../renderer/tray.js';
-
-    // if (process.env.NODE_ENV === 'development') {
-    bundlePath = 'http://localhost:9080/tray.js';
-    // }
+  Tray APP PAGE
+  <div id="app" />
+  <script type='text/javascript'>
+    var bundlePath = './tray.js';
+    if (process.env.NODE_ENV === 'development') {
+      bundlePath = 'http://localhost:9080/tray.js';
+    }
 
     var js_script = document.createElement('script');
     js_script.src = bundlePath;
     js_script.async = true;
     document.body.appendChild(js_script);
+
   </script>
-
-  <div>
-    TEST --------------
-  </div>
-
-  <head>
-    <meta charset="utf-8">
-    <title>SampleDesktop</title>
-    <script>require("source-map-support/source-map-support.js").install()</script>
-    <link href="styles.css" rel="stylesheet">
-    <script type='text/javascript'>
-      window.ipcRenderer = require('electron').ipcRenderer;
-    </script>
-  </head>
-
-  <body>
-    Tray APP PAGE
-    <div id="app" />
-    <script type='text/javascript'>
-      var bundlePath = './tray.js';
-      if (process.env.NODE_ENV === 'development') {
-        bundlePath = 'http://localhost:9080/tray.js';
-      }
-
-      var js_script = document.createElement('script');
-      js_script.src = bundlePath;
-      js_script.async = true;
-      document.body.appendChild(js_script);
-
-    </script>
-  </body>
+</body>
 
 </html>
