@@ -29,7 +29,6 @@ export default class TrayWindow {
              }             
         });
 
-        // this.window.webContents.executeJavaScript(`window.localStorage.setItem( 'counter', '0' )`)
         
         if (config.isDevelopment) {
             this.window.webContents.openDevTools()
