@@ -1,9 +1,9 @@
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import {createBrowserHistory,createMemoryHistory} from 'history';
 
-if (__CLIENT__) {
-    module.exports = createBrowserHistory();
+if(__CLIENT__) {
+    module.exports=createBrowserHistory();
 } else {
-    module.exports = (url) => createMemoryHistory({
+    module.exports=(url: string) => createMemoryHistory({
         initialEntries: [url],
     });
 }
