@@ -1,9 +1,12 @@
 import { createBrowserHistory, createMemoryHistory } from 'history';
 
-if (__CLIENT__) {
-    module.exports = createBrowserHistory();
-} else {
-    module.exports = (url) => createMemoryHistory({
-        initialEntries: [url],
-    });
-}
+// if (__CLIENT__) {
+    const hist = createMemoryHistory();
+    console.log('--hist', hist)
+    module.exports = hist;
+
+// } else {
+//     module.exports = (url) => createMemoryHistory({
+//         initialEntries: [url],
+//     });
+// }
