@@ -26,7 +26,7 @@ export const epicMiddleware = createEpicMiddleware({
     },
 });
 
-export const storeReducer = (hist) => combineReducers({
+export const storeReducer = (hist: any) => combineReducers({
     router: connectRouter(hist),
     ...modules.reducers,
 });
