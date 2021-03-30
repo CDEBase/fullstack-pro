@@ -2937,13 +2937,13 @@
 "@sample-stack/counter-module-browser@file:../../packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-65cec2b8-a91b-45b6-8158-09b91ed9f99e-1617062380174/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:C:/Users/HP/AppData/Local/Yarn/Cache/v6/npm-@sample-stack-counter-module-browser-0.0.1-8081f0f5-09ce-41fb-8cd7-a22b11fe8756-1617104757529/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/platform-browser@file:../../packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-browser-0.0.1-614e012f-122f-4a4d-8542-5cc4c1d91551-1617062380216/node_modules/sample-core"
+    "@sample-stack/core" "file:C:/Users/HP/AppData/Local/Yarn/Cache/v6/npm-@sample-stack-platform-browser-0.0.1-bcf76daf-485b-4b57-a647-adafa2a5134c-1617104757627/node_modules/sample-core"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
@@ -8517,7 +8517,7 @@ fela-beautifier@^11.0.2:
     cssbeautify "^0.3.1"
     fast-loops "^1.0.0"
 
-fela-bindings@^11.0.2:
+fela-bindings@^11.6.1:
   version "11.6.1"
   resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-11.6.1.tgz#80bc6d4dcde459b1bf9e8144eedb2ab838923d44"
   integrity sha512-tvNBT5FIpfSFfdnXuDlQLHJww+q/D28john/km6A4FsUZ1iYZEYSpTcchGS8BV4Jhs7UtKLet3a4PsNYMRT1Rw==
@@ -8538,7 +8538,7 @@ fela-dom@11.0.2:
     fela-utils "^11.0.2"
     sort-css-media-queries "^1.4.3"
 
-fela-dom@^11.0.2, fela-dom@^11.6.1:
+fela-dom@^11.6.1:
   version "11.6.1"
   resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-11.6.1.tgz#a6906a6075261f6916566051457c909367730ded"
   integrity sha512-0mWM7q3z1HuQh0MbzITY0g/5k1rMfMB9G9jyC1gaTMyjNCt0TP9tkmUksF+a831t0ztfHpJOI0+l/dVdS0evHA==
@@ -8564,6 +8564,14 @@ fela-font-renderer@^5.0.25:
   dependencies:
     fela "^6.1.9"
     fela-dom "^7.0.9"
+
+fela-native@^11.6.1:
+  version "11.6.1"
+  resolved "https://registry.yarnpkg.com/fela-native/-/fela-native-11.6.1.tgz#8e63b6f5354df7d8da8ca8adfb52736273a4fe53"
+  integrity sha512-B/2iikbMXMwC/fQDdj0uEJGgrKUwiNl82PqGlBPZJaWdDrlWuX39qto4x7Q6hG+YJtBoETeYMePPEihZjqLp6g==
+  dependencies:
+    fast-loops "^1.0.0"
+    fela-utils "^11.6.1"
 
 fela-perf@^11.0.2:
   version "11.6.1"
@@ -16227,13 +16235,13 @@ react-fast-compare@^2.0.1, react-fast-compare@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-fela@11.0.2:
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-11.0.2.tgz#3118bde66caa9eb223b1e3bc11036f28b23b103a"
-  integrity sha512-Zfb1VE1+YoEMdBzg/1LvIHokNpnhyFjW0E7G7TacCNPEVwPVIxjWQCT5tczqLkekVblBDm0A4XHcdpek97KK5w==
+react-fela@^11.0.2:
+  version "11.6.1"
+  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-11.6.1.tgz#0e0d91873d04067de49a9c316d52ce7efb9e5a70"
+  integrity sha512-A6AIRsCQA9RZEYuwfXX5UncGZB3R56zcGlosJLSeJ/kZQTM6cDhdZqU0w0/26+b89YpTfYbW+HvujXtqSRQvzQ==
   dependencies:
-    fela-bindings "^11.0.2"
-    fela-dom "^11.0.2"
+    fela-bindings "^11.6.1"
+    fela-dom "^11.6.1"
     prop-types "^15.5.8"
 
 react-helmet@^5.2.1:
