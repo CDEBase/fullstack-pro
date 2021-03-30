@@ -4,6 +4,7 @@ import {
     FACEBOOK_APP_ID,
     GA_ID,
     LOG_LEVEL,
+    LOCAL_GRAPHQL_URL,
 } from '@env';
 
 console.log("---LOGLEVE", LOG_LEVEL);
@@ -26,10 +27,11 @@ if (isBrowser) {
     process.APP_ENV = env;
 }
 
+console.log('----ENV --', env);
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,
-    GRAPHQL_URL: env.GRAPHQL_URL,
-    LOCAL_GRAPHQL_URL: env.LOCAL_GRAPHQL_URL,
-    LOG_LEVEL: env.LOG_LEVEL || 'trace',
+    GRAPHQL_URL: GRAPHQL_URL,
+    LOCAL_GRAPHQL_URL: LOCAL_GRAPHQL_URL,
+    LOG_LEVEL: LOG_LEVEL || 'trace',
 };
 
