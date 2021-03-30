@@ -1,17 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import config from "./config";
 import env from "./config/public-config";
 import { Provider } from "react-redux";
+import { ApolloProvider } from "react-apollo";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { createApolloClient } from "./config/apollo-client";
 import { createRenderer } from "fela-native";
 import { RendererProvider } from "react-fela";
+import { ConnectedRouter } from "connected-react-router";
 import {
   createReduxStore,
   storeReducer,
@@ -20,7 +22,7 @@ import {
   epicMiddleware,
 } from "./config/redux-config";
 
-import { createApolloClient } from "./config/apollo-client";
+const client = createApolloClient();
 
 let store: any;
 if (
@@ -49,6 +51,7 @@ console.log("---CONFIG--new-", config, env);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  let persistor = persistStore(store);
 
   if (!isLoadingComplete) {
     return null;
@@ -56,12 +59,16 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Provider store={store}>
-          <RendererProvider renderer={renderer}>
-            <PersistGate persistor={persistor}>
-              <Navigation colorScheme={colorScheme} />
-              <StatusBar />
-            </PersistGate>
-          </RendererProvider>
+          <ApolloProvider client={client}>
+            <RendererProvider renderer={renderer}>
+              <PersistGate persistor={persistor}>
+                <ConnectedRouter history={history}>
+                  <Navigation colorScheme={colorScheme} />
+                  <StatusBar />
+                </ConnectedRouter>
+              </PersistGate>
+            </RendererProvider>
+          </ApolloProvider>
         </Provider>
       </SafeAreaProvider>
     );
