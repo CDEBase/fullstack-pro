@@ -11,7 +11,6 @@ import { filteredMenus, filteredRoutes } from './compute';
 
 export default new Feature({
     navItem: () => <NavBar />, // although not used
-    menuConfig: filteredMenus,
     routeConfig: filteredRoutes,
     reducer: { connectedReactRouter_counter },
 });

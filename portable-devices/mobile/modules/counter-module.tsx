@@ -57,7 +57,7 @@ export const counterPageStore: any = [
         name: 'Connected React Router',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        "title": "首页",
+        "title": "Test",
         "headerTintColor": "#ffffff",
         "headerTitleStyle": {
           "fontWeight": "bold"

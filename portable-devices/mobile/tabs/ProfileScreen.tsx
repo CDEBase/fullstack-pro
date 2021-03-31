@@ -8,8 +8,8 @@ export default function ProfileScreen() {
       <Link
         to="/feedback"
         component={List.Item}
-      // arrow="horizontal"
-      // thumb={<Icon name="info-circle" />}
+      arrow="horizontal"
+      thumb={<Icon name="info-circle" />}
       >
         产品建议
       </Link>
