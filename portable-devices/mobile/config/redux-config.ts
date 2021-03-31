@@ -15,8 +15,10 @@ import { createApolloClient } from './apollo-client';
 import { rootEpic } from '../config/epic-config';
 import storage from '@react-native-community/async-storage';
 
-export const history = require('./router-history');
-
+import history from './router-history';
+// export const history = require('./router-history');
+console.log('--History---', history);
+export { history }
 const reduxLogger = createLogger({
     collapsed: true,
 });

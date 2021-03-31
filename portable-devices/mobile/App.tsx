@@ -21,6 +21,14 @@ import {
   persistConfig,
   epicMiddleware,
 } from "./config/redux-config";
+import { MainRoute } from './modules';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from "@react-navigation/native";
+import LinkingConfiguration from "./navigation/LinkingConfiguration";
+
 
 const client = createApolloClient();
 
@@ -58,18 +66,23 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Provider store={store}>
-          <ApolloProvider client={client}>
-            <RendererProvider renderer={renderer}>
-              <PersistGate persistor={persistor}>
-                <ConnectedRouter history={history}>
-                  <Navigation colorScheme={colorScheme} />
-                  <StatusBar />
-                </ConnectedRouter>
-              </PersistGate>
-            </RendererProvider>
-          </ApolloProvider>
-        </Provider>
+        <NavigationContainer
+          linking={LinkingConfiguration}
+          theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Provider store={store}>
+            <ApolloProvider client={client}>
+              <RendererProvider renderer={renderer}>
+                <PersistGate persistor={persistor}>
+                  <ConnectedRouter history={history}>
+                    <MainRoute history={history} />
+                    <StatusBar />
+                  </ConnectedRouter>
+                </PersistGate>
+              </RendererProvider>
+            </ApolloProvider>
+          </Provider>
+        </NavigationContainer>
       </SafeAreaProvider>
     );
   }
