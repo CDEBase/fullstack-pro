@@ -12,7 +12,7 @@ module.exports = {
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         '@babel/plugin-proposal-object-rest-spread',
         //   ['styled-components', { ssr: true }],
-        //   ['import', { libraryName: 'antd-mobile' }]
+        ["import", { libraryName: "@ant-design/react-native" }]
     ],
     env: {
         production: {
