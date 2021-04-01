@@ -2,7 +2,7 @@ import * as path from 'path';
 import { app, BrowserWindow, Tray } from 'electron';
 import Positioner from 'electron-positioner';
 
-const iconPath = path.join(__dirname, '../../assets/icons/16x16.png');
+const iconPath = path.join(__dirname, '../../assets/icons/icon-256.png');
 
 export default class TrayIcon {
 
@@ -28,7 +28,8 @@ export default class TrayIcon {
     }
 
     public updateTitle(title: string) {
-        console.log('----tititle----', title);
+        const time:String = "00:0" + title
+        console.log('----tititle----', time);
         this.trayIcon.setTitle(title);
     }
 }

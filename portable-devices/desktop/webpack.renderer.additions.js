@@ -48,7 +48,7 @@ let config = {
             './src/renderer/main.tsx',
         ],
         tray: [
-            './src/renderer/tray-main.tsx',
+            './src/renderer/tray.tsx',
         ],
         about: [
             './src/renderer/about.tsx',
