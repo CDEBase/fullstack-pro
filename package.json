@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -159,6 +159,7 @@
     "apollo": "^2.21.2",
     "apollo-server-testing": "^2.21.1",
     "autoprefixer": "^9.7.3",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
