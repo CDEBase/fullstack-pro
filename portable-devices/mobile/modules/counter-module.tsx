@@ -1,10 +1,8 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
 import { Feature, IRouteData } from "@common-stack/client-react";
-import { Icon, List } from '@ant-design/react-native';
-import { Button, View, Text } from "react-native";
-
-import { Link } from "react-router-dom";
+import MainHeader from "./header"
+import { View, Text } from "react-native";
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
     HOME = "/",
@@ -28,41 +26,43 @@ export const getFilteredRoutes = (
         })
         .filter((valid) => valid);
 
-const Counter = () => (
+const Counter = () => {
+  return(
+    <>
+    <MainHeader title="Counter"/>
     <View style={{ marginTop: 20 }}>
         <View style={{ marginBottom: 20 }}>
-            <Text>Counter value</Text>
+        <Text>Counter value</Text>
         </View>
     </View>
-);
+      </>
+  );
+}
 
-const Dashboard = () => (
+const Dashboard = () => {
+  return(
+    <>
+    <MainHeader title="Dashboard"/>
     <View style={{ marginTop: 20 }}>
         <View style={{ marginBottom: 20 }}>
         <Text>Dashboard value</Text>
         </View>
     </View>
-);
-
-const DashboardList = () => (
-    <List>
-        <Link
-            to="/counter"
-            component={List.Item}
-            arrow="horizontal"
-            // thumb={<Icon name="info-circle" />}
-        >
-            Counter
-        </Link>
-    </List>
-)
-const Hello = () => (
+      </>
+  );
+}
+const Hello = () => {
+  return(
+    <>
+    <MainHeader title="Hello"/>
     <View style={{ marginTop: 20 }}>
         <View style={{ marginBottom: 20 }}>
-            <Text>Hello value</Text>
+        <Text>Hello value</Text>
         </View>
     </View>
-);
+      </>
+  );
+}
 
 export const counterPageStore: any = [
     {
@@ -73,7 +73,7 @@ export const counterPageStore: any = [
         name: "Connected React Router",
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        title: "首页",
+        title: "Dashboard",
         headerTintColor: "#ffffff",
         headerTitleStyle: {
             fontWeight: "bold",
@@ -87,6 +87,7 @@ export const counterPageStore: any = [
         icon: "export",
         name: "Hello",
         component: Hello,
+        title: "Hello",
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
@@ -95,6 +96,7 @@ export const counterPageStore: any = [
         exact: true,
         icon: "export",
         name: "Counter",
+        title: "Counter",
         component: Counter,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,

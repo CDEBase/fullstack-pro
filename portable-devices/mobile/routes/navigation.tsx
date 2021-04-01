@@ -1,7 +1,9 @@
 import React, { ComponentType, useEffect, Component } from 'react';
 import { Text, View } from 'react-native';
-import { matchRoutes, Redirect } from 'react-router-config';
+import { matchRoutes } from 'react-router-config';
+import {Redirect} from "react-router-dom"
 import { NavigationHelpers, Route } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { nanoid } from 'nanoid/non-secure';
 import { createHistoryNavigator } from './create-history-navigator';
 import { IRoute as IRouteProps, IRouteComponentProps } from '@common-stack/client-react';
@@ -71,11 +73,9 @@ function flattenRoutes(routes?: IRouteProps[], parent?: IScreen): IScreen[] {
 export function Navigation(props: INavigationProps): JSX.Element {
     const { history, routes, defaultTitle, ...rest } = props;
 
-
     const initialRouteName = props.initial;
 
-
-    const screenOptions = props.screeionOptions;
+    const screenOptions = props.screenOptions;
 
     useEffect(() => {
         function routeChangeHandler(location: any, action?: string) {
@@ -114,10 +114,11 @@ export function Navigation(props: INavigationProps): JSX.Element {
         url: initialRouteName,
     };
 
+    const Drawer = createDrawerNavigator();
     return (
-        <Navigator initialRouteName={initialRouteName} history={history} screenOptions={screenOptions}>
+        <Drawer.Navigator initialRouteName={initialRouteName} history={history} screenOptions={screenOptions}>
             {screens.map(({ key, component: Component, options: { routeMatchOpts, title, ...options }, ...rest }, idx) => (
-                <Screen
+                <Drawer.Screen
                     {...rest}
                     key={key || `screen_${idx}`}
                     options={{
@@ -143,10 +144,9 @@ export function Navigation(props: INavigationProps): JSX.Element {
                         )
                     }}
 
-                </Screen>
+                </Drawer.Screen>
             ))}
-        </Navigator>
+        </Drawer.Navigator>
     )
-
 }
 
