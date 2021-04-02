@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
 import { Feature, IRouteData } from "@common-stack/client-react";
-import {Dashboard, Hello, Calendar} from "../pages"
+import {Dashboard, Hello, CalendarScreen} from "../pages"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
     HOME = "/",
@@ -58,7 +58,7 @@ export const counterPageStore: any = [
         icon: "export",
         name: "Calendar",
         title: "Calendar",
-        component: Calendar,
+        component: CalendarScreen,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,

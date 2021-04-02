@@ -111,6 +111,7 @@
     "lodash": "^4.17.4",
     "metro-minify-terser": "^0.56.0",
     "minilog": "^3.1.0",
+    "moment": "^2.29.1",
     "native-base": "^2.13.5",
     "prop-types": "^15.6.0",
     "ramda": "^0.26.1",

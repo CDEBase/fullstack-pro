@@ -2989,13 +2989,13 @@
 "@sample-stack/counter-module-browser@file:../../packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-28e58165-f338-45f3-9ef0-d1363b8a1e5a-1617359345625/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-aba70470-605d-4aa8-9e17-f7170d75fc19-1617363393476/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/platform-browser@file:../../packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-83de0779-5a11-4df2-bad6-e7a45a2df96f-1617359345716/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-8f340f0b-0627-4d50-a402-a7e6bfcd5bd4-1617363393562/node_modules/sample-core"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
@@ -13577,7 +13577,7 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@^2.10.6, moment@^2.24.0, moment@^2.25.3:
+moment@^2.10.6, moment@^2.24.0, moment@^2.25.3, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==

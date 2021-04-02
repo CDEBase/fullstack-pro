@@ -1,9 +1,9 @@
 import Dashboard from "./dashboard"
 import Hello from "./hello"
-import Calendar from "./Calendar"
+import CalendarScreen from "./Calendar"
 
 export {
     Dashboard,
     Hello,
-    Calendar
+    CalendarScreen
 }
