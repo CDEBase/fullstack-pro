@@ -7,15 +7,13 @@ import counterModules from './counter-module';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-
-export const MainRoute = (props: { history: History<any> }) => {
-    const routes = features.getConfiguredRoutes();
-    console.log('--Routes---', routes);
+export const MainRoute = (props: { history: History<any>, routes: any, getMatchedRoute: any }) => {
     return <Navigation
         history={props.history}
-        routes={routes}
+        routes={props.routes}
         defaultTitle={'Test'}
         initialRouteName={'/'}
+        getMatchedRoute={props.getMatchedRoute}
         screenOptions={{}}
     />
 }

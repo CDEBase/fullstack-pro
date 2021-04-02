@@ -2989,13 +2989,13 @@
 "@sample-stack/counter-module-browser@file:../../packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-f6d16bcb-3a90-40bd-99b3-3b0c5d5a8f05-1617257506691/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-28e58165-f338-45f3-9ef0-d1363b8a1e5a-1617359345625/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/platform-browser@file:../../packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-59f5d606-7b53-4df5-8f5a-d34ced7e5e72-1617257506695/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-83de0779-5a11-4df2-bad6-e7a45a2df96f-1617359345716/node_modules/sample-core"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
@@ -3486,6 +3486,13 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
+
+"@types/redux-logger@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.8.tgz#1fb6d26917bb198792bb1cf57feb31cae1532c5d"
+  integrity sha512-zM+cxiSw6nZtRbxpVp9SE3x/X77Z7e7YAfHD1NkxJyJbAGSXJGF0E9aqajZfPOa/sTYnuwutmlCldveExuCeLw==
+  dependencies:
+    redux "^4.0.0"
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
@@ -6761,7 +6768,7 @@ dateformat@3.0.3:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
-dayjs@^1.8.15:
+dayjs@^1.10.4, dayjs@^1.8.15:
   version "1.10.4"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
   integrity sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
@@ -16399,6 +16406,13 @@ react-native-animatable@1.3.3:
   integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-big-calendar@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-big-calendar/-/react-native-big-calendar-0.8.1.tgz#47faa518176cfbafe6866e0588be9fb7d46fd91d"
+  integrity sha512-kBd7UY+m4SWEjJQXMvdDTDLu8y/auP9siyhS0rr0CLxko0sumq/OZTiWSS/iG5WtwIveLoAWgKkANA9KYYnmiQ==
+  dependencies:
+    dayjs "^1.10.4"
 
 react-native-collapsible@^1.5.2:
   version "1.5.3"

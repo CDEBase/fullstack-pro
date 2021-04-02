@@ -1,13 +1,13 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
 import { Feature, IRouteData } from "@common-stack/client-react";
-import MainHeader from "./header"
 import { View, Text } from "react-native";
+import {Dashboard, Hello, Calendar} from "../pages"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
     HOME = "/",
     HELLO = "/hello",
-    COUNTER = "/counter",
+    CALENDAR = "/calendar",
 }
 
 export const getFilteredRoutes = (
@@ -25,44 +25,6 @@ export const getFilteredRoutes = (
             return null;
         })
         .filter((valid) => valid);
-
-const Counter = () => {
-  return(
-    <>
-    <MainHeader title="Counter"/>
-    <View style={{ marginTop: 20 }}>
-        <View style={{ marginBottom: 20 }}>
-        <Text>Counter value</Text>
-        </View>
-    </View>
-      </>
-  );
-}
-
-const Dashboard = () => {
-  return(
-    <>
-    <MainHeader title="Dashboard"/>
-    <View style={{ marginTop: 20 }}>
-        <View style={{ marginBottom: 20 }}>
-        <Text>Dashboard value</Text>
-        </View>
-    </View>
-      </>
-  );
-}
-const Hello = () => {
-  return(
-    <>
-    <MainHeader title="Hello"/>
-    <View style={{ marginTop: 20 }}>
-        <View style={{ marginBottom: 20 }}>
-        <Text>Hello value</Text>
-        </View>
-    </View>
-      </>
-  );
-}
 
 export const counterPageStore: any = [
     {
@@ -95,19 +57,19 @@ export const counterPageStore: any = [
     {
         exact: true,
         icon: "export",
-        name: "Counter",
-        title: "Counter",
-        component: Counter,
+        name: "Calendar",
+        title: "Calendar",
+        component: Calendar,
         position: IMenuPosition.MIDDLE,
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
+        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
     },
 ];
 
 const selectedRoutesAndMenus = [
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
-    CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+    CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
 ];
 
 // get routes

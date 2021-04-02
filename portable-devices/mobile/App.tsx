@@ -3,7 +3,6 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-import Navigation from "./navigation";
 import config from "./config";
 import env from "./config/public-config";
 import { Provider } from "react-redux";
@@ -21,7 +20,7 @@ import {
   persistConfig,
   epicMiddleware,
 } from "./config/redux-config";
-import { MainRoute } from './modules';
+import {navigationRef} from './routes/root-navigation';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -29,6 +28,7 @@ import {
 } from "@react-navigation/native";
 import LinkingConfiguration from "./navigation/LinkingConfiguration";
 
+import Layout from "./components/Layout"
 
 const client = createApolloClient();
 
@@ -52,7 +52,6 @@ if (
   store = createReduxStore();
 }
 
-const persistor = persistStore(store);
 const renderer = createRenderer();
 
 console.log("---CONFIG--new-", config, env);
@@ -67,6 +66,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <NavigationContainer
+          ref={navigationRef}
           linking={LinkingConfiguration}
           theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
@@ -75,7 +75,7 @@ export default function App() {
               <RendererProvider renderer={renderer}>
                 <PersistGate persistor={persistor}>
                   <ConnectedRouter history={history}>
-                    <MainRoute history={history} />
+                    <Layout history={history}/>
                     <StatusBar />
                   </ConnectedRouter>
                 </PersistGate>
