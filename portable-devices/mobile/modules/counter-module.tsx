@@ -1,7 +1,6 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
 import { Feature, IRouteData } from "@common-stack/client-react";
-import { View, Text } from "react-native";
 import {Dashboard, Hello, Calendar} from "../pages"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
@@ -28,7 +27,7 @@ export const getFilteredRoutes = (
 
 export const counterPageStore: any = [
     {
-        exact: false,
+        exact: true,
         icon: "export",
         component: Dashboard,
         position: IMenuPosition.MIDDLE,

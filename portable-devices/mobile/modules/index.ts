@@ -1,6 +1,7 @@
 Object.assign(global, require('../build.config'));
 
-import modules, { MainRoute} from './module';
+import { DrawerRoute} from './drawer-module';
+import modules, {MainRoute} from "./main-module"
 import MainHeader from "./header"
 export default modules;
-export { MainRoute, MainHeader };
+export { DrawerRoute, MainHeader, MainRoute };

@@ -4,13 +4,12 @@ import { matchRoutes } from 'react-router-config';
 import {Redirect} from "react-router-dom"
 import { NavigationHelpers, Route } from '@react-navigation/native';
 import { nanoid } from 'nanoid/non-secure';
-//import { createHistoryNavigator } from './create-history-navigator';
-import {drawerHistoryNavigator} from "./drawer-history-navigator"
+import { createHistoryNavigator } from './create-history-navigator';
 import { IRoute as IRouteProps, IRouteComponentProps } from '@common-stack/client-react';
 import { History } from 'history';
 import { matchPath, __RouterContext as RouterContext } from 'react-router';
 
-const { Navigator, Screen } = drawerHistoryNavigator();
+const { Navigator, Screen } = createHistoryNavigator();
 
 interface INavigationProps {
     routes: IRouteProps[];
@@ -18,7 +17,6 @@ interface INavigationProps {
     defaultTitle?: string;
     initialRouteName: string;
     screenOptions: any;
-    getMatchedRoute: (route: any) => void
     [key: string]: any;
 }
 
@@ -82,8 +80,6 @@ export function Navigation(props: INavigationProps): JSX.Element {
         function routeChangeHandler(location: any, action?: string) {
             const matchedRoutes = matchRoutes(props.routes, location.pathname);
             console.log('--ROUTE CHANGED', matchedRoutes);
-            const matchedRoute = routes.find((route: any) => route.path === history.location.pathname)
-            props.getMatchedRoute(matchedRoute)
 
         }
         routeChangeHandler(history.location, 'POP');
@@ -117,7 +113,7 @@ export function Navigation(props: INavigationProps): JSX.Element {
         url: initialRouteName,
     };
     return (
-        <Navigator initialRouteName={initialRouteName} history={history} screenOptions={screenOptions}>
+        <Navigator headerMode='none' initialRouteName={initialRouteName} history={history} screenOptions={screenOptions}>
             {screens.map(({ key, component: Component, options: { routeMatchOpts, title, ...options }, ...rest }, idx) => (
                 <Screen
                     {...rest}
@@ -150,4 +146,3 @@ export function Navigation(props: INavigationProps): JSX.Element {
         </Navigator>
     )
 }
-

@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
-import {matchRoutes} from "react-router-config"
-import {useSelector} from "react-redux"
 
-import {MainHeader, MainRoute} from "../modules";
+import {MainHeader, DrawerRoute} from "../modules";
 import * as RootNavigation from "../routes/root-navigation"
 import counterModules from '../modules/counter-module';
 
@@ -17,10 +15,18 @@ const Layout = ({history}: any) => {
     }
     return(
         <>
-            <MainHeader title={route.title} navigation={RootNavigation}/>
-            <MainRoute history={history} routes={routes} getMatchedRoute={getMatchedRoute}/>
+            <MainHeader title={route?.title} navigation={RootNavigation}/>
+            <DrawerRoute history={history} routes={routes} getMatchedRoute={getMatchedRoute}/>
         </>
     )
 }
-
-export default Layout
+export default new Feature({
+    routeConfig: [
+        {
+            ['/CDMBase']:{
+                exact:true,
+                component: Layout
+            }
+        }
+    ],
+});

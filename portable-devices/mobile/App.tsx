@@ -28,7 +28,7 @@ import {
 } from "@react-navigation/native";
 import LinkingConfiguration from "./navigation/LinkingConfiguration";
 
-import Layout from "./components/Layout"
+import {MainRoute} from "./modules"
 
 const client = createApolloClient();
 
@@ -75,7 +75,7 @@ export default function App() {
               <RendererProvider renderer={renderer}>
                 <PersistGate persistor={persistor}>
                   <ConnectedRouter history={history}>
-                    <Layout history={history}/>
+                    <MainRoute history={history}/>
                     <StatusBar />
                   </ConnectedRouter>
                 </PersistGate>
