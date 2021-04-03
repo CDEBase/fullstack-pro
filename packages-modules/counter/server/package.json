@@ -40,7 +40,7 @@
     }
   },
   "peerDependencies": {
-    "@common-stack/server-core": ">=0.0.251"
+    "@common-stack/server-core": ">=0.0.255"
   },
   "publishConfig": {
     "access": "public"
