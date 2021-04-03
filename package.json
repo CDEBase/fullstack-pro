@@ -12,6 +12,14 @@
   },
   "license": "MIT",
   "author": "CDMBase LLC",
+  "workspaces": {
+    "packages": [
+      "portable-devices/*",
+      "packages-modules/**",
+      "packages/**",
+      "servers/*"
+    ]
+  },
   "scripts": {
     "build": "npm run build:packages",
     "build:clean": "lerna exec npm run build:clean",
@@ -37,7 +45,7 @@
     "generateGraphql": "graphql-codegen",
     "generateGraphql:watch": "npm run generateGraphql -- --watch",
     "jest": "./node_modules/.bin/jest",
-    "lerna": "lerna bootstrap --hoist",
+    "lerna": "cross-env NODE_ENV=development yarn clean && lerna exec yarn && lerna link",
     "prelernapublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
@@ -67,22 +75,12 @@
     "chokidar": "^3.4.0"
   },
   "dependencies": {
-    "@sample-stack/core": "file:packages/sample-core",
-    "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
-    "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
-    "@sample-stack/platform-browser": "file:packages/sample-platform/browser",
-    "@sample-stack/platform-server": "file:packages/sample-platform/server",
-    "@sample-stack/store": "file:packages/sample-store",
     "dataloader": "^2.0.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^4.0.8",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "sample-stack-backend-server": "file:servers/backend-server",
-    "sample-stack-desktop": "file:portable-devices/desktop",
-    "sample-stack-frontend-server": "file:servers/frontend-server",
-    "sample-stack-moleculer-server": "file:servers/moleculer-server"
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
@@ -205,7 +203,7 @@
     "jest-raw-loader": "^1.0.1",
     "jest-transform-graphql": "^2.1.0",
     "jsdom": "^15.2.1",
-    "lerna": "3.19.0",
+    "lerna": "^4.0.0",
     "lint-staged": "^9.5.0",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
@@ -231,6 +229,7 @@
     "raw-loader": "^4.0.0",
     "react-addons-test-utils": "^16.0.0-alpha.3",
     "react-hot-loader": "^4.12.18",
+    "react-native-web": "^0.15.5",
     "react-test-renderer": "^16.12.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.4",
