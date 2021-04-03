@@ -5,8 +5,8 @@ import {Dashboard, Hello, CalendarScreen} from "../pages"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
     HOME = "/",
-    HELLO = "/hello",
-    CALENDAR = "/calendar",
+    HELLO = "/org/hello",
+    CALENDAR = "/org/calendar",
 }
 
 export const getFilteredRoutes = (
@@ -77,6 +77,7 @@ const filteredRoutes = getFilteredRoutes(
     selectedRoutesAndMenus
 );
 
+console.log('-FILERERED ORUTES', filteredRoutes);
 export default new Feature({
     routeConfig: filteredRoutes as any,
 });

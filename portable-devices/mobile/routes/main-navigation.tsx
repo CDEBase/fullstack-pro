@@ -72,7 +72,8 @@ function flattenRoutes(routes?: IRouteProps[], parent?: IScreen): IScreen[] {
 export function Navigation(props: INavigationProps): JSX.Element {
     const { history, routes, defaultTitle, ...rest } = props;
 
-    const initialRouteName = props.initial;
+    console.log('nVigation ', routes, rest);
+    const initialRouteName = props.initialRouteName;
 
     const screenOptions = props.screenOptions;
 
@@ -130,10 +131,12 @@ export function Navigation(props: INavigationProps): JSX.Element {
                             match: matchPath(history.location.pathname, routeMatchOpts) || intialMatch,
                         };
                         const newProps = {
+                            routes,
                             ...rest,
                             ...context,
                             ...props,
                         };
+                        console.log('---PROP PASSED', newProps)
                         return (
                             <RouterContext.Provider value={context}>
                                 <Component {...newProps} />

@@ -100,16 +100,16 @@ function HistoryNavigator({
         [navigation, history],
     );
 
-    React.useEffect(() => {
-        if (history.index > state.index) {
-            history.go(state.index - history.index);
-        } else if (history.index < state.index) {
-            const route = state.routes[state.index];
-            if (route) {
-                history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
-            }
-        }
-    }, [state.index, history]);
+    // React.useEffect(() => {
+    //     if (history.index > state.index) {
+    //         history.go(state.index - history.index);
+    //     } else if (history.index < state.index) {
+    //         const route = state.routes[state.index];
+    //         if (route) {
+    //             history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
+    //         }
+    //     }
+    // }, [state.index, history]);
 
     return <DrawerView {...rest} descriptors={descriptors} state={state} navigation={navigation} />;
 }

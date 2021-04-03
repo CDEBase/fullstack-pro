@@ -4,16 +4,18 @@ import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
 import { History } from 'history';
 import { Navigation } from '../routes/main-navigation';
 import Layout from "../components/Layout"
+import counterModules from './counter-module';
 
-const features = new Feature(FeatureWithRouterFactory, Layout);
+const features = new Feature(FeatureWithRouterFactory, Layout, counterModules);
 
 export const MainRoute = (props: { history: History<any>}) => {
-    const routes = features.getConfiguredRoutes()
+    const routes = features.getConfiguredRoutes();
+    console.log('+==Routes', routes);
     return <Navigation
         history={props.history}
         routes={routes}
         defaultTitle={'Test'}
-        initialRouteName={'/CDMBase'}
+        initialRouteName={'/'}
         screenOptions={{}}
     />
 }
