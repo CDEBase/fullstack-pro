@@ -1,11 +1,12 @@
 import 'reflect-metadata';
-
-import * as Knex from 'knex';
-import { DbConfig } from '../db-helpers';
-import { Container } from 'inversify';
-import { ICounterRepository, CounterRepository } from '../repository';
-import { TYPES } from '../constants';
 import 'jest';
+
+import { Container } from 'inversify';
+import * as Knex from 'knex';
+
+import { TYPES } from '../constants';
+import { DbConfig } from '../db-helpers';
+import { CounterRepository,ICounterRepository } from '../repository';
 const DEFAULT_DB_CONFIG = require('./db/config.json');
 
 describe('DI Test', () => {

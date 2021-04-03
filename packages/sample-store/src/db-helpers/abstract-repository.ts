@@ -1,5 +1,6 @@
 import { inject, injectable } from 'inversify';
 import * as Knex from 'knex';
+
 import { DbConfig } from './db-config';
 
 let _db: Knex;

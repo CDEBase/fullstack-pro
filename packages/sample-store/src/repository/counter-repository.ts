@@ -1,8 +1,9 @@
-import { AbstractRepository } from '../db-helpers';
-import { ICounterRepository } from './interfaces';
-import { ICount } from '../models';
 import { injectable } from 'inversify';
+
 import { Counter_Table } from '../database-store/migrations/counter';
+import { AbstractRepository } from '../db-helpers';
+import { ICount } from '../models';
+import { ICounterRepository } from './interfaces';
 
 @injectable()
 export class CounterRepository extends AbstractRepository implements ICounterRepository {
@@ -16,7 +17,8 @@ export class CounterRepository extends AbstractRepository implements ICounterRep
             .first();
     }
 
-    public async find(filter: string, pageNumber: number = 1, count: number = 20): Promise<ICount[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public async find(filter: string, pageNumber = 1, count = 20): Promise<ICount[]> {
         return await this.getTable().where('amount', 'like', `%${filter}`).select();
     }
 

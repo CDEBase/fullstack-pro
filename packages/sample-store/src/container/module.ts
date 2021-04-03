@@ -1,8 +1,9 @@
-import { ContainerModule, interfaces } from 'inversify';
-import { ICounterRepository, CounterRepository } from '../repository';
-import { DbConfig } from '../db-helpers';
 import { TaggedType } from '@common-stack/core';
+import { ContainerModule, interfaces } from 'inversify';
+
 import { TYPES } from '../constants';
+import { DbConfig } from '../db-helpers';
+import { CounterRepository,ICounterRepository } from '../repository';
 
 export const repositoryModule: (config: DbConfig) => interfaces.ContainerModule =
     (dbConfig) => new ContainerModule((bind: interfaces.Bind) => {
