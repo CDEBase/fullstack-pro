@@ -1,8 +1,7 @@
 const { defaults } = require("jest-config");
 
 module.exports = {
-  "verbose": true,
-  testEnvironment: "jsdom",
+  testEnvironment: "node",
   setupFiles: [
     // needed for UI to mock canvas load
     // "jest-canvas-mock"
@@ -30,11 +29,11 @@ module.exports = {
     "servers"
   ],
   moduleFileExtensions: [
-    "tsx",
-    "ts",
+    "tsx", // TODO can be removed as default extension includes
+    "ts", // TODO can be removed as default extension includes
     ...defaults.moduleFileExtensions,
-    "js",
-    "jsx",
+    "js", // TODO can be removed as default extension includes
+    "jsx", // TODO can be removed as default extension includes
     "json",
     "gql",
     "graphql"],
@@ -49,6 +48,15 @@ module.exports = {
     "<rootDir>/node_modules/(?!lodash-es/.*)"
   ],
   clearMocks: true,
+  verbose: true,
+  // projects: ['<rootDir>'], // TODO need to test with it https://github.com/bryan-hunter/yarn-workspace-lerna-monorepo/blob/master/jest.config.base.js
+  coverageDirectory: '<rootDir>/coverage/',
+  coveragePathIgnorePatterns: [
+    '<rootDir>/build/',
+    '<rootDir>/lib/',
+    '<rootDir>/dist/',
+    '<rootDir>/node_modules/',
+  ],
   globals: {
     __BACKEND_URL__: 'http://localhost:3010',
     __GRAPHQL_URL__: 'http://localhost:8085/graphql',
