@@ -8,8 +8,8 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE, TYPES } from '../const
  * Note: This class is not injectable.
  */
 export class CounterMockMicroservice extends Service {
-
     private counterMock: ICounterService;
+
     constructor(broker: ServiceBroker, { container, ...settings }: { container: Container } & { subTopic: string }) {
         super(broker);
 
@@ -20,17 +20,15 @@ export class CounterMockMicroservice extends Service {
             actions: {
                 [CounterCommands.ADD_COUNTER]: {
                     handler: async (ctx: Context<{ amount?: number }>) => {
-                        return await this.counterMock.addCounter(ctx.params.amount);
+                        return this.counterMock.addCounter(ctx.params.amount);
                     },
                 },
                 [CounterCommands.COUNTER_QUERY]: {
                     handler: async (ctx: Context) => {
-                        return await this.counterMock.counterQuery();
+                        return this.counterMock.counterQuery();
                     },
                 },
             },
         });
-
     }
-
 }
