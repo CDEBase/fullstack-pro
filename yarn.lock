@@ -5015,7 +5015,7 @@
 "@sample-stack/counter-module-browser@file:packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-7d5bced0-0766-4240-a22f-97e13d2c44c0-1617493803321/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-55765a16-3c25-4ba7-abdf-dcb66d50b39f-1617494491184/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/counter-module-server@file:packages-modules/counter/server":
@@ -5024,17 +5024,17 @@
 "@sample-stack/platform-browser@file:packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-browser-0.0.1-57dfcdcd-9a20-45ee-b24a-5dcb341bc453-1617493803321/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-browser-0.0.1-c3d05d91-693a-48bf-8584-24e253a793f4-1617494491183/node_modules/sample-core"
 
 "@sample-stack/platform-server@file:packages/sample-platform/server":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-server-0.0.1-e67df797-61b1-449b-9c1b-4a911cb9b371-1617493803324/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-platform-server-0.0.1-12325817-941f-465a-8ece-bec45c67d34e-1617494491186/node_modules/sample-core"
 
 "@sample-stack/store@file:packages/sample-store":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-store-0.0.1-a3b40486-e88f-48b9-908b-185aab965793-1617493803324/node_modules/@sample-stack/sample-core"
+    "@sample-stack/core" "file:../../../../../../Library/Caches/Yarn/v6/npm-@sample-stack-store-0.0.1-06c87a44-ef7e-4638-8263-0b6fc1dbce78-1617494491186/node_modules/@sample-stack/sample-core"
     sequelize "^5.21.3"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -9706,6 +9706,13 @@ clean-stack@^3.0.0:
   dependencies:
     escape-string-regexp "4.0.0"
 
+clean-webpack-plugin@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/clean-webpack-plugin/-/clean-webpack-plugin-2.0.2.tgz#805a19ff20d46a06125298a25eb31142ecad2166"
+  integrity sha512-pi1111o4OBd9qvacbgs+NRqClfVPKVIc66B4d8kx6Ho/L+i9entQ/NpK600CsTYTPu3kWvKwwyKarsYMvC2xeA==
+  dependencies:
+    del "^4.0.0"
+
 clean-webpack-plugin@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/clean-webpack-plugin/-/clean-webpack-plugin-3.0.0.tgz#a99d8ec34c1c628a4541567aa7b457446460c62b"
@@ -11694,7 +11701,7 @@ degenerator@^2.2.0:
     escodegen "^1.8.1"
     esprima "^4.0.0"
 
-del@^4.1.1:
+del@^4.0.0, del@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/del/-/del-4.1.1.tgz#9e8f117222ea44a31ff3a156c049b99052a9f0b4"
   integrity sha512-QwGuEUouP2kVwQenAsOof5Fv8K9t3D8Ca8NxcXKrIpEHjTXK5J2nXLdP+ALI1cgv8wj7KuwBhTwBkOZSJKM5XQ==
