@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type='text/javascript'>
+      window.shell = require('electron').shell;
+      window.remote = require('electron').remote;
+    </script>
+  </head>
+
+  <body>
+
+    <div id='app'></div>
+
+
+    <script>
+      var bundlePath = '../renderer/about.js';
+
+      // if (process.env.NODE_ENV === 'development') {
+        bundlePath = 'http://localhost:9080/about.js';
+      // }
+
+      var js_script = document.createElement('script');
+      js_script.src = bundlePath;
+      js_script.async = true;
+      document.body.appendChild(js_script);
+    </script>
+
+<!-- <div>
+  About --------------
+</div> -->
+
+
+    <style type="text/css">
+      #header {
+        -webkit-user-select: none;
+        -webkit-app-region: drag;
+
+        background-color: blue;
+      }
+    </style>
+
+    <div id='header'>
+      <button id='close'>X</button>
+      <button id='hide'>-</button>
+      <button id='maximize'><></button>
+    </div>
+
+
+    <h1>ABOUT PAGE</h1>
+    <a id='open-external' href="https://github.com/DmytroVasin/">Open</button>
+
+    <script type='text/javascript'>
+     document.getElementById("open-external").addEventListener("click", function (e) {
+        e.preventDefault();
+        var remoteLink = this.getAttribute('href');
+        shell.openExternal( remoteLink );
+      });
+
+
+
+       document.getElementById("close").addEventListener("click", function (e) {
+        remote.getCurrentWindow().hide();
+       });
+
+       document.getElementById("hide").addEventListener("click", function (e) {
+        remote.getCurrentWindow().minimize();
+       });
+
+       document.getElementById("maximize").addEventListener("click", function (e) {
+        if (remote.getCurrentWindow().isMaximized()) {
+          remote.getCurrentWindow().unmaximize();
+        } else {
+          remote.getCurrentWindow().maximize();
+        }
+       })
+    </script>
+  </body>
+</html>

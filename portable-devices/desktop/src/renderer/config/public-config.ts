@@ -1,3 +1,4 @@
+import { lowerCase } from 'lodash';
 
 /**
  * This file opens up in public site, so make sure it is
@@ -22,7 +23,7 @@ for (const v of publicEnv) {
 export default env;
 
 if (isBrowser) {
-    process[env] = env;
+    process[lowerCase('env')] = env; // to avoid webpack to replace `process` with actual value.
     process.APP_ENV = env;
 }
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {

@@ -1,5 +1,7 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import { logger } from '@cdm-logger/client';
+import { lowerCase } from 'lodash';
+
 /**
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
@@ -23,7 +25,7 @@ for (const v of publicEnv) {
 export default env;
 
 if (isBrowser) {
-    process['env'] = env;
+    process[lowerCase('env')] = env; // to avoid webpack to replace `process` with actual value.
     process.APP_ENV = env;
 }
 

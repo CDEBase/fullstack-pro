@@ -19,6 +19,7 @@ const mapStateToProps = (state: Store.Sample) => ({
   isSaving: state['@sample-stack/isSaving'],
   isLoading: state['@sample-stack/isLoading'],
   error: state['@sample-stack/error'],
+  
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
