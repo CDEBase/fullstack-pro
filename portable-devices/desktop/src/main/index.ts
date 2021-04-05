@@ -84,6 +84,7 @@ ipcMain.on('show-about-window-event', function () {
 
 // Custom events TRAY WINDOW
 ipcMain.on('update-title-tray-window-event', function (event, title) {
+    main.window.show();
     trayIcon.updateTitle(title);
 });
 
