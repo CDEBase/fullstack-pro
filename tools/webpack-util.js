@@ -6,9 +6,9 @@
 const path = require('path');
 /* helper function to get into build directory */
 module.exports = libPath = function (name) {
-  if (undefined === name) {
-    return path.join('dist');
-  }
+    if (undefined === name) {
+        return path.join('dist');
+    }
 
-  return path.join('lib', name);
+    return path.join('lib', name);
 };
