@@ -12,6 +12,7 @@
   },
   "command": {
     "publish": {
+      "registry": "https://registry.npmjs.org",
       "graphType": "all",
       "allowBranch": [
         "publish",
