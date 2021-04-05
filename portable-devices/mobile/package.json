@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-mobile",
-  "version": "0.0.51-alpha.2",
+  "version": "0.0.51-alpha.3",
   "private": true,
   "main": "__generated__/AppEntry.js",
   "scripts": {
