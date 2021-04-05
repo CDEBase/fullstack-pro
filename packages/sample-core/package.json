@@ -26,5 +26,6 @@
   },
   "typescript": {
     "definition": "lib/index.d.ts"
-  }
+  },
+  "gitHead": "1d63ca90840c7d40d60256a0994dfd41db385056"
 }
