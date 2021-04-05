@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-underscore-dangle */
 import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -7,20 +11,19 @@ import { ApolloLink, Observable } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getOperationAST } from 'graphql';
 
-import { PUBLIC_SETTINGS } from '../config/public-config';
-import modules from '../modules';
 import { logger } from '@cdm-logger/client';
 import { merge } from 'lodash-es';
 import { invariant } from 'ts-invariant';
+import modules from '../modules';
+import { PUBLIC_SETTINGS } from './public-config';
 
-
-const clientState = modules.getStateParams({resolverContex: () =>  modules.createService({}, {})});
+const clientState = modules.getStateParams({ resolverContex: () => modules.createService({}, {}) });
 
 // TODO: add cache redirects to module
 const cache = new InMemoryCache({
     dataIdFromObject: (result) => modules.getDataIdFromObject(result),
     fragmentMatcher: clientState.fragmentMatcher as any,
- });
+});
 const schema = `
 
 `;
@@ -29,10 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
             // tslint:disable-next-line
-            invariant.warn(
-                `[GraphQL error]: Message: ${message}, Location: ` +
-                `${locations}, Path: ${path}`,
-            ),
+            invariant.warn(`[GraphQL error]: Message: ${message}, Location: ` + `${locations}, Path: ${path}`),
         );
     }
     if (networkError) {
@@ -42,8 +42,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 let link;
 if (__CLIENT__) {
-    let connectionParams = () => {
-        let param = {};
+    const connectionParams = () => {
+        const param = {};
         for (const connectionParam of modules.connectionParams) {
             Object.assign(param, connectionParam());
         }
@@ -51,7 +51,7 @@ if (__CLIENT__) {
     };
 
     const wsLink = new WebSocketLink({
-        uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
+        uri: PUBLIC_SETTINGS.GRAPHQL_URL.replace(/^http/, 'ws'),
         options: {
             reconnect: true,
             timeout: 20000,
@@ -75,10 +75,9 @@ if (__CLIENT__) {
         ({ query, operationName }) => {
             if (operationName.endsWith('_WS')) {
                 return true;
-            } else {
-                const operationAST = getOperationAST(query as any, operationName);
-                return !!operationAST && operationAST.operation === 'subscription';
             }
+            const operationAST = getOperationAST(query as any, operationName);
+            return !!operationAST && operationAST.operation === 'subscription';
         },
         wsLink,
         new HttpLink({
