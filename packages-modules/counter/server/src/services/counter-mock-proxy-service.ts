@@ -17,7 +17,7 @@ export class CounterMockProxyService implements ICounterService {
         @inject('Settings')
         @tagged(TaggedType.MICROSERVICE, true)
         private settings: { subTopic: string },
-    ) { }
+    ) {}
 
     private topic = NATS_MOLECULER_COUNTER_SERIVCE;
 

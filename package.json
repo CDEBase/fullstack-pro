@@ -50,6 +50,7 @@
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
     "lint": "eslint -c .eslintrc.js --ext .ts ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
+    "lint:fix": "npm run lint -- --fix",
     "postbootstrap": "npm run build",
     "prebootstrap": "lerna run prepare",
     "prodBuild": "cross-env NODE_ENV=production babel-node --presets es2015 tools/webpack.run",
