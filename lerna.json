@@ -17,11 +17,12 @@
         "publish",
         "devpublish"
       ],
-      "message": "chore(release): publish"
-    },
-    "bootstrap": {
-      "npmClientArgs": [
-        "--no-package-lock"
+      "message": "chore(release): publish",
+      "ignoreChanges": [
+        "**/__fixtures__/**",
+        "**/__tests__/**",
+        "**/*.md",
+        "**/example/**"
       ]
     },
     "version": {
@@ -35,12 +36,13 @@
       "message": "chore: release package(s)"
     }
   },
-  "npmCLient": "npm",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
   "packages": [
     "packages-modules/**",
     "packages/**",
-    "portable-devices/desktop",
-    "servers/*"
+    "servers/*",
+    "portable-devices/*"
   ],
-  "version": "0.0.40-alpha.13"
+  "version": "0.0.0"
 }

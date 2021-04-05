@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/core": "^0.0.40-alpha.13"
+    "@sample-stack/core": "link:../../sample-core"
   },
   "publishConfig": {
     "access": "public"

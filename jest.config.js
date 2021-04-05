@@ -8,4 +8,15 @@ module.exports = merge.recursive(
         globals: {
 
         }
-    });
+    },
+    // https://baltuta.eu/posts/typescript-lerna-monorepo-more-tools 
+    // {
+    //     roots: ['<rootDir>'],
+    //     projects: [
+    //         '<rootDir>/packages/ui',
+    //         '<rootDir>/packages/api',
+    //         '<rootDir>/packages/diceroll'
+    //     ],
+    // }
+
+);

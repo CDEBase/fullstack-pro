@@ -6,16 +6,19 @@ import {
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
 import modules from '../modules';
 import { persistReducer, WebStorage } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { createApolloClient } from './apollo-client';
 import { rootEpic } from '../config/epic-config';
+import storage from '@react-native-community/async-storage';
 
-export const history = require('./router-history');
-
+import history from './router-history';
+// export const history = require('./router-history');
+console.log('--History---', history);
+export { history }
 const reduxLogger = createLogger({
     collapsed: true,
 });
@@ -25,7 +28,7 @@ export const epicMiddleware = createEpicMiddleware({
     },
 });
 
-export const storeReducer = (hist) => combineReducers({
+export const storeReducer = (hist: any) => combineReducers({
     router: connectRouter(hist),
     ...modules.reducers,
 });

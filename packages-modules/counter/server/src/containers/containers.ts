@@ -1,5 +1,5 @@
-import { CounterMockService, CounterMockProxyService } from '../services';
 import { ContainerModule, interfaces } from 'inversify';
+import { CounterMockService, CounterMockProxyService } from '../services';
 import { TYPES } from '../constants';
 import { ICounterService } from '../interfaces';
 
@@ -9,9 +9,8 @@ import { ICounterService } from '../interfaces';
  *
  * @param settings Settings
  */
-export const localCounterModule: (settings) => interfaces.ContainerModule =
-    (settings) => new ContainerModule((bind: interfaces.Bind) => {
-
+export const localCounterModule: (settings) => interfaces.ContainerModule = (settings) =>
+    new ContainerModule((bind: interfaces.Bind) => {
         // bind<ICounterService>(TYPES.CounterMockService)
         //     .to(CounterMockService)
         //     .inSingletonScope()
@@ -21,9 +20,7 @@ export const localCounterModule: (settings) => interfaces.ContainerModule =
             .to(CounterMockProxyService)
             .inSingletonScope()
             .whenTargetNamed('proxy');
-
     });
-
 
 /**
  * Operates external to the Gateway. Usually a broker listen to calls and invoke this service
@@ -31,11 +28,7 @@ export const localCounterModule: (settings) => interfaces.ContainerModule =
  *
  * @param settings Settings
  */
-export const externalCounterModule: (settings) => interfaces.ContainerModule =
-(settings) => new ContainerModule((bind: interfaces.Bind) => {
-
-    bind<ICounterService>(TYPES.CounterMockService)
-        .to(CounterMockService)
-        .inSingletonScope();
-
-});
+export const externalCounterModule: (settings) => interfaces.ContainerModule = (settings) =>
+    new ContainerModule((bind: interfaces.Bind) => {
+        bind<ICounterService>(TYPES.CounterMockService).to(CounterMockService).inSingletonScope();
+    });

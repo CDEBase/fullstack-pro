@@ -18,24 +18,8 @@
     "test:watch": "npm test -- --watch",
     "watch": "npm run build:lib:watch"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
-    "roots": [
-      "src"
-    ],
-    "testEnvironment": "node",
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    }
+  "devDependencies": {
+    "webpack": "4.43.0"
   },
   "publishConfig": {
     "access": "public"
