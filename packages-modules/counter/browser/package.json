@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.51-alpha.4",
+  "version": "0.0.51-alpha.5",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "^0.0.51-alpha.4",
+    "@sample-stack/platform-browser": "^0.0.51-alpha.5",
     "antd": "^4.5.2"
   },
   "publishConfig": {
