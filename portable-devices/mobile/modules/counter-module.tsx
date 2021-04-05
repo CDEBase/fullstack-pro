@@ -2,9 +2,9 @@ import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
 import { Feature, IRouteData } from "@common-stack/client-react";
 import {Dashboard, Hello, CalendarScreen} from "../pages"
+//import CounterScreen from "../pages/counter"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
-    HOME = "/",
     HELLO = "/org/hello",
     CALENDAR = "/org/calendar",
 }
@@ -29,23 +29,6 @@ export const counterPageStore: any = [
     {
         exact: true,
         icon: "export",
-        component: Dashboard,
-        position: IMenuPosition.MIDDLE,
-        name: "Connected React Router",
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        title: "Dashboard",
-        headerTintColor: "#ffffff",
-        headerTitleStyle: {
-            fontWeight: "bold",
-        },
-        headerStyle: {
-            backgroundColor: "#FFC100",
-        },
-    },
-    {
-        exact: true,
-        icon: "export",
         name: "Hello",
         component: Hello,
         title: "Hello",
@@ -66,7 +49,6 @@ export const counterPageStore: any = [
 ];
 
 const selectedRoutesAndMenus = [
-    CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
 ];

@@ -1,5 +1,5 @@
 import React from "react"
-import {StyleSheet, View, Text, ViewStyle} from "react-native"
+import {StyleSheet, View, Text, ViewStyle, Dimensions} from "react-native"
 import { Calendar } from 'react-native-big-calendar'
 
 interface Style {
@@ -25,9 +25,12 @@ const events = [
 ]
 
 const CalendarScreen = () => {
+
+    let screenHeight = Dimensions.get('window').height
+
     return (
         <View style={styles.container}>
-            <Calendar events={events} height={600} />
+            <Calendar events={events} height={screenHeight} />
         </View>
     )
 }

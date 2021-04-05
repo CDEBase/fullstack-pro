@@ -1307,7 +1307,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@codler/react-native-keyboard-aware-scroll-view@1.0.1":
+"@codler/react-native-keyboard-aware-scroll-view@1.0.1", "@codler/react-native-keyboard-aware-scroll-view@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@codler/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-1.0.1.tgz#e823cedfd064d7dc849ec71fa3f8d9f4b0558bb6"
   integrity sha512-ACGSY+VPJ1KwdNQi/oKt74ld2PtGW+o09hJNsllHyBWcrnke0aOxXdtaS87nRLvVXwWadRawnSrYR/PDxr5QEg==
@@ -2989,13 +2989,13 @@
 "@sample-stack/counter-module-browser@file:../../packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-aba70470-605d-4aa8-9e17-f7170d75fc19-1617363393476/packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "file:../../../.cache/yarn/v6/npm-@sample-stack-counter-module-browser-0.0.1-5d233ce2-0289-4582-95cc-7d9165f0b6ae-1617619001184/packages/sample-platform/browser"
     antd "^4.5.2"
 
 "@sample-stack/platform-browser@file:../../packages/sample-platform/browser":
   version "0.0.1"
   dependencies:
-    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-8f340f0b-0627-4d50-a402-a7e6bfcd5bd4-1617363393562/node_modules/sample-core"
+    "@sample-stack/core" "file:../../../.cache/yarn/v6/npm-@sample-stack-platform-browser-0.0.1-6f352a30-a4d5-4fd6-ad36-237bf093635e-1617619001232/node_modules/sample-core"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"

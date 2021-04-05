@@ -10,7 +10,7 @@ const features = new Feature(FeatureWithRouterFactory, Layout, counterModules);
 
 export const MainRoute = (props: { history: History<any>}) => {
     const routes = features.getConfiguredRoutes();
-    console.log('+==Routes', routes);
+    console.log('==Routes', routes);
     return <Navigation
         history={props.history}
         routes={routes}

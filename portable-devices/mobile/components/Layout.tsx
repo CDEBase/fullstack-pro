@@ -3,18 +3,23 @@ import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
 import {MainHeader, DrawerRoute} from "../modules";
 import * as RootNavigation from "../routes/root-navigation"
 import { connect } from 'react-redux';
+import {Dashboard} from "../pages"
+import counterModules from "../modules/counter-module"
 
+const features = new Feature(FeatureWithRouterFactory, counterModules);
 
 const Layout = ({history, routes, location}: any) => {
-    console.log('---LAYOUT ROUTES AND HISTORY', history, routes)
+    let subRoutes = routes.find((route: any) => route.routes && route)
+    console.log("++LOC++", history)
     const [route, setRoute] = useState<any>({})
-    // const getMatchedRoute = (route: any) => {
-    //     setRoute(route)
-    // }
+    const getMatchedRoute = (route: any) => {
+        setRoute(route)
+    }
+    let drawerRef = React.useRef(null)
     return(
         <>
-            <MainHeader title={route?.title} navigation={RootNavigation}/>
-            <DrawerRoute history={history} location={location} routes={routes}/>
+            <MainHeader title={route?.title} drawerRef={drawerRef} navigation={RootNavigation}/>
+            <DrawerRoute history={history} drawerRef={drawerRef} getMatchedRoute={getMatchedRoute} location={location} routes={subRoutes.routes}/>
         </>
     )
 }
@@ -30,6 +35,12 @@ export default new Feature({
             ['/org']:{
                 exact:false,
                 component: ProLayout
+            },
+        },
+        {
+            ['/']:{
+                exact: true,
+                component: Dashboard,
             }
         }
     ],
