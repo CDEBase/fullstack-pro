@@ -163,13 +163,13 @@ sample-stack-moleculer-server        v0.0.1 servers/moleculer-server         (PR
 
 All npm packages have a name. Some also have a scope. Scopes are a way of grouping related packages together.
 
-When we sign up for an npm user account or create an organization, we can use a scope that matches our user or organization name. The same happens for Github Packages Registry. In both registries, my username is **jsilva-pt**, so my scope is also **jsilva-pt**.
+When we sign up for an npm user account or create an organization, we can use a scope that matches our user or organization name. The same happens for Github Packages Registry. In both registries, my username is **sample-stack**, so my scope is also **sample-stack**.
 
 Using packages without a scope, we can easily have naming conflicts with other person packages. For example, we can not create a package named jquery on npm because it already exists.
 
 When we use scoped packages, naming is not a problem because we are naming packages inside our scope.
 
-If I were creating a new scoped package called **app-card**, its name in the **package.json** file would be **@jsilva-pt/app-card**.
+If I were creating a new scoped package called **core**, its name in the **package.json** file would be **@sample-stack/core**.
 
 ## Dependencies
 The dependencies of our projects are registered inside the **package.json** file. This file is usually in the project's root folder, but it is also inside each package in the Lerna projects. **Each package has its dependencies.**
