@@ -28,8 +28,8 @@ glob('./+(servers|packages|packages-modules)/**/package.json', null, (err, files
       const fileWrie = file;
 
       for (const key in dependencies) {
-        if (dependencies[key].includes('file:')) {
-          const folderRoad = dependencies[key].split('file:');
+        if (dependencies[key].includes('link:')) {
+          const folderRoad = dependencies[key].split('link:');
           let localFolder = folderRoad[1].replace(/(\.\.\/)/g, '');
           try {
             fs.readdirSync(localFolder);

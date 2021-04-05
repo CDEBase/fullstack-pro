@@ -41,7 +41,7 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
         .....
 
         "dependencies": {
-            "@sample-stack/platform-browser": "file:../../../packages/sample-platform/browser",
+            "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
         },
         "peerDependencies": {
             "@common-stack/client-react": ">=0.0.229",
@@ -58,8 +58,8 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
     ```json
     "dependencies": {
         .....
-        "@sample-stack/counter-module-browser": "file:packages-modules/counter/browser",
-        "@sample-stack/counter-module-server": "file:packages-modules/counter/server",
+        "@sample-stack/counter-module-browser": "link:packages-modules/counter/browser",
+        "@sample-stack/counter-module-server": "link:packages-modules/counter/server",
         ....
     }
     ``` 
@@ -67,14 +67,14 @@ Adding new modules, usually goes under `packages-modules` folder. For example to
     ```json
     "dependencies": {
         .....
-        "@sample-stack/counter-module-browser": "file:../../packages-modules/counter/browser",
+        "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
     }
     ```
     c. In backend servers `servers/backend-server` add the server module with relative path.
     ```json
     "dependencies": {
         ....
-        "@sample-stack/counter-module-server": "file:../../packages-modules/counter/server",
+        "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
         ....
     }
     ```

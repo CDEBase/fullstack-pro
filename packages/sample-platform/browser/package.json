@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/core": "file:../../sample-core"
+    "@sample-stack/core": "link:../../sample-core"
   },
   "publishConfig": {
     "access": "public"

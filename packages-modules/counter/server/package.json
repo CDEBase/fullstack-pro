@@ -39,8 +39,17 @@
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     }
   },
+  "devDependencies": {
+    "webpack": "4.43.0"
+  },
   "peerDependencies": {
-    "@common-stack/server-core": ">=0.0.255"
+    "@cdm-logger/server": "*",
+    "@common-stack/core": "*",
+    "@common-stack/server-core": "*",
+    "apollo-server-caching": "*",
+    "dataloader": "*",
+    "inversify": "*",
+    "moleculer": "*"
   },
   "publishConfig": {
     "access": "public"
