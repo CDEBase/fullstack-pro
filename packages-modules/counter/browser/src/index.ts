@@ -6,4 +6,3 @@ import ConnectedReactRouter from './connected-react-router';
 import Fela from './fela';
 
 export default new Feature(Common, ConnectedReactRouter, ApolloCounter, Fela);
-

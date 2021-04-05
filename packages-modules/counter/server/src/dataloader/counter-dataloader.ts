@@ -11,17 +11,19 @@ export interface CacheOptions {
     ttl?: number;
 }
 
-
 export class CounterDataSource extends DataSource<IService> implements ICounterService {
     private context!: IContext;
+
     private cacheCounterService: ICounterService;
 
     constructor() {
         super();
     }
+
     public counterQuery(): Counter | Promise<Counter> | PromiseLike<Counter> {
         return this.cacheCounterService.counterQuery();
     }
+
     public addCounter(amount?: number) {
         return this.cacheCounterService.addCounter();
     }
@@ -29,13 +31,10 @@ export class CounterDataSource extends DataSource<IService> implements ICounterS
     public initialize(config: DataSourceConfig<IContext>) {
         this.context = config.context;
         if (!this.context.counterMockService) {
-
-            throw new ApolloError(
-                'Missing TextFileService in the context!',
-            );
+            throw new ApolloError('Missing TextFileService in the context!');
         }
         try {
-            const cache = config.cache as KeyValueCache<string> || new InMemoryLRUCache<string>();
+            const cache = config.cache || new InMemoryLRUCache<string>();
             this.cacheCounterService = setupCaching({ counterService: config.context.counterMockService, cache });
         } catch (err) {
             throw new ApolloError(`Setting up cache in the FilesDataSource failed due to ${err}`);
