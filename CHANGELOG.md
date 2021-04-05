@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.40-alpha.13](https://github.com/cdmbase/fullstack-pro/compare/v0.0.40-alpha.12...v0.0.40-alpha.13) (2021-04-05)
+
+
+### Bug Fixes
+
+* :rewind: restore `awesome-typescript-loader` package to make auto restart of server ([9c4b118](https://github.com/cdmbase/fullstack-pro/commit/9c4b118e04443c596a5c8fda6435f5a36173c530))
+
+
+### Reverts
+
+* Revert "tray_window  in css" ([d887598](https://github.com/cdmbase/fullstack-pro/commit/d8875981939d40b893b8cfe3f62f11ea73bf999e))
+* Revert "tray design with css" ([1bb222d](https://github.com/cdmbase/fullstack-pro/commit/1bb222dd4fbb11a6769e584c34987861e120a645))
+
+
+
+
+
 ## [0.0.40-alpha.12](https://github.com/cdmbase/fullstack-pro/compare/v0.0.40-alpha.11...v0.0.40-alpha.12) (2021-03-21)
 
 **Note:** Version bump only for package sample-stack
