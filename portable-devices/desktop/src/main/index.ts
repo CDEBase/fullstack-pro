@@ -11,6 +11,7 @@ import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
+import ScreenShot from './screen-shot';
 import { createReduxStore } from '../renderer/config/redux-config'
 
 const {
@@ -29,6 +30,7 @@ createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 let tray: TrayWindow = null;
 let main: MainWindow = null;
+let screenShot: ScreenShot = null;
 let about: AboutWindow = null;
 
 let trayIcon:TrayIcon = null;
@@ -47,6 +49,7 @@ app.on('ready', function () {
     tray = new TrayWindow();
     main = new MainWindow();
     about = new AboutWindow();
+    screenShot = new ScreenShot();
 
     trayIcon = new TrayIcon(tray.window);
 
@@ -61,14 +64,18 @@ ipcMain.on('quit-app', function () {
     main.window.close();
     tray.window.close(); // Standart Event of the BrowserWindow object.
     about.window.close();
-    app.quit(); // Standart event of the app - that will close our app.
+    app.quit(); 
+    screenShot.destoryScreenShot();// Standart event of the app - that will close our app.
 });
 
 
 // Custom events MAIN WINDOW
 ipcMain.on('show-main-window-event', function () {
-    main.window.show();
+    if(main && main.window){
+        main.window.show();
+    }
     app.dock.show();
+    screenShot.initScreenShot();
 });
 
 ipcMain.on('about-window', function () {
@@ -84,8 +91,12 @@ ipcMain.on('show-about-window-event', function () {
 
 // Custom events TRAY WINDOW
 ipcMain.on('update-title-tray-window-event', function (event, title) {
-    main.window.show();
+    console.log("main window", main, main.window);
+    if(main && main.window){
+        main.window.show();
+    }
     trayIcon.updateTitle(title);
+    screenShot.initScreenShot();
 });
 
 
