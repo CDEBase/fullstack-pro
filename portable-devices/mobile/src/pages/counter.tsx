@@ -34,3 +34,5 @@ function CounterScreen(
 }
 
 
+export default CounterScreen
+
