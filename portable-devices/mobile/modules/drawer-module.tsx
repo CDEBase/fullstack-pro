@@ -2,7 +2,7 @@ import * as React from 'react';
 import { History } from 'history';
 import { DrawerNavigation } from '../routes/drawer-navigation';
 
-export const DrawerRoute = (props: { history: History<any>, location: any, routes: any, getMatchedRoute: any, drawerRef: any }) => {
+export const DrawerRoute = (props: { history: History<any>, location: any, routes: any, getMatchedRoute: any }) => {
     console.log('---DRAWER ___PROPS', props)
     return <DrawerNavigation
         history={props.history}
@@ -11,7 +11,6 @@ export const DrawerRoute = (props: { history: History<any>, location: any, route
         defaultTitle={'Test'}
         initialRouteName={'/hello'}
         getMatchedRoute={props.getMatchedRoute}
-        drawerRef={props.drawerRef}
         screenOptions={{}}
     />
 }

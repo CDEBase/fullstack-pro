@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
-import { Feature, IRouteData } from "@common-stack/client-react";
-import {Dashboard, Hello, CalendarScreen} from "../pages"
+import { Feature } from "@common-stack/client-react";
+import { Hello, CalendarScreen} from "../pages"
 //import CounterScreen from "../pages/counter"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
