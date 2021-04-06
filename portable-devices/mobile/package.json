@@ -131,7 +131,6 @@
     "react-native-dotenv": "^2.5.3",
     "react-native-elements": "^3.2.0",
     "react-native-gesture-handler": "~1.8.0",
-    "react-native-in-app-notification": "git+https://git@github.com/AlexSensei/react-native-in-app-notification.git",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-mime-types": "^2.3.0",
