@@ -99,13 +99,24 @@ function HistoryNavigator({
                     }
                 }
             }),
-        [navigation, history],
+        [navigation, history, state],
     );
 
-    const Drawer = createDrawerNavigator()
-   /*  return <Drawer.Navigator drawerContent={
-        <Text>Hello</Text>
-    }></Drawer.Navigator> */
+/*     React.useEffect(() => {
+        if (history.index > state.index) {
+            debugger
+            const route = state.routes[history.index];
+            if (route) {
+                history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
+            }
+        } else if (history.index < state.index) {
+            debugger
+            const route = state.routes[state.index];
+            if (route) {
+                history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
+            }
+        }
+    }, [state.index, history]); */
 
     return <DrawerView {...rest} drawerContent={(props) =>
         <SideBar descriptors={descriptors} state={state} navigation={navigation}/>

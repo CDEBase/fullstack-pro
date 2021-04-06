@@ -8,7 +8,8 @@ import counterModules from "../modules/counter-module"
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-const Layout = ({history, routes, location}: any) => {
+const Layout = ({history, location}: any) => {
+    const routes = features.getConfiguredRoutes()
     let subRoutes = routes.find((route: any) => route.routes && route)
     const [route, setRoute] = useState<any>({})
     const getMatchedRoute = (route: any) => {
@@ -17,7 +18,7 @@ const Layout = ({history, routes, location}: any) => {
     return(
         <>
             <MainHeader title={route?.title} navigation={RootNavigation}/>
-            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={subRoutes.routes}/>
+            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={routes}/>
         </>
     )
 }
