@@ -9,8 +9,8 @@ const features = new Feature(FeatureWithRouterFactory, childModules);
 const subRoutes = features.getConfiguredRoutes();
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
-    HELLO = "/hello",
-    CALENDAR = "/calendar",
+    HELLO = "/org/hello",
+    CALENDAR = "/org/calendar",
 }
 
 export const getFilteredRoutes = (

@@ -65,29 +65,16 @@ const SideBar = ({descriptors, state, navigation}: any) => {
                     </>
                 ): (
                     <List key={route.key}>
-                        <ListItem
-                        onPress={() => {
-                            const event = navigation.emit({
-                            type: 'itemPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                            });
-            
-                            if (!event.defaultPrevented) {
-                            navigation.dispatch({
-                                ...DrawerActions.jumpTo(route.name),
-                                target: state.key,
-                            });
-                            }
-                        }}
-                        >
-                            <Left>
-                                <Text>{descriptors[route.key].options.title}</Text>
-                            </Left>
-                            <Right>
-                                <Icon name="arrow-forward" />
-                            </Right>
-                        </ListItem>
+                        <Link to={route.name}>
+                            <ListItem>
+                                <Left>
+                                    <Text>{descriptors[route.key].options.title}</Text>
+                                </Left>
+                                <Right>
+                                    <Icon name="arrow-forward" />
+                                </Right>
+                            </ListItem>
+                        </Link>
                     </List>
                 )}
                 </>

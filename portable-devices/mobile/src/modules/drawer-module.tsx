@@ -7,7 +7,7 @@ export const DrawerRoute = (props: { history: History<any>, location: any, route
         history={props.history}
         routes={props.routes}
         defaultTitle={'Test'}
-        initialRouteName={'/calendar'}
+        initialRouteName={'/org/calendar'}
         screenOptions={{}}
     />
 }
