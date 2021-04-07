@@ -9,8 +9,8 @@ const features = new Feature(FeatureWithRouterFactory, childModules);
 const subRoutes = features.getConfiguredRoutes();
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
-    HELLO = "/hello",
-    CALENDAR = "/calendar",
+    HELLO = "/org/hello",
+    CALENDAR = "/org/calendar",
 }
 
 export const getFilteredRoutes = (
@@ -36,6 +36,7 @@ export const counterPageStore: any = [
         name: "Hello",
         title: "Hello",
         component: Hello, 
+        id: 'drawer',
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
@@ -46,6 +47,7 @@ export const counterPageStore: any = [
         icon: "export",
         name: "Calendar",
         title: "Calendar",
+        id: 'drawer',
         component: CalendarScreen,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,

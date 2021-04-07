@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
-export const navigationRef = React.createRef<any>();
+export const navigationRefs = React.createRef<any>();
 
 export function navigate(name: any) {
-  navigationRef.current?.navigate(name);
+  navigationRefs.current?.navigate(name);
 }

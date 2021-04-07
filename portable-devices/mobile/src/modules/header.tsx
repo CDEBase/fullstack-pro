@@ -1,16 +1,16 @@
 import React from 'react'
 import {Header} from "react-native-elements"
-import { DrawerActions } from '@react-navigation/native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 const MainHeader = (props: any) => {
-  const Dispatch = props.navigation.navigationRef.current.dispatch
+  const navigation = useNavigation()
     return (
         <Header 
         placement='left' 
         leftComponent={{
           icon: 'menu', 
           color: '#fff', 
-          onPress: () => Dispatch(DrawerActions.toggleDrawer())
+          onPress: () => navigation.dispatch(DrawerActions.toggleDrawer())
         }}
         centerComponent={{
           text: props.title, 

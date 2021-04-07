@@ -77,7 +77,6 @@ function flattenRoutes(routes?: IRouteProps[], parent?: IScreen): IScreen[] {
 
 export function DrawerNavigation(props: INavigationProps): JSX.Element {
     const { history, routes, defaultTitle, ...rest } = props;
-    console.log('--_DRAIER', location);
     const initialRouteName = props.initial;
 
     const screenOptions = props.screenOptions;
@@ -94,7 +93,6 @@ export function DrawerNavigation(props: INavigationProps): JSX.Element {
 
 
     const screens = flattenRoutes(routes);
-    console.log('---screens', screens);
     if (__DEV__) {
         if (!screens || screens.length === 0) {
             return (
