@@ -102,15 +102,10 @@ function HistoryNavigator({
         [navigation, history, state],
     );
 
-/*     React.useEffect(() => {
+    /* React.useEffect(() => {
         if (history.index > state.index) {
-            debugger
-            const route = state.routes[history.index];
-            if (route) {
-                history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
-            }
+            history.go(state.index - history.index)
         } else if (history.index < state.index) {
-            debugger
             const route = state.routes[state.index];
             if (route) {
                 history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);

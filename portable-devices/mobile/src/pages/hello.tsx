@@ -1,12 +1,12 @@
 import React from "react"
 import {StyleSheet, View, Text, ViewStyle} from "react-native"
 import {Footer, Content} from "native-base"
-
+import {connect} from "react-redux"
 interface Style {
     container: ViewStyle
 }
 
-const Hello = () => {
+const HelloScreen = () => {
     return (
         <View style={styles.container}>
             <Content>
@@ -27,5 +27,12 @@ const styles = StyleSheet.create<Style>({
         textAlign: 'center'
     }
 })
+
+const Hello = connect((state: any) => {
+    return({
+        settings: state.settings,
+        location: state?.route?.location
+    })
+})(HelloScreen)
 
 export default Hello

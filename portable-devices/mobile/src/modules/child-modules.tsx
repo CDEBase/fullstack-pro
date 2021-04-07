@@ -5,7 +5,7 @@ import { Hello} from "../pages"
 //import CounterScreen from "../pages/counter"
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
-    TIMER = "/org/hello/timer",
+    TIMER = "/hello/timer",
 }
 
 export const getFilteredRoutes = (
@@ -30,6 +30,7 @@ export const counterPageStore: any = [
         icon: "export",
         name: "Timer",
         title: "Timer",
+        id: 'sub-drawer',
         component: Hello,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.TIMER,

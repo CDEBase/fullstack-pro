@@ -8,9 +8,8 @@ import counterModules from "../modules/counter-module"
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-const Layout = ({history, location}: any) => {
-    const routes = features.getConfiguredRoutes()
-    let subRoutes = routes.find((route: any) => route.routes && route)
+const Layout = ({history, routes, location}: any) => {
+    let subRoutes = routes.filter((route: any) => route.id === 'drawer')
     const [route, setRoute] = useState<any>({})
     const getMatchedRoute = (route: any) => {
         setRoute(route)
@@ -18,15 +17,17 @@ const Layout = ({history, location}: any) => {
     return(
         <>
             <MainHeader title={route?.title} navigation={RootNavigation}/>
-            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={routes}/>
+            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={subRoutes}/>
         </>
     )
 }
 
-export const ProLayout = connect(({ settings, router }: any) => ({
-    settings,
-    location: router.location,
-}))(Layout);
+export const ProLayout = connect((state: any) => {
+    return ({
+    settings: state.settings,
+    location: state.router.location,
+    })
+})(Layout);
 
 export default new Feature({
     routeConfig: [

@@ -1,6 +1,7 @@
 import React from "react"
 import {StyleSheet, View, Text, ViewStyle, Dimensions} from "react-native"
 import { Calendar } from 'react-native-big-calendar'
+import {connect} from "react-redux"
 
 interface Style {
     container: ViewStyle
@@ -24,7 +25,7 @@ const events = [
       },
 ]
 
-const CalendarScreen = () => {
+const Calendarscreen = () => {
 
     let screenHeight = Dimensions.get('window').height
 
@@ -40,5 +41,12 @@ const styles = StyleSheet.create<Style>({
         textAlign: 'center'
     }
 })
+
+const CalendarScreen = connect((state: any) => {
+    return ({
+        settings: state.settings,
+        location: state?.route?.location
+    })
+})(Calendarscreen)
 
 export default CalendarScreen
