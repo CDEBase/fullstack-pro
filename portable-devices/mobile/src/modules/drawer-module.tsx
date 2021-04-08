@@ -1,25 +1,40 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import { History } from 'history';
-import {createDrawerNavigator} from "@react-navigation/drawer"
-import { matchPath, __RouterContext as RouterContext } from 'react-router';
+import { Drawer, Content } from 'native-base';
+import SideBar from "../components/SideBar"
+import MainHeader from "./header"
+import * as RootNavigation from "../routes/root-navigation"
+import { useEffect } from 'react';
 
-const Drawer = createDrawerNavigator()
+export const DrawerModule = (props: { history: History<any>, location: any, routes: any }) => {
 
-export const DrawerRoute = (props: { history: History<any>, location: any, routes: any, getMatchedRoute: any }) => {
+    const [component, setComponent] = useState<any>({})
+    useEffect(() => {
+        const found = props.routes.find((route: any) => route.path === props.location.pathname)
+        if(found){
+            setComponent(found)
+        }
+    }, [props.location])
+
+    const drawerRef = React.useRef<any>()
+    const closeDrawer = () => {
+        drawerRef.current?._root.close()
+    };
+    const openDrawer = () => {
+        drawerRef.current?._root.open()
+    }
 
     return (
-    <Drawer.Navigator initialRouteName={"/org/calendar"}>
-        {props.routes.map((route: any) => (
-            <Drawer.Screen
-                name={route.name}
-                key={route.key}
-                options={{
-                    ...route.options,
-                    title: route.title,
-                }}
-                component={route.component}
-                />
-             ))}
-        </Drawer.Navigator>
+        <Drawer 
+        ref={drawerRef} 
+        tapToClose={true}
+        content={<SideBar {...props} />}
+        onClose={() => closeDrawer()}
+        onOpen={() => openDrawer()} >
+            <MainHeader drawerRef={drawerRef} title={""} navigation={RootNavigation}/>
+            <Content>
+               {/* render component here */}
+            </Content>
+        </Drawer>
     )
 }

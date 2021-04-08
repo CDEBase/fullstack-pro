@@ -113,9 +113,7 @@ function HistoryNavigator({
         }
     }, [state.index, history]); */
 
-    return <DrawerView {...rest} drawerContent={(props) =>
-        <SideBar descriptors={descriptors} state={state} navigation={navigation}/>
-    } descriptors={descriptors} state={state} navigation={navigation} />;
+    return <DrawerView {...rest} descriptors={descriptors} state={state} navigation={navigation} />;
 }
 
 export const drawerHistoryNavigator = createNavigatorFactory<

@@ -3,10 +3,9 @@ import {Container, View, Text, List, ListItem, Left, Right, Icon} from "native-b
 import {Link} from "react-router-dom"
 import {DrawerActions} from "@react-navigation/native"
 
-const SideBar = ({descriptors, state, navigation}: any) => {
+const SideBar = (props: any) => {
     const [icon, setIcon] = useState('arrow-forward')
     const[toggle, setToggle] = useState(false)
-    let selectedRoute = state.history[state.index].key
     const expand = () => {
         if(icon === 'arrow-forward'){
             setIcon('arrow-down')
@@ -17,68 +16,21 @@ const SideBar = ({descriptors, state, navigation}: any) => {
         }
     }
     return(
-        <Container>
-            {state.routes.map((route: any) => (
-                <>
-                {descriptors[route.key].options.childern ? (
-                    <>
-                    <List>
-                        <ListItem onPress={expand}>
+        <Container style={{width: '30%'}}>
+            <List>
+                {props.routes.map((route: any) => (
+                    <Link key={route.key} to={route.path} style={{textDecoration: 'none'}}>
+                        <ListItem>
                             <Left>
-                                <Text>{descriptors[route.key].options.title}</Text>
+                                <Text>{route.name}</Text>
                             </Left>
                             <Right>
                                 <Icon name={icon}/>
                             </Right>
                         </ListItem>
-                    </List>
-                    {toggle && (
-                        <List>
-                            {descriptors[route.key].options.childern.map((subRoute: any) => (
-                                <Link to={subRoute.path} style={{textDecoration: 'none'}}>
-                                    <ListItem onPress={() => {
-                                        console.log(subRoute)
-                                        const event = navigation.emit({
-                                        type: 'itemPress',
-                                        target: route.key,
-                                        canPreventDefault: true,
-                                        });
-                        
-                                        if (!event.defaultPrevented) {
-                                        navigation.dispatch({
-                                            ...DrawerActions.jumpTo(route.name),
-                                            target: state.key,
-                                        });
-                                        }
-                                    }}>
-                                        <Left>
-                                            <Text>{subRoute.title}</Text>
-                                        </Left>
-                                        <Right>
-                                            <Icon name='arrow-forward'/>
-                                        </Right>
-                                    </ListItem>
-                                </Link>
-                            ))}
-                        </List>
-                    )}
-                    </>
-                ): (
-                    <List key={route.key}>
-                        <Link to={route.name}>
-                            <ListItem>
-                                <Left>
-                                    <Text>{descriptors[route.key].options.title}</Text>
-                                </Left>
-                                <Right>
-                                    <Icon name="arrow-forward" />
-                                </Right>
-                            </ListItem>
-                        </Link>
-                    </List>
-                )}
-                </>
-            ))}
+                    </Link>
+                ))}
+            </List>
         </Container>
     )
 }

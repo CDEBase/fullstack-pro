@@ -10,7 +10,7 @@ const MainHeader = (props: any) => {
         leftComponent={{
           icon: 'menu', 
           color: '#fff', 
-          onPress: () => navigation.dispatch(DrawerActions.toggleDrawer())
+          onPress: () => props.drawerRef.current?._root.open()
         }}
         centerComponent={{
           text: props.title, 
