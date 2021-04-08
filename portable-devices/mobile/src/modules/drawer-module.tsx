@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import { History } from 'history';
 import { Drawer, Content } from 'native-base';
 import SideBar from "../components/SideBar"
@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 export const DrawerModule = (props: { history: History<any>, location: any, routes: any }) => {
 
-    const [component, setComponent] = useState<any>({})
+    const [component, setComponent] = useState<any>()
     useEffect(() => {
         const found = props.routes.find((route: any) => route.path === props.location.pathname)
         if(found){
@@ -33,7 +33,7 @@ export const DrawerModule = (props: { history: History<any>, location: any, rout
         onOpen={() => openDrawer()} >
             <MainHeader drawerRef={drawerRef} title={""} navigation={RootNavigation}/>
             <Content>
-               {/* render component here */}
+               {component?.component}
             </Content>
         </Drawer>
     )
