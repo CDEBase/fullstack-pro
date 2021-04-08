@@ -81,5 +81,4 @@
 //         return this.update({ id: 1, amount: amount });
 //     }
 
-
 // }

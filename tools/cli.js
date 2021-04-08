@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // require('babel-register')({ presets: ['env'], plugins: ['transform-class-properties'] });
 // require('babel-polyfill');
 const prog = require('caporal');
-
 
 const addModuleCommand = require('./cli/commands/add-module');
 const deleteModuleCommand = require('./cli/commands/delete-module');
@@ -19,7 +19,7 @@ prog
     '[location]',
     'Where should new module be created. [both, server, browser]',
     ['both', 'server', 'browser'],
-    'both'
+    'both',
   )
   .action((args, options, logger) => commandInvoker.runAddModule(args, options, logger))
   // Delete module

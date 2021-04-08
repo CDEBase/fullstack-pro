@@ -25,7 +25,6 @@ const linkState = withClientState({
     resolvers,
     defaults,
     // typeDefs: defaultSchema.concat(schema as any), // if client schema exist
-
 });
 const links = [linkState];
 
@@ -35,7 +34,6 @@ const client = new ApolloClient({
     cache,
 });
 
-
 function getDataIdFromObject(result: any) {
     if (dataIdFromObject[result.__typename]) {
         return dataIdFromObject[result.__typename](result);
@@ -43,11 +41,4 @@ function getDataIdFromObject(result: any) {
     return result.id || result._id;
 }
 
-
-export {
-    client,
-    getDataIdFromObject,
-};
-
-
-
+export { client, getDataIdFromObject };

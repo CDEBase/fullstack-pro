@@ -1,5 +1,4 @@
 export interface IRepository<T> {
-
     getById(id: number): Promise<T>;
 
     find(filter: string, pageNumber: number, count: number): Promise<T[]>;

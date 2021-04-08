@@ -1,10 +1,10 @@
+import { Feature } from '@common-stack/server-core';
+import { interfaces } from 'inversify';
 import schema from './schema/schema.graphql';
 import { ICounterService, IService } from './interfaces';
 import { resolver } from './resolvers';
 import { localCounterModule, externalCounterModule } from './containers';
 import { CounterMockMoleculerService } from './services';
-import { Feature } from '@common-stack/server-core';
-import { interfaces } from 'inversify';
 import { TYPES } from './constants';
 import { CounterDataSource } from './dataloader';
 
@@ -21,7 +21,7 @@ const dataSources: (container: interfaces.Container) => any = () => {
 };
 
 export default new Feature({
-    schema: schema,
+    schema,
     createContainerFunc: [localCounterModule],
     createResolversFunc: resolver,
     createServiceFunc: counterServiceGen,
@@ -31,4 +31,3 @@ export default new Feature({
     addBrokerClientServiceClass: [CounterMockMoleculerService],
     addBrokerMainServiceClass: [],
 });
-
