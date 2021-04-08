@@ -20,7 +20,7 @@ const Layout = ({ history, routes, location, descriptors }: any) => {
     return (
         <>
             <MainHeader title={route?.title} navigation={RootNavigation} />
-            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={routes} />
+            <DrawerRoute history={history} location={location} routes={routes} />
         </>
     );
 };

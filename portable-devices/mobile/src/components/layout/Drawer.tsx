@@ -5,7 +5,7 @@ import { History } from 'history';
 // import { DrawerNavigation } from './drawer-navigation';
 import SideBar from './SideBar';
 
-export const DrawerRoute = (props: { history: History<any>; location: any; routes: any; getMatchedRoute: any }) => {
+export const DrawerRoute = (props: { history: History<any>; location: any; routes: any; }) => {
     return (
         <SideBar
             history={props.history}

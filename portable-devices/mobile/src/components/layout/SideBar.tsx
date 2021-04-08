@@ -14,7 +14,6 @@ const SideBar = ({ descriptors, routes, navigation }: any) => {
         if (icon === 'arrow-forward') {
             setIcon('arrow-down');
             // setToggle(true);
-            this.drawer._root.close()
         } else {
             setIcon('arrow-forward');
             setToggle(false);
@@ -22,21 +21,19 @@ const SideBar = ({ descriptors, routes, navigation }: any) => {
     };
     return (
         <Container>
-            {routes.map((route: any) => (
-                <>
-                    <List key={route.key}>
-                        <Link to={route.name}>
-                            <ListItem>
-                                <Left>
-                                    <Text>Menu</Text>
-                                </Left>
-                                <Right>
-                                    <Icon name="arrow-forward" />
-                                </Right>
-                            </ListItem>
-                        </Link>
-                    </List>
-                </>
+            {routes[1].routes.map((route: any) => (
+                <List key={route.key}>
+                    <Link key={route.key} to={route.path}>
+                        <ListItem key={route.key}>
+                            <Left>
+                                <Text>{route.name}</Text>
+                            </Left>
+                            <Right>
+                                <Icon name="arrow-forward" />
+                            </Right>
+                        </ListItem>
+                    </Link>
+                </List>
             ))}
         </Container>
     );

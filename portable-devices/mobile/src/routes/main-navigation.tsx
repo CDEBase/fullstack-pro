@@ -91,6 +91,7 @@ export function Navigation(props: INavigationProps): JSX.Element {
     }, [history]);
 
     const screens = flattenRoutes(routes);
+    console.log('---screens', screens);
 
     if (__DEV__) {
         if (!screens || screens.length === 0) {

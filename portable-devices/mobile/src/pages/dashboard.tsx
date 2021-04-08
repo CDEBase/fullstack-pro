@@ -20,4 +20,4 @@ const styles = StyleSheet.create<Style>({
     }
 })
 
-export default Dashboard
+export default Dashboard;
