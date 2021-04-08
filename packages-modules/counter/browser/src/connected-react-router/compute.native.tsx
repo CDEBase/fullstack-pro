@@ -1,21 +1,27 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IMenuPosition } from '@common-stack/client-react';
 import { Hello } from './components/Hello.native';
 import { Counter } from './components/Counter.native';
 // import { Dashboard } from '../common/components/Dashboard';
 import { getFilteredRoutes } from '../utils';
-import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+// import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+
+enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
+    HOME = '/connected-react-router',
+    HELLO = '/connected-react-router/hello',
+    COUNTER = '/connected-react-router/counter',
+}
 
 export const counterPageStore: any[] = [
-    // {
-    //     exact: false,
-    //     icon: 'export',
-    //     component: Dashboard,
-    //     position: IMenuPosition.MIDDLE,
-    //     name: 'Connected React Router',
-    //     key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-    //     path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-    // },
+    {
+        exact: false,
+        icon: 'export',
+        position: IMenuPosition.MIDDLE,
+        name: 'Connected React Router',
+        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+    },
     {
         exact: true,
         icon: 'export',
@@ -37,7 +43,7 @@ export const counterPageStore: any[] = [
 ];
 
 const selectedRoutesAndMenus = [
-    // CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+    CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
 ];
