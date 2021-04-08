@@ -9,7 +9,9 @@ import MainHeader from './Header';
 import * as RootNavigation from './root-navigation';
 import { DrawerRoute } from './Drawer';
 
-const Layout = ({ history, routes, location }: any) => {
+const Layout = ({ history, routes, location, descriptors }: any) => {
+
+    console.log('---Layout ROUTES', routes, descriptors)
     // const subRoutes = routes.filter((route: any) => route.id === 'drawer');
     const [route, setRoute] = useState<any>({});
     const getMatchedRoute = (route: any) => {

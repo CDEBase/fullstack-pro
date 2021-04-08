@@ -1,19 +1,23 @@
-/* eslint-disable react/require-default-props */
-import React, { ComponentType, useEffect, Component } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable no-plusplus */
+import React, { ComponentType, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { matchRoutes } from 'react-router-config';
-import {Redirect} from "react-router-dom"
+import { Redirect } from 'react-router-dom';
 import { NavigationHelpers, Route } from '@react-navigation/native';
 import { nanoid } from 'nanoid/non-secure';
-import { createHistoryNavigator } from './create-history-navigator';
 import { IRoute as IRouteProps, IRouteComponentProps } from '@common-stack/client-react';
 import { History } from 'history';
 import { matchPath, __RouterContext as RouterContext } from 'react-router';
+import { createHistoryNavigator } from './create-history-navigator';
 
 const { Navigator, Screen } = createHistoryNavigator();
 
 interface INavigationProps {
-    routes: any[];
+    routes: IRouteProps[];
     history: History<any>;
     defaultTitle?: string;
     initialRouteName: string;
@@ -37,7 +41,6 @@ export interface IScreenComponentProps extends IRouteComponentProps {
     screen: Route<any>;
     navigation: NavigationHelpers<any, any>;
 }
-
 
 function flattenRoutes(routes?: IRouteProps[], parent?: IScreen): IScreen[] {
     if (!Array.isArray(routes)) return [];
@@ -74,15 +77,14 @@ export function Navigation(props: INavigationProps): JSX.Element {
     const { history, routes, defaultTitle, ...rest } = props;
 
     console.log('nVigation ', routes, rest);
-    const initialRouteName = props.initialRouteName;
+    const { initialRouteName } = props;
 
-    const screenOptions = props.screenOptions;
+    const { screenOptions } = props;
 
     useEffect(() => {
         function routeChangeHandler(location: any, action?: string) {
             const matchedRoutes = matchRoutes(props.routes, location.pathname);
             console.log('--ROUTE CHANGED', matchedRoutes);
-
         }
         routeChangeHandler(history.location, 'POP');
         return history.listen(routeChangeHandler);
@@ -99,7 +101,9 @@ export function Navigation(props: INavigationProps): JSX.Element {
                         component={() => (
                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontWeight: 'bold', fontSize: 17, color: '#f4333c' }}>404</Text>
-                                <Text style={{ fontSize: 14, color: '#f4333c' }}>Please implement an index page under the pages/ directory.</Text>
+                                <Text style={{ fontSize: 14, color: '#f4333c' }}>
+                                    Please implement an index page under the pages/ directory.
+                                </Text>
                             </View>
                         )}
                     />
@@ -115,38 +119,44 @@ export function Navigation(props: INavigationProps): JSX.Element {
         url: initialRouteName,
     };
     return (
-        <Navigator headerMode='none' initialRouteName={initialRouteName} history={history} screenOptions={screenOptions}>
-            {screens.map(({ key, component: Component, options: { routeMatchOpts, title, ...options }, ...rest }, idx) => (
-                <Screen
-                    {...rest}
-                    key={key || `screen_${idx}`}
-                    options={{
-                        ...options,
-                        title: title || defaultTitle,
-                    }}
-                >
-                    {(props) => {
-                        const context = {
-                            history,
-                            location: history.location,
-                            match: matchPath(history.location.pathname, routeMatchOpts) || intialMatch,
-                        };
-                        const newProps = {
-                            routes,
-                            ...rest,
-                            ...context,
-                            ...props,
-                        };
-                        console.log('---PROP PASSED', newProps)
-                        return (
-                            <RouterContext.Provider value={context}>
-                                <Component {...newProps} />
-                            </RouterContext.Provider>
-                        )
-                    }}
-
-                </Screen>
-            ))}
+        <Navigator
+            headerMode="none"
+            initialRouteName={initialRouteName}
+            history={history}
+            screenOptions={screenOptions}
+        >
+            {screens.map(
+                ({ key, component: Component, options: { routeMatchOpts, title, ...options }, ...rest }, idx) => (
+                    <Screen
+                        {...rest}
+                        key={key || `screen_${idx}`}
+                        options={{
+                            ...options,
+                            title: title || defaultTitle,
+                        }}
+                    >
+                        {(props) => {
+                            const context = {
+                                history,
+                                location: history.location,
+                                match: matchPath(history.location.pathname, routeMatchOpts) || intialMatch,
+                            };
+                            const newProps = {
+                                routes,
+                                ...rest,
+                                ...context,
+                                ...props,
+                            };
+                            console.log('---PROP PASSED', newProps);
+                            return (
+                                <RouterContext.Provider value={context}>
+                                    <Component {...newProps} />
+                                </RouterContext.Provider>
+                            );
+                        }}
+                    </Screen>
+                ),
+            )}
         </Navigator>
-    )
+    );
 }
