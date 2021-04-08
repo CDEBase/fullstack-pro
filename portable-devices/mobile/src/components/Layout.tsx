@@ -9,7 +9,7 @@ import counterModules from "../modules/counter-module"
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
 const Layout = ({history, routes, location}: any) => {
-    let subRoutes = routes.filter((route: any) => route.id === 'drawer')
+    let subRoutes = routes.find((route: any) => route.routes)
     const [route, setRoute] = useState<any>({})
     const getMatchedRoute = (route: any) => {
         setRoute(route)
@@ -17,7 +17,7 @@ const Layout = ({history, routes, location}: any) => {
     return(
         <>
             <MainHeader title={route?.title} navigation={RootNavigation}/>
-            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={subRoutes}/>
+            <DrawerRoute history={history} getMatchedRoute={getMatchedRoute} location={location} routes={subRoutes.routes}/>
         </>
     )
 }
@@ -33,7 +33,7 @@ export default new Feature({
     routeConfig: [
         {
             ['/org']:{
-                exact:true,
+                exact:false,
                 component: ProLayout
             },
         },

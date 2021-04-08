@@ -31,7 +31,7 @@ export const getFilteredRoutes = (
 
 export const counterPageStore: any = [
     {
-        exact: true,
+        exact: false,
         icon: "export",
         name: "Hello",
         title: "Hello",
@@ -43,7 +43,7 @@ export const counterPageStore: any = [
         /* childern: subRoutes */
     },
     {
-        exact: true,
+        exact: false,
         icon: "export",
         name: "Calendar",
         title: "Calendar",
