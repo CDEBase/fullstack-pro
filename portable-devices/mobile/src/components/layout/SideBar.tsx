@@ -9,7 +9,6 @@ import { DrawerActions } from '@react-navigation/native';
 const SideBar = ({ descriptors, state, navigation }: any) => {
     const [icon, setIcon] = useState('arrow-forward');
     const [toggle, setToggle] = useState(false);
-    const selectedRoute = state.history[state.index].key;
     const expand = () => {
         if (icon === 'arrow-forward') {
             setIcon('arrow-down');

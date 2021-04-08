@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { ComponentType, useEffect, Component } from 'react';
 import { Text, View } from 'react-native';
 import { matchRoutes } from 'react-router-config';
@@ -12,7 +13,7 @@ import { matchPath, __RouterContext as RouterContext } from 'react-router';
 const { Navigator, Screen } = createHistoryNavigator();
 
 interface INavigationProps {
-    routes: IRouteProps[];
+    routes: any[];
     history: History<any>;
     defaultTitle?: string;
     initialRouteName: string;

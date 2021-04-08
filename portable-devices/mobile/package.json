@@ -28,6 +28,7 @@
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.0",
     "@common-stack/client-core": "^0.0.255",
     "@common-stack/client-react": "^0.0.255",
+    "@common-stack/client-react-native": "^0.0.255",
     "@common-stack/core": "^0.0.255",
     "@common-stack/server-core": "^0.0.255",
     "@expo/samples": "^3.0.3",
