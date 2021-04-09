@@ -14,7 +14,7 @@ export default class MainWindow {
             show: false,
             width: 400,
             height: 400,
-            frame: false,
+            // frame: false,
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
@@ -64,17 +64,17 @@ export default class MainWindow {
 
         // @TODO: Use 'ready-to-show' event
         //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-        this.window.webContents.on('did-finish-load', () => {
-            if (!this.window) {
-                throw new Error('"mainWindow" is not defined');
-            }
-            if (process.env.START_MINIMIZED) {
-                this.window.minimize();
-            } else {
-                this.window.show();
-                this.window.focus();
-            }
-        });
+        // this.window.webContents.on('did-finish-load', () => {
+        //     if (!this.window) {
+        //         throw new Error('"mainWindow" is not defined');
+        //     }
+        //     if (process.env.START_MINIMIZED) {
+        //         this.window.minimize();
+        //     } else {
+        //         this.window.show();
+        //         this.window.focus();
+        //     }
+        // });
 
 
 

@@ -2,7 +2,7 @@ import * as path from 'path';
 import { app, BrowserWindow, Tray } from 'electron';
 import Positioner from 'electron-positioner';
 
-const iconPath = path.join(__dirname, '../../assets/icons/icon-256.png');
+const iconPath = path.join(__dirname, '../../assets/icons/16x16.png');
 
 export default class TrayIcon {
 

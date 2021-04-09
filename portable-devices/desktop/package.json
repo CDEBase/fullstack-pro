@@ -56,7 +56,9 @@
     "apollo-link-schema": "^1.2.4",
     "apollo-link-ws": "^1.0.19",
     "apollo-logger": "^0.3.3",
+    "aws-sdk": "^2.880.0",
     "browser-bunyan": "^1.6.3",
+    "check-internet-connected": "^2.0.5",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.9.1",
     "cors": "^2.8.5",
@@ -65,9 +67,9 @@
     "electron-debug": "^3.1.0",
     "electron-json-storage": "^2.0.0",
     "electron-log": "^4.2.4",
-    "electron-updater": "^4.3.4",
     "electron-positioner": "^4.1.0",
     "electron-redux": "^1.5.4",
+    "electron-updater": "^4.3.4",
     "envalid": "^7.0.0",
     "fela": "11.6.0",
     "fela-beautifier": "^11.6.0",
@@ -86,6 +88,7 @@
     "history": "^4.10.1",
     "immutability-helper": "^3.0.1",
     "inversify": "^5.0.1",
+    "iohook": "^0.9.0",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
@@ -122,5 +125,20 @@
     "electron-webpack": "^2.8.2",
     "electron-webpack-ts": "^4.0.1",
     "electron-devtools-installer": "^3.1.1"
+  },
+  "iohook": {
+    "targets": [
+      "node-72",
+      "electron-85"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
   }
 }
