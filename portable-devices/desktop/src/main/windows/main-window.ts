@@ -14,11 +14,16 @@ export default class MainWindow {
             show: false,
             width: 400,
             height: 400,
-            frame: false,
+            // frame: false,
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
-            webPreferences: { nodeIntegration: true, webSecurity: false }
+            webPreferences: { 
+                nodeIntegration: true, 
+                webSecurity: false,
+                enableRemoteModule: true,
+            
+            }
         });
 
         if (config.isDevelopment) {
@@ -38,7 +43,7 @@ export default class MainWindow {
                 pathname: MAIN_HTML_PAGE,
             });
             this.window.loadURL(htmlDevPath);
-        } else {
+            } else {
             const htmlPath = formatUrl({
                 pathname: path.join(__dirname, MAIN_HTML_PAGE),
                 protocol: 'file',
@@ -59,17 +64,17 @@ export default class MainWindow {
 
         // @TODO: Use 'ready-to-show' event
         //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-        this.window.webContents.on('did-finish-load', () => {
-            if (!this.window) {
-                throw new Error('"mainWindow" is not defined');
-            }
-            if (process.env.START_MINIMIZED) {
-                this.window.minimize();
-            } else {
-                this.window.show();
-                this.window.focus();
-            }
-        });
+        // this.window.webContents.on('did-finish-load', () => {
+        //     if (!this.window) {
+        //         throw new Error('"mainWindow" is not defined');
+        //     }
+        //     if (process.env.START_MINIMIZED) {
+        //         this.window.minimize();
+        //     } else {
+        //         this.window.show();
+        //         this.window.focus();
+        //     }
+        // });
 
 
 

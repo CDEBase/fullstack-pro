@@ -10,42 +10,7 @@
 
 <body>
   MAIN APP PAGE
-  
-  <!-- Counter : <div id="counter_disp"></div>
-  <button onclick="increment()"> + </button> 
-   <button onclick="decrement()"> - </button> -->
-   <div id="app" /> 
-
-
-
-   <!-- <script>
-     window.onload = (event) =>{
-      var i = localStorage.getItem('counter');
-     document.getElementById("counter_disp").innerText = i
-     }
-    function increment(){
-     var i = localStorage.getItem('counter');
-     console.log("=========###########=====",i)
-     i++;
-     localStorage.setItem('counter',i)
-     console.log("========New value=======",i)
-     document.getElementById("counter_disp").innerText = i
-    }
-    function decrement(){
-     var i = localStorage.getItem('counter');
-     console.log("=========###########=====",i)
-     i--;
-     localStorage.setItem('counter',i)
-     console.log("========New value=======",i)
-     document.getElementById("counter_disp").innerText = i
-    }
-   
-
-   console.log("==========increment============")
-   ipcRenderer.send('startjob');
-   console.log("==========After ipc============")
- 
-</script> -->
+  <div id="app" />
   <script type='text/javascript'>
     var bundlePath = './renderer.js';
     if (process.env.NODE_ENV === 'development') {

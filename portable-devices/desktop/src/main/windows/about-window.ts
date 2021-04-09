@@ -1,39 +1,64 @@
 import * as path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow, webContents } from 'electron';
 import { format as formatUrl } from 'url';
-import Positioner from 'electron-positioner';
+import { config } from '../../config';
+
+const ABOUT_HTML_PAGE = 'about-page.html'
 
 export default class AboutWindow {
 
     public window: BrowserWindow;
-
     constructor() {
 
+
+        // Creation of the new window.
         this.window = new BrowserWindow({
-            show: false,
-            width: 300,
-            height: 336,
-            frame: false,
+            show: false, // Initially, we should hide it, in such way will remove blink-effect.
+            height: 500,
+            width: 500,
+            // This option will remove frame buttons. 
+            // By default window has standart header buttons (close, hide, minimize). 
+            // We should change this option because we want to display our window like
+            // Tray Window not like common-like window.
+            // frame: false,
             backgroundColor: '#E4ECEF',
+            // resizable: false,
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule:true,
+             }             
         });
 
-        const htmlPath = formatUrl({
-            pathname: path.join(__dirname, 'about-page.html'),
-            protocol: 'file',
-            slashes: false
-        });
-
-        this.window.loadURL(htmlPath);
-
-        // About Window will disappear in blur.
+        
+        if (config.isDevelopment) {
+            this.window.webContents.openDevTools()
+            this.window.webContents.on('devtools-opened', () => {
+                this.window.focus()
+                setImmediate(() => {
+                    this.window.focus()
+                });
+            });
+            const htmlDevPath = formatUrl({
+                protocol: "http",
+                slashes: true,
+                hostname: config.ELECTRON_WEBPACK_WDS_HOST,
+                port: config.ELECTRON_WEBPACK_WDS_PORT,
+                pathname: ABOUT_HTML_PAGE,
+            });
+            this.window.loadURL(htmlDevPath);
+        } else {
+            const htmlPath = formatUrl({
+                pathname: path.join(__dirname, ABOUT_HTML_PAGE),
+                protocol: 'file',
+                slashes: true,
+            });
+            this.window.loadURL(htmlPath);
+        }
+ 
+        // Object BrowserWindow has a lot of standart events
+        // We will hide Tray window on blur. To emulate standart behavior of the tray-like apps.
         this.window.on('blur', () => {
             this.window.hide();
-        });
-
-        // On show - we should display About Window in the center of the screen.
-        this.window.on('show', () => {
-            let positioner = new Positioner(this.window);
-            positioner.move('center');
         });
     }
 }

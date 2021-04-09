@@ -1,6 +1,5 @@
 import { format as formatUrl } from 'url';
 import { app, shell, ipcMain, MenuItem, Menu, BrowserWindow } from 'electron';
-import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 
 export const template: Electron.MenuItemConstructorOptions[] = [{
