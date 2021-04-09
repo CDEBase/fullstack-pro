@@ -31,3 +31,4 @@ export default new Feature({
     addBrokerClientServiceClass: [CounterMockMoleculerService],
     addBrokerMainServiceClass: [],
 });
+

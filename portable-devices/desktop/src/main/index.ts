@@ -11,13 +11,30 @@ import MainWindow from './windows/main-window';
 import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
-import moduleName from 'module'
+import ScreenShot from './screen-shot';
+import { createReduxStore } from '../renderer/config/redux-config'
+
+// const ioHook = require("iohook");
+const {
+    forwardToRenderer,
+    triggerAlias,
+    replayActionMain,
+    createAliasedAction,
+  } = require('electron-redux');
+
+const { createStore, applyMiddleware } = require('redux');
+
+import { connectedReactRouter_counter } from '../reducers'
+const store  = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
+replayActionMain(store);
+createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 let tray: TrayWindow = null;
 let main: MainWindow = null;
+let screenShot: ScreenShot = null;
 let about: AboutWindow = null;
 
-let trayIcon: TrayIcon = null;
+let trayIcon:TrayIcon = null;
 
 // We hide dock, because we do not want to show our app as common app. 
 // We want to display our app as a Tray-lik app (like Dropbox, Skitch or ets).
@@ -33,6 +50,7 @@ app.on('ready', function () {
     tray = new TrayWindow();
     main = new MainWindow();
     about = new AboutWindow();
+    screenShot = new ScreenShot();
 
     trayIcon = new TrayIcon(tray.window);
 
@@ -47,17 +65,18 @@ ipcMain.on('quit-app', function () {
     main.window.close();
     tray.window.close(); // Standart Event of the BrowserWindow object.
     about.window.close();
-    app.quit(); // Standart event of the app - that will close our app.
+    app.quit(); 
+    screenShot.destoryScreenShot();// Standart event of the app - that will close our app.
 });
 
-ipcMain.on('startjob',async(event,i)=>{
-    console.log("===================",i)
-})
 
 // Custom events MAIN WINDOW
 ipcMain.on('show-main-window-event', function () {
-    main.window.show();
+    if(main && main.window){
+        main.window.show();
+    }
     app.dock.show();
+    screenShot.initScreenShot();
 });
 
 ipcMain.on('about-window', function () {
@@ -73,7 +92,12 @@ ipcMain.on('show-about-window-event', function () {
 
 // Custom events TRAY WINDOW
 ipcMain.on('update-title-tray-window-event', function (event, title) {
+    console.log("main window");
+    if(main && main.window){
+        main.window.show();
+    }
     trayIcon.updateTitle(title);
+    screenShot.initScreenShot();
 });
 
 

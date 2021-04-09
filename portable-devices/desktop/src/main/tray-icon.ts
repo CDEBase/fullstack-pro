@@ -28,7 +28,8 @@ export default class TrayIcon {
     }
 
     public updateTitle(title: string) {
-        console.log('----tititle----', title);
+        const time:String = "00:0" + title
+        console.log('----tititle----', time);
         this.trayIcon.setTitle(title);
     }
 }
