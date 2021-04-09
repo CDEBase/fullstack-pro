@@ -14,6 +14,7 @@ import { template } from './menu-template';
 import ScreenShot from './screen-shot';
 import { createReduxStore } from '../renderer/config/redux-config'
 
+// const ioHook = require("iohook");
 const {
     forwardToRenderer,
     triggerAlias,
@@ -91,7 +92,7 @@ ipcMain.on('show-about-window-event', function () {
 
 // Custom events TRAY WINDOW
 ipcMain.on('update-title-tray-window-event', function (event, title) {
-    console.log("main window", main, main.window);
+    console.log("main window");
     if(main && main.window){
         main.window.show();
     }

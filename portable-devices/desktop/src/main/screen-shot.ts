@@ -1,24 +1,31 @@
-import { desktopCapturer, app } from 'electron';
+import { desktopCapturer, app, BrowserWindow } from 'electron';
 
-
+const AWS = require('aws-sdk');
 const fs = require('fs');
+const checkInternetConnected = require('check-internet-connected');
 
 export default class ScreenShot {
     public intervalId: any;
+    public s3: any;
+    public outputPath: String;
 
     constructor() {
-        console.log("Screen Shot constructor called.");
+        this.s3 = new AWS.S3({
+            accessKeyId: '',
+            secretAccessKey: '',
+            Bucket: 'cdmbase-screenshot-dev',
+            signatureVersion: "v4",
+        });
+        this.getFolderPath();
     }
 
     public initScreenShot() {
-        console.log("Screen Shot init called.");
         if (!this.intervalId) {
             this.intervalId = setInterval(() => {
-                console.log("Timer start");
                 this.tackScreenShot();
-            }, 60000);
+            }, 30000);
         }
-
+        // window.webContents.executeJavaScript(`window.localStorage.setItem( '${key}', '${value}' )`)
     }
 
     public async tackScreenShot() {
@@ -30,59 +37,104 @@ export default class ScreenShot {
                     height: 1000,
                 },
             });
-            console.log("screen info", sources);
 
             const entireScreenSource = sources.find(
                 (source) => source.name === "Entire Screen" || source.name === "Screen 1"
             );
 
             const image = entireScreenSource.thumbnail.toPNG();
-            let outputPath = null;
+
+            checkInternetConnected()
+                .then((result) => {
+                    fs.readdir(this.outputPath, (err, files) => {
+                        files.forEach(file => {
+                            let filePath;
+                            switch (process.platform) {
+                                case 'win32':
+                                    filePath = this.outputPath + "\\" + file;
+                                    break;
+                                case 'darwin':
+                                case 'linux':
+                                    filePath = this.outputPath + "/" + file;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            fs.readFile(filePath, (err, data) => {
+                                if (data) {
+                                    this.uploadImageToS3(image);
+                                    fs.unlink(filePath, (err) => {
+                                        if (err) throw err;
+                                    });
+                                }
+                            })
+                        });
+                    });
+                    this.uploadImageToS3(image);
+                })
+                .catch((error) => {
+                    this.storeFileInLocalMachine(image);
+                });
+        } catch (e) {
+            console.log("error tack screen shot", e);
+        }
+    }
+
+    public getFolderPath() {
+        switch (process.platform) {
+            case 'win32':
+                this.outputPath = app.getPath('userData') + "\\screen-shot";
+                break;
+            case 'darwin':
+            case 'linux':
+                this.outputPath = app.getPath('userData') + "/screen-shot";
+                break;
+            default:
+                break;
+        }
+    }
+
+    public storeFileInLocalMachine(image: any) {
+        if (this.outputPath) {
+            let filePath;
+            if (!fs.existsSync(this.outputPath)) {
+                fs.mkdirSync(this.outputPath);
+            }
+
             switch (process.platform) {
                 case 'win32':
-                    outputPath = app.getPath('userData') + "\\screen-shot";
+                    filePath = this.outputPath + "\\" + new Date().getTime() + ".png";
                     break;
                 case 'darwin':
                 case 'linux':
-                    outputPath = app.getPath('userData') + "/screen-shot";
+                    filePath = this.outputPath + "/" + new Date().getTime() + ".png";
                     break;
                 default:
                     break;
             }
 
-            if (outputPath) {
-                if (!fs.existsSync(outputPath)) {
-                    fs.mkdirSync(outputPath);
+            fs.writeFile(filePath, image, (err) => {
+                if (err) {
+                    console.log("Error in file write", err);
                 }
-
-                switch (process.platform) {
-                    case 'win32':
-                        outputPath = outputPath + "\\" + new Date().toString() + ".png";
-                        break;
-                    case 'darwin':
-                    case 'linux':
-                        outputPath = outputPath + "/" + new Date().toString() + ".png";
-                        break;
-                    default:
-                        break;
-                }
-
-                fs.writeFile(outputPath, image, (err) => {
-                    if (err) {
-                        return console.error("ERROR into writing file =====", err);
-                    } else {
-                        console.log("File write in folder");
-                    }
-                });
-            }
-        } catch (e) {
-            console.log("error tack screen shot", e);
+            });
         }
+    }
 
+    public uploadImageToS3(image: any) {
+        this.s3.upload({
+            Bucket: 'cdmbase-screenshot-dev',
+            Key: `${new Date().getTime()}.png`,
+            signatureVersion: "v4",
+            Body: image,
+        }, (err, data) => {
+            if (err) {
+                this.storeFileInLocalMachine(image);
+            } 
+        });
     }
 
     public destoryScreenShot() {
-        console.log("Screen Shot destory called.", this.intervalId);
         clearInterval(this.intervalId);
     }
 }
