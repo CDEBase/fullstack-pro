@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
 import { getFilteredMenus, getFilteredRoutes } from '../utils';

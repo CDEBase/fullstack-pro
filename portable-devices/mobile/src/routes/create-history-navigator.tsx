@@ -1,3 +1,9 @@
+/* eslint-disable default-case */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { Platform } from 'react-native';
 import {
@@ -41,13 +47,13 @@ function HistoryNavigator({
         screenOptions:
             typeof screenOptions === 'function'
                 ? (...args) => ({
-                    ...defaultOptions,
-                    ...screenOptions(...args),
-                })
+                      ...defaultOptions,
+                      ...screenOptions(...args),
+                  })
                 : {
-                    ...defaultOptions,
-                    ...screenOptions,
-                },
+                      ...defaultOptions,
+                      ...screenOptions,
+                  },
     });
 
     React.useEffect(
@@ -85,12 +91,16 @@ function HistoryNavigator({
                             break;
                         case 'PUSH':
                             if (state.index < history.index) {
-                                navigation.dispatch(StackActions.push(location.pathname, parse(location.search.replace('?', ''))));
+                                navigation.dispatch(
+                                    StackActions.push(location.pathname, parse(location.search.replace('?', ''))),
+                                );
                             }
                             break;
                         case 'REPLACE':
                             if (state.index === history.index) {
-                                navigation.dispatch(StackActions.replace(location.pathname, parse(location.search.replace('?', ''))));
+                                navigation.dispatch(
+                                    StackActions.replace(location.pathname, parse(location.search.replace('?', ''))),
+                                );
                             }
                             break;
                     }
