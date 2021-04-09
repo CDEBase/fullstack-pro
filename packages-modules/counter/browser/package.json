@@ -43,6 +43,22 @@
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
     "antd": "^4.5.2"
   },
+  "devDependencies": {
+    "rimraf": "^3.0.0",
+    "webpack": "4.43.0"
+  },
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "@common-stack/client-react-native": "*",
+    "@react-navigation/drawer": "*",
+    "native-base": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*"
+  },
   "publishConfig": {
     "access": "public"
   },

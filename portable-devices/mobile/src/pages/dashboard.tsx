@@ -9,7 +9,7 @@ const Dashboard = () => {
     return(
         <View style={styles.container}>
             <Text>Dashboard Value</Text>
-            <Link to={'/org/hello'}>Hello</Link>
+            <Link to={'/org/calendar'}>Calendar</Link>
         </View>
     )
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create<Style>({
     }
 })
 
-export default Dashboard
+export default Dashboard;

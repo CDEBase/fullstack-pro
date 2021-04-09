@@ -1,10 +1,14 @@
 import * as React from "react";
 import { IMenuPosition } from "@common-stack/client-react";
-import { Feature, IRouteData } from "@common-stack/client-react";
-import {Dashboard, Hello, CalendarScreen} from "../pages"
+import { Feature, FeatureWithRouterFactory } from "@common-stack/client-react";
+import { Hello, CalendarScreen} from "../pages"
+import childModules from "./child-modules"
+
+const features = new Feature(FeatureWithRouterFactory, childModules);
+
+const subRoutes = features.getConfiguredRoutes();
 
 export enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
-    HOME = "/",
     HELLO = "/org/hello",
     CALENDAR = "/org/calendar",
 }
@@ -29,35 +33,21 @@ export const counterPageStore: any = [
     {
         exact: true,
         icon: "export",
-        component: Dashboard,
-        position: IMenuPosition.MIDDLE,
-        name: "Connected React Router",
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        title: "Dashboard",
-        headerTintColor: "#ffffff",
-        headerTitleStyle: {
-            fontWeight: "bold",
-        },
-        headerStyle: {
-            backgroundColor: "#FFC100",
-        },
-    },
-    {
-        exact: true,
-        icon: "export",
         name: "Hello",
-        component: Hello,
         title: "Hello",
+        component: Hello, 
+        id: 'drawer',
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
+        /* childern: subRoutes */
     },
     {
         exact: true,
         icon: "export",
         name: "Calendar",
         title: "Calendar",
+        id: 'drawer',
         component: CalendarScreen,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
@@ -66,7 +56,6 @@ export const counterPageStore: any = [
 ];
 
 const selectedRoutesAndMenus = [
-    CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.CALENDAR,
 ];
