@@ -1,4 +1,3 @@
-
 class ServerError extends Error {
     constructor(error: any) {
         super();

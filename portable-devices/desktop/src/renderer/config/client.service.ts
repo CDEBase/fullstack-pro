@@ -1,20 +1,22 @@
-
-import modules, { container } from '../modules';
-import { createApolloClient, cache } from './apollo-client';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { Container } from 'inversify';
 import ApolloClient from 'apollo-client';
-
-
+import modules, { container } from '../modules';
+import { createApolloClient, cache } from './apollo-client';
 
 let __CLIENT_SERVICE__: {
-    apolloClient: ApolloClient<any>,
-    container: Container,
-    services: any,
+    apolloClient: ApolloClient<any>;
+    container: Container;
+    services: any;
 };
 export const createClientContainer = () => {
-
-    if (__CLIENT_SERVICE__){
+    if (__CLIENT_SERVICE__) {
         return __CLIENT_SERVICE__;
     }
     const apolloClient = createApolloClient();
@@ -27,7 +29,7 @@ export const createClientContainer = () => {
     __CLIENT_SERVICE__ = {
         container,
         apolloClient,
-        services
-    }
+        services,
+    };
     return __CLIENT_SERVICE__;
-}
+};

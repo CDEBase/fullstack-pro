@@ -1,19 +1,16 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { lowerCase } from 'lodash';
 
 /**
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
  */
-const publicEnv = [
-    'NODE_ENV',
-    'GRAPHQL_URL',
-    'FACEBOOK_APP_ID',
-    'GA_ID',
-    'LOG_LEVEL',
-];
+const publicEnv = ['NODE_ENV', 'GRAPHQL_URL', 'FACEBOOK_APP_ID', 'GA_ID', 'LOG_LEVEL'];
 
 const isBrowser = typeof window !== 'undefined';
-const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
+const base = (isBrowser ? window.__ENV__ || __ENV__ : process.env) || {};
 
 const env: any = {};
 for (const v of publicEnv) {
