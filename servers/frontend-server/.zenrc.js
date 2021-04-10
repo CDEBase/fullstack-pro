@@ -6,10 +6,15 @@ const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const pp =  path.resolve(process.cwd(), 'dist');
+
+console.log('---PPP', pp);
 const config = {
     builders: {
         web: {
+            webpackDLL: false,
             entry: './src/index.tsx',
             output: {
                 chunkFilename: '[name].bundle.js',
@@ -31,6 +36,9 @@ const config = {
             waitOn: ['tcp:localhost:8080'],
             enabled: true,
             webpackConfig: {
+                output: {
+                    path: pp,
+                },
                 plugins: [
                     new LodashModuleReplacementPlugin({
                         // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
@@ -49,6 +57,9 @@ const config = {
         },
         server: {
             entry: './src/backend/app.ts',
+            output: {
+                path: pp,
+            },
             stack: ['server'],
             tsLoaderOptions: {
                 // configFileName: "./tsconfig.json"
@@ -60,6 +71,8 @@ const config = {
             webpackConfig: {
                 output: {
                     filename: 'main.js',
+                    path: pp,
+
                 },
                 plugins: [
                     new CopyWebpackPlugin({

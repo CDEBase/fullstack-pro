@@ -16,7 +16,7 @@ export const MigrationSchema = new Schema({
 
 export async function migrate(db: Connection, container: Container) {
     try {
-        const migrations = container.getAll<{up: any}>('MongodbMigration');
+        const migrations = container.getAll<{ up: any; id: any }>('MongodbMigration');
         const model = db.model<any, any>('Migration', MigrationSchema);
         return await Promise.all(
             migrations.map(async (migration) => {
