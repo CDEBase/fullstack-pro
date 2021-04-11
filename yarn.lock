@@ -3490,10 +3490,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/exec-p/-/exec-p-0.4.0.tgz#ab3765d482849ba6e825721077c248cf9f3323b7"
   integrity sha512-44DWNv5gDR9EwrCTVQ4ZC99yPqVS0VCWrYIBl45qNR8XQy+4lbl0IQG8kBDf6NHwj4Ib4c2z1Fq1IUJOCbkZcw==
 
-"@larix/zen@0.1.35":
-  version "0.1.35"
-  resolved "https://registry.yarnpkg.com/@larix/zen/-/zen-0.1.35.tgz#30748ff36a42e52e44c1081b1b4754ca772b7078"
-  integrity sha512-osIHdMnmuIesDPf5WJiOhFH4Xw5cOMXvBmf0bb/krrshoJ7NcHWL/EPSduQfyFSw9k7j8sPlOfmEap1xqpcD+w==
+"@larix/zen@0.1.37":
+  version "0.1.37"
+  resolved "https://registry.yarnpkg.com/@larix/zen/-/zen-0.1.37.tgz#c980910ef1f3cb4f36b4bab45bfa69798f0afa7e"
+  integrity sha512-skiJQJv2vmLK9JKxanVSNjmp0+Wuj1E3vFNFR0O006tt7mULo00wZF5tUmqbEoJpMo/xe2ZNYvnUrUITAZGZ9A==
   dependencies:
     connect-cors "^0.5.6"
     debug "^3.1.0"
