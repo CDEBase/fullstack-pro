@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
     builders: {
