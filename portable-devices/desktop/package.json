@@ -121,10 +121,14 @@
     "subscriptions-transport-ws": "0.9.18"
   },
   "devDependencies": {
+    "cross-env": "^6.0.3",
+    "electron": "^11.2.0",
     "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-webpack": "^2.8.2",
-    "electron-webpack-ts": "^4.0.1"
+    "electron-webpack-ts": "^4.0.1",
+    "pm2": "^4.2.1",
+    "rimraf": "^3.0.0"
   },
   "iohook": {
     "targets": [

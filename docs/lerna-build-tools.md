@@ -15,11 +15,11 @@ Things to know about current package structure
     "lerna:prepublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lerna:prepublish:develop": "git checkout publish-develop && git merge -s recursive -X theirs develop",
     "watch": "lerna exec --no-sort --ignore *server --stream --parallel -- webpack --watch",
-    "publish": "npm run lerna:prepublish && lerna publish",
+    "publish": "yarn lerna:prepublish && lerna publish",
     "lerna": "lerna bootstrap --hoist",
-    "postinstall": "npm run lerna",
+    "postinstall": "yarn lerna",
     "clean": "lerna clean",
-    "build": "npm run build:packages",
+    "build": "yarn build:packages",
     "build:packages": "lerna run build --ignore *server",
     "build:packages:watch": "lerna run build:lib:watch --ignore *server --stream",
     "watch-packages": "lerna exec --no-sort  --scope @sample-stack/platform* --scope @sample-stack/react-shared-components --scope @sample-stack/core --stream --parallel 'webpack --watch'",
@@ -29,13 +29,13 @@ Things to know about current package structure
 
 Details on each command that wrapped for lerna
 --
-- `npm install` - This command need to be run in the root of the package only to install all the dependencies. We have post step(`postinstall`) to run `npm run lerna` after install finishes so `lerna` will installs all of packages (seen under packages directory) dependencies and links any cross-dependencies.
+- `npm install` - This command need to be run in the root of the package only to install all the dependencies. We have post step(`postinstall`) to run `yarn lerna` after install finishes so `lerna` will installs all of packages (seen under packages directory) dependencies and links any cross-dependencies.
 Note: We do not need to run `yarn` under any packages with `package.json` files seen under `packages` and `servers` directories. 
 - `yarn lerna` - This triggers `lerna bootstrap --hoist`. Normally this get triggered as post install step. You can run this command to install any packages' dependencies. More information about this command can be found [here](https://github.com/lerna/lerna/blob/master/doc/hoist.md). The bottom line, the `hoist` will try to install all common dependencies to the top-level node_modules, and omitted from individual package's `node_modules`.
 The outlier packages with different versions will get a normal, local node_modules installation of the necessary dependencies.
 - `yarn clean` - Removes the `node_modules` directory from all packages.
 - `yarn clean:force` - Removes the `node_modules` directory from all packages as well as `package-lock.json` file.
-- `yarn build` - It invokes `npm run build` in each packages parallely. 
+- `yarn build` - It invokes `yarn build` in each packages parallely. 
 - `yarn watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly. You may also see `Error: ENOSPC: System limit for number of file watchers reached` if you OS is not configured with high open files. Check [Not Enough Watchers](#not-enough-watchers) section for futher information.
 - `yarn watch-packages` - Abutomatically builds the dependent packages mostly under `packages` folder. 
 - `yarn watch-packages -- --scope @sample-stack/counter-module-*` - By adding package module you like to watch along with the dependent packages. If you have more packages to watch keep adding with `-- --scope packageA* --scope packageB`
@@ -62,7 +62,7 @@ lerna exec --scope=@sample-stack/counter-module-server yarn watch
 
 Adding packages as dependencies to sibling packages (not needed anymore)
 --
-When you add sibling package to one of the packages, you need to run `npm run lerna` symlink the packages that are dependencies of each other.
+When you add sibling package to one of the packages, you need to run `yarn lerna` symlink the packages that are dependencies of each other.
 
 
 ### List packages
