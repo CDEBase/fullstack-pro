@@ -154,6 +154,7 @@ function getRouteElement({ route, index, opts }: IGetRouteElementOpts) {
 }
 
 function renderRoutes(opts: IOpts) {
+    console.log('--OPTS', opts)
     return opts.routes ? (
         <Switch>
             <Route exact path="/">

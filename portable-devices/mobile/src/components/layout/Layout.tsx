@@ -13,13 +13,10 @@ const Layout = ({ history, routes, location, descriptors }: any) => {
 
     console.log('---Layout ROUTES', routes, descriptors)
     // const subRoutes = routes.filter((route: any) => route.id === 'drawer');
-    const [route, setRoute] = useState<any>({});
-    const getMatchedRoute = (route: any) => {
-        setRoute(route);
-    };
+    console.log('--RENDER __LAYOUT')
     return (
         <>
-            <MainHeader title={route?.title} navigation={RootNavigation} />
+            <MainHeader title={route?.title} />
             <DrawerRoute history={history} location={location} routes={routes} />
         </>
     );
