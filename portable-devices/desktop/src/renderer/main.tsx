@@ -10,11 +10,7 @@ import Main from './app/Main';
 const rootEl = document.getElementById('app');
 let frontendReloadCount = 0;
 
-const renderApp = ({ key }: { key: number }) =>
-    ReactDOM.render(
-        <Main key={key} />,
-        rootEl,
-    );
+const renderApp = ({ key }: { key: number }) => ReactDOM.render(<Main key={key} />, rootEl);
 renderApp({ key: frontendReloadCount });
 if (__DEV__) {
     if ((module as any).hot) {
@@ -32,7 +28,7 @@ if (__DEV__) {
         });
         //  React-hot-loader v4 doesn't require following code any more.
         //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
-          (module as any).hot.accept('./app/Main', () => {
+        (module as any).hot.accept('./app/Main', () => {
             try {
                 console.log('Updating front-end');
                 frontendReloadCount = (frontendReloadCount || 0) + 1;

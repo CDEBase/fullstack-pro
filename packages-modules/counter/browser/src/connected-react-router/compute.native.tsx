@@ -1,16 +1,22 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IMenuPosition } from '@common-stack/client-react';
-import { Hello } from './components/Hello';
-import { Counter } from './components/Counter';
-import { Dashboard } from '../common/components/Dashboard';
-import { getFilteredMenus, getFilteredRoutes } from '../utils';
-import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+import { Hello } from './components/Hello.native';
+import { Counter } from './components/Counter.native';
+// import { Dashboard } from '../common/components/Dashboard';
+import { getFilteredRoutes } from '../utils';
+// import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+
+enum CONNECTED_REACT_ROUTER_ROUTES_TYPES {
+    HOME = '/connected-react-router',
+    HELLO = '/connected-react-router/hello',
+    COUNTER = '/connected-react-router/counter',
+}
 
 export const counterPageStore: any[] = [
     {
         exact: false,
         icon: 'export',
-        component: Dashboard,
         position: IMenuPosition.MIDDLE,
         name: 'Connected React Router',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
@@ -42,11 +48,7 @@ const selectedRoutesAndMenus = [
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
 ];
 
-// get menus
-const filteredMenus = getFilteredMenus(counterPageStore, selectedRoutesAndMenus);
-
 // get routes
 const filteredRoutes = getFilteredRoutes(counterPageStore, selectedRoutesAndMenus);
 
-export { filteredMenus, filteredRoutes };
-
+export { filteredRoutes };

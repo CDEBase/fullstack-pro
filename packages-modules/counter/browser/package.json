@@ -7,18 +7,18 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run build:clean && npm run build:lib",
+    "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack",
-    "build:lib:watch": "npm run build:lib -- --watch",
+    "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
-    "prepublish": "npm run build",
+    "prepublish": "yarn build",
     "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
     "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
     "test": "cross-env ENV_FILE=../../config/test/test.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
-    "watch": "npm run build:lib:watch"
+    "watch": "yarn build:lib:watch"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -43,11 +43,26 @@
     "@sample-stack/platform-browser": "^0.0.51-alpha.10",
     "antd": "^4.5.2"
   },
+  "devDependencies": {
+    "rimraf": "^3.0.0",
+    "webpack": "4.43.0"
+  },
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "@common-stack/client-react-native": "*",
+    "@react-navigation/drawer": "*",
+    "native-base": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*"
+  },
   "publishConfig": {
     "access": "public"
   },
   "typescript": {
     "definition": "lib/index.d.ts"
-  },
-  "gitHead": "1d63ca90840c7d40d60256a0994dfd41db385056"
+  }
 }

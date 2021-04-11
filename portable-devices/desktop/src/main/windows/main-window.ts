@@ -3,35 +3,37 @@ import { BrowserWindow, shell } from 'electron';
 import { format as formatUrl } from 'url';
 import { config } from '../../config';
 
-
-const MAIN_HTML_PAGE = 'main-page.html'
+const MAIN_HTML_PAGE = 'main-page.html';
 export default class MainWindow {
     public window: BrowserWindow;
 
     constructor() {
-
         this.window = new BrowserWindow({
             show: false,
             width: 400,
             height: 400,
-            frame: false,
+            // frame: false,
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
-            webPreferences: { nodeIntegration: true, webSecurity: false }
+            webPreferences: {
+                nodeIntegration: true,
+                webSecurity: false,
+                enableRemoteModule: true,
+            },
         });
 
         if (config.isDevelopment) {
-            this.window.webContents.openDevTools()
+            this.window.webContents.openDevTools();
 
             this.window.webContents.on('devtools-opened', () => {
-                this.window.focus()
+                this.window.focus();
                 setImmediate(() => {
-                    this.window.focus()
+                    this.window.focus();
                 });
             });
             const htmlDevPath = formatUrl({
-                protocol: "http",
+                protocol: 'http',
                 slashes: true,
                 hostname: config.ELECTRON_WEBPACK_WDS_HOST,
                 port: config.ELECTRON_WEBPACK_WDS_PORT,
@@ -48,7 +50,7 @@ export default class MainWindow {
         }
 
         this.window.on('closed', () => {
-            this.window = null
+            this.window = null;
         });
 
         // Open urls in the user's browser
@@ -59,19 +61,16 @@ export default class MainWindow {
 
         // @TODO: Use 'ready-to-show' event
         //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-        this.window.webContents.on('did-finish-load', () => {
-            if (!this.window) {
-                throw new Error('"mainWindow" is not defined');
-            }
-            if (process.env.START_MINIMIZED) {
-                this.window.minimize();
-            } else {
-                this.window.show();
-                this.window.focus();
-            }
-        });
-
-
-
+        // this.window.webContents.on('did-finish-load', () => {
+        //     if (!this.window) {
+        //         throw new Error('"mainWindow" is not defined');
+        //     }
+        //     if (process.env.START_MINIMIZED) {
+        //         this.window.minimize();
+        //     } else {
+        //         this.window.show();
+        //         this.window.focus();
+        //     }
+        // });
     }
 }

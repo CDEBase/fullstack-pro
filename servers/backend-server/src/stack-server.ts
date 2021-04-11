@@ -15,6 +15,7 @@ import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-upd
 import { IModuleService } from './interfaces';
 import { CommonType } from '@common-stack/core';
 import * as _ from 'lodash';
+import {migrate} from './utils/migrations';
 import { CdmLogger } from '@cdm-logger/core';
 type ILogger = CdmLogger.ILogger;
 
@@ -72,6 +73,8 @@ export class StackServer {
         this.microserviceBroker = new ServiceBroker({
             ...brokerConfig,
             started: async () => {
+                // start DB migration
+                await migrate(mongoClient, this.serviceContainer);
                 await modules.preStart(this.serviceContainer);
                 if (config.NODE_ENV === 'development') {
                     await modules.microservicePreStart(this.microserviceContainer);

@@ -1,0 +1,2 @@
+yarn run v1.22.10
+$ cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env yarn zen:watch -- -v

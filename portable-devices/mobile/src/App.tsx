@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useRef} from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
@@ -14,7 +14,6 @@ import { RendererProvider } from 'react-fela';
 import { ConnectedRouter } from 'connected-react-router';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createReduxStore, storeReducer, history, persistConfig, epicMiddleware } from './config/redux-config';
-import { navigationRef } from './routes/root-navigation';
 import { createApolloClient } from './config/apollo-client';
 import env from './config/public-config';
 import config from './config';
@@ -44,18 +43,32 @@ export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
     const persistor = persistStore(store);
+    const routeNameRef = useRef()
+    const navigationRef = useRef<any>()
 
     if (!isLoadingComplete) {
         return null;
     }
     return (
         <SafeAreaProvider>
-            <NavigationContainer
-                ref={navigationRef}
-                linking={LinkingConfiguration}
-                theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-            >
-                <Provider store={store}>
+            <Provider store={store}>
+                <NavigationContainer
+                    ref={navigationRef}
+                    onReady={() => {
+                        (routeNameRef.current = navigationRef?.current.getCurrentRoute()?.name ||'')
+                    }}
+                    onStateChange={ () => {
+                        const previousRouteName = routeNameRef.current
+                        const currentRouteName = navigationRef?.current.getCurrentRoute()?.name
+                        if(previousRouteName !== currentRouteName){
+                            console.log("Not Same")
+                        }
+
+                        routeNameRef.current = currentRouteName
+                    }}
+                    linking={LinkingConfiguration}
+                    theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+                >
                     <ApolloProvider client={client}>
                         <RendererProvider renderer={renderer}>
                             <PersistGate persistor={persistor}>
@@ -66,8 +79,8 @@ export default function App() {
                             </PersistGate>
                         </RendererProvider>
                     </ApolloProvider>
-                </Provider>
-            </NavigationContainer>
+                </NavigationContainer>
+            </Provider>
         </SafeAreaProvider>
     );
 }

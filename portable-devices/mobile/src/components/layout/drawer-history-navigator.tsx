@@ -1,5 +1,12 @@
+/* eslint-disable default-case */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import {
     createNavigatorFactory,
     useNavigationBuilder,
@@ -7,17 +14,19 @@ import {
     DrawerActions,
     DefaultNavigatorOptions,
     EventArg,
-    NavigationHelpersContext
+    NavigationHelpersContext,
 } from '@react-navigation/native';
 import { DrawerRouterOptions, DrawerNavigationState } from '@react-navigation/routers/lib/typescript/src/DrawerRouter';
 import {
     DrawerNavigationEventMap,
     DrawerNavigationConfig,
-    DrawerNavigationOptions
+    DrawerNavigationOptions,
 } from '@react-navigation/drawer/lib/typescript/src/types';
 import { Location, Action } from 'history';
 import { parse, stringify } from 'querystring';
-import { DrawerView } from '@react-navigation/drawer';
+import { DrawerView, createDrawerNavigator } from '@react-navigation/drawer';
+
+import SideBar from './SideBar';
 
 function HistoryNavigator({
     initialRouteName,
@@ -31,7 +40,7 @@ function HistoryNavigator({
         animationEnabled: Platform.OS !== 'web',
     };
     const { descriptors, state, navigation } = useNavigationBuilder<
-    DrawerNavigationState<any>,
+        DrawerNavigationState<any>,
         DrawerRouterOptions,
         any,
         DrawerNavigationOptions,
@@ -42,13 +51,13 @@ function HistoryNavigator({
         screenOptions:
             typeof screenOptions === 'function'
                 ? (...args) => ({
-                    ...defaultOptions,
-                    ...screenOptions(...args),
-                })
+                      ...defaultOptions,
+                      ...screenOptions(...args),
+                  })
                 : {
-                    ...defaultOptions,
-                    ...screenOptions,
-                },
+                      ...defaultOptions,
+                      ...screenOptions,
+                  },
     });
 
     React.useEffect(
@@ -91,27 +100,37 @@ function HistoryNavigator({
                             break;
                         case 'REPLACE':
                             if (state.index === history.index) {
-                                navigation.dispatch(DrawerActions.jumpTo(location.pathname, parse(location.search.replace('?', ''))));
+                                navigation.dispatch(
+                                    DrawerActions.jumpTo(location.pathname, parse(location.search.replace('?', ''))),
+                                );
                             }
                             break;
                     }
                 }
             }),
-        [navigation, history],
+        [navigation, history, state],
     );
 
-    // React.useEffect(() => {
-    //     if (history.index > state.index) {
-    //         history.go(state.index - history.index);
-    //     } else if (history.index < state.index) {
-    //         const route = state.routes[state.index];
-    //         if (route) {
-    //             history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
-    //         }
-    //     }
-    // }, [state.index, history]);
+    /* React.useEffect(() => {
+        if (history.index > state.index) {
+            history.go(state.index - history.index)
+        } else if (history.index < state.index) {
+            const route = state.routes[state.index];
+            if (route) {
+                history.push(route.params ? `${route.name}?${stringify(route.params)}` : route.name);
+            }
+        }
+    }, [state.index, history]); */
 
-    return <DrawerView {...rest} descriptors={descriptors} state={state} navigation={navigation} />;
+    return (
+        <DrawerView
+            {...rest}
+            drawerContent={(props) => <SideBar descriptors={descriptors} state={state} navigation={navigation} />}
+            descriptors={descriptors}
+            state={state}
+            navigation={navigation}
+        />
+    );
 }
 
 export const drawerHistoryNavigator = createNavigatorFactory<
