@@ -1,6 +1,5 @@
 import * as envalid from 'envalid';
 
-
 const { str, bool, num } = envalid;
 
 export const config = envalid.cleanEnv(process.env, {

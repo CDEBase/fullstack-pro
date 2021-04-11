@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 
@@ -43,8 +44,10 @@ const selectedRoutesAndMenus = [
     CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
 ];
 
-
 // get routes
 const filteredRoutes = getFilteredRoutes(counterPageStore, selectedRoutesAndMenus);
 
-export { filteredRoutes };
+// get menus
+const filteredMenus = getFilteredMenus(counterPageStore, selectedRoutesAndMenus);
+
+export { filteredRoutes, filteredMenus };

@@ -2,10 +2,11 @@ import { format as formatUrl } from 'url';
 import { app, shell, ipcMain, MenuItem, Menu, BrowserWindow } from 'electron';
 import AboutWindow from './windows/about-window';
 
-export const template: Electron.MenuItemConstructorOptions[] = [{
+export const template: Electron.MenuItemConstructorOptions[] = [
+    {
         label: 'Edit',
         submenu: [
-            { role: 'undo'},
+            { role: 'undo' },
             { role: 'redo' },
             { type: 'separator' },
             { role: 'cut' },
@@ -13,8 +14,8 @@ export const template: Electron.MenuItemConstructorOptions[] = [{
             { role: 'paste' },
             { role: 'pasteAndMatchStyle' },
             { role: 'delete' },
-            { role: 'selectAll'}
-        ]
+            { role: 'selectAll' },
+        ],
     },
     {
         label: 'View',
@@ -27,25 +28,27 @@ export const template: Electron.MenuItemConstructorOptions[] = [{
             { role: 'zoomIn' },
             { role: 'zoomOut' },
             { type: 'separator' },
-            { role: 'togglefullscreen' }
-        ]
+            { role: 'togglefullscreen' },
+        ],
     },
     { role: 'window', submenu: [{ role: 'minimize' }, { role: 'close' }] },
     {
         role: 'help',
-        submenu: [{
-            label: 'Learn More',
-            click() {
-                require('electron').shell.openExternal('https://electron.atom.io');
-            }
-        },{
-            label: 'about',
-            click(){
-                console.log("================Clicked About====================")
-                const about = new AboutWindow();
-                about.window.show();
-            }
-        }]
-    }
+        submenu: [
+            {
+                label: 'Learn More',
+                click() {
+                    require('electron').shell.openExternal('https://electron.atom.io');
+                },
+            },
+            {
+                label: 'about',
+                click() {
+                    console.log('================Clicked About====================');
+                    const about = new AboutWindow();
+                    about.window.show();
+                },
+            },
+        ],
+    },
 ];
-

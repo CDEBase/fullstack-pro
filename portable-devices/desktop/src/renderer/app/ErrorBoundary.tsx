@@ -2,8 +2,7 @@ import * as React from 'react';
 import { Error500 } from './500';
 import { ServerError } from './ServerError';
 
-type IErrorBoundryState = { error: any, type: string }
-
+type IErrorBoundryState = { error: any; type: string };
 
 export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     constructor(props) {
@@ -17,22 +16,21 @@ export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     }
 
     componentDidCatch(error) {
-        let type = undefined;
+        let type;
 
         if (process.env.NODE_ENV === 'production') {
-            type = '404'
+            type = '404';
         } else {
-            type = '500'
+            type = '500';
         }
         // Update state so the next render will show the fallback UI.
         this.setState({ error, type });
     }
 
-
     render() {
         const { error, type } = this.state;
         if (error) {
-            return <Error500 error={error} />
+            return <Error500 error={error} />;
         }
         return this.props.children;
     }

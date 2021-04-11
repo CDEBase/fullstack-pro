@@ -3,13 +3,11 @@ import { BrowserWindow, shell } from 'electron';
 import { format as formatUrl } from 'url';
 import { config } from '../../config';
 
-
-const MAIN_HTML_PAGE = 'main-page.html'
+const MAIN_HTML_PAGE = 'main-page.html';
 export default class MainWindow {
     public window: BrowserWindow;
 
     constructor() {
-
         this.window = new BrowserWindow({
             show: false,
             width: 400,
@@ -18,32 +16,31 @@ export default class MainWindow {
             minWidth: 800,
             minHeight: 600,
             backgroundColor: '#E4ECEF',
-            webPreferences: { 
-                nodeIntegration: true, 
+            webPreferences: {
+                nodeIntegration: true,
                 webSecurity: false,
                 enableRemoteModule: true,
-            
-            }
+            },
         });
 
         if (config.isDevelopment) {
-            this.window.webContents.openDevTools()
+            this.window.webContents.openDevTools();
 
             this.window.webContents.on('devtools-opened', () => {
-                this.window.focus()
+                this.window.focus();
                 setImmediate(() => {
-                    this.window.focus()
+                    this.window.focus();
                 });
             });
             const htmlDevPath = formatUrl({
-                protocol: "http",
+                protocol: 'http',
                 slashes: true,
                 hostname: config.ELECTRON_WEBPACK_WDS_HOST,
                 port: config.ELECTRON_WEBPACK_WDS_PORT,
                 pathname: MAIN_HTML_PAGE,
             });
             this.window.loadURL(htmlDevPath);
-            } else {
+        } else {
             const htmlPath = formatUrl({
                 pathname: path.join(__dirname, MAIN_HTML_PAGE),
                 protocol: 'file',
@@ -53,7 +50,7 @@ export default class MainWindow {
         }
 
         this.window.on('closed', () => {
-            this.window = null
+            this.window = null;
         });
 
         // Open urls in the user's browser
@@ -75,8 +72,5 @@ export default class MainWindow {
         //         this.window.focus();
         //     }
         // });
-
-
-
     }
 }

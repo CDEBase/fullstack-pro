@@ -10,8 +10,8 @@ const features = new Feature(FeatureWithRouterFactory, counterModules);
 
 console.log(features.getMenus());
 
-export const MainRoute = props => (
-    <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
+export const MainRoute = (props) => (
+    <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
         <SiderMenu
             collapsed={false}
             menuData={features.getMenus()}
@@ -19,8 +19,8 @@ export const MainRoute = props => (
             segments={features.sidebarSegments}
         />
         <Layout>
-            <Layout.Content style={{height: '100%'}}>
-                <section className="flex-grow" style={{height: '100%'}}>
+            <Layout.Content style={{ height: '100%' }}>
+                <section className="flex-grow" style={{ height: '100%' }}>
                     {features.getRoutes()}
                 </section>
             </Layout.Content>

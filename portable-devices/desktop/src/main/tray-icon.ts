@@ -5,8 +5,8 @@ import Positioner from 'electron-positioner';
 const iconPath = path.join(__dirname, '../../assets/icons/16x16.png');
 
 export default class TrayIcon {
-
     public trayIcon: Tray;
+
     constructor(trayWindow: BrowserWindow) {
         // Path to the app icon that will be displayed in the Tray (icon size: 22px)
 
@@ -19,16 +19,16 @@ export default class TrayIcon {
             if (trayWindow.isVisible()) {
                 trayWindow.hide();
             } else {
-                let positioner = new Positioner(trayWindow);
+                const positioner = new Positioner(trayWindow);
                 positioner.move('trayCenter', bounds);
 
                 trayWindow.show();
             }
-        })
+        });
     }
 
     public updateTitle(title: string) {
-        const time:String = "00:0" + title
+        const time = `00:0${title}`;
         console.log('----tititle----', time);
         this.trayIcon.setTitle(title);
     }
