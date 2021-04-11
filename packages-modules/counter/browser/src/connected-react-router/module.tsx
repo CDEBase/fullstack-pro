@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { Feature } from '@common-stack/client-react';
 import NavBar from './components/NavBar';
