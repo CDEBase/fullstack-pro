@@ -3490,10 +3490,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/exec-p/-/exec-p-0.4.0.tgz#ab3765d482849ba6e825721077c248cf9f3323b7"
   integrity sha512-44DWNv5gDR9EwrCTVQ4ZC99yPqVS0VCWrYIBl45qNR8XQy+4lbl0IQG8kBDf6NHwj4Ib4c2z1Fq1IUJOCbkZcw==
 
-"@larix/zen@0.1.36":
-  version "0.1.36"
-  resolved "https://registry.yarnpkg.com/@larix/zen/-/zen-0.1.36.tgz#f47de711b395a984d191c08af4b6289f078aaa87"
-  integrity sha512-VRbo6NIxrTBuSo/o56zfP2Tb8FR35Lyc8voo5GcZBu+v2yk3bpVzQksOmvH6M7QpiTi8L9OLrEfF0LBoQdV69w==
+"@larix/zen@0.1.35":
+  version "0.1.35"
+  resolved "https://registry.yarnpkg.com/@larix/zen/-/zen-0.1.35.tgz#30748ff36a42e52e44c1081b1b4754ca772b7078"
+  integrity sha512-osIHdMnmuIesDPf5WJiOhFH4Xw5cOMXvBmf0bb/krrshoJ7NcHWL/EPSduQfyFSw9k7j8sPlOfmEap1xqpcD+w==
   dependencies:
     connect-cors "^0.5.6"
     debug "^3.1.0"
@@ -9610,13 +9610,6 @@ check-internet-connected@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/check-internet-connected/-/check-internet-connected-2.0.5.tgz#e872b4e65365f875cc9ed5194c18f31137f79f95"
   integrity sha512-bvS2SCWQGdwWqRS/hlzBKign6AjxZQtBGop/UnFAsBZoDZwSWjoJfcU5MvY+uxtWL3rVOxFIoszugaNz0C5mNg==
-  dependencies:
-    bluebird "^3.7.1"
-
-cheerio-select-tmp@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/cheerio-select-tmp/-/cheerio-select-tmp-0.1.1.tgz#55bbef02a4771710195ad736d5e346763ca4e646"
-  integrity sha512-YYs5JvbpU19VYJyj+F7oYrIE2BOll1/hRU7rEy/5+v9BzkSo3bK81iAeeQEMI92vRIxz677m72UmJUiVwwgjfQ==
   dependencies:
     bluebird "^3.7.1"
 

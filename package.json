@@ -122,7 +122,7 @@
     "@graphql-codegen/typescript-react-apollo": "1.13.5",
     "@graphql-codegen/typescript-resolvers": "1.13.5",
     "@hot-loader/react-dom": "^16.14.0",
-    "@larix/zen": "0.1.36",
+    "@larix/zen": "0.1.35",
     "@redux-devtools/core": "^3.9.0",
     "@redux-devtools/dock-monitor": "^1.4.0",
     "@redux-devtools/log-monitor": "^2.3.0",
