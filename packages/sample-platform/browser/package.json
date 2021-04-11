@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/platform-browser",
-  "version": "0.0.51-alpha.10",
+  "version": "0.0.51-alpha.13",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/core": "^0.0.51-alpha.10"
+    "@sample-stack/core": "^0.0.51-alpha.13"
   },
   "publishConfig": {
     "access": "public"
