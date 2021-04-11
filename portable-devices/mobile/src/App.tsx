@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StatusBar } from 'expo-status-bar';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
@@ -43,8 +43,8 @@ export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
     const persistor = persistStore(store);
-    const routeNameRef = useRef()
-    const navigationRef = useRef<any>()
+    const routeNameRef = useRef();
+    const navigationRef = useRef<any>();
 
     if (!isLoadingComplete) {
         return null;
@@ -55,16 +55,16 @@ export default function App() {
                 <NavigationContainer
                     ref={navigationRef}
                     onReady={() => {
-                        (routeNameRef.current = navigationRef?.current.getCurrentRoute()?.name ||'')
+                        routeNameRef.current = navigationRef?.current.getCurrentRoute()?.name || '';
                     }}
-                    onStateChange={ () => {
-                        const previousRouteName = routeNameRef.current
-                        const currentRouteName = navigationRef?.current.getCurrentRoute()?.name
-                        if(previousRouteName !== currentRouteName){
-                            console.log("Not Same")
+                    onStateChange={() => {
+                        const previousRouteName = routeNameRef.current;
+                        const currentRouteName = navigationRef?.current.getCurrentRoute()?.name;
+                        if (previousRouteName !== currentRouteName) {
+                            console.log('Not Same');
                         }
 
-                        routeNameRef.current = currentRouteName
+                        routeNameRef.current = currentRouteName;
                     }}
                     linking={LinkingConfiguration}
                     theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
