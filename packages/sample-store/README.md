@@ -4,6 +4,6 @@
 
     `npm link`
     `npm link @xtermstack/xterm-core`
-    `npm install`
+    `yarn install`
     `tsc`
     `yarn test`

@@ -21,7 +21,7 @@ Useful commands:
 |`yarn watch`|               - build the packages in watchmode (Useful for development)|
 |`yarn lerna`|               - install external dependencies at the repo root so they're |`lable to all packages.|
 |`yarn build`|               - build all the packages|
-|`npm install`|                - runs `lerna` and `build`|
+|`yarn install`|                - runs `lerna` and `build`|
 |`lerna publish`|               - publishes packages in the current Lerna project. |
 
 Files explained:

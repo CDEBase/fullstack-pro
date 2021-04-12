@@ -52,7 +52,7 @@ Files explained:
 
 Output files explained:
 ----
-    1. node_modules - directory npm creates with all the dependencies of the module (result of npm install)
+    1. node_modules - directory npm creates with all the dependencies of the module (result of yarn install)
     2. dist         - directory contains the compiled server (javascript)
     3. html-report  - output of npm test, code coverage html report.
 

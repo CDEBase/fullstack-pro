@@ -3,9 +3,9 @@ node_js:
   - "8.4"
 install:
   - npm config set spin=false
-  - npm install -g npm@5.2
-  - npm install -g coveralls
-  - npm install
+  - yarn install -g npm@5.2
+  - yarn install -g coveralls
+  - yarn install
 os:
   - linux
   - osx
