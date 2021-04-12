@@ -18,7 +18,7 @@ cd fullstack-pro
 
     d. Insall and build packages using following command. Run from the root folder of this project.
 ```
-    npm install && yarn build
+    yarn install && yarn build
 ```
     
 3. Setup environment file
@@ -83,7 +83,7 @@ Most of the changes at code level can be taken using `git` command.
 But in some cases when `lerna's packages` are added or versions in `packages.json` are updated, to avoid getting installed duplicate pacakges due to monrepo architecture you need to first clean existing `node_modules` and reinstall again. This can be done with following command.
 
 ```
-yarn clean:force && git pull <branch_name> && npm install && yarn build
+yarn clean:force && git pull <branch_name> && yarn install && yarn build
 ```
 - here <branch_name> should be replaced with the branch you getting updates.
 

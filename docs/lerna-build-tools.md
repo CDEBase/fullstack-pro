@@ -29,7 +29,7 @@ Things to know about current package structure
 
 Details on each command that wrapped for lerna
 --
-- `npm install` - This command need to be run in the root of the package only to install all the dependencies. We have post step(`postinstall`) to run `yarn lerna` after install finishes so `lerna` will installs all of packages (seen under packages directory) dependencies and links any cross-dependencies.
+- `yarn install` - This command need to be run in the root of the package only to install all the dependencies. We have post step(`postinstall`) to run `yarn lerna` after install finishes so `lerna` will installs all of packages (seen under packages directory) dependencies and links any cross-dependencies.
 Note: We do not need to run `yarn` under any packages with `package.json` files seen under `packages` and `servers` directories. 
 - `yarn lerna` - This triggers `lerna bootstrap --hoist`. Normally this get triggered as post install step. You can run this command to install any packages' dependencies. More information about this command can be found [here](https://github.com/lerna/lerna/blob/master/doc/hoist.md). The bottom line, the `hoist` will try to install all common dependencies to the top-level node_modules, and omitted from individual package's `node_modules`.
 The outlier packages with different versions will get a normal, local node_modules installation of the necessary dependencies.
@@ -207,7 +207,7 @@ fullstack-pro/
 |── package.json
 └── lerna.json
 ```
-To add dependencies to the packages, Lerna provides us the command `lerna add`. Note that only a single package can be added at a time compared to `yarn add` or `npm install`.
+To add dependencies to the packages, Lerna provides us the command `lerna add`. Note that only a single package can be added at a time compared to `yarn add` or `yarn install`.
 
 ### Add dependencies
 

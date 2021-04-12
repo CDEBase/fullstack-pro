@@ -7,7 +7,7 @@ FROM node:12.18.4-alpine
 ADD package.json /tmp/package.json
 RUN set -ex \
 	&& cd /tmp \
-	&& npm install \
+	&& yarn install \
 	&& mkdir -p /home/app \
 	&& cp -a /tmp/node_modules /home/app/ \
 	&& rm -Rf /tmp/*
@@ -20,4 +20,4 @@ ADD . /home/app
 ENV PORT=3000
 EXPOSE ${PORT}
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
