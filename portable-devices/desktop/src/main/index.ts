@@ -7,7 +7,7 @@ import { template } from './menu-template';
 import ScreenShot from './screen-shot';
 import { createReduxStore } from '../renderer/config/redux-config';
 
-import { connectedReactRouter_counter } from '../reducers';
+// import { connectedReactRouter_counter } from '../reducers';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -17,13 +17,13 @@ if (isDev) {
 }
 
 // const ioHook = require("iohook");
-const { forwardToRenderer, triggerAlias, replayActionMain, createAliasedAction } = require('electron-redux');
+// const { forwardToRenderer, triggerAlias, replayActionMain, createAliasedAction } = require('electron-redux');
 
-const { createStore, applyMiddleware } = require('redux');
+// const { createStore, applyMiddleware } = require('redux');
 
-const store = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
-replayActionMain(store);
-createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
+// const store = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
+// replayActionMain(store);
+// createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 let tray: TrayWindow = null;
 let main: MainWindow = null;
