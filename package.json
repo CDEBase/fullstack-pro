@@ -292,7 +292,7 @@
   },
   "engines": {
     "node": ">=12.18.4 < 14.0.0",
-    "npm": ">6.x <=7.x"
+    "yarn": ">=1.22"
   },
   "cacheDirectories": [
     ".cache"
