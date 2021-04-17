@@ -6,7 +6,9 @@ import { ICount } from '../models';
 import { ICounterRepository } from './interfaces';
 
 @injectable()
-export class CounterRepository extends AbstractRepository implements ICounterRepository {
+export class CounterRepository
+    extends AbstractRepository
+    implements ICounterRepository {
     // Set the table name to count
     public readonly tableName: string = Counter_Table;
 
@@ -15,7 +17,11 @@ export class CounterRepository extends AbstractRepository implements ICounterRep
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public async find(filter: string, pageNumber = 1, count = 20): Promise<ICount[]> {
+    public async find(
+        filter: string,
+        pageNumber = 1,
+        count = 20,
+    ): Promise<ICount[]> {
         return this.getTable().where('amount', 'like', `%${filter}`).select();
     }
 
