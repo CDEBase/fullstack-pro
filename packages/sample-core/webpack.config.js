@@ -11,7 +11,6 @@ const webpackOpts = {
         path: path.join(__dirname, 'lib'),
         filename: 'index.js',
         libraryTarget: 'commonjs2',
-        library: '@sample-stack/core',
     },
     resolve: {
         extensions: ['.ts', '.js'],
