@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
-const webpack_opts = {
+const webpackOpts = {
     mode: 'development',
     entry: './src/index.tsx',
     target: 'node',
@@ -52,10 +52,7 @@ const webpack_opts = {
             },
         ],
     },
-    externals: [
-        nodeExternals({ modulesDir: '../../../node_modules' }),
-        nodeExternals(),
-    ],
+    externals: [nodeExternals({ modulesDir: '../../../node_modules' }), nodeExternals()],
 };
 
-module.exports = webpack_opts;
+module.exports = webpackOpts;

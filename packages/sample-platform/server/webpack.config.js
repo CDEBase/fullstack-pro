@@ -4,7 +4,7 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs');
 
-const webpack_opts = {
+const webpackOpts = {
     mode: 'development',
     entry: {
         index: './src/index.ts',
@@ -63,4 +63,4 @@ const webpack_opts = {
     ],
 };
 
-module.exports = webpack_opts;
+module.exports = webpackOpts;

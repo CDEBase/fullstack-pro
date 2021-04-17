@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
-const webpack_opts = {
+const webpackOpts = {
     mode: 'development',
     entry: './src/index.ts',
     target: 'node',
@@ -46,4 +46,4 @@ const webpack_opts = {
     ],
 };
 
-module.exports = webpack_opts;
+module.exports = webpackOpts;

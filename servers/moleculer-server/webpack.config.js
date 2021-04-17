@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-var webpack_opts = {   
+var webpackOpts = {   
   mode: 'development',
   entry: {
     main: './src/index.ts',
@@ -56,4 +56,4 @@ var webpack_opts = {
 
 };
 
-module.exports = webpack_opts;
+module.exports = webpackOpts;
