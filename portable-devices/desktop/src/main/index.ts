@@ -16,7 +16,6 @@ if (isDev) {
     installExtension = require('electron-devtools-installer');
 }
 
-// const ioHook = require("iohook");
 // const { forwardToRenderer, triggerAlias, replayActionMain, createAliasedAction } = require('electron-redux');
 
 // const { createStore, applyMiddleware } = require('redux');

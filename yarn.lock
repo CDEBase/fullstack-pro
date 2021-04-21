@@ -17684,16 +17684,6 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-iohook@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/iohook/-/iohook-0.9.0.tgz#dae8311e2e9b9da08971bed23c66068a25c7ad44"
-  integrity sha512-SYQn4bwcXqe36k6k93F9+u3SppEaFNUGmV6Nv3M1r69qsO9dFLcz96buEn+6xI/hOtfPXLcNjsotx2gk2LaWcg==
-  dependencies:
-    nugget "^2.0.1"
-    pump "^1.0.3"
-    rc "^1.2.8"
-    tar-fs "^1.16.3"
-
 ioredis@^4.0.0, ioredis@^4.14.1:
   version "4.26.0"
   resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.26.0.tgz#dbbfb5e5da085fc2b1de8174db50fa42f9fed66a"
