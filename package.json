@@ -322,20 +322,5 @@
   },
   "cacheDirectories": [
     ".cache"
-  ],
-  "iohook": {
-    "targets": [
-      "node-72",
-      "electron-85"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "x64",
-      "ia32"
-    ]
-  }
+  ]
 }
