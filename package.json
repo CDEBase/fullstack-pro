@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -21,6 +21,9 @@
     ]
   },
   "scripts": {
+    "prebootstrap": "lerna run prepare",
+    "bootstrap": "yarn && yarn lerna && yarn build",
+    "postbootstrap": "yarn build",
     "build": "yarn build:packages",
     "build:clean": "lerna exec yarn build:clean",
     "build:packages": "lerna run build --ignore *server --ignore *desktop",
@@ -28,6 +31,7 @@
     "check-updates": "lerna exec ./node_modules/.bin/npm-check-updates -- -u",
     "clean": "lerna clean --yes && yarn build:clean && rimraf node_modules",
     "clean:force": "rimraf package-lock.json yarn.lock && yarn clean",
+    "clean:install": "yarn clean:force && yarn git:pull && yarn bootstrap",
     "cli": "node tools/cli",
     "commit": "git cz",
     "compile": "lerna exec -- yarn compile",
@@ -47,6 +51,7 @@
     "format:md": "yarn lint:md --fix",
     "generateGraphql": "graphql-codegen",
     "generateGraphql:watch": "yarn generateGraphql -- --watch",
+    "git:pull": "git pull origin $(git rev-parse --abbrev-ref HEAD)",
     "husky-skip": "cross-env HUSKY_SKIP_HOOKS=1",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap",
@@ -58,8 +63,6 @@
     "lint:fix": "yarn lint -- --fix",
     "lint:md": "markdownlint",
     "lintx": "eslint -c .eslintrc.js --ext .ts ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
-    "postbootstrap": "yarn build",
-    "prebootstrap": "lerna run prepare",
     "prodBuild": "cross-env NODE_ENV=production babel-node --presets es2015 tools/webpack.run",
     "publish": "yarn lernapublish",
     "publish:force": "yarn lernapublish -- --force-publish=*",

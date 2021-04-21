@@ -1,5 +1,13 @@
 
+### To Install the project and build all packages
 
+`yarn bootstrap`
+
+### To clean install the project of already installed.
+
+If you need to do a clean the existing node_modules and take latest changes from the remote head
+
+`yarn clean:install`
 
 ### To run all packages in watch mode
 
@@ -47,8 +55,11 @@ To just start the backend-server
 
 `lerna exec --scope=*backend-server yarn watch`
 
+### To run both Frontend and Backend Server
 
-### To run Frontend Server in SSR Mode
+`yarn start`
+
+### To run both Frontend and Backend Server but start frontend in SSR Mode
 
 `yarn start:envSSR`
 
