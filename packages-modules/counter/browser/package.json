@@ -43,10 +43,6 @@
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
     "antd": "^4.5.2"
   },
-  "devDependencies": {
-    "rimraf": "*",
-    "webpack": "*"
-  },
   "peerDependencies": {
     "@common-stack/client-react": "*",
     "@common-stack/client-react-native": "*",

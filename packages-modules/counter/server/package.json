@@ -39,9 +39,6 @@
       "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     }
   },
-  "devDependencies": {
-    "webpack": "*"
-  },
   "peerDependencies": {
     "@cdm-logger/server": "*",
     "@common-stack/core": "*",
