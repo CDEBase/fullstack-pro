@@ -62,7 +62,7 @@
     "lint:ci": "yarn lint . --format junit",
     "lint:fix": "yarn lint -- --fix",
     "lint:md": "markdownlint",
-    "lintx": "eslint -c .eslintrc.js --ext .ts ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
+    "lintx": "yarn lint ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
     "prodBuild": "cross-env NODE_ENV=production babel-node --presets es2015 tools/webpack.run",
     "publish": "yarn lernapublish",
     "publish:force": "yarn lernapublish -- --force-publish=*",
