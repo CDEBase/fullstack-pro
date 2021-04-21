@@ -1,4 +1,4 @@
-
+## SETUP and INSTALL
 ### To Install the project and build all packages
 
 `yarn bootstrap`
@@ -9,6 +9,20 @@ If you need to do a clean the existing node_modules and take latest changes from
 
 `yarn clean:install`
 
+## LINTING
+### To check linting
+
+`yarn lint <relative folder>`
+
+### To check and auto fix linting
+
+`yarn format <relative folder>`
+
+## PACKAGES COMMANDS
+### To run build all packages
+
+`yarn build`
+
 ### To run all packages in watch mode
 
 `yarn watch`
@@ -16,7 +30,6 @@ If you need to do a clean the existing node_modules and take latest changes from
 Note: It only run `packages` and `packages-modules` only in watch mode. Servers should be run seperately.
 
 Also check out `yarn watch-packages` to run watch on required packages. 
-
 
 ### To run build with watch for dependent packages
 
@@ -32,7 +45,7 @@ If you also need to watch along with it, you can as many scopes as required like
 yarn watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
 ```
 
-
+## TO START SERVERS
 ### To run a individual package in watch mode
 
 `lerna exec --scope=<package name> yarn watch`
