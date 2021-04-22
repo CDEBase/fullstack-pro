@@ -55,7 +55,7 @@ declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
 declare interface __PUBLIC_SETTINGS__ {
     apolloLogging: boolean;
     GRAPHQL_URL: string;
-    GRAPHQL_SUBSCRIPTION_URL: string;
+    GRAPHQL_SUBSCRIPTION_URL?: string;
     LOCAL_GRAPHQL_URL?: string;
     LOG_LEVEL?: string;
 }
