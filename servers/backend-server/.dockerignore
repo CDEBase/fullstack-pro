@@ -4,3 +4,4 @@
 !.zenrc.json
 !package.json
 !knexfile.ts
+!.npmrc
