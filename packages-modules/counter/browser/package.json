@@ -43,10 +43,6 @@
     "@sample-stack/platform-browser": "^0.0.51-alpha.13",
     "antd": "^4.5.2"
   },
-  "devDependencies": {
-    "rimraf": "^3.0.0",
-    "webpack": "4.43.0"
-  },
   "peerDependencies": {
     "@common-stack/client-react": "*",
     "@common-stack/client-react-native": "*",

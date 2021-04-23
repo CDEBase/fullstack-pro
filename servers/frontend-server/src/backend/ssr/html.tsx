@@ -70,7 +70,7 @@ const Html = ({
                         dangerouslySetInnerHTML={
                             {
                                 __html: content ||
-                                    'Try building the demo:<br/> ...and refreshing this page!',
+                                    'Try building the app:<br/> ...and refreshing this page!',
                             }}
                     />
                 </div>

@@ -2,7 +2,7 @@ var nodeExternals = require('webpack-node-externals');
 var webpack = require('webpack');
 var path = require('path');
 
-var webpack_opts = {
+var webpackOpts = {
   mode: 'development',
   entry: {
     index: './src/index.ts',
@@ -55,4 +55,4 @@ var webpack_opts = {
   ]
 };
 
-module.exports = webpack_opts;
+module.exports = webpackOpts;

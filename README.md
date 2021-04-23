@@ -39,12 +39,12 @@ It uses `lerna.json` for creating the packages structure. Under packages you can
          backend-server          - Backend apollo server. 
     
 
-## [Project Setup](docs/Project_Setup.md)
+## [Click here for Project Setup](docs/development/CodeContribution/Project_Setup.md)
 
 In Order to get started with the development you need to go through the 
 documentation first
 
-- [Getting Started with lerna](./docs/lerna-build-tools.md)
-- [Running the servers](./docs/How_to_Run_Various_Options.md)
-- [Dos and Dont](./docs/DoAndDont.md)
+- [Getting Started with lerna](./docs/development/CodeContribution/lerna-build-tools.md)
+- [Running the servers](./docs/development/CodeContribution/How_to_Run_Various_Options.md)
+- [Dos and Dont](./docs/development/CodeContribution/DoAndDont.md)
 

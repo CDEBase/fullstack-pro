@@ -14,11 +14,11 @@ cd fullstack-pro
 
     b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
 
-    c. Node version supported is `12.18.4` and `npm` version is `6.14.6`. You can Download Node from [here](https://nodejs.org/dist/v12.18.4/)
+    c. Node version supported is `>=12.18.4` and `yarn` version is `1.22`. You can Download Node from [here](https://nodejs.org/dist/v12.18.4/)
 
     d. Insall and build packages using following command. Run from the root folder of this project.
 ```
-    yarn install && yarn build
+    yarn bootstrap
 ```
     
 3. Setup environment file

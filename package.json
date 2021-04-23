@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -21,6 +21,9 @@
     ]
   },
   "scripts": {
+    "prebootstrap": "lerna run prepare",
+    "bootstrap": "yarn && yarn lerna && yarn build",
+    "postbootstrap": "yarn build",
     "build": "yarn build:packages",
     "build:clean": "lerna exec yarn build:clean",
     "build:packages": "lerna run build --ignore *server --ignore *desktop",
@@ -28,7 +31,9 @@
     "check-updates": "lerna exec ./node_modules/.bin/npm-check-updates -- -u",
     "clean": "lerna clean --yes && yarn build:clean && rimraf node_modules",
     "clean:force": "rimraf package-lock.json yarn.lock && yarn clean",
+    "clean:install": "yarn clean:force && yarn git:pull && yarn bootstrap",
     "cli": "node tools/cli",
+    "commit": "git cz",
     "compile": "lerna exec -- yarn compile",
     "coverage": "jest --coverage",
     "postcoverage": "remap-istanbul --input coverage/coverage.raw.json --type lcovonly --output coverage/lcov.info",
@@ -36,23 +41,28 @@
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "yarn db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "predevpublish": "git checkout devpublish && git pull origin devpublish && git merge -s recursive -X theirs develop -m 'merge from develop' && node tools/update-dependency-version.js",
-    "devpublish": "lerna publish prerelease --ignore-scripts",
+    "devpublish": "lerna publish prerelease --ignore-scripts --exact",
     "postdevpublish": "git checkout develop",
     "devpublish:auto": "yarn devpublish -- --yes",
     "devpublish:force": "yarn devpublish:forceManual -- --yes",
     "devpublish:forceManual": "yarn devpublish -- --force-publish=*",
     "devpublish:push": "yarn predevpublish && git push origin devpublish && yarn postdevpublish",
+    "format": "yarn lint --fix",
+    "format:md": "yarn lint:md --fix",
     "generateGraphql": "graphql-codegen",
     "generateGraphql:watch": "yarn generateGraphql -- --watch",
+    "git:pull": "git pull origin $(git rev-parse --abbrev-ref HEAD)",
+    "husky-skip": "cross-env HUSKY_SKIP_HOOKS=1",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap",
     "prelernapublish": "git checkout publish && git merge -s recursive -X theirs master",
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
-    "lint": "eslint -c .eslintrc.js --ext .ts ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
+    "lint": "eslint --ext js --ext ts --ext md",
+    "lint:ci": "yarn lint . --format junit",
     "lint:fix": "yarn lint -- --fix",
-    "postbootstrap": "yarn build",
-    "prebootstrap": "lerna run prepare",
+    "lint:md": "markdownlint",
+    "lintx": "yarn lint ./packages/**/src/**/*.ts ./packages-modules/**/src/**/*.ts",
     "prodBuild": "cross-env NODE_ENV=production babel-node --presets es2015 tools/webpack.run",
     "publish": "yarn lernapublish",
     "publish:force": "yarn lernapublish -- --force-publish=*",
@@ -71,6 +81,22 @@
     "zen:exp": "zen exp",
     "zen:watch": "zen  watch -x",
     "zen:watch:debug": "yarn zen:watch -- -v"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.md": [
+      "yarn format:md",
+      "git add"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "resolutions": {
     "chokidar": "^3.4.0"
@@ -170,6 +196,7 @@
     "caporal": "^1.3.0",
     "chokidar": "^3.4.0",
     "clean-webpack-plugin": "^2.0.0",
+    "commitizen": "^4.2.3",
     "concurrently": "^5.0.2",
     "connect": "^3.7.0",
     "copy-webpack-plugin": "^6.4.0",
@@ -195,6 +222,7 @@
     "eslint-plugin-jest": "^24.3.3",
     "eslint-plugin-jsdoc": "^32.3.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-markdown": "^2.0.1",
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
@@ -227,6 +255,7 @@
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "lodash-webpack-plugin": "^0.11.5",
+    "markdownlint-cli": "^0.27.0",
     "merge": "^1.2.1",
     "mime": "^2.4.4",
     "mini-css-extract-plugin": "^0.9.0",
@@ -291,25 +320,10 @@
     "ws": "^7.2.1"
   },
   "engines": {
-    "node": ">=12.18.4 < 14.0.0",
-    "npm": ">6.x <=7.x"
+    "node": ">=12.18.4 < 15.0.0",
+    "yarn": ">=1.22"
   },
   "cacheDirectories": [
     ".cache"
-  ],
-  "iohook": {
-    "targets": [
-      "node-72",
-      "electron-85"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "x64",
-      "ia32"
-    ]
-  }
+  ]
 }
