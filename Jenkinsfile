@@ -17,6 +17,7 @@ pipeline {
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
+    string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
@@ -93,7 +94,7 @@ pipeline {
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Build packages'){
       when {
-        expression { GIT_BRANCH_NAME != 'devpublish' }
+        // expression { GIT_BRANCH_NAME != params.PUBLISH_BRANCH }  not needed
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' }
       }
       steps{
@@ -132,7 +133,7 @@ pipeline {
       }
       steps{
         script {
-          GIT_BRANCH_NAME='devpublish'
+          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
         }
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
@@ -142,14 +143,14 @@ pipeline {
             git checkout develop
             ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
             git push origin develop
-            git checkout devpublish
+            git checkout ${params.PUBLISH_BRANCH}
           """
         }
       }
     }
     stage('Docker login'){
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
       }
       steps{
         sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
@@ -161,7 +162,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
       }
 
@@ -186,7 +187,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
@@ -224,7 +225,7 @@ pipeline {
       DOMAIN_NAME = 'stage.cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
@@ -267,7 +268,7 @@ pipeline {
       }
       environment{ deployment_env = 'prod'}
       when {
-        expression { GIT_BRANCH_NAME == 'devpublish' }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
