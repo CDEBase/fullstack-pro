@@ -138,7 +138,7 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff-index --quiet HEAD || git commit -am 'auto build\r\n[skip ci]'
+            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
             git fetch origin develop
             git checkout develop
             ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
