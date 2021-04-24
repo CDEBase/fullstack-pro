@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-underscore-dangle */
 import {
     createStore,
     Store,
@@ -10,7 +12,14 @@ import {
     combineReducers,
     StoreEnhancer,
 } from 'redux';
-import { forwardToMain, forwardToRenderer, triggerAlias, replayActionMain, replayActionRenderer } from 'electron-redux';
+import {
+    forwardToMain,
+    forwardToRenderer,
+    triggerAlias,
+    replayActionMain,
+    replayActionRenderer,
+    getInitialStateRenderer,
+} from 'electron-redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import storage from 'redux-persist/lib/storage';
@@ -100,7 +109,11 @@ export const createReduxStore = (scope = 'main', url = '/') => {
     const persistedReducer = persistReducer(persistConfig, rootReducer);
 
     // If we have preloaded state, save it.
-    const initialState = __CLIENT__ ? { ...window.__PRELOADED_STATE__ } : {};
+    const initialState = __CLIENT__
+        ? scope === 'renderer'
+            ? getInitialStateRenderer()
+            : { ...window.__PRELOADED_STATE__ }
+        : {};
 
     // Delete it once we have it stored in a variable
     if (__CLIENT__) {
@@ -115,7 +128,7 @@ export const createReduxStore = (scope = 'main', url = '/') => {
 
     if (scope === 'main') {
         replayActionMain(store);
-    } else {
+    } else if (scope === 'renderer') {
         replayActionRenderer(store);
     }
 

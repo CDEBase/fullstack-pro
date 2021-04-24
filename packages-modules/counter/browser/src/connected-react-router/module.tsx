@@ -6,7 +6,7 @@ import { connectedReactRouter_counter } from './redux';
 import { filteredRoutes, filteredMenus } from './compute';
 
 export default new Feature({
-    navItem: () => <NavBar />, // although not used
+    navItem: () => <NavBar />, // used in electron
     menuConfig: filteredMenus,
     routeConfig: filteredRoutes,
     reducer: { connectedReactRouter_counter },
