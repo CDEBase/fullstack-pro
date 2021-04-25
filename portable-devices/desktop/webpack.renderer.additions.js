@@ -42,7 +42,7 @@ const config = {
     target: 'electron-renderer',
     entry: {
         renderer: ['./src/renderer/main.tsx'],
-        tray: ['./src/renderer/tray.tsx'],
+        tray: ['./src/renderer/tray-main.tsx'],
         about: ['./src/renderer/about.tsx'],
     },
     output: {

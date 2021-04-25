@@ -19,6 +19,20 @@ let config = {
             ],
     },
     plugins: [
+        // new Dotenv({
+        //     path: process.env.ENV_FILE,
+        // }),
+        new webpack.DefinePlugin({
+            __DEV__: process.env.NODE_ENV === 'development',
+            __GRAPHQL_URL__: '"http://localhost:8091/graphql"',
+            __CLIENT__: false,
+            __SSR__: false,
+            __PERSIST_GQL__: false,
+            __DEBUGGING__: false,
+        }),
+        // new webpack.DefinePlugin({
+        //     __ENV__: JSON.stringify(dotenv.parsed),
+        // }),
         new BundleAnalyzerPlugin({
             analyzerMode:
                 process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',

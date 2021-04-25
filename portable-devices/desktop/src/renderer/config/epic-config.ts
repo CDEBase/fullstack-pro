@@ -10,4 +10,4 @@ export const epic$ = new BehaviorSubject(combineEpics(...modules.epics));
 // one, unless an EPIC_END action is dispatched first,
 // which would cause the old one(s) to be unsubscribed
 export const rootEpic = (action$, ...rest) =>
-    epic$.pipe(mergeMap((epic) => epic(action$, ...rest).pipe(takeUntil(action$.pipe(ofType('EPIC_END'))))));
+    epic$.pipe<any>(mergeMap((epic) => epic(action$, ...rest).pipe(takeUntil(action$.pipe(ofType('EPIC_END'))))));

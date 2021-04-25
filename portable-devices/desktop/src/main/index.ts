@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { app, ipcMain, Menu, webContents } from 'electron';
 import TrayWindow from './windows/tray-window';
 import MainWindow from './windows/main-window';
@@ -5,12 +6,13 @@ import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
 import ScreenShot from './screen-shot';
-import { createReduxStore } from '../renderer/config/redux-config';
+import { createReduxStore } from '../renderer/config/redux-electron-config';
 
 // import { connectedReactRouter_counter } from '../reducers';
 
 const isDev = process.env.NODE_ENV === 'development';
 
+createReduxStore('main');
 let installExtension = null;
 if (isDev) {
     installExtension = require('electron-devtools-installer');
@@ -36,7 +38,7 @@ let trayIcon: TrayIcon = null;
 // app.dock.hide();
 
 // This event will be emitted when Electron has finished initialization.
-app.on('ready', function () {
+app.on('ready', () => {
     if (isDev) {
         installExtentions();
     }
@@ -53,7 +55,7 @@ app.on('ready', function () {
 
 // Custom event created to close the app from Tray Window.
 // The ipcMain module is used to handle events from a renderer process (web page).
-ipcMain.on('quit-app', function () {
+ipcMain.on('quit-app', () => {
     console.log('--QUIT_APP');
     main.window.close();
     tray.window.close(); // Standart Event of the BrowserWindow object.
@@ -63,7 +65,7 @@ ipcMain.on('quit-app', function () {
 });
 
 // Custom events MAIN WINDOW
-ipcMain.on('show-main-window-event', function () {
+ipcMain.on('show-main-window-event', () => {
     if (main && main.window) {
         main.window.show();
     }
@@ -71,18 +73,18 @@ ipcMain.on('show-main-window-event', function () {
     screenShot.initScreenShot();
 });
 
-ipcMain.on('about-window', function () {
+ipcMain.on('about-window', () => {
     console.log('###################');
     about.window.show();
 });
 
 // Custom events ABOUT WINDOW
-ipcMain.on('show-about-window-event', function () {
+ipcMain.on('show-about-window-event', () => {
     about.window.show();
 });
 
 // Custom events TRAY WINDOW
-ipcMain.on('update-title-tray-window-event', function (event, title) {
+ipcMain.on('update-title-tray-window-event', (event, title) => {
     console.log('main window');
     if (main && main.window) {
         main.window.show();
