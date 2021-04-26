@@ -12,7 +12,10 @@
     "url": "git+https://github.com/cdmbase/fullstack-pro.git"
   },
   "license": "MIT",
-  "author": "CDMBase LLC",
+  "author": {
+    "name": "CDMBase LLC",
+    "email": "jteidforyou@gmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production electron-webpack",
@@ -25,7 +28,9 @@
     "test": "echo Skipped.",
     "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env electron-webpack dev",
     "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env electron-webpack dev",
-    "release": "electron-builder build --mac"
+    "release:mac": "electron-builder build --mac",
+    "release:linux": "electron-builder build --linux",
+    "release:win": "electron-builder build --win"
   },
   "resolutions": {
     "webpack-sources": "^1.1.0"

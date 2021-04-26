@@ -11,7 +11,10 @@
     "url": "git+https://github.com/cdmbase/fullstack-pro.git"
   },
   "license": "MIT",
-  "author": "CDMBase LLC",
+  "author": {
+    "name": "CDMBase LLC",
+    "email": "jteidforyou@gmail.com"
+  },
   "workspaces": {
     "packages": [
       "portable-devices/*",

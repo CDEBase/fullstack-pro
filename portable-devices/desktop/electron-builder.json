@@ -1,4 +1,24 @@
 {
   "appId": "io.github.cra-lerna-electron",
-  "productName": "CRA-Lerna-Electron"
+  "productName": "CRA-Lerna-Electron",
+  "mac": {
+    "category": "public.app-category.productivity",
+    "darkModeSupport": true,
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "entitlements": "entitlements.mac.plist",
+    "entitlementsInherit": "entitlements.mac.plist"
+  },
+  "win": {
+    "target": ["nsis"]
+  },
+  "linux": {
+    "executableName": "sample-stack-desktop",
+    "category": "Application",
+    "desktop": "sample-stack-desktop",
+    "target": ["deb", "AppImage"]
+  },
+  "directories": {
+    "output": "release"
+  }
 }
