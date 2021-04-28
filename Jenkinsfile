@@ -270,9 +270,6 @@ pipeline {
       }
       environment{
           deployment_env = 'prod'
-          DOMAIN_NAME = 'cdebase.io'
-          FRONT_END_PREFIX = 'prod-idefront'
-          BACK_END_PREFIX = 'prod-ideback'
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
