@@ -16,8 +16,6 @@ pipeline {
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
-    string(name: 'FRONT_END_PREFIX', defaultValue: 'idefront', description: 'domain of the ingress')
-    string(name: 'BACK_END_PREFIX', defaultValue: 'ideback', description: 'domain of the ingress')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
     string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
@@ -407,8 +405,6 @@ def generateStage(server, environmentType) {
             --set backend.pullPolicy=Always \
             --set ingress.domain=${env.DOMAIN_NAME} \
             --version=${IDESTACK_CHART_VERSION} \
-            --set frontend.prefix=${FRONT_END_PREFIX} \
-            --set backend.prefix=${BACK_END_PREFIX} \
               kube-orchestration/idestack
             """
 
