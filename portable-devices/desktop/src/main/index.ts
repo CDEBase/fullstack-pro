@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import 'reflect-metadata';
 import { app, ipcMain, Menu, webContents } from 'electron';
 import TrayWindow from './windows/tray-window';
 import MainWindow from './windows/main-window';
@@ -6,9 +7,7 @@ import AboutWindow from './windows/about-window';
 import TrayIcon from './tray-icon';
 import { template } from './menu-template';
 import ScreenShot from './screen-shot';
-import { createReduxStore } from '../renderer/config/redux-electron-config';
-
-// import { connectedReactRouter_counter } from '../reducers';
+import { createReduxStore } from './redux-electron-config';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -18,20 +17,12 @@ if (isDev) {
     installExtension = require('electron-devtools-installer');
 }
 
-// const { forwardToRenderer, triggerAlias, replayActionMain, createAliasedAction } = require('electron-redux');
-
-// const { createStore, applyMiddleware } = require('redux');
-
-// const store = createStore(connectedReactRouter_counter, 0, applyMiddleware(triggerAlias, forwardToRenderer));
-// replayActionMain(store);
-// createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
-
-let tray: TrayWindow = null;
+// let tray: TrayWindow = null;
 let main: MainWindow = null;
 let screenShot: ScreenShot = null;
 let about: AboutWindow = null;
 
-let trayIcon: TrayIcon = null;
+// let trayIcon: TrayIcon = null;
 
 // We hide dock, because we do not want to show our app as common app.
 // We want to display our app as a Tray-lik app (like Dropbox, Skitch or ets).
@@ -43,12 +34,12 @@ app.on('ready', () => {
         installExtentions();
     }
 
-    tray = new TrayWindow();
+    // tray = new TrayWindow();
     main = new MainWindow();
     about = new AboutWindow();
     screenShot = new ScreenShot();
 
-    trayIcon = new TrayIcon(tray.window);
+    // trayIcon = new TrayIcon(tray.window);
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 });
@@ -58,7 +49,7 @@ app.on('ready', () => {
 ipcMain.on('quit-app', () => {
     console.log('--QUIT_APP');
     main.window.close();
-    tray.window.close(); // Standart Event of the BrowserWindow object.
+    // tray.window.close(); // Standart Event of the BrowserWindow object.
     about.window.close();
     app.quit();
     screenShot.destoryScreenShot(); // Standart event of the app - that will close our app.

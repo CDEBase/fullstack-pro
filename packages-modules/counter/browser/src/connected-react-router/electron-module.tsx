@@ -5,6 +5,8 @@ import { Counter } from './components/Counter';
 import { connectedReactRouter_counter } from './redux';
 import { filteredRoutes, filteredMenus } from './compute';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+import { onCountChangedEpic } from './epics';
+
 
 export const counterPageStore: IRoute[] = [
     {
@@ -21,4 +23,5 @@ export const counterPageStore: IRoute[] = [
 export const ElectronModule = new Feature({
     routeConfig: filteredRoutes,
     reducer: { connectedReactRouter_counter },
+    epic: [onCountChangedEpic],
 });

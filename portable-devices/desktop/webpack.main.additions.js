@@ -2,7 +2,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 
-let config = {
+const config = {
     devtool: process.env.DEBUG_PROD === 'true' ? 'source-map' : 'none',
     target: 'electron-main',
     entry: './src/main/index.ts',
@@ -11,12 +11,12 @@ let config = {
         minimizer: process.env.E2E_BUILD
             ? []
             : [
-                new TerserPlugin({
-                    parallel: true,
-                    sourceMap: true,
-                    cache: true,
-                }),
-            ],
+                  new TerserPlugin({
+                      parallel: true,
+                      sourceMap: true,
+                      cache: true,
+                  }),
+              ],
     },
     plugins: [
         // new Dotenv({
@@ -34,17 +34,16 @@ let config = {
         //     __ENV__: JSON.stringify(dotenv.parsed),
         // }),
         new BundleAnalyzerPlugin({
-            analyzerMode:
-                process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+            analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
             openAnalyzer: process.env.OPEN_ANALYZER === 'true',
         }),
 
         /**
          * Create global constants which can be configured at compile time.
-         * 
+         *
          * Useful for allowing different behaviour between development builds and
          * release builds.
-         * 
+         *
          * NODE_ENV should be production so that modules do not perform certain
          * development checks.
          */
@@ -53,7 +52,7 @@ let config = {
             DEBUG_PROD: false,
             START_MINIMIZED: false,
             E2E_BUILD: false,
-        })
+        }),
     ],
 
     /**
@@ -65,9 +64,6 @@ let config = {
         __dirname: false,
         __filename: false,
     },
-
-}
-
-
+};
 
 module.exports = config;

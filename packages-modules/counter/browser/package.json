@@ -49,11 +49,13 @@
     "@react-navigation/drawer": "*",
     "native-base": "*",
     "react": "*",
+    "redux-observable": "*",
     "react-native": "*",
     "react-redux": "*",
     "react-router": "*",
     "react-router-dom": "*",
-    "redux": "*"
+    "redux": "*",
+    "rxjs": "*"
   },
   "publishConfig": {
     "access": "public"

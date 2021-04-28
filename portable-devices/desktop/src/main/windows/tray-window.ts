@@ -1,14 +1,18 @@
 import * as path from 'path';
 import { BrowserWindow, webContents } from 'electron';
+import { injectable, postConstruct } from 'inversify';
 import { format as formatUrl } from 'url';
 import { config } from '../../config';
+import { ITrayWindow } from '../interfaces';
 
 const TRAY_HTML_PAGE = 'tray-page.html';
 
-export default class TrayWindow {
+@injectable()
+export default class TrayWindow implements ITrayWindow {
     public window: BrowserWindow;
 
-    constructor() {
+    // @postConstruct()
+    public init() {
         // Creation of the new window.
         this.window = new BrowserWindow({
             show: false, // Initially, we should hide it, in such way will remove blink-effect.

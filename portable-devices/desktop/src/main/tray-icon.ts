@@ -1,13 +1,19 @@
 import * as path from 'path';
-import { app, BrowserWindow, Tray } from 'electron';
+import { BrowserWindow, Tray } from 'electron';
 import Positioner from 'electron-positioner';
+import { injectable, inject } from 'inversify';
+import { TYPES, ITraceIcon, ITrayWindow } from './interfaces';
 
 const iconPath = path.join(__dirname, '../../assets/icons/16x16.png');
 
-export default class TrayIcon {
+@injectable()
+export default class TrayIcon implements ITraceIcon {
     public trayIcon: Tray;
 
-    constructor(trayWindow: BrowserWindow) {
+    constructor(
+        @inject(TYPES.ITrayWindow)
+        trayWindow: ITrayWindow,
+    ) {
         // Path to the app icon that will be displayed in the Tray (icon size: 22px)
 
         this.trayIcon = new Tray(iconPath);
@@ -16,18 +22,18 @@ export default class TrayIcon {
         // By clicking on the icon we have to show TrayWindow and position it in the middle under
         // the tray icon (initially this windo is hidden).
         this.trayIcon.on('click', (e, bounds) => {
-            if (trayWindow.isVisible()) {
-                trayWindow.hide();
+            if (trayWindow.window.isVisible()) {
+                trayWindow.window.hide();
             } else {
-                const positioner = new Positioner(trayWindow);
+                const positioner = new Positioner(trayWindow.window);
                 positioner.move('trayCenter', bounds);
 
-                trayWindow.show();
+                trayWindow.window.show();
             }
         });
     }
 
-    public updateTitle(title: string) {
+    public updateTitle(title: string): void {
         const time = `00:0${title}`;
         console.log('----tititle----', time);
         this.trayIcon.setTitle(title);

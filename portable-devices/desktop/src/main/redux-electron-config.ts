@@ -5,11 +5,20 @@
 import { triggerAlias, replayActionMain, forwardToRenderer } from 'electron-redux';
 // import { connectRouter } from 'connected-react-router';
 import storage from 'redux-persist/lib/storage';
+import { createEpicMiddleware } from 'redux-observable';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import modules from '../modules';
-import { createReduxStore as createBaseReduxStore } from './base-redux-config';
+import modules, { services } from './modules';
+import { createReduxStore as createBaseReduxStore } from '../renderer/config/base-redux-config';
+import { rootEpic } from '../renderer/config/epic-config';
 
 // export const history = require('./router-history');
+
+export const epicMiddleware = createEpicMiddleware({
+    dependencies: {
+        routes: modules.getConfiguredRoutes(),
+        services,
+    },
+});
 
 export const persistConfig = {
     key: 'root',
@@ -24,7 +33,7 @@ export const persistConfig = {
  * `combineReducers`
  */
 export const createReduxStore = (url = '/') => {
-    console.log('---MOdules---', modules.reducers)
+    console.log('---MOdules---', modules.reducers);
     // only in server side, url will be passed.
     const newHistory = {};
     // If we have preloaded state, save it.
@@ -36,6 +45,8 @@ export const createReduxStore = (url = '/') => {
         isDev: process.env.NODE_ENV === 'development',
         history: newHistory as any,
         initialState,
+        epicMiddleware,
+        rootEpic,
         // persistConfig,
         middleware: [triggerAlias],
         postMiddleware: [forwardToRenderer],
