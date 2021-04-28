@@ -16,6 +16,8 @@ pipeline {
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
+    string(name: 'FRONT_END_PREFIX', defaultValue: 'idefront', description: 'domain of the ingress')
+    string(name: 'BACK_END_PREFIX', defaultValue: 'ideback', description: 'domain of the ingress')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
     string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
@@ -26,7 +28,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.2.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -266,7 +268,12 @@ pipeline {
       options {
           timeout(time: 300, unit: 'SECONDS')
       }
-      environment{ deployment_env = 'prod'}
+      environment{
+          deployment_env = 'prod'
+          DOMAIN_NAME = 'cdebase.io'
+          FRONT_END_PREFIX = 'prod-idefront'
+          BACK_END_PREFIX = 'prod-ideback'
+      }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
@@ -403,6 +410,8 @@ def generateStage(server, environmentType) {
             --set backend.pullPolicy=Always \
             --set ingress.domain=${env.DOMAIN_NAME} \
             --version=${IDESTACK_CHART_VERSION} \
+            --set frontend.prefix=${FRONT_END_PREFIX} \
+            --set backend.prefix=${BACK_END_PREFIX} \
               kube-orchestration/idestack
             """
 
