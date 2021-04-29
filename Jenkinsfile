@@ -222,7 +222,7 @@ pipeline {
        }
       environment{
       deployment_env = 'stage'
-      DOMAIN_NAME = 'stage.cdebase.io'
+      DOMAIN_NAME = 'cdebase.io'
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
@@ -268,6 +268,7 @@ pipeline {
       }
       environment{
           deployment_env = 'prod'
+          DOMAIN_NAME = 'cdebase.com'
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
