@@ -4219,6 +4219,15 @@
     npmlog "^4.1.2"
     write-file-atomic "^3.0.3"
 
+"@loopmode/electron-webpack-config-yarn-workspaces@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@loopmode/electron-webpack-config-yarn-workspaces/-/electron-webpack-config-yarn-workspaces-0.2.0.tgz#bec092750a1985537907da9d66dbda251464c47a"
+  integrity sha512-sB3stZcm4MVbb1xoLZhIaZIYUaLvylUeyS+fz/dl0YoJU4E27RyfDvu5HKc2vajhkNRozJWmsNhkcxrYPka5rA==
+  dependencies:
+    npm-link-extra "^4.0.0"
+    webpack-merge "^4.2.1"
+    workspaces-utils "^1.1.2"
+
 "@malept/cross-spawn-promise@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@malept/cross-spawn-promise/-/cross-spawn-promise-1.1.1.tgz#504af200af6b98e198bce768bc1730c6936ae01d"
@@ -23092,6 +23101,14 @@ npm-lifecycle@^3.1.5:
     umask "^1.1.0"
     which "^1.3.1"
 
+npm-link-extra@^4.0.0, npm-link-extra@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/npm-link-extra/-/npm-link-extra-4.0.3.tgz#a19c5c735b30f38333a8fa7f6e2112161c1eb267"
+  integrity sha512-o1aSmgKLXIn0aANlKflIgufcclQgO3oS35K9fq2cKBbYtGW3Q79qtjjkSNq89PeXsmZRPyRlWAzwv95iWu9EzQ==
+  dependencies:
+    execa "^0.8.0"
+    minimist "^1.2.0"
+
 npm-normalize-package-bin@^1.0.0, npm-normalize-package-bin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/npm-normalize-package-bin/-/npm-normalize-package-bin-1.0.1.tgz#6e79a41f23fd235c0623218228da7d9c23b8f6e2"
@@ -31848,7 +31865,7 @@ webpack-manifest-plugin@^2.2.0, webpack-manifest-plugin@~2.2.0:
     object.entries "^1.1.0"
     tapable "^1.0.0"
 
-webpack-merge@^4.1.0, webpack-merge@^4.2.2:
+webpack-merge@^4.1.0, webpack-merge@^4.2.1, webpack-merge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
   integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
@@ -32327,6 +32344,16 @@ worker-rpc@^0.1.0:
   integrity sha512-P1WjMrUB3qgJNI9jfmpZ/htmBEjFh//6l/5y8SD9hg1Ef5zTTVVoRjTrTEzPrNBQvmhMxkoTsjOXN10GWU7aCg==
   dependencies:
     microevent.ts "~0.1.1"
+
+workspaces-utils@^1.1.2, workspaces-utils@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/workspaces-utils/-/workspaces-utils-1.2.1.tgz#1e3a0e4345807a3418a89d00e6592922689b05d5"
+  integrity sha512-4qntqjHwCVB2SaPMzV4o9p9PgvuSlmLbD1UXAVAFuu1EUS2MaVJBz67eGQSFLKBa26TPk/j8Zqg7bOac4LUjBA==
+  dependencies:
+    execa "^0.8.0"
+    invariant "^2.2.4"
+    npm-link-extra "^4.0.3"
+    rimraf "^2.6.2"
 
 wrap-ansi@7.0.0, wrap-ansi@^7.0.0:
   version "7.0.0"

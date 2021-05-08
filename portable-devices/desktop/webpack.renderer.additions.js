@@ -3,9 +3,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 const Dotenv = require('dotenv-webpack');
+const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv-safe');
+const { merge } = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const configureYarnWorkspaces = require('./tools/configure');
 
 const options = {
     stack: ['apollo', 'ts', 'react', 'webpack', 'css'],
@@ -82,9 +85,6 @@ const config = {
             ],
         }),
     ],
-    // defines: {
-    //     __CLIENT__: true,
-    // },
     externals: [
         'react',
         'react-redux',
@@ -121,26 +121,13 @@ const extraDefines = {
     __DEBUGGING__: false,
 };
 
-if (process.env.NODE_ENV !== 'production') {
-    // if (!options.ssr) {
-    //     console.log('Warning! exposing env variables in UI, only run in development.');
-    //     var dotenv = require('dotenv-safe')
-    //         .config(
-    //             {
-    //                 allowEmptyValues: true,
-    //                 path: process.env.ENV_FILE,
-    //                 example: '../../config/development/dev.env',
-    //             });
-    //     const envPlugin = {
-    //         plugins: [
-    //             new webpack.DefinePlugin({
-    //                 "__ENV__": JSON.stringify(dotenv.parsed)
-    //             }),
-    //         ],
-    //     }
-    //     config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, envPlugin);
-    // }
-}
+// Work in progress. Need to be fixed this first https://github.com/DavideDaniel/oss-projects/issues/39
+// const workspaceRoot = path.resolve(__dirname, '../..');
+// module.exports = function (givenConfig) {
+//     console.log('--Merge', merge);
+//     const updatedConfig = merge(givenConfig, config);
+//     const finalConfig = configureYarnWorkspaces(updatedConfig, workspaceRoot);
+//     return finalConfig;
+// };
 
-// config.defines = Object.assign(config.defines, extraDefines);
 module.exports = config;
