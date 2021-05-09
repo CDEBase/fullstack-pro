@@ -4,11 +4,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const dotenv = require('dotenv-safe');
 const { merge } = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const configureYarnWorkspaces = require('./tools/configure');
+// const dirsToWatch = glob.sync(`../*/lib`).map(dir => path.resolve(__dirname, dir));
 
 const options = {
     stack: ['apollo', 'ts', 'react', 'webpack', 'css'],
