@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "preserveConstEnums": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "rootDir": "./src",
+    "outDir": "lib",
+    "jsx": "react"
+  },
+  "exclude": [
+    "**/*.test.ts",
+    "node_modules",
+    "../../../node_modules/**",
+    "node_modules/hoist-non-react-statics/**",
+    "lib",
+    "dist",
+    "webpack.config.js"
+  ]
+}
