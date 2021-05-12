@@ -1865,45 +1865,45 @@
   dependencies:
     chalk "^4.0.0"
 
-"@common-stack/client-core@0.0.255", "@common-stack/client-core@^0.0.255":
-  version "0.0.255"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.0.255.tgz#bc25071e423584c2b31a4b746bed4f4a6b9424eb"
-  integrity sha512-vtOUCYvfd7VWYGnpMXLb4bTBHcu9qFMe8bumYDzJMR+JJYW/e05/XbMjKtGuPfG3phmqmXUHAW4qjA4RrCIkyA==
+"@common-stack/client-core@0.0.257", "@common-stack/client-core@^0.0.257":
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.0.257.tgz#e507cb7d198bfd62dcda548319509107e943e8d1"
+  integrity sha512-T3slTi8S6g9iCrAR8W0bkveYuTnMwxRmutZFNZQabLSlthfIe7qE8csP2fm0aVDDROwdsjjqQaWl/n0y6mGErg==
   dependencies:
-    "@common-stack/core" "^0.0.255"
+    "@common-stack/core" "^0.0.257"
 
-"@common-stack/client-react-native@0.0.255", "@common-stack/client-react-native@^0.0.255":
-  version "0.0.255"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react-native/-/client-react-native-0.0.255.tgz#9f07b1da70de0895c20ffa4428791bff9ad6ada0"
-  integrity sha512-80dkTmoBRED2KVIEXYRjkaVAEyidli3ZydgDzJvKFP+q1ef89rebYPDqUbUk2BlPM578KMawNFY4L3XQ+Uzn0A==
+"@common-stack/client-react-native@0.0.257", "@common-stack/client-react-native@^0.0.257":
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react-native/-/client-react-native-0.0.257.tgz#2f78765998dd3675242ec5bd926337b5883d38d3"
+  integrity sha512-ZSyawwxRouch/34wBxx9FfZWYjyGFAhbE41/B4Vhwsf4YJhkviNHFfL6StwywXtMVjQKPJO0RRQ/9zqCIB0K9A==
   dependencies:
-    "@common-stack/client-core" "^0.0.255"
-    "@common-stack/client-react" "^0.0.255"
-    "@common-stack/core" "^0.0.255"
+    "@common-stack/client-core" "^0.0.257"
+    "@common-stack/client-react" "^0.0.257"
+    "@common-stack/core" "^0.0.257"
 
-"@common-stack/client-react@0.0.255", "@common-stack/client-react@^0.0.255":
-  version "0.0.255"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.0.255.tgz#d111d65a4a15bc42a57331c9cda7d385eb6bb4e6"
-  integrity sha512-S+Ne9aMgGLF5/SIR/cKgBVnm5xSerX/X1+01Ofi7p4Y+m+ggCYClbWGIM50MrlOUEfsshUeeNtkuiGFqfvqjxQ==
+"@common-stack/client-react@0.0.257", "@common-stack/client-react@^0.0.257":
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.0.257.tgz#97c0c7dcae40b89a1a4ed627fca6f077c4cd25a5"
+  integrity sha512-GfWk5h8DFm9mEv3gasifbqAYveUEsHh08oJVPSfB4G1cjP4a/HyohY+7Br4Ww7ptI8ynqfHu9Wm1CK0eD/UTfQ==
   dependencies:
-    "@common-stack/client-core" "^0.0.255"
-    "@common-stack/core" "^0.0.255"
+    "@common-stack/client-core" "^0.0.257"
+    "@common-stack/core" "^0.0.257"
     "@wordpress/hooks" "^2.10.0"
     browser-bunyan "^1.6.3"
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/core@0.0.255", "@common-stack/core@^0.0.255":
-  version "0.0.255"
-  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.0.255.tgz#f329a4563dc815631dad1b57f36aa531e8a9ee51"
-  integrity sha512-meXI2DaOCsTg5UAGEtyRXrxE3ZNUZX3TK5UQ41akAcf9777o6qKBGldvFeTNZqi8bngP7OOU3hRtTJLxRaPHoQ==
+"@common-stack/core@0.0.257", "@common-stack/core@^0.0.257":
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.0.257.tgz#4114d441d8d4dbb14409e7aca9c176c4d09611ac"
+  integrity sha512-07wYvM3xlAKmxu8Ee4xGijGdux5LqANzTFWyr8QcCK3e/eVvyxY/X9ajXpsvXQC33/nO+eP7nB6h10MQB1Xpnw==
 
-"@common-stack/server-core@0.0.255", "@common-stack/server-core@^0.0.255":
-  version "0.0.255"
-  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.0.255.tgz#89fe15e98bb13557378f54579d621c63dfb61128"
-  integrity sha512-obeuaKAlGiljogvAFX3bs10FdDbQS5JpXTANjTMBEsTWIVlPQ1bSxBNWi9RdPe4VJQtgGUaUFY9oo4ia1KdZag==
+"@common-stack/server-core@0.0.257", "@common-stack/server-core@^0.0.257":
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.0.257.tgz#dcbf356b2deeb1143d0c930006f69471825d8fee"
+  integrity sha512-CCf3+9XU2wSh4A4kNbbVljyhfn7LTvyXSmmMPIQeitwtZukJ2GLd2i/oUqfrjsD+0Q/sjgX32WJW2DeNJt/i3A==
   dependencies:
-    "@common-stack/core" "^0.0.255"
+    "@common-stack/core" "^0.0.257"
 
 "@ctrl/tinycolor@^3.4.0":
   version "3.4.0"
@@ -5340,6 +5340,12 @@
   version "0.0.1"
 
 "@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
+  version "0.0.1"
+  dependencies:
+    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
+    antd "^4.5.2"
+
+"@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
   version "0.0.1"
   dependencies:
     "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
