@@ -9,7 +9,7 @@
   "scripts": {
     "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
-    "build:lib": "webpack",
+    "build:lib": "rollup -c rollup.config.js",
     "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
     "prepublish": "yarn build",
@@ -54,6 +54,13 @@
     "react-router": "*",
     "react-router-dom": "*",
     "redux": "*"
+  },
+  "devDependencies": {
+    "rollup": "latest",
+    "@open-wc/building-rollup":"^1.10.0",
+    "@rollup/plugin-typescript": "^6.1.0",
+    "@rollup/plugin-image": "^2.0.6",
+    "@rollup/plugin-graphql": "1.0.0"
   },
   "publishConfig": {
     "access": "public"
