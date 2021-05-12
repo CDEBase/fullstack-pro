@@ -1,25 +1,32 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React from 'react';
-import { Header } from 'react-native-elements';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Header, Left, Right, Body, Text, Icon } from 'native-base';
+import { useHistory } from 'react-router-native';
 
 const MainHeader = (props: any) => {
-    const navigation = useNavigation();
-    return (
-        <Header
-            placement="left"
-            leftComponent={{
-                icon: 'menu',
-                color: '#fff',
-                onPress: () => navigation.dispatch(DrawerActions.toggleDrawer()),
-            }}
-            centerComponent={{
-                text: props.title,
-                style: { color: '#fff' },
-            }}
-        />
-    );
+  const[isToggle, setIsToggle] = useState(false);
+
+  const toggle = () => {
+    if(isToggle){
+      props.drawerRef?.current?._root?.close();
+    } else{
+      props.drawerRef?.current?._root?.open();
+    }
+    setIsToggle(!isToggle)
+  }
+
+
+
+  const history = useHistory();
+  return (
+    <Header style={{ backgroundColor: '#1f1f1f' }}>
+      <Left>
+        <Icon style={{ color: '#fff' }} name="menu" onPress={() => toggle()} />
+      </Left>
+      <Body>
+        <Text style={{ color: '#fff' }}>{props.title}</Text>
+      </Body>
+    </Header>
+  );
 };
 
 export default MainHeader;

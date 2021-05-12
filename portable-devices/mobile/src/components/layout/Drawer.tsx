@@ -1,18 +1,25 @@
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
-import { History } from 'history';
-// import { DrawerNavigation } from './drawer-navigation';
+import { Drawer } from 'native-base';
+import { Route } from 'react-router-native';
 import SideBar from './SideBar';
 
-export const DrawerRoute = (props: { history: History<any>; location: any; routes: any; }) => {
-    return (
-        <SideBar
-            history={props.history}
-            routes={props.routes}
-            defaultTitle="Test"
-            initialRouteName="/org/calendar"
-            screenOptions={{}}
-        />
-    );
+export const DrawerRoute = ({ match, drawerRef, routes }: any) => {
+  const onClose = () => {
+    console.log("close")
+    drawerRef.current._root.close()
+  }
+
+  return (
+    <Drawer 
+    ref={drawerRef} 
+    content={
+      <SideBar matchUrl={match.url} routes={routes} />
+    }
+    onClose={onClose}
+    >
+      {routes.map((route: any) => (
+        <Route key={route.path} exact={route.exact} path={route.path} component={route.component} />
+      ))}
+    </Drawer>
+  )
 };
