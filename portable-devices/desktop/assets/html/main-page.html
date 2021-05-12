@@ -9,12 +9,11 @@
 </head>
 
 <body>
-  MAIN APP PAGE
   <div id="app" />
   <script type='text/javascript'>
     var bundlePath = './renderer.js';
     if (process.env.NODE_ENV === 'development') {
-      bundlePath = 'http://localhost:9080/renderer.js';
+      bundlePath = `http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}/renderer.js`;
     }
 
     var js_script = document.createElement('script');
