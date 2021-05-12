@@ -16,7 +16,7 @@
   <script type='text/javascript'>
     var bundlePath = './tray.js';
     if (process.env.NODE_ENV === 'development') {
-      bundlePath = 'http://localhost:9080/tray.js';
+      bundlePath = `http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}/tray.js`;
     }
 
     var js_script = document.createElement('script');
