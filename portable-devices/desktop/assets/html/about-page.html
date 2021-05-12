@@ -13,7 +13,7 @@
     <script type='text/javascript'>
       var bundlePath = './about.js';
       if (process.env.NODE_ENV === 'development') { 
-        bundlePath = 'http://localhost:9080/about.js';
+        bundlePath = `http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}/about.js`;
       }
   
       var js_script = document.createElement('script');
@@ -32,16 +32,6 @@
         background-color: blue;
       }
     </style>
-
-    <div id='header'>
-      <button id='close'>X</button>
-      <button id='hide'>-</button>
-      <button id='maximize'><></button>
-    </div>
-
-
-    <h1>ABOUT PAGE</h1>
-    <a id='open-external' href="https://github.com/DmytroVasin/">Open</button>
 
     <script type='text/javascript'>
      document.getElementById("open-external").addEventListener("click", function (e) {

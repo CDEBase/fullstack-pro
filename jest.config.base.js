@@ -13,8 +13,8 @@ module.exports = {
     testRegex: '.*test*\\.(ts|tsx|js)$',
     testPathIgnorePatterns: ['/node_modules/', '/dist/'],
     transform: {
-        '\\.(gql|graphql)$': 'jest-transform-graphql',
-        '\\.(graphqls)$': 'jest-raw-loader',
+        '\\.(gql)$': 'jest-transform-graphql',
+        '\\.(graphql|graphqls)$': 'jest-raw-loader',
         '\\.(ts|tsx)$': 'ts-jest',
         // Use our custom transformer only for the *.js and *.jsx files
         '\\.(js|jsx)?$': './transform.js',
