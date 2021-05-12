@@ -1,42 +1,62 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState } from 'react';
 import { Container, View, Text, List, ListItem, Left, Right, Icon, Drawer } from 'native-base';
-import { Link } from 'react-router-dom';
-import { DrawerActions } from '@react-navigation/native';
+import { Link } from 'react-router-native';
 
-const SideBar = ({ descriptors, routes, navigation }: any) => {
-    console.log('---ROUTES IN SIDEBAR', routes, descriptors);
-    const [icon, setIcon] = useState('arrow-forward');
-    const [toggle, setToggle] = useState(false);
-    const expand = () => {
-        if (icon === 'arrow-forward') {
-            setIcon('arrow-down');
-            // setToggle(true);
-        } else {
-            setIcon('arrow-forward');
+const SideBar = ({ routes, matchUrl }: any) => {
+    const [icon, setIcon] = useState('chevron-down-outline');
+    const [isToggle, setToggle] = useState(false);
+
+    const toggle = () => {
+        if (isToggle) {
+            setIcon('chevron-down-outline');
             setToggle(false);
+        } else {
+            setIcon('chevron-up-outline');
+            setToggle(true)
         }
-    };
+    }
+
+    const isMenuExist = routes.length > 0;
+
     return (
-        <Container>
-            {routes[1].routes.map((route: any) => (
-                <List key={route.key}>
-                    <Link key={route.key} to={route.path}>
-                        <ListItem key={route.key}>
+        <Container style={{ backgroundColor: '#1f1f1f' }}>
+            {isMenuExist && routes.map(menu => (
+                menu.routes ? (
+                    <List>
+                        <ListItem onPress={() => toggle()}>
                             <Left>
-                                <Text>{route.name}</Text>
+                                <Icon style={{ color: isToggle ? '#fff' : '#a1a1a1' }} name="document-outline" />
+                                <Text style={{ color: isToggle ? '#fff' : '#a1a1a1' }}>{menu.name}</Text>
                             </Left>
                             <Right>
-                                <Icon name="arrow-forward" />
+                                <Icon name={icon} />
                             </Right>
                         </ListItem>
-                    </Link>
-                </List>
+                        {isToggle && (menu.routes.map(subMenu => (
+                            <List>
+                                <ListItem>
+                                    <Left>
+                                        <Link to={subMenu.path} underlayColor="#f0f4f7">
+                                            <Text style={{ color: '#a1a1a1' }}>{subMenu.name}</Text>
+                                        </Link>
+                                    </Left >
+                                </ListItem >
+                            </List >
+                        )))}
+                    </List>
+                ) :
+                    (<List>
+                        <ListItem>
+                            <Left>
+                                <Link to={menu.path} underlayColor="#f0f4f7">
+                                    <Text style={{ color: '#a1a1a1' }}>{menu.name}</Text>
+                                </Link>
+                            </Left >
+                        </ListItem >
+                    </List >)
             ))}
-        </Container>
-    );
-};
+        </Container >
+    )
+}
 
 export default SideBar;

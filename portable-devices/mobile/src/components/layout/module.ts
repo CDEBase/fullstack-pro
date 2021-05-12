@@ -1,14 +1,24 @@
-import { Feature } from '@common-stack/client-react-native';
-import { ProLayout } from './Layout';
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Feature } from '@common-stack/client-react';
+import { Dashboard } from '../../pages';
+import Layout from './Layout';
 
 export default new Feature({
-    routeConfig: [
-        {
-            '/': {
-                exact: false,
-                component: ProLayout,
-                key: 'layout',
-            },
-        },
-    ],
+  routeConfig: [
+    {
+      '/': {
+        exact: true,
+        component: Dashboard,
+      } as any,
+    },
+    {
+      '/org': {
+        exact: false,
+        component: Layout,
+        key: 'layout',
+      } as any,
+    },
+  ],
 });

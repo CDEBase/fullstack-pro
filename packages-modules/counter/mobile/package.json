@@ -1,0 +1,64 @@
+{
+  "name": "@sample-stack/counter-module-mobile",
+  "version": "0.0.1",
+  "description": "Sample core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn build:clean && yarn build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "tsc",
+    "build:lib:watch": "yarn build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "yarn build",
+    "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
+    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "yarn build:lib:watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "dependencies": {
+    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "antd": "^4.5.2"
+  },
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "@common-stack/client-react-native": "*",
+    "@react-navigation/drawer": "*",
+    "native-base": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
+}
