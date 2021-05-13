@@ -10,7 +10,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import createRenderer from '../config/fela-renderer';
 import { epic$ } from '../config/epic-config';
 import { createReduxStore, history, persistConfig } from '../config/redux-config';
-import modules, { MainRoute } from '../modules';
+import { MainRoute } from '../modules/electron-module';
 import { ErrorBoundary } from './ErrorBoundary';
 
 
@@ -50,7 +50,7 @@ export class Main extends React.Component<{}, {}> {
             <ErrorBoundary>
                 <Provider store={store}>
                     <RendererProvider renderer={renderer}>
-                        <Counter />
+                        <MainRoute history={history} />
                     </RendererProvider>
                 </Provider>
             </ErrorBoundary>

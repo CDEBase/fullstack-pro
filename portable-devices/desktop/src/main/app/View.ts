@@ -1,17 +1,18 @@
 /* eslint-disable no-use-before-define */
 import { inject } from 'inversify';
-import { HomeWindow, TrayWindow, AboutWindow } from '../views';
+import { ElectronTypes } from '@common-stack/client-core';
+import { MainWindow, TrayWindow, AboutWindow } from '../views';
 import { logAfter, logBefore, provideSingleton } from '../utils';
 
 @provideSingleton(View)
 export class View {
-    @inject(HomeWindow)
-    home!: HomeWindow;
+    @inject(ElectronTypes.MainWindow)
+    main!: MainWindow;
 
-    @inject(AboutWindow)
+    @inject(ElectronTypes.AboutWindow)
     about!: AboutWindow;
 
-    @inject(TrayWindow)
+    @inject(ElectronTypes.TrayWindow)
     tray!: TrayWindow;
 
     /**
@@ -29,7 +30,7 @@ export class View {
     }
 
     close() {
-        this.home.close();
+        this.main.close();
         this.about.close();
         this.tray.close();
     }

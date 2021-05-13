@@ -1,26 +1,22 @@
 /* eslint-disable no-use-before-define */
 import { provide } from 'inversify-binding-decorators';
 import { BrowserWindow, ipcMain } from 'electron';
+import { ElectronTypes } from '@common-stack/client-core';
 import { createWindow } from '../utils';
+import { IPC_EVENTS } from '../../common';
 
-@provide(HomeWindow)
-export class HomeWindow {
+@provide(ElectronTypes.MainWindow)
+export class MainWindow {
     private window: BrowserWindow;
 
     constructor() {
         this.window = createWindow({ name: 'main-page', show: true, remote: true });
-        // Object BrowserWindow has a lot of standart events
-        // We will hide Tray window on blur. To emulate standart behavior of the tray-like apps.
-        this.window.on('blur', () => {
-            this.window.hide();
-        });
         // Custom events MAIN WINDOW
-        ipcMain.on('show-main-window-event', function () {
+        ipcMain.on(IPC_EVENTS.SHOW_MAIN, function () {
             if (this.window) {
                 this.window.show();
             }
         });
-
     }
 
     show() {

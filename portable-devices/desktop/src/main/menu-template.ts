@@ -1,6 +1,6 @@
 import { format as formatUrl } from 'url';
-import { app, shell, ipcMain, MenuItem, Menu, BrowserWindow } from 'electron';
-import AboutWindow from './windows/about-window';
+import { app, shell, ipcMain } from 'electron';
+import { IPC_EVENTS } from '../common';
 
 export const template: Electron.MenuItemConstructorOptions[] = [
     {
@@ -42,12 +42,10 @@ export const template: Electron.MenuItemConstructorOptions[] = [
                 },
             },
             {
-                label: 'about',
-                click() {
-                    console.log('================Clicked About====================');
-                    const about = new AboutWindow();
-                    about.window.show();
-                },
+                label: 'about', role: 'about'
+                // click() {
+                //     ipcMain.emit(IPC_EVENTS.SHOW_ABOUT);
+                // },
             },
         ],
     },

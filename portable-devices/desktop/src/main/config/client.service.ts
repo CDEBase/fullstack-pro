@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
-import { Container } from 'inversify';
+import { interfaces } from 'inversify';
 import ApolloClient from 'apollo-client';
 import modules, { container } from '../modules';
-import { createApolloClient } from './base-apollo-client';
-import { PUBLIC_SETTINGS } from './public-config';
+import { createApolloClient } from '../../renderer/config/base-apollo-client';
+import { PUBLIC_SETTINGS } from '../../renderer/config/public-config';
 
 let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
-    container: Container;
+    container: interfaces.Container;
     services: any;
 };
 export const createClientContainer = () => {
@@ -23,7 +23,7 @@ export const createClientContainer = () => {
         isDev: process.env.NODE_ENV === 'development',
         isDebug: __DEBUGGING__,
         isSSR: __SSR__,
-        scope: 'browser',
+        scope: 'server',
         clientState,
         linkConnectionParams: modules.connectionParams,
         additionalLinks: modules.link,

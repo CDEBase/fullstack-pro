@@ -3,8 +3,10 @@ import { dev } from 'electron-is';
 
 import { createLogProxy } from '../common';
 import { getLogger } from './utils';
-import container, { loadContainerAsync } from './ioc';
+import { loadContainerAsync } from './ioc';
+import { createClientContainer } from './config/client.service';
 import { App } from './app';
+import { createReduxStore } from './config/redux-electron-config';
 
 /**
  * Operation before initialization
@@ -33,6 +35,7 @@ const beforeInit = async () => {
  */
 export const bootstrap = async () => {
     await beforeInit();
-
+    const { container } = createClientContainer();
     container.get(App);
+    createReduxStore();
 };

@@ -1,22 +1,16 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-underscore-dangle */
 import { triggerAlias, replayActionMain, forwardToRenderer } from 'electron-redux';
-// import { connectRouter } from 'connected-react-router';
 import storage from 'redux-persist/lib/storage';
 import { createEpicMiddleware } from 'redux-observable';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import modules, { services } from './modules';
-import { createReduxStore as createBaseReduxStore } from '../renderer/config/base-redux-config';
-import { rootEpic } from '../renderer/config/epic-config';
-
-// export const history = require('./router-history');
+import modules from '../modules';
+import { createReduxStore as createBaseReduxStore } from '../../renderer/config/base-redux-config';
+import { rootEpic } from '../../renderer/config/epic-config';
+import { isDev } from '../../common';
 
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
         routes: modules.getConfiguredRoutes(),
-        services,
+        lazyServices: () => modules.createService({}, {}),
     },
 });
 
@@ -32,8 +26,7 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (url = '/') => {
-    console.log('---MOdules---', modules.reducers);
+export const createReduxStore = () => {
     // only in server side, url will be passed.
     const newHistory = {};
     // If we have preloaded state, save it.
@@ -42,7 +35,7 @@ export const createReduxStore = (url = '/') => {
     const store = createBaseReduxStore({
         scope: 'server',
         isDebug: __DEBUGGING__,
-        isDev: process.env.NODE_ENV === 'development',
+        isDev,
         history: newHistory as any,
         initialState,
         epicMiddleware,

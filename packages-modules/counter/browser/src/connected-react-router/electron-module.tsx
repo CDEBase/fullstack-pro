@@ -3,9 +3,9 @@ import { Feature } from '@common-stack/client-react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 import { Counter } from './components/Counter';
 import { connectedReactRouter_counter } from './redux';
-import { filteredRoutes, filteredMenus } from './compute';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 import { onCountChangedEpic } from './epics';
+import { getFilteredRoutes } from '../utils';
 
 
 export const counterPageStore: IRoute[] = [
@@ -19,6 +19,12 @@ export const counterPageStore: IRoute[] = [
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.ROOT,
     },
 ];
+
+const selectedRoutesAndMenus = [
+    CONNECTED_REACT_ROUTER_ROUTES_TYPES.ROOT,
+];
+// get routes
+const filteredRoutes = getFilteredRoutes(counterPageStore, selectedRoutesAndMenus);
 
 export const ElectronModule = new Feature({
     routeConfig: filteredRoutes,

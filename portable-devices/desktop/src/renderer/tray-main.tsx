@@ -32,7 +32,7 @@ if (__DEV__) {
         });
         //  React-hot-loader v4 doesn't require following code any more.
         //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
-        (module as any).hot.accept('./app/Main', () => {
+        (module as any).hot.accept('./app/Tray', () => {
             try {
                 console.log('Updating front-end');
                 frontendReloadCount = (frontendReloadCount || 0) + 1;

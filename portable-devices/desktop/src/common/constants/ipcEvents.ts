@@ -1,4 +1,9 @@
 const enum IPC_EVENTS {
+    // MAIN
+    SHOW_MAIN = 'SHOW_MAIN',
+    // ABOUT
+    SHOW_ABOUT = 'SHOW_ABOUT',
+
     // Tray
     HIDE_TRAY = 'HIDE_TRAY',
     SHOW_TRAY = 'SHOW_TRAY',
