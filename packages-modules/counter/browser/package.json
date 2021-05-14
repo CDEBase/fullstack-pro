@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.51-alpha.25",
+  "version": "0.0.51-alpha.26",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "0.0.51-alpha.18",
+    "@sample-stack/platform-browser": "0.0.51-alpha.26",
     "antd": "^4.5.2"
   },
   "peerDependencies": {
@@ -49,12 +49,12 @@
     "@react-navigation/drawer": "*",
     "native-base": "*",
     "react": "*",
-    "redux-observable": "*",
     "react-native": "*",
     "react-redux": "*",
     "react-router": "*",
     "react-router-dom": "*",
     "redux": "*",
+    "redux-observable": "*",
     "rxjs": "*"
   },
   "publishConfig": {
