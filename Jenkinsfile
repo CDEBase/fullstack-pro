@@ -4,7 +4,7 @@ def GIT_BRANCH_NAME=getGitBranchName()
 pipeline {
   agent {
     kubernetes{
-      label 'jenkins-slave-v3'
+      label 'low-cpu-build'
     }
   }
   parameters {
