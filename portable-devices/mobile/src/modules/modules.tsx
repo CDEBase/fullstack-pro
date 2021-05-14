@@ -16,7 +16,6 @@ export const MainRoute = () => {
   return (
     <>
       {configuredRoutes.map((route: any) => {
-        console.log('---ROUTE_--', route);
         return (
           <Route
             key={route.path}
