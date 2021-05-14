@@ -24,6 +24,9 @@ cd fullstack-pro
 ```
     
 3. Setup environment file
+
+You need to have environemnt file before you start the project. There is a sample file exist at `config/development/dev.env.sample` which you can copy as `config/development/dev.env`.
+
 ```
 cp ./config/development/dev.env.sample ./config/development/dev.env
 ```

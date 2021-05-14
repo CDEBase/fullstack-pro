@@ -1,6 +1,4 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable no-underscore-dangle */
 import { lowerCase } from 'lodash';
 
 /**

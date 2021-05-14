@@ -8,8 +8,6 @@ import { SiderMenu } from './layout';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-console.log(features.getMenus());
-
 export const MainRoute = (props) => (
     <Layout hasSider style={{ minHeight: '100vh', display: 'flex' }}>
         <SiderMenu

@@ -4,7 +4,7 @@ def GIT_BRANCH_NAME=getGitBranchName()
 pipeline {
   agent {
     kubernetes{
-      label 'jenkins-slave-v3'
+      label 'slave-2cpu-8gb'
     }
   }
   parameters {
@@ -44,7 +44,6 @@ pipeline {
   // Initialize npm and docker commands using plugins
   tools {
     nodejs 'nodejs'
-    'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
   }
 
   stages {

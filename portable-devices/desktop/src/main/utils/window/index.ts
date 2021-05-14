@@ -1,8 +1,9 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import { merge } from 'lodash';
 import { loadDevTools } from './devTools';
 import { loadUrl } from './protocol';
 
-export interface WindowOpts {
+export interface WindowOpts extends BrowserWindowConstructorOptions {
     /**
      * URL
      */
@@ -20,20 +21,26 @@ export interface WindowOpts {
 
 export const createWindow = (opts: WindowOpts) => {
     const { name, title, width, height, devTools, remote, show = false } = opts;
-    const windows = new BrowserWindow({
-        show,
-        width,
-        height,
-        title,
-        webPreferences: {
-            nodeIntegration: true,
-            enableRemoteModule: remote,
-            // Context isolation environment
-            // https://www.electronjs.org/docs/tutorial/context-isolation
-            contextIsolation: false,
-            // devTools: isDev,
-        },
-    });
+    const windows = new BrowserWindow(
+        merge(
+            {},
+            {
+                show,
+                width,
+                height,
+                title,
+                webPreferences: {
+                    nodeIntegration: true,
+                    enableRemoteModule: remote,
+                    // Context isolation environment
+                    // https://www.electronjs.org/docs/tutorial/context-isolation
+                    contextIsolation: false,
+                    // devTools: isDev,
+                },
+            },
+            opts,
+        ),
+    );
 
     loadUrl(windows, name);
 

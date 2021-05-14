@@ -5,7 +5,7 @@
 import 'antd/dist/antd.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Main from './app/Main';
+import Main from './app/Tray';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
@@ -32,7 +32,7 @@ if (__DEV__) {
         });
         //  React-hot-loader v4 doesn't require following code any more.
         //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
-        (module as any).hot.accept('./app/Main', () => {
+        (module as any).hot.accept('./app/Tray', () => {
             try {
                 console.log('Updating front-end');
                 frontendReloadCount = (frontendReloadCount || 0) + 1;

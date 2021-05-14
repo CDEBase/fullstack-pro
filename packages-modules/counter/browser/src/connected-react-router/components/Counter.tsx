@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { increment, decrement } from '../redux';
 import { State } from '../interfaces';
 
-const CounterComponent: React.SFC<RouteComponentProps<any> & StateProps & DispatchProps> = (props) => (
+const CounterComponent: React.SFC<StateProps & DispatchProps> = (props) => (
     <div>
         Counter: {props.count}
         <button onClick={props.increment}>+</button>
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     decrement: () => dispatch(decrement()),
 });
 
-export const Counter = connect<StateProps, DispatchProps, RouteComponentProps<any>>(
+export const Counter = connect<StateProps, DispatchProps>(
     mapStateToProps,
     mapDispatchToProps,
 )(CounterComponent);
