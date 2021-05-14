@@ -4,7 +4,7 @@ def GIT_BRANCH_NAME=getGitBranchName()
 pipeline {
   agent {
     kubernetes{
-      label 'high-cpu-build'
+      label 'low-resource-build'
     }
   }
   parameters {
