@@ -44,7 +44,6 @@ pipeline {
   // Initialize npm and docker commands using plugins
   tools {
     nodejs 'nodejs'
-    'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
   }
 
   stages {
