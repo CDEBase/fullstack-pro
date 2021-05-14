@@ -24,8 +24,8 @@ const getStoreReducer = (reducers: ReducersMapObject) =>
     });
 
 interface IReduxStore<S> {
-    history: History;
-    scope: 'browser' | 'server' | 'native';
+    history?: History;
+    scope: 'browser' | 'server' | 'native' | 'ElectronMain';
     isDebug: boolean;
     isDev: boolean;
     reducers: ReducersMapObject<S>;
@@ -56,6 +56,7 @@ export const createReduxStore = ({
     persistConfig,
 }: IReduxStore<any>) => {
     const isBrowser = scope === 'browser';
+    const isElectronMain = scope === 'ElectronMain';
     /**
      * Add middleware that required for this app.
      */
@@ -97,7 +98,7 @@ export const createReduxStore = ({
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
-    if (isBrowser) {
+    if (isBrowser || isElectronMain) {
         // no SSR for now
         if (epicMiddleware) {
             epicMiddleware.run(rootEpic);

@@ -3,18 +3,16 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
-import storage from 'redux-persist/lib/storage';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import modules from '../modules';
-import { createClientContainer } from './client.service';
+import modules from '../../modules/electron-module';
+import { createClientContainer } from '../client.service';
+import { isDev } from '../../../common';
 import { rootEpic } from './epic-config';
-import { createReduxStore as createBaseReduxStore } from '../../common/config/base-redux-config';
-import { isDev } from '../../common';
+import { createReduxStore as createBaseReduxStore } from '../../../common/config/base-redux-config';
 
-export const history = require('./router-history');
+export const history = require('../router-history');
 
 const { apolloClient, services } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
@@ -25,33 +23,24 @@ export const epicMiddleware = createEpicMiddleware({
     },
 });
 
-export const persistConfig = {
-    key: 'root',
-    storage,
-    stateReconciler: autoMergeLevel2,
-    // Don't add `user` state to persist as it creates problems.
-    whitelist: [],
-};
 
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (scope = 'main', url = '/') => {
-    // only in server side, url will be passed.
-    const newHistory = __CLIENT__ ? history : history(url);
+export const createReduxStore = () => {
 
     // middleware
-    const router = connectRouter(newHistory);
+    const router = connectRouter(history);
 
+    // If we have preloaded state, save it.
     const store = createBaseReduxStore({
         scope: 'browser',
         isDebug: __DEBUGGING__,
         isDev,
-        history: newHistory,
+        history,
         initialState: {},
-        persistConfig,
-        middleware: [routerMiddleware(newHistory)],
+        middleware: [routerMiddleware(history)],
         epicMiddleware,
         preMiddleware: [forwardToMain],
         rootEpic,

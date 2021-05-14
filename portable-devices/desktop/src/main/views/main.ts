@@ -1,11 +1,10 @@
 /* eslint-disable no-use-before-define */
-import { provide } from 'inversify-binding-decorators';
 import { BrowserWindow, ipcMain } from 'electron';
 import { ElectronTypes } from '@common-stack/client-core';
-import { createWindow } from '../utils';
+import { createWindow, provideSingleton } from '../utils';
 import { IPC_EVENTS } from '../../common';
 
-@provide(ElectronTypes.MainWindow)
+@provideSingleton(ElectronTypes.MainWindow)
 export class MainWindow {
     private window: BrowserWindow;
 

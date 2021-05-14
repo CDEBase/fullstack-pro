@@ -4,7 +4,7 @@ import { ClientTypes } from '@common-stack/client-core';
 import { interfaces } from 'inversify';
 import ApolloClient from 'apollo-client';
 import modules, { container } from '../modules';
-import { createApolloClient } from '../../renderer/config/base-apollo-client';
+import { createApolloClient } from '../../common/config/base-apollo-client';
 import { PUBLIC_SETTINGS } from '../../renderer/config/public-config';
 
 let __CLIENT_SERVICE__: {

@@ -26,8 +26,12 @@ const selectedRoutesAndMenus = [
 // get routes
 const filteredRoutes = getFilteredRoutes(counterPageStore, selectedRoutesAndMenus);
 
-export const ElectronModule = new Feature({
+export const ElectronTrayModule = new Feature({
     routeConfig: filteredRoutes,
+    reducer: { connectedReactRouter_counter },
+});
+
+export const ElectronMainModule = new Feature({
     reducer: { connectedReactRouter_counter },
     epic: [onCountChangedEpic],
 });

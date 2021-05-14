@@ -7,9 +7,6 @@ export const config = envalid.cleanEnv(process.env, {
     NODE_ENV: str({ default: 'production', choices: ['production', 'staging', 'development', 'test'] }),
     ELECTRON_WEBPACK_WDS_PORT: num({ devDefault: 3000 }),
     ELECTRON_WEBPACK_WDS_HOST: str({ devDefault: 'localhost' }),
-    // NATS_URL: str(),
-    // NATS_USER: str(),
-    // NATS_PW: str(),
     REDIS_CLUSTER_URL: json({
         devDefault: '[{"port":6379,"host":"localhost"}]',
         example: '[{"port":6379,"host":"localhost"}]',

@@ -3,13 +3,9 @@ import * as React from 'react';
 import { RendererProvider } from 'react-fela';
 import { Provider } from 'react-redux';
 import { rehydrate } from 'fela-dom';
-import { Counter } from '@sample-stack/counter-module-browser';
-import { ConnectedRouter } from 'connected-react-router';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore, persistReducer } from 'redux-persist';
 import createRenderer from '../config/fela-renderer';
-import { epic$ } from '../config/epic-config';
-import { createReduxStore, history, persistConfig } from '../config/redux-config';
+import { epic$ } from '../config/tray/epic-config';
+import { createReduxStore, history } from '../config/tray/redux-config';
 import { MainRoute } from '../modules/electron-module';
 import { ErrorBoundary } from './ErrorBoundary';
 
@@ -20,9 +16,9 @@ if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.
     store = (module as any).hot.data.store;
     // replace the reducers always as we don't have ablity to find
     // new reducer added through our `modules`
-    // store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
+    // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
 } else {
-    store = createReduxStore('renderer');
+    store = createReduxStore();
 }
 if ((module as any).hot) {
     (module as any).hot.dispose((data) => {

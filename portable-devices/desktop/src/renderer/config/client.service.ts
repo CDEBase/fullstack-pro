@@ -4,8 +4,9 @@ import { ClientTypes } from '@common-stack/client-core';
 import { Container } from 'inversify';
 import ApolloClient from 'apollo-client';
 import modules, { container } from '../modules';
-import { createApolloClient } from './base-apollo-client';
+import { createApolloClient } from '../../common/config/base-apollo-client';
 import { PUBLIC_SETTINGS } from './public-config';
+import { isDev } from '../../common';
 
 let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
@@ -20,7 +21,7 @@ export const createClientContainer = () => {
     const { cache, apolloClient } = createApolloClient({
         httpGraphqlURL: PUBLIC_SETTINGS.GRAPHQL_URL,
         httpLocalGraphqlURL: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL,
-        isDev: process.env.NODE_ENV === 'development',
+        isDev,
         isDebug: __DEBUGGING__,
         isSSR: __SSR__,
         scope: 'browser',

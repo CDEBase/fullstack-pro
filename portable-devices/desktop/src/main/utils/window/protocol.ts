@@ -2,7 +2,7 @@ import { protocol, BrowserWindow } from 'electron';
 import { dev } from 'electron-is';
 import { format as formatUrl } from 'url';
 import createProtocol from '../createProtocol';
-import { config } from '../../../config';
+import { config } from '../../../common/config/config';
 
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }]);
 

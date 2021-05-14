@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-use-before-define */
-import { provide } from 'inversify-binding-decorators';
 import { BrowserWindow, ipcMain, Tray } from 'electron';
 import { ElectronTypes } from '@common-stack/client-core';
 import * as path from 'path';
-import { createWindow } from '../utils';
+import { createWindow, provideSingleton } from '../utils';
 import { isDev } from '../../common';
 
 import { IPC_EVENTS } from '../../common';
 
 const iconPath = path.join(__dirname, '../../assets/icons/16x16.png');
 
-@provide(ElectronTypes.TrayWindow)
+@provideSingleton(ElectronTypes.TrayWindow)
 export class TrayWindow {
     private window: BrowserWindow;
 
@@ -79,8 +78,6 @@ export class TrayWindow {
     }
 
     public updateTitle(title: string) {
-        const time = `00:0${title}`;
-        console.log('----tititle----', time);
         this.trayIcon.setTitle(title);
     }
 }

@@ -87,6 +87,9 @@ const config = {
             ],
         }),
     ],
+    resolve: {
+        symlinks: true,
+    },
     externals: [
         'react',
         'react-redux',
