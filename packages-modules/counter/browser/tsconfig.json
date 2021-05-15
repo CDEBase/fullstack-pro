@@ -4,17 +4,22 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "declarationDir": "lib",
+    "skipLibCheck": true,
     "rootDir": "./src",
-    "outDir": "../lib",
+    "outDir": "lib",
+    "declarationDir": "lib",
+    "declaration": true,
+    "declarationMap": true
   },
   "exclude": [
     "node_modules",
     "lib",
     "dist",
-    "webpack.config.js"
+    "webpack.config.js",
+    "rollup.config.js"
   ],
   "include": [
+    "src",
     "./typings/*.d.ts"
   ]
 }
