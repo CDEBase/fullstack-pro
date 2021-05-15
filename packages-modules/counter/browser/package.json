@@ -43,24 +43,24 @@
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
     "antd": "^4.5.2"
   },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^1.10.0",
+    "@rollup/plugin-graphql": "1.0.0",
+    "@rollup/plugin-image": "^2.0.6",
+    "@rollup/plugin-typescript": "^6.1.0",
+    "rollup": "latest"
+  },
   "peerDependencies": {
     "@common-stack/client-react": "*",
     "native-base": "*",
     "react": "*",
-    "redux-observable": "*",
     "react-native": "*",
     "react-redux": "*",
     "react-router": "*",
     "react-router-dom": "*",
     "redux": "*",
+    "redux-observable": "*",
     "rxjs": "*"
-  },
-  "devDependencies": {
-    "rollup": "latest",
-    "@open-wc/building-rollup":"^1.10.0",
-    "@rollup/plugin-typescript": "^6.1.0",
-    "@rollup/plugin-image": "^2.0.6",
-    "@rollup/plugin-graphql": "1.0.0"
   },
   "publishConfig": {
     "access": "public"
