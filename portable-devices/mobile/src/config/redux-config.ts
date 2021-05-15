@@ -33,9 +33,6 @@ export const createReduxStore = () => {
         initialState: {},
         persistConfig,
         middleware: [routerMiddleware(history)],
-        // epicMiddleware,
-        // preMiddleware: [forwardToMain],
-        // rootEpic,
         reducers: { router },
     });
 
