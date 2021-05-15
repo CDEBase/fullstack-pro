@@ -45,8 +45,6 @@
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
-    "@common-stack/client-react-native": "*",
-    "@react-navigation/drawer": "*",
     "native-base": "*",
     "react": "*",
     "redux-observable": "*",

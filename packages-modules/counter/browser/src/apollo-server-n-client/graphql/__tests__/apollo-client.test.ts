@@ -1,5 +1,5 @@
 import { client } from './apollo-client-test-helper';
-import { ADD_COUNTER_CLIENT } from '../mutations';
+import { AddCounterDocument } from '../../../generated-modle';
 import 'jest';
 
 describe('Apollo Client tests', () => {

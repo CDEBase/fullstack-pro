@@ -1,4 +1,4 @@
-import { COUNTER_QUERY_CLIENT } from '../queries';
+import { CounterQueryDocument } from '../../../generated-models';
 
 const TYPE_NAME = 'CounterState';
 
