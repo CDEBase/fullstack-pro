@@ -9,10 +9,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 import createRenderer from '../config/fela-renderer';
 import { epic$ } from '../config/epic-config';
-import { createReduxStore, storeReducer, history, persistConfig } from '../config/redux-config';
+import { createReduxStore, history, persistConfig } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
 import { ErrorBoundary } from './ErrorBoundary';
+import { getStoreReducer } from '../../common/config/base-redux-config';
+
 // import { getInitialStateRenderer } from 'electron-redux';
 
 // const initialState = getInitialStateRenderer();
@@ -25,7 +27,7 @@ if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.
     store = (module as any).hot.data.store;
     // replace the reducers always as we don't have ablity to find
     // new reducer added through our `modules`
-    store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
+    store.replaceReducer(persistReducer(persistConfig, getStoreReducer((module as any).hot.data.history || history)));
 } else {
     store = createReduxStore('renderer');
 }
