@@ -132,7 +132,6 @@
   },
   "devDependencies": {
     "@jest-runner/electron": "^3.0.1",
-    "@loopmode/electron-webpack-config-yarn-workspaces": "^0.2.0",
     "cross-env": "^6.0.3",
     "electron-builder": "^22.9.1",
     "electron-debug": "^3.1.0",
