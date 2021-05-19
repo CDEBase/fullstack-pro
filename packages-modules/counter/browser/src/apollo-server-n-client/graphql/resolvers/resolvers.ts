@@ -14,7 +14,7 @@ const resolvers = {
         counterState: (_, args, { cache }) => {
             const {
                 counterState: { counter },
-            } = cache.readQuery({ query: COUNTER_QUERY_CLIENT });
+            } = cache.readQuery({ query: CounterQueryDocument });
             return {
                 counter,
                 __typename: TYPE_NAME,
@@ -25,7 +25,7 @@ const resolvers = {
         addCounterState: async (_, { amount }, { cache }) => {
             const {
                 counterState: { counter },
-            } = cache.readQuery({ query: COUNTER_QUERY_CLIENT });
+            } = cache.readQuery({ query: CounterQueryDocument });
             const newAmount = amount + counter;
 
             await cache.writeData({
