@@ -1,0 +1,70 @@
+{
+  "name": "@sample-stack/counter-module-electron",
+  "version": "0.0.1",
+  "description": "Sample core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn build:clean && yarn build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "rollup -c rollup.config.js",
+    "build:lib:watch": "yarn build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "yarn build",
+    "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
+    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "yarn build:lib:watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "modulePaths": [
+      "node_modules"
+    ],
+    "roots": [
+      "src"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "dependencies": {
+    "@sample-stack/counter-module-browser": "link:../browser"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^1.10.0",
+    "@rollup/plugin-graphql": "1.0.0",
+    "@rollup/plugin-image": "^2.0.6",
+    "@rollup/plugin-typescript": "^6.1.0",
+    "rollup": "latest"
+  },
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "native-base": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*",
+    "redux-observable": "*",
+    "rxjs": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
+}
