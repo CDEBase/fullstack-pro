@@ -1,5 +1,6 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const config = {
@@ -19,6 +20,18 @@ const config = {
               ],
     },
     plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'assets/preload.js',
+                    to: 'preload.js',
+                },
+                {
+                    from: '../../tools/esm-wrapper.js',
+                    to: 'index.js',
+                },
+            ],
+        }),
         // new Dotenv({
         //     path: process.env.ENV_FILE,
         // }),

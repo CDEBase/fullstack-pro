@@ -1661,7 +1661,7 @@
   dependencies:
     "@common-stack/core" "^0.0.258"
 
-"@common-stack/client-react-native@0.0.258", "@common-stack/client-react-native@^0.0.258":
+"@common-stack/client-react-native@^0.0.258":
   version "0.0.258"
   resolved "https://registry.yarnpkg.com/@common-stack/client-react-native/-/client-react-native-0.0.258.tgz#b9b0dfc5b9f17d937404513f5cc4cf8de967af3f"
   integrity sha512-ODO5oaQDuAwVBLbim9+SQmU99p/EVVkJbUwfgSo9iTHCbiOp1EuAiXlU1P9/yfvXbqX70zQCF+7v5SX5IAqUEA==
@@ -4307,15 +4307,6 @@
     npmlog "^4.1.2"
     write-file-atomic "^3.0.3"
 
-"@loopmode/electron-webpack-config-yarn-workspaces@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@loopmode/electron-webpack-config-yarn-workspaces/-/electron-webpack-config-yarn-workspaces-0.2.0.tgz#bec092750a1985537907da9d66dbda251464c47a"
-  integrity sha512-sB3stZcm4MVbb1xoLZhIaZIYUaLvylUeyS+fz/dl0YoJU4E27RyfDvu5HKc2vajhkNRozJWmsNhkcxrYPka5rA==
-  dependencies:
-    npm-link-extra "^4.0.0"
-    webpack-merge "^4.2.1"
-    workspaces-utils "^1.1.2"
-
 "@malept/cross-spawn-promise@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@malept/cross-spawn-promise/-/cross-spawn-promise-1.1.1.tgz#504af200af6b98e198bce768bc1730c6936ae01d"
@@ -5317,6 +5308,11 @@
   dependencies:
     "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
     antd "^4.5.2"
+
+"@sample-stack/counter-module-electron@link:packages-modules/counter/electron":
+  version "0.0.1"
+  dependencies:
+    "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
 
 "@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
   version "0.0.1"
@@ -23643,7 +23639,7 @@ npm-lifecycle@^3.1.5:
     umask "^1.1.0"
     which "^1.3.1"
 
-npm-link-extra@^4.0.0, npm-link-extra@^4.0.3:
+npm-link-extra@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/npm-link-extra/-/npm-link-extra-4.0.3.tgz#a19c5c735b30f38333a8fa7f6e2112161c1eb267"
   integrity sha512-o1aSmgKLXIn0aANlKflIgufcclQgO3oS35K9fq2cKBbYtGW3Q79qtjjkSNq89PeXsmZRPyRlWAzwv95iWu9EzQ==
@@ -32604,7 +32600,7 @@ webpack-manifest-plugin@^2.2.0, webpack-manifest-plugin@~2.2.0:
     object.entries "^1.1.0"
     tapable "^1.0.0"
 
-webpack-merge@^4.1.0, webpack-merge@^4.2.1, webpack-merge@^4.2.2:
+webpack-merge@^4.1.0, webpack-merge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
   integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
@@ -32619,10 +32615,10 @@ webpack-merge@^5.4.0:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
 
-webpack-node-externals@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.7.2.tgz#6e1ee79ac67c070402ba700ef033a9b8d52ac4e3"
-  integrity sha512-ajerHZ+BJKeCLviLUUmnyd5B4RavLF76uv3cs6KNuO8W+HuQaEs0y0L7o40NQxdPy5w0pcv8Ew7yPUAQG0UdCg==
+webpack-node-externals@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-3.0.0.tgz#1a3407c158d547a9feb4229a9e3385b7b60c9917"
+  integrity sha512-LnL6Z3GGDPht/AigwRh2dvL9PQPFQ8skEpVrWZXLWBYmqcaojHNN0onvHzie6rq7EWKrrBfPYqNEzTJgiwEQDQ==
 
 webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1, webpack-sources@^1.4.3:
   version "1.4.3"
@@ -33232,7 +33228,7 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.1"
 
-workspaces-utils@^1.1.2, workspaces-utils@^1.2.1:
+workspaces-utils@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/workspaces-utils/-/workspaces-utils-1.2.1.tgz#1e3a0e4345807a3418a89d00e6592922689b05d5"
   integrity sha512-4qntqjHwCVB2SaPMzV4o9p9PgvuSlmLbD1UXAVAFuu1EUS2MaVJBz67eGQSFLKBa26TPk/j8Zqg7bOac4LUjBA==

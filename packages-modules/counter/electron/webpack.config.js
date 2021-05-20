@@ -14,7 +14,7 @@ const webpackOpts = {
         libraryTarget: 'commonjs2',
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.graphql', '.graphqls', '.gql', '.native.tsx', '.native.ts'],
+        extensions: ['.ts', '.tsx', '.js', '.graphql', '.graphqls', '.gql', '.native.tsx', '.native.ts'],
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -60,7 +60,15 @@ const webpackOpts = {
             },
         ],
     },
-    externals: [nodeExternals({ modulesDir: '../../../node_modules' }), nodeExternals()],
+    externals: [
+        nodeExternals({
+            allowlist: [/^@sample-stack/],
+            modulesDir: '../../../node_modules',
+        }),
+        nodeExternals({
+            allowlist: [/^@sample-stack/],
+        }),
+    ],
 };
 
 module.exports = webpackOpts;

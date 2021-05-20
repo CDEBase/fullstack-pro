@@ -1,1 +1,1 @@
-export { ElectronMainModule, ElectronTrayModule } from './electron-module';
+export { ElectronTrayModule } from './electron-module';
