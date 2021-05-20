@@ -29,7 +29,7 @@ const config = {
                 ],
                 externals: [
                     nodeExternals({}),
-                    nodeExternals({ whitelist: [/webpack\/hot/i], modulesDir: "../../node_modules" })
+                    nodeExternals({ allowList: [/webpack\/hot/i], modulesDir: "../../node_modules" })
                 ],
             }
         },
