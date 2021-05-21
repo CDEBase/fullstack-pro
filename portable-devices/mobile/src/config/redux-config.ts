@@ -3,6 +3,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
+import modules from '../modules';
 
 // import { rootEpic } from './epic-config';
 
@@ -33,7 +34,7 @@ export const createReduxStore = () => {
         initialState: {},
         persistConfig,
         middleware: [routerMiddleware(history)],
-        reducers: { router },
+        reducers: { router, ...modules.reducers },
     });
 
     return store;
