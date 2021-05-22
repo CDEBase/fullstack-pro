@@ -18,7 +18,8 @@
       "esnext.asynciterable"
     ],
     "types": [
-      "@types/node"
+      "@types/node",
+      "@types/jest"
     ]
   },
   "include": [
