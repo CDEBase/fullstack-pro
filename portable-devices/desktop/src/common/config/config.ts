@@ -1,4 +1,4 @@
-/// <reference path='../../../../typings/index.d.ts' />
+/// <reference path='../../../../../typings/index.d.ts' />
 import * as envalid from 'envalid';
 
 const { str, bool, json, num } = envalid;

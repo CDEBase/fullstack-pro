@@ -4,13 +4,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
-const glob = require('glob');
 const webpack = require('webpack');
 const dotenv = require('dotenv-safe');
 const { merge } = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const configureYarnWorkspaces = require('./tools/configure');
-// const dirsToWatch = glob.sync(`../*/lib`).map(dir => path.resolve(__dirname, dir));
+const utils = require('./tools/utils');
 
 const options = {
     stack: ['apollo', 'ts', 'react', 'webpack', 'css'],
@@ -32,11 +30,6 @@ const options = {
             path: process.env.ENV_FILE,
         }),
         new webpack.DefinePlugin(),
-        // Object.assign(
-        //     ...Object.entries(buildConfig).map(([k, v]) => ({
-        //         [k]: typeof v !== 'string' ? v : `'${v.replace(/\\/g, '\\\\')}'`
-        //     }))
-        // )
     ],
     defines: {
         __DEV__: process.env.NODE_ENV === 'development',
@@ -126,13 +119,16 @@ const extraDefines = {
     __DEBUGGING__: false,
 };
 
-// Work in progress. Need to be fixed this first https://github.com/DavideDaniel/oss-projects/issues/39
-// const workspaceRoot = path.resolve(__dirname, '../..');
-// module.exports = function (givenConfig) {
-//     console.log('--Merge', merge);
-//     const updatedConfig = merge(givenConfig, config);
-//     const finalConfig = configureYarnWorkspaces(updatedConfig, workspaceRoot);
-//     return finalConfig;
-// };
-
-module.exports = config;
+const workspaceRoot = path.resolve(__dirname, '../..');
+const dirsToWatch = utils.getWorkspacePackagePaths(workspaceRoot);
+// inorder to make watch to work on workspace packages
+module.exports = function (givenConfig) {
+    const updatedConfig = merge(givenConfig, config, {
+        devServer: {
+            ...givenConfig.devServer,
+            contentBase: dirsToWatch,
+            watchContentBase: true,
+        },
+    });
+    return updatedConfig;
+};

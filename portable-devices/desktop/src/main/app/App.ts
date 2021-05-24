@@ -44,7 +44,7 @@ export class App {
     services!: Service;
 
     onActivate = () => {
-        this.views.home.show();
+        this.views.main.show();
         app.dock.show();
     };
 

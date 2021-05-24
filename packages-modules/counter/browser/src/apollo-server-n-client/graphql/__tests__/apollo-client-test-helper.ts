@@ -1,7 +1,6 @@
-import ApolloClient from 'apollo-client';
+import { ApolloClient, ApolloClientOptions } from 'apollo-client';
 import { SchemaLink } from 'apollo-link-schema';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { withClientState } from 'apollo-link-state';
 import { ApolloLink } from 'apollo-link';
 // import * as schema from '../schema/schema.graphql';
 import { resolvers, defaults } from '../resolvers';
@@ -20,13 +19,12 @@ const cache = new InMemoryCache({
     dataIdFromObject: (object) => getDataIdFromObject(object),
 });
 
-const linkState = withClientState({
+const  params: ApolloClientOptions<any> = {
     cache,
     resolvers,
-    defaults,
     // typeDefs: defaultSchema.concat(schema as any), // if client schema exist
-});
-const links = [linkState];
+};
+const links = [];
 
 const client = new ApolloClient({
     queryDeduplication: true,

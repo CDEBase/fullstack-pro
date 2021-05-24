@@ -1,6 +1,6 @@
 import { RouterState } from 'connected-react-router';
 
 export interface State {
-    connectedReactRouter_counter: number;
+    connectedReactRouterCounter: number;
     router: RouterState;
 }

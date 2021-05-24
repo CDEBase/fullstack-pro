@@ -18,7 +18,7 @@ import { EpicMiddleware, Epic } from 'redux-observable';
 import { History } from 'history';
 import { persistReducer, PersistConfig } from 'redux-persist';
 
-const getStoreReducer = (reducers: ReducersMapObject) =>
+export const getStoreReducer = (reducers: ReducersMapObject) =>
     combineReducers({
         ...reducers,
     });
