@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-mobile",
-  "version": "0.0.51-alpha.27",
+  "version": "0.0.51-alpha.28",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
