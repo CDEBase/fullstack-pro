@@ -147,7 +147,6 @@ pipeline {
         }
       }
     }
-
     stage('Docker login'){
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
@@ -157,7 +156,7 @@ pipeline {
       }
     }
 
-    stage('Dev Docker Images') {
+    stage('Build Docker Images') {
       options {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
@@ -260,59 +259,6 @@ pipeline {
         }
       }
     } // End of staging deployment code block.
-
-
-    // publish packages to npm repository.
-    // commit new package-lock.json that might get generated during install
-    // Build will be ignore with tag '[skip ci]'
-    stage ('Publish Prod packages'){
-      when {
-        expression { GIT_BRANCH_NAME == 'develop' }
-        expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'prod' }
-      }
-      steps{
-        script {
-          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
-        }
-        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
-          sh """
-            git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin develop
-            git checkout develop
-            ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
-            git push origin develop
-            git checkout ${params.PUBLISH_BRANCH}
-          """
-        }
-      }
-    }
-
-
-    // Build Docker containers for production.
-    stage('Prod Docker Images') {
-      options {
-         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
-       }
-      when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
-      }
-
-      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
-      environment{ deployment_env = 'prod' }
-        steps{
-          load "./jenkins_variables.groovy"
-          script {
-            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-            def parallelStagesMap = servers.collectEntries {
-             ["${it}" : generateBuildStage(it)]
-            }
-            parallel parallelStagesMap
-          }
-        }
-    } // End of production docker build.
-
 
   // Below are production stages
     stage('Prod deployment') {
