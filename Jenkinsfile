@@ -289,7 +289,7 @@ pipeline {
     stage ('Publish Prod packages'){
       when {
         expression { GIT_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         script {
