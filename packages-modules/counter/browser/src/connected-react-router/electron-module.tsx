@@ -2,9 +2,8 @@
 import { Feature } from '@common-stack/client-react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 import { Counter } from './components/Counter';
-import { connectedReactRouter_counter } from './redux';
+import { connectedReactRouterCounter } from './redux';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
-import { onCountChangedEpic } from './epics';
 import { getFilteredRoutes } from '../utils';
 
 
@@ -28,10 +27,6 @@ const filteredRoutes = getFilteredRoutes(counterPageStore, selectedRoutesAndMenu
 
 export const ElectronTrayModule = new Feature({
     routeConfig: filteredRoutes,
-    reducer: { connectedReactRouter_counter },
+    reducer: { connectedReactRouterCounter },
 });
 
-export const ElectronMainModule = new Feature({
-    reducer: { connectedReactRouter_counter },
-    epic: [onCountChangedEpic],
-});

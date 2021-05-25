@@ -1,10 +1,9 @@
 import { triggerAlias, replayActionMain, forwardToRenderer } from 'electron-redux';
 import { createEpicMiddleware } from 'redux-observable';
-import modules from '../modules';
+import modules, { container } from '../modules';
 import { createReduxStore as createBaseReduxStore } from '../../common/config/base-redux-config';
 import { rootEpic } from './epic-config';
 import { isDev } from '../../common';
-import container from '../ioc';
 
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
