@@ -485,7 +485,7 @@ def generateStage(server, environmentType) {
 
         } else {
           sh """
-            cd servers/${server}
+            cd .${params.DEPLOYMENT_PATH}/${server}
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
