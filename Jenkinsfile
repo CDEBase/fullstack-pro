@@ -102,6 +102,7 @@ pipeline {
         """
       }
     }
+
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge PR to `develop` branch and publish'){
       when {
@@ -261,14 +262,34 @@ pipeline {
       }
     } // End of staging deployment code block.
 
+    // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
+    stage ('Merge `develop` branch to master'){
+      when {
+        expression { params.GIT_PR_BRANCH_NAME == 'master' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+      }
+      steps{
+        sh """
+          git checkout master
+          git merge develop -m 'auto merging'
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
+        """
+        script {
+          GIT_BRANCH_NAME = 'master'
+        }
+      }
+    }
+
 
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_BRANCH_NAME == 'develop' }
-        expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_BRANCH_NAME == 'master' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         script {
@@ -278,8 +299,8 @@ pipeline {
           sh """
             git add -A
             git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin develop
-            git checkout develop
+            git fetch origin master
+            git checkout master
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
             git push origin develop
             git checkout ${params.PUBLISH_BRANCH}
@@ -295,7 +316,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { GIT_BRANCH_NAME == 'master' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
       }
 
