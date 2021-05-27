@@ -262,6 +262,21 @@ pipeline {
       }
     } // End of staging deployment code block.
 
+    //
+    stage ('Test Stage'){
+      steps{
+        sh """
+          env
+          echo "#######################"
+          echo ${params.GIT_PR_BRANCH_NAME}
+          echo "#######################"
+          echo ${GIT_PR_BRANCH_NAME}
+          echo "#######################"
+        """
+      }
+    }
+
+
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
@@ -288,7 +303,7 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_BRANCH_NAME == 'master' }
+        expression { params.GIT_PR_BRANCH_NAME == 'master' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
