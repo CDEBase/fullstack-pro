@@ -268,8 +268,6 @@ pipeline {
         sh """
           env
           echo "#######################"
-          echo ${params.GIT_PR_BRANCH_NAME}
-          echo "#######################"
           echo ${GIT_PR_BRANCH_NAME}
           echo "#######################"
         """
@@ -280,8 +278,8 @@ pipeline {
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
-        expression { params.GIT_PR_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_PR_BRANCH_NAME == 'develop' || GIT_PR_BRANCH_NAME == 'master' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         sh """
@@ -303,8 +301,8 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { params.GIT_PR_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish'}
+        expression { GIT_PR_BRANCH_NAME == 'develop' || GIT_PR_BRANCH_NAME == 'master' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
       steps{
         script {
@@ -332,7 +330,7 @@ pipeline {
        }
       when {
         expression { GIT_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -361,7 +359,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
         beforeInput true
       }
 
