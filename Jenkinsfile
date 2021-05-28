@@ -276,7 +276,7 @@ pipeline {
       steps{
         sh """
           git checkout master
-          git merge develop -m 'auto merging'
+          git merge origin/develop -m 'auto merging'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
