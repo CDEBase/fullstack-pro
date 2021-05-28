@@ -80,7 +80,6 @@ pipeline {
     // a. any branch
     // b. ENV_CHOICE set not selected `dev`, `stage` or `prod`
     stage ('Install git repository'){
-      when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
@@ -94,7 +93,6 @@ pipeline {
     stage ('Build packages'){
       when {
         // expression { GIT_BRANCH_NAME != params.PUBLISH_BRANCH }  not needed
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' }
       }
       steps{
         sh """
@@ -150,9 +148,6 @@ pipeline {
     }
 
     stage('Docker login'){
-      when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-      }
       steps{
         sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
       }
@@ -278,7 +273,7 @@ pipeline {
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'develop' || GIT_PR_BRANCH_NAME == 'master' }
+        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
@@ -301,7 +296,7 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'develop' || GIT_PR_BRANCH_NAME == 'master' }
+        expression { GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
       steps{
@@ -329,7 +324,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'master' }
+        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
 
@@ -358,8 +353,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
+        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
         beforeInput true
       }
 
