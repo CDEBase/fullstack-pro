@@ -91,9 +91,6 @@ pipeline {
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Build packages'){
-      when {
-        // expression { GIT_BRANCH_NAME != params.PUBLISH_BRANCH }  not needed
-      }
       steps{
         sh """
           ${params.BUILD_STRATEGY} run build
