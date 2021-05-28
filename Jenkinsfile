@@ -307,7 +307,6 @@ pipeline {
             git fetch origin master
             git checkout master
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
-            git push origin develop
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
