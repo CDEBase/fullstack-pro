@@ -80,7 +80,6 @@ pipeline {
     // a. any branch
     // b. ENV_CHOICE set not selected `dev`, `stage` or `prod`
     stage ('Install git repository'){
-      when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
@@ -92,10 +91,6 @@ pipeline {
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Build packages'){
-      when {
-        // expression { GIT_BRANCH_NAME != params.PUBLISH_BRANCH }  not needed
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' }
-      }
       steps{
         sh """
           ${params.BUILD_STRATEGY} run build
@@ -150,9 +145,6 @@ pipeline {
     }
 
     stage('Docker login'){
-      when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-      }
       steps{
         sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
       }
@@ -262,16 +254,29 @@ pipeline {
       }
     } // End of staging deployment code block.
 
+    //
+    stage ('Test Stage'){
+      steps{
+        sh """
+          env
+          echo "#######################"
+          echo ${GIT_PR_BRANCH_NAME}
+          echo "#######################"
+        """
+      }
+    }
+
+
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
-        expression { params.GIT_PR_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         sh """
           git checkout master
-          git merge develop -m 'auto merging'
+          git merge origin/develop -m 'auto merging'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
@@ -288,8 +293,8 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish'}
+        expression { GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
       steps{
         script {
@@ -302,7 +307,6 @@ pipeline {
             git fetch origin master
             git checkout master
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
-            git push origin develop
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
@@ -316,8 +320,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -345,8 +349,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
+        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
         beforeInput true
       }
 
