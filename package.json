@@ -43,7 +43,7 @@
     "db:migrate": "knex migrate:latest --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
     "db:seed": "yarn db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
-    "predevpublish": "git checkout devpublish && git pull origin devpublish && git merge -s recursive -X theirs develop -m 'merge from develop' && node tools/update-dependency-version.js",
+    "predevpublish": "git checkout devpublish && git pull origin devpublish && git merge -s recursive -X theirs develop -m 'merge from develop' && yarn gitcommit && node tools/update-dependency-version.js",
     "devpublish": "lerna publish prerelease --ignore-scripts --exact",
     "postdevpublish": "git checkout develop",
     "devpublish:auto": "yarn devpublish -- --yes",
