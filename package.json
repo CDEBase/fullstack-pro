@@ -55,6 +55,7 @@
     "generateGraphql": "graphql-codegen",
     "generateGraphql:watch": "yarn generateGraphql -- --watch",
     "git:pull": "git pull origin $(git rev-parse --abbrev-ref HEAD)",
+    "gitcommit": "git add -A && git diff --staged --quiet || git commit -am 'auto build [skip ci] \r\n'",
     "husky-skip": "cross-env HUSKY_SKIP_HOOKS=1",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap",
