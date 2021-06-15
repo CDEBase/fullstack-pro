@@ -27,7 +27,7 @@ pipeline {
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeploy', 'stageDeploy', 'prodDeploy', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -193,7 +193,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+        expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
@@ -231,7 +231,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
+        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
 
@@ -270,31 +270,42 @@ pipeline {
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
+        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'main' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         sh """
-          git checkout master
+          git checkout ${params.REPOSITORY_BRANCH}
           git merge origin/develop -m 'auto merging'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
         """
         script {
-          GIT_BRANCH_NAME = 'master'
+          GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
         }
       }
     }
 
+    // Run build packages for production
+    stage ('Build Prod Packages'){
+      when {
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run build
+        """
+      }
+    }
 
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
+        expression { GIT_PR_BRANCH_NAME == 'main' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
       steps{
         script {
@@ -320,8 +331,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
+        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -349,8 +360,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' }
         beforeInput true
       }
 
