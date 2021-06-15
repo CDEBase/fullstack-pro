@@ -27,7 +27,7 @@ pipeline {
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['buildOnly', 'buildAndPublish', 'dev', 'stage', 'prod', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeploy', 'stageDeploy', 'prodDeploy', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -80,7 +80,6 @@ pipeline {
     // a. any branch
     // b. ENV_CHOICE set not selected `dev`, `stage` or `prod`
     stage ('Install git repository'){
-      when {  expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' } }
        steps{
           sh """
             echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
@@ -92,16 +91,25 @@ pipeline {
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Build packages'){
-      when {
-        // expression { GIT_BRANCH_NAME != params.PUBLISH_BRANCH }  not needed
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' }
-      }
       steps{
         sh """
           ${params.BUILD_STRATEGY} run build
         """
       }
     }
+
+    // Test build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Test packages'){
+      when {
+        expression { params.ENV_CHOICE == 'buildAndTest' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run test
+        """
+      }
+    }
+
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge PR to `develop` branch and publish'){
       when {
@@ -149,9 +157,6 @@ pipeline {
     }
 
     stage('Docker login'){
-      when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-      }
       steps{
         sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
       }
@@ -188,7 +193,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'dev' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+        expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
@@ -226,7 +231,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'stage' || params.ENV_CHOICE == 'allenv'}
+        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
 
@@ -262,13 +267,45 @@ pipeline {
     } // End of staging deployment code block.
 
 
+    // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
+    stage ('Merge `develop` branch to master'){
+      when {
+        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'main' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
+      }
+      steps{
+        sh """
+          git checkout ${params.REPOSITORY_BRANCH}
+          git merge origin/develop -m 'auto merging'
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
+        """
+        script {
+          GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
+        }
+      }
+    }
+
+    // Run build packages for production
+    stage ('Build Prod Packages'){
+      when {
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run build
+        """
+      }
+    }
+
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_BRANCH_NAME == 'develop' }
-        expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_PR_BRANCH_NAME == 'main' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
       steps{
         script {
@@ -278,10 +315,9 @@ pipeline {
           sh """
             git add -A
             git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin develop
-            git checkout develop
+            git fetch origin master
+            git checkout master
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
-            git push origin develop
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
@@ -295,8 +331,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prod' }
+        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -324,8 +360,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'prod' || params.ENV_CHOICE == 'allenv'}
+        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' }
         beforeInput true
       }
 
@@ -464,7 +500,7 @@ def generateStage(server, environmentType) {
 
         } else {
           sh """
-            cd servers/${server}
+            cd .${params.DEPLOYMENT_PATH}/${server}
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
