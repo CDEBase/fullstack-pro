@@ -98,6 +98,18 @@ pipeline {
       }
     }
 
+    // Test build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Test packages'){
+      when {
+        expression { params.ENV_CHOICE == 'buildAndTest' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run test
+        """
+      }
+    }
+
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge PR to `develop` branch and publish'){
       when {
