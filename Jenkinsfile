@@ -266,18 +266,6 @@ pipeline {
       }
     } // End of staging deployment code block.
 
-    //
-    stage ('Test Stage'){
-      steps{
-        sh """
-          env
-          echo "#######################"
-          echo ${GIT_PR_BRANCH_NAME}
-          echo "#######################"
-        """
-      }
-    }
-
 
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
