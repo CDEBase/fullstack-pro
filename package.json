@@ -25,7 +25,7 @@
   },
   "scripts": {
     "prebootstrap": "lerna run prepare",
-    "bootstrap": "yarn && yarn lerna && yarn build",
+    "bootstrap": "yarn && yarn lerna",
     "postbootstrap": "yarn build",
     "build": "yarn build:packages",
     "build:clean": "lerna exec yarn build:clean",
