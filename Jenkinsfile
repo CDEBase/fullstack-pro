@@ -266,7 +266,6 @@ pipeline {
       }
     } // End of staging deployment code block.
 
-
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {

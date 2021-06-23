@@ -1,13 +1,7 @@
-import {
-    createStore,
-    Store,
-    applyMiddleware,
-    Middleware,
-    AnyAction,
-    compose,
-    combineReducers,
-    StoreEnhancer,
-} from 'redux';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+import { createStore, applyMiddleware, Middleware, compose, combineReducers, StoreEnhancer } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import storage from 'redux-persist/lib/storage';
@@ -41,8 +35,7 @@ export const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    // Don't add `user` state to persist as it creates problems.
-    // whitelist: [],
+    transforms: modules.reduxPersistStateTransformers,
 };
 
 /**
