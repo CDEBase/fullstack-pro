@@ -14,6 +14,7 @@ const config = {
             entry: './src/index.tsx',
             output: {
                 chunkFilename: '[name].bundle.js',
+                sourceMapFilename: '[file].map',
             },
             stack: ['web', 'react'],
             tsLoaderOptions: {
@@ -61,6 +62,7 @@ const config = {
             webpackConfig: {
                 output: {
                     filename: 'main.js',
+                    sourceMapFilename: '[file].map',
                 },
                 plugins: [
                     new CopyWebpackPlugin({
