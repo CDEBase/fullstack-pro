@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { render } from 'react-dom'
 
 const pJson = require('../../../package.json');
-
-
 const timeTrackerIcon = require('../../../assets/icon.png');
 
 export default class About extends Component {

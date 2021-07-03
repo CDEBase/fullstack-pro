@@ -1,8 +1,12 @@
-import 'antd/dist/antd.css';
+import 'reflect-metadata';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import './config/public-config'; // load before rendering `Main`
 import Main from './app/Main';
-
+import 'antd/dist/antd.css';
+// import 'react-table/react-table.css';
+// import 'react-big-calendar/lib/css/react-big-calendar.css';
+// import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 // import 'backend_reload';

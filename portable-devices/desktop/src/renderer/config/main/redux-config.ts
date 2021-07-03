@@ -2,26 +2,27 @@
 /* eslint-disable global-require */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
+import { forwardToMain, replayActionRenderer, forwardToMainWithParams } from 'electron-redux';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
-import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import modules from '../modules';
+import modules from '../../modules/main';
 import { createClientContainer } from './client.service';
 import { rootEpic } from './epic-config';
-import { createReduxStore as createBaseReduxStore } from '../../common/config/base-redux-config';
-import { isDev } from '../../common';
+import { createReduxStore as createBaseReduxStore } from '../../../common/config/base-redux-config';
+import { isDev } from '../../../common';
 
-export const history = require('./router-history');
+export const history = require('../router-history');
 
-const { apolloClient, services } = createClientContainer();
+const { apolloClient, services, container, logger } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
         apolloClient,
         routes: modules.getConfiguredRoutes(),
         services,
+        container,
+        logger,
     },
 });
 
@@ -37,25 +38,27 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (scope = 'main', url = '/') => {
-    // only in server side, url will be passed.
-    const newHistory = __CLIENT__ ? history : history(url);
-
+export const createReduxStore = () => {
     // middleware
-    const router = connectRouter(newHistory);
+    const router = connectRouter(history);
+    console.log('---modules---', modules.reducers);
 
     const store = createBaseReduxStore({
         scope: 'browser',
         isDebug: __DEBUGGING__,
         isDev,
-        history: newHistory,
+        history,
         initialState: {},
         persistConfig,
-        middleware: [routerMiddleware(newHistory)],
+        middleware: [routerMiddleware(history)],
         epicMiddleware,
-        preMiddleware: [forwardToMain],
+        preMiddleware: [
+            forwardToMainWithParams({
+                blacklist: [/^@@/, /^redux-form/, /^contribution/, /^command/],
+            }),
+        ],
         rootEpic,
-        reducers: { router, ...modules.reducers },
+        reducers: { router, aaa: "AAAA", ...modules.reducers },
     });
 
     // Delete it once we have it stored in a variable

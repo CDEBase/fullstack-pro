@@ -1,17 +1,21 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { Container } from 'inversify';
 import ApolloClient from 'apollo-client';
-import modules, { container } from '../modules';
-import { createApolloClient } from '../../common/config/base-apollo-client';
-import { PUBLIC_SETTINGS } from './public-config';
-import { isDev } from '../../common';
+import { CdmLogger } from '@cdm-logger/core';
+import { logger } from '@cdm-logger/client';
+import modules, { container } from '../../modules/tray';
+import { createApolloClient } from '../../../common/config/base-apollo-client';
+import { PUBLIC_SETTINGS } from '../public-config';
+import { isDev } from '../../../common';
 
 let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
     container: Container;
     services: any;
+    logger: CdmLogger.ILogger;
 };
 export const createClientContainer = () => {
     if (__CLIENT_SERVICE__) {
@@ -42,6 +46,7 @@ export const createClientContainer = () => {
         container,
         apolloClient,
         services,
+        logger,
     };
     return __CLIENT_SERVICE__;
 };
