@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -8,6 +10,12 @@ const config = {
     target: 'electron-main',
     entry: './src/main/index.ts',
     mode: 'development',
+    output: {
+        filename: 'main-process.js',
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.mjs', '.graphql', '.graphqls', '.gql', '.native.tsx', '.native.ts'],
+    },
     optimization: {
         minimizer: process.env.E2E_BUILD
             ? []
@@ -19,6 +27,15 @@ const config = {
                   }),
               ],
     },
+    module: {
+        rules: [
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: 'javascript/auto',
+            },
+        ],
+    },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
@@ -27,8 +44,8 @@ const config = {
                     to: 'preload.js',
                 },
                 {
-                    from: '../../tools/esm-wrapper.js',
-                    to: 'index.js',
+                    from: 'tools/esm-wrapper.js',
+                    to: 'main.js',
                 },
             ],
         }),

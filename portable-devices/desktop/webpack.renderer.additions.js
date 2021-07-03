@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
@@ -84,20 +81,37 @@ const config = {
         symlinks: true,
     },
     externals: [
+        'apollo-client',
         'react',
-        'react-redux',
         'react-redux',
         'react-apollo',
         'react-fela',
         'react-helmet',
         'react-loadable',
-        'react-redux',
         'react-resizable',
         'react-router',
         'react-router-config',
         'react-router-dom',
         'react-router-redux',
         'react-transition-group',
+        'connected-react-router',
+        'history',
+        '@apollo/react-common',
+        '@apollo/react-hooks',
+        // '@admin-layout/activity-module-browser',
+        // '@admin-layout/components',
+        // '@admin-layout/core',
+        // '@admin-layout/counter-module-browser',
+        // '@admin-layout/platform-browser',
+        // '@admin-layout/react-shared-components',
+        // '@admin-layout/schedule-module-browser',
+        // '@admin-layout/timetracker-module-browser',
+        // '@adminide-stack/account-api-browser',
+        // '@adminide-stack/extension-module-browser',
+        // '@adminide-stack/platform-browser',
+        // '@adminide-stack/react-shared-components',
+        // '@adminide-stack/user-auth0-browser',
+        // '@adminide-stack/user-auth0-server',
     ],
 };
 
