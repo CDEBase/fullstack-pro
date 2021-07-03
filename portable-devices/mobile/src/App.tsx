@@ -15,9 +15,10 @@ import {
   createReduxStore,
   history,
 } from './config/redux-config';
-import { createApolloClient } from './config/apollo-client';
+import { Root } from 'native-base';
+import { createClientContainer } from './config/client.service';
 
-const client = createApolloClient();
+const { apolloClient: client, container } = createClientContainer();
 
 const store = createReduxStore();
 const renderer = createRenderer();
@@ -27,44 +28,46 @@ export default function App() {
 
   let persistor = persistStore(store as any);
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <ApolloProvider client={client}>
-          <PersistGate persistor={persistor}>
-            <NativeRouter>
-              <ConnectedRouter history={history}>
-                <MainRoute />
-              </ConnectedRouter>
-            </NativeRouter>
-          </PersistGate>
-        </ApolloProvider>
-      </Provider>
-    </SafeAreaProvider>
+    <Root>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <ApolloProvider client={client}>
+            <PersistGate persistor={persistor}>
+              <NativeRouter>
+                <ConnectedRouter history={history}>
+                  <MainRoute />
+                </ConnectedRouter>
+              </NativeRouter>
+            </PersistGate>
+          </ApolloProvider>
+        </Provider>
+      </SafeAreaProvider>
+    </Root>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 25,
+        container: {
+        marginTop: 25,
     padding: 10,
   },
   header: {
-    fontSize: 20,
+        fontSize: 20,
   },
   nav: {
-    flexDirection: 'row',
+        flexDirection: 'row',
     justifyContent: 'space-around',
   },
   navItem: {
-    flex: 1,
+        flex: 1,
     alignItems: 'center',
     padding: 10,
   },
   subNavItem: {
-    padding: 5,
+        padding: 5,
   },
   topic: {
-    textAlign: 'center',
+        textAlign: 'center',
     fontSize: 15,
   },
 });
