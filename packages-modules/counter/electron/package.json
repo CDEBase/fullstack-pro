@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/counter-module-browser": "link:../browser"
+    "@sample-stack/counter-module-browser": "^0.0.51-alpha.28"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.10.0",
