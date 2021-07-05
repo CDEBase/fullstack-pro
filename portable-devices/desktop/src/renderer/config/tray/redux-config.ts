@@ -2,34 +2,33 @@
 /* eslint-disable global-require */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
+import { forwardToMain, replayActionRenderer, forwardToMainWithParams, getInitialStateRenderer } from 'electron-redux';
 import { createEpicMiddleware } from 'redux-observable';
-import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-import modules from '../../modules/electron-module';
-import { createClientContainer } from '../client.service';
+import modules from '../../modules/tray';
+import { createClientContainer } from './client.service';
 import { isDev } from '../../../common';
 import { rootEpic } from './epic-config';
 import { createReduxStore as createBaseReduxStore } from '../../../common/config/base-redux-config';
 
 export const history = require('../router-history');
 
-const { apolloClient, services } = createClientContainer();
+const { apolloClient, container, services, logger } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
         apolloClient,
         routes: modules.getConfiguredRoutes(),
         services,
+        container,
+        logger,
     },
 });
-
 
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
 export const createReduxStore = () => {
-
     // middleware
     const router = connectRouter(history);
 
@@ -41,9 +40,9 @@ export const createReduxStore = () => {
         history,
         initialState: {},
         middleware: [routerMiddleware(history)],
-        epicMiddleware,
+        // epicMiddleware,
         preMiddleware: [forwardToMain],
-        rootEpic,
+        // rootEpic,
         reducers: { router, ...modules.reducers },
     });
 
