@@ -113,8 +113,8 @@ pipeline {
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge PR to `develop` branch and publish'){
       when {
-        expression { params.GIT_PR_BRANCH_NAME != 'develop' }
-        expression { params.ENV_CHOICE == 'buildAndPublish' }
+        expression { GIT_BRANCH_NAME == 'develop' || GIT_BRANCH_NAME == 'devpublish' }
+        expression { params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'allenv' }
       }
       steps{
         sh """
@@ -193,7 +193,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+        expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
 
@@ -286,25 +286,13 @@ pipeline {
       }
     }
 
-    // Run build packages for production
-    stage ('Build Prod Packages'){
-      when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' }
-      }
-      steps{
-        sh """
-          ${params.BUILD_STRATEGY} run build
-        """
-      }
-    }
-
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
         expression { GIT_PR_BRANCH_NAME == 'main' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish'}
       }
       steps{
         script {
@@ -331,7 +319,7 @@ pipeline {
        }
       when {
         expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'buildOnly'}
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' }
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
