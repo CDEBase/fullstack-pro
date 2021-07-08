@@ -18,6 +18,7 @@ const config = {
             webpackConfig: {
                 output: {
                     filename: 'main.js',
+                    sourceMapFilename: '[file].map',
                 },
                 plugins: [
                     new CopyWebpackPlugin({

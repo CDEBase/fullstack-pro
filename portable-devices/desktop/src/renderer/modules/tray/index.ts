@@ -1,14 +1,9 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { ClientTypes } from '@common-stack/client-react';
 import { logger } from '@cdm-logger/client';
-import modules, { MainRoute } from './modules';
-
-Object.assign(global, require('../../build.config'));
-
+import { ClientTypes } from '@common-stack/client-react';
+import modules, { MainRoute } from './module';
 
 class UtilityClass {
-    // tslint:disable-next-line:no-shadowed-variable
+    // eslint-disable-next-line no-useless-constructor
     constructor(private modules) {}
 
     public getCacheKey(storeObj) {
@@ -17,6 +12,7 @@ class UtilityClass {
 }
 
 const utility = new UtilityClass(modules);
+
 // additional bindings to container
 const container = modules.createContainers({}) as any;
 container.bind(ClientTypes.Logger).toConstantValue(logger);

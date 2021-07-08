@@ -1,23 +1,27 @@
 module.exports = {
     compact: false,
-    presets: ['@babel/preset-typescript', '@babel/preset-react', ['@babel/preset-env', { modules: 'commonjs' }]],
+    presets: [
+        '@babel/preset-typescript',
+        '@babel/preset-react',
+        ['@babel/preset-env', { modules: 'commonjs', loose: true }],
+    ],
     plugins: [
-          "react-hot-loader/babel",
+        'react-hot-loader/babel',
         '@babel/plugin-transform-modules-commonjs',
         '@babel/plugin-transform-destructuring',
-        "@babel/plugin-transform-for-of",
+        '@babel/plugin-transform-for-of',
         '@babel/plugin-transform-regenerator',
         '@babel/plugin-transform-runtime',
-        "@babel/plugin-syntax-dynamic-import",
+        '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-class-properties',
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         '@babel/plugin-proposal-object-rest-spread',
         //   ['styled-components', { ssr: true }],
-        ["import", { libraryName: "@ant-design/react-native" }]
+        ['import', { libraryName: '@ant-design/react-native' }],
     ],
     env: {
         production: {
-            compact: true
-        }
-    }
+            compact: true,
+        },
+    },
 };

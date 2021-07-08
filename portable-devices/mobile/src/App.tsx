@@ -11,85 +11,63 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 // import { RendererProvider } from 'react-fela';
 import { ConnectedRouter } from 'connected-react-router';
-// import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-// import { NativeRouter } from 'react-router-native';
 import {
   createReduxStore,
   history,
 } from './config/redux-config';
-import { createApolloClient } from './config/apollo-client';
-// import env from './config/public-config';
-// import config from './config';
-// import useColorScheme from './hooks/useColorScheme';
-// import useCachedResources from './hooks/useCachedResources';
+import { Root } from 'native-base';
+import { createClientContainer } from './config/client.service';
 
-// import { MainRoute } from './modules';
-
-const client = createApolloClient();
-
-// let store: any;
-// if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
-//   // console.log('Restoring Redux store:', JSON.stringify((module as any).hot.data.store.getState()));
-//   store = (module as any).hot.data.store;
-//   // replace the reducers always as we don't have ablity to find
-//   // new reducer added through our `modules`
-//   store.replaceReducer(
-//     persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)),
-//   );
-// } else {
-//   store = createReduxStore();
-// }
+const { apolloClient: client, container } = createClientContainer();
 
 const store = createReduxStore();
 const renderer = createRenderer();
 
 // console.log('---CONFIG--new-', config, env);
 export default function App() {
-  // const isLoadingComplete = useCachedResources();
 
-  // if (!isLoadingComplete) {
-  //   return null;
-  // }
   let persistor = persistStore(store as any);
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <ApolloProvider client={client}>
-          <PersistGate persistor={persistor}>
-            <NativeRouter>
-              <ConnectedRouter history={history}>
-                <MainRoute />
-              </ConnectedRouter>
-            </NativeRouter>
-          </PersistGate>
-        </ApolloProvider>
-      </Provider>
-    </SafeAreaProvider>
+    <Root>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <ApolloProvider client={client}>
+            <PersistGate persistor={persistor}>
+              <NativeRouter>
+                <ConnectedRouter history={history}>
+                  <MainRoute />
+                </ConnectedRouter>
+              </NativeRouter>
+            </PersistGate>
+          </ApolloProvider>
+        </Provider>
+      </SafeAreaProvider>
+    </Root>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 25,
+        container: {
+        marginTop: 25,
     padding: 10,
   },
   header: {
-    fontSize: 20,
+        fontSize: 20,
   },
   nav: {
-    flexDirection: 'row',
+        flexDirection: 'row',
     justifyContent: 'space-around',
   },
   navItem: {
-    flex: 1,
+        flex: 1,
     alignItems: 'center',
     padding: 10,
   },
   subNavItem: {
-    padding: 5,
+        padding: 5,
   },
   topic: {
-    textAlign: 'center',
+        textAlign: 'center',
     fontSize: 15,
   },
 });

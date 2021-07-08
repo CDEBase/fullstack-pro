@@ -1,4 +1,4 @@
-import { createRenderer, IRenderer } from 'fela';
+import { createRenderer } from 'fela';
 import webPreset from 'fela-preset-web';
 
 export default () => {
@@ -10,10 +10,7 @@ export default () => {
         `
         html, body, #root{
             height: 100%;
-          }
-          .ant-picker-dropdown, .ant-select-dropdown {
-            
-          }
+            }
         `,
     );
 
