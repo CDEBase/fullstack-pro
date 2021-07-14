@@ -167,7 +167,6 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
       }
 
@@ -192,7 +191,6 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
@@ -223,8 +221,7 @@ pipeline {
   // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge `develop` branch to master'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'main' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
       }
       steps{
         sh """
@@ -245,8 +242,7 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Prod packages'){
       when {
-        expression { GIT_PR_BRANCH_NAME == 'main' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
       }
       steps{
         script {
@@ -271,8 +267,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy' }
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -300,7 +295,6 @@ pipeline {
       DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'main' }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
@@ -341,7 +335,6 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'ProdWithBuild'}
         beforeInput true
       }
