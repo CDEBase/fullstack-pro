@@ -41,7 +41,6 @@ export const persistConfig = {
 export const createReduxStore = () => {
     // middleware
     const router = connectRouter(history);
-    console.log('---modules---', modules.reducers);
 
     const store = createBaseReduxStore({
         scope: 'browser',
@@ -58,7 +57,7 @@ export const createReduxStore = () => {
             }),
         ],
         rootEpic,
-        reducers: { router, aaa: "AAAA", ...modules.reducers },
+        reducers: { router, ...modules.reducers },
     });
 
     // Delete it once we have it stored in a variable
