@@ -27,7 +27,7 @@ pipeline {
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeploy', 'stageDeploy', 'prodDeploy', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeploy', 'stageDeploy', 'prodDeploy', 'ProdWithBuild', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -167,7 +167,6 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
       }
 
@@ -192,7 +191,6 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' }
         beforeInput true
       }
@@ -220,6 +218,73 @@ pipeline {
       }
     } // End of dev deployment code block.
 
+  // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
+    stage ('Merge `develop` branch to master'){
+      when {
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+      }
+      steps{
+        sh """
+          git checkout ${params.REPOSITORY_BRANCH}
+          git merge origin/develop -m 'auto merging'
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
+        """
+        script {
+          GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
+        }
+      }
+    }
+
+  // publish packages to npm repository.
+    // commit new package-lock.json that might get generated during install
+    // Build will be ignore with tag '[skip ci]'
+    stage ('Publish Prod packages'){
+      when {
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+      }
+      steps{
+        script {
+          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
+        }
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
+          sh """
+            git add -A
+            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git fetch origin master
+            git checkout master
+            ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
+            git checkout ${params.PUBLISH_BRANCH}
+          """
+        }
+      }
+    }
+  
+  // Build Docker containers for production.
+    stage('Prod Docker Images') {
+      options {
+         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
+       }
+      when {
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy' }
+      }
+
+      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
+      environment{ deployment_env = 'prod' }
+        steps{
+          load "./jenkins_variables.groovy"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateBuildStage(it)]
+            }
+            parallel parallelStagesMap
+          }
+        }
+    } // End of production docker build.
+
+
   // Below are stage code block
     stage('Stage deployment') {
       options {
@@ -230,21 +295,13 @@ pipeline {
       DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'allenv'}
         beforeInput true
       }
 
-      input {
-        message "Want to deploy fullstack-pro on stage cluster?"
-        parameters {
-          choice choices: ['yes', 'no'], description: 'Want to deploy micro service on stage?', name: 'STAGE_DEPLOYMENT'
-        }
-      }
-
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://35.225.221.114']) {
+        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://0.0.0.0']) {
           
           sh """
             helm repo add stable https://charts.helm.sh/stable
@@ -266,75 +323,6 @@ pipeline {
       }
     } // End of staging deployment code block.
 
-    // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
-    stage ('Merge `develop` branch to master'){
-      when {
-        expression { GIT_PR_BRANCH_NAME == 'publish' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'main' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish'}
-      }
-      steps{
-        sh """
-          git checkout ${params.REPOSITORY_BRANCH}
-          git merge origin/develop -m 'auto merging'
-          ${params.BUILD_STRATEGY} install
-          ${params.BUILD_STRATEGY} run lerna
-          ${params.BUILD_STRATEGY} run build
-        """
-        script {
-          GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
-        }
-      }
-    }
-
-    // publish packages to npm repository.
-    // commit new package-lock.json that might get generated during install
-    // Build will be ignore with tag '[skip ci]'
-    stage ('Publish Prod packages'){
-      when {
-        expression { GIT_PR_BRANCH_NAME == 'main' || GIT_PR_BRANCH_NAME == 'master' || GIT_PR_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish'}
-      }
-      steps{
-        script {
-          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
-        }
-        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
-          sh """
-            git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin master
-            git checkout master
-            ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
-            git checkout ${params.PUBLISH_BRANCH}
-          """
-        }
-      }
-    }
-
-
-    // Build Docker containers for production.
-    stage('Prod Docker Images') {
-      options {
-         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
-       }
-      when {
-        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'buildAndPublish' }
-      }
-
-      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
-      environment{ deployment_env = 'prod' }
-        steps{
-          load "./jenkins_variables.groovy"
-          script {
-            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-            def parallelStagesMap = servers.collectEntries {
-             ["${it}" : generateBuildStage(it)]
-            }
-            parallel parallelStagesMap
-          }
-        }
-    } // End of production docker build.
 
 
   // Below are production stages
@@ -347,8 +335,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { GIT_BRANCH_NAME == 'main' || GIT_BRANCH_NAME == 'master' || GIT_BRANCH_NAME == 'publish' }
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' }
+        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'ProdWithBuild'}
         beforeInput true
       }
 
