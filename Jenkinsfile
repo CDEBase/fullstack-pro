@@ -22,12 +22,14 @@ pipeline {
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
     string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
+    string(name: 'DEVELOP_BRANCH', defaultValue: 'develop', description: 'Develop branch as default for the development.')
+    string(name: 'MASTER_BRANCH', defaultValue: 'master', description: 'Master branch as default branch for production.')
 
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeploy', 'stageDeploy', 'prodDeploy', 'ProdWithBuild', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -90,7 +92,10 @@ pipeline {
     }
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
-    stage ('Build packages'){
+    stage ('Build Packages'){
+      when {
+        expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndTest' || params.ENV_CHOICE == 'buildAndPublish' }
+      }
       steps{
         sh """
           ${params.BUILD_STRATEGY} run build
@@ -99,7 +104,7 @@ pipeline {
     }
 
     // Test build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
-    stage ('Test packages'){
+    stage ('Test Packages'){
       when {
         expression { params.ENV_CHOICE == 'buildAndTest' }
       }
@@ -111,10 +116,10 @@ pipeline {
     }
 
     // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
-    stage ('Merge PR to `develop` branch and publish'){
+    // Skip this stage. Future implementation.
+    stage ('Merge PR, Install, Build'){
       when {
-        expression { GIT_BRANCH_NAME == 'develop' || GIT_BRANCH_NAME == 'devpublish' }
-        expression { params.ENV_CHOICE == 'buildAndPublish' || params.ENV_CHOICE == 'allenv' }
+        expression { params.ENV_CHOICE == '1' }
       }
       steps{
         sh """
@@ -133,9 +138,9 @@ pipeline {
     // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
-    stage ('Publish packages'){
+    stage ('Publish Packages'){
       when {
-        expression { GIT_BRANCH_NAME == 'develop' }
+        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' }
       }
       steps{
@@ -167,7 +172,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndPublish' }
+        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.ENV_CHOICE == 'buildOnly' }
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -191,7 +197,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { params.ENV_CHOICE == 'devDeploy' || params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'buildAndPublish' }
+        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
         beforeInput true
       }
 
@@ -219,9 +226,10 @@ pipeline {
     } // End of dev deployment code block.
 
   // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
-    stage ('Merge `develop` branch to master'){
+    stage ('Merge Develop to master & Install'){
       when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
         sh """
@@ -236,13 +244,27 @@ pipeline {
         }
       }
     }
+  
+    // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Prod Build Packages'){
+      when {
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run build
+        """
+      }
+    }
 
   // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
-    stage ('Publish Prod packages'){
+    stage ('Prod Publish Packages'){
       when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy'}
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
         script {
@@ -267,7 +289,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'ProdWithBuild' || params.ENV_CHOICE == 'stageDeploy' }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
@@ -286,7 +309,7 @@ pipeline {
 
 
   // Below are stage code block
-    stage('Stage deployment') {
+    stage('Stage Deployment') {
       options {
          timeout(time: 300, unit: 'SECONDS')
        }
@@ -295,7 +318,8 @@ pipeline {
       DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'allenv'}
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
         beforeInput true
       }
 
@@ -326,7 +350,7 @@ pipeline {
 
 
   // Below are production stages
-    stage('Prod deployment') {
+    stage('Prod Deployment') {
       options {
           timeout(time: 300, unit: 'SECONDS')
       }
@@ -335,7 +359,8 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { params.ENV_CHOICE == 'allenv' || params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'ProdWithBuild'}
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
       }
 
