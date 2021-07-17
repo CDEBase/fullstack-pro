@@ -14,7 +14,6 @@
     "react-fela",
     "react-helmet",
     "react-loadable",
-    "react-redux",
     "react-resizable",
     "react-router",
     "react-router-config",

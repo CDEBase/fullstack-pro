@@ -5,20 +5,11 @@ const { str, bool, json, num } = envalid;
 
 export const config = envalid.cleanEnv(process.env, {
     NODE_ENV: str({ default: 'production', choices: ['production', 'staging', 'development', 'test'] }),
-    ELECTRON_WEBPACK_WDS_PORT: num({ devDefault: 3000 }),
-    ELECTRON_WEBPACK_WDS_HOST: str({ devDefault: 'localhost' }),
-    REDIS_CLUSTER_URL: json({
-        devDefault: '[{"port":6379,"host":"localhost"}]',
-        example: '[{"port":6379,"host":"localhost"}]',
-    }),
-    REDIS_URL: str({ devDefault: 'localhost' }),
-    REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),
-    REDIS_SENTINEL_ENABLED: bool({ devDefault: true }),
-    HEMERA_LOG_LEVEL: str({ default: 'info' }),
+    ELECTRON_WEBPACK_WDS_PORT: num({ default: 3000 }),
+    ELECTRON_WEBPACK_WDS_HOST: str({ default: 'localhost' }),
     // BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     // GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
     // CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
-    CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
     NAMESPACE: str({ default: 'default' }),
     apolloLogging: bool({ default: false, devDefault: true }),
 });
