@@ -123,14 +123,14 @@ pipeline {
       }
       steps{
         sh """
-          git checkout develop
+          git checkout ${params.DEVELOP_BRANCH}
           git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
         """
         script {
-          GIT_BRANCH_NAME = 'develop'
+          GIT_BRANCH_NAME = params.DEVELOP_BRANCH
         }
       }
     }
@@ -151,10 +151,10 @@ pipeline {
           sh """
             git add -A
             git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin develop
-            git checkout develop
+            git fetch origin ${params.DEVELOP_BRANCH}
+            git checkout ${params.DEVELOP_BRANCH}
             ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
-            git push origin develop
+            git push origin ${params.DEVELOP_BRANCH}
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
@@ -234,7 +234,7 @@ pipeline {
       steps{
         sh """
           git checkout ${params.REPOSITORY_BRANCH}
-          git merge origin/develop -m 'auto merging'
+          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
@@ -274,8 +274,8 @@ pipeline {
           sh """
             git add -A
             git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
-            git fetch origin master
-            git checkout master
+            git fetch origin ${params.MASTER_BRANCH}
+            git checkout ${params.MASTER_BRANCH}
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
             git checkout ${params.PUBLISH_BRANCH}
           """
