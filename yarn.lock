@@ -1569,33 +1569,33 @@
   resolved "https://registry.yarnpkg.com/@browser-bunyan/levels/-/levels-1.6.0.tgz#3a50b8118254aa2ac26caf9d2aafa72d157e374b"
   integrity sha512-wte6nXXZH62Y/RGysYRlOkKxuJn+4S8xEamMF0fDncxxy0SriCHYwGPyWGF0FWYWmRzbZuEkp7dNebBf9Xfeeg==
 
-"@cdm-logger/client@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@cdm-logger/client/-/client-7.0.4.tgz#296077cac45472de6e77d41f2de09a7f4a397c60"
-  integrity sha512-Jngy6y/AW2aCa3SEjVsnopBs+/nV5MO40sPUVjd9eVEW8Eb+8B4TU04aRv+tGRC3cMis/JvbGzk/6yYHrVBpKg==
+"@cdm-logger/client@^7.0.7":
+  version "7.0.7"
+  resolved "https://registry.yarnpkg.com/@cdm-logger/client/-/client-7.0.7.tgz#fdbca2d68911a1a3e349e1743ed128dbe008fc36"
+  integrity sha512-hs7qh8iRgk4P5LZlsQ8bYgfVlc79VfZIUXkwyjvpGrYGP6CV3K8TzCIkuXzJXHAnwA8uq+6FwqM1lXaI090Qiw==
   dependencies:
     browser-bunyan "^1.6.3"
     stream "0.0.2"
 
-"@cdm-logger/core@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@cdm-logger/core/-/core-7.0.4.tgz#2619d048b25105e91f5eebe3d1c46dbef6320504"
-  integrity sha512-lPwucZyK5We1o/AwWCKQM8hbAphSqs/mJIQ2iZYVJ1IsMk1cgGPbjICshmRgbbH7RdiVzAslRiysDHt+w9d/GA==
+"@cdm-logger/core@^7.0.7":
+  version "7.0.7"
+  resolved "https://registry.yarnpkg.com/@cdm-logger/core/-/core-7.0.7.tgz#06d15d1b126aca590bade84035eaf8f49709fdd6"
+  integrity sha512-hSh+YpMNM3eKBDkyzWRhXJ9aXq7Urs1bV+xACw9XecwkJ57NhiaIEUAuCa9yQsmYjV27JCtX07PA05KTcB2CgA==
 
-"@cdm-logger/electron@^7.0.6":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@cdm-logger/electron/-/electron-7.0.6.tgz#87db0e094703a78cb1becee1a9ddd482c132908a"
-  integrity sha512-d6IDzpfaOKByIRjlc2vyQIXJ93odAyXv9ycT9FtyfwrWdBulfZWMe6XlFV5oy+2rA+lJo4pXpKlmxMma2Unlvg==
+"@cdm-logger/electron@^7.0.7":
+  version "7.0.7"
+  resolved "https://registry.yarnpkg.com/@cdm-logger/electron/-/electron-7.0.7.tgz#615961c5d98613e37d654ebbab2fe551b803c6fc"
+  integrity sha512-40p964bs9t2sZi5c0VVRmpjcy/q0VgAjHsfQt0aQF274+syWI4SwjKoudOXAvzCTHOOko3U3OJNGhGON4oaImQ==
   dependencies:
-    "@cdm-logger/core" "^7.0.4"
-    "@cdm-logger/server" "^7.0.6"
+    "@cdm-logger/core" "^7.0.7"
+    "@cdm-logger/server" "^7.0.7"
 
-"@cdm-logger/server@^7.0.6":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@cdm-logger/server/-/server-7.0.6.tgz#acddafe20fec8a1aaa4bfa20884060e2bb5916d4"
-  integrity sha512-WdjIVHvtZfwdRB4v3LclNdJ44ACbIPVflwKxuP6Z82zanwYzOPpbuyPqyRe0yvHfBqrltbeadHU4C6Wsl3Dv5g==
+"@cdm-logger/server@^7.0.7":
+  version "7.0.7"
+  resolved "https://registry.yarnpkg.com/@cdm-logger/server/-/server-7.0.7.tgz#c8f05812a237cb4d46bb24626578e2a14854ae15"
+  integrity sha512-vdslo7bTymGkpvA6KGjuzM4g+TQe+dFJBxcG5swa+8DHnmoHw3WpmrRllxkvdZB6Ucg149nyz7oNvXgg6HYmDg==
   dependencies:
-    "@cdm-logger/core" "^7.0.4"
+    "@cdm-logger/core" "^7.0.7"
     bunyan "^1.8.15"
     bunyan-prettystream-circularsafe "^0.3.1"
 
