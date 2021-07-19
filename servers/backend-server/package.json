@@ -58,7 +58,7 @@
     "zen:watch": "zen watch -x"
   },
   "dependencies": {
-    "@cdm-logger/server": "^7.0.4",
+    "@cdm-logger/server": "^7.0.6",
     "@common-stack/core": "0.0.262",
     "@common-stack/server-core": "0.0.262",
     "@sample-stack/core": "link:../../packages/sample-core",

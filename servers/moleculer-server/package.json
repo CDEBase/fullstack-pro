@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@cdm-logger/client": "^7.0.4",
-    "@cdm-logger/server": "^7.0.4",
+    "@cdm-logger/server": "^7.0.6",
     "@common-stack/client-core": "0.0.262",
     "@common-stack/core": "0.0.262",
     "@common-stack/server-core": "0.0.262",
