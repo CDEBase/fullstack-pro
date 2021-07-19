@@ -48,6 +48,10 @@ const config = {
                     from: 'tools/esm-wrapper.js',
                     to: 'main.js',
                 },
+                {
+                    from: 'assets/icons',
+                    to: 'icons',
+                },
             ],
         }),
         // new Dotenv({
