@@ -1,6 +1,5 @@
-import { ConsoleLogger } from '@cdm-logger/server';
+import { logger } from '@cdm-logger/electron';
 
-const logger = ConsoleLogger.create('main');
 logger.divider = (str = '-', length = 10) => {
     let line = '';
     for (let i = 0; i < length; i += 1) {
