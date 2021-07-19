@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+const buildConfig = require('./build.config');
 
 const config = {
     devtool: process.env.DEBUG_PROD === 'true' ? 'source-map' : 'none',
@@ -52,14 +53,13 @@ const config = {
         // new Dotenv({
         //     path: process.env.ENV_FILE,
         // }),
-        new webpack.DefinePlugin({
-            __DEV__: process.env.NODE_ENV === 'development',
-            __GRAPHQL_URL__: '"http://localhost:8091/graphql"',
-            __CLIENT__: false,
-            __SSR__: false,
-            __PERSIST_GQL__: false,
-            __DEBUGGING__: false,
-        }),
+        new webpack.DefinePlugin(
+            Object.assign(
+                ...Object.entries(buildConfig).map(([k, v]) => ({
+                    [k]: typeof v !== 'string' ? v : `'${v.replace(/\\/g, '\\\\')}'`,
+                })),
+            ),
+        ),
         // new webpack.DefinePlugin({
         //     __ENV__: JSON.stringify(dotenv.parsed),
         // }),

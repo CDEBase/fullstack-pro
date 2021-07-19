@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^4.0.7",
-    "@cdm-logger/client": "^5.0.7",
+    "@cdm-logger/client": "^7.0.4",
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.0",
     "@common-stack/client-core": "^0.0.262",
     "@common-stack/client-react": "^0.0.262",

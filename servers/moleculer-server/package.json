@@ -33,8 +33,8 @@
     "watch": "yarn start:dev"
   },
   "dependencies": {
-    "@cdm-logger/client": "^5.0.7",
-    "@cdm-logger/server": "^6.0.0",
+    "@cdm-logger/client": "^7.0.4",
+    "@cdm-logger/server": "^7.0.4",
     "@common-stack/client-core": "0.0.262",
     "@common-stack/core": "0.0.262",
     "@common-stack/server-core": "0.0.262",
