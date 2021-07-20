@@ -35,7 +35,6 @@ const base = {
     AUTH0_API_AUDIENCE: 'https://dev-cdebase.auth0.com/api/v2/',
     STRIPE_ENDPOINT_SECRET: 'werwerw',
     CLIENT_URL: 'http://localhost',
-    CONNECTION_ID: 'default',
 };
 
 const env: any = {};

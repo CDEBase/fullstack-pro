@@ -1,7 +1,7 @@
 {
-  "appId": "io.github.cra-lerna-electron",
-  "productName": "CRA-Lerna-Electron",
-  "copyright": "Copyright © 2017 Fullstack",
+  "appId": "io.github.sample-stack",
+  "productName": "Sample-Stack-Electron",
+  "copyright": "Copyright © 2021 Sample-Stack",
   "mac": {
     "category": "public.app-category.productivity",
     "darkModeSupport": true,

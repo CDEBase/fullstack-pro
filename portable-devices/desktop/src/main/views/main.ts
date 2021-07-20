@@ -10,6 +10,10 @@ export class MainWindow {
     private window: BrowserWindow;
 
     constructor() {
+        this.startWindow();
+    }
+
+    private startWindow() {
         this.window = createWindow({
             name: 'main-page',
             show: true,
@@ -21,6 +25,10 @@ export class MainWindow {
                 // add preload to load esm
                 preload: path.resolve(path.join(__dirname, 'preload.js')),
             },
+        });
+        this.window.on('close', (event) => {
+            (event as any).sender.hide();
+            event.preventDefault(); // prevent quit process
         });
         // Custom events MAIN WINDOW
         ipcMain.on(IPC_EVENTS.SHOW_MAIN, function () {

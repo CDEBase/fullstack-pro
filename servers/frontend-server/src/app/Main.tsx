@@ -54,7 +54,7 @@ if ((module as any).hot) {
 export class Main extends React.Component<{}, {}> {
 
   componentDidMount() {
-    store.dispatch({ type: 'REDUX_INIT' })
+    store.dispatch({ type: '@@REDUX_INIT' })
   }
 
   public render() {

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-use-before-define */
 import { inject } from 'inversify';
 import { app, ipcMain, Menu } from 'electron';
@@ -44,6 +45,7 @@ export class App {
     services!: Service;
 
     onActivate = () => {
+        console.log('--ON ACTIVATE', this.views);
         this.views.main.show();
         app.dock.show();
     };

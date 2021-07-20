@@ -13,18 +13,13 @@ const routes = renderRoutes2({ routes: configuredRoutes }) || [];
 enableScreens();
 
 export const MainRoute = () => {
+  /**
+   * when used renderRoutes2 opts.routes come as empty need to debug that
+   * for now using switch directly inroder to render routes properly.
+   */
   return (
     <>
-      {configuredRoutes.map((route: any) => {
-        return (
-          <Route
-            key={route.path}
-            exact={route.exact}
-            path={route.path}
-            component={(props: any) => route.component(props, route)}
-          />
-        )
-      })}
+      {routes}
     </>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { osx, windows as _windows, main, renderer } from 'electron-is/is';
 
 /**

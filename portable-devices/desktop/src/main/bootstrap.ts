@@ -27,15 +27,17 @@ const beforeInit = async () => {
     }
 
     // Initialize the database part
-    await loadContainerAsync();
+    const baseContainer = await loadContainerAsync();
+    return baseContainer;
 };
 
 /**
  * Start method
  */
 export const bootstrap = async () => {
-    await beforeInit();
+    const baseContainer = await beforeInit();
     const { container } = createClientContainer();
+    container.parent = baseContainer;
     container.get(App);
     createReduxStore();
 };

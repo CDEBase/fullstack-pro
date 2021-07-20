@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
@@ -9,33 +6,8 @@ const dotenv = require('dotenv-safe');
 const { merge } = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const utils = require('./tools/utils');
+const buildConfig = require('./build.config');
 
-const options = {
-    stack: ['apollo', 'ts', 'react', 'webpack', 'css'],
-    cache: '../../.cache',
-    backendBuildDir: 'dist',
-    frontendBuildDir: 'dist',
-    dllBuildDir: 'dist/.build/dll',
-    ssr: false,
-    backendUrl: 'http://localhost:8091',
-    webpackDll: true,
-    reactHotLoader: true,
-    useDefaultPostCss: true,
-    persistGraphQL: false,
-    frontendRefreshOnBackendChange: true,
-    nodeDebugger: false,
-    overridesConfig: './tools/webpackAppConfig.js',
-    plugins: [
-        new Dotenv({
-            path: process.env.ENV_FILE,
-        }),
-        new webpack.DefinePlugin(),
-    ],
-    defines: {
-        __DEV__: process.env.NODE_ENV === 'development',
-        __GRAPHQL_URL__: '"http://localhost:8091/graphql"',
-    },
-};
 const config = {
     target: 'electron-renderer',
     entry: {
@@ -50,16 +22,13 @@ const config = {
         new Dotenv({
             path: process.env.ENV_FILE,
         }),
-        new webpack.DefinePlugin({
-            __DEV__: process.env.NODE_ENV === 'development',
-            __GRAPHQL_URL__: '"http://localhost:8091/graphql"',
-            __CLIENT__: true,
-            __SSR__: false,
-            __PERSIST_GQL__: false,
-            __FRONTEND_BUILD_DIR__: `'${options.frontendBuildDir}'`,
-            __DLL_BUILD_DIR__: `'${options.dllBuildDir}'`,
-            __DEBUGGING__: false,
-        }),
+        new webpack.DefinePlugin(
+            Object.assign(
+                ...Object.entries(buildConfig).map(([k, v]) => ({
+                    [k]: typeof v !== 'string' ? v : `'${v.replace(/\\/g, '\\\\')}'`,
+                })),
+            ),
+        ),
         new webpack.DefinePlugin({
             __ENV__: JSON.stringify(dotenv.parsed),
         }),
@@ -84,20 +53,23 @@ const config = {
         symlinks: true,
     },
     externals: [
+        'apollo-client',
         'react',
-        'react-redux',
         'react-redux',
         'react-apollo',
         'react-fela',
         'react-helmet',
         'react-loadable',
-        'react-redux',
         'react-resizable',
         'react-router',
         'react-router-config',
         'react-router-dom',
         'react-router-redux',
         'react-transition-group',
+        'connected-react-router',
+        'history',
+        '@apollo/react-common',
+        '@apollo/react-hooks',
     ],
 };
 
@@ -111,13 +83,6 @@ if (process.env.NODE_ENV === 'development') {
     };
     // config.builders.web.webpackConfig = merge(config.builders.web.webpackConfig, dotEnvPlugin);
 }
-const extraDefines = {
-    __SSR__: false,
-    __PERSIST_GQL__: false,
-    __FRONTEND_BUILD_DIR__: `'${options.frontendBuildDir}'`,
-    __DLL_BUILD_DIR__: `'${options.dllBuildDir}'`,
-    __DEBUGGING__: false,
-};
 
 const workspaceRoot = path.resolve(__dirname, '../..');
 const dirsToWatch = utils.getWorkspacePackagePaths(workspaceRoot);

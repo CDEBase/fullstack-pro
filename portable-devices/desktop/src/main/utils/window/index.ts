@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { merge } from 'lodash';
 import { loadDevTools } from './devTools';
@@ -19,6 +20,10 @@ export interface WindowOpts extends BrowserWindowConstructorOptions {
     remote?: boolean;
 }
 
+/**
+ * Method of constructing BrowserWindows object
+ * @param opts { WindowOpts }
+ */
 export const createWindow = (opts: WindowOpts) => {
     const { name, title, width, height, devTools, remote, show = false } = opts;
     const windows = new BrowserWindow(

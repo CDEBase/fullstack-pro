@@ -1,4 +1,4 @@
-FROM node:12.18.4-alpine
+FROM node:14.17.3-alpine
 
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there
