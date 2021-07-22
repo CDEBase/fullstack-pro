@@ -1,5 +1,5 @@
 # The official nodejs docker image
-FROM node:12.18.4
+FROM node:14.17.3
 
 ENV PYTHON /usr/bin/python
 

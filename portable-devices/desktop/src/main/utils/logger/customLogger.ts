@@ -1,7 +1,8 @@
 import { getLogger as createLogger } from '@cdm-logger/electron';
+import { ConsoleLogger } from '@cdm-logger/server';
+import { isDev } from '../../../common';
 
-// const logger = ConsoleLogger.create('main');
-const logger = createLogger('log');
+const logger = isDev ? ConsoleLogger.create('main') : createLogger('log');
 logger.divider = (str = '-', length = 10) => {
     let line = '';
     for (let i = 0; i < length; i += 1) {
