@@ -23,7 +23,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@ant-design/react-native": "^4.0.7",
     "@cdm-logger/client": "^7.0.7",
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.0",
     "@common-stack/client-core": "^0.0.262",
