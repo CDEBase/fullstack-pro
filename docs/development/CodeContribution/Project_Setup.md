@@ -41,7 +41,7 @@ You may need to set personalized values in the `dev.env` file.
 
 5. Start both client and server together
 ```
-npm start
+yarn start
 ```
 Alternatively, if you need to run `backend` and `frontend` on its respective terminal instead of one terminal then follow [How to Start Backend and Frontend seperately](./How_to_Run_Various_Options.md#how-to-start-backend-and-frontend-seperately)
 
