@@ -473,7 +473,7 @@ def generateStage(server, environmentType) {
           echo "add deployment flag to - ${server} "
 
           if ("${server}".endsWith("frontend-server")){
-            deployment_flag = " --set backend.enabled='false' --set external.enabled='true' "
+            deployment_flag = " --set backend.enabled='false' --set external.enabled='true'"
           }
 
           if ("${server}".endsWith("backend-server")){
@@ -495,6 +495,7 @@ def generateStage(server, environmentType) {
             --set backend.pullPolicy=Always \
             --set ingress.domain=${env.DOMAIN_NAME} \
             --version=${IDESTACK_CHART_VERSION} \
+            --set ingress.domainBase=${env.DOMAIN_NAME} \
               kube-orchestration/idestack
             """
 
