@@ -198,7 +198,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH ||  params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
         beforeInput true
       }
@@ -319,7 +319,7 @@ pipeline {
       DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
         beforeInput true
       }
@@ -360,7 +360,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
       }
