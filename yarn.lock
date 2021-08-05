@@ -2590,16 +2590,6 @@
     tslib "~2.2.0"
     value-or-promise "1.0.6"
 
-"@graphql-tools/batch-execute@^8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/batch-execute/-/batch-execute-8.0.2.tgz#ad9e9b1f791ef9824f72b3bde9987fc7d191e929"
-  integrity sha512-IsTwujhWYbEPCPdUaEsEihzovQMfNeoOhV7LgXpJXyLAvr24WpY5H/Yn1FaT9B1Ki1Oh6sgYbuai9gNm3iDz5A==
-  dependencies:
-    "@graphql-tools/utils" "8.0.2"
-    dataloader "2.0.0"
-    tslib "~2.3.0"
-    value-or-promise "1.0.10"
-
 "@graphql-tools/code-file-loader@^6.2.4", "@graphql-tools/code-file-loader@^6.3.1":
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/code-file-loader/-/code-file-loader-6.3.1.tgz#42dfd4db5b968acdb453382f172ec684fa0c34ed"
@@ -2608,18 +2598,6 @@
     "@graphql-tools/graphql-tag-pluck" "^6.5.1"
     "@graphql-tools/utils" "^7.0.0"
     tslib "~2.1.0"
-
-"@graphql-tools/delegate@8.0.6":
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/delegate/-/delegate-8.0.6.tgz#17d197877094e8609af52e21c5e3fa448fd52c6f"
-  integrity sha512-ZHR6mwHaNQRLzx/2w8ZTHBaB47FqdtkVa0nukUZJSMtv7RMcTTt9ifBwYTVtHL28zYVrJH/DCoUcIZFRv/Okqg==
-  dependencies:
-    "@graphql-tools/batch-execute" "^8.0.2"
-    "@graphql-tools/schema" "^8.0.2"
-    "@graphql-tools/utils" "8.0.2"
-    dataloader "2.0.0"
-    tslib "~2.3.0"
-    value-or-promise "1.0.10"
 
 "@graphql-tools/delegate@^6.2.4":
   version "6.2.4"
@@ -2713,19 +2691,6 @@
     form-data "3.0.0"
     is-promise "4.0.0"
     tslib "~2.0.1"
-
-"@graphql-tools/links@^8.0.4":
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/links/-/links-8.0.6.tgz#6d7c11a33bb4cf0bdfab0082789e21dc21e6c52d"
-  integrity sha512-Rmn+Q2tr9IXH6SlC1/J0927f0Z+YufUdnuODHwpKQglh1HW63zXc9xQ/7w3NnnfKQSfBMGPBZVF9026iFm3zBA==
-  dependencies:
-    "@graphql-tools/delegate" "8.0.6"
-    "@graphql-tools/utils" "8.0.2"
-    apollo-upload-client "16.0.0"
-    cross-fetch "3.1.4"
-    form-data "4.0.0"
-    is-promise "4.0.0"
-    tslib "~2.3.0"
 
 "@graphql-tools/load-files@^6.2.4":
   version "6.3.2"
@@ -7942,13 +7907,6 @@ apollo-upload-client@14.1.2:
     "@apollo/client" "^3.1.5"
     "@babel/runtime" "^7.11.2"
     extract-files "^9.0.0"
-
-apollo-upload-client@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-16.0.0.tgz#704c9bc21e12bd4687172876eb927cf756b2e524"
-  integrity sha512-aLhYucyA0T8aBEQ5g+p13qnR9RUyL8xqb8FSZ7e/Kw2KUOsotLUlFluLobqaE7JSUFwc6sKfXIcwB7y4yEjbZg==
-  dependencies:
-    extract-files "^11.0.0"
 
 apollo-upload-client@^10.0.0:
   version "10.0.1"
@@ -14870,11 +14828,6 @@ extract-files@9.0.0, extract-files@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-9.0.0.tgz#8a7744f2437f81f5ed3250ed9f1550de902fe54a"
   integrity sha512-CvdFfHkC95B4bBBk36hcEmvdR2awOdhhVUYH6S/zrVj3477zven/fJMYg7121h4T1xHZC+tetUpubpAhxwI7hQ==
-
-extract-files@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-11.0.0.tgz#b72d428712f787eef1f5193aff8ab5351ca8469a"
-  integrity sha512-FuoE1qtbJ4bBVvv94CC7s0oTnKUGvQs+Rjf1L2SJFfS+HTVVjhPFtehPdQ0JiGPqVNfSSZvL5yzHHQq2Z4WNhQ==
 
 extract-files@^5.0.0, extract-files@^5.0.1:
   version "5.0.1"
@@ -24002,9 +23955,9 @@ optional-require@1.0.x:
   integrity sha512-RV2Zp2MY2aeYK5G+B/Sps8lW5NHAzE5QClbFP15j+PWmP+T9PxlJXBOOLoSAdgwFvS4t0aMR4vpedMkbHfh0nA==
 
 optional-require@^1.0.3:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/optional-require/-/optional-require-1.1.1.tgz#214314d1f9fbdd6f9e28fb12c9a3b4422ef93fdc"
-  integrity sha512-EnUe33GTAltyZlIsQ2l93KzBC9zi8BsxLvKP3wxALOsz/YIakVojyuZsv5PFFk8y8e6r+SbaPIsNmyPoSK0OHw==
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/optional-require/-/optional-require-1.1.4.tgz#8af7da26b17da76abbf8a1c46e2e148a63813c0e"
+  integrity sha512-YIabCRxu1Qqlxowh5MBaT8vrvC5fa5QehT4iJw8OthkTC1ZXe7aMxtZHtwnNwJRfFgiqPof2RZeguXo4weS9mA==
   dependencies:
     require-at "^1.0.6"
 
