@@ -1,9 +1,9 @@
-import { ApolloClient, ApolloClientOptions } from 'apollo-client';
-import { SchemaLink } from 'apollo-link-schema';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
+/* eslint-disable no-use-before-define */
+/* eslint-disable import/no-extraneous-dependencies */
+import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
 // import * as schema from '../schema/schema.graphql';
-import { resolvers, defaults } from '../resolvers';
+import { resolvers } from '../resolvers';
 import { dataIdFromObject } from '../id-generation';
 
 const defaultSchema = `

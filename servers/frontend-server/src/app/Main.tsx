@@ -2,7 +2,7 @@
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import createRenderer from '../config/fela-renderer';
 import { rehydrate } from 'fela-dom';

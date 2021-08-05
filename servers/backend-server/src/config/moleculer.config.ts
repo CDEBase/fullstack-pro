@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { BrokerOptions, Errors } from 'moleculer';
 import { config } from './config';
 
@@ -26,7 +26,6 @@ const brokerConfig: BrokerOptions = {
     // Unique node identifier. Must be unique in a namespace.
     // nodeID: config.CONNECTION_ID,
 
-
     // Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.14/logging.html
     // Available logger types: 'Console', 'File', 'Pino', 'Winston', 'Bunyan', 'debug', 'Log4js', 'Datadog'
     logger: {
@@ -36,7 +35,7 @@ const brokerConfig: BrokerOptions = {
             colors: true,
             // Print module names with different colors (like docker-compose for containers)
             moduleColors: false,
-            // Line formatter. It can be 'json', 'short', 
+            // Line formatter. It can be 'json', 'short',
             // 'simple', 'full', a `Function` or a template string like '{timestamp} {level} {nodeID}/{mod}: {msg}'
             formatter: 'full',
             // Custom object printer. If not defined, it uses the `util.inspect` method.
@@ -53,15 +52,18 @@ const brokerConfig: BrokerOptions = {
     // More info: https://moleculer.services/docs/0.14/networking.html
     // Note: During the development, you don't need to define it because all services will be loaded locally.
     // In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-    transporter: (config.NODE_ENV === 'development') ? 'TCP' : {
-        type: 'NATS',
-        options: {
-            url: config.NATS_URL,
-            user: config.NATS_USER,
-            pass: config.NATS_PW,
-            reconnectTimeWait: 1000,
-        },
-    },
+    transporter:
+        config.NODE_ENV === 'development'
+            ? 'TCP'
+            : {
+                  type: 'NATS',
+                  options: {
+                      url: config.NATS_URL,
+                      user: config.NATS_USER,
+                      pass: config.NATS_PW,
+                      reconnectTimeWait: 1000,
+                  },
+              },
 
     // Define a cacher.
     // More info: https://moleculer.services/docs/0.14/caching.html
@@ -173,7 +175,7 @@ const brokerConfig: BrokerOptions = {
                 // HTTP URL path
                 path: '/metrics',
                 // Default labels which are appended to all metrics labels
-                defaultLabels: registry => ({
+                defaultLabels: (registry) => ({
                     namespace: registry.broker.namespace,
                     nodeID: registry.broker.nodeID,
                 }),
@@ -205,7 +207,7 @@ const brokerConfig: BrokerOptions = {
     // Register internal middlewares. More info: https://moleculer.services/docs/0.13/middlewares.html#Internal-middlewares
     internalMiddlewares: true,
 
-    // Watch the loaded services and hot reload if they changed. 
+    // Watch the loaded services and hot reload if they changed.
     // You can also enable it in Moleculer Runner with `--hot` argument
     hotReload: false,
 
@@ -213,19 +215,13 @@ const brokerConfig: BrokerOptions = {
     middlewares: [],
 
     // Called after broker created.
-    created(broker) {
-
-    },
+    created(broker) {},
 
     // Called after broker starte.
-    started(broker) {
-
-    },
+    started(broker) {},
 
     // Called after broker stopped.
-    stopped(broker) {
-
-    },
+    stopped(broker) {},
 
     // Register custom REPL commands.
     replCommands: null,

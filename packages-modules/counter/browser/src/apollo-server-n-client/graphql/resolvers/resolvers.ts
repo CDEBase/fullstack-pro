@@ -1,11 +1,19 @@
-import { CounterQueryDocument } from '../../../generated-models';
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-extraneous-dependencies */
+import { IClientStateDefault } from '@common-stack/client-core';
+import { InMemoryCache } from '@apollo/client/cache';
+import { CounterStateDocument } from '../../../generated-models';
 
 const TYPE_NAME = 'CounterState';
 
-const defaults = {
-    counterState: {
-        counter: 1,
-        __typename: TYPE_NAME,
+const stateDefault: IClientStateDefault = {
+    type: 'query',
+    query: CounterStateDocument,
+    data: {
+        counterState: {
+            counter: 1,
+            __typename: TYPE_NAME,
+        },
     },
 };
 
@@ -14,7 +22,7 @@ const resolvers = {
         counterState: (_, args, { cache }) => {
             const {
                 counterState: { counter },
-            } = cache.readQuery({ query: CounterQueryDocument });
+            } = cache.readQuery({ query: CounterStateDocument });
             return {
                 counter,
                 __typename: TYPE_NAME,
@@ -22,13 +30,14 @@ const resolvers = {
         },
     },
     Mutation: {
-        addCounterState: async (_, { amount }, { cache }) => {
+        addCounterState: async (_, { amount }, { cache }: { cache: InMemoryCache }) => {
             const {
                 counterState: { counter },
-            } = cache.readQuery({ query: CounterQueryDocument });
+            } = cache.readQuery({ query: CounterStateDocument });
             const newAmount = amount + counter;
 
-            await cache.writeData({
+            await cache.writeQuery({
+                query: CounterStateDocument,
                 data: {
                     counterState: {
                         counter: newAmount,
@@ -42,4 +51,4 @@ const resolvers = {
     },
 };
 
-export { defaults, resolvers };
+export { stateDefault, resolvers };

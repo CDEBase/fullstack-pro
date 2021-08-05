@@ -29,6 +29,7 @@ pipeline {
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['nodejs', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -45,7 +46,7 @@ pipeline {
 
   // Initialize npm and docker commands using plugins
   tools {
-    nodejs 'nodejs'
+    nodejs params.NODEJS_TOOL_VERSION
   }
 
   stages {
@@ -197,7 +198,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH ||  params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
         beforeInput true
       }
@@ -318,7 +319,7 @@ pipeline {
       DOMAIN_NAME = 'cdebase.io'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
         beforeInput true
       }
@@ -359,7 +360,7 @@ pipeline {
           DOMAIN_NAME = 'cdebase.com'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
       }
@@ -472,7 +473,7 @@ def generateStage(server, environmentType) {
           echo "add deployment flag to - ${server} "
 
           if ("${server}".endsWith("frontend-server")){
-            deployment_flag = " --set backend.enabled='false' --set external.enabled='true' "
+            deployment_flag = " --set backend.enabled='false' --set external.enabled='true'"
           }
 
           if ("${server}".endsWith("backend-server")){
@@ -494,6 +495,7 @@ def generateStage(server, environmentType) {
             --set backend.pullPolicy=Always \
             --set ingress.domain=${env.DOMAIN_NAME} \
             --version=${IDESTACK_CHART_VERSION} \
+            --set ingress.domainBase=${env.DOMAIN_NAME} \
               kube-orchestration/idestack
             """
 

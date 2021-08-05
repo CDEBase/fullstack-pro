@@ -1,13 +1,17 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable import/no-extraneous-dependencies */
 /* tslint:disable */
-
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } &
     { [P in K]-?: NonNullable<T[P]> };
-
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: string;
@@ -38,41 +42,28 @@ export type FieldError = {
     message: Scalars['String'];
 };
 
-export type HealthCheckRequest = {
-    host?: Maybe<Scalars['String']>;
-    topic?: Maybe<Scalars['String']>;
-    type: HealthCheckType;
-};
-
-export enum HealthCheckType {
-    Nats = 'Nats',
-    Redis = 'Redis',
-    Mongo = 'Mongo',
-    Custom = 'Custom',
-}
-
 export type Mutation = {
     __typename?: 'Mutation';
-    dummy?: Maybe<Scalars['Int']>;
     /**  Increase counter value returns current counter amount  */
     addCounter?: Maybe<Counter>;
-    /**  sync cached counter with current value  */
-    syncCachedCounter?: Maybe<Scalars['Boolean']>;
+    addCounterState?: Maybe<ClientCounter>;
     /**  add Counter  */
     addMoleculerCounter?: Maybe<Counter>;
-    addCounterState?: Maybe<ClientCounter>;
+    dummy?: Maybe<Scalars['Int']>;
+    /**  sync cached counter with current value  */
+    syncCachedCounter?: Maybe<Scalars['Boolean']>;
 };
 
 export type MutationAddCounterArgs = {
     amount?: Maybe<Scalars['Int']>;
 };
 
-export type MutationAddMoleculerCounterArgs = {
-    amount?: Maybe<Scalars['Int']>;
-};
-
 export type MutationAddCounterStateArgs = {
     amount: Scalars['Int'];
+};
+
+export type MutationAddMoleculerCounterArgs = {
+    amount?: Maybe<Scalars['Int']>;
 };
 
 export type Node = {
@@ -81,82 +72,98 @@ export type Node = {
 
 export type Query = {
     __typename?: 'Query';
-    dummy?: Maybe<Scalars['Int']>;
     /**  Counter  */
     counter?: Maybe<Counter>;
     /**  Counter from Datasource  */
     counterCache?: Maybe<Counter>;
+    counterState?: Maybe<ClientCounter>;
+    dummy?: Maybe<Scalars['Int']>;
     /**  Moleculer Counter  */
     moleculerCounter?: Maybe<Counter>;
-    health?: Maybe<Scalars['Boolean']>;
-    counterState?: Maybe<ClientCounter>;
-};
-
-export type QueryHealthArgs = {
-    request: HealthCheckRequest;
 };
 
 export type Subscription = {
     __typename?: 'Subscription';
-    dummy?: Maybe<Scalars['Int']>;
     /**  Subscription fired when anyone increases counter  */
     counterUpdated?: Maybe<Counter>;
+    dummy?: Maybe<Scalars['Int']>;
     moleculerCounterUpdate?: Maybe<Counter>;
 };
 
-export type AddCounterStateMutationVariables = {
+export type AddCounterStateMutationVariables = Exact<{
     amount: Scalars['Int'];
-};
+}>;
 
 export type AddCounterStateMutation = { __typename?: 'Mutation' } & {
-    addCounterState: Maybe<{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>>;
+    addCounterState?: Maybe<{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>>;
 };
 
-export type AddCounterMutationVariables = {
+export type AddCounterMutationVariables = Exact<{
     amount: Scalars['Int'];
-};
+}>;
 
 export type AddCounterMutation = { __typename?: 'Mutation' } & {
-    addCounter: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+    addCounter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
 };
 
-export type AddCounter_WsMutationVariables = {
+export type AddCounter_WsMutationVariables = Exact<{
     amount: Scalars['Int'];
-};
+}>;
 
 export type AddCounter_WsMutation = { __typename?: 'Mutation' } & {
-    addCounter: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+    addCounter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
 };
 
-export type SyncCachedCounterMutationVariables = {};
+export type SyncCachedCounterMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SyncCachedCounterMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'syncCachedCounter'>;
 
-export type CounterCacheQueryQueryVariables = {};
+export type CounterCacheQueryQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CounterCacheQueryQuery = { __typename?: 'Query' } & {
-    counterCache: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+    counterCache?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
 };
 
-export type CounterStateQueryVariables = {};
+export type CounterStateQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CounterStateQuery = { __typename?: 'Query' } & {
-    counterState: Maybe<{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>>;
+    counterState?: Maybe<{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>>;
 };
 
-export type CounterQueryQueryVariables = {};
+export type CounterQueryQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CounterQueryQuery = { __typename?: 'Query' } & {
-    counter: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+    counter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
 };
 
-export type OnCounterUpdatedSubscriptionVariables = {};
+export type OnCounterUpdatedSubscriptionVariables = Exact<{ [key: string]: never }>;
 
 export type OnCounterUpdatedSubscription = { __typename?: 'Subscription' } & {
-    counterUpdated: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+    counterUpdated?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
+    resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
+    fragment: string;
+    resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+    selectionSet: string;
+    resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type StitchingResolver<TResult, TParent, TContext, TArgs> =
+    | LegacyStitchingResolver<TResult, TParent, TContext, TArgs>
+    | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+    | ResolverFn<TResult, TParent, TContext, TArgs>
+    | ResolverWithResolve<TResult, TParent, TContext, TArgs>
+    | StitchingResolver<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
     parent: TParent,
@@ -164,15 +171,6 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
     context: TContext,
     info: GraphQLResolveInfo,
 ) => Promise<TResult> | TResult;
-
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
-    fragment: string;
-    resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-    | ResolverFn<TResult, TParent, TContext, TArgs>
-    | StitchingResolver<TResult, TParent, TContext, TArgs>;
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
     parent: TParent,
@@ -210,7 +208,13 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
     parent: TParent,
     context: TContext,
     info: GraphQLResolveInfo,
-) => Maybe<TTypes>;
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+    obj: T,
+    context: TContext,
+    info: GraphQLResolveInfo,
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -225,40 +229,36 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
     Query: ResolverTypeWrapper<{}>;
-    Int: ResolverTypeWrapper<Scalars['Int']>;
     Counter: ResolverTypeWrapper<Counter>;
-    HealthCheckRequest: HealthCheckRequest;
-    String: ResolverTypeWrapper<Scalars['String']>;
-    HealthCheckType: HealthCheckType;
-    Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+    Int: ResolverTypeWrapper<Scalars['Int']>;
     ClientCounter: ResolverTypeWrapper<ClientCounter>;
     Mutation: ResolverTypeWrapper<{}>;
+    Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
     Subscription: ResolverTypeWrapper<{}>;
+    String: ResolverTypeWrapper<Scalars['String']>;
     AnyObject: ResolverTypeWrapper<Scalars['AnyObject']>;
+    FieldError: ResolverTypeWrapper<FieldError>;
     JSON: ResolverTypeWrapper<Scalars['JSON']>;
     JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
-    FieldError: ResolverTypeWrapper<FieldError>;
-    Node: ResolverTypeWrapper<Node>;
+    Node: never;
     ID: ResolverTypeWrapper<Scalars['ID']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
     Query: {};
-    Int: Scalars['Int'];
     Counter: Counter;
-    HealthCheckRequest: HealthCheckRequest;
-    String: Scalars['String'];
-    HealthCheckType: HealthCheckType;
-    Boolean: Scalars['Boolean'];
+    Int: Scalars['Int'];
     ClientCounter: ClientCounter;
     Mutation: {};
+    Boolean: Scalars['Boolean'];
     Subscription: {};
+    String: Scalars['String'];
     AnyObject: Scalars['AnyObject'];
+    FieldError: FieldError;
     JSON: Scalars['JSON'];
     JSONObject: Scalars['JSONObject'];
-    FieldError: FieldError;
-    Node: Node;
+    Node: never;
     ID: Scalars['ID'];
 };
 
@@ -268,24 +268,27 @@ export interface AnyObjectScalarConfig extends GraphQLScalarTypeConfig<Resolvers
 
 export type ClientCounterResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']
+    ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter'],
 > = {
     counter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CounterResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter']
+    ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter'],
 > = {
     amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type FieldErrorResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['FieldError'] = ResolversParentTypes['FieldError']
+    ParentType extends ResolversParentTypes['FieldError'] = ResolversParentTypes['FieldError'],
 > = {
     field?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
@@ -298,16 +301,13 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 
 export type MutationResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+    ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
-    dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-    addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, MutationAddCounterArgs>;
-    syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-    addMoleculerCounter?: Resolver<
+    addCounter?: Resolver<
         Maybe<ResolversTypes['Counter']>,
         ParentType,
         ContextType,
-        MutationAddMoleculerCounterArgs
+        RequireFields<MutationAddCounterArgs, never>
     >;
     addCounterState?: Resolver<
         Maybe<ResolversTypes['ClientCounter']>,
@@ -315,11 +315,19 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationAddCounterStateArgs, 'amount'>
     >;
+    addMoleculerCounter?: Resolver<
+        Maybe<ResolversTypes['Counter']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationAddMoleculerCounterArgs, never>
+    >;
+    dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
 };
 
 export type NodeResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']
+    ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node'],
 > = {
     __resolveType: TypeResolveFn<null, ParentType, ContextType>;
     id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -327,27 +335,21 @@ export type NodeResolvers<
 
 export type QueryResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+    ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
-    dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
     counterCache?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
-    moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
-    health?: Resolver<
-        Maybe<ResolversTypes['Boolean']>,
-        ParentType,
-        ContextType,
-        RequireFields<QueryHealthArgs, 'request'>
-    >;
     counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>;
+    dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
 };
 
 export type SubscriptionResolvers<
     ContextType = any,
-    ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']
+    ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription'],
 > = {
-    dummy?: SubscriptionResolver<Maybe<ResolversTypes['Int']>, 'dummy', ParentType, ContextType>;
     counterUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, 'counterUpdated', ParentType, ContextType>;
+    dummy?: SubscriptionResolver<Maybe<ResolversTypes['Int']>, 'dummy', ParentType, ContextType>;
     moleculerCounterUpdate?: SubscriptionResolver<
         Maybe<ResolversTypes['Counter']>,
         'moleculerCounterUpdate',
@@ -364,7 +366,7 @@ export type Resolvers<ContextType = any> = {
     JSON?: GraphQLScalarType;
     JSONObject?: GraphQLScalarType;
     Mutation?: MutationResolvers<ContextType>;
-    Node?: NodeResolvers;
+    Node?: NodeResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
     Subscription?: SubscriptionResolvers<ContextType>;
 };
@@ -382,8 +384,36 @@ export const AddCounterStateDocument = gql`
         }
     }
 `;
-export type AddCounterStateMutationResult = ApolloReactCommon.MutationResult<AddCounterStateMutation>;
-export type AddCounterStateMutationOptions = ApolloReactCommon.BaseMutationOptions<
+
+/**
+ * __useAddCounterStateMutation__
+ *
+ * To run a mutation, you first call `useAddCounterStateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCounterStateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCounterStateMutation, { data, loading, error }] = useAddCounterStateMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useAddCounterStateMutation(
+    baseOptions?: Apollo.MutationHookOptions<AddCounterStateMutation, AddCounterStateMutationVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useMutation<AddCounterStateMutation, AddCounterStateMutationVariables>(
+        AddCounterStateDocument,
+        options,
+    );
+}
+export type AddCounterStateMutationHookResult = ReturnType<typeof useAddCounterStateMutation>;
+export type AddCounterStateMutationResult = Apollo.MutationResult<AddCounterStateMutation>;
+export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<
     AddCounterStateMutation,
     AddCounterStateMutationVariables
 >;
@@ -394,11 +424,33 @@ export const AddCounterDocument = gql`
         }
     }
 `;
-export type AddCounterMutationResult = ApolloReactCommon.MutationResult<AddCounterMutation>;
-export type AddCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<
-    AddCounterMutation,
-    AddCounterMutationVariables
->;
+
+/**
+ * __useAddCounterMutation__
+ *
+ * To run a mutation, you first call `useAddCounterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCounterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCounterMutation, { data, loading, error }] = useAddCounterMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useAddCounterMutation(
+    baseOptions?: Apollo.MutationHookOptions<AddCounterMutation, AddCounterMutationVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useMutation<AddCounterMutation, AddCounterMutationVariables>(AddCounterDocument, options);
+}
+export type AddCounterMutationHookResult = ReturnType<typeof useAddCounterMutation>;
+export type AddCounterMutationResult = Apollo.MutationResult<AddCounterMutation>;
+export type AddCounterMutationOptions = Apollo.BaseMutationOptions<AddCounterMutation, AddCounterMutationVariables>;
 export const AddCounter_WsDocument = gql`
     mutation AddCounter_WS($amount: Int!) {
         addCounter(amount: $amount) {
@@ -406,8 +458,33 @@ export const AddCounter_WsDocument = gql`
         }
     }
 `;
-export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<AddCounter_WsMutation>;
-export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<
+
+/**
+ * __useAddCounter_WsMutation__
+ *
+ * To run a mutation, you first call `useAddCounter_WsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCounter_WsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCounterWsMutation, { data, loading, error }] = useAddCounter_WsMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useAddCounter_WsMutation(
+    baseOptions?: Apollo.MutationHookOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useMutation<AddCounter_WsMutation, AddCounter_WsMutationVariables>(AddCounter_WsDocument, options);
+}
+export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
+export type AddCounter_WsMutationResult = Apollo.MutationResult<AddCounter_WsMutation>;
+export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<
     AddCounter_WsMutation,
     AddCounter_WsMutationVariables
 >;
@@ -416,8 +493,35 @@ export const SyncCachedCounterDocument = gql`
         syncCachedCounter
     }
 `;
-export type SyncCachedCounterMutationResult = ApolloReactCommon.MutationResult<SyncCachedCounterMutation>;
-export type SyncCachedCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<
+
+/**
+ * __useSyncCachedCounterMutation__
+ *
+ * To run a mutation, you first call `useSyncCachedCounterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSyncCachedCounterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [syncCachedCounterMutation, { data, loading, error }] = useSyncCachedCounterMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSyncCachedCounterMutation(
+    baseOptions?: Apollo.MutationHookOptions<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useMutation<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>(
+        SyncCachedCounterDocument,
+        options,
+    );
+}
+export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
+export type SyncCachedCounterMutationResult = Apollo.MutationResult<SyncCachedCounterMutation>;
+export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<
     SyncCachedCounterMutation,
     SyncCachedCounterMutationVariables
 >;
@@ -428,10 +532,40 @@ export const CounterCacheQueryDocument = gql`
         }
     }
 `;
-export type CounterCacheQueryQueryResult = ApolloReactCommon.QueryResult<
-    CounterCacheQueryQuery,
-    CounterCacheQueryQueryVariables
->;
+
+/**
+ * __useCounterCacheQueryQuery__
+ *
+ * To run a query within a React component, call `useCounterCacheQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCounterCacheQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCounterCacheQueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCounterCacheQueryQuery(
+    baseOptions?: Apollo.QueryHookOptions<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
+}
+export function useCounterCacheQueryLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useLazyQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(
+        CounterCacheQueryDocument,
+        options,
+    );
+}
+export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
+export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
+export type CounterCacheQueryQueryResult = Apollo.QueryResult<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>;
 export const CounterStateDocument = gql`
     query CounterState {
         counterState @client {
@@ -439,7 +573,37 @@ export const CounterStateDocument = gql`
         }
     }
 `;
-export type CounterStateQueryResult = ApolloReactCommon.QueryResult<CounterStateQuery, CounterStateQueryVariables>;
+
+/**
+ * __useCounterStateQuery__
+ *
+ * To run a query within a React component, call `useCounterStateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCounterStateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCounterStateQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCounterStateQuery(
+    baseOptions?: Apollo.QueryHookOptions<CounterStateQuery, CounterStateQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
+}
+export function useCounterStateLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<CounterStateQuery, CounterStateQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useLazyQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
+}
+export type CounterStateQueryHookResult = ReturnType<typeof useCounterStateQuery>;
+export type CounterStateLazyQueryHookResult = ReturnType<typeof useCounterStateLazyQuery>;
+export type CounterStateQueryResult = Apollo.QueryResult<CounterStateQuery, CounterStateQueryVariables>;
 export const CounterQueryDocument = gql`
     query counterQuery {
         counter {
@@ -447,7 +611,37 @@ export const CounterQueryDocument = gql`
         }
     }
 `;
-export type CounterQueryQueryResult = ApolloReactCommon.QueryResult<CounterQueryQuery, CounterQueryQueryVariables>;
+
+/**
+ * __useCounterQueryQuery__
+ *
+ * To run a query within a React component, call `useCounterQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCounterQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCounterQueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCounterQueryQuery(
+    baseOptions?: Apollo.QueryHookOptions<CounterQueryQuery, CounterQueryQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
+}
+export function useCounterQueryLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<CounterQueryQuery, CounterQueryQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useLazyQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
+}
+export type CounterQueryQueryHookResult = ReturnType<typeof useCounterQueryQuery>;
+export type CounterQueryLazyQueryHookResult = ReturnType<typeof useCounterQueryLazyQuery>;
+export type CounterQueryQueryResult = Apollo.QueryResult<CounterQueryQuery, CounterQueryQueryVariables>;
 export const OnCounterUpdatedDocument = gql`
     subscription onCounterUpdated {
         counterUpdated {
@@ -455,4 +649,30 @@ export const OnCounterUpdatedDocument = gql`
         }
     }
 `;
-export type OnCounterUpdatedSubscriptionResult = ApolloReactCommon.SubscriptionResult<OnCounterUpdatedSubscription>;
+
+/**
+ * __useOnCounterUpdatedSubscription__
+ *
+ * To run a query within a React component, call `useOnCounterUpdatedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnCounterUpdatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnCounterUpdatedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOnCounterUpdatedSubscription(
+    baseOptions?: Apollo.SubscriptionHookOptions<OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useSubscription<OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables>(
+        OnCounterUpdatedDocument,
+        options,
+    );
+}
+export type OnCounterUpdatedSubscriptionHookResult = ReturnType<typeof useOnCounterUpdatedSubscription>;
+export type OnCounterUpdatedSubscriptionResult = Apollo.SubscriptionResult<OnCounterUpdatedSubscription>;

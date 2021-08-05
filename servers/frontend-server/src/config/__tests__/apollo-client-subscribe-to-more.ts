@@ -1,10 +1,8 @@
 import gql from 'graphql-tag';
-import { ApolloLink, Operation } from 'apollo-link';
+import { Operation } from '@apollo/client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { stripSymbols } from 'apollo-utilities';
-
 import { DocumentNode, OperationDefinitionNode } from 'graphql';
-import { mockSingleLink, mockObservableLink } from 'apollo-client/dist/__mocks__/mockLinks';
+import { mockSingleLink, mockObservableLink } from '@apollo/client/testing';
 
 
 const isSub = (operation: Operation) =>

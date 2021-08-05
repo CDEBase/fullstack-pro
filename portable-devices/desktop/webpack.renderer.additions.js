@@ -53,10 +53,9 @@ const config = {
         symlinks: true,
     },
     externals: [
-        'apollo-client',
+        '@apollo/client',
         'react',
         'react-redux',
-        'react-apollo',
         'react-fela',
         'react-helmet',
         'react-loadable',
@@ -68,8 +67,6 @@ const config = {
         'react-transition-group',
         'connected-react-router',
         'history',
-        '@apollo/react-common',
-        '@apollo/react-hooks',
     ],
 };
 

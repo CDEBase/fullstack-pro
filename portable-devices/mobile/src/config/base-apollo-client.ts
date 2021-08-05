@@ -1,12 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink, createHttpLink } from 'apollo-link-http';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
+import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
+import { HttpLink, createHttpLink } from '@apollo/client/link/http';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import fetch from 'node-fetch';
@@ -16,7 +16,7 @@ const schema = `
 `;
 
 interface IApolloClientParams {
-    fragmentMatcher: any;
+    possibleTypes: any;
     initialState?: any;
     scope: 'browser' | 'server' | 'native';
     linkConnectionParams?: any;
@@ -64,7 +64,7 @@ export const createApolloClient = ({
 
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
-        fragmentMatcher: clientState.fragmentMatcher as any,
+        possibleTypes: clientState.possibleTypes,
     });
 
     if (_apolloClient && _memoryCache) {
@@ -137,11 +137,15 @@ export const createApolloClient = ({
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-    cache.writeData({
-        data: {
-            ...clientState.defaults,
-        },
+
+    clientState?.defaults?.forEach((x) => {
+        if (x.type === 'query') {
+            cache.writeQuery(x);
+        } else if (x.type === 'fragment') {
+            cache.writeFragment(x);
+        }
     });
+
     if ((isDev || isDebug) && isBrowser) {
         window.__APOLLO_CLIENT__ = _apolloClient;
     }

@@ -45,7 +45,6 @@ export class App {
     services!: Service;
 
     onActivate = () => {
-        console.log('--ON ACTIVATE', this.views);
         this.views.main.show();
         app.dock.show();
     };

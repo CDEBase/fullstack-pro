@@ -15,8 +15,8 @@ generates:
         withHOC: false
         withComponent: false
     plugins:
-      - add: |
-          /* tslint:disable */
+      - add:
+          content: /* tslint:disable */
       - typescript
       - typescript-operations
       - typescript-resolvers
@@ -34,6 +34,6 @@ generates:
       typesPath: "../generated-models"
       importTypesNamespace: SchemaTypes
     plugins:
-      - add: |
-          /* tslint:disable */
+      - add:
+          content: /* tslint:disable */
       - typescript-react-apollo
