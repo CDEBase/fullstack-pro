@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-mobile",
-  "version": "0.0.51-alpha.36",
+  "version": "0.0.51-alpha.37",
   "private": true,
   "main": "__generated__/AppEntry.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.5",
     "@cdm-logger/client": "^7.0.7",
     "@codler/react-native-keyboard-aware-scroll-view": "1.0.0",
     "@common-stack/client-core": "^0.1.1",
@@ -46,7 +47,6 @@
     "@react-navigation/stack": "^5.12.8",
     "@sample-stack/counter-module-mobile": "link:../../packages-modules/counter/mobile",
     "antd": "^4.5.2",
-    "@apollo/client": "^3.4.5",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",
