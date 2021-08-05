@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
-import { ApolloProvider } from '@apollo/react-common';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { rehydrate } from 'fela-dom';
 import { PluginArea } from '@common-stack/client-react';

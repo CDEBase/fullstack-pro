@@ -4,7 +4,7 @@ import { NativeRouter, Route } from 'react-router-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import { createRenderer } from 'fela-native';
-import { ApolloProvider } from '@apollo/react-common';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { MainRoute } from './modules/modules';
 import { persistStore, persistReducer } from 'redux-persist';

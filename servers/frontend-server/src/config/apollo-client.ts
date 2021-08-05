@@ -117,7 +117,7 @@ const createApolloClient = () => {
     }
     _apolloClient = new ApolloClient<any>(params);
 
-    clientState.defaults.forEach((x) => {
+    clientState?.defaults?.forEach((x) => {
         if (x.type === 'query') {
             cache.writeQuery(x);
         } else if (x.type === 'fragment') {

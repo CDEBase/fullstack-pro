@@ -137,11 +137,15 @@ export const createApolloClient = ({
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-    cache.writeData({
-        data: {
-            ...clientState.defaults,
-        },
+
+    clientState?.defaults?.forEach((x) => {
+        if (x.type === 'query') {
+            cache.writeQuery(x);
+        } else if (x.type === 'fragment') {
+            cache.writeFragment(x);
+        }
     });
+
     if ((isDev || isDebug) && isBrowser) {
         window.__APOLLO_CLIENT__ = _apolloClient;
     }

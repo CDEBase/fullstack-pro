@@ -67,7 +67,6 @@ const config = {
         'react-transition-group',
         'connected-react-router',
         'history',
-        '@apollo/react-common'
     ],
 };
 
