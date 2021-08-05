@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { interfaces } from 'inversify';
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from '@apollo/client';
 import modules, { container } from '../modules';
 import { createApolloClient } from '../../common/config/base-apollo-client';
 import { PUBLIC_SETTINGS } from '../../renderer/config/public-config';

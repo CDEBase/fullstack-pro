@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
 import path from 'path';
@@ -40,7 +41,7 @@ async function renderServerSide(req, res) {
                 req,
             );
 
-        await getDataFromTree(App as any);
+        await getDataFromTree(App);
         if (context.pageNotFound === true) {
             res.status(404);
         } else {

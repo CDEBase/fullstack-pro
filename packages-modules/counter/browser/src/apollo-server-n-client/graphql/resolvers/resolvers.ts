@@ -1,11 +1,17 @@
-import { CounterQueryDocument } from '../../../generated-models';
+/* eslint-disable import/no-extraneous-dependencies */
+import { IClientStateDefault } from '@common-stack/client-core';
+import { CounterQueryDocument, CounterStateDocument } from '../../../generated-models';
 
 const TYPE_NAME = 'CounterState';
 
-const defaults = {
-    counterState: {
-        counter: 1,
-        __typename: TYPE_NAME,
+const stateDefault: IClientStateDefault = {
+    type: 'query',
+    query: CounterStateDocument,
+    data: {
+        counterState: {
+            counter: 1,
+            __typename: TYPE_NAME,
+        },
     },
 };
 
@@ -42,4 +48,4 @@ const resolvers = {
     },
 };
 
-export { defaults, resolvers };
+export { stateDefault, resolvers };

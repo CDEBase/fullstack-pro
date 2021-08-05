@@ -1,6 +1,6 @@
 import * as React from 'react';
 import update from 'immutability-helper';
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/react-hoc';
 import compose from 'lodash/flowRight';
 import { CounterComponent, ICounterProps } from '../components';
 import { COUNT_SUBSCRIPTION, COUNT_QUERY, ADD_COUNT_MUTATION,} from '../graphql';

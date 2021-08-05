@@ -1,23 +1,25 @@
-import { ApolloClient, ApolloClientOptions } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-extraneous-dependencies */
+import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
+import { HttpLink } from '@apollo/client/link/http';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { getOperationAST } from 'graphql';
 import apolloLogger from 'apollo-link-logger';
-import { PUBLIC_SETTINGS } from './public-config';
-import modules from '../modules';
 import { logger } from '@cdm-logger/client';
 import { invariant } from 'ts-invariant';
+import { PUBLIC_SETTINGS } from './public-config';
+import modules from '../modules';
 
 const clientState = modules.getStateParams({ resolverContex: () => modules.createService({}, {}) });
 
 // TODO: add cache redirects to module
 export const cache = new InMemoryCache({
     dataIdFromObject: (result) => modules.getDataIdFromObject(result),
-    fragmentMatcher: clientState.fragmentMatcher as any,
+    possibleTypes: clientState.possibleTypes,
 });
 
 const schema = ``;
@@ -26,10 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
             // tslint:disable-next-line
-            invariant.warn(
-                `[GraphQL error]: Message: ${message}, Location: ` +
-                `${locations}, Path: ${path}`,
-            ),
+            invariant.warn(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
         );
     }
     if (networkError) {
@@ -39,8 +38,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 let link;
 if (__CLIENT__) {
-    let connectionParams = () => {
-        let param = {};
+    const connectionParams = () => {
+        const param = {};
         for (const connectionParam of modules.connectionParams) {
             Object.assign(param, connectionParam());
         }
@@ -48,7 +47,7 @@ if (__CLIENT__) {
     };
 
     const wsLink = new WebSocketLink({
-        uri: (PUBLIC_SETTINGS.GRAPHQL_URL).replace(/^http/, 'ws'),
+        uri: PUBLIC_SETTINGS.GRAPHQL_URL.replace(/^http/, 'ws'),
         options: {
             reconnect: true,
             timeout: 20000,
@@ -72,10 +71,9 @@ if (__CLIENT__) {
         ({ query, operationName }) => {
             if (operationName && operationName.endsWith('_WS')) {
                 return true;
-            } else {
-                const operationAST = getOperationAST(query as any, operationName);
-                return !!operationAST && operationAST.operation === 'subscription';
             }
+            const operationAST = getOperationAST(query as any, operationName);
+            return !!operationAST && operationAST.operation === 'subscription';
         },
         wsLink,
         new HttpLink({
@@ -119,11 +117,14 @@ const createApolloClient = () => {
     }
     _apolloClient = new ApolloClient<any>(params);
 
-    cache.writeData({
-        data: {
-            ...clientState.defaults,
-        },
+    clientState.defaults.forEach((x) => {
+        if (x.type === 'query') {
+            cache.writeQuery(x);
+        } else if (x.type === 'fragment') {
+            cache.writeFragment(x);
+        }
     });
+
     if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
         window.__APOLLO_CLIENT__ = _apolloClient;
     }

@@ -5,7 +5,7 @@ interface ISchemaConfig {
 
 export const remoteSchemaDetails: ISchemaConfig[] = [
     // {
-        // uri: 'http://localhost:8085/graphql',
-        // wsUri: 'ws://localhost:8085/graphql',
+    // uri: 'http://localhost:8085/graphql',
+    // wsUri: 'ws://localhost:8085/graphql',
     // },
 ];

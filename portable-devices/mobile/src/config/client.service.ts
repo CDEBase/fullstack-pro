@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { Container } from 'inversify';
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from '@apollo/client';
 import modules, { container } from '../modules';
 import { createApolloClient } from './base-apollo-client';
 import { PUBLIC_SETTINGS } from './public-config';
@@ -28,7 +28,7 @@ export const createClientContainer = () => {
         linkConnectionParams: modules.connectionParams,
         additionalLinks: modules.link,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        fragmentMatcher: clientState.fragmentMatcher,
+        fragmentMatcher: clientState.possibleTypes,
         initialState: null,
     });
     // attaching the context to client as a workaround.

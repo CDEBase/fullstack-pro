@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import * as React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/react-hoc';
 import update from 'immutability-helper';
 import compose from 'lodash/flowRight';
 import { connect } from 'react-redux';

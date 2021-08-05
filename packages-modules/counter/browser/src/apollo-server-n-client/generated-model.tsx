@@ -1,24 +1,13 @@
 /* tslint:disable */
-
-
 import * as SchemaTypes from '../generated-models';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
-import * as ApolloReactHooks from '@apollo/react-hooks';
+import * as ApolloReactComponents from '@apollo/client/react/components';
+import * as ApolloReactHoc from '@apollo/client/react/hoc';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-
-
-
-
-
-
-
-
+const defaultOptions =  {}
 
 export const AddCounterStateDocument = gql`
     mutation addCounterState($amount: Int!) {
@@ -27,20 +16,22 @@ export const AddCounterStateDocument = gql`
   }
 }
     `;
-export type AddCounterStateMutationFn = ApolloReactCommon.MutationFunction<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
+export type AddCounterStateMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
 export type AddCounterStateComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>, 'mutation'>;
 
     export const AddCounterStateComponent = (props: AddCounterStateComponentProps) => (
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables> mutation={AddCounterStateDocument} {...props} />
     );
     
-export type AddCounterStateProps<TChildProps = {}> = ApolloReactHoc.MutateProps<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables> | TChildProps;
-export function withAddCounterState<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type AddCounterStateProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>
+    } & TChildProps;
+export function withAddCounterState<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.AddCounterStateMutation,
   SchemaTypes.AddCounterStateMutationVariables,
-  AddCounterStateProps<TChildProps>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables, AddCounterStateProps<TChildProps>>(AddCounterStateDocument, {
+  AddCounterStateProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables, AddCounterStateProps<TChildProps, TDataName>>(AddCounterStateDocument, {
       alias: 'addCounterState',
       ...operationOptions
     });
@@ -63,12 +54,13 @@ export function withAddCounterState<TProps, TChildProps = {}>(operationOptions?:
  *   },
  * });
  */
-export function useAddCounterStateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>) {
-        return ApolloReactHooks.useMutation<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>(AddCounterStateDocument, baseOptions);
+export function useAddCounterStateMutation(baseOptions?: Apollo.MutationHookOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>(AddCounterStateDocument, options);
       }
 export type AddCounterStateMutationHookResult = ReturnType<typeof useAddCounterStateMutation>;
-export type AddCounterStateMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.AddCounterStateMutation>;
-export type AddCounterStateMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
+export type AddCounterStateMutationResult = Apollo.MutationResult<SchemaTypes.AddCounterStateMutation>;
+export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
 export const AddCounterDocument = gql`
     mutation addCounter($amount: Int!) {
   addCounter(amount: $amount) {
@@ -76,20 +68,22 @@ export const AddCounterDocument = gql`
   }
 }
     `;
-export type AddCounterMutationFn = ApolloReactCommon.MutationFunction<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
+export type AddCounterMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
 export type AddCounterComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>, 'mutation'>;
 
     export const AddCounterComponent = (props: AddCounterComponentProps) => (
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables> mutation={AddCounterDocument} {...props} />
     );
     
-export type AddCounterProps<TChildProps = {}> = ApolloReactHoc.MutateProps<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables> | TChildProps;
-export function withAddCounter<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type AddCounterProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>
+    } & TChildProps;
+export function withAddCounter<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.AddCounterMutation,
   SchemaTypes.AddCounterMutationVariables,
-  AddCounterProps<TChildProps>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables, AddCounterProps<TChildProps>>(AddCounterDocument, {
+  AddCounterProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables, AddCounterProps<TChildProps, TDataName>>(AddCounterDocument, {
       alias: 'addCounter',
       ...operationOptions
     });
@@ -112,12 +106,13 @@ export function withAddCounter<TProps, TChildProps = {}>(operationOptions?: Apol
  *   },
  * });
  */
-export function useAddCounterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>) {
-        return ApolloReactHooks.useMutation<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>(AddCounterDocument, baseOptions);
+export function useAddCounterMutation(baseOptions?: Apollo.MutationHookOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>(AddCounterDocument, options);
       }
 export type AddCounterMutationHookResult = ReturnType<typeof useAddCounterMutation>;
-export type AddCounterMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.AddCounterMutation>;
-export type AddCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
+export type AddCounterMutationResult = Apollo.MutationResult<SchemaTypes.AddCounterMutation>;
+export type AddCounterMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
 export const AddCounter_WsDocument = gql`
     mutation AddCounter_WS($amount: Int!) {
   addCounter(amount: $amount) {
@@ -125,20 +120,22 @@ export const AddCounter_WsDocument = gql`
   }
 }
     `;
-export type AddCounter_WsMutationFn = ApolloReactCommon.MutationFunction<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
+export type AddCounter_WsMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
 export type AddCounter_WsComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>, 'mutation'>;
 
     export const AddCounter_WsComponent = (props: AddCounter_WsComponentProps) => (
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables> mutation={AddCounter_WsDocument} {...props} />
     );
     
-export type AddCounter_WsProps<TChildProps = {}> = ApolloReactHoc.MutateProps<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables> | TChildProps;
-export function withAddCounter_Ws<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type AddCounter_WsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>
+    } & TChildProps;
+export function withAddCounter_Ws<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.AddCounter_WsMutation,
   SchemaTypes.AddCounter_WsMutationVariables,
-  AddCounter_WsProps<TChildProps>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables, AddCounter_WsProps<TChildProps>>(AddCounter_WsDocument, {
+  AddCounter_WsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables, AddCounter_WsProps<TChildProps, TDataName>>(AddCounter_WsDocument, {
       alias: 'addCounterWs',
       ...operationOptions
     });
@@ -161,31 +158,34 @@ export function withAddCounter_Ws<TProps, TChildProps = {}>(operationOptions?: A
  *   },
  * });
  */
-export function useAddCounter_WsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>) {
-        return ApolloReactHooks.useMutation<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>(AddCounter_WsDocument, baseOptions);
+export function useAddCounter_WsMutation(baseOptions?: Apollo.MutationHookOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>(AddCounter_WsDocument, options);
       }
 export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
-export type AddCounter_WsMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.AddCounter_WsMutation>;
-export type AddCounter_WsMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
+export type AddCounter_WsMutationResult = Apollo.MutationResult<SchemaTypes.AddCounter_WsMutation>;
+export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
 export const SyncCachedCounterDocument = gql`
     mutation SyncCachedCounter {
   syncCachedCounter
 }
     `;
-export type SyncCachedCounterMutationFn = ApolloReactCommon.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
+export type SyncCachedCounterMutationFn = Apollo.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
 export type SyncCachedCounterComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>, 'mutation'>;
 
     export const SyncCachedCounterComponent = (props: SyncCachedCounterComponentProps) => (
       <ApolloReactComponents.Mutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> mutation={SyncCachedCounterDocument} {...props} />
     );
     
-export type SyncCachedCounterProps<TChildProps = {}> = ApolloReactHoc.MutateProps<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> | TChildProps;
-export function withSyncCachedCounter<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type SyncCachedCounterProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>
+    } & TChildProps;
+export function withSyncCachedCounter<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.SyncCachedCounterMutation,
   SchemaTypes.SyncCachedCounterMutationVariables,
-  SyncCachedCounterProps<TChildProps>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables, SyncCachedCounterProps<TChildProps>>(SyncCachedCounterDocument, {
+  SyncCachedCounterProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables, SyncCachedCounterProps<TChildProps, TDataName>>(SyncCachedCounterDocument, {
       alias: 'syncCachedCounter',
       ...operationOptions
     });
@@ -207,12 +207,13 @@ export function withSyncCachedCounter<TProps, TChildProps = {}>(operationOptions
  *   },
  * });
  */
-export function useSyncCachedCounterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>) {
-        return ApolloReactHooks.useMutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>(SyncCachedCounterDocument, baseOptions);
+export function useSyncCachedCounterMutation(baseOptions?: Apollo.MutationHookOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>(SyncCachedCounterDocument, options);
       }
 export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
-export type SyncCachedCounterMutationResult = ApolloReactCommon.MutationResult<SchemaTypes.SyncCachedCounterMutation>;
-export type SyncCachedCounterMutationOptions = ApolloReactCommon.BaseMutationOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
+export type SyncCachedCounterMutationResult = Apollo.MutationResult<SchemaTypes.SyncCachedCounterMutation>;
+export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
 export const CounterCacheQueryDocument = gql`
     query counterCacheQuery {
   counterCache {
@@ -226,13 +227,15 @@ export type CounterCacheQueryComponentProps = Omit<ApolloReactComponents.QueryCo
       <ApolloReactComponents.Query<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> query={CounterCacheQueryDocument} {...props} />
     );
     
-export type CounterCacheQueryProps<TChildProps = {}> = ApolloReactHoc.DataProps<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> | TChildProps;
-export function withCounterCacheQuery<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type CounterCacheQueryProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>
+    } & TChildProps;
+export function withCounterCacheQuery<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.CounterCacheQueryQuery,
   SchemaTypes.CounterCacheQueryQueryVariables,
-  CounterCacheQueryProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables, CounterCacheQueryProps<TChildProps>>(CounterCacheQueryDocument, {
+  CounterCacheQueryProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables, CounterCacheQueryProps<TChildProps, TDataName>>(CounterCacheQueryDocument, {
       alias: 'counterCacheQuery',
       ...operationOptions
     });
@@ -242,7 +245,7 @@ export function withCounterCacheQuery<TProps, TChildProps = {}>(operationOptions
  * __useCounterCacheQueryQuery__
  *
  * To run a query within a React component, call `useCounterCacheQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useCounterCacheQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useCounterCacheQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -253,15 +256,17 @@ export function withCounterCacheQuery<TProps, TChildProps = {}>(operationOptions
  *   },
  * });
  */
-export function useCounterCacheQueryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
-        return ApolloReactHooks.useQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, baseOptions);
+export function useCounterCacheQueryQuery(baseOptions?: Apollo.QueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
       }
-export function useCounterCacheQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, baseOptions);
+export function useCounterCacheQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
         }
 export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
 export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
-export type CounterCacheQueryQueryResult = ApolloReactCommon.QueryResult<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>;
+export type CounterCacheQueryQueryResult = Apollo.QueryResult<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>;
 export const CounterStateDocument = gql`
     query CounterState {
   counterState @client {
@@ -275,13 +280,15 @@ export type CounterStateComponentProps = Omit<ApolloReactComponents.QueryCompone
       <ApolloReactComponents.Query<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables> query={CounterStateDocument} {...props} />
     );
     
-export type CounterStateProps<TChildProps = {}> = ApolloReactHoc.DataProps<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables> | TChildProps;
-export function withCounterState<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type CounterStateProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>
+    } & TChildProps;
+export function withCounterState<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.CounterStateQuery,
   SchemaTypes.CounterStateQueryVariables,
-  CounterStateProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables, CounterStateProps<TChildProps>>(CounterStateDocument, {
+  CounterStateProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables, CounterStateProps<TChildProps, TDataName>>(CounterStateDocument, {
       alias: 'counterState',
       ...operationOptions
     });
@@ -291,7 +298,7 @@ export function withCounterState<TProps, TChildProps = {}>(operationOptions?: Ap
  * __useCounterStateQuery__
  *
  * To run a query within a React component, call `useCounterStateQuery` and pass it any options that fit your needs.
- * When your component renders, `useCounterStateQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useCounterStateQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -302,15 +309,17 @@ export function withCounterState<TProps, TChildProps = {}>(operationOptions?: Ap
  *   },
  * });
  */
-export function useCounterStateQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>) {
-        return ApolloReactHooks.useQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, baseOptions);
+export function useCounterStateQuery(baseOptions?: Apollo.QueryHookOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, options);
       }
-export function useCounterStateLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, baseOptions);
+export function useCounterStateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, options);
         }
 export type CounterStateQueryHookResult = ReturnType<typeof useCounterStateQuery>;
 export type CounterStateLazyQueryHookResult = ReturnType<typeof useCounterStateLazyQuery>;
-export type CounterStateQueryResult = ApolloReactCommon.QueryResult<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>;
+export type CounterStateQueryResult = Apollo.QueryResult<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>;
 export const CounterQueryDocument = gql`
     query counterQuery {
   counter {
@@ -324,13 +333,15 @@ export type CounterQueryComponentProps = Omit<ApolloReactComponents.QueryCompone
       <ApolloReactComponents.Query<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables> query={CounterQueryDocument} {...props} />
     );
     
-export type CounterQueryProps<TChildProps = {}> = ApolloReactHoc.DataProps<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables> | TChildProps;
-export function withCounterQuery<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type CounterQueryProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>
+    } & TChildProps;
+export function withCounterQuery<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.CounterQueryQuery,
   SchemaTypes.CounterQueryQueryVariables,
-  CounterQueryProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables, CounterQueryProps<TChildProps>>(CounterQueryDocument, {
+  CounterQueryProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables, CounterQueryProps<TChildProps, TDataName>>(CounterQueryDocument, {
       alias: 'counterQuery',
       ...operationOptions
     });
@@ -340,7 +351,7 @@ export function withCounterQuery<TProps, TChildProps = {}>(operationOptions?: Ap
  * __useCounterQueryQuery__
  *
  * To run a query within a React component, call `useCounterQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useCounterQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useCounterQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -351,15 +362,17 @@ export function withCounterQuery<TProps, TChildProps = {}>(operationOptions?: Ap
  *   },
  * });
  */
-export function useCounterQueryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>) {
-        return ApolloReactHooks.useQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, baseOptions);
+export function useCounterQueryQuery(baseOptions?: Apollo.QueryHookOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, options);
       }
-export function useCounterQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, baseOptions);
+export function useCounterQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, options);
         }
 export type CounterQueryQueryHookResult = ReturnType<typeof useCounterQueryQuery>;
 export type CounterQueryLazyQueryHookResult = ReturnType<typeof useCounterQueryLazyQuery>;
-export type CounterQueryQueryResult = ApolloReactCommon.QueryResult<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>;
+export type CounterQueryQueryResult = Apollo.QueryResult<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>;
 export const OnCounterUpdatedDocument = gql`
     subscription onCounterUpdated {
   counterUpdated {
@@ -373,13 +386,15 @@ export type OnCounterUpdatedComponentProps = Omit<ApolloReactComponents.Subscrip
       <ApolloReactComponents.Subscription<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables> subscription={OnCounterUpdatedDocument} {...props} />
     );
     
-export type OnCounterUpdatedProps<TChildProps = {}> = ApolloReactHoc.DataProps<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables> | TChildProps;
-export function withOnCounterUpdated<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+export type OnCounterUpdatedProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>
+    } & TChildProps;
+export function withOnCounterUpdated<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
   SchemaTypes.OnCounterUpdatedSubscription,
   SchemaTypes.OnCounterUpdatedSubscriptionVariables,
-  OnCounterUpdatedProps<TChildProps>>) {
-    return ApolloReactHoc.withSubscription<TProps, SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables, OnCounterUpdatedProps<TChildProps>>(OnCounterUpdatedDocument, {
+  OnCounterUpdatedProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withSubscription<TProps, SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables, OnCounterUpdatedProps<TChildProps, TDataName>>(OnCounterUpdatedDocument, {
       alias: 'onCounterUpdated',
       ...operationOptions
     });
@@ -389,7 +404,7 @@ export function withOnCounterUpdated<TProps, TChildProps = {}>(operationOptions?
  * __useOnCounterUpdatedSubscription__
  *
  * To run a query within a React component, call `useOnCounterUpdatedSubscription` and pass it any options that fit your needs.
- * When your component renders, `useOnCounterUpdatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useOnCounterUpdatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -400,8 +415,9 @@ export function withOnCounterUpdated<TProps, TChildProps = {}>(operationOptions?
  *   },
  * });
  */
-export function useOnCounterUpdatedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>) {
-        return ApolloReactHooks.useSubscription<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>(OnCounterUpdatedDocument, baseOptions);
+export function useOnCounterUpdatedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>(OnCounterUpdatedDocument, options);
       }
 export type OnCounterUpdatedSubscriptionHookResult = ReturnType<typeof useOnCounterUpdatedSubscription>;
-export type OnCounterUpdatedSubscriptionResult = ApolloReactCommon.SubscriptionResult<SchemaTypes.OnCounterUpdatedSubscription>;
+export type OnCounterUpdatedSubscriptionResult = Apollo.SubscriptionResult<SchemaTypes.OnCounterUpdatedSubscription>;
