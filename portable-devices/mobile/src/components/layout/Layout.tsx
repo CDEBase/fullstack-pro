@@ -9,7 +9,7 @@ const Layout = (props: any, route: any) => {
   return (
     <View style={{ flex: 1 }}>
       <MainHeader title="CDMBase LLC" drawerRef={drawerRef} />
-      <DrawerRoute match={props.match} routes={route.routes} drawerRef={drawerRef}/>
+      <DrawerRoute match={props.match} routes={route.routes || []} drawerRef={drawerRef}/>
     </View>
   );
 };
