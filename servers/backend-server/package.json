@@ -62,7 +62,7 @@
     "@cdm-logger/server": "^7.0.7",
     "@common-stack/core": "0.1.1",
     "@common-stack/server-core": "0.1.1",
-    "@graphql-tools/links": "^6.2.4",
+    "@graphql-tools/links": "^7.0.0",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
     "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
