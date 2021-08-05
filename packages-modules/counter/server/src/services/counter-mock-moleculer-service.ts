@@ -13,7 +13,6 @@ export class CounterMockMoleculerService extends Service {
     constructor(broker: ServiceBroker, { container, settings }: { container: Container } & { settings: any }) {
         super(broker);
         const { subTopic } = settings;
-        console.log('---SUBTOPIC ', subTopic);
         const topic = NATS_MOLECULER_COUNTER_SERIVCE;
         this.counterMock = container.get<ICounterService>(TYPES.CounterMockService);
         this.parseServiceSchema({
@@ -21,14 +20,11 @@ export class CounterMockMoleculerService extends Service {
             version: subTopic,
             actions: {
                 [CounterCommands.ADD_COUNTER]: {
-                    handler: async (ctx: Context<{ amount?: number }>) => {
-                        return this.counterMock.addCounter(ctx.params.amount);
-                    },
+                    handler: async (ctx: Context<{ amount?: number }>) =>
+                        this.counterMock.addCounter(ctx.params.amount),
                 },
                 [CounterCommands.COUNTER_QUERY]: {
-                    handler: async (ctx: Context) => {
-                        return this.counterMock.counterQuery();
-                    },
+                    handler: async (ctx: Context) => this.counterMock.counterQuery(),
                 },
             },
         });
