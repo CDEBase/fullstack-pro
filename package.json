@@ -291,6 +291,7 @@
     "rollup": "^2.53.2",
     "sass-loader": "^8.0.0",
     "shelljs": "^0.8.3",
+    "simple-git": "^2.42.0",
     "sinon": "^8.0.1",
     "source-list-map": "^2.0.1",
     "source-map-loader": "^0.2.4",
