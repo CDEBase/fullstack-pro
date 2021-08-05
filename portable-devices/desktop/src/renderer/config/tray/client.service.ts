@@ -33,7 +33,7 @@ export const createClientContainer = () => {
         linkConnectionParams: modules.connectionParams,
         additionalLinks: modules.link,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        fragmentMatcher: clientState.fragmentMatcher,
+        possibleTypes: clientState.possibleTypes,
         initialState: null,
     });
     // attaching the context to client as a workaround.

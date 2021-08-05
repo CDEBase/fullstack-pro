@@ -17,7 +17,7 @@ const schema = `
 `;
 
 interface IApolloClientParams {
-    fragmentMatcher: any;
+    possibleTypes: any;
     initialState?: any;
     scope: 'browser' | 'server' | 'native';
     linkConnectionParams?: any;
@@ -65,7 +65,7 @@ export const createApolloClient = ({
 
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
-        fragmentMatcher: clientState.fragmentMatcher as any,
+        possibleTypes: clientState.possibleTypes,
     });
 
     if (_apolloClient && _memoryCache) {
