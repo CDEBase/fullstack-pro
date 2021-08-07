@@ -15,7 +15,6 @@ pipeline {
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
-    string(name: 'DOMAIN_NAME', defaultValue: 'cdebase.io', description: 'domain of the ingress')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
     string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
@@ -28,10 +27,10 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['nodejs', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
+    choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
-    booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'DEBUG')
+    booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
@@ -195,7 +194,6 @@ pipeline {
     stage('Dev deployment') {
       environment{
           deployment_env = 'dev'
-          DOMAIN_NAME = 'cdebase.io'
       }
       when {
         expression { params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH ||  params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
@@ -315,8 +313,7 @@ pipeline {
          timeout(time: 300, unit: 'SECONDS')
        }
       environment{
-      deployment_env = 'stage'
-      DOMAIN_NAME = 'cdebase.io'
+        deployment_env = 'stage'
       }
       when {
         expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
@@ -353,11 +350,10 @@ pipeline {
   // Below are production stages
     stage('Prod Deployment') {
       options {
-          timeout(time: 300, unit: 'SECONDS')
+        timeout(time: 300, unit: 'SECONDS')
       }
       environment{
-          deployment_env = 'prod'
-          DOMAIN_NAME = 'cdebase.com'
+        deployment_env = 'prod'
       }
       when {
         expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
@@ -411,7 +407,7 @@ pipeline {
 }
 
 def getBuildCommand(){
-  if(DEBUG.toBoolean()){
+  if(ENABLE_DEBUG.toBoolean()){
     return 'build:debug'
   } else {
     return 'build'
@@ -493,9 +489,7 @@ def generateStage(server, environmentType) {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
-            --set ingress.domain=${env.DOMAIN_NAME} \
             --version=${IDESTACK_CHART_VERSION} \
-            --set ingress.domainBase=${env.DOMAIN_NAME} \
               kube-orchestration/idestack
             """
 
