@@ -11,11 +11,14 @@ declare const __DLL_BUILD_DIR__: string;
 declare const __SSR__;
 declare const __CLIENT__;
 declare const __SERVER__;
-declare const __APOLLO_CLIENT__;
+declare const __APOLLO_STATE__;
 declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 declare const __DEBUGGING__;
 
 declare interface Window {
+    /** Apollo Cache to restore in the browser in SSR mode */
+    __APOLLO_STATE__?: any;
+    /** Apollo Dev tools  */
     __APOLLO_CLIENT__?: any;
     __PRELOADED_STATE__?: any;
     __INITIAL_STATE__?: any;
@@ -43,19 +46,20 @@ declare interface __ZEN_OPTIONS__ {
     persistGraphQL?: boolean;
 }
 
-declare interface __PUBLIC_SETTINGS__ {
-    apolloLogging: boolean;
-    GRAPHQL_URL: string;
-    GRAPHQL_SUBSCRIPTION_URL?: string;
-    LOCAL_GRAPHQL_URL?: string;
-    LOG_LEVEL?: string;
-}
 declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
     CLIENT_URL: string;
     BACKEND_URL: string;
     NATS_URL: string;
     NATS_USER: string;
     NATS_PW: number | string;
+}
+
+declare interface __PUBLIC_SETTINGS__ {
+    apolloLogging: boolean;
+    GRAPHQL_URL: string;
+    GRAPHQL_SUBSCRIPTION_URL?: string;
+    LOCAL_GRAPHQL_URL?: string;
+    LOG_LEVEL?: string;
 }
 
 declare namespace NodeJS {

@@ -85,7 +85,7 @@ const Html = ({
                 />
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: `window.__APOLLO_CLIENT__=${serialize(state, {
+                        __html: `window.__APOLLO_STATE__=${serialize(state, {
                             isJSON: true,
                         })};`,
                     }}
