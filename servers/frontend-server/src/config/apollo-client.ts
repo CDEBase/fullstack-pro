@@ -104,7 +104,7 @@ const createApolloClient = () => {
         typeDefs: schema.concat(<string>clientState.typeDefs),
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
-        connectToDevTools: process.env.NODE_ENV === 'development' || __DEBUGGING__,
+        connectToDevTools: __CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__),
     };
     if (__SSR__) {
         if (__CLIENT__) {
