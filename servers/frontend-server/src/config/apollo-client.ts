@@ -104,12 +104,13 @@ const createApolloClient = () => {
         typeDefs: schema.concat(<string>clientState.typeDefs),
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
+        connectToDevTools: __CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__),
     };
     if (__SSR__) {
         if (__CLIENT__) {
-            if (window.__APOLLO_STATE__) {
-                cache.restore(window.__APOLLO_STATE__);
-            }
+            // if (window.__APOLLO_CLIENT__) {
+            //     cache.restore(window.__APOLLO_CLIENT__);
+            // }
             params.ssrForceFetchDelay = 100;
         } else {
             params.ssrMode = true;
@@ -125,9 +126,6 @@ const createApolloClient = () => {
         }
     });
 
-    if (__CLIENT__ && (process.env.NODE_ENV === 'development' || __DEBUGGING__)) {
-        window.__APOLLO_CLIENT__ = _apolloClient;
-    }
     return _apolloClient;
 };
 
