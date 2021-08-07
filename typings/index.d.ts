@@ -46,20 +46,20 @@ declare interface __ZEN_OPTIONS__ {
     persistGraphQL?: boolean;
 }
 
-declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
-    CLIENT_URL: string;
-    BACKEND_URL: string;
-    NATS_URL: string;
-    NATS_USER: string;
-    NATS_PW: number | string;
-}
-
 declare interface __PUBLIC_SETTINGS__ {
     apolloLogging: boolean;
     GRAPHQL_URL: string;
     GRAPHQL_SUBSCRIPTION_URL?: string;
     LOCAL_GRAPHQL_URL?: string;
     LOG_LEVEL?: string;
+}
+
+declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
+    CLIENT_URL: string;
+    BACKEND_URL: string;
+    NATS_URL: string;
+    NATS_USER: string;
+    NATS_PW: number | string;
 }
 
 declare namespace NodeJS {
