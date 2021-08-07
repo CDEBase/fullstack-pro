@@ -38,7 +38,7 @@ if ((module as any).hot) {
     data.store = store;
     data.history = history;
     // Force Apollo to fetch the latest data from the server
-    delete window.__APOLLO_CLIENT__;
+    delete window.__APOLLO_STATE__;
   });
   (module as any).hot.accept('../config/epic-config', () => {
     // we may need to reload epic always as we don't
