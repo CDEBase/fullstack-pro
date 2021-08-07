@@ -11,12 +11,12 @@ declare const __DLL_BUILD_DIR__: string;
 declare const __SSR__;
 declare const __CLIENT__;
 declare const __SERVER__;
-declare const __APOLLO_STATE__;
+declare const __APOLLO_CLIENT__;
 declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 declare const __DEBUGGING__;
 
 declare interface Window {
-    __APOLLO_STATE__?: any;
+    __APOLLO_CLIENT__?: any;
     __APOLLO_CLIENT__?: any;
     __PRELOADED_STATE__?: any;
     __INITIAL_STATE__?: any;
