@@ -407,7 +407,7 @@ pipeline {
 }
 
 def getBuildCommand(){
-  if(ENABLE_DEBUG.toBoolean()){
+  if(params.ENABLE_DEBUG.toBoolean()){
     return 'build:debug'
   } else {
     return 'build'
