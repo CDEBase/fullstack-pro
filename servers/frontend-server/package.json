@@ -71,7 +71,7 @@
     "connected-react-router": "^6.9.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "envalid": "^7.0.0",
+    "envalid": "^7.2.0-beta.2",
     "error-stack-parser": "^2.0.4",
     "esm": "^3.2.25",
     "express": "^4.17.1",

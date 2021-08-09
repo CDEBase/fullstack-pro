@@ -69,7 +69,7 @@
     "electron-positioner": "^4.1.0",
     "electron-redux": "^1.5.4",
     "electron-updater": "^4.3.9",
-    "envalid": "^7.0.0",
+    "envalid": "^7.2.0-beta.2",
     "esm": "^3.2.25",
     "fela": "11.6.0",
     "fela-beautifier": "^11.6.0",
