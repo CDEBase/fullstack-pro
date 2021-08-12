@@ -1611,45 +1611,45 @@
   dependencies:
     chalk "^4.0.0"
 
-"@common-stack/client-core@0.1.1", "@common-stack/client-core@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.1.1.tgz#a9caca64d8319acfdb92a350897b7102447f60bf"
-  integrity sha512-SDZtTOfNefjOI42HgTHPRTmvwBkHCT/AmURG2SUfm+2WAwnB1iOnTY1feBg51hcS5KD4ocqpHA85rkNCmUxiWQ==
+"@common-stack/client-core@0.1.7", "@common-stack/client-core@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.1.7.tgz#bf1c2f25048c8ad5b68d9b70de0929eb83c59dfe"
+  integrity sha512-X1cJXmvZBTp9CW6n/nIeFuKESe0qIUUM2w6b68f/yl8MEVwjH5XMHlmXL4B7oi8NfIpoJ87mvm+0cf+PsiAbOQ==
   dependencies:
-    "@common-stack/core" "^0.1.1"
+    "@common-stack/core" "^0.1.7"
 
-"@common-stack/client-react-native@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react-native/-/client-react-native-0.1.1.tgz#502a1f09a75a95823d51c63818e3878b4e3d1f84"
-  integrity sha512-GErJDOCayVYtHq6frdQuuCudivAHnPg4NtfCKZFEcX3nYhZG+7YVyy8047vuxrgle0LBVM25xn39C/pGLTV93Q==
+"@common-stack/client-react-native@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react-native/-/client-react-native-0.1.7.tgz#1df76d31cda90a6389533f5307956532e0e4a03d"
+  integrity sha512-0/4uabWVK5sDanZ7GqKxgkaD7MlU9ViGaStVHIEHnICQN+y81ldqr0PTPHw+ekq46jl/g3bVYIFOHrlip/rKjA==
   dependencies:
-    "@common-stack/client-core" "^0.1.1"
-    "@common-stack/client-react" "^0.1.1"
-    "@common-stack/core" "^0.1.1"
+    "@common-stack/client-core" "^0.1.7"
+    "@common-stack/client-react" "^0.1.7"
+    "@common-stack/core" "^0.1.7"
 
-"@common-stack/client-react@0.1.1", "@common-stack/client-react@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.1.1.tgz#b153d62bf2cbe28d999bf80fe9f8061a18ebfd92"
-  integrity sha512-1dmD3hgn4XwWkSTk8FXYNokRf4dyMUsrp5UWRysEQH43SyCX7soOZghGP7P9NlijKcbr9rNIYOB7rUI9b1/Zew==
+"@common-stack/client-react@0.1.7", "@common-stack/client-react@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.1.7.tgz#e5312afa992b37c8dcee0e878f3ae333573b9876"
+  integrity sha512-ZbaOXrzYcqmw+aN0v3Rz/v8vOrpCM7gtpM07y8Nv5+qJYXqqsWrLZULDZoIi+LOoq5JQZDV1eHSaFsvMQJJnfA==
   dependencies:
-    "@common-stack/client-core" "^0.1.1"
-    "@common-stack/core" "^0.1.1"
+    "@common-stack/client-core" "^0.1.7"
+    "@common-stack/core" "^0.1.7"
     "@wordpress/hooks" "^2.10.0"
     browser-bunyan "^1.6.3"
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/core@0.1.1", "@common-stack/core@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.1.1.tgz#82dae0407f10736c31879882eb61d5eb79f8b749"
-  integrity sha512-EdZuby32J/QEehNFpWOq4AQcKl4pLMVE6ajPzC1LXGeZWhXVz2Ia1oWnJCw174oCdXyktvQfvQXFqy5sWwqaOQ==
+"@common-stack/core@0.1.7", "@common-stack/core@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.1.7.tgz#2be61e8e4105096cb5a372e53170d7791f84adb5"
+  integrity sha512-8EnZqp/D9nb7EY7fZnwcsk/JBlaQHhq/lyhIzbWO0R1p75NuHwLT6Y9DpmAG7q1yCSH/+SwrSPTpzJDdKwW7JQ==
 
-"@common-stack/server-core@0.1.1", "@common-stack/server-core@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.1.1.tgz#1d440e37edf0244507320f0a04d7ba59f8fce73e"
-  integrity sha512-smk/fmalTidR3ndO3SbknFTE+m/o00M0XOsLl8VCssHmrSK2LIb0TC5+uXb/ik8Hr6Z+Sg0pNozp9mLSgDFV4A==
+"@common-stack/server-core@0.1.7", "@common-stack/server-core@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.1.7.tgz#487319567e505fe543e24200982619fbc1d01a5c"
+  integrity sha512-C62W1zXcXfZlneh+W9vz12lYfy3Al+ATqYpOuCSIja2qxNpPqqkQM6rtjYYZAdc/mY/xpM3h9h+aTn9/6ZItjA==
   dependencies:
-    "@common-stack/core" "^0.1.1"
+    "@common-stack/core" "^0.1.7"
 
 "@ctrl/tinycolor@^3.4.0":
   version "3.4.0"
@@ -13434,10 +13434,10 @@ env-paths@^2.2.0:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
   integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
 
-envalid@^7.0.0:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/envalid/-/envalid-7.1.1.tgz#6429c5e3ef6987e4ea44893dd354b6cc1646de75"
-  integrity sha512-2MIPjXAWcAVsO2jTVbgMFRc66lQCy2bQDP+zPT3NucrbWMD3pij5iGZMwQiv3zdveyVfl0qAGpI1JRQGfkmu1w==
+envalid@^7.2.0-beta.2:
+  version "7.2.0-beta.2"
+  resolved "https://registry.yarnpkg.com/envalid/-/envalid-7.2.0-beta.2.tgz#b1e6c273b92505dbaed27c4227ff08cad221c2c2"
+  integrity sha512-NAKVGvU2jaEHIq3Zq9YUsQ3z3mZzIG+chuThV7eEeZrAvzxGpGpsAhFlUIV8K9zaTx2Zz9AuSlCch9OVwDgNSA==
 
 envify@^3.0.0:
   version "3.4.1"
