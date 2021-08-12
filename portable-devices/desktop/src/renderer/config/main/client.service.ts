@@ -30,11 +30,9 @@ export const createClientContainer = () => {
         isSSR: __SSR__,
         scope: 'browser',
         clientState,
-        linkConnectionParams: modules.connectionParams,
-        additionalLinks: modules.link,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        possibleTypes: clientState.possibleTypes,
         initialState: null,
+        logger,
     });
     // attaching the context to client as a workaround.
     container.bind(ClientTypes.ApolloClient).toConstantValue(apolloClient);

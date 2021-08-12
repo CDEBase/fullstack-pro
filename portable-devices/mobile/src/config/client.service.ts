@@ -3,7 +3,8 @@
 import { ClientTypes } from '@common-stack/client-core';
 import { Container } from 'inversify';
 import { ApolloClient } from '@apollo/client';
-import modules, { container } from '../modules';
+import { CdmLogger } from '@cdm-logger/core';
+import modules, { container, logger } from '../modules';
 import { createApolloClient } from './base-apollo-client';
 import { PUBLIC_SETTINGS } from './public-config';
 
@@ -11,6 +12,7 @@ let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
     container: Container;
     services: any;
+    logger: CdmLogger.ILogger
 };
 export const createClientContainer = () => {
     if (__CLIENT_SERVICE__) {
@@ -25,11 +27,9 @@ export const createClientContainer = () => {
         isSSR: __SSR__,
         scope: 'browser',
         clientState,
-        linkConnectionParams: modules.connectionParams,
-        additionalLinks: modules.link,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        possibleTypes: clientState.possibleTypes,
         initialState: null,
+        logger,
     });
     // attaching the context to client as a workaround.
     container.bind(ClientTypes.ApolloClient).toConstantValue(apolloClient);
@@ -41,6 +41,7 @@ export const createClientContainer = () => {
         container,
         apolloClient,
         services,
+        logger,
     };
     return __CLIENT_SERVICE__;
 };
