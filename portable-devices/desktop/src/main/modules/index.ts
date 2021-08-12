@@ -22,4 +22,4 @@ container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
 container.parent = parentContainer;
 
 export default modules;
-export { container };
+export { container, logger };

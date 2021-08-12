@@ -1,9 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { interfaces } from 'inversify';
 import { ApolloClient } from '@apollo/client';
-import modules, { container } from '../modules';
+import { CdmLogger } from '@cdm-logger/core';
+import modules, { container, logger } from '../modules';
 import { createApolloClient } from '../../common/config/base-apollo-client';
 import { PUBLIC_SETTINGS } from '../../renderer/config/public-config';
 
@@ -11,6 +13,7 @@ let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
     container: interfaces.Container;
     services: any;
+    logger: CdmLogger.ILogger;
 };
 export const createClientContainer = () => {
     if (__CLIENT_SERVICE__) {
@@ -25,11 +28,9 @@ export const createClientContainer = () => {
         isSSR: __SSR__,
         scope: 'server',
         clientState,
-        linkConnectionParams: modules.connectionParams,
-        additionalLinks: modules.link,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        possibleTypes: clientState.possibleTypes,
         initialState: null,
+        logger,
     });
     // attaching the context to client as a workaround.
     container.bind(ClientTypes.ApolloClient).toConstantValue(apolloClient);
@@ -41,6 +42,7 @@ export const createClientContainer = () => {
         container,
         apolloClient,
         services,
+        logger,
     };
     return __CLIENT_SERVICE__;
 };
