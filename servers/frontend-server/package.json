@@ -51,7 +51,7 @@
     }
   },
   "dependencies": {
-    "@apollo/client": "^3.4.5",
+    "@apollo/client": "3.3.21",
     "@apollo/react-components": "^4.0.0",
     "@apollo/react-hoc": "^4.0.0",
     "@cdm-logger/client": "^7.0.7",

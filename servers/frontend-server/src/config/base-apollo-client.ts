@@ -138,7 +138,6 @@ export const createApolloClient = ({
     } else {
         link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     }
-
     const links = [errorLink, retrylink, ...clientState.preLinks, link];
 
     // Add apollo logger during development only

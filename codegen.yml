@@ -25,8 +25,8 @@ generates:
     schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
     documents: "packages-modules/counter/browser/src/**/*.gql"
     config:
-      withMutationFn: true
-      withHOC: true
+      withMutationFn: false
+      withHOC: false
       withComponent: true
       withHooks: true
     preset: import-types-preset
