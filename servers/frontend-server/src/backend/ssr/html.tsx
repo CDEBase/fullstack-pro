@@ -3,7 +3,6 @@
 import * as React from 'react';
 import serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
-import { Store } from 'redux';
 import modules from '../../modules';
 
 /**
@@ -65,6 +64,7 @@ const Html = ({
                 })}
             </head>
             <body {...bodyAttrs}>
+                <div id="root"/>
                 <div className="demo">
                     <div
                         id="content"
