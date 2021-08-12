@@ -1,58 +1,99 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import * as React from 'react';
-import { graphql } from '@apollo/react-hoc';
+import React, { useEffect } from 'react';
 import update from 'immutability-helper';
-import compose from 'lodash/flowRight';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CounterView from '../components/CounterView';
 import {
-    CounterQueryDocument,
-    AddCounterDocument,
+    useCounterQueryQuery,
+    useAddCounterMutation,
+    useAddCounterStateMutation,
+    useCounterStateQuery,
+    useAddCounter_WsMutation, 
+    useSyncCachedCounterMutation, 
+    useCounterCacheQueryLazyQuery
+} from '../generated-model';
+import {
     OnCounterUpdatedDocument,
-    AddCounterStateDocument,
-    CounterStateDocument,
 } from '../../common/generated-models';
 
-class Counter extends React.Component<any, any> {
-    private subscription;
+/**
+ * 
+ * @description Counter Component with Data dependency.
+ */
+const CounterWithApollo: React.SFC<any> = (props) => {
+    const [addCounterMutation] = useAddCounterMutation();
+    const { loading, error, data: counterData, subscribeToMore, } = useCounterQueryQuery();
+    const [addCounterStateMutation] = useAddCounterStateMutation();
+    const { data: couterStateData } = useCounterStateQuery();
+    const dispatch = useDispatch();
+    const reduxCount = useSelector(state => (state as any).counter.reduxCount);
+    const [getCounter, { loading: getCounterLoading, data: cachedData }] = useCounterCacheQueryLazyQuery({ fetchPolicy: 'network-only' });
+    const [addCounterWs] = useAddCounter_WsMutation();
+    const [syncCachedCounter] = useSyncCachedCounterMutation();
 
-    constructor(props) {
-        super(props);
-        this.subscription = null;
+    useEffect(() => {
+        const unsubscribe = subscribeToMore(getSubscriptionOptions({}));
+        return () => unsubscribe();
+    }, [subscribeToMore]);
+
+    const onReduxIncrement = (value) => () => {
+        dispatch({
+            type: 'COUNTER_INCREMENT',
+            value: Number(value),
+        });
     }
-
-    public componentWillReceiveProps(nextProps) {
-        if (!nextProps.loading) {
-            // Subscribe or re-subscribe
-            if (!this.subscription) {
-                this.subscribeToCount();
+    const addCounter = (amount) => () => {
+        addCounterMutation({
+            variables: { amount },
+            // Update the Cache of the Query that need to be display when it's dependent mutation gets called.
+            // This is needed for two reasons
+            // a). When update the Optimistically update cache, this get executes
+            // b). When the mutation response from Server, this gets update.
+            // Note: Optimistically update wont' work when network is offline.
+            update: (cache, { data: { addCounter } }) => {
+                // update the query's cache manually
+                // recommend to be done using fields but it can be done directly updating the cache
+                cache.modify({
+                    fields: {
+                        counter(prev) {
+                            return { amount: addCounter.amount };
+                        }
+                    }
+                })
+            },
+            // Optimistically update the amount to the locally cached
+            // before the server responds
+            // You can verify it by setting the "Network conditions" in devtools to `Slow 3G`.
+            // You will see the data gets updated before the server responds.
+            optimisticResponse: {
+                // __typename: 'Mutation',
+                addCounter: {
+                    __typename: 'Counter',
+                    amount: counterData?.counter.amount + amount,
+                }
             }
-        }
+        })
     }
 
-    public componentWillUnmount() {
-        if (this.subscription) {
-            this.subscription();
-        }
+    const addCounterState = (amount) => () => {
+        addCounterStateMutation({
+            variables: { amount }
+        });
     }
-
-    public subscribeToCount() {
-        const { subscribeToMore } = this.props;
-        this.subscription = subscribeToMore({
+    const getSubscriptionOptions = ({ }) => {
+        return {
             document: OnCounterUpdatedDocument,
             variables: {},
-            updateQuery: (
-                prev,
+            updateQuery: (prev,
                 {
                     subscriptionData: {
                         data: {
                             counterUpdated: { amount },
                         },
-                    },
-                },
-            ) => {
+                    }
+                }) => {
                 return update(prev, {
                     counter: {
                         amount: {
@@ -60,80 +101,24 @@ class Counter extends React.Component<any, any> {
                         },
                     },
                 });
-            },
-        });
+            }
+        }
     }
 
-    public render() {
-        return <CounterView {...this.props} />;
-    }
+    return <CounterView
+        loading={loading}
+        counter={counterData?.counter}
+        counterState={couterStateData?.counterState?.counter}
+        addCounter={addCounter}
+        addCounterState={addCounterState}
+        reduxCount={reduxCount}
+        onReduxIncrement={onReduxIncrement}
+        getCounterLoading={getCounterLoading}
+        addCounterWs={addCounterWs}
+        getCounter={getCounter}
+        syncCachedCounter={syncCachedCounter}
+        cachedData={cachedData}
+    />
 }
 
-const CounterWithApollo: any = compose(
-    graphql(CounterQueryDocument, {
-        props({ data: { loading, error, counter, subscribeToMore } }: any) {
-            if (error) {
-                throw new Error(error);
-            }
-            return { loading, counter, subscribeToMore };
-        },
-    }),
-    graphql(AddCounterDocument, {
-        props: ({ ownProps, mutate }: any) => ({
-            addCounter(amount) {
-                return () =>
-                    mutate({
-                        variables: { amount },
-                        updateQueries: {
-                            counterQuery: (prev, { mutationResult }) => {
-                                const newAmount = mutationResult.data.addCounter.amount;
-                                return update(prev, {
-                                    counter: {
-                                        amount: {
-                                            $set: newAmount,
-                                        },
-                                    },
-                                });
-                            },
-                        },
-                        optimisticResponse: {
-                            __typename: 'Mutation',
-                            addCounter: {
-                                __typename: 'Counter',
-                                amount: ownProps.counter.amount + 1,
-                            },
-                        },
-                    });
-            },
-        }),
-    } as any),
-    graphql(AddCounterStateDocument, {
-        props: ({ mutate }) =>
-            ({
-                addCounterState: (amount) => () => {
-                    const { value }: any = mutate({ variables: { amount } });
-                    return value;
-                },
-            } as any),
-    }),
-    graphql(CounterStateDocument, {
-        props: ({
-            data: {
-                counterState: { counter },
-            },
-        }: any) => ({ counterState: counter }),
-    }),
-)(Counter);
-
-export default connect(
-    (state) => ({ reduxCount: (state as any).counter.reduxCount }),
-    (dispatch) => ({
-        onReduxIncrement(value) {
-            return () =>
-                dispatch({
-                    type: 'COUNTER_INCREMENT',
-                    value: Number(value),
-                });
-        },
-    }),
-)(CounterWithApollo);
+export default CounterWithApollo;

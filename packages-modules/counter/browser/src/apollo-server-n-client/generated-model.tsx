@@ -5,7 +5,6 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as React from 'react';
 import * as ApolloReactComponents from '@apollo/client/react/components';
-import * as ApolloReactHoc from '@apollo/client/react/hoc';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const defaultOptions =  {}
 
@@ -23,19 +22,6 @@ export type AddCounterStateComponentProps = Omit<ApolloReactComponents.MutationC
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables> mutation={AddCounterStateDocument} {...props} />
     );
     
-export type AddCounterStateProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>
-    } & TChildProps;
-export function withAddCounterState<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.AddCounterStateMutation,
-  SchemaTypes.AddCounterStateMutationVariables,
-  AddCounterStateProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables, AddCounterStateProps<TChildProps, TDataName>>(AddCounterStateDocument, {
-      alias: 'addCounterState',
-      ...operationOptions
-    });
-};
 
 /**
  * __useAddCounterStateMutation__
@@ -75,19 +61,6 @@ export type AddCounterComponentProps = Omit<ApolloReactComponents.MutationCompon
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables> mutation={AddCounterDocument} {...props} />
     );
     
-export type AddCounterProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>
-    } & TChildProps;
-export function withAddCounter<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.AddCounterMutation,
-  SchemaTypes.AddCounterMutationVariables,
-  AddCounterProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables, AddCounterProps<TChildProps, TDataName>>(AddCounterDocument, {
-      alias: 'addCounter',
-      ...operationOptions
-    });
-};
 
 /**
  * __useAddCounterMutation__
@@ -127,19 +100,6 @@ export type AddCounter_WsComponentProps = Omit<ApolloReactComponents.MutationCom
       <ApolloReactComponents.Mutation<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables> mutation={AddCounter_WsDocument} {...props} />
     );
     
-export type AddCounter_WsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>
-    } & TChildProps;
-export function withAddCounter_Ws<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.AddCounter_WsMutation,
-  SchemaTypes.AddCounter_WsMutationVariables,
-  AddCounter_WsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables, AddCounter_WsProps<TChildProps, TDataName>>(AddCounter_WsDocument, {
-      alias: 'addCounterWs',
-      ...operationOptions
-    });
-};
 
 /**
  * __useAddCounter_WsMutation__
@@ -177,19 +137,6 @@ export type SyncCachedCounterComponentProps = Omit<ApolloReactComponents.Mutatio
       <ApolloReactComponents.Mutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> mutation={SyncCachedCounterDocument} {...props} />
     );
     
-export type SyncCachedCounterProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: Apollo.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>
-    } & TChildProps;
-export function withSyncCachedCounter<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.SyncCachedCounterMutation,
-  SchemaTypes.SyncCachedCounterMutationVariables,
-  SyncCachedCounterProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables, SyncCachedCounterProps<TChildProps, TDataName>>(SyncCachedCounterDocument, {
-      alias: 'syncCachedCounter',
-      ...operationOptions
-    });
-};
 
 /**
  * __useSyncCachedCounterMutation__
@@ -227,19 +174,6 @@ export type CounterCacheQueryComponentProps = Omit<ApolloReactComponents.QueryCo
       <ApolloReactComponents.Query<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> query={CounterCacheQueryDocument} {...props} />
     );
     
-export type CounterCacheQueryProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>
-    } & TChildProps;
-export function withCounterCacheQuery<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.CounterCacheQueryQuery,
-  SchemaTypes.CounterCacheQueryQueryVariables,
-  CounterCacheQueryProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables, CounterCacheQueryProps<TChildProps, TDataName>>(CounterCacheQueryDocument, {
-      alias: 'counterCacheQuery',
-      ...operationOptions
-    });
-};
 
 /**
  * __useCounterCacheQueryQuery__
@@ -280,19 +214,6 @@ export type CounterStateComponentProps = Omit<ApolloReactComponents.QueryCompone
       <ApolloReactComponents.Query<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables> query={CounterStateDocument} {...props} />
     );
     
-export type CounterStateProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>
-    } & TChildProps;
-export function withCounterState<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.CounterStateQuery,
-  SchemaTypes.CounterStateQueryVariables,
-  CounterStateProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables, CounterStateProps<TChildProps, TDataName>>(CounterStateDocument, {
-      alias: 'counterState',
-      ...operationOptions
-    });
-};
 
 /**
  * __useCounterStateQuery__
@@ -333,19 +254,6 @@ export type CounterQueryComponentProps = Omit<ApolloReactComponents.QueryCompone
       <ApolloReactComponents.Query<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables> query={CounterQueryDocument} {...props} />
     );
     
-export type CounterQueryProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>
-    } & TChildProps;
-export function withCounterQuery<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.CounterQueryQuery,
-  SchemaTypes.CounterQueryQueryVariables,
-  CounterQueryProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables, CounterQueryProps<TChildProps, TDataName>>(CounterQueryDocument, {
-      alias: 'counterQuery',
-      ...operationOptions
-    });
-};
 
 /**
  * __useCounterQueryQuery__
@@ -386,19 +294,6 @@ export type OnCounterUpdatedComponentProps = Omit<ApolloReactComponents.Subscrip
       <ApolloReactComponents.Subscription<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables> subscription={OnCounterUpdatedDocument} {...props} />
     );
     
-export type OnCounterUpdatedProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>
-    } & TChildProps;
-export function withOnCounterUpdated<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  SchemaTypes.OnCounterUpdatedSubscription,
-  SchemaTypes.OnCounterUpdatedSubscriptionVariables,
-  OnCounterUpdatedProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withSubscription<TProps, SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables, OnCounterUpdatedProps<TChildProps, TDataName>>(OnCounterUpdatedDocument, {
-      alias: 'onCounterUpdated',
-      ...operationOptions
-    });
-};
 
 /**
  * __useOnCounterUpdatedSubscription__
