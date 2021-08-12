@@ -36,9 +36,9 @@
   "dependencies": {
     "@cdm-logger/client": "^7.0.7",
     "@cdm-logger/server": "^7.0.7",
-    "@common-stack/client-core": "0.1.1",
-    "@common-stack/core": "0.1.1",
-    "@common-stack/server-core": "0.1.1",
+    "@common-stack/client-core": "0.1.7",
+    "@common-stack/core": "0.1.7",
+    "@common-stack/server-core": "0.1.7",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
     "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
