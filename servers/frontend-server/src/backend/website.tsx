@@ -10,7 +10,7 @@ import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
-import { createApolloClient } from '../config/apollo-client';
+import { createClientContainer } from '../config/client.service';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
@@ -21,7 +21,7 @@ let assetMap;
 async function renderServerSide(req, res) {
     try {
 
-        const client = createApolloClient();
+        const { apolloClient: client } = createClientContainer();
 
         let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
         const store = createReduxStore();
