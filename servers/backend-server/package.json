@@ -58,7 +58,7 @@
     "zen:watch": "zen watch -x"
   },
   "dependencies": {
-    "@apollo/client": "3.3.21",
+    "@apollo/client": "~3.3.21",
     "@cdm-logger/server": "^7.0.7",
     "@common-stack/core": "0.1.7",
     "@common-stack/server-core": "0.1.7",
