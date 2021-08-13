@@ -105,7 +105,8 @@
     ]
   },
   "resolutions": {
-    "chokidar": "^3.4.0"
+    "chokidar": "^3.4.0",
+    "@apollo/client": "~3.3.21"
   },
   "dependencies": {
     "dataloader": "^2.0.0",

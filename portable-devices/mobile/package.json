@@ -46,7 +46,7 @@
     "@react-navigation/stack": "^5.12.8",
     "@sample-stack/counter-module-mobile": "link:../../packages-modules/counter/mobile",
     "antd": "^4.5.2",
-    "@apollo/client": "3.3.21",
+    "@apollo/client": "~3.3.21",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",
