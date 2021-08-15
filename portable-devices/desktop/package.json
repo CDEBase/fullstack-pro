@@ -52,7 +52,6 @@
     "@sample-stack/counter-module-electron": "link:../../packages-modules/counter/electron",
     "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
     "antd": "^4.5.2",
-    "apollo-cache-inmemory": "^1.6.5",
     "@apollo/client": "~3.3.21",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
