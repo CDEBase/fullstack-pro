@@ -9,6 +9,8 @@ export const config = envalid.cleanEnv(process.env, {
     LOCAL_BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     LOCAL_GRAPHQL_URL: str({ default: __GRAPHQL_URL__ }),
     GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
+    LOG_LEVEL: str({ devDefault: 'trace' }),
+    APP_NAME: str({ devDefault: 'FullStack'}),
     CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
     CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
     NAMESPACE: str({ default: 'default' }),

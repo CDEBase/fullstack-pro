@@ -14,7 +14,9 @@ class UtilityClass {
 
 const utility = new UtilityClass(modules);
 
-const logger = ClientLogger.create(process.env.APP_NAME, { level: process.env.LOG_LEVEL as any });
+const logger = ClientLogger.create(process.env.APP_NAME || 'Fullstack-Pro', {
+    level: (process.env.LOG_LEVEL as any) || 'info',
+});
 // additional bindings to container
 const container = modules.createContainers({}) as any;
 container.bind(ClientTypes.Logger).toConstantValue(logger);
