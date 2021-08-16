@@ -54,7 +54,7 @@
     "@apollo/client": "~3.3.21",
     "@apollo/react-components": "^4.0.0",
     "@apollo/react-hoc": "^4.0.0",
-    "@cdm-logger/client": "^7.0.7",
+    "@cdm-logger/client": "^7.0.8",
     "@cdm-logger/server": "^7.0.7",
     "@common-stack/client-core": "0.1.7",
     "@common-stack/client-react": "0.1.7",
