@@ -16899,10 +16899,10 @@ graphql-iso-date@^3.5.0:
   resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.6.1.tgz#bd2d0dc886e0f954cbbbc496bbf1d480b57ffa96"
   integrity sha512-AwFGIuYMJQXOEAgRlJlFL4H1ncFM8n8XmoVDTNypNOZyQ8LFDG2ppMFlsS862BSTCDcSUfHp8PD3/uJhv7t59Q==
 
-graphql-nats-subscriptions@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/graphql-nats-subscriptions/-/graphql-nats-subscriptions-1.4.2.tgz#24ed5fd25ac9170cf4b083ceb5c533b48501c873"
-  integrity sha512-e2g1TkhT4Dj686NEH/+HjiWuoaSYPDr3O0vAW4D9SrhxRt4ojqL/z1UjV10OXXglyROPPkjwCgWvKniNapM/JQ==
+graphql-nats-subscriptions@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/graphql-nats-subscriptions/-/graphql-nats-subscriptions-1.5.0.tgz#9408555a165239d11bd9125adf4bbdd2783dd146"
+  integrity sha512-qG8Yw64LHuIvDre92Eyoj07aHYUbcKI3kWJCYDC5u2XS5eL6yISSDpeyTKx0icY0iRsg533P/W7+f2stcDiOEw==
   dependencies:
     lodash "^4.0.0"
 
