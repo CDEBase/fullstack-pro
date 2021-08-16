@@ -1525,11 +1525,12 @@
   resolved "https://registry.yarnpkg.com/@browser-bunyan/levels/-/levels-1.6.0.tgz#3a50b8118254aa2ac26caf9d2aafa72d157e374b"
   integrity sha512-wte6nXXZH62Y/RGysYRlOkKxuJn+4S8xEamMF0fDncxxy0SriCHYwGPyWGF0FWYWmRzbZuEkp7dNebBf9Xfeeg==
 
-"@cdm-logger/client@^7.0.7":
-  version "7.0.7"
-  resolved "https://registry.yarnpkg.com/@cdm-logger/client/-/client-7.0.7.tgz#fdbca2d68911a1a3e349e1743ed128dbe008fc36"
-  integrity sha512-hs7qh8iRgk4P5LZlsQ8bYgfVlc79VfZIUXkwyjvpGrYGP6CV3K8TzCIkuXzJXHAnwA8uq+6FwqM1lXaI090Qiw==
+"@cdm-logger/client@^7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@cdm-logger/client/-/client-7.0.8.tgz#8274ece33971c53c3dba2971fceed278c9e4d136"
+  integrity sha512-aCVZsyndZjqx09x2Gmvt19PyPncyhRujQIb3LDLX4/2J1XdV8bIfy3qTBUjs2yUW88v1QGwwdJsNWXGnWyoJvg==
   dependencies:
+    "@cdm-logger/core" "^7.0.7"
     browser-bunyan "^1.6.3"
     stream "0.0.2"
 
