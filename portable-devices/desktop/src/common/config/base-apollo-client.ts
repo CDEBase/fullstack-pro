@@ -1,4 +1,4 @@
-// version 08/12/2021
+// version 08/16/2021
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -120,6 +120,18 @@ export const createApolloClient = ({
                 },
             },
         });
+
+        (wsLink as any).connectionCallback = async (error, result) => {
+            const promises = (clientState.connectionCallbackFuncs || []).map((func) => func(wsLink, error, result));
+
+            try {
+                await promises;
+            } catch (e) {
+                logger.trace('Error occured in connectionCallback condition', e);
+                throw e;
+            }
+        };
+
         link = ApolloLink.split(
             ({ query, operationName }) => {
                 if (operationName.endsWith('_WS')) {
@@ -134,12 +146,12 @@ export const createApolloClient = ({
             }),
         );
     } else if (isServer) {
-        link = new BatchHttpLink({ uri: httpLocalGraphqlURL });
+        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     } else {
         link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     }
 
-    const links = [errorLink, retrylink, ...clientState.preLinks, link];
+    const links = [errorLink, retrylink, ...(clientState.preLinks || []), link];
 
     // Add apollo logger during development only
     if (isBrowser && (isDev || isDebug)) {
