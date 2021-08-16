@@ -1,4 +1,4 @@
-// version 08/12/2021
+// version 08/15/2021
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -71,7 +71,9 @@ export const createApolloClient = ({
     });
 
     const attemptConditions = async (count: number, operation: any, error: Error) => {
-        const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => func(count, operation, error));
+        const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => {
+            return func(count, operation, error)
+        });
 
         try {
             const result = await promises;
@@ -80,11 +82,11 @@ export const createApolloClient = ({
             logger.trace('Error occured in retryLink Attempt condition', e);
             throw e;
         }
-    };
+    }
 
     const retrylink = new RetryLink({
         attempts: attemptConditions,
-    });
+    })
 
     if (_apolloClient && _memoryCache) {
         // return quickly if client is already created.
@@ -95,8 +97,8 @@ export const createApolloClient = ({
     }
     _memoryCache = cache;
     if (isBrowser) {
-        const connectionParams = async () => {
-            const param: ConnectionParams = {};
+        let connectionParams = async () => {
+            let param: ConnectionParams = {};
             for (const connectionParam of clientState.connectionParams) {
                 merge(param, await connectionParam);
             }
@@ -120,6 +122,20 @@ export const createApolloClient = ({
                 },
             },
         });
+
+        (wsLink as any).connectionCallback = async (error, result) => {
+            const promises = (clientState.connectionCallbackFuncs || []).map((func) => {
+                return func(wsLink, error, result)
+            });
+
+            try {
+                await promises;
+            } catch (e) {
+                logger.trace('Error occured in connectionCallback condition', e);
+                throw e;
+            }
+        }
+
         link = ApolloLink.split(
             ({ query, operationName }) => {
                 if (operationName.endsWith('_WS')) {
@@ -139,7 +155,12 @@ export const createApolloClient = ({
         link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     }
 
-    const links = [errorLink, retrylink, ...clientState.preLinks, link];
+    const links = [
+        errorLink,
+        retrylink,
+        ...clientState.preLinks || [],
+        link,
+    ];
 
     // Add apollo logger during development only
     if (isBrowser && (isDev || isDebug)) {
