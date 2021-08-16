@@ -87,7 +87,7 @@
     "express": "^4.17.1",
     "graphql": "^14.7.0",
     "graphql-bigint": "^1.0.0",
-    "graphql-nats-subscriptions": "^1.4.2",
+    "graphql-nats-subscriptions": "^1.5.0",
     "graphql-subscriptions": "^1.2.0",
     "graphql-tools": "^6.0.0",
     "graphql-type-json": "^0.3.1",
