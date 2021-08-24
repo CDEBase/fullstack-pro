@@ -172,7 +172,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
+        // Docker build need be performed in PUBLISH branch only
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' }
       }
 
@@ -224,10 +225,10 @@ pipeline {
       }
     } // End of dev deployment code block.
 
-  // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
+  // Only master branch will be merged
     stage ('Merge Develop to master & Install'){
       when {
-        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
+        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
@@ -288,7 +289,8 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
+        // required to be in Publish branch to build docker
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
 
