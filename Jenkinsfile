@@ -172,7 +172,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' }
       }
 
@@ -196,7 +196,7 @@ pipeline {
           deployment_env = 'dev'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH ||  params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.PUBLISH_BRANCH ||  params.GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
         beforeInput true
       }
@@ -227,7 +227,7 @@ pipeline {
   // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
     stage ('Merge Develop to master & Install'){
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
@@ -247,7 +247,7 @@ pipeline {
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
     stage ('Prod Build Packages'){
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
@@ -262,7 +262,7 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Prod Publish Packages'){
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
@@ -288,7 +288,7 @@ pipeline {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
        }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
 
@@ -316,7 +316,7 @@ pipeline {
         deployment_env = 'stage'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH || params.GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
         beforeInput true
       }
@@ -356,7 +356,7 @@ pipeline {
         deployment_env = 'prod'
       }
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH || params.REPOSITORY_BRANCH == params.PUBLISH_BRANCH }
+        expression { params.GIT_BRANCH_NAME == params.MASTER_BRANCH || params.GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
       }
