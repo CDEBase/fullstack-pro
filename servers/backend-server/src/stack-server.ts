@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 import * as http from 'http';
 import * as express from 'express';
@@ -18,6 +20,8 @@ import { GatewaySchemaBuilder } from './api/schema-builder';
 import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
 import { IModuleService } from './interfaces';
 import { migrate } from './utils/migrations';
+import { InterNamespaceMiddleware } from './middleware/moleculer-inter-namespace';
+// This is temp and will be replaced one we add support for rules in Feature
 
 type ILogger = CdmLogger.ILogger;
 
@@ -29,7 +33,7 @@ function startListening(port) {
     });
 }
 
-const infraModule = ({ broker, pubsub, logger }) =>
+const infraModule = ({ broker, pubsub, mongoClient, logger }) =>
     new ContainerModule((bind: interfaces.Bind) => {
         bind('Logger').toConstantValue(logger);
         bind(CommonType.LOGGER).toConstantValue(logger);
@@ -37,8 +41,9 @@ const infraModule = ({ broker, pubsub, logger }) =>
         bind(CommonType.ENVIRONMENT).toConstantValue(config.NODE_ENV || 'development');
         bind('PubSub').toConstantValue(pubsub);
         bind(CommonType.PUBSUB).toConstantValue(pubsub);
-        bind('MoleculerBroker').toConstantValue(broker);
         bind(CommonType.MOLECULER_BROKER).toConstantValue(broker);
+        bind('MoleculerBroker').toConstantValue(broker);
+        bind('MongoDBConnection').toConstantValue(mongoClient);
     });
 
 /**
@@ -55,6 +60,8 @@ export class StackServer {
     private logger: ILogger;
 
     private connectionBroker: ConnectionBroker;
+
+    private mainserviceBroker: ServiceBroker;
 
     private microserviceBroker: ServiceBroker;
 
@@ -74,49 +81,88 @@ export class StackServer {
         // eslint-disable-next-line import/namespace
         this.connectionBroker = new ConnectionBroker(brokerConfig.transporter, this.logger);
         const redisClient = this.connectionBroker.redisDataloaderClient;
+
         const mongoClient = await this.connectionBroker.mongoConnection;
 
         // Moleculer Broker Setup
-        this.microserviceBroker = new ServiceBroker({
+        this.mainserviceBroker = new ServiceBroker({
             ...brokerConfig,
+            middlewares: [
+                InterNamespaceMiddleware([
+                    {
+                        namespace: 'api-admin',
+                        transporter: brokerConfig.transporter,
+                    },
+                ]),
+            ],
             started: async () => {
-                // start DB migration
-                await migrate(mongoClient, this.serviceContainer);
                 await modules.preStart(this.serviceContainer);
                 if (config.NODE_ENV === 'development') {
-                    await modules.microservicePreStart(this.microserviceContainer);
+                    // await modules.microservicePreStart(this.micorserviceContainer);
                 }
 
-                await modules.postStart(this.serviceContainer);
+                try {
+                    await migrate(mongoClient, this.serviceContainer);
+                } catch (e) {
+                    this.logger.error('Error while running migrations', e);
+                    this.logger.error(e.stack);
+                }
+
+                try {
+                    await modules.postStart(this.serviceContainer);
+                } catch (e) {
+                    this.logger.error('Error while running Post Start', e);
+                    this.logger.error(e.stack);
+                }
+                // start DB migration
+
                 if (config.NODE_ENV === 'development') {
-                    await modules.microservicePostStart(this.microserviceContainer);
+                    // await modules.microservicePostStart(this.micorserviceContainer);
                 }
             },
+
             // created,
-            created: async () => ({}),
+            async created() {
+                return Promise.resolve();
+            },
         });
 
+        if (config.NODE_ENV === 'development') {
+            this.microserviceBroker = new ServiceBroker({
+                ...brokerConfig,
+                nodeID: 'node-broker-2',
+                started: async () => {
+                    await modules.microservicePreStart(this.microserviceContainer);
+                    await modules.microservicePostStart(this.microserviceContainer);
+                },
+                // created,
+                created: async () => Promise.resolve(),
+            });
+        }
         const pubsub = await this.connectionBroker.graphqlPubsub;
         const InfraStructureFeature = new Feature({
             createContainerFunc: [
                 () =>
                     infraModule({
-                        broker: this.microserviceBroker,
+                        broker: this.mainserviceBroker,
                         pubsub,
+                        mongoClient,
                         logger: serverLogger,
                     }),
             ],
+            createServiceFunc: (container) => ({ moleculerBroker: container.get(CommonType.MOLECULER_BROKER) }),
             createHemeraContainerFunc: [
                 () =>
                     infraModule({
-                        broker: this.microserviceBroker,
+                        broker: this.mainserviceBroker,
                         pubsub,
+                        mongoClient,
                         logger: serverLogger,
                     }),
             ],
         });
-        const allModules = new Feature(InfraStructureFeature, modules);
 
+        const allModules = new Feature(InfraStructureFeature, modules as Feature);
         const executableSchema = await new GatewaySchemaBuilder({
             schema: allModules.schemas,
             resolvers: allModules.createResolvers({
@@ -141,7 +187,7 @@ export class StackServer {
             schema: executableSchema,
         };
         allModules.loadMainMoleculerService({
-            broker: this.microserviceBroker,
+            broker: this.mainserviceBroker,
             container: this.serviceContainer,
             settings,
         });
@@ -157,7 +203,7 @@ export class StackServer {
             });
         }
 
-        // intialize Servers
+        // initialize Servers
         this.httpServer = http.createServer();
         this.app = await expressApp(serviceBroker, null, this.httpServer);
 
@@ -186,7 +232,11 @@ export class StackServer {
     }
 
     public async start() {
-        await this.microserviceBroker.start();
+        if (config.NODE_ENV === 'development') {
+            await Promise.all([this.mainserviceBroker.start(), this.microserviceBroker.start()]);
+        } else {
+            await this.mainserviceBroker.start();
+        }
     }
 
     public async cleanup() {
@@ -198,6 +248,9 @@ export class StackServer {
         }
         if (this.connectionBroker) {
             await this.connectionBroker.stop();
+        }
+        if (this.mainserviceBroker) {
+            await this.mainserviceBroker.stop();
         }
         if (this.microserviceBroker) {
             await this.microserviceBroker.stop();
