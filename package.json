@@ -59,7 +59,7 @@
     "husky-skip": "cross-env HUSKY_SKIP_HOOKS=1",
     "jest": "./node_modules/.bin/jest",
     "lerna": "lerna bootstrap",
-    "prelernapublish": "git checkout publish && git merge -s recursive -X theirs master  -m 'merge from develop' && yarn gitcommit && node tools/update-dependency-version.js && yarn gitcommit",
+    "prelernapublish": "git checkout publish && git pull origin publish  && git merge -s recursive -X theirs master  -m 'merge from master' && yarn gitcommit && node tools/update-dependency-version.js && yarn gitcommit",
     "lernapublish": "lerna publish --ignore-scripts --cd-version=patch",
     "postlernapublish": "git checkout master",
     "lint": "eslint --ext js --ext ts --ext md",
