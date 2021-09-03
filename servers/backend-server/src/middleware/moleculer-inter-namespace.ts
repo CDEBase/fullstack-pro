@@ -13,28 +13,31 @@ export const InterNamespaceMiddleware = function (options): Middleware {
     return {
         created(broker: ServiceBroker) {
             thisBroker = broker;
-            options.forEach(nsOpts => {
+            options.forEach((nsOpts) => {
+                let options = {} as any;
                 if (_.isString(nsOpts)) {
-                    nsOpts = {
+                    options = {
                         namespace: nsOpts,
                     };
                 }
-                const ns = nsOpts.namespace;
+                const ns = options.namespace;
 
-                const brokerOpts = _.defaultsDeep({}, nsOpts, { nodeID: null,
-                    middlewares: null, created: null, started: null }, broker.options);
+                const brokerOpts = _.defaultsDeep(
+                    {},
+                    options,
+                    { nodeID: null, middlewares: null, created: null, started: null },
+                    broker.options,
+                );
                 brokers[ns] = new ServiceBroker(brokerOpts);
             });
         },
 
         started() {
-            return Promise.all(Object.values(brokers).map(b => {
-                return b.start();
-            }));
+            return Promise.all(Object.values(brokers).map((b) => b.start()));
         },
 
         stopped() {
-            return Promise.all(Object.values(brokers).map(b => b.stop()));
+            return Promise.all(Object.values(brokers).map((b) => b.stop()));
         },
 
         call(next) {
@@ -44,11 +47,11 @@ export const InterNamespaceMiddleware = function (options): Middleware {
 
                     if (brokers[namespace]) {
                         return brokers[namespace].call(action, params, opts);
-                    } else if (namespace === thisBroker.namespace) {
-                        return next(action, params, opts);
-                    } else {
-                        throw new Error('Unknown namespace: ' + namespace);
                     }
+                    if (namespace === thisBroker.namespace) {
+                        return next(action, params, opts);
+                    }
+                    throw new Error(`Unknown namespace: ${namespace}`);
                 }
 
                 return next(actionName, params, opts);

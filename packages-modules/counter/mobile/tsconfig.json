@@ -13,7 +13,12 @@
     "skipLibCheck": true,
     "rootDir": "./src",
     "outDir": "lib",
-    "jsx": "react"
+    "jsx": "react",
+    "types": [
+      "@types/node",
+      "@types/jest",
+      "../../../typings",
+    ]
   },
   "exclude": [
     "**/*.test.ts",
