@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-electron",
-  "version": "0.0.51-alpha.51",
+  "version": "0.0.51-alpha.59",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/counter-module-browser": "0.0.51-alpha.51"
+    "@sample-stack/counter-module-browser": "0.0.51-alpha.59"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.10.0",

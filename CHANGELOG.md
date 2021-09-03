@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.51-alpha.59](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.58...v0.0.51-alpha.59) (2021-09-03)
+
+**Note:** Version bump only for package sample-stack
+
+
+
+
+
 ## [0.0.51-alpha.58](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.57...v0.0.51-alpha.58) (2021-08-25)
 
 **Note:** Version bump only for package sample-stack
