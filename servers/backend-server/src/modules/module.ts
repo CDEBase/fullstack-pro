@@ -23,4 +23,6 @@ const DefaultFeature = new Feature({
     createHemeraContainerFunc: [defaultModule],
 });
 
-export default new Feature(DefaultFeature, CounterModule);
+export const ExternalModules = new Feature<any>({});
+
+export default new Feature(DefaultFeature, ExternalModules, CounterModule);

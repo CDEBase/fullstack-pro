@@ -142,10 +142,10 @@ export class GatewaySchemaBuilder {
     private createOwnSchema(): GraphQLSchema {
         const typeDefs = [rootSchemaDef, this.options.schema].join('\n');
         if (__DEV__) {
-            // eslint-disable-next-line global-require
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const { ExternalModules } = require('../modules/module');
+            const externalSchema = ExternalModules.schemas;
             const fs = require('fs');
-            const writeData = `${typeDefs}`;
+            const writeData = `${externalSchema}`;
             fs.writeFileSync('./generated-schema.graphql', writeData);
         }
         return makeExecutableSchema({
