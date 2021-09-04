@@ -1,6 +1,6 @@
+/* eslint-disable no-param-reassign */
 import { ServiceBroker, Middleware } from 'moleculer';
 import * as _ from 'lodash';
-import { logger } from '@cdm-logger/server';
 
 export const InterNamespaceMiddleware = function (options): Middleware {
     if (!Array.isArray(options)) {
@@ -14,17 +14,16 @@ export const InterNamespaceMiddleware = function (options): Middleware {
         created(broker: ServiceBroker) {
             thisBroker = broker;
             options.forEach((nsOpts) => {
-                let options = {} as any;
                 if (_.isString(nsOpts)) {
-                    options = {
+                    nsOpts = {
                         namespace: nsOpts,
                     };
                 }
-                const ns = options.namespace;
+                const ns = nsOpts.namespace;
 
                 const brokerOpts = _.defaultsDeep(
                     {},
-                    options,
+                    nsOpts,
                     { nodeID: null, middlewares: null, created: null, started: null },
                     broker.options,
                 );
