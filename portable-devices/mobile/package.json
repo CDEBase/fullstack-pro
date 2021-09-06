@@ -182,12 +182,10 @@
     "jsdom": "^15.2.1",
     "lint-staged": "^7.3.0",
     "mkdirp": "^0.5.1",
-    "prettier": "1.14.3",
     "react-addons-test-utils": "^16.0.0-alpha.3",
     "react-test-renderer": "16.11.0",
     "request": "^2.83.0",
     "rimraf": "^3.0.0",
-    "typescript": "^3.8.3",
     "ws": "^7.2.1"
   },
   "peerDependencies": {
