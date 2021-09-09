@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.51-alpha.60](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.59...v0.0.51-alpha.60) (2021-09-09)
+
+**Note:** Version bump only for package @sample-stack/counter-module-server
+
+
+
+
+
 ## [0.0.51-alpha.39](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.38...v0.0.51-alpha.39) (2021-08-06)
 
 **Note:** Version bump only for package @sample-stack/counter-module-server
