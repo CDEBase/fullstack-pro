@@ -115,7 +115,7 @@ export const createApolloClient = ({
                 // by auth-link where we are already checking for authentication error.
                 connectionCallback: async (error) => {
                     if (error) {
-                        logger.trace('[connectionCallback error] %j', error);
+                        logger.error(error, '[WS connectionCallback error] %j');
                     }
                 },
             },

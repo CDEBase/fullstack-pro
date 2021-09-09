@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const webpackOpts = {
     mode: 'development',
-    entry: './src/index.tsx',
+    entry: './src/index.ts',
     target: 'node',
     output: {
         path: path.join(__dirname, 'lib'),

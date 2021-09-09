@@ -23,7 +23,6 @@ const { apolloClient: client, container } = createClientContainer();
 const store = createReduxStore();
 const renderer = createRenderer();
 
-// console.log('---CONFIG--new-', config, env);
 export default function App() {
 
   let persistor = persistStore(store as any);

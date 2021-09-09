@@ -49,7 +49,6 @@ exports.createWebpackConfigAsync = async function createWebpackConfigAsync(env, 
             const packageDirectory = path.join(workspaceRootPath, path.dirname(file));
             if (symlinkedModulePaths.includes(packageDirectory)) {
                 workspacePackagesToTranspile.push(packageDirectory);
-                console.log('---WORKSPAC Packages', workspacePackagesToTranspile);
             }
         }
     } else {

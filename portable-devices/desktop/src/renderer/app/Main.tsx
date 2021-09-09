@@ -47,7 +47,6 @@ if ((module as any).hot) {
     });
 }
 
-console.log('----CLIENT-----', client);
 export class Main extends React.Component<{}, {}> {
     componentDidMount() {
         store.dispatch({ type: '@@REDUX_INIT' })
