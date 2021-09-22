@@ -1,4 +1,4 @@
-// version 08/16/2021
+// version 09/18/2021
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -111,26 +111,23 @@ export const createApolloClient = ({
                 reconnectionAttempts: 10,
                 lazy: true,
                 connectionParams,
-                // during subscription publish event will be handled
-                // by auth-link where we are already checking for authentication error.
-                connectionCallback: async (error) => {
+                connectionCallback: async (error, result) => {
                     if (error) {
                         logger.error(error, '[WS connectionCallback error] %j');
                     }
+                    const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
+                        func(wsLink, error, result),
+                    );
+                    try {
+                        await promises;
+                    } catch (e) {
+                        logger.trace('Error occured in connectionCallback condition', e);
+                        throw e;
+                    }
                 },
             },
+            inactivityTimeout: 10000,
         });
-
-        (wsLink as any).connectionCallback = async (error, result) => {
-            const promises = (clientState.connectionCallbackFuncs || []).map((func) => func(wsLink, error, result));
-
-            try {
-                await promises;
-            } catch (e) {
-                logger.trace('Error occured in connectionCallback condition', e);
-                throw e;
-            }
-        };
 
         link = ApolloLink.split(
             ({ query, operationName }) => {
