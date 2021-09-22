@@ -34,7 +34,7 @@ pipeline {
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
-  // Setup common + secret key variables for pipeline.
+ // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
@@ -140,7 +140,7 @@ pipeline {
     // Build will be ignore with tag '[skip ci]'
     stage ('Publish Packages'){
       when {
-        expression { params.REPOSITORY_BRANCH == params.DEVELOP_BRANCH }
+        expression { GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' }
       }
       steps{
@@ -228,7 +228,7 @@ pipeline {
   // Only master branch will be merged
     stage ('Merge Develop to master & Install'){
       when {
-        expression { params.REPOSITORY_BRANCH == params.MASTER_BRANCH }
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
         expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
       }
       steps{
@@ -258,7 +258,7 @@ pipeline {
       }
     }
 
-    // publish packages to npm repository.
+  // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Prod Publish Packages'){
@@ -318,7 +318,7 @@ pipeline {
         deployment_env = 'stage'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
         beforeInput true
       }
@@ -358,7 +358,7 @@ pipeline {
         deployment_env = 'prod'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
       }
