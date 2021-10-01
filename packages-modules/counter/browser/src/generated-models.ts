@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
@@ -15,11 +15,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  AnyObject: any;
-  JSON: any;
-  JSONObject: any;
 };
-
 
 export type ClientCounter = {
   __typename?: 'ClientCounter';
@@ -33,14 +29,6 @@ export type Counter = {
   amount: Scalars['Int'];
 };
 
-export type FieldError = {
-  __typename?: 'FieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
-};
-
-
-
 export type Mutation = {
   __typename?: 'Mutation';
   /**  Increase counter value returns current counter amount  */
@@ -48,7 +36,6 @@ export type Mutation = {
   addCounterState?: Maybe<ClientCounter>;
   /**  add Counter  */
   addMoleculerCounter?: Maybe<Counter>;
-  dummy?: Maybe<Scalars['Int']>;
   /**  sync cached counter with current value  */
   syncCachedCounter?: Maybe<Scalars['Boolean']>;
 };
@@ -68,10 +55,6 @@ export type MutationAddMoleculerCounterArgs = {
   amount?: Maybe<Scalars['Int']>;
 };
 
-export type Node = {
-  id: Scalars['ID'];
-};
-
 export type Query = {
   __typename?: 'Query';
   /**  Counter  */
@@ -79,7 +62,6 @@ export type Query = {
   /**  Counter from Datasource  */
   counterCache?: Maybe<Counter>;
   counterState?: Maybe<ClientCounter>;
-  dummy?: Maybe<Scalars['Int']>;
   /**  Moleculer Counter  */
   moleculerCounter?: Maybe<Counter>;
 };
@@ -88,7 +70,6 @@ export type Subscription = {
   __typename?: 'Subscription';
   /**  Subscription fired when anyone increases counter  */
   counterUpdated?: Maybe<Counter>;
-  dummy?: Maybe<Scalars['Int']>;
   moleculerCounterUpdate?: Maybe<Counter>;
 };
 
@@ -274,12 +255,6 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Subscription: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  AnyObject: ResolverTypeWrapper<Scalars['AnyObject']>;
-  FieldError: ResolverTypeWrapper<FieldError>;
-  JSON: ResolverTypeWrapper<Scalars['JSON']>;
-  JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
-  Node: never;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -292,17 +267,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Subscription: {};
   String: Scalars['String'];
-  AnyObject: Scalars['AnyObject'];
-  FieldError: FieldError;
-  JSON: Scalars['JSON'];
-  JSONObject: Scalars['JSONObject'];
-  Node: never;
-  ID: Scalars['ID'];
 };
-
-export interface AnyObjectScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['AnyObject'], any> {
-  name: 'AnyObject';
-}
 
 export type ClientCounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
   counter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -314,56 +279,29 @@ export type CounterResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FieldErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['FieldError'] = ResolversParentTypes['FieldError']> = {
-  field?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
-  name: 'JSON';
-}
-
-export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
-  name: 'JSONObject';
-}
-
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddCounterArgs, never>>;
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>;
   addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddMoleculerCounterArgs, never>>;
-  dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-};
-
-export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
   counterCache?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
   counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>;
-  dummy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   counterUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "counterUpdated", ParentType, ContextType>;
-  dummy?: SubscriptionResolver<Maybe<ResolversTypes['Int']>, "dummy", ParentType, ContextType>;
   moleculerCounterUpdate?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "moleculerCounterUpdate", ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
-  AnyObject?: GraphQLScalarType;
   ClientCounter?: ClientCounterResolvers<ContextType>;
   Counter?: CounterResolvers<ContextType>;
-  FieldError?: FieldErrorResolvers<ContextType>;
-  JSON?: GraphQLScalarType;
-  JSONObject?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
-  Node?: NodeResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
 };
