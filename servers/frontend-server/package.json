@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-frontend-server",
-  "version": "0.0.51-alpha.61",
+  "version": "0.0.51-alpha.62",
   "private": true,
   "description": "Sample Client server",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
@@ -61,7 +61,7 @@
     "@common-stack/core": "0.1.7",
     "@common-stack/server-core": "0.1.7",
     "@sample-stack/core": "^0.0.51-alpha.27",
-    "@sample-stack/counter-module-browser": "0.0.51-alpha.60",
+    "@sample-stack/counter-module-browser": "0.0.51-alpha.62",
     "@sample-stack/platform-browser": "0.0.51-alpha.60",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
