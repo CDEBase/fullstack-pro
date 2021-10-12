@@ -116,6 +116,7 @@
   },
   "peerDependencies": {
     "@cdm-logger/core": "*",
+    "apollo-server-errors": "*",
     "mongodb": "*"
   },
   "typescript": {
