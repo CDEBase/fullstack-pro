@@ -1,16 +1,16 @@
-
 import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
 import 'isomorphic-fetch';
 import { Express } from 'express';
 import * as http from 'http';
-import { GRAPHQL_ROUTE } from '../constants';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
-import { IModuleService } from '../interfaces';
 import { CdmLogger } from '@cdm-logger/core';
+import { GRAPHQL_ROUTE } from '../constants';
+import { IModuleService } from '../interfaces';
+
 type ILogger = CdmLogger.ILogger;
 
-let debug: boolean = false;
-if (process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace' || process.env.LOG_LEVEL === 'debug') {
+let debug = false;
+if ((process.env.LOG_LEVEL && process.env.LOG_LEVEL === 'trace') || process.env.LOG_LEVEL === 'debug') {
     debug = true;
 }
 
@@ -21,17 +21,17 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
         instance.initialize({ context, cache });
     };
     // tslint:disable-next-line:forin
-    for (let prop in dataSources) {
+    // eslint-disable-next-line guard-for-in
+    for (const prop in dataSources) {
         // tslint:disable-next-line:no-console
         intializeDataSource(dataSources[prop]);
     }
     return dataSources;
 };
 
-
 export class GraphqlServer {
-
     private logger: ILogger;
+
     constructor(
         private app: Express,
         private httpServer: http.Server,
@@ -41,7 +41,6 @@ export class GraphqlServer {
     ) {
         this.logger = this.moduleService.logger.child({ className: 'GraphqlServer' });
     }
-
 
     public async initialize() {
         this.logger.info('GraphqlServer initializing...');
@@ -59,16 +58,28 @@ export class GraphqlServer {
             schema: this.moduleService.schema as any,
             dataSources: () => this.moduleService.dataSource,
             cache: this.cache,
-            context: async ({ req, res, connection }: { req: Express.Request, res: Express.Response, connection: any }) => {
-                let context, addons = {};
+            context: async ({
+                req,
+                res,
+                connection,
+            }: {
+                req: Express.Request;
+                res: Express.Response;
+                connection: any;
+            }) => {
+                let context;
+                let addons = {};
                 try {
                     if (connection) {
                         context = connection.context;
                         if (!context.dataSources) {
                             addons = {
                                 // @workaround for apollo server issue #1526
-                                dataSources: constructDataSourcesForSubscriptions
-                                    (connection.context, this.cache, this.moduleService.dataSource),
+                                dataSources: constructDataSourcesForSubscriptions(
+                                    connection.context,
+                                    this.cache,
+                                    this.moduleService.dataSource,
+                                ),
                             };
                         } else {
                             addons = {
@@ -94,7 +105,6 @@ export class GraphqlServer {
                     ...context,
                     ...addons,
                 };
-
             },
         };
         if (this.enableSubscription) {
