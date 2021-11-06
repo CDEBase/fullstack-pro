@@ -101,7 +101,7 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
         };
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
             this.setState({
                 openKeys: this.getDefaultCollapsedSubMenus(nextProps),
