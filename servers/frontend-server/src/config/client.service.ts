@@ -44,5 +44,11 @@ export const createClientContainer = () => {
         services,
         logger,
     };
+    if ((module as any).hot) {
+        (module as any).hot.dispose(() => {
+            // Force Apollo to fetch the latest data from the server
+            delete window.__APOLLO_STATE__;
+        });
+    }
     return __CLIENT_SERVICE__;
 };
