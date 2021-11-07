@@ -31,7 +31,7 @@ export const persistConfig = {
     storage,
     stateReconciler: autoMergeLevel2,
     // Don't add `user` state to persist as it creates problems.
-    whitelist: [],
+    transforms: modules.reduxPersistStateTransformers,
 };
 
 /**
@@ -66,5 +66,7 @@ export const createReduxStore = () => {
         // electron
         replayActionRenderer(store);
     }
+    container.bind('ReduxStore').toConstantValue(store);
+
     return store;
 };

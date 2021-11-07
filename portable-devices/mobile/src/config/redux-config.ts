@@ -25,7 +25,7 @@ export const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['user'],
+    transforms: modules.reduxPersistStateTransformers,
 };
 
 /**
@@ -48,6 +48,7 @@ export const createReduxStore = () => {
         rootEpic: rootEpic as any,
         reducers: { router, ...modules.reducers },
     });
+    container.bind('ReduxStore').toConstantValue(store);
 
     return store;
 };

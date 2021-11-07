@@ -52,5 +52,7 @@ export const createReduxStore = () => {
         // electron
         replayActionRenderer(store);
     }
+    container.bind('ReduxStore').toConstantValue(store);
+
     return store;
 };

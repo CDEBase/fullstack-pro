@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import * as express from 'express';
-import cookiesMiddleware from 'universal-cookie-express';
 
 import modules from './modules';
 import { errorMiddleware } from './middleware/error';
 import { contextServicesMiddleware } from './middleware/services';
 import { IModuleService } from './interfaces';
+
+const cookiesMiddleware = require('universal-cookie-express');
 
 export function expressApp(options: IModuleService, middlewares, http?) {
     const app: express.Express = express();
