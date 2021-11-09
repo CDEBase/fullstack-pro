@@ -12,8 +12,8 @@
     "prebuild": "yarn build:clean",
     "build": "cross-env NODE_ENV=production yarn build:dist",
     "build:clean": "rimraf dist",
-    "build:dist": "webpack",
     "build:debug": "cross-env DEBUGGING=true NODE_ENV=production yarn build:dist",
+    "build:dist": "webpack",
     "build:watch": "yarn build:dist -- --watch",
     "cli": "moleculer connect --config ./dist/moleculer.config.js",
     "cli:dev": " cross-env ENV_FILE=../../config/development/dev.env yarn cli",
@@ -73,6 +73,9 @@
     "cross-env": "^6.0.3",
     "pm2": "^4.2.1",
     "rimraf": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@cdm-logger/core": "*"
   },
   "engines": {
     "node": ">= 8.x.x"
