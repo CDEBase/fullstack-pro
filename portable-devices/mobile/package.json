@@ -133,7 +133,6 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-router-native": "^5.2.0",
-    "react-router-redux": "^5.0.0-alpha.8",
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

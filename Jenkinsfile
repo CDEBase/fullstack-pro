@@ -53,7 +53,7 @@ pipeline {
     stage('define environment') {
       steps {
         // skip the build if ends with `[skip ci]` which is equivalent to regex `.*\[skip ci\]$`
-        scmSkip(deleteBuild: true, skipPattern:'.*\\[skip ci\\]$')
+        scmSkip(deleteBuild: true, skipPattern:'.*\\[skip ci\\]\\s')
         checkout([$class: 'GitSCM', branches: [[name: '*/'+ params.REPOSITORY_BRANCH]],
         doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']],
         submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
