@@ -20,10 +20,8 @@ import { History } from 'history';
 import { persistReducer, PersistConfig } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
-const getStoreReducer = (reducers: ReducersMapObject) =>
-    combineReducers({
-        ...reducers,
-    });
+// do not expand the reducer due to issue https://github.com/cdmbase/fullstack-pro/issues/224
+const getStoreReducer = (reducers: ReducersMapObject) => combineReducers(reducers);
 interface IReduxStore<S = any> {
     history: History;
     scope: 'browser' | 'server' | 'native';
