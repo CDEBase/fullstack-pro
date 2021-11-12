@@ -24,7 +24,7 @@ async function renderServerSide(req, res) {
         const { apolloClient: client } = createClientContainer();
 
         let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
-        const store = createReduxStore();
+        const { store } = createReduxStore();
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(

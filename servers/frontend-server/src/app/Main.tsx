@@ -9,7 +9,6 @@ import { rehydrate } from 'fela-dom';
 // import { epic$ } from '../config/epic-config';
 import {
   createReduxStore,
-  history,
 } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
@@ -20,7 +19,7 @@ import { ErrorBoundary } from './ErrorBoundary';
 
 const { apolloClient: client } = createClientContainer();
 
-const store = createReduxStore();
+const { store, history } = createReduxStore();
 
 export class Main extends React.Component<{}, {}> {
 

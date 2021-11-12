@@ -13,7 +13,7 @@ import modules, { logger } from '../modules';
 import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
 
-export const history = require('./router-history');
+const history = require('./router-history');
 
 const { apolloClient, container, services } = createClientContainer();
 
@@ -48,7 +48,7 @@ export const createReduxStore = (url = '/') => {
     // only in server side, url will be passed.
     const newHistory = __CLIENT__ ? history : history(url);
     // middleware
-    const router = connectRouter(history);
+    const router = connectRouter(newHistory);
 
     let store;
     if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
@@ -56,7 +56,9 @@ export const createReduxStore = (url = '/') => {
         store = (module as any).hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
-        store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
+        store.replaceReducer(
+            persistReducer(persistConfig, storeReducer((module as any).hot.data.history || newHistory)),
+        );
         // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
     } else {
         // If we have preloaded state, save it.
@@ -71,7 +73,6 @@ export const createReduxStore = (url = '/') => {
             scope: __CLIENT__ ? 'browser' : 'server',
             isDebug: true,
             isDev: process.env.NODE_ENV === 'development',
-            history,
             initialState,
             persistConfig,
             middleware: [routerMiddleware(newHistory)],
@@ -97,5 +98,5 @@ export const createReduxStore = (url = '/') => {
         });
     }
     container.bind('ReduxStore').toConstantValue(store);
-    return store;
+    return { store, history };
 };

@@ -16,16 +16,10 @@ import {
     PreloadedState,
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
-import { History } from 'history';
 import { persistReducer, PersistConfig } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
-const getStoreReducer = (reducers: ReducersMapObject) =>
-    combineReducers({
-        ...reducers,
-    });
 interface IReduxStore<S = any> {
-    history: History;
     scope: 'browser' | 'server' | 'native';
     isDebug: boolean;
     isDev: boolean;
@@ -93,7 +87,7 @@ export const createReduxStore = ({
     const composeEnhancers: any =
         ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-    const rootReducer = getStoreReducer(reducers);
+    const rootReducer = combineReducers(reducers);
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
