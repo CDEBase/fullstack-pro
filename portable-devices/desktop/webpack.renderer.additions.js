@@ -63,7 +63,6 @@ const config = {
         'react-router',
         'react-router-config',
         'react-router-dom',
-        'react-router-redux',
         'react-transition-group',
         'connected-react-router',
         'history',
