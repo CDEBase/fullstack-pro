@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Header, Left, Right, Body, Text, Icon } from 'native-base';
-import { useHistory } from 'react-router-native';
 
 const MainHeader = (props: any) => {
   const[isToggle, setIsToggle] = useState(false);
@@ -14,9 +13,6 @@ const MainHeader = (props: any) => {
     setIsToggle(!isToggle)
   }
 
-
-
-  const history = useHistory();
   return (
     <Header style={{ backgroundColor: '#1f1f1f' }}>
       <Left>
