@@ -53,3 +53,5 @@ node_modules
 .idea
 *.DS_Store
 .DS_Store
+dump.rdb
+v8-compile-cache-0
