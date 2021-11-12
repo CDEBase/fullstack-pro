@@ -8,6 +8,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
+import thunkMiddleware from 'redux-thunk';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { createClientContainer } from './client.service';
@@ -75,7 +76,7 @@ export const createReduxStore = (url = '/') => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [routerMiddleware(newHistory)],
+            middleware: [thunkMiddleware, routerMiddleware(newHistory)],
             epicMiddleware,
             rootEpic: rootEpic as any,
             reducers: { router, ...modules.reducers },

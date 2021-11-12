@@ -1,4 +1,4 @@
-// version 11/06/2021
+// version 11/12/2021
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -17,10 +17,9 @@ import {
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
-import thunkMiddleware from 'redux-thunk';
 
 interface IReduxStore<S = any> {
-    scope: 'browser' | 'server' | 'native';
+    scope: 'browser' | 'server' | 'native' | 'ElectronMain';
     isDebug: boolean;
     isDev: boolean;
     reducers: ReducersMapObject<S>;
@@ -50,11 +49,12 @@ export const createReduxStore = ({
     persistConfig,
 }: IReduxStore<any>) => {
     const isBrowser = scope === 'browser';
+    const isElectronMain = scope === 'ElectronMain';
     /**
      * Add middleware that required for this app.
      */
 
-    const middlewares: Middleware[] = [thunkMiddleware];
+    const middlewares: Middleware[] = [];
     // add epicMiddleware
     if (epicMiddleware) {
         middlewares.push(epicMiddleware);
@@ -91,7 +91,7 @@ export const createReduxStore = ({
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
-    if (isBrowser) {
+    if (isBrowser || isElectronMain) {
         // no SSR for now
         if (epicMiddleware) {
             epicMiddleware.run(rootEpic);
