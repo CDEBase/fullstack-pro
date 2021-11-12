@@ -1,3 +1,4 @@
+// version 11/12/2021
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -15,17 +16,10 @@ import {
     PreloadedState,
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
-import { History } from 'history';
 import { persistReducer, PersistConfig } from 'redux-persist';
 
-const getStoreReducer = (reducers: ReducersMapObject) =>
-    combineReducers({
-        ...reducers,
-    });
-
-interface IReduxStore<S> {
-    history: History;
-    scope: 'browser' | 'server' | 'native';
+interface IReduxStore<S = any> {
+    scope: 'browser' | 'server' | 'native' | 'ElectronMain';
     isDebug: boolean;
     isDev: boolean;
     reducers: ReducersMapObject<S>;
@@ -51,11 +45,11 @@ export const createReduxStore = ({
     preMiddleware,
     postMiddleware,
     middleware,
-    history,
     initialState = {},
     persistConfig,
 }: IReduxStore<any>) => {
     const isBrowser = scope === 'browser';
+    const isElectronMain = scope === 'ElectronMain';
     /**
      * Add middleware that required for this app.
      */
@@ -93,11 +87,11 @@ export const createReduxStore = ({
     const composeEnhancers: any =
         ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-    const rootReducer = getStoreReducer(reducers);
+    const rootReducer = combineReducers(reducers);
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
-    if (isBrowser) {
+    if (isBrowser || isElectronMain) {
         // no SSR for now
         if (epicMiddleware) {
             epicMiddleware.run(rootEpic);
