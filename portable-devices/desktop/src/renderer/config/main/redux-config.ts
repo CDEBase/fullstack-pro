@@ -46,7 +46,6 @@ export const createReduxStore = () => {
         scope: 'browser',
         isDebug: __DEBUGGING__,
         isDev,
-        history,
         initialState: {},
         persistConfig,
         middleware: [routerMiddleware(history)],
