@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -113,8 +113,8 @@
     "dataloader": "^2.0.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
