@@ -9,24 +9,11 @@
       "node": "14.17.3",
       "env": {
         "NODE_ENV": "development",
-        "GRAPHQL_URL": "https://ideback-adminide-v1.cdebase.io/graphql",
-        "FACEBOOK_APP_ID": "lklkl",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
         "GA_ID": "jjj",
         "LOG_LEVEL": "trace",
         "CLIENT_URL": "http://localhost:3000",
-        "AUTH0_CLIENT_ID": "T9XM292l33Xb12RVPvRIfrb5hYTZsRme",
-        "AUTH0_DOMAIN": "dev-cdebase.auth0.com",
-        "AUTH0_API_AUDIENCE": "https://dev-cdebase.auth0.com/api/v2/",
-        "AUTH0_REALM": "Username-Password-Authentication",
-        "AUTH0_MOBILE_CLIENT_ID": "KnANdJEt0NDRXmeuBGmq84eVamu9kvkc",
-        "AUTH0_AUTHENTICATION_CUSTOM_API_IDENTIFIER": "https://www.cdmbase.com/v1/",
-        "AUTH0_TOKEN_GRANTED_TIME": "0",
-        "CALLBACK_REDIRECT_URL": "http://localhost:3000/callback/",
-        "POPUP_REDIRECT_URL": "http://localhost:3000/authenticate-popup/",
-        "APP_NAME": "adminide-stack",
-        "PAYPAL_ENVIRONMENT": "paypal-sandbox",
-        "STRIPE_PUBLISHABLE_KEY": "pk_test_51HQgS0FHfltkrCPTfVDF27N3s2JNFbfD5W9gDvRbmg5Wx35Xl45uiXi1GU4w98Vm2XFzket5DlgEQ38tEtbDPzYC00r0BNMIJj",
-        "DEFAULT_EXTENDED_RENEWAL_TIME": "43200000"
+        "APP_NAME": "fullstack-pro"
       }
     },
     "preview": {
@@ -34,48 +21,22 @@
       "distribution": "internal",
       "env": {
         "NODE_ENV": "development",
-        "GRAPHQL_URL": "https://ideback-adminide-v1.cdebase.io/graphql",
-        "FACEBOOK_APP_ID": "lklkl",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
         "GA_ID": "jjj",
         "LOG_LEVEL": "trace",
         "CLIENT_URL": "http://localhost:3000",
-        "AUTH0_CLIENT_ID": "T9XM292l33Xb12RVPvRIfrb5hYTZsRme",
-        "AUTH0_DOMAIN": "dev-cdebase.auth0.com",
-        "AUTH0_API_AUDIENCE": "https://dev-cdebase.auth0.com/api/v2/",
-        "AUTH0_REALM": "Username-Password-Authentication",
-        "AUTH0_MOBILE_CLIENT_ID": "KnANdJEt0NDRXmeuBGmq84eVamu9kvkc",
-        "AUTH0_AUTHENTICATION_CUSTOM_API_IDENTIFIER": "https://www.cdmbase.com/v1/",
-        "AUTH0_TOKEN_GRANTED_TIME": "0",
-        "CALLBACK_REDIRECT_URL": "http://localhost:3000/callback/",
-        "POPUP_REDIRECT_URL": "http://localhost:3000/authenticate-popup/",
-        "APP_NAME": "adminide-stack",
-        "PAYPAL_ENVIRONMENT": "paypal-sandbox",
-        "STRIPE_PUBLISHABLE_KEY": "pk_test_51HQgS0FHfltkrCPTfVDF27N3s2JNFbfD5W9gDvRbmg5Wx35Xl45uiXi1GU4w98Vm2XFzket5DlgEQ38tEtbDPzYC00r0BNMIJj",
-        "DEFAULT_EXTENDED_RENEWAL_TIME": "43200000"
+        "APP_NAME": "fullstack-pro"
       }
     },
     "production": {   
       "node": "14.17.3",
       "env": {
         "NODE_ENV": "development",
-        "GRAPHQL_URL": "https://ideback-adminide-v1.cdebase.io/graphql",
-        "FACEBOOK_APP_ID": "lklkl",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
         "GA_ID": "jjj",
         "LOG_LEVEL": "trace",
         "CLIENT_URL": "http://localhost:3000",
-        "AUTH0_CLIENT_ID": "T9XM292l33Xb12RVPvRIfrb5hYTZsRme",
-        "AUTH0_DOMAIN": "dev-cdebase.auth0.com",
-        "AUTH0_API_AUDIENCE": "https://dev-cdebase.auth0.com/api/v2/",
-        "AUTH0_REALM": "Username-Password-Authentication",
-        "AUTH0_MOBILE_CLIENT_ID": "KnANdJEt0NDRXmeuBGmq84eVamu9kvkc",
-        "AUTH0_AUTHENTICATION_CUSTOM_API_IDENTIFIER": "https://www.cdmbase.com/v1/",
-        "AUTH0_TOKEN_GRANTED_TIME": "0",
-        "CALLBACK_REDIRECT_URL": "http://localhost:3000/callback/",
-        "POPUP_REDIRECT_URL": "http://localhost:3000/authenticate-popup/",
-        "APP_NAME": "adminide-stack",
-        "PAYPAL_ENVIRONMENT": "paypal-sandbox",
-        "STRIPE_PUBLISHABLE_KEY": "pk_test_51HQgS0FHfltkrCPTfVDF27N3s2JNFbfD5W9gDvRbmg5Wx35Xl45uiXi1GU4w98Vm2XFzket5DlgEQ38tEtbDPzYC00r0BNMIJj",
-        "DEFAULT_EXTENDED_RENEWAL_TIME": "43200000"
+        "APP_NAME": "fullstack-pro"
       }
     }
   },
