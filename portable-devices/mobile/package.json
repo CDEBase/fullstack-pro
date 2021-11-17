@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "build:clean": "rimraf build .expo .tmp",
     "build:configure": "eas build:configure",
-    "build:eas": "eas build --profile preview --local -p ios --clear-cache",
+    "build:eas": "eas build --profile preview -p ios --clear-cache",
     "cli": "node ../../tools/cli",
     "eslint": "eslint --fix --ext js --ext jsx --ext json src",
     "exp-login": "cross-env NODE_ENV=production expo login -u $EXP_USERNAME -p $EXP_PASSWORD --non-interactive",
