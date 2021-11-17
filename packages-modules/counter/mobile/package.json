@@ -39,12 +39,10 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "0.0.51-alpha.60",
-    "antd": "^4.5.2"
+    "antd": "~4.15.3"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
-    "@common-stack/client-react-native": "*",
-    "@react-navigation/drawer": "*",
     "native-base": "*",
     "react": "*",
     "react-native": "*",
