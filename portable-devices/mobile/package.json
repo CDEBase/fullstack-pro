@@ -9,6 +9,7 @@
     "build:configure": "eas build:configure",
     "build:eas": "eas build --profile preview -p ios --clear-cache",
     "cli": "node ../../tools/cli",
+    "eas-build-post-install": "lerna exec --scope=@sample-stack/core --scope=@sample-stack/counter-module-mobile yarn build",
     "eslint": "eslint --fix --ext js --ext jsx --ext json src",
     "exp-login": "cross-env NODE_ENV=production expo login -u $EXP_USERNAME -p $EXP_PASSWORD --non-interactive",
     "exp-publish": "yarn exp-login && yarn expo p --non-interactive",
@@ -140,7 +141,8 @@
     "cross-env": "^6.0.3",
     "eslint-plugin-react-native": "^3.8.1",
     "expo-yarn-workspaces": "^1.6.0",
-    "jest-expo": "^43.0.0"
+    "jest-expo": "^43.0.0",
+    "lerna": "^4.0.0"
   },
   "peerDependencies": {
     "webpack": "*"
