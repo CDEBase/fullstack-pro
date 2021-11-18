@@ -59,7 +59,6 @@ const config = {
         'react-fela',
         'react-helmet',
         'react-loadable',
-        'react-resizable',
         'react-router',
         'react-router-config',
         'react-router-dom',
