@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-desktop",
-  "version": "0.0.51-alpha.74",
+  "version": "0.0.51-alpha.75",
   "private": true,
   "description": "App is based on Electron, React, Redux and NodeJS as a back end",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
@@ -40,6 +40,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.5",
     "@ant-design/icons": "^4.2.2",
+    "@apollo/client": "~3.3.21",
     "@cdm-logger/client": "^7.0.8",
     "@cdm-logger/electron": "^7.0.7",
     "@common-stack/client-core": "0.1.11",
@@ -51,7 +52,6 @@
     "@sample-stack/counter-module-electron": "link:../../packages-modules/counter/electron",
     "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
     "antd": "~4.15.3",
-    "@apollo/client": "~3.3.21",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",

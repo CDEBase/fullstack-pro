@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.51-alpha.75](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.74...v0.0.51-alpha.75) (2021-11-18)
+
+**Note:** Version bump only for package @sample-stack/counter-module-electron
+
+
+
+
+
 ## [0.0.51-alpha.62](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.61...v0.0.51-alpha.62) (2021-10-01)
 
 **Note:** Version bump only for package @sample-stack/counter-module-electron
