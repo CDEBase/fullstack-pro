@@ -4909,6 +4909,12 @@
   dependencies:
     "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
 
+"@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
+  version "0.0.1"
+  dependencies:
+    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
+    antd "~4.15.3"
+
 "@sample-stack/counter-module-server@link:packages-modules/counter/server":
   version "0.0.1"
 
