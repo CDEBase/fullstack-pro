@@ -4896,37 +4896,23 @@
     picomatch "^2.2.2"
 
 "@sample-stack/core@link:packages/sample-core":
-  version "0.0.1"
+  version "0.0.51-alpha.75"
 
 "@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
-  version "0.0.1"
+  version "0.0.51-alpha.75"
   dependencies:
-    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
+    "@sample-stack/platform-browser" "0.0.51-alpha.75"
     antd "~4.15.3"
 
 "@sample-stack/counter-module-electron@link:packages-modules/counter/electron":
-  version "0.0.1"
+  version "0.0.51-alpha.75"
   dependencies:
-    "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
-
-"@sample-stack/counter-module-server@link:packages-modules/counter/server":
-  version "0.0.1"
+    "@sample-stack/counter-module-browser" "0.0.51-alpha.75"
 
 "@sample-stack/platform-browser@link:packages/sample-platform/browser":
-  version "0.0.1"
+  version "0.0.51-alpha.75"
   dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/platform-server@link:packages/sample-platform/server":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/store@link:packages/sample-store":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-    sequelize "^5.21.3"
+    "@sample-stack/core" "0.0.51-alpha.75"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
