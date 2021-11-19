@@ -13,12 +13,12 @@ export default new Feature({
         component: NativeBaseSample,
       } as any,
     },
-    {
-      '/org': {
-        exact: false,
-        component: Layout,
-        key: 'layout',
-      } as any,
-    },
+    // {
+    //   '/org': {
+    //     exact: false,
+    //     component: Layout,
+    //     key: 'layout',
+    //   } as any,
+    // },
   ],
 });
