@@ -20,6 +20,7 @@ module.exports = async function (env, argv) {
     config.plugins.push(
         new webpack.DefinePlugin({
             __CLIENT__: true,
+            __DEBUGGING__: false,
         }),
     );
     return config;

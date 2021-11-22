@@ -127,7 +127,7 @@
     "rxjs-compat": "^6.5.3",
     "rxjs-hooks": "^0.5.2",
     "sentry-expo": "~4.0.0",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "0.9.18"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

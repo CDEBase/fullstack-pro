@@ -38,7 +38,7 @@ export const createReduxStore = () => {
 
     const store = createBaseReduxStore({
         scope: 'browser',
-        isDebug: true,
+        isDebug: __DEBUGGING__,
         isDev: process.env.NODE_ENV === 'development',
         initialState: {},
         persistConfig,
