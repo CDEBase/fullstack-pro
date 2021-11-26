@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "android": "expo run:android",
-    "build:android": "eas build --profile preview -p ios --clear-cache",
+    "build:android": "eas build --profile preview -p android --clear-cache",
     "build:clean": "rimraf build .expo .tmp",
     "build:configure": "eas build:configure",
     "build:ios": "eas build --profile preview -p ios --clear-cache",
