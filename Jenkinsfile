@@ -29,7 +29,7 @@ pipeline {
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -39,6 +39,7 @@ pipeline {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
+    EXPO_TOKEN = credentials('expo_cdmbase_token')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
     GITHUB_HELM_REPO_TOKEN = credentials('github-helm-repo-access-token')
   }
@@ -90,6 +91,17 @@ pipeline {
             ${params.BUILD_STRATEGY} run lerna
           """
        }
+    }
+
+    stage ('Mobile Build'){
+      when {
+        expression { params.ENV_CHOICE == 'mobileBuild' }
+      }
+      steps{
+        sh """
+            lerna exec --scope=*mobile ${params.BUILD_STRATEGY} build:auto
+        """
+      }
     }
 
     // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
