@@ -12,7 +12,16 @@ const globals = { react: 'React' };
 
 export default [
     bundle({
-        plugins: [typescript({ noEmitOnError: true }), image(), graphql()],
+        plugins: [
+            image(),
+            graphql({
+                include: "**/*.gql"
+            }),
+            string({
+                include: "**/*.graphql"
+            }),
+            typescript({ noEmitOnError: true }),
+        ],
         output: [
             {
                 dir: 'lib',
