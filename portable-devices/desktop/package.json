@@ -1,5 +1,5 @@
 {
-  "name": "sample-stack-desktop",
+  "name": "sample-stack-desktop-device",
   "version": "0.0.1",
   "private": true,
   "description": "App is based on Electron, React, Redux and NodeJS as a back end",

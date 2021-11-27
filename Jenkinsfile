@@ -99,7 +99,7 @@ pipeline {
       }
       steps{
         sh """
-            lerna exec --scope=*mobile ${params.BUILD_STRATEGY} build:auto
+            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} build:auto
         """
       }
     }
