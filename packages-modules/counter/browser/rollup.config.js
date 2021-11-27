@@ -1,6 +1,7 @@
 import graphql from '@rollup/plugin-graphql';
 import image from '@rollup/plugin-image';
 import typescript from '@rollup/plugin-typescript';
+import { string } from 'rollup-plugin-string';
 
 const bundle = (config) => ({
     ...config,
