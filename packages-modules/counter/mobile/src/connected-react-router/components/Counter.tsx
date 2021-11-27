@@ -42,6 +42,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export const Counter = connect<CounterStateProps, CounterDispatchProps>(
-    mapStateToProps,
+    mapStateToProps as any,
     mapDispatchToProps,
 )(CounterScreen);

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react';
 import { StyleSheet, View, Text, ViewStyle } from 'react-native';
-import { Footer, Content } from 'native-base';
+import {  Box } from 'native-base';
 import { connect } from 'react-redux';
 
 interface Style {
@@ -12,14 +12,14 @@ interface Style {
 const HelloScreen = () => {
     return (
         <View style={styles.container}>
-            <Content>
+            <Box>
                 <Text>Hello Value</Text>
-            </Content>
-            <Footer style={{ position: 'absolute', left: 0, right: 0, bottom: 0 }}>
+            </Box>
+            <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0 }}>
                 <View>
                     <Text>Footer will be here</Text>
                 </View>
-            </Footer>
+            </Box>
         </View>
     );
 };
