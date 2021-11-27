@@ -29,7 +29,7 @@ pipeline {
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -95,11 +95,11 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' }
       }
       steps{
         sh """
-            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} build:auto
+            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
         """
       }
     }
@@ -422,6 +422,12 @@ pipeline {
 }
 
 def getBuildCommand(){
+  if(params.ENV_CHOICE == 'mobileBuild'){
+    return 'build:auto'
+  }
+  if(params.ENV_CHOICE == 'mobilePreview'){
+    return 'build:preview'
+  }
   if(params.ENABLE_DEBUG.toBoolean()){
     return 'build:debug'
   } else {

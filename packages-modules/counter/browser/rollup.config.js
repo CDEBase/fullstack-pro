@@ -16,10 +16,10 @@ export default [
         plugins: [
             image(),
             graphql({
-                include: "**/*.gql"
+                include: '**/*.gql',
             }),
             string({
-                include: "**/*.graphql"
+                include: '**/*.graphql',
             }),
             typescript({ noEmitOnError: true }),
         ],
