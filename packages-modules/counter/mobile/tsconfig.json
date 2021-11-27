@@ -1,29 +1,31 @@
 {
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "target": "esnext",
     "jsx": "react-native",
     "lib": ["es2017"],
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "strict": true,
-    "target": "esnext"
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "rootDir": "src",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationDir": "lib",
+    "types": [
+      "@types/node",
+      "@types/jest",
+      "../../../typings",
+    ],
+    "skipLibCheck": true
   },
+  "include": ["src"],
   "exclude": [
     "node_modules",
-    "**/*.test.ts",
-    "native-base",
-    "babel.config.js",
-    "metro.config.js",
-    "jest.config.js",
-    "../../../node_modules/**",
-    "node_modules/hoist-non-react-statics/**",
     "lib",
-    "dist",
-    "webpack.config.js"
+    "jest.config.js",
+    "webpack.config.js",
+    "rollup.config.js"
   ]
 }
