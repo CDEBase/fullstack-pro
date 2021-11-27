@@ -20,7 +20,7 @@
       }
     },
     "preview": {
-      "extends": "development",
+      "extends": "production",
       "node": "14.17.3",
       "distribution": "internal",
       "env": {
