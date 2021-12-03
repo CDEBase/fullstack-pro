@@ -22,11 +22,6 @@ const { apolloClient: client } = createClientContainer();
 const { store, history } = createReduxStore();
 
 export class Main extends React.Component<{}, {}> {
-
-  componentDidMount() {
-    store.dispatch({ type: '@@REDUX_INIT' })
-  }
-
   public render() {
     const renderer = createRenderer();
     let persistor = persistStore(store);

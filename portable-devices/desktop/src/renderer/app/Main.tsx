@@ -48,9 +48,6 @@ if ((module as any).hot) {
 }
 
 export class Main extends React.Component<{}, {}> {
-    componentDidMount() {
-        store.dispatch({ type: '@@REDUX_INIT' })
-    }
     render() {
         const renderer = createRenderer();
         const persistor = persistStore(store);
