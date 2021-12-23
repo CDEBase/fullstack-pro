@@ -382,7 +382,7 @@ pipeline {
           // Assign the 'DO_RELEASE' environment variable that is going
           //  to be used in the next stage.
           env.DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
-                                        parameters:[choice(choices:  ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT')]
+                                        parameters:[choice(choices:  ['yes', 'no'], description: "Deploy branch '${GIT_BRANCH_NAME}' in Production?", name: 'PROD_DEPLOYMENT')]
         }
         // In case you approved multiple pipeline runs in parallel, this
         // milestone would kill the older runs and prevent deploying
