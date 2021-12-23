@@ -87,7 +87,7 @@ pipeline {
       options {
         // Optionally, let's add a timeout that we don't allow ancient
         // builds to be released.
-        timeout time: 14, unit: 'DAYS' 
+        timeout time: 900, unit: 'SECONDS' 
       }
       steps {
         // Optionally, send some notifications to the approver before
@@ -112,8 +112,6 @@ pipeline {
       }
     }
     stage('Release') {
-      // We need a real agent, because we want to do some real work.
-      agent any
       when {
       // Evaluate the 'when' directive before allocating the agent.
       beforeAgent true
