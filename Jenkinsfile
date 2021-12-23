@@ -93,7 +93,7 @@ pipeline {
         // Optionally, send some notifications to the approver before
         // asking for input. You can't do that with the input directive
         // without using an extra stage.
-        slackSend (color: '#FF0000', message: "Approve Release:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  to be approved. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+        slackSend (color: '#2596BE', message: "Approval Needed for Production Release:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  to be approved. Click <${env.RUN_DISPLAY_URL}|here> to approve it.", channel: 'idestack-automation')
 
         // The input statement has to go to a script block because we
         // want to assign the result to an environment variable. As we 
@@ -130,7 +130,7 @@ pipeline {
           milestone 2
 
           // Now do the actual work here.
-          slackSend (color: '#FF0000', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+          slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
         }
       }
     }
