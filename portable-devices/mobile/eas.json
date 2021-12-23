@@ -6,6 +6,9 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
       "node": "14.17.3",
       "env": {
         "NODE_ENV": "development",
@@ -17,6 +20,7 @@
       }
     },
     "preview": {
+      "extends": "production",
       "node": "14.17.3",
       "distribution": "internal",
       "env": {

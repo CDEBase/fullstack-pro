@@ -41,8 +41,12 @@
     "@sample-stack/platform-browser": "0.0.51-alpha.75",
     "antd": "~4.15.3"
   },
+  "devDependencies": {},
   "peerDependencies": {
     "@common-stack/client-react": "*",
+    "@rollup/plugin-graphql": "*",
+    "@rollup/plugin-image": "*",
+    "@rollup/plugin-typescript": "*",
     "react": "*",
     "react-native": "*",
     "react-redux": "*",
@@ -50,6 +54,7 @@
     "react-router-dom": "*",
     "redux": "*",
     "redux-observable": "*",
+    "rollup-plugin-string": "*",
     "rxjs": "*"
   },
   "publishConfig": {

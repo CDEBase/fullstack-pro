@@ -15,7 +15,7 @@ import {
   createReduxStore,
   history,
 } from './config/redux-config';
-import { Root } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import { createClientContainer } from './config/client.service';
 
 const { apolloClient: client, container } = createClientContainer();
@@ -27,7 +27,7 @@ export default function App() {
 
   let persistor = persistStore(store as any);
   return (
-    <Root>
+    <NativeBaseProvider>
       <SafeAreaProvider>
         <Provider store={store}>
           <ApolloProvider client={client}>
@@ -41,7 +41,7 @@ export default function App() {
           </ApolloProvider>
         </Provider>
       </SafeAreaProvider>
-    </Root>
+    </NativeBaseProvider>
   );
 }
 

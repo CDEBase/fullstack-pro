@@ -1,9 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
-const { createWebpackConfigAsync } = require('expo-yarn-workspaces/webpack');
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
 
 module.exports = async function (env, argv) {
-    const config = await createWebpackConfigAsync(env, argv);
+    const config = await createExpoWebpackConfigAsync(env, argv);
 
     config.module.rules.push(
         {
@@ -20,6 +20,7 @@ module.exports = async function (env, argv) {
     config.plugins.push(
         new webpack.DefinePlugin({
             __CLIENT__: true,
+            __DEBUGGING__: false,
         }),
     );
     return config;
