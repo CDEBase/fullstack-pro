@@ -80,10 +80,10 @@ pipeline {
       // Don't allocate an agent because we don't want to block our
       // slaves while waiting for user input.
       agent none
-      when {
-        // You forgot the 'env.' in your example above ;)
-        // expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
-      }
+      // when {
+      //   // You forgot the 'env.' in your example above ;)
+      //   // expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
+      // }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
         // builds to be released.
