@@ -59,10 +59,6 @@ pipeline {
         doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']],
         submoduleCfg: [], userRemoteConfigs: [[credentialsId: params.GIT_CREDENTIAL_ID, url: params.REPOSITORY_SSH_URL]]])
         sh "git checkout ${env.GIT_PR_BRANCH_NAME}"
-
-        // env.NODEJS_HOME = "${tool 'node_v8'}"
-  	    // env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-  	    //sh 'npm --version'
       }
     }
 
