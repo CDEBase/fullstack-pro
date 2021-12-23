@@ -136,7 +136,7 @@ pipeline {
         milestone 2
 
         // Now do the actual work here.
-        ...
+        slackSend (color: '#FF0000', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
       }
     }
 
