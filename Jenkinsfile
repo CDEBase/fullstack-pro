@@ -362,7 +362,6 @@ pipeline {
       when {
         expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
-        beforeInput true
       }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
