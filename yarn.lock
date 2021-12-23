@@ -4907,7 +4907,16 @@
 "@sample-stack/counter-module-electron@link:packages-modules/counter/electron":
   version "0.0.51-alpha.75"
   dependencies:
-    "@sample-stack/counter-module-browser" "0.0.51-alpha.75"
+    "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
+
+"@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
+  version "0.0.1"
+  dependencies:
+    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
+    antd "~4.15.3"
+
+"@sample-stack/counter-module-server@link:packages-modules/counter/server":
+  version "0.0.1"
 
 "@sample-stack/platform-browser@link:packages/sample-platform/browser":
   version "0.0.51-alpha.75"
