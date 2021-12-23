@@ -76,81 +76,81 @@ pipeline {
       }
     }
 
-  stage('Release?') {
-    // Don't allocate an agent because we don't want to block our
-    // slaves while waiting for user input.
-    agent none
-    when {
-      // You forgot the 'env.' in your example above ;)
-      expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
-    }
-    options {
-      // Optionally, let's add a timeout that we don't allow ancient
-      // builds to be released.
-      timeout time: 14, unit: 'DAYS' 
-    }
-    steps {
-      // Optionally, send some notifications to the approver before
-      // asking for input. You can't do that with the input directive
-      // without using an extra stage.
-      slackSend (color: '#FF0000', message: "Approve Release:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  to be approved. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+    stage('Release?') {
+      // Don't allocate an agent because we don't want to block our
+      // slaves while waiting for user input.
+      agent none
+      when {
+        // You forgot the 'env.' in your example above ;)
+        expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
+      }
+      options {
+        // Optionally, let's add a timeout that we don't allow ancient
+        // builds to be released.
+        timeout time: 14, unit: 'DAYS' 
+      }
+      steps {
+        // Optionally, send some notifications to the approver before
+        // asking for input. You can't do that with the input directive
+        // without using an extra stage.
+        slackSend (color: '#FF0000', message: "Approve Release:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  to be approved. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
 
-      // The input statement has to go to a script block because we
-      // want to assign the result to an environment variable. As we 
-      // want to stay as declarative as possible, we put noting but
-      // this into the script block.
-      script {
-        // Assign the 'DO_RELEASE' environment variable that is going
-        //  to be used in the next stage.
-        env.DO_RELEASE = input {
-          message "Want to deploy fullstack-pro on prod cluster?"
-          parameters {
-            choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
+        // The input statement has to go to a script block because we
+        // want to assign the result to an environment variable. As we 
+        // want to stay as declarative as possible, we put noting but
+        // this into the script block.
+        script {
+          // Assign the 'DO_RELEASE' environment variable that is going
+          //  to be used in the next stage.
+          env.DO_RELEASE = input {
+            message "Want to deploy fullstack-pro on prod cluster?"
+            parameters {
+              choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
+            }
           }
         }
+        // In case you approved multiple pipeline runs in parallel, this
+        // milestone would kill the older runs and prevent deploying
+        // older releases over newer ones.
+        milestone 1
       }
-      // In case you approved multiple pipeline runs in parallel, this
-      // milestone would kill the older runs and prevent deploying
-      // older releases over newer ones.
-      milestone 1
     }
-  }
-  stage('Release') {
-    // We need a real agent, because we want to do some real work.
-    agent any
-    when {
+    stage('Release') {
+      // We need a real agent, because we want to do some real work.
+      agent any
+      when {
       // Evaluate the 'when' directive before allocating the agent.
       beforeAgent true
       // Only execute the step when the release has been approved.
       environment name: 'DO_RELEASE', value: 'yes'
-    }
-    steps {
-      // Make sure that only one release can happen at a time.
-      lock('release') {
-        // As using the first milestone only would introduce a race 
-        // condition (assume that the older build would enter the 
-        // milestone first, but the lock second) and Jenkins does
-        // not support inter-stage locks yet, we need a second 
-        // milestone to make sure that older builds don't overwrite
-        // newer ones.
-        milestone 2
+      }
+      steps {
+        // Make sure that only one release can happen at a time.
+        lock('release') {
+          // As using the first milestone only would introduce a race 
+          // condition (assume that the older build would enter the 
+          // milestone first, but the lock second) and Jenkins does
+          // not support inter-stage locks yet, we need a second 
+          // milestone to make sure that older builds don't overwrite
+          // newer ones.
+          milestone 2
 
-        // Now do the actual work here.
-        slackSend (color: '#FF0000', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+          // Now do the actual work here.
+          slackSend (color: '#FF0000', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+        }
       }
     }
 
-  }
-
-  post {
-    always {
-      deleteDir()
-    }
-    success{
-      slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job success. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
-    }
-    failure{
-      slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+    post {
+      always {
+        deleteDir()
+      }
+      success{
+        slackSend (color: '#00FF00', message: "SUCCESSFUL:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job success. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+      }
+      failure{
+        slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+      }
     }
   }
 }
@@ -297,12 +297,12 @@ def getVersion(json_file_path){
   def inputFile = readFile(json_file_path)
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def version = InputJSON.version
-return version
+  return version
 }
 
 def getName(json_file_path){
   def inputFile = readFile(json_file_path)
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def name = InputJSON.name
-return name
+  return name
 }
