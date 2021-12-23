@@ -82,7 +82,7 @@ pipeline {
       agent none
       when {
         // You forgot the 'env.' in your example above ;)
-        expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
+        // expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
       }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
