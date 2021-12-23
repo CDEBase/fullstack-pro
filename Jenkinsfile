@@ -34,7 +34,7 @@ pipeline {
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
- // Setup common + secret key variables for pipeline.
+  // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
@@ -200,7 +200,7 @@ pipeline {
         }
     }
 
-  // Below are dev stages
+    // Below are dev stages
     stage('Dev deployment') {
       environment{
           deployment_env = 'dev'
@@ -234,7 +234,7 @@ pipeline {
       }
     } // End of dev deployment code block.
 
-  // Only master branch will be merged
+    // Only master branch will be merged
     stage ('Merge Develop to master & Install'){
       when {
         expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
@@ -267,7 +267,7 @@ pipeline {
       }
     }
 
-  // publish packages to npm repository.
+    // publish packages to npm repository.
     // commit new package-lock.json that might get generated during install
     // Build will be ignore with tag '[skip ci]'
     stage ('Prod Publish Packages'){
@@ -292,7 +292,7 @@ pipeline {
       }
     }
   
-  // Build Docker containers for production.
+    // Build Docker containers for production.
     stage('Prod Docker Images') {
       options {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
@@ -317,8 +317,7 @@ pipeline {
         }
     } // End of production docker build.
 
-
-  // Below are stage code block
+    // Below are stage code block
     stage('Stage Deployment') {
       options {
          timeout(time: 300, unit: 'SECONDS')
@@ -356,9 +355,43 @@ pipeline {
       }
     } // End of staging deployment code block.
 
+    stage('Release?') {
+      // Don't allocate an agent because we don't want to block our
+      // slaves while waiting for user input.
+      agent none
+      when {
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
+        beforeInput true
+      }
+      options {
+        // Optionally, let's add a timeout that we don't allow ancient
+        // builds to be released.
+        timeout time: 900, unit: 'SECONDS' 
+      }
+      steps {
+        // Optionally, send some notifications to the approver before
+        // asking for input. You can't do that with the input directive
+        // without using an extra stage.
+        slackSend (color: '#2596BE', message: "Approval Needed for Production Release:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  to be approved. Click <${env.RUN_DISPLAY_URL}|here> to approve it.", channel: 'idestack-automation')
 
-
-  // Below are production stages
+        // The input statement has to go to a script block because we
+        // want to assign the result to an environment variable. As we 
+        // want to stay as declarative as possible, we put noting but
+        // this into the script block.
+        script {
+          // Assign the 'DO_RELEASE' environment variable that is going
+          //  to be used in the next stage.
+          env.DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
+                                        parameters:[choice(choices:  ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT')]
+        }
+        // In case you approved multiple pipeline runs in parallel, this
+        // milestone would kill the older runs and prevent deploying
+        // older releases over newer ones.
+        milestone 1
+      }
+    }
+    // Below are production stages
     stage('Prod Deployment') {
       options {
         timeout(time: 300, unit: 'SECONDS')
@@ -367,16 +400,11 @@ pipeline {
         deployment_env = 'prod'
       }
       when {
-        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
         beforeInput true
-      }
-
-      input {
-        message "Want to deploy fullstack-pro on prod cluster?"
-        parameters {
-          choice choices: ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT'
-        }
+        // Evaluate the 'when' directive before allocating the agent.
+        beforeAgent true
+        // Only execute the step when the release has been approved.
+        environment name: 'DO_RELEASE', value: 'yes'
       }
 
       steps {
@@ -389,14 +417,27 @@ pipeline {
              helm repo update
            """
           script {
-            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            // Make sure that only one release can happen at a time.
+            lock('release') {
+              // As using the first milestone only would introduce a race 
+              // condition (assume that the older build would enter the 
+              // milestone first, but the lock second) and Jenkins does
+              // not support inter-stage locks yet, we need a second 
+              // milestone to make sure that older builds don't overwrite
+              // newer ones.
+              milestone 2
+              nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+              if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
             
-            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
-            def parallelStagesMap = servers.collectEntries {
-             ["${it}" : generateStage(it, deployment_env)]
+              def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+              def parallelStagesMap = servers.collectEntries {
+                ["${it}" : generateStage(it, deployment_env)]
+              }
+              parallel parallelStagesMap
+
+              // Now do the actual work here.
+              slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
             }
-            parallel parallelStagesMap
           }
        }
       }
@@ -432,7 +473,7 @@ def getBuildCommand(){
 }
 
 def getGitPrBranchName() {
-    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+  // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
   if(env.ghprbSourceBranch){
