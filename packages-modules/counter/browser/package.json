@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/counter-module-browser",
-  "version": "0.0.51-alpha.75",
+  "version": "0.0.51-alpha.77",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -41,7 +41,6 @@
     "@sample-stack/platform-browser": "0.0.51-alpha.75",
     "antd": "~4.15.3"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "@common-stack/client-react": "*",
     "@rollup/plugin-graphql": "*",
