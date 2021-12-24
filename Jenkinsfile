@@ -356,11 +356,8 @@ pipeline {
     } // End of staging deployment code block.
 
     stage('Release?') {
-      // Don't allocate an agent because we don't want to block our
-      // slaves while waiting for user input.
-      agent none
       when {
-        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
       }
       options {
@@ -400,8 +397,6 @@ pipeline {
       }
       when {
         beforeInput true
-        // Evaluate the 'when' directive before allocating the agent.
-        beforeAgent true
         // Only execute the step when the release has been approved.
         environment name: 'DO_RELEASE', value: 'yes'
       }
