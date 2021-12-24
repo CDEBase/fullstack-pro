@@ -34,7 +34,7 @@ pipeline {
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
- // Setup common + secret key variables for pipeline.
+  // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
@@ -76,14 +76,290 @@ pipeline {
       }
     }
 
+    // Install packages. If
+    // a. any branch
+    // b. ENV_CHOICE set not selected `dev`, `stage` or `prod`
+    stage ('Install git repository'){
+       steps{
+          sh """
+            echo "what is docker git version $GIT_BRANCH_NAME -- ${params.ENV_CHOICE}"
+            ${params.BUILD_STRATEGY} install
+            ${params.BUILD_STRATEGY} run lerna
+          """
+       }
+    }
+
+    stage ('Mobile Build'){
+      when {
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' }
+      }
+      steps{
+        sh """
+            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
+        """
+      }
+    }
+
+    // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Build Packages'){
+      when {
+        expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'buildAndTest' || params.ENV_CHOICE == 'buildAndPublish' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run build
+        """
+      }
+    }
+
+    // Test build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Test Packages'){
+      when {
+        expression { params.ENV_CHOICE == 'buildAndTest' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run test
+        """
+      }
+    }
+
+    // if PR is from branch other than `develop` then merge to `develop` if we chose ENV_CHOICE as 'buildAndPublish'.
+    // Skip this stage. Future implementation.
+    stage ('Merge PR, Install, Build'){
+      when {
+        expression { params.ENV_CHOICE == '1' }
+      }
+      steps{
+        sh """
+          git checkout ${params.DEVELOP_BRANCH}
+          git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging'
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
+        """
+        script {
+          GIT_BRANCH_NAME = params.DEVELOP_BRANCH
+        }
+      }
+    }
+
+    // publish packages to npm repository.
+    // commit new package-lock.json that might get generated during install
+    // Build will be ignore with tag '[skip ci]'
+    stage ('Publish Packages'){
+      when {
+        expression { GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
+        expression { params.ENV_CHOICE == 'buildOnly' ||  params.ENV_CHOICE == 'buildAndPublish' }
+      }
+      steps{
+        script {
+          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
+        }
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
+          sh """
+            git add -A
+            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git fetch origin ${params.DEVELOP_BRANCH}
+            git checkout ${params.DEVELOP_BRANCH}
+            ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
+            git push origin ${params.DEVELOP_BRANCH}
+            git checkout ${params.PUBLISH_BRANCH}
+          """
+        }
+      }
+    }
+
+    stage('Docker login'){
+      steps{
+        sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
+      }
+    }
+
+    stage('Dev Docker Images') {
+      options {
+         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
+       }
+      when {
+        // Docker build need be performed in PUBLISH branch only
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'buildOnly' }
+      }
+
+      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
+      environment{ deployment_env = 'dev' }
+        steps{
+          load "./jenkins_variables.groovy"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateBuildStage(it)]
+            }
+            parallel parallelStagesMap
+          }
+        }
+    }
+
+    // Below are dev stages
+    stage('Dev deployment') {
+      environment{
+          deployment_env = 'dev'
+      }
+      when {
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH ||  GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
+        expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
+        beforeInput true
+      }
+
+      steps {
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {         
+         sh """
+            helm repo add stable https://charts.helm.sh/stable
+            helm repo add incubator https://charts.helm.sh/incubator
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo update
+         """
+          script {
+
+            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
+          }
+        }
+      }
+    } // End of dev deployment code block.
+
+    // Only master branch will be merged
+    stage ('Merge Develop to master & Install'){
+      when {
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
+      }
+      steps{
+        sh """
+          git checkout ${params.REPOSITORY_BRANCH}
+          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging'
+          ${params.BUILD_STRATEGY} install
+          ${params.BUILD_STRATEGY} run lerna
+          ${params.BUILD_STRATEGY} run build
+        """
+        script {
+          GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
+        }
+      }
+    }
+  
+    // Run build for all cases except when ENV_CHOICE is 'buildAndPublish' and `dev`, `stage` or `prod`
+    stage ('Prod Build Packages'){
+      when {
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
+      }
+      steps{
+        sh """
+          ${params.BUILD_STRATEGY} run build
+        """
+      }
+    }
+
+    // publish packages to npm repository.
+    // commit new package-lock.json that might get generated during install
+    // Build will be ignore with tag '[skip ci]'
+    stage ('Prod Publish Packages'){
+      when {
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
+      }
+      steps{
+        script {
+          GIT_BRANCH_NAME=params.PUBLISH_BRANCH
+        }
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
+          sh """
+            git add -A
+            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git fetch origin ${params.MASTER_BRANCH}
+            git checkout ${params.MASTER_BRANCH}
+            ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
+            git checkout ${params.PUBLISH_BRANCH}
+          """
+        }
+      }
+    }
+  
+    // Build Docker containers for production.
+    stage('Prod Docker Images') {
+      options {
+         timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
+       }
+      when {
+        // required to be in Publish branch to build docker
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy' }
+      }
+
+      // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
+      environment{ deployment_env = 'prod' }
+        steps{
+          load "./jenkins_variables.groovy"
+          script {
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+             ["${it}" : generateBuildStage(it)]
+            }
+            parallel parallelStagesMap
+          }
+        }
+    } // End of production docker build.
+
+    // Below are stage code block
+    stage('Stage Deployment') {
+      options {
+         timeout(time: 300, unit: 'SECONDS')
+       }
+      environment{
+        deployment_env = 'stage'
+      }
+      when {
+        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
+        beforeInput true
+      }
+
+      steps {
+        load "./jenkins_variables.groovy"
+        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://0.0.0.0']) {
+          
+          sh """
+            helm repo add stable https://charts.helm.sh/stable
+            helm repo add incubator https://charts.helm.sh/incubator
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo update
+          """
+          script {
+            nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+
+            def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+            def parallelStagesMap = servers.collectEntries {
+              ["${it}" : generateStage(it, deployment_env)]
+            }
+            parallel parallelStagesMap
+          }
+        }
+      }
+    } // End of staging deployment code block.
+
     stage('Release?') {
-      // Don't allocate an agent because we don't want to block our
-      // slaves while waiting for user input.
-      agent none
-      // when {
-      //   // You forgot the 'env.' in your example above ;)
-      //   // expression { env.BRANCH_NAME ==~ /^qa[\w-_]*$/ }
-      // }
+      when {
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
+      }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
         // builds to be released.
@@ -103,7 +379,7 @@ pipeline {
           // Assign the 'DO_RELEASE' environment variable that is going
           //  to be used in the next stage.
           env.DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
-                                        parameters:[choice(choices:  ['yes', 'no'], description: 'Want to deploy micro service on prod?', name: 'PROD_DEPLOYMENT')]
+                                        parameters:[choice(choices:  ['yes', 'no'], description: 'Deploy branch in Production?', name: 'PROD_DEPLOYMENT')]
         }
         // In case you approved multiple pipeline runs in parallel, this
         // milestone would kill the older runs and prevent deploying
@@ -111,13 +387,21 @@ pipeline {
         milestone 1
       }
     }
-    stage('Release') {
-      when {
-      // Evaluate the 'when' directive before allocating the agent.
-      beforeAgent true
-      // Only execute the step when the release has been approved.
-      environment name: 'DO_RELEASE', value: 'yes'
+    // Below are production stages
+    stage('Prod Deployment') {
+      options {
+        timeout(time: 300, unit: 'SECONDS')
       }
+      environment{
+        deployment_env = 'prod'
+      }
+      when {
+        // Evaluate the 'when' directive before allocating the agent.
+        beforeAgent true
+        // Only execute the step when the release has been approved.
+        environment name: 'DO_RELEASE', value: 'yes'
+      }
+
       steps {
         // Make sure that only one release can happen at a time.
         lock('release') {
@@ -128,13 +412,34 @@ pipeline {
           // milestone to make sure that older builds don't overwrite
           // newer ones.
           milestone 2
+          
+          // Now do the actual work here
+          load "./jenkins_variables.groovy"
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://104.196.165.88']) {
+            sh """
+               helm repo add stable https://charts.helm.sh/stable
+               helm repo add incubator https://charts.helm.sh/incubator
+               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+               helm repo update
+             """
+            script {
+              nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+              if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            
+              def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
+              def parallelStagesMap = servers.collectEntries {
+                ["${it}" : generateStage(it, deployment_env)]
+              }
+              parallel parallelStagesMap
 
-          // Now do the actual work here.
-          slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+              slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
+            }
+          }
         }
       }
-    }
+    } // End of production deployment code block.
   }
+
   post {
     always {
       deleteDir()
@@ -163,7 +468,7 @@ def getBuildCommand(){
 }
 
 def getGitPrBranchName() {
-    // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
+  // The branch name could be in the BRANCH_NAME or GIT_BRANCH variable depending on the type of job
   //def branchName = env.BRANCH_NAME ? env.BRANCH_NAME : env.GIT_BRANCH
   //return branchName || ghprbSourceBranch
   if(env.ghprbSourceBranch){
