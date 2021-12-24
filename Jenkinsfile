@@ -420,6 +420,8 @@ pipeline {
               // milestone to make sure that older builds don't overwrite
               // newer ones.
               milestone 2
+              
+              // Now do the actual work here
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
               if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
             
@@ -429,7 +431,6 @@ pipeline {
               }
               parallel parallelStagesMap
 
-              // Now do the actual work here.
               slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
             }
           }
