@@ -357,7 +357,7 @@ pipeline {
 
     stage('Release?') {
       when {
-        expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
       }
       options {
@@ -397,8 +397,6 @@ pipeline {
       }
       when {
         beforeInput true
-        // Evaluate the 'when' directive before allocating the agent.
-        beforeAgent true
         // Only execute the step when the release has been approved.
         environment name: 'DO_RELEASE', value: 'yes'
       }
