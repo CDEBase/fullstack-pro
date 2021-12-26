@@ -380,7 +380,7 @@ pipeline {
         script {
           // Assign the 'DO_RELEASE' environment variable that is going
           //  to be used in the next stage.
-          env.DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
+          DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
                                         parameters:[choice(choices:  ['yes', 'no'], description: 'Deploy branch in Production?', name: 'PROD_DEPLOYMENT')]
         }
         // In case you approved multiple pipeline runs in parallel, this
@@ -399,8 +399,8 @@ pipeline {
       }
       when {
         // Only execute the step when the release has been approved.
-        environment name: 'DO_RELEASE', value: 'yes'
-
+        // environment name: 'DO_RELEASE', value: 'yes'
+        expression { DO_RELEASE == 'yes' || params.SKIP_RELEASE_APPROVAL == true }
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
       }
