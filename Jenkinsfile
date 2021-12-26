@@ -30,6 +30,7 @@ pipeline {
     choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -327,7 +328,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
+        expression {params.ENV_CHOICE == 'stageDeploy'}
         beforeInput true
       }
 
@@ -359,6 +360,7 @@ pipeline {
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
+        expression { params.SKIP_RELEASE_APPROVAL == false }
       }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
@@ -396,10 +398,11 @@ pipeline {
         deployment_env = 'prod'
       }
       when {
-        // Evaluate the 'when' directive before allocating the agent.
-        beforeAgent true
         // Only execute the step when the release has been approved.
         environment name: 'DO_RELEASE', value: 'yes'
+
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
       }
 
       steps {
