@@ -1,34 +1,37 @@
+// version 09/18/2021
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink, createHttpLink } from 'apollo-link-http';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
+import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client/cache';
+import { HttpLink, createHttpLink } from '@apollo/client/link/http';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { getOperationAST } from 'graphql';
-import apolloLogger from 'apollo-link-logger';
 import { invariant } from 'ts-invariant';
+import { IClientState } from '@common-stack/client-core';
 import fetch from 'node-fetch';
+import { ConnectionParams } from 'subscriptions-transport-ws';
+import { isBoolean, merge } from 'lodash';
+import { CdmLogger } from '@cdm-logger/core';
+import { RetryLink } from '@apollo/client/link/retry';
 
 const schema = `
 
 `;
 
 interface IApolloClientParams {
-    fragmentMatcher: any;
     initialState?: any;
     scope: 'browser' | 'server' | 'native';
-    linkConnectionParams?: any;
-    additionalLinks: any[];
     getDataIdFromObject: (x?: any) => string;
-    clientState: any;
+    clientState: IClientState;
     isDebug: boolean;
     isDev: boolean;
     isSSR: boolean;
     httpGraphqlURL: string;
     httpLocalGraphqlURL: string;
+    logger: CdmLogger.ILogger;
 }
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -47,17 +50,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 let _apolloClient: ApolloClient<any>;
 let _memoryCache: InMemoryCache;
 export const createApolloClient = ({
-    linkConnectionParams,
     scope,
     isDev,
     isDebug,
     isSSR,
     getDataIdFromObject,
     clientState,
-    additionalLinks,
     httpGraphqlURL,
     httpLocalGraphqlURL,
     initialState,
+    logger,
 }: IApolloClientParams) => {
     const isBrowser = scope === 'browser';
     const isServer = scope === 'server';
@@ -65,7 +67,23 @@ export const createApolloClient = ({
 
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
-        fragmentMatcher: clientState.fragmentMatcher as any,
+        possibleTypes: clientState.possibleTypes,
+    });
+
+    const attemptConditions = async (count: number, operation: any, error: Error) => {
+        const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => func(count, operation, error));
+
+        try {
+            const result = await promises;
+            return !!result.find((item) => item && isBoolean(item));
+        } catch (e) {
+            logger.trace('Error occured in retryLink Attempt condition', e);
+            throw e;
+        }
+    };
+
+    const retrylink = new RetryLink({
+        attempts: attemptConditions,
     });
 
     if (_apolloClient && _memoryCache) {
@@ -77,10 +95,10 @@ export const createApolloClient = ({
     }
     _memoryCache = cache;
     if (isBrowser) {
-        const connectionParams = () => {
-            const param = {};
-            for (const connectionParam of linkConnectionParams) {
-                Object.assign(param, connectionParam());
+        const connectionParams = async () => {
+            const param: ConnectionParams = {};
+            for (const connectionParam of clientState.connectionParams) {
+                merge(param, await connectionParam);
             }
             return param;
         };
@@ -93,8 +111,24 @@ export const createApolloClient = ({
                 reconnectionAttempts: 10,
                 lazy: true,
                 connectionParams,
+                connectionCallback: async (error, result) => {
+                    if (error) {
+                        logger.error(error, '[WS connectionCallback error] %j');
+                    }
+                    const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
+                        func(wsLink, error, result),
+                    );
+                    try {
+                        await promises;
+                    } catch (e) {
+                        logger.trace('Error occured in connectionCallback condition', e);
+                        throw e;
+                    }
+                },
             },
+            inactivityTimeout: 10000,
         });
+
         link = ApolloLink.split(
             ({ query, operationName }) => {
                 if (operationName.endsWith('_WS')) {
@@ -108,16 +142,18 @@ export const createApolloClient = ({
                 uri: httpGraphqlURL,
             }),
         );
+    } else if (isServer) {
+        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     } else {
-        // link = new BatchHttpLink({ uri: httpLocalGraphqlURL });
         link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     }
 
-    const links = [errorLink, ...additionalLinks, /** ...modules.errorLink, */ link];
+    const links = [errorLink, retrylink, ...(clientState.preLinks || []), link];
 
     // Add apollo logger during development only
-    if ((isDev || isDebug) && isBrowser) {
-        links.unshift(apolloLogger);
+    if (isBrowser && (isDev || isDebug)) {
+        const apolloLogger = require('apollo-link-logger');
+        links.unshift(apolloLogger.default);
     }
 
     const params: ApolloClientOptions<any> = {
@@ -126,6 +162,7 @@ export const createApolloClient = ({
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
         cache,
+        connectToDevTools: isBrowser && (isDev || isDebug),
     };
     if (isSSR) {
         if (isBrowser) {
@@ -138,13 +175,14 @@ export const createApolloClient = ({
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-    cache.writeData({
-        data: {
-            ...clientState.defaults,
-        },
+
+    clientState?.defaults?.forEach((x) => {
+        if (x.type === 'query') {
+            cache.writeQuery(x);
+        } else if (x.type === 'fragment') {
+            cache.writeFragment(x);
+        }
     });
-    if ((isDev || isDebug) && isBrowser) {
-        window.__APOLLO_CLIENT__ = _apolloClient;
-    }
+
     return { apolloClient: _apolloClient, cache };
 };

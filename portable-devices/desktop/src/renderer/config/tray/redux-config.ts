@@ -37,7 +37,6 @@ export const createReduxStore = () => {
         scope: 'browser',
         isDebug: __DEBUGGING__,
         isDev,
-        history,
         initialState: {},
         middleware: [routerMiddleware(history)],
         // epicMiddleware,
@@ -52,5 +51,7 @@ export const createReduxStore = () => {
         // electron
         replayActionRenderer(store);
     }
+    container.bind('ReduxStore').toConstantValue(store);
+
     return store;
 };

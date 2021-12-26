@@ -1,4 +1,4 @@
-import storage from '@react-native-community/async-storage';
+import storage from '@react-native-async-storage/async-storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
@@ -25,7 +25,7 @@ export const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['user'],
+    transforms: modules.reduxPersistStateTransformers,
 };
 
 /**
@@ -38,9 +38,8 @@ export const createReduxStore = () => {
 
     const store = createBaseReduxStore({
         scope: 'browser',
-        isDebug: true,
+        isDebug: __DEBUGGING__,
         isDev: process.env.NODE_ENV === 'development',
-        history,
         initialState: {},
         persistConfig,
         middleware: [routerMiddleware(history)],
@@ -48,6 +47,7 @@ export const createReduxStore = () => {
         rootEpic: rootEpic as any,
         reducers: { router, ...modules.reducers },
     });
+    container.bind('ReduxStore').toConstantValue(store);
 
     return store;
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/react-hoc';
 import compose from 'lodash/flowRight';
 import { PERSONS_QUERY } from '../graphql';
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Feature, IRouteData } from '@common-stack/client-react-native';
+import { Feature } from '@common-stack/client-react';
 import { connectedReactRouterCounter } from './redux';
 import { filteredRoutes } from './compute';
 

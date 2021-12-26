@@ -13,8 +13,6 @@
     "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
     "prepublish": "yarn build",
-    "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
-    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
     "test": "cross-env ENV_FILE=../../config/test/test.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
@@ -41,12 +39,10 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "^4.5.2"
+    "antd": "~4.15.3"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
-    "@common-stack/client-react-native": "*",
-    "@react-navigation/drawer": "*",
     "native-base": "*",
     "react": "*",
     "react-native": "*",

@@ -1,7 +1,6 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import * as envalid from 'envalid';
 
-
 const { str, bool, json } = envalid;
 
 export const config = envalid.cleanEnv(process.env, {
@@ -10,8 +9,11 @@ export const config = envalid.cleanEnv(process.env, {
     NATS_USER: str(),
     NATS_PW: str(),
     MONGO_URL: str(),
-    LOG_LEVEL: str({ default: 'info', choices: ['info', 'debug', 'trace'] }),
-    REDIS_CLUSTER_URL: json({devDefault: '[{"port":6379,"host":"localhost"}]',  example: '[{"port":6379,"host":"localhost"}]'}),
+    LOG_LEVEL: str({ default: 'info', devDefault: 'trace', choices: ['info', 'debug', 'trace'] }),
+    REDIS_CLUSTER_URL: json({
+        devDefault: '[{"port":6379,"host":"localhost"}]',
+        example: '[{"port":6379,"host":"localhost"}]',
+    }),
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),
     REDIS_SENTINEL_ENABLED: bool({ devDefault: true }),
@@ -21,6 +23,7 @@ export const config = envalid.cleanEnv(process.env, {
     CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
     CONNECTION_ID: str({ devDefault: 'CONNECTION_ID' }),
     NAMESPACE: str({ default: 'default' }),
-    apolloLogging: bool({ default: false }),
+    apolloLogging: bool({ default: false, devDefault: true }),
+    API_NAMESPACE: str({ devDefault: 'default' }),
+    ADMIN_API_NAMESPACE: str({ devDefault: 'default' }),
 });
-

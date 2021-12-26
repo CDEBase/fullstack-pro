@@ -135,7 +135,6 @@ function getRouteElement({ route, index, opts }: IGetRouteElementOpts) {
   //   // client Render for enable ssr, but not sure SSR success
   //   route.component = wrapInitialPropsFetch(route, opts);
   // }
-  console.log('---ROUTE PROPS____', routeProps, route)
   return (
     <Route
       {...routeProps}
@@ -147,7 +146,6 @@ function getRouteElement({ route, index, opts }: IGetRouteElementOpts) {
 }
 
 function renderRoutes(opts: IOpts) {
-  console.log('--OPTS', opts);
   return opts.routes ? (
     <Switch>
       {opts.routes.map((route, index) => {

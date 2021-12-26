@@ -4,7 +4,7 @@ import { NativeRouter, Route } from 'react-router-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import { createRenderer } from 'fela-native';
-import { ApolloProvider } from '@apollo/react-common';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { MainRoute } from './modules/modules';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -15,7 +15,7 @@ import {
   createReduxStore,
   history,
 } from './config/redux-config';
-import { Root } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import { createClientContainer } from './config/client.service';
 
 const { apolloClient: client, container } = createClientContainer();
@@ -23,12 +23,11 @@ const { apolloClient: client, container } = createClientContainer();
 const store = createReduxStore();
 const renderer = createRenderer();
 
-// console.log('---CONFIG--new-', config, env);
 export default function App() {
 
   let persistor = persistStore(store as any);
   return (
-    <Root>
+    <NativeBaseProvider>
       <SafeAreaProvider>
         <Provider store={store}>
           <ApolloProvider client={client}>
@@ -42,7 +41,7 @@ export default function App() {
           </ApolloProvider>
         </Provider>
       </SafeAreaProvider>
-    </Root>
+    </NativeBaseProvider>
   );
 }
 

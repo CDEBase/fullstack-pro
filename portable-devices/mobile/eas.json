@@ -1,0 +1,50 @@
+{
+  "cli": {
+    "version": ">= 0.36.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "node": "14.17.3",
+      "env": {
+        "NODE_ENV": "development",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
+        "GA_ID": "jjj",
+        "LOG_LEVEL": "trace",
+        "CLIENT_URL": "http://localhost:3000",
+        "APP_NAME": "fullstack-pro"
+      }
+    },
+    "preview": {
+      "extends": "production",
+      "node": "14.17.3",
+      "distribution": "internal",
+      "env": {
+        "NODE_ENV": "development",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
+        "GA_ID": "jjj",
+        "LOG_LEVEL": "trace",
+        "CLIENT_URL": "http://localhost:3000",
+        "APP_NAME": "fullstack-pro"
+      }
+    },
+    "production": {   
+      "node": "14.17.3",
+      "env": {
+        "NODE_ENV": "development",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
+        "GA_ID": "jjj",
+        "LOG_LEVEL": "trace",
+        "CLIENT_URL": "http://localhost:3000",
+        "APP_NAME": "fullstack-pro"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

@@ -9,7 +9,12 @@
     "outDir": "lib",
     "declarationDir": "lib",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "types": [
+      "@types/node",
+      "@types/jest",
+      "../../../typings",
+    ]
   },
   "exclude": [
     "node_modules",

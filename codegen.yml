@@ -2,12 +2,16 @@ overwrite: true
 schema: "./servers/backend-server/generated-schema.graphql"
 generates:
   typings/graphql.d.ts:
-    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema: 
+      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+      - packages-modules/counter/server/src/schema/**/*.graphql
     documents: "packages-modules/counter/browser/src/**/*.gql"
     plugins:
       - typescript-graphql-files-modules
   packages-modules/counter/browser/src/generated-models.ts:
-    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema: 
+      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+      - packages-modules/counter/server/src/schema/**/*.graphql
     documents: "packages-modules/counter/browser/src/**/*.gql"
     config:
         noNamespaces: true
@@ -15,18 +19,20 @@ generates:
         withHOC: false
         withComponent: false
     plugins:
-      - add: |
-          /* tslint:disable */
+      - add:
+          content: /* tslint:disable */
       - typescript
       - typescript-operations
       - typescript-resolvers
       - typescript-react-apollo
   packages-modules/counter/browser/src/apollo-server-n-client/generated-model.tsx:
-    schema: "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema: 
+      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+      - packages-modules/counter/server/src/schema/**/*.graphql
     documents: "packages-modules/counter/browser/src/**/*.gql"
     config:
-      withMutationFn: true
-      withHOC: true
+      withMutationFn: false
+      withHOC: false
       withComponent: true
       withHooks: true
     preset: import-types-preset
@@ -34,6 +40,6 @@ generates:
       typesPath: "../generated-models"
       importTypesNamespace: SchemaTypes
     plugins:
-      - add: |
-          /* tslint:disable */
+      - add:
+          content: /* tslint:disable */
       - typescript-react-apollo

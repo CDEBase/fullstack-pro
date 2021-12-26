@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { protocol, BrowserWindow } from 'electron';
 import { dev } from 'electron-is';
 import { format as formatUrl } from 'url';

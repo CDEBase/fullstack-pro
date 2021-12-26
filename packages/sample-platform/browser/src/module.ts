@@ -1,7 +1,7 @@
 import { Feature } from '@common-stack/client-react';
 
 import { interfaces } from 'inversify';
-import { ApolloClient } from 'apollo-client';
+import { ApolloClient } from '@apollo/client';
 import { ClientTypes as BrowserTypes } from '@common-stack/client-core';
 import { platformModule } from './inversify-containers';
 

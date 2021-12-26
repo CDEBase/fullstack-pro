@@ -1,5 +1,5 @@
-import { DataProxy } from 'apollo-cache';
-import { ApolloClient } from 'apollo-client';
+import { DataProxy } from '@apollo/client/cache';
+import { ApolloClient } from '@apollo/client';
 
 export interface MyContext {
     cache: DataProxy;

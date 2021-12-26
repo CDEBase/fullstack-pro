@@ -1,8 +1,7 @@
-
 import { combineEpics, ofType } from 'redux-observable';
-import modules from '../modules';
 import { BehaviorSubject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
+import modules from '../modules';
 
 export const epic$ = new BehaviorSubject(combineEpics(...modules.epics));
 
@@ -11,13 +10,4 @@ export const epic$ = new BehaviorSubject(combineEpics(...modules.epics));
 // one, unless an EPIC_END action is dispatched first,
 // which would cause the old one(s) to be unsubscribed
 export const rootEpic = (action$, ...rest) =>
-    epic$.pipe(
-        mergeMap(epic =>
-            epic(action$, ...rest).pipe(
-                takeUntil(action$.pipe(
-                    ofType('EPIC_END'),
-                )),
-            )),
-    );
-
-
+    epic$.pipe(mergeMap((epic) => epic(action$, ...rest).pipe(takeUntil(action$.pipe(ofType('EPIC_END'))))));

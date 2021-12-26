@@ -38,25 +38,27 @@ export class Logger {
      * @param before
      * @param after
      */
-    static withLog = ({ before, after }: WithLogParams) => (func: Function) => {
-        if (before) {
-            if (typeof before === 'function') {
-                before();
-            } else {
-                const logger = getLogger(before.key);
-                logger[before.level](before.message);
+    static withLog =
+        ({ before, after }: WithLogParams) =>
+        (func: Function) => {
+            if (before) {
+                if (typeof before === 'function') {
+                    before();
+                } else {
+                    const logger = getLogger(before.key);
+                    logger[before.level](before.message);
+                }
             }
-        }
 
-        func();
+            func();
 
-        if (after) {
-            if (typeof after === 'function') {
-                after();
-            } else {
-                const logger = getLogger(after.key);
-                logger[after.level](after.message);
+            if (after) {
+                if (typeof after === 'function') {
+                    after();
+                } else {
+                    const logger = getLogger(after.key);
+                    logger[after.level](after.message);
+                }
             }
-        }
-    };
+        };
 }

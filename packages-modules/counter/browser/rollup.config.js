@@ -1,6 +1,7 @@
 import graphql from '@rollup/plugin-graphql';
 import image from '@rollup/plugin-image';
 import typescript from '@rollup/plugin-typescript';
+import { string } from 'rollup-plugin-string';
 
 const bundle = (config) => ({
     ...config,
@@ -12,7 +13,16 @@ const globals = { react: 'React' };
 
 export default [
     bundle({
-        plugins: [typescript({}), image(), graphql()],
+        plugins: [
+            image(),
+            graphql({
+                include: '**/*.gql',
+            }),
+            string({
+                include: '**/*.graphql',
+            }),
+            typescript({ noEmitOnError: true }),
+        ],
         output: [
             {
                 dir: 'lib',

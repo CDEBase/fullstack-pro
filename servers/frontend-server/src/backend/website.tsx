@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
 import path from 'path';
@@ -9,7 +10,7 @@ import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
-import { createApolloClient } from '../config/apollo-client';
+import { createClientContainer } from '../config/client.service';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
@@ -20,10 +21,10 @@ let assetMap;
 async function renderServerSide(req, res) {
     try {
 
-        const client = createApolloClient();
+        const { apolloClient: client } = createClientContainer();
 
         let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
-        const store = createReduxStore();
+        const { store } = createReduxStore();
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
@@ -40,7 +41,7 @@ async function renderServerSide(req, res) {
                 req,
             );
 
-        await getDataFromTree(App as any);
+        await getDataFromTree(App);
         if (context.pageNotFound === true) {
             res.status(404);
         } else {

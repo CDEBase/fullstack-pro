@@ -1,6 +1,5 @@
 import { NODE_ENV, GRAPHQL_URL, FACEBOOK_APP_ID, GA_ID, LOG_LEVEL } from '@env';
 
-console.log('---LOGLEVE', LOG_LEVEL);
 const env = {
     NODE_ENV,
     GRAPHQL_URL,

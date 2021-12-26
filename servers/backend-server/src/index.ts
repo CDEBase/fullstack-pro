@@ -1,17 +1,20 @@
-///<reference types="webpack-env" />
-// tslint:disable-next-line:no-unused-expression
-process.env.ENV_FILE !== null && (require('dotenv')).config({ path: process.env.ENV_FILE });
+/* eslint-disable import/first */
+/// <reference types="webpack-env" />
+// eslint-disable-next-line global-require, import/first, no-unused-expressions, @typescript-eslint/no-var-requires
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+
 import 'reflect-metadata';
 import { logger } from '@cdm-logger/server';
-import  { Service } from './service';
-declare var module: __WebpackModuleApi.Module;
+import { Service } from './service';
+
+declare let module: __WebpackModuleApi.Module;
 
 process.on('uncaughtException', (ex) => {
     logger.error(ex);
     process.exit(1);
 });
 
-process.on('unhandledRejection', reason => {
+process.on('unhandledRejection', (reason) => {
     logger.error(reason);
 });
 const service = new Service();
@@ -21,9 +24,9 @@ async function start() {
     await service.start();
 }
 if (module.hot) {
-    module.hot.status(event => {
+    module.hot.status((event) => {
         if (event === 'abort' || event === 'fail') {
-            logger.error('HMR error status: ' + event);
+            logger.error(`HMR error status: ${event}`);
             // Signal webpack.run.js to do full-reload of the back-end
             service.gracefulShutdown(event);
         }
@@ -36,4 +39,3 @@ if (module.hot) {
 }
 
 start();
-

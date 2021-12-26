@@ -13,8 +13,6 @@
     "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
     "prepublish": "yarn build",
-    "schema:download": "./node_modules/.bin/apollo-codegen download-schema http://localhost:8080/graphql --output schema.json ",
-    "schema:generate": "./node_modules/.bin/apollo-codegen generate src/browser/graphql/**/*.graphql --schema schema.json --target typescript --output src/browser/types/schema.ts",
     "test": "cross-env ENV_FILE=../../config/test/test.env jest",
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
@@ -41,18 +39,14 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "^4.5.2"
+    "antd": "~4.15.3"
   },
-  "devDependencies": {
-    "@open-wc/building-rollup": "^1.10.0",
-    "@rollup/plugin-graphql": "1.0.0",
-    "@rollup/plugin-image": "^2.0.6",
-    "@rollup/plugin-typescript": "^6.1.0",
-    "rollup": "latest"
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "@common-stack/client-react": "*",
-    "native-base": "*",
+    "@rollup/plugin-graphql": "*",
+    "@rollup/plugin-image": "*",
+    "@rollup/plugin-typescript": "*",
     "react": "*",
     "react-native": "*",
     "react-redux": "*",
@@ -60,6 +54,7 @@
     "react-router-dom": "*",
     "redux": "*",
     "redux-observable": "*",
+    "rollup-plugin-string": "*",
     "rxjs": "*"
   },
   "publishConfig": {

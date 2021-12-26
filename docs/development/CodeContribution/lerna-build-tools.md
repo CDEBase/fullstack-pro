@@ -279,6 +279,7 @@ For now, what we do is manually update the dependencies version in the `package.
 ### Updating all sub packages of a **scoped** packages to newest release
 lerna exec "ncu -u --newest --timeout 60000 -f /@sample-stack*/"
 
+***note** after updating packages you need to run `yarn` to install them. 
 
 ### Removing dependencies
 
