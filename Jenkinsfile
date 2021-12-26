@@ -96,6 +96,7 @@ pipeline {
       }
       steps{
         sh """
+            rm .npmrc
             lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
         """
       }
