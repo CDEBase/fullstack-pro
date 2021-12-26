@@ -30,6 +30,7 @@ pipeline {
     choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
@@ -327,7 +328,7 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'prodDeploy'}
+        expression {params.ENV_CHOICE == 'stageDeploy'}
         beforeInput true
       }
 
@@ -359,6 +360,7 @@ pipeline {
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
         expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
+        expression { params.SKIP_RELEASE_APPROVAL == false }
       }
       options {
         // Optionally, let's add a timeout that we don't allow ancient
@@ -379,7 +381,7 @@ pipeline {
           // Assign the 'DO_RELEASE' environment variable that is going
           //  to be used in the next stage.
           env.DO_RELEASE = input  message: 'Want to deploy fullstack-pro on prod cluster?',
-                                        parameters:[choice(choices:  ['yes', 'no'], description: "Deploy branch '${GIT_BRANCH_NAME}' in Production?", name: 'PROD_DEPLOYMENT')]
+                                        parameters:[choice(choices:  ['yes', 'no'], description: 'Deploy branch in Production?', name: 'PROD_DEPLOYMENT')]
         }
         // In case you approved multiple pipeline runs in parallel, this
         // milestone would kill the older runs and prevent deploying
@@ -396,32 +398,33 @@ pipeline {
         deployment_env = 'prod'
       }
       when {
-        beforeInput true
-        // Only execute the step when the release has been approved.
-        environment name: 'DO_RELEASE', value: 'yes'
+        // Only execute the step when the release has been approved or skipped in the deployment.
+        expression { env.DO_RELEASE == 'yes' || params.SKIP_RELEASE_APPROVAL == true }
+        expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
+        expression { params.ENV_CHOICE == 'prodDeploy' || params.ENV_CHOICE == 'prodDeployOnly' }
       }
 
       steps {
-        load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://104.196.165.88']) {
-          sh """
-             helm repo add stable https://charts.helm.sh/stable
-             helm repo add incubator https://charts.helm.sh/incubator
-             helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
-             helm repo update
-           """
-          script {
-            // Make sure that only one release can happen at a time.
-            lock('release') {
-              // As using the first milestone only would introduce a race 
-              // condition (assume that the older build would enter the 
-              // milestone first, but the lock second) and Jenkins does
-              // not support inter-stage locks yet, we need a second 
-              // milestone to make sure that older builds don't overwrite
-              // newer ones.
-              milestone 2
-              
-              // Now do the actual work here
+        // Make sure that only one release can happen at a time.
+        lock('release') {
+          // As using the first milestone only would introduce a race 
+          // condition (assume that the older build would enter the 
+          // milestone first, but the lock second) and Jenkins does
+          // not support inter-stage locks yet, we need a second 
+          // milestone to make sure that older builds don't overwrite
+          // newer ones.
+          milestone 2
+          
+          // Now do the actual work here
+          load "./jenkins_variables.groovy"
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://104.196.165.88']) {
+            sh """
+               helm repo add stable https://charts.helm.sh/stable
+               helm repo add incubator https://charts.helm.sh/incubator
+               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+               helm repo update
+             """
+            script {
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
               if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
             
@@ -434,10 +437,9 @@ pipeline {
               slackSend (color: '#2596BE', message: "Done:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  is completed. click <${env.RUN_DISPLAY_URL}|here> to see the log.", channel: 'idestack-automation')
             }
           }
-       }
+        }
       }
     } // End of production deployment code block.
-
   }
 
   post {
@@ -595,12 +597,12 @@ def getVersion(json_file_path){
   def inputFile = readFile(json_file_path)
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def version = InputJSON.version
-return version
+  return version
 }
 
 def getName(json_file_path){
   def inputFile = readFile(json_file_path)
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def name = InputJSON.name
-return name
+  return name
 }
