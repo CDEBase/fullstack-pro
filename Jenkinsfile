@@ -135,7 +135,8 @@ pipeline {
       steps{
         sh """
           git checkout ${params.DEVELOP_BRANCH}
-          git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging'
+          git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging ${params.GIT_PR_BRANCH_NAME} \r\n[skip ci]'
+          git push origin ${params.DEVELOP_BRANCH}
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
@@ -245,7 +246,7 @@ pipeline {
       steps{
         sh """
           git checkout ${params.REPOSITORY_BRANCH}
-          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging'
+          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging ${params.DEVELOP_BRANCH} \r\n[skip ci]'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
@@ -288,6 +289,7 @@ pipeline {
             git fetch origin ${params.MASTER_BRANCH}
             git checkout ${params.MASTER_BRANCH}
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
+            git push origin ${params.MASTER_BRANCH}
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
