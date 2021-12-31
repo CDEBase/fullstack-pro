@@ -60,6 +60,7 @@
     "@common-stack/client-react": "0.1.11",
     "@common-stack/core": "0.1.11",
     "@common-stack/server-core": "0.1.11",
+    "@sample-stack/assets": "link:../../packages/assets",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
     "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
