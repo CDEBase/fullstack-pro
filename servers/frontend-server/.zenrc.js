@@ -78,7 +78,7 @@ const config = {
                 ],
                 externals: [
                     nodeExternals(),
-                    nodeExternals({ allowlist: [/webpack\/hot/i, /babel-polyfill/], modulesDir: "../../node_modules" })
+                    nodeExternals({ allowlist: [/webpack\/hot/i, /babel-polyfill/, /@sample-stack\/assets/], modulesDir: "../../node_modules" })
                 ],
             }
         },
