@@ -9,6 +9,7 @@ import { combineReducers } from 'redux';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { REDUX_PERSIST_KEY } from '@common-stack/client';
 import modules from '../../modules/main';
 import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
@@ -29,7 +30,7 @@ export const epicMiddleware = createEpicMiddleware({
 });
 
 export const persistConfig = {
-    key: 'root',
+    key: REDUX_PERSIST_KEY,
     storage,
     stateReconciler: autoMergeLevel2,
     // Don't add `user` state to persist as it creates problems.

@@ -2,6 +2,7 @@ import storage from '@react-native-async-storage/async-storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { REDUX_PERSIST_KEY } from '@common-stack/client';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { rootEpic } from './epic-config';
@@ -22,7 +23,7 @@ export const epicMiddleware = createEpicMiddleware({
 });
 
 export const persistConfig = {
-    key: 'root',
+    key: REDUX_PERSIST_KEY,
     storage,
     stateReconciler: autoMergeLevel2,
     transforms: modules.reduxPersistStateTransformers,
