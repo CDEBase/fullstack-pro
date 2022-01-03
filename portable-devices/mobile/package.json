@@ -6,7 +6,7 @@
   "scripts": {
     "android": "expo run:android",
     "build": "yarn easBuild --profile development",
-    "build:all": "yarn build -p all",
+    "build:all": "yarn build -p ios",
     "build:android": "yarn build -p android --clear-cache",
     "build:auto": "yarn build:all --non-interactive",
     "build:clean": "rimraf build .expo .tmp",
