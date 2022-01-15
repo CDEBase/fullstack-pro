@@ -162,7 +162,7 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git diff --staged --quiet || git commit -am 'auto build [skip ci] \r\n'
             git fetch origin ${params.DEVELOP_BRANCH}
             git checkout ${params.DEVELOP_BRANCH}
             ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
@@ -285,7 +285,7 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git diff --staged --quiet || git commit -am 'auto build [skip ci]\r\n'
             git fetch origin ${params.MASTER_BRANCH}
             git checkout ${params.MASTER_BRANCH}
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
