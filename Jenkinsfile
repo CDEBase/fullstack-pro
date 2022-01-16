@@ -245,6 +245,8 @@ pipeline {
       }
       steps{
         sh """
+          git add -A
+          git diff --staged --quiet || git commit -am 'pre merge to master \r\n[skip ci]'
           git checkout ${params.REPOSITORY_BRANCH}
           git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging ${params.DEVELOP_BRANCH} \r\n[skip ci]'
           ${params.BUILD_STRATEGY} install
