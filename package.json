@@ -163,7 +163,7 @@
     "@rollup/plugin-graphql": "1.0.0",
     "@rollup/plugin-image": "^2.0.6",
     "@rollup/plugin-typescript": "^6.1.0",
-    "@shelf/jest-mongodb": "^1.1.5",
+    "@shelf/jest-mongodb": "^2.2.0",
     "@types/async": "^3.0.3",
     "@types/body-parser": "1.17.1",
     "@types/bunyan": "^1.8.6",
