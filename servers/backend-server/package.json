@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@apollo/client": "~3.3.21",
-    "@cdm-logger/server": "^7.0.7",
+    "@cdm-logger/server": "^7.0.12",
     "@common-stack/core": "0.1.19",
     "@common-stack/server-core": "0.1.19",
     "@common-stack/store-mongo": "0.1.19",

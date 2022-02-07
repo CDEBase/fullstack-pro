@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@apollo/client": "~3.3.21",
-    "@cdm-logger/client": "^7.0.8",
+    "@cdm-logger/client": "^7.0.12",
     "@common-stack/client-core": "^0.1.19",
     "@common-stack/client-react": "^0.1.19",
     "@common-stack/core": "^0.1.19",
