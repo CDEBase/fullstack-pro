@@ -7,22 +7,9 @@ import { Context } from 'apollo-server-core';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
 import { IModuleService } from '../interfaces';
+import { createContextFromConnectionParams } from './utils';
 
 type ILogger = CdmLogger.ILogger;
-
-// @workaround as the `dataSources` not available in Subscription (websocket) Context.
-// https://github.com/apollographql/apollo-server/issues/1526 need to revisit in Apollo-Server v3.
-const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
-    const intializeDataSource = (instance) => {
-        instance.initialize({ context, cache });
-    };
-    // tslint:disable-next-line:forin
-    for (const prop in dataSources) {
-        // tslint:disable-next-line:no-console
-        intializeDataSource(dataSources[prop]);
-    }
-    return dataSources;
-};
 
 export class GraphqlSubscriptionServer {
     private subscriptionServer: SubscriptionServer;
@@ -47,27 +34,14 @@ export class GraphqlSubscriptionServer {
                 subscribe,
                 onConnect: async (connectionParams: any, webSocket: any, ctx: ConnectionContext) => {
                     try {
-                        this.logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
-                        const pureContext = await this.moduleService.createContext(connectionParams, webSocket);
-                        const contextServices = await this.moduleService.serviceContext(connectionParams, webSocket);
-                        const context = {
-                            ...contextServices,
-                            ...pureContext,
-                            preferences: this.moduleService.defaultPreferences,
-                            // update: updateContainers,
-                            wsCtx: ctx,
-                        };
-                        const addons = {
-                            dataSources: constructDataSourcesForSubscriptions(
-                                context,
-                                this.cache,
-                                this.moduleService.dataSource,
-                            ),
-                        };
-                        return {
-                            ...context,
-                            ...addons,
-                        };
+                        // @ts-ignore
+                        extra.context = await createContextFromConnectionParams(
+                            connectionParams,
+                            webSocket,
+                            this.moduleService,
+                            this.cache,
+                            this.logger,
+                        );
                     } catch (e) {
                         this.logger.error(e);
                     }

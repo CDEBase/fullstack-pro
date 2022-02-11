@@ -1,3 +1,4 @@
+/* eslint-disable jest/require-hook */
 /* eslint-disable import/first */
 /// <reference types="webpack-env" />
 // eslint-disable-next-line global-require, import/first, no-unused-expressions, @typescript-eslint/no-var-requires
