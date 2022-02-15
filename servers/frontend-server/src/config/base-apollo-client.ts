@@ -7,15 +7,17 @@ import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
-import { WebSocketLink } from '@apollo/client/link/ws';
+// import { WebSocketLink } from '@apollo/client/link/ws';
 import { getOperationAST } from 'graphql';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
 import fetch from 'node-fetch';
-import { ConnectionParams } from 'subscriptions-transport-ws';
+// import { ConnectionParams } from 'subscriptions-transport-ws';
 import { isBoolean, merge } from 'lodash';
 import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
+import { WebSocketLink } from './websocket-link';
 
 const schema = `
 
@@ -95,47 +97,50 @@ export const createApolloClient = ({
     }
     _memoryCache = cache;
     if (isBrowser) {
-        const connectionParams = async () => {
-            const param: ConnectionParams = {};
-            for (const connectionParam of clientState.connectionParams) {
-                merge(param, await connectionParam);
-            }
-            return param;
-        };
+        // const connectionParams = async () => {
+        //     const param: ConnectionParams = {};
+        //     for (const connectionParam of clientState.connectionParams) {
+        //         merge(param, await connectionParam);
+        //     }
+        //     return param;
+        // };
 
         const wsLink = new WebSocketLink({
-            uri: httpGraphqlURL.replace(/^http/, 'ws'),
-            options: {
-                reconnect: true,
-                timeout: 20000,
-                reconnectionAttempts: 10,
-                lazy: true,
-                connectionParams,
-                connectionCallback: async (error, result) => {
-                    if (error) {
-                        logger.error(error, '[WS connectionCallback error] %j');
-                    }
-                    const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
-                        func(wsLink, error, result),
-                    );
-                    try {
-                        await promises;
-                    } catch (e) {
-                        logger.trace('Error occured in connectionCallback condition', e);
-                        throw e;
-                    }
-                },
-            },
-            inactivityTimeout: 10000,
+            url: httpGraphqlURL.replace(/^http/, 'ws'),
+            // options: {
+            // reconnect: true,
+            // timeout: 20000,
+            // reconnectionAttempts: 10,
+            // retryAttempts: 10,
+            // lazy: true,
+            // connectionParams,
+            // connectionCallback: async (error, result) => {
+            //     if (error) {
+            //         logger.error(error, '[WS connectionCallback error] %j');
+            //     }
+            //     const promises = (clientState.connectionCallbackFuncs || []).map((func) => func(wsLink, error, result));
+            //     try {
+            //         await promises;
+            //     } catch (e) {
+            //         logger.trace('Error occured in connectionCallback condition', e);
+            //         throw e;
+            //     }
+            // },
+            // },
+            // inactivityTimeout: 10000,
         });
 
         link = ApolloLink.split(
-            ({ query, operationName }) => {
-                if (operationName.endsWith('_WS')) {
-                    return true;
-                }
-                const operationAST = getOperationAST(query as any, operationName);
-                return !!operationAST && operationAST.operation === 'subscription';
+            // ({ query, operationName }) => {
+            //     if (operationName.endsWith('_WS')) {
+            //         return true;
+            //     }
+            //     const operationAST = getOperationAST(query as any, operationName);
+            //     return !!operationAST && operationAST.operation === 'subscription';
+            // },
+            ({ query }) => {
+                const { kind, operation } = getMainDefinition(query) as any;
+                return kind === 'OperationDefinition' && operation === 'subscription';
             },
             wsLink,
             new HttpLink({

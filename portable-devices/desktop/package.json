@@ -114,7 +114,7 @@
     "rxjs-hooks": "^0.5.2",
     "source-map-support": "^0.5.19",
     "sqlite3": "^5.0.2",
-    "subscriptions-transport-ws": "0.9.18",
+    "subscriptions-transport-ws": "0.11.0",
     "typeorm": "^0.2.32"
   },
   "devDependencies": {

@@ -1,3 +1,6 @@
+/* eslint-disable no-useless-constructor */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable guard-for-in */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-param-reassign */
@@ -81,40 +84,39 @@ function allowOnlySub(schema: GraphQLSchema, msg: SubscribeMessage) {
 export class GraphqlWs {
     private subscriptionServer: Disposable;
 
-    private context: Context;
-
     private logger: ILogger;
 
     constructor(
-        private moduleService: IModuleService,
+        private schema: any,
+        private context: Context,
         private cache: RedisCache | RedisClusterCache,
         private websocket: WebSocket.Server,
         private requestOptions: Partial<GraphQLServerOptions<any>> = Object.create(null),
-    ) {
-        this.logger = this.moduleService.logger.child({ className: 'GraphqlSubscriptionServer' });
-    }
+    ) {}
 
     public create() {
         this.subscriptionServer = useServer(
             {
-                schema: this.moduleService.schema as any,
+                schema: this.schema as any,
                 execute,
                 subscribe,
                 onConnect: async ({ connectionParams, extra }) => {
-                    try {
-                        // @ts-ignore
-                        extra.context = await createContextFromConnectionParams(
-                            connectionParams,
-                            extra,
-                            this.moduleService,
-                            this.cache,
-                            this.logger,
-                        );
-                    } catch (e) {
-                        this.logger.error(e);
-                    }
+                    // try {
+                    //     // console.log('--Confnection Params', connectionParams);
+                    //     // console.log('--..exter----', extra);
+                    //     // // @ts-ignore
+                    //     // extra.context = await createContextFromConnectionParams(
+                    //     //     connectionParams,
+                    //     //     extra,
+                    //     //     this.moduleService,
+                    //     //     this.cache,
+                    //     //     // this.logger,
+                    //     // );
+                    // } catch (e) {
+                    //     this.logger.error(e);
+                    // }
                 },
-                onSubscribe: async (ctx, msg) => allowOnlySub(this.moduleService.schema, msg),
+                // onSubscribe: async (ctx, msg) => allowOnlySub(this.moduleService.schema, msg),
                 // onOperation: async (message: { payload: any }, connection: ExecutionParams) => {
                 //     let context: Context = this.context ? this.context : { connection };
                 //     try {
@@ -132,8 +134,11 @@ export class GraphqlWs {
                 //     return { ...connection }; // TODO: we didn't add `context`
                 // },
             },
-            this.websocket,
+            {
+                noServer: true,
+            },
         );
+        return this.subscriptionServer;
     }
 
     public disconnect() {

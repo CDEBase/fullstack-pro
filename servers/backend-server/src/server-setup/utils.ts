@@ -1,6 +1,6 @@
-import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
+/* eslint-disable guard-for-in */
+import { RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
-import { IModuleService } from '../interfaces';
 
 type ILogger = CdmLogger.ILogger;
 
@@ -27,26 +27,15 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
  * The approach below tries to support both based on the template provided here but adjusted for our setup here.
  * https://github.com/enisdenjo/graphql-ws#ws-backwards-compat
  */
-
 export async function createContextFromConnectionParams(
-    connectionParams: any,
-    webSocket: any,
-    moduleService: IModuleService,
+    context: any,
+    datasources: any,
     cache: RedisCache,
     logger: ILogger,
 ): Promise<any> {
-    logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
-    const pureContext = await moduleService.createContext(connectionParams, webSocket);
-    const contextServices = await moduleService.serviceContext(connectionParams, webSocket);
-    const context = {
-        ...contextServices,
-        ...pureContext,
-        preferences: moduleService.defaultPreferences,
-        // update: updateContainers,
-        // wsCtx: ctx,
-    };
+    // logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
     const addons = {
-        dataSources: constructDataSourcesForSubscriptions(context, cache, moduleService.dataSource),
+        dataSources: constructDataSourcesForSubscriptions(context, cache, datasources),
     };
     return {
         ...context,

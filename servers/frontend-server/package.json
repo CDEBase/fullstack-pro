@@ -119,7 +119,7 @@
     "rxjs-hooks": "^0.5.2",
     "serialize-javascript": "^4.0.0",
     "sourcemapped-stacktrace": "^1.1.11",
-    "subscriptions-transport-ws": "0.9.18",
+    "subscriptions-transport-ws": "0.11.0",
     "universal-cookie-express": "^4.0.1"
   },
   "devDependencies": {
