@@ -1,4 +1,4 @@
-const base = require('../../../jest.config.base');
+const base = require('../../jest.config.base');
 const packageJson = require('./package');
 
 module.exports = {
@@ -14,4 +14,8 @@ module.exports = {
     ],
     name: packageJson.name,
     displayName: packageJson.name,
+    globals: {
+        // https://github.com/software-mansion/react-native-reanimated/issues/1380#issuecomment-865143328
+        __reanimatedWorkletInit: jest.fn(),
+    },
 };
