@@ -21,6 +21,7 @@
     "build:debug": "cross-env DEBUGGING=true NODE_ENV=production zen build",
     "build:debug:verbose": "yarn build:debug -- -v",
     "build:dev": "cross-env NODE_ENV=development zen build",
+    "build:stats": "cross-env BUNDLE_STATS=true yarn build:debug",
     "docker:build": "cross-env NODE_OPTIONS='--max_old_space_size=4096' yarn build && docker build . -t $npm_package_name:$npm_package_version",
     "docker:build:debug": "yarn build:debug && docker build . -t $npm_package_name:$npm_package_version",
     "docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  -p 3010:3010  -it $npm_package_name:$npm_package_version",

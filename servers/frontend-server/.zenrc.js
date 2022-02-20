@@ -6,7 +6,13 @@ const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const plugins = [];
+
+if (bundleStats) {
+    plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static'}));
+}
 const config = {
     builders: {
         web: {
@@ -34,10 +40,10 @@ const config = {
             enabled: true,
             webpackConfig: {
                 plugins: [
-                    new LodashModuleReplacementPlugin({
-                        // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
-                        flattening: true
-                      }),
+                    // new LodashModuleReplacementPlugin({
+                    //     // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
+                    //     flattening: true
+                    //   }),
                 ],
                 // for additional webpack configuration.
                 resolve: process.env.NODE_ENV !== 'production'
