@@ -1,6 +1,7 @@
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
+const bundleStats = process.env.BUNDLE_STATS || false;
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
