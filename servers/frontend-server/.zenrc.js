@@ -1,12 +1,24 @@
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
 const debug = process.env.DEBUGGING || false;
+const bundleStats = process.env.BUNDLE_STATS || false;
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const plugins = [
+    // new LodashModuleReplacementPlugin({
+    //     // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
+    //     flattening: true
+    //   }),
+];
+
+if (bundleStats) {
+    plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
 const config = {
     builders: {
         web: {
@@ -33,12 +45,7 @@ const config = {
             waitOn: ['tcp:localhost:8080'],
             enabled: true,
             webpackConfig: {
-                plugins: [
-                    new LodashModuleReplacementPlugin({
-                        // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
-                        flattening: true
-                      }),
-                ],
+                plugins,
                 // for additional webpack configuration.
                 resolve: process.env.NODE_ENV !== 'production'
                     ? {
@@ -74,7 +81,7 @@ const config = {
                     new LodashModuleReplacementPlugin({
                         // Necessary as a workaround for https://github.com/apollographql/react-apollo/issues/1831
                         flattening: true
-                      }),
+                    }),
                 ],
                 externals: [
                     nodeExternals(),
