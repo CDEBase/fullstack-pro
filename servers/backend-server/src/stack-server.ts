@@ -14,6 +14,7 @@ import { CdmLogger } from '@cdm-logger/core';
 import { expressApp } from './express-app';
 import { GraphqlServer } from './server-setup/graphql-server';
 import { config } from './config';
+import { GRAPHQL_ROUTE } from './constants';
 import { ConnectionBroker } from './connectors/connection-broker';
 import * as brokerConfig from './config/moleculer.config';
 import modules, { settings } from './modules';
@@ -22,6 +23,7 @@ import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-upd
 import { IModuleService } from './interfaces';
 import { migrate } from './utils/migrations';
 import { InterNamespaceMiddleware } from './middleware/moleculer-inter-namespace';
+import { GraphqlWs } from './server-setup/graphql-ws';
 // This is temp and will be replaced one we add support for rules in Feature
 
 type ILogger = CdmLogger.ILogger;
@@ -99,7 +101,7 @@ export class StackServer {
             started: async () => {
                 await modules.preStart(this.serviceContainer);
                 if (config.NODE_ENV === 'development') {
-                    // await modules.microservicePreStart(this.micorserviceContainer);
+                    // await modules.microservicePreStart(this.microserviceContainer);
                 }
 
                 try {
@@ -118,7 +120,7 @@ export class StackServer {
                 // start DB migration
 
                 if (config.NODE_ENV === 'development') {
-                    // await modules.microservicePostStart(this.micorserviceContainer);
+                    // await modules.microservicePostStart(this.microserviceContainer);
                 }
             },
 
@@ -141,6 +143,7 @@ export class StackServer {
             });
         }
         const pubsub = await this.connectionBroker.graphqlPubsub;
+        console.log('--PUBSUB --', pubsub)
         const InfraStructureFeature = new Feature({
             createContainerFunc: [
                 () =>
@@ -161,6 +164,12 @@ export class StackServer {
                         logger: serverLogger,
                     }),
             ],
+            // createWebsocketConfig: {
+            //     [GRAPHQL_ROUTE]: (ws) => {
+            //         const ser = new GraphqlWs(moduleService, this.cache, ws);
+
+            //     }
+            // }
         });
 
         const allModules = new Feature(InfraStructureFeature, modules as Feature);
@@ -205,7 +214,7 @@ export class StackServer {
         }
 
         // initialize Servers
-        this.httpServer = http.createServer();
+        this.httpServer = http.createServer(); // TODO modify to http.createServer(this.app)
         this.app = await expressApp(serviceBroker, null, this.httpServer);
 
         this.httpServer.startListening = startListening.bind(this.httpServer);
@@ -216,17 +225,17 @@ export class StackServer {
 
         const customWebsocket = allModules.getWebsocketConfig();
         const customWebsocketEnable = !_.isEmpty(customWebsocket);
-
-        if (customWebsocketEnable) {
+        console.log('---CUSTOM SOCKET', customWebsocket, customWebsocketEnable)
+        // if (customWebsocketEnable) {
             this.multiPathWebsocket = new WebsocketMultiPathServer(serviceBroker, redisClient, customWebsocket);
             this.httpServer = this.multiPathWebsocket.httpServerUpgrade(this.httpServer);
-        }
+        // }
         const graphqlServer = new GraphqlServer(
             this.app,
             this.httpServer,
             redisClient,
             serviceBroker,
-            !customWebsocketEnable,
+            // !customWebsocketEnable,
         );
 
         await graphqlServer.initialize();

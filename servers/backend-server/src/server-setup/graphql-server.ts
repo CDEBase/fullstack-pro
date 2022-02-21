@@ -4,6 +4,10 @@ import { Express } from 'express';
 import * as http from 'http';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
+import {
+    ApolloServerPluginLandingPageGraphQLPlayground,
+    ApolloServerPluginLandingPageDisabled
+} from 'apollo-server-core';
 import { GRAPHQL_ROUTE } from '../constants';
 import { IModuleService } from '../interfaces';
 
@@ -37,25 +41,22 @@ export class GraphqlServer {
         private httpServer: http.Server,
         private cache: RedisCache | RedisClusterCache,
         private moduleService: IModuleService,
-        private enableSubscription = true,
     ) {
         this.logger = this.moduleService.logger.child({ className: 'GraphqlServer' });
     }
 
     public async initialize() {
         this.logger.info('GraphqlServer initializing...');
-        const apolloServer = this.configureApolloServer();
+        const apolloServer = await this.configureApolloServer();
+        await apolloServer.start();
         apolloServer.applyMiddleware({ app: this.app, disableHealthCheck: false, path: GRAPHQL_ROUTE });
-        if (this.enableSubscription) {
-            apolloServer.installSubscriptionHandlers(this.httpServer);
-        }
         this.logger.info('GraphqlServer initialized');
     }
 
     private configureApolloServer(): ApolloServer {
         const serverConfig: ApolloServerExpressConfig = {
             debug,
-            schema: this.moduleService.schema as any,
+            schema: this.moduleService.schema,
             dataSources: () => this.moduleService.dataSource,
             cache: this.cache,
             context: async ({
@@ -107,23 +108,15 @@ export class GraphqlServer {
                     ...addons,
                 };
             },
+            plugins: [
+                // process.env.NODE_ENV === 'production'
+                //     ? ApolloServerPluginLandingPageDisabled()
+                //     : 
+                    // ApolloServerPluginLandingPageGraphQLPlayground(),
+                    ApolloServerPluginLandingPageDisabled(),
+                    // ApolloServerPluginDrainHttpServer({ httpServer })
+            ],
         };
-        if (this.enableSubscription) {
-            serverConfig.subscriptions = {
-                onConnect: async (connectionParams, webSocket) => {
-                    this.logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
-                    const pureContext = await this.moduleService.createContext(connectionParams, webSocket);
-                    const contextServices = await this.moduleService.serviceContext(connectionParams, webSocket);
-                    return {
-                        ...contextServices,
-                        ...pureContext,
-                        preferences: this.moduleService.defaultPreferences,
-                        // update: updateContainers,
-                    };
-                },
-                // onDisconnect: () => {},
-            };
-        }
         return new ApolloServer(serverConfig);
     }
 }

@@ -56,7 +56,6 @@
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",
-    "aws-sdk": "^2.880.0",
     "check-internet-connected": "^2.0.5",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.9.1",
@@ -81,7 +80,7 @@
     "fela-plugin-unit": "^11.6.0",
     "fela-plugin-validator": "^11.6.0",
     "fela-preset-web": "^11.6.0",
-    "graphql": "^14.7.0",
+    "graphql": "^15.8.0",
     "graphql-tag": "^2.11.0",
     "history": "^4.10.1",
     "immutability-helper": "^3.0.1",
@@ -115,7 +114,7 @@
     "rxjs-hooks": "^0.5.2",
     "source-map-support": "^0.5.19",
     "sqlite3": "^5.0.2",
-    "subscriptions-transport-ws": "0.9.18",
+    "subscriptions-transport-ws": "0.11.0",
     "typeorm": "^0.2.32"
   },
   "devDependencies": {

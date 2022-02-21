@@ -3,11 +3,12 @@ import { GraphQLResolveInfo } from 'graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
-const defaultOptions =  {}
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -42,7 +43,7 @@ export type Mutation = {
 
 
 export type MutationAddCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+  amount?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -52,7 +53,7 @@ export type MutationAddCounterStateArgs = {
 
 
 export type MutationAddMoleculerCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+  amount?: InputMaybe<Scalars['Int']>;
 };
 
 export type Query = {
@@ -78,91 +79,46 @@ export type AddCounterStateMutationVariables = Exact<{
 }>;
 
 
-export type AddCounterStateMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
+export type AddCounterStateMutation = { __typename?: 'Mutation', addCounterState?: { __typename?: 'ClientCounter', counter?: number | null } | null };
 
 export type AddCounterMutationVariables = Exact<{
   amount: Scalars['Int'];
 }>;
 
 
-export type AddCounterMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type AddCounterMutation = { __typename?: 'Mutation', addCounter?: { __typename?: 'Counter', amount: number } | null };
 
 export type AddCounter_WsMutationVariables = Exact<{
   amount: Scalars['Int'];
 }>;
 
 
-export type AddCounter_WsMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type AddCounter_WsMutation = { __typename?: 'Mutation', addCounter?: { __typename?: 'Counter', amount: number } | null };
 
 export type SyncCachedCounterMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SyncCachedCounterMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'syncCachedCounter'>
-);
+export type SyncCachedCounterMutation = { __typename?: 'Mutation', syncCachedCounter?: boolean | null };
 
 export type CounterCacheQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterCacheQueryQuery = (
-  { __typename?: 'Query' }
-  & { counterCache?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type CounterCacheQueryQuery = { __typename?: 'Query', counterCache?: { __typename?: 'Counter', amount: number } | null };
 
 export type CounterStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterStateQuery = (
-  { __typename?: 'Query' }
-  & { counterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
+export type CounterStateQuery = { __typename?: 'Query', counterState?: { __typename?: 'ClientCounter', counter?: number | null } | null };
 
 export type CounterQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterQueryQuery = (
-  { __typename?: 'Query' }
-  & { counter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type CounterQueryQuery = { __typename?: 'Query', counter?: { __typename?: 'Counter', amount: number } | null };
 
 export type OnCounterUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnCounterUpdatedSubscription = (
-  { __typename?: 'Subscription' }
-  & { counterUpdated?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type OnCounterUpdatedSubscription = { __typename?: 'Subscription', counterUpdated?: { __typename?: 'Counter', amount: number } | null };
 
 
 
@@ -172,21 +128,7 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -200,7 +142,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -247,26 +189,26 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  ClientCounter: ResolverTypeWrapper<ClientCounter>;
   Counter: ResolverTypeWrapper<Counter>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  ClientCounter: ResolverTypeWrapper<ClientCounter>;
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Subscription: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Subscription: ResolverTypeWrapper<{}>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
+  Boolean: Scalars['Boolean'];
+  ClientCounter: ClientCounter;
   Counter: Counter;
   Int: Scalars['Int'];
-  ClientCounter: ClientCounter;
   Mutation: {};
-  Boolean: Scalars['Boolean'];
-  Subscription: {};
+  Query: {};
   String: Scalars['String'];
+  Subscription: {};
 };
 
 export type ClientCounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
@@ -280,9 +222,9 @@ export type CounterResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddCounterArgs, never>>;
+  addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, Partial<MutationAddCounterArgs>>;
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>;
-  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddMoleculerCounterArgs, never>>;
+  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, Partial<MutationAddMoleculerCounterArgs>>;
   syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
 };
 
@@ -306,12 +248,6 @@ export type Resolvers<ContextType = any> = {
   Subscription?: SubscriptionResolvers<ContextType>;
 };
 
-
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 
 export const AddCounterStateDocument = gql`
