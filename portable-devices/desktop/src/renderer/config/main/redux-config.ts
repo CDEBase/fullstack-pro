@@ -11,6 +11,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
+import thunkMiddleware from 'redux-thunk';
 import modules from '../../modules/main';
 import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
@@ -75,7 +76,7 @@ export const createReduxStore = () => {
             isDev,
             initialState: {},
             persistConfig,
-            middleware: [routerMiddleware(history)],
+            middleware: [thunkMiddleware, routerMiddleware(history)],
             epicMiddleware,
             preMiddleware: [
                 forwardToMainWithParams({
@@ -108,5 +109,5 @@ export const createReduxStore = () => {
         replayActionRenderer(store);
     }
     container.bind('ReduxStore').toConstantValue(store);
-    return store;
+    return { store, history };
 };
