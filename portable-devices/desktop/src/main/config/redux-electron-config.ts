@@ -1,5 +1,6 @@
 import { triggerAlias, replayActionMain, forwardToRenderer } from 'electron-redux';
 import { createEpicMiddleware } from 'redux-observable';
+import thunkMiddleware from 'redux-thunk';
 import modules, { container } from '../modules';
 import { createReduxStore as createBaseReduxStore } from '../../common/config/base-redux-config';
 import { rootEpic } from './epic-config';
@@ -24,7 +25,7 @@ export const createReduxStore = () => {
         initialState: {},
         epicMiddleware,
         rootEpic,
-        middleware: [triggerAlias],
+        middleware: [thunkMiddleware, triggerAlias],
         postMiddleware: [forwardToRenderer],
         reducers: modules.reducers,
     });
