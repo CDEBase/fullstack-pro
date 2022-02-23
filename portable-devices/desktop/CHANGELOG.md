@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.51-alpha.82](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.81...v0.0.51-alpha.82) (2022-02-23)
+
+
+### Bug Fixes
+
+*  resolved issues with redux store ([3bb1c2f](https://github.com/cdmbase/fullstack-pro/commit/3bb1c2f7a316e65ad219797a2b1c7c145da1a226))
+
+
+
+
+
 ## [0.0.51-alpha.81](https://github.com/cdmbase/fullstack-pro/compare/v0.0.51-alpha.80...v0.0.51-alpha.81) (2022-02-22)
 
 **Note:** Version bump only for package sample-stack-desktop-device
