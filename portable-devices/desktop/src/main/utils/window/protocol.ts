@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { protocol, BrowserWindow } from 'electron';
-import { dev } from 'electron-is';
 import { format as formatUrl } from 'url';
 import createProtocol from '../createProtocol';
 import { config } from '../../../common/config/config';
@@ -13,7 +12,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
  * @param name path name in renderer
  */
 export const loadUrl = (windows: BrowserWindow, name: string) => {
-    if (dev()) {
+    if (config.isDev) {
         const htmlDevPath = formatUrl({
             protocol: 'http',
             slashes: true,
