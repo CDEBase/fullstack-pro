@@ -49,6 +49,7 @@
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
+    "envalid": "*",
     "native-base": "*",
     "react": "*",
     "react-native": "*",
