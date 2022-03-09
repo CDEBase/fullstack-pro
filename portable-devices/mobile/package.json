@@ -13,6 +13,7 @@
     "build:configure": "eas build:configure",
     "build:ios": "yarn build -p ios --clear-cache",
     "build:preview": "yarn easBuild --profile preview -p ios --non-interactive",
+    "build:prod": "yarn easBuild --profile production -p ios --non-interactive",
     "cli": "node ../../tools/cli",
     "eas-build-post-install": "lerna exec --scope=@sample-stack/core --scope=@sample-stack/counter-module-mobile yarn build",
     "easBuild": "eas build",
