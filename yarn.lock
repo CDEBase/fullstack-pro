@@ -13981,14 +13981,6 @@ fela-dom@^7.0.9:
     fast-loops "^1.0.0"
     fela-utils "^8.0.8"
 
-fela-font-renderer@^5.0.25:
-  version "5.0.25"
-  resolved "https://registry.yarnpkg.com/fela-font-renderer/-/fela-font-renderer-5.0.25.tgz#8b02ffacbfb2a746bd69ec903668cf3017690c61"
-  integrity sha512-sGPPO2JdpuP3airvfBmlTcELADL9I6mph82Fq2+WOhYjUtlbio/9B9fp/SgXboH0w4+sjh1RRsnoMeDfOORFAw==
-  dependencies:
-    fela "^6.1.9"
-    fela-dom "^7.0.9"
-
 fela-native@^11.6.1:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/fela-native/-/fela-native-11.7.0.tgz#a69e553e6e8f6e07b95d7f3b8380c8d632175923"

@@ -79,7 +79,6 @@
     "fela": "11.6.0",
     "fela-beautifier": "^11.6.0",
     "fela-dom": "11.6.0",
-    "fela-font-renderer": "^5.0.25",
     "fela-perf": "^11.6.0",
     "fela-plugin-fallback-value": "^11.6.0",
     "fela-plugin-logger": "^11.6.0",
