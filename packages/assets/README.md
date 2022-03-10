@@ -18,6 +18,7 @@ cd packages/assets/src
 inkscape -w 16 -h 16 -o assets/favicon-16x16.png original/master.svg
 inkscape -w 32 -h 32 -o assets/favicon-32x32.png original/master.svg
 inkscape -w 48 -h 48 -o assets/favicon-48x48.png original/master.svg
+inkscape -w 64 -h 64 -o assets/favicon-64x64.png original/master.svg
 inkscape -w 150 -h 150 -o assets/mstile-150x50.png original/master.svg
 inkscape -w 192 -h 192 -o assets/android-chrome-192x192.png original/master.svg
 inkscape -w 256 -h 256 -o assets/android-chrome-256x256.png original/master.svg
