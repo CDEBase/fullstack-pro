@@ -37,3 +37,8 @@ assets/favicon.ico[0] ICO 16x16 16x16+0+0 8-bit sRGB 0.000u 0:00.001
 assets/favicon.ico[1] ICO 32x32 32x32+0+0 8-bit sRGB 0.000u 0:00.001
 assets/favicon.ico[2] ICO 48x48 48x48+0+0 8-bit sRGB 15086B 0.000u 0:00.000
 ```
+
+
+Phones
+--
+inkscape -w 64 -h 64 -o ../../../portable-devices/mobile/assets/images/favicon.png original/master.svg
