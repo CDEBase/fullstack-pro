@@ -18,7 +18,7 @@ const simpleGit = require('simple-git/promise');
 const git = simpleGit();
 
 glob(
-    './+(servers|packages|packages-modules)/**/package.json',
+    './+(servers|portable-devices|packages|packages-modules)/**/package.json',
     { onlyFiles: false, ignore: ['**/node_modules/**'] },
     (err, files) => {
         if (err) return console.error(`Unable to scan directory: ${err}`);
