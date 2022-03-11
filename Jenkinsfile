@@ -27,9 +27,9 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.4.1', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -92,7 +92,7 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
         sh """
@@ -466,6 +466,12 @@ def getBuildCommand(){
   }
   if(params.ENV_CHOICE == 'mobilePreview'){
     return 'build:preview'
+  }
+  if(params.ENV_CHOICE == 'mobileProd'){
+    return 'build:prod'
+  }
+  if(params.ENV_CHOICE == 'mobileProdSubmit'){
+    return 'build:prodSubmit'
   }
   if(params.ENABLE_DEBUG.toBoolean()){
     return 'build:debug'
