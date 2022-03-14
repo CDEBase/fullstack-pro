@@ -43,3 +43,4 @@ assets/favicon.ico[2] ICO 48x48 48x48+0+0 8-bit sRGB 15086B 0.000u 0:00.000
 Phones
 --
 inkscape -w 64 -h 64 -o ../../../portable-devices/mobile/assets/images/favicon.png original/master.svg
+inkscape -w 120 -h 120 -o ../../../portable-devices/mobile/assets/images/apple-touch-icon-120x120.png original/master.svg
