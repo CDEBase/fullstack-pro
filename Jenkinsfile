@@ -30,6 +30,7 @@ pipeline {
     choice choices: ['0.4.1', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -465,13 +466,13 @@ def getBuildCommand(){
     return 'build:auto'
   }
   if(params.ENV_CHOICE == 'mobilePreview'){
-    return 'build:preview'
+    return 'build:preview:' + params.MOBILE_CHOICE
   }
   if(params.ENV_CHOICE == 'mobileProd'){
-    return 'build:prod'
+    return 'build:prod:' + params.MOBILE_CHOICE
   }
   if(params.ENV_CHOICE == 'mobileProdSubmit'){
-    return 'build:prodSubmit'
+    return 'build:prodSubmit:' + params.MOBILE_CHOICE
   }
   if(params.ENABLE_DEBUG.toBoolean()){
     return 'build:debug'
