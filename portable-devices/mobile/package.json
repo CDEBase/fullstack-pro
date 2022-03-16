@@ -21,7 +21,7 @@
     "build:prod:android": "yarn build:prod -p android",
     "build:prod:ios": "yarn build:prod -p ios",
     "build:prod:manual": "yarn easBuild --profile production",
-    "build:prodSubmit": "yarn build:prod:all --auto-submit",
+    "build:prodSubmit:all": "yarn build:prod:all --auto-submit",
     "build:prodSubmit:android": "yarn build:prod:android --auto-submit",
     "build:prodSubmit:ios": "yarn build:prod:ios --auto-submit",
     "build:stage": "yarn easBuild --profile staging -p ios --non-interactive",
