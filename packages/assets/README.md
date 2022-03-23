@@ -24,6 +24,7 @@ inkscape -w 192 -h 192 -o assets/android-chrome-192x192.png original/master.svg
 inkscape -w 256 -h 256 -o assets/android-chrome-256x256.png original/master.svg
 
 inkscape -w 512 -h 512 -o assets/logo-512x512.png original/master.svg
+inkscape -w 1024 -h 1024 -o assets/logo-1024x1024.png original/master.svg
 
 inkscape -w 180 -h 180 -o assets/apple-touch-icon-180x180.png original/master.svg
 inkscape -w 120 -h 120 -o assets/apple-touch-icon-120x120.png original/master.svg
