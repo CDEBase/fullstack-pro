@@ -12,7 +12,7 @@
     "build:clean": "rimraf build .expo .tmp",
     "build:configure": "eas build:configure",
     "build:ios": "yarn build -p ios --clear-cache",
-    "build:preview": "yarn easBuild --profile preview --non-interactive",
+    "build:preview": "yarn easBuild --profile preview",
     "build:preview:all": "yarn build:preview -p all --non-interactive",
     "build:preview:android": "yarn build:preview -p android --non-interactive",
     "build:preview:ios": "yarn build:preview -p ios --non-interactive",
