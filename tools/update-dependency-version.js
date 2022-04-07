@@ -1,3 +1,6 @@
+/* eslint-disable jest/require-hook */
+/* eslint-disable no-loop-func */
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable no-restricted-syntax */
@@ -17,6 +20,43 @@ const simpleGit = require('simple-git/promise');
 
 const git = simpleGit();
 
+const searchAndUpdate = (dependencies, filePath, obj) => {
+    const fileWrie = filePath;
+    const packageDir = path.dirname(filePath);
+    console.log('---PACKAGE DIR', packageDir);
+    for (const key in dependencies) {
+        if (dependencies[key].includes('link:')) {
+            const relativeDepFolder = dependencies[key].split('link:')[1];
+            console.log('--FOLDER ROAD', relativeDepFolder);
+            const dependencyFolder = path.join(packageDir, relativeDepFolder);
+            try {
+                fs.readdirSync(dependencyFolder);
+            } catch (err) {
+                console.log(
+                    `--- err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
+                );
+                console.log(`--- err ${err.message}`);
+                return;
+            }
+            glob(`${dependencyFolder}/package.json`, null, (err, files) => {
+                if (err) return console.error(`Unable to scan directory: ${err}`);
+                console.log(files);
+                files.forEach((file) => {
+                    fs.readFile(file, 'utf-8', (err, data) => {
+                        if (err) return console.error(`Unable to scan directory: ${err}`);
+
+                        const objVersion = JSON.parse(data);
+                        const { version } = objVersion;
+                        dependencies[key] = `${version}`;
+                        const str = JSON.stringify(obj, null, 2);
+                        fs.writeFileSync(fileWrie, str, 'ascii');
+                    });
+                });
+            });
+        }
+    }
+};
+
 glob(
     './+(servers|portable-devices|packages|packages-modules)/**/package.json',
     { onlyFiles: false, ignore: ['**/node_modules/**'] },
@@ -27,41 +67,10 @@ glob(
                 if (err) return console.error(`Unable to scan directory: ${err}`);
                 try {
                     const obj = JSON.parse(data);
-                    const { dependencies } = obj;
-                    const fileWrie = file;
-                    const packageDir = path.dirname(file);
-                    console.log('---PACKAGE DIR', packageDir);
-                    for (const key in dependencies) {
-                        if (dependencies[key].includes('link:')) {
-                            const relativeDepFolder = dependencies[key].split('link:')[1];
-                            console.log('--FOLDER ROAD', relativeDepFolder);
-                            const dependencyFolder = path.join(packageDir, relativeDepFolder);
-                            try {
-                                fs.readdirSync(dependencyFolder);
-                            } catch (err) {
-                                console.log(
-                                    `--- err Search for dependency of ${file} with package path ${relativeDepFolder} not found`,
-                                );
-                                console.log(`--- err ${err.message}`);
-                                return;
-                            }
-                            glob(`${dependencyFolder}/package.json`, null, (err, files) => {
-                                if (err) return console.error(`Unable to scan directory: ${err}`);
-                                console.log(files);
-                                files.forEach((file) => {
-                                    fs.readFile(file, 'utf-8', (err, data) => {
-                                        if (err) return console.error(`Unable to scan directory: ${err}`);
-
-                                        const objVersion = JSON.parse(data);
-                                        const { version } = objVersion;
-                                        dependencies[key] = `${version}`;
-                                        const str = JSON.stringify(obj, null, 2);
-                                        fs.writeFileSync(fileWrie, str, 'ascii');
-                                    });
-                                });
-                            });
-                        }
-                    }
+                    const { dependencies, peerDependencies, devDependencies } = obj;
+                    searchAndUpdate(dependencies, file, obj);
+                    searchAndUpdate(peerDependencies, file, obj);
+                    searchAndUpdate(devDependencies, file, obj);
                 } catch (err) {
                     console.error(`Errored at ${file}`);
                     console.error(err);
