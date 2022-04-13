@@ -35,7 +35,6 @@
     "production": {   
       "node": "14.17.3",
       "env": {
-        "NODE_ENV": "development",
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
         "GA_ID": "jjj",
         "LOG_LEVEL": "trace",

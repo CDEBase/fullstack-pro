@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 import { registerRootComponent } from 'expo';
-import 'text-encoding-polyfill'; // to fix App Crash due to reference to TextEncoder
+import './shim';
 import 'react-native-reanimated'; // to fix web crash
 
 import App from './App';
