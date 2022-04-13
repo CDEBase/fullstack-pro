@@ -340,7 +340,7 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://0.0.0.0']) {
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.237.50.131']) {
           
           sh """
             helm repo add stable https://charts.helm.sh/stable
