@@ -63,7 +63,7 @@
     "@react-native-community/segmented-control": "~2.2.2",
     "@react-native-community/slider": "~4.1.7",
     "@react-native-community/viewpager": "~5.0.11",
-    "@sample-stack/counter-module-mobile": "link:../../packages-modules/counter/mobile",
+    "@sample-stack/counter-module-mobile": "0.0.51-alpha.77",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",
