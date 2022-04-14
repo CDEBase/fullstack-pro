@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-mobile-device",
-  "version": "0.0.51-alpha.86",
+  "version": "0.0.51-alpha.87",
   "private": true,
   "main": "index.js",
   "scripts": {
