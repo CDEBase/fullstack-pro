@@ -165,6 +165,7 @@
     "@rollup/plugin-image": "^2.0.6",
     "@rollup/plugin-typescript": "^6.1.0",
     "@shelf/jest-mongodb": "^2.2.0",
+    "@testing-library/react": "^12.1.4",
     "@types/async": "^3.0.3",
     "@types/body-parser": "1.17.1",
     "@types/bunyan": "^1.8.6",
