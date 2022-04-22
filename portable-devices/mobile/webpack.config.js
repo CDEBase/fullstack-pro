@@ -16,6 +16,11 @@ module.exports = async function (env, argv) {
             loader: 'babel-loader',
             include: [path.join(__dirname, '../../node_modules/react-router-native')],
         },
+        {
+            test: /\.mjs$/,
+            include: /node_modules/,
+            type: 'javascript/auto',
+        },
     );
     config.plugins.push(
         new webpack.DefinePlugin({
