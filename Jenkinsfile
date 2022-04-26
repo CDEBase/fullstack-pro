@@ -209,6 +209,7 @@ pipeline {
       environment{
           deployment_env = 'dev'
       }
+      def devClusterIP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH ||  GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
@@ -216,7 +217,6 @@ pipeline {
       }
 
       steps {
-       def devClusterIP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
        withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://${devClusterIP}"]) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
