@@ -27,7 +27,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.4.1', '0.5.1', '0.5.2', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.4.1', '0.5.2', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
@@ -209,7 +209,6 @@ pipeline {
       environment{
           deployment_env = 'dev'
       }
-      def devClusterIP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH ||  GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
@@ -217,7 +216,7 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://${devClusterIP}"]) {         
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://35.243.206.245"]) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
