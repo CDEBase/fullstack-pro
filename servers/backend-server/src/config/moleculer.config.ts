@@ -222,9 +222,6 @@ const brokerConfig: BrokerOptions = {
 
     // Called after broker stopped.
     stopped(broker) {},
-
-    // Register custom REPL commands.
-    replCommands: null,
 };
 
 export = brokerConfig;
