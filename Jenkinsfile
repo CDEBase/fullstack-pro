@@ -209,7 +209,7 @@ pipeline {
       environment{
           deployment_env = 'dev'
       }
-      def devClusterIP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
+      devClusterIP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
       when {
         expression { GIT_BRANCH_NAME == params.PUBLISH_BRANCH ||  GIT_BRANCH_NAME == params.DEVELOP_BRANCH }
         expression { params.ENV_CHOICE == 'buildOnly' || params.ENV_CHOICE == 'devDeployOnly' }
