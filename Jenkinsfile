@@ -252,7 +252,6 @@ pipeline {
           git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging ${params.DEVELOP_BRANCH} \r\n[skip ci]'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
-          ${params.BUILD_STRATEGY} run build
         """
         script {
           GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
