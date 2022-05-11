@@ -223,6 +223,7 @@
     "csstype": "^2.5.5",
     "dotenv-safe": "^8.2.0",
     "dotenv-webpack": "^6.0.0",
+    "easygraphql-load-tester": "^2.0.5",
     "envalid": "~7.2.2",
     "enzyme": "^3.11.0",
     "eslint": "^7.23.0",
