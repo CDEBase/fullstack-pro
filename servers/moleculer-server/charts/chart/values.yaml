@@ -18,7 +18,6 @@ ingress:
   enabled: false
 env:
   CONNECTION_ID: v1
-  BRIGADE_PROJECT_ID: "brigade-fc500e5f406ddcff3c0cc1e1e39ecfe605e4c1e34d45b36ce15d6c"
   LOG_LEVEL: info
   HEMERA_LOG_LEVEL: info
 external:
