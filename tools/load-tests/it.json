@@ -1,0 +1,16 @@
+{
+    "config": {
+        "url": "https://ideback-default-v1.smartidog.com/graphql",
+        "name": "Test",
+        "selectedQueries": ["counterQuery"],
+        "queryFile": true,
+        "withMutations": true,
+        "duration": 5,
+        "arrivalRate": 40
+    },
+    "args": {
+        "counterQuery": {
+
+        }
+    }
+}
