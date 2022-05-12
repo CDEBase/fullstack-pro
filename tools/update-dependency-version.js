@@ -89,7 +89,10 @@ glob(
                             git.commit('corrected packages version!');
                         } else console.log('no change');
                     })
-                    .catch((err) => console.error(err));
+                    .catch((err) => {
+                        console.error(err);
+                        return err;
+                    });
             })
             .catch((err) => console.error(err));
     },
