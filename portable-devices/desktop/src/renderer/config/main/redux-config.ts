@@ -9,6 +9,9 @@ import { combineReducers } from 'redux';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { persistReducer } from 'redux-persist';
+import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
+import thunkMiddleware from 'redux-thunk';
 import modules from '../../modules/main';
 import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
@@ -29,7 +32,7 @@ export const epicMiddleware = createEpicMiddleware({
 });
 
 export const persistConfig = {
-    key: 'root',
+    key: REDUX_PERSIST_KEY,
     storage,
     stateReconciler: autoMergeLevel2,
     // Don't add `user` state to persist as it creates problems.
@@ -56,9 +59,7 @@ export const createReduxStore = () => {
         store = (module as any).hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
-        store.replaceReducer(
-            persistReducer(persistConfig, storeReducer((module as any).hot.data.history || newHistory)),
-        );
+        store.replaceReducer(persistReducer(persistConfig, storeReducer((module as any).hot.data.history || history)));
         // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
     } else {
         // If we have preloaded state, save it.
@@ -75,7 +76,7 @@ export const createReduxStore = () => {
             isDev,
             initialState: {},
             persistConfig,
-            middleware: [routerMiddleware(history)],
+            middleware: [thunkMiddleware, routerMiddleware(history)],
             epicMiddleware,
             preMiddleware: [
                 forwardToMainWithParams({
@@ -92,7 +93,7 @@ export const createReduxStore = () => {
             data.store = store;
             data.history = history;
         });
-        (module as any).hot.accept('../config/epic-config', () => {
+        (module as any).hot.accept('./epic-config', () => {
             // we may need to reload epic always as we don't
             // know whether it is updated using our `modules`
             const nextRootEpic = require('./epic-config').rootEpic;
@@ -108,5 +109,5 @@ export const createReduxStore = () => {
         replayActionRenderer(store);
     }
     container.bind('ReduxStore').toConstantValue(store);
-    return store;
+    return { store, history };
 };

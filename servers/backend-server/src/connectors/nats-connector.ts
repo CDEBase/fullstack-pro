@@ -2,21 +2,23 @@ import * as nats from 'nats';
 import * as _ from 'lodash';
 import { logger } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
+
 type ILogger = CdmLogger.ILogger;
 
-
 export class NatsConnector {
-
-
     private opts: nats.ClientOpts;
+
     private client: nats.Client;
+
     private logger: ILogger;
+
     private connected: boolean;
 
     constructor(opts: nats.ClientOpts) {
         this.opts = _.defaultsDeep(opts, {});
         this.logger = logger.child({ className: 'NatsConnector' });
     }
+
     /**
      * Connect to a NATS server
      *
@@ -52,18 +54,16 @@ export class NatsConnector {
                 }
             });
 
-            client.on('error', e => {
+            client.on('error', (e) => {
                 this.logger.error('NATS error.', e.message);
                 this.logger.debug(e);
                 reject(e);
-
             });
 
             client.on('close', () => {
                 this.logger.fatal('NATS connection close.');
             });
         });
-
     }
 
     /**

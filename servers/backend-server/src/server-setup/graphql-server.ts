@@ -102,6 +102,7 @@ export class GraphqlServer {
                     throw err;
                 }
                 return {
+                    req,
                     ...context,
                     ...addons,
                 };

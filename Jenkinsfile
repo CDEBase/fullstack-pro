@@ -27,9 +27,10 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.4.0', '0.3.0', '0.1.22'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.4.1', '0.5.2', '0.6.0', '0.3.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'devDeployOnly', 'stageDeploy', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
@@ -92,7 +93,7 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
         sh """
@@ -135,7 +136,8 @@ pipeline {
       steps{
         sh """
           git checkout ${params.DEVELOP_BRANCH}
-          git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging'
+          git merge ${env.GIT_PR_BRANCH_NAME} -m 'auto merging ${params.GIT_PR_BRANCH_NAME} \r\n[skip ci]'
+          git push origin ${params.DEVELOP_BRANCH}
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
           ${params.BUILD_STRATEGY} run build
@@ -161,7 +163,7 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git diff --staged --quiet || git commit -am 'auto build [skip ci] \r\n'
             git fetch origin ${params.DEVELOP_BRANCH}
             git checkout ${params.DEVELOP_BRANCH}
             ${params.BUILD_STRATEGY} run devpublish:${params.NPM_PUBLISH_STRATEGY};
@@ -214,7 +216,7 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: 'https://35.243.206.245']) {         
+       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://35.243.206.245"]) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -244,11 +246,12 @@ pipeline {
       }
       steps{
         sh """
+          git add -A
+          git diff --staged --quiet || git commit -am 'pre merge to master \r\n[skip ci]'
           git checkout ${params.REPOSITORY_BRANCH}
-          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging'
+          git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging ${params.DEVELOP_BRANCH} \r\n[skip ci]'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
-          ${params.BUILD_STRATEGY} run build
         """
         script {
           GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
@@ -284,10 +287,11 @@ pipeline {
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
           sh """
             git add -A
-            git diff --staged --quiet || git commit -am 'auto build\r\n[skip ci]'
+            git diff --staged --quiet || git commit -am 'auto build [skip ci]\r\n'
             git fetch origin ${params.MASTER_BRANCH}
             git checkout ${params.MASTER_BRANCH}
             ${params.BUILD_STRATEGY} run publish:${params.NPM_PUBLISH_STRATEGY};
+            git push origin ${params.MASTER_BRANCH}
             git checkout ${params.PUBLISH_BRANCH}
           """
         }
@@ -329,14 +333,13 @@ pipeline {
       }
       when {
         expression { GIT_BRANCH_NAME == params.MASTER_BRANCH || GIT_BRANCH_NAME == params.PUBLISH_BRANCH }
-        expression {params.ENV_CHOICE == 'stageDeploy'}
+        expression { params.ENV_CHOICE == 'stageDeploy' || params.ENV_CHOICE == 'stageDeployOnly' }
         beforeInput true
       }
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-dev-cluster', serverUrl: 'https://0.0.0.0']) {
-          
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.231.34.237']) {
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -418,7 +421,7 @@ pipeline {
           
           // Now do the actual work here
           load "./jenkins_variables.groovy"
-          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://104.196.165.88']) {
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster-r1', serverUrl: 'https://35.229.71.215']) {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
@@ -461,7 +464,13 @@ def getBuildCommand(){
     return 'build:auto'
   }
   if(params.ENV_CHOICE == 'mobilePreview'){
-    return 'build:preview'
+    return 'build:preview:' + params.MOBILE_CHOICE
+  }
+  if(params.ENV_CHOICE == 'mobileProd'){
+    return 'build:prod:' + params.MOBILE_CHOICE
+  }
+  if(params.ENV_CHOICE == 'mobileProdSubmit'){
+    return 'build:prodSubmit:' + params.MOBILE_CHOICE
   }
   if(params.ENABLE_DEBUG.toBoolean()){
     return 'build:debug'

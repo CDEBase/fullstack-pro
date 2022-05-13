@@ -103,7 +103,9 @@ export class StackServer {
                 }
 
                 try {
-                    await migrate(mongoClient, this.serviceContainer);
+                    this.logger.info('Starting Migration');
+                    await migrate(mongoClient, this.serviceContainer, this.logger);
+                    this.logger.info('End Migration');
                 } catch (e) {
                     this.logger.error('Error while running migrations', e);
                     this.logger.error(e.stack);

@@ -36,6 +36,12 @@ const Html = ({
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+                <link rel="icon" type="image/png" href={`${assetMap['favicon-32x32.png']}`} sizes="32x32" />
+                <link rel="icon" type="image/png" href={`${assetMap['favicon-16x16.png']}`} sizes="16x16" />
+                <link rel="manifest" href={`${assetMap['manifest.xjson']}`} />
+                <link rel="mask-icon" href={`${assetMap['safari-pinned-tab.svg']}`} color="#5bbad5" />
+                <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
+                <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
                 {<link rel="stylesheet" type="text/css" href={`${assetMap['index.css']}`} />}
                 {assetMap['vendor.css'] && <link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
                 <style id="font-stylesheet" />

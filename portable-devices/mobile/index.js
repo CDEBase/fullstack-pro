@@ -2,6 +2,8 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 import { registerRootComponent } from 'expo';
+import './shim';
+import 'react-native-reanimated'; // to fix web crash
 
 import App from './App';
 

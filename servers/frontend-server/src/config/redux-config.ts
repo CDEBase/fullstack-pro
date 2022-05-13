@@ -9,6 +9,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
+import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { createClientContainer } from './client.service';
@@ -29,7 +30,7 @@ export const epicMiddleware = createEpicMiddleware({
 });
 
 export const persistConfig = {
-    key: 'root',
+    key: REDUX_PERSIST_KEY,
     storage,
     stateReconciler: autoMergeLevel2,
     transforms: modules.reduxPersistStateTransformers,
