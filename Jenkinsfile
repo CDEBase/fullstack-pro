@@ -1,5 +1,6 @@
 // Global Variable so it can be changed between stages
 def GIT_BRANCH_NAME=getGitBranchName()
+def CLUSTER_IP
 
 pipeline {
   agent {
@@ -216,7 +217,10 @@ pipeline {
       }
 
       steps {
-       withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://35.243.206.245"]) {         
+        script {
+          CLUSTER_IP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
+        }
+        withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://${CLUSTER_IP}"]) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -340,7 +344,10 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
+        script {
+          CLUSTER_IP = getSecrets(pwd() + "/values.secret.json", "stage", "ClusterIP")
+        }
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: "https://${ClusterIP}"]) {
           
           sh """
             helm repo add stable https://charts.helm.sh/stable
@@ -423,7 +430,10 @@ pipeline {
           
           // Now do the actual work here
           load "./jenkins_variables.groovy"
-          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://35.229.71.215']) {
+          script {
+            CLUSTER_IP = getSecrets(pwd() + "/values.secret.json", "prod", "ClusterIP")
+          }
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: "https://${CLUSTER_IP}"]) {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
