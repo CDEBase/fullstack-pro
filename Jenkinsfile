@@ -339,12 +339,7 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-<<<<<<< HEAD
         withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.231.34.237']) {
-=======
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
->>>>>>> develop
-          
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
