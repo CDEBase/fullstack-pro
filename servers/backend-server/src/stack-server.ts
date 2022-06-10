@@ -15,7 +15,7 @@ import { expressApp } from './express-app';
 import { GraphqlServer } from './server-setup/graphql-server';
 import { config } from './config';
 import { ConnectionBroker } from './connectors/connection-broker';
-import * as brokerConfig from './config/moleculer.config';
+import { brokerConfig } from './config/moleculer.config';
 import modules, { settings } from './modules';
 import { GatewaySchemaBuilder } from './api/schema-builder';
 import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
