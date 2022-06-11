@@ -80,7 +80,7 @@
     "fela-plugin-unit": "^11.6.0",
     "fela-plugin-validator": "^11.6.0",
     "fela-preset-web": "^11.6.0",
-    "graphql": "^14.7.0",
+    "graphql": "^15.0.0",
     "graphql-tag": "^2.11.0",
     "history": "^4.10.1",
     "immutability-helper": "^3.0.1",

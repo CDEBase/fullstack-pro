@@ -7,13 +7,14 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const webpackPort = 3000;
 
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
-const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@gqlapp)).*`);
+const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
 
 class WaitOnWebpackPlugin {
     constructor(waitOnUrl) {
@@ -37,9 +38,21 @@ class WaitOnWebpackPlugin {
     }
 }
 
+var dotenv
+if (!buildConfig.__SSR__) {
+    dotenv = require('dotenv-safe')
+        .config(
+            {
+                allowEmptyValues: true,
+                path: process.env.ENV_FILE,
+                example: '../../config/development/dev.env',
+            });
+}
+
+
 const config = {
     entry: {
-        index: ['raf/polyfill', 'core-js/stable', 'regenerator-runtime/runtime', './src/index.ts'],
+        index: ['raf/polyfill', 'core-js/stable', 'regenerator-runtime/runtime', './src/index.tsx'],
     },
     name: 'web',
     module: {
@@ -125,28 +138,41 @@ const config = {
             path: false,
         },
     },
-    watchOptions: { ignored: /build/ },
+    watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
         filename: '[name].[fullhash].js',
         chunkFilename: '[name].[chunkhash].js',
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, 'dist'),
         publicPath: '/',
     },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
     mode: process.env.NODE_ENV || 'development',
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
-        ? [].concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
+        ? []
+            .concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
+            .concat(new Dotenv({
+                path: process.env.ENV_FILE
+            }))
+            .concat(new webpack.DefinePlugin({
+                "__ENV__": JSON.stringify(dotenv.parsed)
+            }))
+            .concat(
+                // fix "process is not defined" error:
+                // (do "npm install process" before running the build)
+                new webpack.ProvidePlugin({
+                    process: 'process/browser',
+                }))
         : [
-              new MiniCSSExtractPlugin({
-                  chunkFilename: '[name].[id].[chunkhash].css',
-                  filename: `[name].[chunkhash].css`,
-              }),
-          ]
+            new MiniCSSExtractPlugin({
+                chunkFilename: '[name].[id].[chunkhash].css',
+                filename: `[name].[chunkhash].css`,
+            }),
+        ]
     )
         .concat([
-            new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build'] }),
+            new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
             new webpack.DefinePlugin(
                 Object.assign(
                     ...Object.entries(buildConfig).map(([k, v]) => ({
@@ -160,7 +186,7 @@ const config = {
         .concat(
             buildConfig.__SSR__
                 ? []
-                : [new HtmlWebpackPlugin({ template: './html-plugin-template.ejs', inject: true, cache: false })],
+                : [new HtmlWebpackPlugin({ template: '../../tools/html-plugin-template.ejs', inject: true, cache: false })],
         ),
     optimization: {
         splitChunks: {
@@ -182,13 +208,13 @@ const config = {
         },
         ...(buildConfig.__SSR__
             ? {
-                  proxy: {
-                      '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
-                          target: 'http://localhost:8080',
-                          logLevel: 'info',
-                      },
-                  },
-              }
+                proxy: {
+                    '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
+                        target: 'http://localhost:8080',
+                        logLevel: 'info',
+                    },
+                },
+            }
             : {}),
     },
 };

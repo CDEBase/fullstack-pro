@@ -52,7 +52,7 @@
     "dotenv": "^8.2.0",
     "envalid": "~7.2.2",
     "esm": "^3.2.25",
-    "graphql": "^14.7.0",
+    "graphql": "^15.0.0",
     "graphql-bigint": "^1.0.0",
     "graphql-nats-subscriptions": "^1.5.0",
     "graphql-subscriptions": "^1.2.0",
