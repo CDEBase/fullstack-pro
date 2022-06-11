@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
+import { lazy } from '@loadable/component'
+
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
-import { ComplexWithTheme } from './components/CompledWithTheme';
 
-
+const ComplexWithTheme = lazy(() => import('./components/CompledWithTheme'));
 
 export const felaPageStore: any[] = [
     {

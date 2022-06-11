@@ -36,7 +36,7 @@ const webpackOpts = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loaders: 'ts-loader',
+                use: 'ts-loader',
                 options: {
                     compilerOptions: {
                         outDir: path.join(),
