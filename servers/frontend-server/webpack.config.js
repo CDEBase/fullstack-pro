@@ -38,17 +38,14 @@ class WaitOnWebpackPlugin {
     }
 }
 
-var dotenv
+let dotenv;
 if (!buildConfig.__SSR__) {
-    dotenv = require('dotenv-safe')
-        .config(
-            {
-                allowEmptyValues: true,
-                path: process.env.ENV_FILE,
-                example: '../../config/development/dev.env',
-            });
+    dotenv = require('dotenv-safe').config({
+        allowEmptyValues: true,
+        path: process.env.ENV_FILE,
+        example: '../../config/development/dev.env',
+    });
 }
-
 
 const config = {
     entry: {
@@ -151,25 +148,30 @@ const config = {
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? []
-            .concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
-            .concat(new Dotenv({
-                path: process.env.ENV_FILE
-            }))
-            .concat(new webpack.DefinePlugin({
-                "__ENV__": JSON.stringify(dotenv.parsed)
-            }))
-            .concat(
-                // fix "process is not defined" error:
-                // (do "npm install process" before running the build)
-                new webpack.ProvidePlugin({
-                    process: 'process/browser',
-                }))
+              .concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
+              .concat(
+                  new Dotenv({
+                      path: process.env.ENV_FILE,
+                  }),
+              )
+              .concat(
+                  new webpack.DefinePlugin({
+                      __ENV__: JSON.stringify(dotenv.parsed),
+                  }),
+              )
+              .concat(
+                  // fix "process is not defined" error:
+                  // (do "npm install process" before running the build)
+                  new webpack.ProvidePlugin({
+                      process: 'process/browser',
+                  }),
+              )
         : [
-            new MiniCSSExtractPlugin({
-                chunkFilename: '[name].[id].[chunkhash].css',
-                filename: `[name].[chunkhash].css`,
-            }),
-        ]
+              new MiniCSSExtractPlugin({
+                  chunkFilename: '[name].[id].[chunkhash].css',
+                  filename: `[name].[chunkhash].css`,
+              }),
+          ]
     )
         .concat([
             new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
@@ -186,7 +188,13 @@ const config = {
         .concat(
             buildConfig.__SSR__
                 ? []
-                : [new HtmlWebpackPlugin({ template: '../../tools/html-plugin-template.ejs', inject: true, cache: false })],
+                : [
+                      new HtmlWebpackPlugin({
+                          template: '../../tools/html-plugin-template.ejs',
+                          inject: true,
+                          cache: false,
+                      }),
+                  ],
         ),
     optimization: {
         splitChunks: {
@@ -208,13 +216,13 @@ const config = {
         },
         ...(buildConfig.__SSR__
             ? {
-                proxy: {
-                    '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
-                        target: 'http://localhost:8080',
-                        logLevel: 'info',
-                    },
-                },
-            }
+                  proxy: {
+                      '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
+                          target: 'http://localhost:8080',
+                          logLevel: 'info',
+                      },
+                  },
+              }
             : {}),
     },
 };
