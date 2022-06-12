@@ -17,13 +17,14 @@ const Html = ({
     content,
     state,
     reduxState,
+    headElements,
     fela,
     env,
     assetMap,
     styleSheet,
     helmet,
 }:
-    { content?: any, state: any, reduxState: any, assetMap?: string[], env: any, fela?: any, styleSheet?: any[], helmet?: HelmetData }) => {
+    { content?: any, state: any, reduxState: any, headElements: React.ReactElement<any>[], assetMap?: string[], env: any, fela?: any, styleSheet?: any[], helmet?: HelmetData }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
@@ -33,6 +34,12 @@ const Html = ({
                 {helmet.title.toComponent()}
                 {helmet.meta.toComponent()}
                 {helmet.link.toComponent()}
+                {helmet.style.toComponent()}
+                {helmet.script.toComponent()}
+                {helmet.noscript.toComponent()}
+                {assetMap['vendor.css'] && <link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
+                {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
+                {headElements}
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -43,7 +50,7 @@ const Html = ({
                 <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
                 <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
                 {<link rel="stylesheet" type="text/css" href={`${assetMap['index.css']}`} />}
-                {assetMap['vendor.css'] && <link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
+
                 <style id="font-stylesheet" />
                 {!!__DEV__ && (
                     <style
@@ -70,7 +77,7 @@ const Html = ({
                 })}
             </head>
             <body {...bodyAttrs}>
-                <div id="root"/>
+                <div id="root" />
                 <div className="demo">
                     <div
                         id="content"
@@ -105,8 +112,6 @@ const Html = ({
                     }}
                     charSet="UTF-8"
                 />
-                {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
-                <script src={`${assetMap['index.js']}`} charSet="utf-8" />
             </body>
         </html>
     );

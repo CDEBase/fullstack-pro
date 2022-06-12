@@ -10,6 +10,7 @@ const config = {
     // },
     __GRAPHQL_URL__: process.env.GRAPHQL_URL || '/graphql',
     __API_URL__: process.env.API_URL || '/graphql',
+    __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || './dist',
 };
 
 module.exports = config;

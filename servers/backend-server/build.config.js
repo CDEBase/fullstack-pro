@@ -11,7 +11,7 @@ const config = {
     __WEBSITE_URL__: process.env.CLIENT_URL || 'http://localhost:3000',
     __CDN_URL__: process.env.CDN_URL || '',
     __BACKEND_URL__: process.env.BACKEND_URL || 'http://localhost:8080',
-    __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || '../frontend-server/build',
+    __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || '../frontend-server/dist',
 };
 
 module.exports = config;

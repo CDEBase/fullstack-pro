@@ -65,6 +65,8 @@
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
     "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
+    "@loadable/component": "^5.15.2",
+    "@loadable/server": "^5.15.2",
     "apollo-link-debounce": "^2.1.0",
     "apollo-link-logger": "^1.2.3",
     "apollo-logger": "^0.3.3",

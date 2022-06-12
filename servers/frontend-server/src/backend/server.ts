@@ -1,3 +1,4 @@
+/* eslint-disable jest/require-hook */
 import 'reflect-metadata';
 import express from 'express';
 import * as bodyParser from 'body-parser';
@@ -10,13 +11,13 @@ import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';
-const cookiesMiddleware = require('universal-cookie-express');
 import modules from './modules';
+
+const cookiesMiddleware = require('universal-cookie-express');
 
 let server;
 
 const app = express();
-
 
 app.use(corsMiddleware);
 app.options('*', corsMiddleware);
@@ -26,7 +27,6 @@ for (const applyBeforeware of modules.beforewares) {
 }
 
 app.use(cookiesMiddleware());
-
 
 // By default it uses backend_url port, which may conflict with graphql server.
 const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
@@ -44,12 +44,11 @@ app.use(
     }),
 );
 
-
 if (__DEV__) {
     app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
 }
 
-app.use(websiteMiddleware);
+app.use(websiteMiddleware(schema, modules));
 
 if (__DEV__) {
     app.use(errorMiddleware);
@@ -81,6 +80,5 @@ if ((module as any).hot) {
 
     (module as any).hot.accept();
 }
-
 
 export default server;

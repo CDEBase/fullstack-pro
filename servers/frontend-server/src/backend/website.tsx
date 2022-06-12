@@ -10,6 +10,8 @@ import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
+import { ChunkExtractor } from '@loadable/server';
+
 import { createClientContainer } from '../config/client.service';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
@@ -47,9 +49,15 @@ async function renderServerSide(req, res) {
         } else {
             res.status(200);
         }
-
-        const html = ReactDOMServer.renderToString(App as any);
-
+        const extractor = new ChunkExtractor({
+            statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
+            entrypoints: ['index'],
+            publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
+        });
+        // Wrap your application using "collectChunks"
+        const JSX = extractor.collectChunks(App)
+        const content = ReactDOMServer.renderToString(JSX);
+        
         // this comes after Html render otherwise we don't see fela rules generated
         const appStyles = renderToSheetList(renderer);
 
@@ -70,7 +78,8 @@ async function renderServerSide(req, res) {
             };
             const page = (
                 <Html
-                    content={html}
+                    content={content}
+                    headElements={[...extractor.getScriptElements(), ...extractor.getLinkElements(), ...extractor.getStyleElements()]}
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmet}
