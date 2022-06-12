@@ -20,6 +20,7 @@ cd fullstack-pro
 
     e. Insall and build packages using following command. Run from the root folder of this project.
 ```
+    yarn global add lerna
     yarn bootstrap
 ```
     
