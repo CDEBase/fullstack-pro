@@ -10,7 +10,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ServerConfig = require('../../tools/webpack/server.config');
 
-const webpackPort = 3000;
+const webpackPort = 3010;
 
 const buildConfig = require('./build.config');
 
@@ -39,14 +39,16 @@ class WaitOnWebpackPlugin {
     }
 }
 
-// let dotenv;
-// if (!buildConfig.__SSR__) {
-//     dotenv = require('dotenv-safe').config({
-//         allowEmptyValues: true,
-//         path: process.env.ENV_FILE,
-//         example: '../../config/development/dev.env',
-//     });
-// }
+let dotenv;
+if (!buildConfig.__SSR__) {
+    dotenv = require('dotenv-safe').config({
+        allowEmptyValues: true,
+        path: process.env.ENV_FILE,
+        example: '../../config/development/dev.env',
+    });
+} else {
+    dotenv = { parsed: { }};
+}
 
 const config = {
     entry: {

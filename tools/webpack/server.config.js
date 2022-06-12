@@ -124,7 +124,8 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         nodeExternals(),
         nodeExternals({
             modulesDir: path.resolve(currentDir, '../../node_modules'),
-            allowlist: [modulenameRegex],
+            // allowlist: [modulenameRegex],
+        allowlist: [/webpack\/hot/i, /babel-polyfill/, /@sample-stack*/],
         }),
     ],
     optimization: {
