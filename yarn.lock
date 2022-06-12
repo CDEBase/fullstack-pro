@@ -1486,10 +1486,10 @@
   dependencies:
     "@common-stack/core" "^0.2.1"
 
-"@common-stack/client-react@0.2.3", "@common-stack/client-react@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.3.tgz#538bcbf4c934c4fc8e2b5eea5ddccd99edb45536"
-  integrity sha512-NiMmp4fiOMnv223Y7jru7DzwS5Sl0JyBUksUxij5Dz39Nxjotq7rmloVSr5yy/GEd+cqEtyfoSrNBxvpZZSu9A==
+"@common-stack/client-react@0.2.4", "@common-stack/client-react@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.4.tgz#247c4d0849216aaeb3aee4bcf2435ece5b60dd19"
+  integrity sha512-9KKsylt9tX4wIGgP3gEpCKAP4+qbsV86d4OpbODHcxp2ZrAfgMWHD//HmB7pspdMANYwrxOIyvgtFQgzizsUTw==
   dependencies:
     "@common-stack/client-core" "^0.2.3"
     "@common-stack/core" "^0.2.1"
@@ -1503,10 +1503,10 @@
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.2.1.tgz#3fd117c765533418db0c7b7887b8d335a46cf0bb"
   integrity sha512-jWVezXhetU/UP21/3FqwAumH5o19AzAde0GaMDuMwjqYVS8FR81ko13PZBegN9tPufXqnNDxpEPg/lrGE8wBOQ==
 
-"@common-stack/server-core@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.2.1.tgz#44f3fab68c0709e7c0d2a5219bdde6f4e407e764"
-  integrity sha512-VE7hc9wCJeVp7it83CNRo89MMFn6HZ9bqCpz5kWAJw45W/rcZ8Y3vBpIdsJnpviBCKgVWGAgp0hM3kqyvd4/QA==
+"@common-stack/server-core@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.2.4.tgz#927b228394f2f670101725051521baa9dd298b38"
+  integrity sha512-Myt2XTTYvZjp/+T7UwxQGTVIPnfM61LXDkTGdHR3MTd2b90T4PPWLny0DkKIc4hiFUOYygNi6D8C8JgNSr3PQQ==
   dependencies:
     "@common-stack/core" "^0.2.1"
 
