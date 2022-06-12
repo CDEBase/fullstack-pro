@@ -11,13 +11,14 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor } from '@loadable/server';
+import { createMemoryHistory } from 'history';
 
 import { createClientContainer } from '../config/client.service';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
-import clientModules from '../modules';
+import clientModules, { MainRoute } from '../modules';
 
 let assetMap;
 async function renderServerSide(req, res) {
@@ -26,7 +27,8 @@ async function renderServerSide(req, res) {
         const { apolloClient: client } = createClientContainer();
 
         let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
-        const { store } = createReduxStore();
+        const history = createMemoryHistory({ initialEntries: [req.url] });
+        const { store } = createReduxStore(history);
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
@@ -35,7 +37,7 @@ async function renderServerSide(req, res) {
                     <ApolloProvider client={client}>
                         <ReactFela.Provider renderer={renderer} >
                             <StaticRouter location={req.url} context={context}>
-                                {clientModules.getRouter()}
+                                <MainRoute />
                             </StaticRouter>
                         </ReactFela.Provider>
                     </ApolloProvider>
@@ -57,7 +59,7 @@ async function renderServerSide(req, res) {
         // Wrap your application using "collectChunks"
         const JSX = extractor.collectChunks(App)
         const content = ReactDOMServer.renderToString(JSX);
-        
+
         // this comes after Html render otherwise we don't see fela rules generated
         const appStyles = renderToSheetList(renderer);
 

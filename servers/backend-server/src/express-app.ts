@@ -27,6 +27,7 @@ export function expressApp(options: IModuleService, middlewares, http?) {
     }
 
     app.use('/', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
+    app.use('/apollo-server-n-client/counter', express.static(__FRONTEND_BUILD_DIR__, { maxAge: '180 days' }));
 
     // app.use(corsMiddleware);
     app.use((req, res, next) => {

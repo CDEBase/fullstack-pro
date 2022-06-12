@@ -15,8 +15,6 @@ import modules, { logger } from '../modules';
 import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
 
-const history = require('./router-history');
-
 const { apolloClient, container, services } = createClientContainer();
 
 export const epicMiddleware = createEpicMiddleware({
@@ -36,21 +34,20 @@ export const persistConfig = {
     transforms: modules.reduxPersistStateTransformers,
 };
 
-export const storeReducer = (hist) =>
+export const getStoreReducer = (history: any, reducers: any) =>
     combineReducers({
-        router: connectRouter(hist),
-        ...modules.reducers,
+        router: connectRouter(history),
+        ...reducers,
     });
 
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (url = '/') => {
+export const createReduxStore = (history) => {
     // only in server side, url will be passed.
-    const newHistory = __CLIENT__ ? history : history(url);
     // middleware
-    const router = connectRouter(newHistory);
+    const router = connectRouter(history);
 
     let store;
     if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
@@ -59,7 +56,10 @@ export const createReduxStore = (url = '/') => {
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
         store.replaceReducer(
-            persistReducer(persistConfig, storeReducer((module as any).hot.data.history || newHistory)),
+            persistReducer(
+                persistConfig,
+                getStoreReducer((module as any).hot.data.history || history, modules.reducers),
+            ),
         );
         // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
     } else {
@@ -77,7 +77,7 @@ export const createReduxStore = (url = '/') => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [thunkMiddleware, routerMiddleware(newHistory)],
+            middleware: [thunkMiddleware, routerMiddleware(history)],
             epicMiddleware,
             rootEpic: rootEpic as any,
             reducers: { router, ...modules.reducers },
@@ -100,5 +100,5 @@ export const createReduxStore = (url = '/') => {
         });
     }
     container.bind('ReduxStore').toConstantValue(store);
-    return { store, history };
+    return { store };
 };

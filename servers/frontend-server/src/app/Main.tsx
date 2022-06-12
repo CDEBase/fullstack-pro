@@ -8,6 +8,8 @@ import { rehydrate } from 'fela-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { createBrowserHistory } from 'history';
+
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
@@ -16,7 +18,8 @@ import { ErrorBoundary } from './ErrorBoundary';
 
 const { apolloClient: client } = createClientContainer();
 
-const { store, history } = createReduxStore();
+const history = createBrowserHistory();
+const { store } = createReduxStore(history);
 
 export class Main extends React.Component<{}, {}> {
   public render() {
