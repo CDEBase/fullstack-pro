@@ -38,7 +38,7 @@
     "@cdm-logger/server": "^7.0.12",
     "@common-stack/client-core": "0.2.3",
     "@common-stack/core": "0.2.1",
-    "@common-stack/server-core": "0.2.1",
+    "@common-stack/server-core": "0.2.4",
     "@common-stack/store-mongo": "0.2.3",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
