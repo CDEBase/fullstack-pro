@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const ServerConfig = require('../../tools/webpack/server.config');
 
 const webpackPort = 3000;
 
@@ -38,14 +39,14 @@ class WaitOnWebpackPlugin {
     }
 }
 
-let dotenv;
-if (!buildConfig.__SSR__) {
-    dotenv = require('dotenv-safe').config({
-        allowEmptyValues: true,
-        path: process.env.ENV_FILE,
-        example: '../../config/development/dev.env',
-    });
-}
+// let dotenv;
+// if (!buildConfig.__SSR__) {
+//     dotenv = require('dotenv-safe').config({
+//         allowEmptyValues: true,
+//         path: process.env.ENV_FILE,
+//         example: '../../config/development/dev.env',
+//     });
+// }
 
 const config = {
     entry: {
@@ -140,7 +141,7 @@ const config = {
         pathinfo: false,
         filename: '[name].[fullhash].js',
         chunkFilename: '[name].[chunkhash].js',
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, `${buildConfig.__FRONTEND_BUILD_DIR__}`),
         publicPath: '/',
     },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
@@ -171,7 +172,13 @@ const config = {
                   chunkFilename: '[name].[id].[chunkhash].css',
                   filename: `[name].[chunkhash].css`,
               }),
-          ]
+          ].concat(
+              // fix "process is not defined" error:
+              // (do "npm install process" before running the build)
+              new webpack.ProvidePlugin({
+                  process: 'process/browser',
+              }),
+          )
     )
         .concat([
             new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
@@ -227,4 +234,11 @@ const config = {
     },
 };
 
-module.exports = config;
+module.exports = [
+    config,
+    ServerConfig({
+        buildConfig: { ...buildConfig, __CLIENT__: false, __SERVER__: true },
+        indexFilePath: './src/backend/app.ts',
+        currentDir: __dirname,
+    }),
+];

@@ -15,8 +15,11 @@ const publicEnv = [
 ];
 
 const isBrowser = typeof window !== 'undefined';
-const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
 
+if (!isBrowser) {
+    process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+}
+const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
 const env: any = {};
 for (const v of publicEnv) {
     env[v] = base[v];

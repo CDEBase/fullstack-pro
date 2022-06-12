@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 
 app.use(
     '/',
-    express.static(path.join(__FRONTEND_BUILD_DIR__, 'web'), {
+    express.static(path.join(__FRONTEND_BUILD_DIR__), {
         maxAge: '180 days',
     }),
 );
@@ -48,7 +48,7 @@ if (__DEV__) {
     app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
 }
 
-app.use(websiteMiddleware(schema, modules));
+app.use(websiteMiddleware);
 
 if (__DEV__) {
     app.use(errorMiddleware);

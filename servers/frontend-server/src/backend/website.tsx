@@ -65,13 +65,12 @@ async function renderServerSide(req, res) {
 
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
-
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();
         } else {
             if (__DEV__ || !assetMap) {
-                assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'web', 'assets.json')).toString());
+                assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'assets.json')).toString());
             }
             const apolloState = Object.assign({}, client.extract());
             const reduxState = Object.assign({}, store.getState());

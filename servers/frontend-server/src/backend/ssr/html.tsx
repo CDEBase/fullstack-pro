@@ -27,7 +27,6 @@ const Html = ({
     { content?: any, state: any, reduxState: any, headElements: React.ReactElement<any>[], assetMap?: string[], env: any, fela?: any, styleSheet?: any[], helmet?: HelmetData }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
-
     return (
         <html lang="en" {...htmlAttrs}>
             <head>
@@ -37,20 +36,16 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
-                {assetMap['vendor.css'] && <link rel="stylesheet" type="text/css" href={`${assetMap['vendor.css']}`} />}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
                 {headElements}
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
                 <link rel="icon" type="image/png" href={`${assetMap['favicon-32x32.png']}`} sizes="32x32" />
                 <link rel="icon" type="image/png" href={`${assetMap['favicon-16x16.png']}`} sizes="16x16" />
                 <link rel="manifest" href={`${assetMap['manifest.xjson']}`} />
                 <link rel="mask-icon" href={`${assetMap['safari-pinned-tab.svg']}`} color="#5bbad5" />
                 <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
                 <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
-                {<link rel="stylesheet" type="text/css" href={`${assetMap['index.css']}`} />}
-
                 <style id="font-stylesheet" />
                 {!!__DEV__ && (
                     <style
@@ -83,8 +78,7 @@ const Html = ({
                         id="content"
                         dangerouslySetInnerHTML={
                             {
-                                __html: content ||
-                                    'Try building the app:<br/> ...and refreshing this page!',
+                                __html: content || ''                            
                             }}
                     />
                 </div>
