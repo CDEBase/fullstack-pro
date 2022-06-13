@@ -12,6 +12,7 @@ module.exports = (api) => {
             plugins: [
                 'babel-plugin-dynamic-import-node',
                 '@babel/plugin-transform-destructuring',
+                '@babel/plugin-transform-modules-commonjs',
                 ['@babel/plugin-transform-for-of'],
                 '@babel/plugin-transform-regenerator',
                 '@babel/plugin-transform-runtime',
@@ -28,6 +29,7 @@ module.exports = (api) => {
         plugins: [
             '@babel/plugin-syntax-dynamic-import',
             '@loadable/babel-plugin',
+            '@babel/plugin-transform-modules-commonjs',
             '@babel/plugin-transform-destructuring',
             ['@babel/plugin-transform-for-of'],
             '@babel/plugin-transform-regenerator',
