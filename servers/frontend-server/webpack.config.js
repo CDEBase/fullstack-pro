@@ -8,7 +8,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ServerConfig = require('../../tools/webpack/server.config');
+
+const bundleStats = process.env.BUNDLE_STATS || false;
 
 const webpackPort = 3010;
 
@@ -17,6 +20,10 @@ const buildConfig = require('./build.config');
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
 
+const plugins = [];
+if (bundleStats) {
+    plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
 class WaitOnWebpackPlugin {
     constructor(waitOnUrl) {
         this.waitOnUrl = waitOnUrl;
@@ -47,7 +54,7 @@ if (!buildConfig.__SSR__) {
         example: '../../config/development/dev.env',
     });
 } else {
-    dotenv = { parsed: { }};
+    dotenv = { parsed: {} };
 }
 
 const config = {
@@ -183,6 +190,7 @@ const config = {
           )
     )
         .concat([
+            ...plugins,
             new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
             new webpack.DefinePlugin(
                 Object.assign(
