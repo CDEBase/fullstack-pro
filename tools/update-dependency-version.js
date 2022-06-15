@@ -32,11 +32,12 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
             try {
                 fs.readdirSync(dependencyFolder);
             } catch (err) {
-                console.log(
-                    `--- err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
-                );
+
                 console.log(`--- err ${err.message}`);
-                return;
+                console.log(
+                    `err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
+                );
+                throw err;
             }
             glob(`${dependencyFolder}/package.json`, null, (err, files) => {
                 if (err) return console.error(`Unable to scan directory: ${err}`);
@@ -89,7 +90,9 @@ glob(
                             git.commit('corrected packages version!');
                         } else console.log('no change');
                     })
-                    .catch((err) => console.error(err));
+                    .catch((err) => {
+                        console.error(err);
+                    });
             })
             .catch((err) => console.error(err));
     },
