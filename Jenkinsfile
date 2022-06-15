@@ -28,7 +28,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.4.1', '0.5.2', '0.6.0', '0.3.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.4.1', '0.5.2', '0.6.0', '0.7.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs14', 'nodejs12'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
@@ -256,7 +256,6 @@ pipeline {
           git merge origin/${params.DEVELOP_BRANCH} -m 'auto merging ${params.DEVELOP_BRANCH} \r\n[skip ci]'
           ${params.BUILD_STRATEGY} install
           ${params.BUILD_STRATEGY} run lerna
-          ${params.BUILD_STRATEGY} run build
         """
         script {
           GIT_BRANCH_NAME = params.REPOSITORY_BRANCH
@@ -344,11 +343,7 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        script {
-          CLUSTER_IP = getSecrets(pwd() + "/values.secret.json", "stage", "ClusterIP")
-        }
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: "https://${ClusterIP}"]) {
-          
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
