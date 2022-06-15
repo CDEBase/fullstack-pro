@@ -1,14 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const NodeHmrPlugin = require('node-hmr-plugin');
 const Dotenv = require('dotenv-webpack');
+const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack|client|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    `(${modulenameExtra}@pubngo-stack*|client|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
 );
 
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
@@ -93,7 +94,7 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: '[name].js',
+        filename: 'main.js',
         path: path.join(currentDir, 'dist'),
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
@@ -105,7 +106,7 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         ? [
               //  new Dotenv(),
               new webpack.HotModuleReplacementPlugin(),
-              new NodeHmrPlugin({ cmd: '{app}', restartOnExitCodes: [250] }),
+              new NodemonPlugin({ script: './dist/index.js' }),
           ]
         : []
     ).concat([
@@ -118,14 +119,21 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: '../../tools/esm-wrapper.js',
+                    to: 'index.js',
+                },
+            ],
+        }),
     ]),
     target: 'node',
     externals: [
         nodeExternals(),
         nodeExternals({
             modulesDir: path.resolve(currentDir, '../../node_modules'),
-            // allowlist: [modulenameRegex],
-        allowlist: [/webpack\/hot/i, /babel-polyfill/, /@sample-stack*/],
+            allowlist: [modulenameRegex],
         }),
     ],
     optimization: {

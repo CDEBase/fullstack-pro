@@ -1,22 +1,22 @@
 const webpack = require('webpack');
 const path = require('path');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const NodeHmrPlugin = require('node-hmr-plugin');
 const Dotenv = require('dotenv-webpack');
+const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack|client|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    `(${modulenameExtra}@sample-stack*|client|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
 );
 
 const config = {
     entry: {
         index: (process.env.NODE_ENV !== 'production' ? ['webpack/hot/poll?200'] : []).concat([
-            'raf/polyfill',
+            // 'raf/polyfill',
             './src/index.ts',
         ]),
     },
@@ -95,7 +95,7 @@ const config = {
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: '[name].js',
+        filename: 'main.js',
         path: path.join(__dirname, 'dist'),
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
@@ -105,9 +105,9 @@ const config = {
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? [
-            //   new Dotenv(),
+              //   new Dotenv(),
               new webpack.HotModuleReplacementPlugin(),
-              new NodeHmrPlugin({ cmd: '{app}', restartOnExitCodes: [250] }),
+              new NodemonPlugin({ script: './dist/index.js' }),
           ]
         : []
     ).concat([
@@ -120,6 +120,14 @@ const config = {
                 })),
             ),
         ),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: '../../tools/esm-wrapper.js',
+                    to: 'index.js',
+                },
+            ],
+        }),
     ]),
     target: 'node',
     externals: [

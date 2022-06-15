@@ -9,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CompressionPlugin = require('compression-webpack-plugin');
+const zlib = require('zlib');
 const ServerConfig = require('../../tools/webpack/server.config');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
@@ -23,6 +25,19 @@ const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sa
 const plugins = [];
 if (bundleStats) {
     plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
+
+if (!buildConfig.__SSR__ && buildConfig.__DEV__) {
+    const dotenv = require('dotenv-safe').config({
+        allowEmptyValues: true,
+        path: process.env.ENV_FILE,
+        example: '../../config/development/dev.env',
+    });
+    plugins.push(
+        new webpack.DefinePlugin({
+            __ENV__: JSON.stringify(dotenv.parsed),
+        }),
+    );
 }
 class WaitOnWebpackPlugin {
     constructor(waitOnUrl) {
@@ -44,17 +59,6 @@ class WaitOnWebpackPlugin {
             }
         });
     }
-}
-
-let dotenv;
-if (!buildConfig.__SSR__) {
-    dotenv = require('dotenv-safe').config({
-        allowEmptyValues: true,
-        path: process.env.ENV_FILE,
-        example: '../../config/development/dev.env',
-    });
-} else {
-    dotenv = { parsed: {} };
 }
 
 const config = {
@@ -165,11 +169,6 @@ const config = {
                   }),
               )
               .concat(
-                  new webpack.DefinePlugin({
-                      __ENV__: JSON.stringify(dotenv.parsed),
-                  }),
-              )
-              .concat(
                   // fix "process is not defined" error:
                   // (do "npm install process" before running the build)
                   new webpack.ProvidePlugin({
@@ -180,6 +179,25 @@ const config = {
               new MiniCSSExtractPlugin({
                   chunkFilename: '[name].[id].[chunkhash].css',
                   filename: `[name].[chunkhash].css`,
+              }),
+              new CompressionPlugin({
+                  filename: '[path][base].gz',
+                  algorithm: 'gzip',
+                  test: /\.js$|\.css$|\.html$/,
+                  threshold: 10240,
+                  minRatio: 0.8,
+              }),
+              new CompressionPlugin({
+                  filename: '[path][base].br',
+                  algorithm: 'brotliCompress',
+                  test: /\.(js|css|html|svg)$/,
+                  compressionOptions: {
+                      params: {
+                          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+                      },
+                  },
+                  threshold: 10240,
+                  minRatio: 0.8,
               }),
           ].concat(
               // fix "process is not defined" error:
@@ -244,11 +262,14 @@ const config = {
     },
 };
 
-module.exports = [
-    config,
-    ServerConfig({
-        buildConfig: { ...buildConfig, __CLIENT__: false, __SERVER__: true },
-        indexFilePath: './src/backend/app.ts',
-        currentDir: __dirname,
-    }),
-];
+const ServersConfig = [config];
+if (buildConfig.__SSR__) {
+    ServersConfig.push(
+        ServerConfig({
+            buildConfig: { ...buildConfig, __CLIENT__: false, __SERVER__: true },
+            indexFilePath: './src/backend/app.ts',
+            currentDir: __dirname,
+        }),
+    );
+}
+module.exports = ServersConfig;

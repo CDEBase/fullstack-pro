@@ -1,6 +1,7 @@
 /* eslint-disable jest/require-hook */
 import 'reflect-metadata';
 import express from 'express';
+import compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import * as path from 'path';
@@ -33,6 +34,9 @@ const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
+if (!__DEV__) {
+    app.use(compression());
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
