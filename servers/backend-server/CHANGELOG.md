@@ -1,5 +1,34 @@
 # Change Log
 
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.0.55-alpha.1](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.0...v0.0.55-alpha.1) (2022-05-14)
+
+**Note:** Version bump only for package sample-stack-backend-server
+
+
+
+
+
+## 0.0.55-alpha.0 (2022-05-10)
+
+
+### Features
+
+* **Better streamline of code and use molecuer service:** Moleculer Service and app fixes ([6555252](https://github.com/cdmbase/fullstack-pro/commit/6555252275514c7e72598e03ff0775cb5d9fa04e))
+
+
+### Reverts
+
+* Revert "udpate redis typefix" ([a262508](https://github.com/cdmbase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
+
+
+
+
+
+# Change Log
+
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.2.0"></a>

@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/platform-server",
-  "version": "0.0.1",
+  "version": "0.0.55-alpha.0",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/core": "link:../../sample-core"
+    "@sample-stack/core": "0.0.55-alpha.0"
   },
   "publishConfig": {
     "access": "public"
