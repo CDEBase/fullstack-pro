@@ -59,7 +59,7 @@ const webpackOpts = {
         rules: [
             {
                 test: /\.ts$/,
-                loaders: 'ts-loader',
+                use: 'ts-loader',
             },
         ],
     },

@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
+import { lazy } from '@loadable/component'
 
-import { Hello } from './components/Hello';
-import { Counter } from './components/Counter';
-import { Dashboard } from '../common/components/Dashboard';
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
+
+
+
+const Dashboard = lazy(() => import('../common/components/Dashboard'));
+const Counter = lazy(() => import('./components/Counter'));
+const Hello = lazy(() => import('./components/Hello'));
 
 export const counterPageStore: IRoute[] = [
     {

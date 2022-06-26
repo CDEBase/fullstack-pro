@@ -52,7 +52,7 @@
     "@apollo/client": "~3.3.21",
     "@cdm-logger/client": "^7.0.12",
     "@common-stack/client-core": "^0.2.3",
-    "@common-stack/client-react": "^0.2.3",
+    "@common-stack/client-react": "^0.2.4",
     "@common-stack/core": "^0.2.1",
     "@expo/vector-icons": "~13.0.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -62,7 +62,6 @@
     "@react-native-community/picker": "~1.8.1",
     "@react-native-community/segmented-control": "~2.2.2",
     "@react-native-community/slider": "~4.1.12",
-    "@react-native-community/viewpager": "~5.0.11",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/material-top-tabs": "^6.2.1",
     "@react-navigation/native": "^6.0.10",
@@ -156,7 +155,7 @@
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-keyboard-spacer": "^0.4.1",
     "@types/react-router-native": "^5.1.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.7.3"
   },
   "peerDependencies": {
     "webpack": "*"

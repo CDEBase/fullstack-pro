@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { HelloChild } from './HelloChild';
 
-const Hello = () => (
+export default () => (
     <div>
         <div>Hello</div>
         <HelloChild />
     </div>
 );
 
-export { Hello };

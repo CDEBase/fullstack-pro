@@ -23,19 +23,32 @@ async function start() {
     await service.initialize();
     await service.start();
 }
+// if (module.hot) {
+//     module.hot.status((event) => {
+//         if (event === 'abort' || event === 'fail') {
+//             logger.error(`HMR error status: ${event}`);
+//             // Signal webpack.run.js to do full-reload of the back-end
+//             service.gracefulShutdown(event);
+//         }
+//         // adddintionally when event is idle due to external modules
+//         if (event === 'idle') {
+//             service.gracefulShutdown(event);
+//         }
+//     });
+//     module.hot.accept();
+// }
 if (module.hot) {
-    module.hot.status((event) => {
-        if (event === 'abort' || event === 'fail') {
-            logger.error(`HMR error status: ${event}`);
-            // Signal webpack.run.js to do full-reload of the back-end
-            service.gracefulShutdown(event);
-        }
-        // adddintionally when event is idle due to external modules
-        if (event === 'idle') {
-            service.gracefulShutdown(event);
+    module.hot.dispose((data) => {
+        // Shutdown server if changes to this module code are made
+        // So that it was started afresh
+        console.log('--data---', data);
+        try {
+            if (service) {
+                service.gracefulShutdown(null);
+            }
+        } catch (error) {
+            logger.error(error.stack);
         }
     });
-    module.hot.accept();
 }
-
 start();
