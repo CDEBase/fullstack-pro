@@ -15,7 +15,7 @@ const extendStyles = {
 };
 
 
-export const ComplexWithTheme: React.FunctionComponent<{}> = props => {
+export default (props) => {
 
 
     return (

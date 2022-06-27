@@ -40,7 +40,7 @@ var webpackOpts = {
   module: {
     rules: [{
       test: /\.tsx?$/,
-      loaders: 'ts-loader'
+      use: 'ts-loader'
     }, {
       test: /\.graphql?/,
       exclude: /node_modules/,

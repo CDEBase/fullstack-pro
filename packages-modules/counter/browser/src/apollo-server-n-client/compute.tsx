@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-
-import Counter from './containers/Counter';
-import { Dashboard } from '../common/components/Dashboard';
+import { lazy } from '@loadable/component'
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
+
+const Dashboard = lazy(() => import('../common/components/Dashboard'));
+const Counter = lazy(() => import('./containers/Counter'));
 
 export const counterPageStore: any[] = [
     {

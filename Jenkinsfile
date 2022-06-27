@@ -217,10 +217,7 @@ pipeline {
       }
 
       steps {
-        script {
-          CLUSTER_IP = getSecrets(pwd() + "/values.secret.json", "dev", "ClusterIP")
-        }
-        withKubeConfig([credentialsId: 'kubernetes-preproduction-1-cluster', serverUrl: "https://${CLUSTER_IP}"]) {         
+       withKubeConfig([credentialsId: 'kubernetes-dev-cluster-r1', serverUrl: "https://34.74.64.165"]) {         
          sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator

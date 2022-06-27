@@ -224,4 +224,4 @@ const brokerConfig: BrokerOptions = {
     stopped(broker) {},
 };
 
-export = brokerConfig;
+export { brokerConfig };
