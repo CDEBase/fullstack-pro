@@ -1,5 +1,9 @@
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 
-const __SERVER_PORT__ = 3000;
+const __API_SERVER_PORT__ = process.env.BACKEND_URL
+    ? new URL(process.env.BACKEND_URL).port
+    : process.env.SERVER_PORT || 8091;
+const __WEB_SERVER_PORT__ = 3011;
 const __SERVER_PROTOCOL__ = 'http';
 const __SERVER_HOST__ = 'localhost';
 const __GRAPHQL_ENDPOINT__ = 'graphql';
@@ -9,9 +13,12 @@ const config = {
     __SSR__: process.env.NODE_ENV === 'production', // enableing SSR only in Production as in Dev we have a issue
     __DEBUGGING__: false,
     __TEST__: false,
-    __API_URL__: process.env.API_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__SERVER_PORT__}/${__GRAPHQL_ENDPOINT__}`,
-    __WEBSITE_URL__: process.env.WEBSITE_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__SERVER_PORT__}`,
-    __BACKEND_URL__: process.env.BACKEND_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__SERVER_PORT__}`,
+    __WEB_SERVER_PORT__,
+    __API_URL__:
+        process.env.API_URL ||
+        `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__API_SERVER_PORT__}/${__GRAPHQL_ENDPOINT__}`,
+    __WEBSITE_URL__: process.env.WEBSITE_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__WEB_SERVER_PORT__}`,
+    __BACKEND_URL__: process.env.BACKEND_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__API_SERVER_PORT__}`,
 };
 
 module.exports = config;

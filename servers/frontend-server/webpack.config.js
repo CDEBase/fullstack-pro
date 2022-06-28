@@ -15,14 +15,16 @@ const ServerConfig = require('../../tools/webpack/server.config');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
 
-const webpackPort = 3010;
-
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
 
-const plugins = [];
+const plugins = [
+    new webpack.ProvidePlugin({
+        process: 'process/browser',
+    }),
+];
 if (bundleStats) {
     plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
 }
@@ -168,13 +170,6 @@ const config = {
                       path: process.env.ENV_FILE,
                   }),
               )
-              .concat(
-                  // fix "process is not defined" error:
-                  // (do "npm install process" before running the build)
-                  new webpack.ProvidePlugin({
-                      process: 'process/browser',
-                  }),
-              )
         : [
               new MiniCSSExtractPlugin({
                   chunkFilename: '[name].[id].[chunkhash].css',
@@ -199,13 +194,7 @@ const config = {
                   threshold: 10240,
                   minRatio: 0.8,
               }),
-          ].concat(
-              // fix "process is not defined" error:
-              // (do "npm install process" before running the build)
-              new webpack.ProvidePlugin({
-                  process: 'process/browser',
-              }),
-          )
+          ]
     )
         .concat([
             ...plugins,
@@ -244,7 +233,7 @@ const config = {
         headers: { 'Access-Control-Allow-Origin': '*' },
         open: true,
         historyApiFallback: true,
-        port: webpackPort,
+        port: buildConfig.__WEB_SERVER_PORT__,
         devMiddleware: {
             publicPath: '/',
             writeToDisk: (pathname) => /(assets.json|loadable-stats.json)$/.test(pathname),
