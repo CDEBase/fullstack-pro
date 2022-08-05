@@ -48,6 +48,9 @@
   "jest": {
     "preset": "jest-expo"
   },
+  "resolutions": {
+    "@types/react": "^17.0.0"
+  },
   "dependencies": {
     "@apollo/client": "~3.3.21",
     "@cdm-logger/client": "^7.0.12",
