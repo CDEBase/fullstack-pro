@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const webpack = require('webpack');
 const path = require('path');
 const waitOn = require('wait-on');
@@ -164,7 +165,15 @@ const config = {
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? []
-              .concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
+              .concat(
+                  typeof STORYBOOK_MODE === 'undefined'
+                      ? [
+                            new WaitOnWebpackPlugin(
+                                `tcp:${buildConfig.__SERVER_HOST__}:${buildConfig.__API_SERVER_PORT__}`,
+                            ),
+                        ]
+                      : [],
+              )
               .concat(
                   new Dotenv({
                       path: process.env.ENV_FILE,

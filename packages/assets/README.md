@@ -45,3 +45,4 @@ Phones
 --
 inkscape -w 64 -h 64 -o ../../../portable-devices/mobile/assets/images/favicon.png original/master.svg
 inkscape -w 120 -h 120 -o ../../../portable-devices/mobile/assets/images/apple-touch-icon-120x120.png original/master.svg
+inkscape -w 180 -h 180 -o ../../../portable-devices/mobile/assets/images/apple-touch-icon-180x180.png original/master.svg

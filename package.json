@@ -247,7 +247,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "express": "^4.17.1",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.11",
     "freeport-async": "^2.0.0",

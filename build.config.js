@@ -14,6 +14,8 @@ const config = {
     __DEBUGGING__: false,
     __TEST__: false,
     __WEB_SERVER_PORT__,
+    __SERVER_HOST__,
+    __API_SERVER_PORT__,
     __API_URL__:
         process.env.API_URL ||
         `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__API_SERVER_PORT__}/${__GRAPHQL_ENDPOINT__}`,
