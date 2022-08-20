@@ -24,6 +24,7 @@ const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sa
 const plugins = [
     new webpack.ProvidePlugin({
         process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
     }),
 ];
 if (bundleStats) {
@@ -64,6 +65,10 @@ class WaitOnWebpackPlugin {
     }
 }
 
+/**
+ * Webpack 5 need manual polyfills. If you need to add anything you can check the following link
+ * https://gist.github.com/ef4/d2cf5672a93cf241fd47c020b9b3066a
+ */
 const config = {
     entry: {
         index: ['raf/polyfill', 'core-js/stable', 'regenerator-runtime/runtime', './src/index.tsx'],
@@ -149,7 +154,7 @@ const config = {
         ],
         fallback: {
             fs: false,
-            path: false,
+            path: require.resolve('path-browserify'),
         },
     },
     watchOptions: { ignored: /dist/ },
