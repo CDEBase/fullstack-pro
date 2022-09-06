@@ -1,23 +1,26 @@
-import React from "react"
-import {StyleSheet, View, Text, ViewStyle} from "react-native"
-import { Link } from 'react-router-native';
+import React from 'react';
+import { StyleSheet, View, Text, ViewStyle } from 'react-native';
+import { Button } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 interface Style {
-    container: ViewStyle
+    container: ViewStyle;
 }
 
 const Dashboard = () => {
-    return(
+    const navigation = useNavigation<any>();
+    return (
         <View style={styles.container}>
             <Text>Dashboard Value</Text>
-            <Link to={'/org/counter'}><Text>Calendar</Text></Link>
+            <Text>Calendar</Text>
+            <Button onPress={() => navigation.navigate('MainStack.Setting')}>Setting</Button>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create<Style>({
-    container:{
-        textAlign: 'center'
-    }
-})
+    container: {
+        textAlign: 'center',
+    },
+});
 
 export default Dashboard;
