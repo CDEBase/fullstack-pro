@@ -24,6 +24,8 @@ export const Navigation = () => {
                         initialRouteName: 'Home',
                         screenOptions: {
                             headerShown: false,
+                            tabBarLabel: 'About',
+                            tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
                         },
                     },
                     children: {
@@ -43,9 +45,6 @@ export const Navigation = () => {
                             container: createStackNavigator(),
                             props: {
                                 initialRouteName: 'Hello',
-                                options: {
-                                    tabBarLabel: 'About',
-                                },
                             },
                             children: {
                                 Hello: {
@@ -54,15 +53,12 @@ export const Navigation = () => {
                                         component: Hello,
                                         options: {
                                             headerTitle: 'About',
-                                            tabBarIcon: ({ color }) => (
-                                                <Ionicons name="person" size={24} color={color} />
-                                            ),
                                         },
                                     },
                                 },
                                 PersonalInfo: {
                                     props: {
-                                        initialParams: {},
+                                        initialParams: { name: 'Test' },
                                         component: PersonalInfo,
                                         options: {
                                             headerTitle: 'Personal Info',
