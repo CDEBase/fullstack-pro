@@ -1,15 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { NativeRouter, Route } from 'react-router-native';
+import { NativeRouter } from 'react-router-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
-import { createRenderer } from 'fela-native';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { MainRoute } from './modules/modules';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-// import { RendererProvider } from 'react-fela';
 import { ConnectedRouter } from 'connected-react-router';
 import {
   createReduxStore,
@@ -21,7 +18,6 @@ import { createClientContainer } from './config/client.service';
 const { apolloClient: client, container } = createClientContainer();
 
 const store = createReduxStore();
-const renderer = createRenderer();
 
 export default function App() {
 
