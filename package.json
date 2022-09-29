@@ -117,6 +117,8 @@
     "react-native-gesture-handler": "~2.1.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "dataloader": "^2.0.0",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.11.0"
