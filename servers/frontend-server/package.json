@@ -123,7 +123,8 @@
     "sourcemapped-stacktrace": "^1.1.11",
     "subscriptions-transport-ws": "0.9.18",
     "ts-invariant": "^0.10.3",
-    "universal-cookie-express": "^4.0.1"
+    "universal-cookie-express": "^4.0.1",
+    "@emotion/react": "^11.10.4"
   },
   "devDependencies": {
     "@babel/polyfill": "7.7.0",
