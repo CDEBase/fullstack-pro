@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { Button } from './button';
+import { styleSheet } from './styles';
 
 const Navbar = () => {
     const navItems = [
@@ -19,37 +20,15 @@ const Navbar = () => {
             title: 'FAQ',
         },
     ];
-    const color = 'white';
-    const header = css({
-        display: 'flex',
-        padding: '20px',
-        justifyContent: 'space-around',
-        alignItems: 'baseline',
-    });
-    const itemList = css({
-        listStyleType: 'none',
-        display: 'flex',
-    });
-    const li = css({
-        fontSize: '18px',
-        color: color,
-        cursor: 'pointer',
-        marginRight: '50px',
-    });
-    const logo = css({
-        fontSize: '30px',
-        color: color,
-        cursor: 'pointer',
-    });
     return (
-        <div css={header}>
-            <div css={logo}>CDNBase LLC</div>
+        <div css={styleSheet.header}>
+            <div css={styleSheet.logo}>CDNBase LLC</div>
             <div>
                 <div>
-                    <ul css={itemList}>
+                    <ul css={styleSheet.itemList}>
                         {navItems.map((item, index) => {
                             return (
-                                <li css={li} key={index}>
+                                <li css={styleSheet.li} key={index}>
                                     {item.title}
                                 </li>
                             );
