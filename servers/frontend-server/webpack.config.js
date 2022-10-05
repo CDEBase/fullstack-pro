@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const webpack = require('webpack');
 const path = require('path');
 const waitOn = require('wait-on');
@@ -15,14 +16,17 @@ const ServerConfig = require('../../tools/webpack/server.config');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
 
-const webpackPort = 3010;
-
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
 
-const plugins = [];
+const plugins = [
+    new webpack.ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
+    }),
+];
 if (bundleStats) {
     plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
 }
@@ -61,6 +65,10 @@ class WaitOnWebpackPlugin {
     }
 }
 
+/**
+ * Webpack 5 need manual polyfills. If you need to add anything you can check the following link
+ * https://gist.github.com/ef4/d2cf5672a93cf241fd47c020b9b3066a
+ */
 const config = {
     entry: {
         index: ['raf/polyfill', 'core-js/stable', 'regenerator-runtime/runtime', './src/index.tsx'],
@@ -146,7 +154,7 @@ const config = {
         ],
         fallback: {
             fs: false,
-            path: false,
+            path: require.resolve('path-browserify'),
         },
     },
     watchOptions: { ignored: /dist/ },
@@ -162,17 +170,18 @@ const config = {
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? []
-              .concat(typeof STORYBOOK_MODE === 'undefined' ? [new WaitOnWebpackPlugin('tcp:localhost:8080')] : [])
+              .concat(
+                  typeof STORYBOOK_MODE === 'undefined'
+                      ? [
+                            new WaitOnWebpackPlugin(
+                                `tcp:${buildConfig.__SERVER_HOST__}:${buildConfig.__API_SERVER_PORT__}`,
+                            ),
+                        ]
+                      : [],
+              )
               .concat(
                   new Dotenv({
                       path: process.env.ENV_FILE,
-                  }),
-              )
-              .concat(
-                  // fix "process is not defined" error:
-                  // (do "npm install process" before running the build)
-                  new webpack.ProvidePlugin({
-                      process: 'process/browser',
                   }),
               )
         : [
@@ -199,13 +208,7 @@ const config = {
                   threshold: 10240,
                   minRatio: 0.8,
               }),
-          ].concat(
-              // fix "process is not defined" error:
-              // (do "npm install process" before running the build)
-              new webpack.ProvidePlugin({
-                  process: 'process/browser',
-              }),
-          )
+          ]
     )
         .concat([
             ...plugins,
@@ -244,7 +247,7 @@ const config = {
         headers: { 'Access-Control-Allow-Origin': '*' },
         open: true,
         historyApiFallback: true,
-        port: webpackPort,
+        port: buildConfig.__WEB_SERVER_PORT__,
         devMiddleware: {
             publicPath: '/',
             writeToDisk: (pathname) => /(assets.json|loadable-stats.json)$/.test(pathname),

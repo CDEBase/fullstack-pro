@@ -95,9 +95,12 @@ yarn clean:force && git pull <branch_name> && yarn install && yarn build
 
 ## Installation of Prerequisties servers
 
-Install redis and setup an instance with default settings on default port,
+Install redis and mongo and setup an instance with default settings on default port,
+Please check the installation documentation of each one.
 
-* Install Redis on a Linux, OS X, or a similar Posix operating system
+MongoDB install : https://www.mongodb.com/docs/manual/administration/install-community/
+Redis install: https://redis.io/docs/getting-started/
+
 
 ## Advance Options
 ### To test Production build and run
