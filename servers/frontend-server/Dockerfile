@@ -10,6 +10,7 @@ COPY .npmrc /tmp/.npmrc
 ADD package.json /tmp/package.json
 RUN set -ex \
 	&& cd /tmp \
+	&& yarn config set network-timeout 300000 \
 	&& yarn install \
 	&& rm -f /tmp/.npmrc \
 	&& mkdir -p /home/app \
