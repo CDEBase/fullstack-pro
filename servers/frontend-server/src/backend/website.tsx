@@ -19,26 +19,34 @@ import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import createEmotionServer from '@emotion/server/create-instance'
+
 
 let assetMap;
+const key = 'custom';
+const cache = createCache({ key });
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
 async function renderServerSide(req, res) {
     try {
-
         const { apolloClient: client } = createClientContainer();
 
-        let context: { pageNotFound?: boolean, url?: string } = { pageNotFound: false };
+        let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
         const { store } = createReduxStore(history);
         const renderer = createRenderer();
         const App = () =>
             clientModules.getWrappedRoot(
                 // tslint:disable-next-line:jsx-wrap-multiline
-                <ReduxProvider store={store} >
+                <ReduxProvider store={store}>
                     <ApolloProvider client={client}>
-                        <ReactFela.Provider renderer={renderer} >
-                            <StaticRouter location={req.url} context={context}>
-                                <MainRoute />
-                            </StaticRouter>
+                        <ReactFela.Provider renderer={renderer}>
+                            <CacheProvider value={cache}>
+                                <StaticRouter location={req.url} context={context}>
+                                    <MainRoute />
+                                </StaticRouter>
+                            </CacheProvider>
                         </ReactFela.Provider>
                     </ApolloProvider>
                 </ReduxProvider>,
@@ -57,11 +65,15 @@ async function renderServerSide(req, res) {
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
         // Wrap your application using "collectChunks"
-        const JSX = extractor.collectChunks(App)
+        const JSX = extractor.collectChunks(App);
         const content = ReactDOMServer.renderToString(JSX);
 
         // this comes after Html render otherwise we don't see fela rules generated
         const appStyles = renderToSheetList(renderer);
+        
+        const chunks = extractCriticalToChunks(JSX)
+
+        const emotionEtyles = constructStyleTagsFromChunks(chunks)
 
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
@@ -80,7 +92,11 @@ async function renderServerSide(req, res) {
             const page = (
                 <Html
                     content={content}
-                    headElements={[...extractor.getScriptElements(), ...extractor.getLinkElements(), ...extractor.getStyleElements()]}
+                    headElements={[
+                        ...extractor.getScriptElements(),
+                        ...extractor.getLinkElements(),
+                        ...extractor.getStyleElements(),
+                    ]}
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmet}
@@ -102,7 +118,7 @@ export const websiteMiddleware = async (req, res, next) => {
         if (req.path.indexOf('.') < 0 && __SSR__) {
             return await renderServerSide(req, res);
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
-            logger.debug('FRONEND_BUILD_DIR with index.html')
+            logger.debug('FRONEND_BUILD_DIR with index.html');
             res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
         } else {
             next();
