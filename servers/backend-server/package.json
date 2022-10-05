@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-backend-server",
-  "version": "0.0.55-alpha.3",
+  "version": "0.0.55-alpha.4",
   "private": true,
   "description": "Starter kit for apollo server using webpack and typescript",
   "keywords": [
@@ -65,10 +65,10 @@
     "@common-stack/server-core": "0.2.4",
     "@common-stack/store-mongo": "0.2.3",
     "@graphql-tools/links": "^7.0.0",
-    "@sample-stack/core": "0.0.55-alpha.3",
-    "@sample-stack/counter-module-server": "0.0.55-alpha.3",
-    "@sample-stack/platform-server": "0.0.55-alpha.3",
-    "@sample-stack/store": "0.0.55-alpha.3",
+    "@sample-stack/core": "0.0.55-alpha.4",
+    "@sample-stack/counter-module-server": "0.0.55-alpha.4",
+    "@sample-stack/platform-server": "0.0.55-alpha.4",
+    "@sample-stack/store": "0.0.55-alpha.4",
     "apollo-datasource": "^0.7.0",
     "apollo-datasource-rest": "^0.8.0",
     "apollo-errors": "^1.9.0",
@@ -95,7 +95,6 @@
     "graphql-type-json": "^0.3.1",
     "inversify": "^5.0.1",
     "ioredis": "^4.14.0",
-    "ts-invariant": "^0.10.3",
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.20.4",
     "lodash": "^4.17.15",
@@ -109,6 +108,7 @@
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
     "subscriptions-transport-ws": "0.9.18",
+    "ts-invariant": "^0.10.3",
     "universal-cookie-express": "^4.0.1",
     "ws": "^7.2.1"
   },
