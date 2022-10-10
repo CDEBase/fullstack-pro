@@ -1,6 +1,6 @@
 {
   "name": "sample-stack-frontend-server",
-  "version": "0.0.55-alpha.5",
+  "version": "0.0.55-alpha.6",
   "private": true,
   "description": "Sample Client server",
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
@@ -65,10 +65,6 @@
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
-    "@sample-stack/assets": "link:../../packages/assets",
-    "@sample-stack/core": "link:../../packages/sample-core",
-    "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
-    "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
     "@loadable/component": "^5.15.2",
     "@loadable/server": "^5.15.2",
     "@sample-stack/assets": "0.0.55-alpha.4",
