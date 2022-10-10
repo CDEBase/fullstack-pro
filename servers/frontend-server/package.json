@@ -61,6 +61,10 @@
     "@common-stack/client-react": "0.2.4",
     "@common-stack/core": "0.2.1",
     "@common-stack/server-core": "0.2.4",
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.4",
     "@sample-stack/assets": "link:../../packages/assets",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
@@ -123,8 +127,7 @@
     "sourcemapped-stacktrace": "^1.1.11",
     "subscriptions-transport-ws": "0.9.18",
     "ts-invariant": "^0.10.3",
-    "universal-cookie-express": "^4.0.1",
-    "@emotion/react": "^11.10.4"
+    "universal-cookie-express": "^4.0.1"
   },
   "devDependencies": {
     "@babel/polyfill": "7.7.0",
