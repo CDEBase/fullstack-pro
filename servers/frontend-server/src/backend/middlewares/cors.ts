@@ -1,15 +1,11 @@
+/* eslint-disable jest/require-hook */
 import cors from 'cors';
-import { config } from '../../config';
 import { logger } from '@common-stack/client-core';
+import { config } from '../../config';
 
-const CLIENT_URL = config.CLIENT_URL;
-const BACKEND_URL = config.BACKEND_URL;
+const { CLIENT_URL, BACKEND_URL } = config;
 
-
-const corsWhitelist = [
-    CLIENT_URL,
-    BACKEND_URL,
-];
+const corsWhitelist = [CLIENT_URL, BACKEND_URL];
 logger.info('corsWhitelist (%j)', corsWhitelist);
 
 const corsOptions: cors.CorsOptions = {

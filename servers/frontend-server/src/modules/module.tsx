@@ -18,9 +18,11 @@ export const MainRoute = props => (
             segments={features.sidebarSegments}
         />
         <Layout>
-            <Layout.Content style={{height: '100%'}}>
-                <section className="flex-grow" style={{height: '100%'}}>
-                    {features.getRoutes()}
+            <Layout.Content style={{ height: '100%' }}>
+                <section className="flex-grow" style={{ height: '100%' }}>
+                    <React.Suspense fallback={<span>Loading....</span>}>
+                        {features.getRoutes()}
+                    </React.Suspense>
                 </section>
             </Layout.Content>
         </Layout>

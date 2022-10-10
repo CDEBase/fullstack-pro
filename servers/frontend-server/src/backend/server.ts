@@ -1,5 +1,7 @@
+/* eslint-disable jest/require-hook */
 import 'reflect-metadata';
 import express from 'express';
+import compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import * as path from 'path';
@@ -10,13 +12,13 @@ import { websiteMiddleware } from './website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';
-const cookiesMiddleware = require('universal-cookie-express');
 import modules from './modules';
+
+const cookiesMiddleware = require('universal-cookie-express');
 
 let server;
 
 const app = express();
-
 
 app.use(corsMiddleware);
 app.options('*', corsMiddleware);
@@ -27,23 +29,24 @@ for (const applyBeforeware of modules.beforewares) {
 
 app.use(cookiesMiddleware());
 
-
 // By default it uses backend_url port, which may conflict with graphql server.
 const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
+if (!__DEV__) {
+    app.use(compression());
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(
     '/',
-    express.static(path.join(__FRONTEND_BUILD_DIR__, 'web'), {
+    express.static(path.join(__FRONTEND_BUILD_DIR__), {
         maxAge: '180 days',
     }),
 );
-
 
 if (__DEV__) {
     app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
@@ -81,6 +84,5 @@ if ((module as any).hot) {
 
     (module as any).hot.accept();
 }
-
 
 export default server;

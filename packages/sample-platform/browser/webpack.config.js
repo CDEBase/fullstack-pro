@@ -38,7 +38,7 @@ const webpackOpts = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loaders: 'ts-loader',
+                use: 'ts-loader',
             },
             {
                 test: /\.graphql?/,

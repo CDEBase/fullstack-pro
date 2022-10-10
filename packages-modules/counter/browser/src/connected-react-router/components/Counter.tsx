@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     decrement: () => dispatch(decrement()),
 });
 
-export const Counter = connect<StateProps, DispatchProps>(
+export default connect<StateProps, DispatchProps>(
     mapStateToProps,
     mapDispatchToProps,
 )(CounterComponent);

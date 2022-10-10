@@ -5,10 +5,10 @@ const { str, bool, json } = envalid;
 
 export const config = envalid.cleanEnv(process.env, {
     NODE_ENV: str({ default: 'production', choices: ['production', 'staging', 'development', 'test'] }),
-    NATS_URL: str(),
-    NATS_USER: str(),
-    NATS_PW: str(),
-    MONGO_URL: str(),
+    NATS_URL: str({ devDefault: 'nats://localhost:4222/' }),
+    NATS_USER: str({ devDefault: 'test' }),
+    NATS_PW: str({ devDefault: 'test' }),
+    MONGO_URL: str({ devDefault: 'mongodb://localhost:27017/sample-stack' }),
     LOG_LEVEL: str({ default: 'info', devDefault: 'trace', choices: ['info', 'debug', 'trace'] }),
     REDIS_CLUSTER_URL: json({
         devDefault: '[{"port":6379,"host":"localhost"}]',

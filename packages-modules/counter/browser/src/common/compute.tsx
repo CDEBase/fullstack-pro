@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
+import { lazy } from '@loadable/component'
 
-import { Home } from '../common/components/Home';
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
+
+const Home = lazy(() => import('../common/components/Home'));
 
 export const commonPageStore: any[] = [
     {
