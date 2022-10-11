@@ -12,17 +12,15 @@ import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor } from '@loadable/server';
 import { createMemoryHistory } from 'history';
-
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import createEmotionServer from '@emotion/server/create-instance'
 import { createClientContainer } from '../config/client.service';
 import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import createEmotionServer from '@emotion/server/create-instance'
-
 
 let assetMap;
 const key = 'custom';
