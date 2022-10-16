@@ -21,7 +21,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cdmbase.samplestack"
+      "bundleIdentifier": "com.cdebase.samplestack"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,6 +32,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a2a019ee-d784-46b5-b595-401a91c61844"
+      }
     }
   }
 }
