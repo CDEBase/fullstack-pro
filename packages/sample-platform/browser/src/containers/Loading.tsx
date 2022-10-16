@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface Props {}
 
-const Loading: React.SFC<Props> = () => (
+const Loading: React.FC<Props> = () => (
     <div>Loading</div>
 );
 

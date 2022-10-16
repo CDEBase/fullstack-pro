@@ -14,7 +14,7 @@ interface CounterDispatchProps {
     decrement: () => void;
 }
 
-const CounterScreen: React.SFC<CounterStateProps & CounterDispatchProps> = (props) => {
+const CounterScreen: React.FC<CounterStateProps & CounterDispatchProps> = (props) => {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <View style={{ marginTop: 20 }}>
