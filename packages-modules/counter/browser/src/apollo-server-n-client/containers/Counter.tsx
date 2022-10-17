@@ -22,7 +22,7 @@ import {
  * 
  * @description Counter Component with Data dependency.
  */
-const CounterWithApollo: React.SFC<any> = (props) => {
+const CounterWithApollo: React.FC<any> = (props) => {
     const [addCounterMutation] = useAddCounterMutation();
     const { loading, error, data: counterData, subscribeToMore, } = useCounterQueryQuery();
     const [addCounterStateMutation] = useAddCounterStateMutation();
