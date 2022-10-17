@@ -1,6 +1,6 @@
 {
   "name": "@sample-stack/platform-browser",
-  "version": "0.0.55-alpha.4",
+  "version": "0.0.55-alpha.9",
   "description": "Sample core for higher packages to depend on",
   "license": "ISC",
   "author": "CDMBase LLC",
