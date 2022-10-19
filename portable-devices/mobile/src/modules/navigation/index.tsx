@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { RootAppNavigators, resolveRootRoute } from '../../react-navigation';
-import { Dashboard, Hello, Settings, PersonalInfo } from '../../pages';
+import { Dashboard, Hello, Settings, PersonalInfo,CameraScreen } from '../../pages';
 
 export const Navigation = () => {
     const rootRoutes: RootAppNavigators = {
@@ -76,6 +76,17 @@ export const Navigation = () => {
                         options: {
                             headerShown: true,
                             headerTitle: 'Settings',
+                            headerBackTitle: 'Back',
+                        },
+                    },
+                },
+                CameraScreen: {
+                    props: {
+                        initialParams: {},
+                        component: Settings,
+                        options: {
+                            headerShown: true,
+                            headerTitle: 'Camera',
                             headerBackTitle: 'Back',
                         },
                     },
