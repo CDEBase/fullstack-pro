@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}-conf
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    reloader.stakater.com/match: "true"
+  namespace: {{ .Release.Namespace }}
+data:
+{{- if  or .Values.external.service.mongodb.generateEnv .Values.external.service.mongodb.enabled }}
+  MONGO_URL: "{{ template "mongodb_service" . }}"
+{{- end }}
+{{- if  or .Values.external.service.redis.generateEnv .Values.external.service.redis.enabled }}
+  REDIS_URL: "{{ template "redis_service" . }}"
+{{- end }}
+{{- if  or .Values.external.service.zipkin.generateEnv .Values.external.service.zipkin.enabled }}
+  ZIPKIN_URL: {{ template "zipkin_host" . }}
+  ZIPKIN_PORT: {{ .Values.external.service.zipkin.port | quote }}
+{{- end }}
+{{- if  or .Values.external.service.nats.generateEnv .Values.external.service.nats.enabled }}
+  NATS_PW: {{ .Values.external.service.nats.password | quote }}
+  NATS_URL: "{{ template "nats_service" . }}"
+  NATS_USER: {{ .Values.external.service.nats.user | quote }}
+{{- end }}
+{{- range $name, $value := .Values.env }}
+{{- if not (empty $value) }}
+  {{ $name }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
