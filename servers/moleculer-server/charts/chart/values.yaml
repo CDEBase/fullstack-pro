@@ -15,7 +15,19 @@ resources:
     memory: 512Mi
 
 ingress:
-  enabled: false
+  enabled: true
+  domainPrefix: mytest
+  domain: cdebase.dev
+  onlyDomainBase: false
+  domainBase: cdebase.dev
+  ssl: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: microstack-cert-manager-webhook-dnsimple-production
+    external-dns.alpha.kubernetes.io/target: cdebase.dev
+
 env:
   CONNECTION_ID: v1
   LOG_LEVEL: info
