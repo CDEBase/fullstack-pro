@@ -1,17 +1,45 @@
-{{- if .Values.ingress.enabled -}}
-apiVersion: networking.k8s.io/v1beta1
+{{- if .Values.ingress.enabled }}
+apiVersion:  networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "fullname" . }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+  {{- $root := . }}
+  {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ tpl $value $root| quote }}
+  {{- end }}
 spec:
   rules:
-  - host: {{ .Release.Name }}.{{ .Values.basedomain }}
+   {{ if .Values.ingress.onlyDomainBase  }}
+  - host: {{ .Values.ingress.domainBase }}
+  {{ else if and (.Values.ingress.domainPrefix) (.Values.namespace) }}
+  - host: {{ .Values.ingress.domainPrefix }}-{{.Values.namespace}}-{{ .Values.env.VERSION}}.{{ .Values.ingress.domainBase }}
+  {{ else if (.Values.ingress.domainPrefix) }}
+  - host: {{ .Values.ingress.domainPrefix }}-{{ .Values.env.VERSION}}.{{ .Values.ingress.domainBase }}
+  {{ else }}
+  - host: {{ template "idestack.frontend_ingress" . }}
+  {{ end }}
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: {{ template "fullname" . }}
-          servicePort: {{ .Values.service.externalPort }}
-{{- end -}}
+          service:
+            name: {{ template "fullname" . }}
+            port: 
+              number: {{ .Values.service.externalPort }}
+  tls:
+  - hosts:
+    {{ if .Values.ingress.onlyDomainBase  }}
+    - {{ .Values.ingress.domainBase }}
+    {{ else if and (.Values.ingress.domainPrefix) (.Values.namespace) }}
+    - {{ .Values.ingress.domainPrefix }}-{{.Values.namespace}}-{{ .Values.env.VERSION}}.{{ .Values.ingress.domainBase }}
+    {{ else if (.Values.ingress.domainPrefix) }}
+    - {{ .Values.ingress.domainPrefix }}-{{ .Values.env.VERSION}}.{{ .Values.ingress.domainBase }}
+    {{ else }}
+    - {{ template "idestack.frontend_ingress" . }}
+    {{ end }}
+    secretName: {{ template "fullname" . }}-tls
+{{- end }}
