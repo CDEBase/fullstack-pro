@@ -21,6 +21,8 @@ env:
   CONNECTION_ID: v1
   LOG_LEVEL: info
   HEMERA_LOG_LEVEL: info
+  VERSION: v1
+
 external:
   name: idestack
   service: 
