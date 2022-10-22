@@ -16,6 +16,7 @@ resources:
 
 ingress:
   enabled: false
+
 env:
   CONNECTION_ID: v1
   LOG_LEVEL: info
