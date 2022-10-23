@@ -343,7 +343,7 @@ pipeline {
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
-            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop/helm-packages
             helm repo update
           """
           script {
@@ -425,7 +425,7 @@ pipeline {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
-               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop/helm-packages
                helm repo update
              """
             script {
