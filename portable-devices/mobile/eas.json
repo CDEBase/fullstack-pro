@@ -23,6 +23,9 @@
       "extends": "production",
       "node": "14.17.3",
       "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
       "env": {
         "NODE_ENV": "development",
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
@@ -32,7 +35,7 @@
         "APP_NAME": "fullstack-pro"
       }
     },
-    "production": {   
+    "production": {
       "node": "14.17.3",
       "env": {
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
