@@ -571,6 +571,7 @@ def generateStage(server, environmentType) {
             ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
+            --version="v0.1.3" \
             charts/chart
           """
 
