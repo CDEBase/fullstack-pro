@@ -569,8 +569,8 @@ def generateStage(server, environmentType) {
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
-            --set image.repository=${REPOSITORY_SERVER}/${name} \
-            --set image.tag=${version} \
+            --set cdebase.image.repository=${REPOSITORY_SERVER}/${name} \
+            --set cdebase.image.tag=${version} \
             --version="v0.1.3" \
             charts/chart
           """
