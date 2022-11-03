@@ -16,7 +16,7 @@
     "build:preview:all": "yarn build:preview -p all --non-interactive",
     "build:preview:android": "yarn build:preview -p android --non-interactive",
     "build:preview:ios": "yarn build:preview -p ios --non-interactive",
-    "build:previewLocal": "yarn easBuild --profile previewLocal",
+    "build:previewLocal": "yarn easBuild --profile previewlocal",
     "build:previewLocal:all": "yarn build:previewLocal -p all --non-interactive",
     "build:previewLocal:android": "yarn build:previewLocal -p android --non-interactive",
     "build:previewLocal:ios": "yarn build:previewLocal -p ios --non-interactive",
