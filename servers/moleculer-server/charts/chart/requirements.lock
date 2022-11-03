@@ -1,6 +1,6 @@
 dependencies:
 - name: cdebase
   repository: https://cdmbase.github.io/helm-chart/helm-packages
-  version: v0.1.6
-digest: sha256:8319e2a0189873232bd5227c7821f99c45fdd79ff8bb09bc95e14e6cff7567ad
-generated: "2022-11-02T21:39:59.6107367+01:00"
+  version: v0.1.7
+digest: sha256:5c85f9cb395238c9367d97d9e0192ac886b23d8b24f4da3a338409586c3c8091
+generated: "2022-11-03T11:51:44.2856464+01:00"
