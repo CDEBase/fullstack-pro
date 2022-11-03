@@ -5,5 +5,5 @@ version: v0.1.3
 
 dependencies:
 - name: cdebase
-  version: "v0.1.6"
+  version: "v0.1.7"
   repository: "https://cdmbase.github.io/helm-chart/helm-packages"
