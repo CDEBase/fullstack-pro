@@ -20,7 +20,7 @@
         "APP_NAME": "fullstack-pro"
       }
     },
-    "priviewlocal": {
+    "previewlocal": {
       "extends": "preview",
       "ios": {
         "simulator": true
