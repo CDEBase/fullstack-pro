@@ -570,7 +570,8 @@ def generateStage(server, environmentType) {
             ${namespace} \
             --set image.repository=${REPOSITORY_SERVER}/${name} \
             --set image.tag=${version} \
-            charts/chart
+            --version="v0.1.3" \
+            kube-orchestration/cdebase
           """
 
         }
