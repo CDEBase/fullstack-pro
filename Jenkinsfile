@@ -568,10 +568,10 @@ def generateStage(server, environmentType) {
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
-            --set image.repository=${REPOSITORY_SERVER}/${name} \
-            --set image.tag=${version} \
+            --set global.image.repository=${REPOSITORY_SERVER}/${name} \
+            --set global.image.tag=${version} \
             --version="v0.1.3" \
-            kube-orchestration/cdebase
+            charts/chart
           """
 
         }
