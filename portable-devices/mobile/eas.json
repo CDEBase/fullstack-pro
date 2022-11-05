@@ -7,9 +7,10 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
+        "buildConfiguration": "Debug",
         "simulator": true
       },
-      "node": "14.17.3",
+      "node": "16.17.0",
       "env": {
         "NODE_ENV": "development",
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
@@ -17,12 +18,22 @@
         "LOG_LEVEL": "trace",
         "CLIENT_URL": "http://localhost:3000",
         "APP_NAME": "fullstack-pro"
+      }
+    },
+    "previewlocal": {
+      "extends": "preview",
+      "ios": {
+        "simulator": true
       }
     },
     "preview": {
       "extends": "production",
-      "node": "14.17.3",
+      "node": "16.17.0",
       "distribution": "internal",
+      "ios": {
+        "autoIncrement": "buildNumber",
+        "simulator": true
+      },
       "env": {
         "NODE_ENV": "development",
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
@@ -32,8 +43,13 @@
         "APP_NAME": "fullstack-pro"
       }
     },
-    "production": {   
-      "node": "14.17.3",
+    "production": {
+      "node": "16.17.0",
+      "ios": {
+        "image": "default",
+        "autoIncrement": "buildNumber"
+      },
+      "releaseChannel": "production",
       "env": {
         "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
         "GA_ID": "jjj",
@@ -44,6 +60,13 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "google-cred.json",
+        "changesNotSentForReview": true,
+        "track": "internal",
+        "releaseStatus": "draft"
+      }
+    }
   }
 }

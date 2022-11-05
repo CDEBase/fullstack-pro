@@ -131,7 +131,6 @@ const config = {
                     options: { babelrc: true, rootMode: 'upward-optional' },
                 },
             },
-            { test: /locales/, use: { loader: '@alienfast/i18next-loader' } },
         ],
         unsafeCache: false,
     },

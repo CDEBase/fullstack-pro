@@ -28,9 +28,9 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.7.2', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.7.4', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
@@ -94,7 +94,7 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
         sh """
@@ -344,7 +344,7 @@ pipeline {
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
-            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+            helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop/helm-packages
             helm repo update
           """
           script {
@@ -429,7 +429,7 @@ pipeline {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
-               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop
+               helm repo add kube-orchestration https://"""+ GITHUB_HELM_REPO_TOKEN +"""@raw.githubusercontent.com/cdmbase/kube-orchestration/develop/helm-packages
                helm repo update
              """
             script {
@@ -469,6 +469,9 @@ def getBuildCommand(){
   }
   if(params.ENV_CHOICE == 'mobilePreview'){
     return 'build:preview:' + params.MOBILE_CHOICE
+  }
+  if(params.ENV_CHOICE == 'mobilePreviewLocal'){
+    return 'build:previewLocal:' + params.MOBILE_CHOICE
   }
   if(params.ENV_CHOICE == 'mobileProd'){
     return 'build:prod:' + params.MOBILE_CHOICE
@@ -565,6 +568,7 @@ def generateStage(server, environmentType) {
         } else {
           sh """
             cd .${params.DEPLOYMENT_PATH}/${server}
+            helm dependency update charts/chart/Chart.yaml
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
