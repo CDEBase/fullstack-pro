@@ -568,7 +568,7 @@ def generateStage(server, environmentType) {
         } else {
           sh """
             cd .${params.DEPLOYMENT_PATH}/${server}
-            helm dependency update charts/chart/Chart.yaml
+            helm dependency update  charts/chart/
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
