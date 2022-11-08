@@ -9,7 +9,7 @@
   "scripts": {
     "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
-    "build:lib": "rollup -c rollup.config.js",
+    "build:lib": "rollup -c rollup.config.mjs",
     "build:lib:watch": "yarn build:lib -- --watch",
     "jest": "./node_modules/.bin/jest",
     "prepublish": "yarn build",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "~4.15.3"
+    "antd": "~4.24.1"
   },
   "devDependencies": {},
   "peerDependencies": {

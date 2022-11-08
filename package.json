@@ -1,6 +1,6 @@
 {
   "name": "sample-stack",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "private": true,
   "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
   "bugs": {
@@ -233,6 +233,7 @@
     "easygraphql-load-tester": "^2.0.5",
     "envalid": "~7.3.1",
     "enzyme": "^3.11.0",
+    "esbuild": "^0.15.13",
     "eslint": "^8.27.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -305,6 +306,7 @@
     "resolve-url-loader": "^5.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^3.2.5",
+    "rollup-plugin-esbuild": "^5.0.0",
     "rollup-plugin-string": "^3.0.0",
     "sass-loader": "^13.1.0",
     "shelljs": "^0.8.5",

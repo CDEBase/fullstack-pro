@@ -13,7 +13,7 @@ interface HelloChildProps {
 
 const HelloChildComponent = ({ pathname, search, hash }: HelloChildProps) => (
     <div>
-        Hello-Child
+        Hello-Child 23423
     <ul>
             <li><Link to={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}?color=Blue&size=40`}>with query string</Link></li>
             <li><Link to={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}#lovelove`}>with hash</Link></li>

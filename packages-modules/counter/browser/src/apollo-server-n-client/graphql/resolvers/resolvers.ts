@@ -33,7 +33,7 @@ const resolvers = {
         addCounterState: async (_, { amount }, { cache }: { cache: InMemoryCache }) => {
             const {
                 counterState: { counter },
-            } = cache.readQuery({ query: CounterStateDocument });
+            } = cache.readQuery({ query: CounterStateDocument }) as any;
             const newAmount = amount + counter;
 
             await cache.writeQuery({
