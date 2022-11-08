@@ -198,7 +198,7 @@
     "@types/redux-logger": "^3.0.9",
     "@types/semver": "^6.2.0",
     "@types/sinon": "^7.5.1",
-    "@types/webpack": "^4.41.0",
+    "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.14.1",
     "@types/zen-observable": "^0.8.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
