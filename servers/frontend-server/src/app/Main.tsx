@@ -1,5 +1,4 @@
 /// <reference path='../../../../typings/index.d.ts' />
-import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/client';
@@ -48,4 +47,4 @@ export class Main extends React.Component<{}, {}> {
   }
 }
 
-export default hot(Main);
+export default Main;

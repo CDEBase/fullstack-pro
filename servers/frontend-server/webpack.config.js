@@ -2,7 +2,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const waitOn = require('wait-on');
-
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -11,6 +10,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressionPlugin = require('compression-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const zlib = require('zlib');
 const ServerConfig = require('../../tools/webpack/server.config');
 
@@ -43,6 +43,8 @@ if (!buildConfig.__SSR__ && buildConfig.__DEV__) {
         }),
     );
 }
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 class WaitOnWebpackPlugin {
     constructor(waitOnUrl) {
         this.waitOnUrl = waitOnUrl;
@@ -128,7 +130,11 @@ const config = {
                 exclude: modulenameRegex,
                 use: {
                     loader: 'babel-loader',
-                    options: { babelrc: true, rootMode: 'upward-optional' },
+                    options: {
+                        babelrc: true,
+                        rootMode: 'upward-optional',
+                        plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                    },
                 },
             },
         ],
@@ -183,6 +189,7 @@ const config = {
                       path: process.env.ENV_FILE,
                   }),
               )
+              .concat(new ReactRefreshWebpackPlugin())
         : [
               new MiniCSSExtractPlugin({
                   chunkFilename: '[name].[id].[chunkhash].css',
