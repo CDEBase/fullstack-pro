@@ -19,7 +19,7 @@
     "watch": "yarn build:lib:watch"
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "@sample-stack/platform-browser": "0.0.55-alpha.9",
     "antd": "~4.24.1"
   },
   "devDependencies": {},
