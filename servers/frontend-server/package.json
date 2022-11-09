@@ -34,11 +34,10 @@
     "test:debug": "npm test -- --runInBand",
     "test:watch": "npm test -- --watch",
     "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env webpack-dev-server",
-    "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env yarn zen:watch -- -v",
+    "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env yarn webpack-dev-server -- -v",
     "watch:ssr": "cross-env SSR=true && yarn watch",
-    "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env yarn zen:watch",
-    "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn zen:watch",
-    "zen:watch": "zen watch -x"
+    "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env yarn webpack-dev-server",
+    "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn webpack-dev-server"
   },
   "jest": {
     "moduleFileExtensions": [
