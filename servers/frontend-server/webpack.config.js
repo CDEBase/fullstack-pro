@@ -253,7 +253,7 @@ const config = {
         headers: { 'Access-Control-Allow-Origin': '*' },
         open: true,
         historyApiFallback: true,
-        port: buildConfig.__WEB_SERVER_PORT__,
+        port: buildConfig.__WEB_DEV_SERVER_PORT__,
         devMiddleware: {
             publicPath: '/',
             writeToDisk: (pathname) => /(assets.json|loadable-stats.json)$/.test(pathname),
