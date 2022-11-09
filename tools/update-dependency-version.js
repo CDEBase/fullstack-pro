@@ -16,7 +16,7 @@ const path = require('path');
 const fs = require('fs');
 
 const SERVER_FOLDER = './servers';
-const simpleGit = require('simple-git/promise');
+const simpleGit = require('simple-git');
 
 const git = simpleGit();
 
@@ -32,11 +32,12 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
             try {
                 fs.readdirSync(dependencyFolder);
             } catch (err) {
-                console.log(
-                    `--- err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
-                );
+
                 console.log(`--- err ${err.message}`);
-                return;
+                console.log(
+                    `err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
+                );
+                throw err;
             }
             glob(`${dependencyFolder}/package.json`, null, (err, files) => {
                 if (err) return console.error(`Unable to scan directory: ${err}`);
@@ -44,12 +45,17 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
                 files.forEach((file) => {
                     fs.readFile(file, 'utf-8', (err, data) => {
                         if (err) return console.error(`Unable to scan directory: ${err}`);
-
+                    try {
                         const objVersion = JSON.parse(data);
                         const { version } = objVersion;
                         dependencies[key] = `${version}`;
                         const str = JSON.stringify(obj, null, 2);
                         fs.writeFileSync(fileWrie, str, 'ascii');
+                    } catch(err) {
+                        console.error(`Failed at file: ${file}`)
+                        throw(err);
+                    }
+
                     });
                 });
             });
@@ -89,7 +95,9 @@ glob(
                             git.commit('corrected packages version!');
                         } else console.log('no change');
                     })
-                    .catch((err) => console.error(err));
+                    .catch((err) => {
+                        console.error(err);
+                    });
             })
             .catch((err) => console.error(err));
     },
