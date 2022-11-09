@@ -16,7 +16,7 @@ const path = require('path');
 const fs = require('fs');
 
 const SERVER_FOLDER = './servers';
-const simpleGit = require('simple-git/promise');
+const simpleGit = require('simple-git');
 
 const git = simpleGit();
 
@@ -53,7 +53,7 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
                         fs.writeFileSync(fileWrie, str, 'ascii');
                     } catch(err) {
                         console.error(`Failed at file: ${file}`)
-                        console.error(err);
+                        throw(err);
                     }
 
                     });
