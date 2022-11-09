@@ -170,6 +170,7 @@
     "@rollup/plugin-image": "^3.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
     "@shelf/jest-mongodb": "^4.1.3",
+    "@svgr/webpack": "^6.5.1",
     "@testing-library/react": "^13.4.0",
     "@types/async": "^3.2.15",
     "@types/body-parser": "1.19.2",
