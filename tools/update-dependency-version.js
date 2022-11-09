@@ -45,12 +45,17 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
                 files.forEach((file) => {
                     fs.readFile(file, 'utf-8', (err, data) => {
                         if (err) return console.error(`Unable to scan directory: ${err}`);
-
+                    try {
                         const objVersion = JSON.parse(data);
                         const { version } = objVersion;
                         dependencies[key] = `${version}`;
                         const str = JSON.stringify(obj, null, 2);
                         fs.writeFileSync(fileWrie, str, 'ascii');
+                    } catch(err) {
+                        console.error(`Failed at file: ${file}`)
+                        console.error(err);
+                    }
+
                     });
                 });
             });
