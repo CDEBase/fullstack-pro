@@ -3,106 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.0.55-alpha.14](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.13...v0.0.55-alpha.14) (2022-10-22)
+## [0.0.55-alpha.26](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.25...v0.0.55-alpha.26) (2022-11-09)
 
 **Note:** Version bump only for package sample-stack-backend-server
 
+## [0.0.55-alpha.14](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.13...v0.0.55-alpha.14) (2022-10-22)
 
-
-
+**Note:** Version bump only for package sample-stack-backend-server
 
 ## [0.0.55-alpha.9](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.8...v0.0.55-alpha.9) (2022-10-17)
 
 **Note:** Version bump only for package sample-stack-backend-server
 
-
-
-
-
 ## [0.0.55-alpha.7](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.6...v0.0.55-alpha.7) (2022-10-11)
 
 **Note:** Version bump only for package sample-stack-backend-server
-
-
-
-
 
 ## [0.0.55-alpha.5](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.4...v0.0.55-alpha.5) (2022-10-10)
 
 **Note:** Version bump only for package sample-stack-backend-server
 
-
-
-
-
 ## [0.0.55-alpha.4](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.3...v0.0.55-alpha.4) (2022-10-05)
 
 **Note:** Version bump only for package sample-stack-backend-server
-
-
-
-
 
 ## [0.0.55-alpha.3](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.2...v0.0.55-alpha.3) (2022-06-15)
 
 **Note:** Version bump only for package sample-stack-backend-server
 
-
-
-
-
 ## [0.0.55-alpha.1](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.0...v0.0.55-alpha.1) (2022-05-14)
 
 **Note:** Version bump only for package sample-stack-backend-server
 
-
-
-
-
 ## 0.0.55-alpha.0 (2022-05-10)
-
 
 ### Features
 
-* **Better streamline of code and use molecuer service:** Moleculer Service and app fixes ([6555252](https://github.com/cdmbase/fullstack-pro/commit/6555252275514c7e72598e03ff0775cb5d9fa04e))
-
+-   **Better streamline of code and use molecuer service:** Moleculer Service and app fixes ([6555252](https://github.com/cdmbase/fullstack-pro/commit/6555252275514c7e72598e03ff0775cb5d9fa04e))
 
 ### Reverts
 
-* Revert "udpate redis typefix" ([a262508](https://github.com/cdmbase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
-
-
-
-
+-   Revert "udpate redis typefix" ([a262508](https://github.com/cdmbase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
 
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.2.0"></a>
-# [0.2.0](https://github.com/DxCx/webpack-apollo-server/compare/v0.1.0...v0.2.0) (2017-01-25)
 
+# [0.2.0](https://github.com/DxCx/webpack-apollo-server/compare/v0.1.0...v0.2.0) (2017-01-25)
 
 ### Bug Fixes
 
-* **schema:** Fixed connector test ([cfbe262](https://github.com/DxCx/webpack-apollo-server/commit/cfbe262))
-* **tests:**  replace mocha/chai/istanbul with jest ([f8f9527](https://github.com/DxCx/webpack-apollo-server/commit/f8f9527))
-
+-   **schema:** Fixed connector test ([cfbe262](https://github.com/DxCx/webpack-apollo-server/commit/cfbe262))
+-   **tests:** replace mocha/chai/istanbul with jest ([f8f9527](https://github.com/DxCx/webpack-apollo-server/commit/f8f9527))
 
 ### Features
 
-* **compilers:** Removed babel ([39275e9](https://github.com/DxCx/webpack-apollo-server/commit/39275e9))
-* **formatting:** Added editor config and applied style throughout the project. ([1aa8016](https://github.com/DxCx/webpack-apollo-server/commit/1aa8016))
-* **schema:** Passing connectors through context ([1bd1ac7](https://github.com/DxCx/webpack-apollo-server/commit/1bd1ac7))
-
-
+-   **compilers:** Removed babel ([39275e9](https://github.com/DxCx/webpack-apollo-server/commit/39275e9))
+-   **formatting:** Added editor config and applied style throughout the project. ([1aa8016](https://github.com/DxCx/webpack-apollo-server/commit/1aa8016))
+-   **schema:** Passing connectors through context ([1bd1ac7](https://github.com/DxCx/webpack-apollo-server/commit/1bd1ac7))
 
 <a name="0.1.0"></a>
-# 0.1.0 (2016-09-09)
 
+# 0.1.0 (2016-09-09)
 
 ### Features
 
-* **graphql-tools:** changed vanilla graphql to graphql-tools ([#9](https://github.com/DxCx/webpack-apollo-server/issues/9)) ([b8435b1](https://github.com/DxCx/webpack-apollo-server/commit/b8435b1)), closes [graphql-tools/#121](https://github.com/DxCx/webpack-apollo-server/issues/121)
-* **standard-version:** Added standard-version for auto SemVer ([e311e3e](https://github.com/DxCx/webpack-apollo-server/commit/e311e3e))
-* **tests:** Added testing using mocha & istanbul ([#7](https://github.com/DxCx/webpack-apollo-server/issues/7)) ([0463daa](https://github.com/DxCx/webpack-apollo-server/commit/0463daa))
+-   **graphql-tools:** changed vanilla graphql to graphql-tools ([#9](https://github.com/DxCx/webpack-apollo-server/issues/9)) ([b8435b1](https://github.com/DxCx/webpack-apollo-server/commit/b8435b1)), closes [graphql-tools/#121](https://github.com/DxCx/webpack-apollo-server/issues/121)
+-   **standard-version:** Added standard-version for auto SemVer ([e311e3e](https://github.com/DxCx/webpack-apollo-server/commit/e311e3e))
+-   **tests:** Added testing using mocha & istanbul ([#7](https://github.com/DxCx/webpack-apollo-server/issues/7)) ([0463daa](https://github.com/DxCx/webpack-apollo-server/commit/0463daa))
