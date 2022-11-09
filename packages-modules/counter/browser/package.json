@@ -62,4 +62,31 @@
     "typescript": {
         "definition": "lib/index.d.ts"
     }
+  },
+  "dependencies": {
+    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "antd": "~4.24.1"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "@rollup/plugin-graphql": "*",
+    "@rollup/plugin-image": "*",
+    "@rollup/plugin-typescript": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*",
+    "redux-observable": "*",
+    "rollup-plugin-string": "*",
+    "rxjs": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
 }

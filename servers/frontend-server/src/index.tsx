@@ -32,7 +32,6 @@ if (__DEV__) {
                 console.error('Cannot apply HMR update.', err);
             }
         });
-        //  React-hot-loader v4 doesn't require following code any more.
         //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
         (module as any).hot.accept('./app/Main', () => {
             try {

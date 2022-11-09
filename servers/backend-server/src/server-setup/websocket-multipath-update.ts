@@ -2,7 +2,6 @@
 
 
 import * as url from 'url';
-import { GRAPHQL_ROUTE } from '../constants';
 import { GraphqlSubscriptionServer } from './graphql-subscription-server';
 import * as WebSocket from 'ws';
 import { IModuleService } from '../interfaces';
@@ -26,7 +25,7 @@ export class WebsocketMultiPathServer {
         multiplePathConfig?: MultiWebsocketConfig,
     ) {
         this.graphqlSubscriptionServer = new GraphqlSubscriptionServer(moduleService, cache);
-        this.webSockets[GRAPHQL_ROUTE] = this.graphqlSubscriptionServer.create().server;
+        this.webSockets[__GRAPHQL_ENDPOINT__] = this.graphqlSubscriptionServer.create().server;
         for (let key in multiplePathConfig) {
             if (!multiplePathConfig.hasOwnProperty(key)) { continue; }
 

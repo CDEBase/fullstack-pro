@@ -38,8 +38,8 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "0.0.55-alpha.9",
-    "antd": "~4.15.3"
+    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "antd": "~4.24.1"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",

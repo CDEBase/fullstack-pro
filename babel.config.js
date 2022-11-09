@@ -6,7 +6,6 @@ module.exports = {
         ['@babel/preset-env', { modules: 'commonjs', loose: true }],
     ],
     plugins: [
-        'react-hot-loader/babel',
         '@babel/plugin-transform-modules-commonjs',
         '@babel/plugin-transform-destructuring',
         '@babel/plugin-transform-for-of',

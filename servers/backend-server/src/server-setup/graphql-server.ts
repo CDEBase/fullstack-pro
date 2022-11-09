@@ -4,7 +4,6 @@ import { Express } from 'express';
 import * as http from 'http';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
-import { GRAPHQL_ROUTE } from '../constants';
 import { IModuleService } from '../interfaces';
 
 type ILogger = CdmLogger.ILogger;
@@ -45,7 +44,7 @@ export class GraphqlServer {
     public async initialize() {
         this.logger.info('GraphqlServer initializing...');
         const apolloServer = this.configureApolloServer();
-        apolloServer.applyMiddleware({ app: this.app, disableHealthCheck: false, path: GRAPHQL_ROUTE });
+        apolloServer.applyMiddleware({ app: this.app, disableHealthCheck: false, path: __GRAPHQL_ENDPOINT__ });
         if (this.enableSubscription) {
             apolloServer.installSubscriptionHandlers(this.httpServer);
         }
