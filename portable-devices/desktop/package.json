@@ -50,7 +50,7 @@
     "@common-stack/server-core": "0.2.16",
     "@sample-stack/core": "0.0.55-alpha.4",
     "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
-    "@sample-stack/counter-module-electron": "link:../../packages-modules/counter/electron",
+    "@sample-stack/counter-module-electron": "0.0.55-alpha.25",
     "@sample-stack/platform-browser": "0.0.55-alpha.9",
     "antd": "~4.24.1",
     "apollo-link-debounce": "^2.1.0",

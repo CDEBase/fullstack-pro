@@ -64,7 +64,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
-    "@sample-stack/assets": "link:../../packages/assets",
+    "@sample-stack/assets": "0.0.55-alpha.4",
     "@sample-stack/core": "0.0.55-alpha.4",
     "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
     "@sample-stack/platform-browser": "0.0.55-alpha.9",
