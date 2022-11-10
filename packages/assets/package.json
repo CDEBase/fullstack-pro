@@ -1,23 +1,23 @@
 {
-  "name": "@sample-stack/assets",
-  "version": "0.0.55-alpha.4",
-  "description": "Sample core for higher packages to depend on",
-  "license": "ISC",
-  "author": "CDMBase LLC",
-  "main": "src/index.js",
-  "scripts": {
-    "build": "yarn build:clean && yarn build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "webpack",
-    "build:lib:watch": "yarn build:lib -- --watch",
-    "jest": "./node_modules/.bin/jest",
-    "prepublish": "yarn build",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "watch": "yarn build:lib:watch"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "name": "@sample-stack/assets",
+    "version": "0.0.55-alpha.29",
+    "description": "Sample core for higher packages to depend on",
+    "license": "ISC",
+    "author": "CDMBase LLC",
+    "main": "src/index.js",
+    "scripts": {
+        "build": "yarn build:clean && yarn build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "webpack",
+        "build:lib:watch": "yarn build:lib -- --watch",
+        "jest": "./node_modules/.bin/jest",
+        "prepublish": "yarn build",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "watch": "yarn build:lib:watch"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

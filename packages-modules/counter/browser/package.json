@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/counter-module-browser",
-    "version": "0.0.55-alpha.26",
+    "version": "0.0.55-alpha.29",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/platform-browser": "0.0.55-alpha.9",
+        "@sample-stack/platform-browser": "0.0.55-alpha.29",
         "antd": "~4.24.1"
     },
     "peerDependencies": {
