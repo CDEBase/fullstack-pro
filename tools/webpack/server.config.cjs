@@ -15,7 +15,7 @@ const modulenameRegex = new RegExp(
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     entry: {
         index: (process.env.NODE_ENV !== 'production' ? ['webpack/hot/poll?200'] : []).concat([
-            'raf/polyfill',
+            // 'raf/polyfill',
             indexFilePath,
         ]),
     },
@@ -65,8 +65,13 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
             {
                 test: /\.[tj]sx?$/,
                 use: {
-                    loader: 'babel-loader',
-                    options: { babelrc: true, rootMode: 'upward-optional' },
+                    // loader: 'babel-loader',
+                    // options: { babelrc: true, rootMode: 'upward-optional' },
+                    loader: 'esbuild-loader',
+                    options: {
+                        loader: 'tsx',
+                        target: 'es2021'
+                    }
                 },
             },
             { test: /locales/, use: { loader: '@alienfast/i18next-loader' } },
@@ -94,20 +99,26 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: 'main.js',
+        filename: 'index.js',
         path: path.join(currentDir, 'dist'),
+        library: {
+            type: "module",
+        },
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
     },
+    experiments: {
+        outputModule: true,
+      },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
     mode: process.env.NODE_ENV || 'development',
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? [
-              //  new Dotenv(),
-              new webpack.HotModuleReplacementPlugin(),
-              new NodemonPlugin({ script: './dist/index.js' }),
-          ]
+            //  new Dotenv(),
+            new webpack.HotModuleReplacementPlugin(),
+            new NodemonPlugin({ script: './dist/index.js' }),
+        ]
         : []
     ).concat([
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
@@ -119,14 +130,14 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: '../../tools/esm-wrapper.js',
-                    to: 'index.js',
-                },
-            ],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: '../../tools/esm-wrapper.js',
+        //             to: 'index.js',
+        //         },
+        //     ],
+        // }),
     ]),
     target: 'node',
     externals: [

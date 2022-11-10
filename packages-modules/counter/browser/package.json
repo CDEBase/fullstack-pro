@@ -5,6 +5,7 @@
   "license": "ISC",
   "author": "CDMBase LLC",
   "main": "lib/index.js",
+  "type": "module",
   "typings": "lib/index.d.ts",
   "scripts": {
     "build": "yarn build:clean && yarn build:lib",
