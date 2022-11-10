@@ -10,13 +10,13 @@ import { logger } from '@cdm-logger/server';
 
 import './server';
 
-process.on('uncaughtException', (ex) => {
-    logger.error(ex);
+process.on('uncaughtException', (ex: Error) => {
+    logger.error(ex, 'uncaughtException');
     process.exit(1);
 });
 
-process.on('unhandledRejection', (reason) => {
-    logger.error(reason);
+process.on('unhandledRejection', (reason: Error) => {
+    logger.error(reason, 'unhandledRejection');
 });
 
 if ((module as any).hot) {
