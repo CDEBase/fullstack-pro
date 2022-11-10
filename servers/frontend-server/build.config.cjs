@@ -1,5 +1,5 @@
 const config = {
-    ...require('../../build.config'),
+    ...require('../../build.config.cjs'),
     __CLIENT__: true,
     __SERVER__: false,
     __DEV__: process.env.NODE_ENV !== 'production',

@@ -12,11 +12,11 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const zlib = require('zlib');
-const ServerConfig = require('../../tools/webpack/server.config');
+const ServerConfig = require('../../tools/webpack/server.config.cjs');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
 
-const buildConfig = require('./build.config');
+const buildConfig = require('./build.config.cjs');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
@@ -271,7 +271,9 @@ const config = {
     },
 };
 
-const ServersConfig = [config];
+// const ServersConfig = [config];
+const ServersConfig = [];
+
 if (buildConfig.__SSR__) {
     ServersConfig.push(
         ServerConfig({

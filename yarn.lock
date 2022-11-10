@@ -14138,6 +14138,18 @@ esbuild-linux-s390x@0.15.13:
   resolved "https://registry.yarnpkg.com/esbuild-linux-s390x/-/esbuild-linux-s390x-0.15.13.tgz#d52880ece229d1bd10b2d936b792914ffb07c7fc"
   integrity sha512-BMeXRljruf7J0TMxD5CIXS65y7puiZkAh+s4XFV9qy16SxOuMhxhVIXYLnbdfLrsYGFzx7U9mcdpFWkkvy/Uag==
 
+esbuild-loader@^2.19.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/esbuild-loader/-/esbuild-loader-2.20.0.tgz#28fcff0142fa7bd227512d69f31e9a6e202bb88f"
+  integrity sha512-dr+j8O4w5RvqZ7I4PPB4EIyVTd679EBQnMm+JBB7av+vu05Zpje2IpK5N3ld1VWa+WxrInIbNFAg093+E1aRsA==
+  dependencies:
+    esbuild "^0.15.6"
+    joycon "^3.0.1"
+    json5 "^2.2.0"
+    loader-utils "^2.0.0"
+    tapable "^2.2.0"
+    webpack-sources "^2.2.0"
+
 esbuild-netbsd-64@0.15.13:
   version "0.15.13"
   resolved "https://registry.yarnpkg.com/esbuild-netbsd-64/-/esbuild-netbsd-64-0.15.13.tgz#de14da46f1d20352b43e15d97a80a8788275e6ed"
@@ -14168,7 +14180,7 @@ esbuild-windows-arm64@0.15.13:
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.15.13.tgz#4ffd01b6b2888603f1584a2fe96b1f6a6f2b3dd8"
   integrity sha512-3bv7tqntThQC9SWLRouMDmZnlOukBhOCTlkzNqzGCmrkCJI7io5LLjwJBOVY6kOUlIvdxbooNZwjtBvj+7uuVg==
 
-esbuild@^0.15.13:
+esbuild@^0.15.13, esbuild@^0.15.6:
   version "0.15.13"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.15.13.tgz#7293480038feb2bafa91d3f6a20edab3ba6c108a"
   integrity sha512-Cu3SC84oyzzhrK/YyN4iEVy2jZu5t2fz66HEOShHURcjSkOSAVL8C/gfUT+lDJxkVHpg8GZ10DD0rMHRPqMFaQ==
@@ -19745,7 +19757,7 @@ join-component@^1.1.0:
   resolved "https://registry.yarnpkg.com/join-component/-/join-component-1.1.0.tgz#b8417b750661a392bee2c2537c68b2a9d4977cd5"
   integrity sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==
 
-joycon@^3.1.1:
+joycon@^3.0.1, joycon@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/joycon/-/joycon-3.1.1.tgz#bce8596d6ae808f8b68168f5fc69280996894f03"
   integrity sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==
