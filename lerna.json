@@ -33,7 +33,7 @@
         "publish",
         "devpublish"
       ],
-      "private": false,
+      "private": true,
       "conventionalCommits": true,
       "message": "chore: release package(s)"
     }
