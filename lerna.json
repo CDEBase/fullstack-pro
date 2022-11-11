@@ -46,5 +46,5 @@
     "servers/*",
     "portable-devices/*"
   ],
-  "version": "0.55-alpha.31"
+  "version": "0.0.55-alpha.31"
 }
