@@ -30,6 +30,22 @@ const common = {
             {}
         ]
     },
+    globals: {
+        fetch: true,
+        window: true,
+        document: true,
+        __CDN_URL__: true,
+        __DEV__: true,
+        __TEST__: true,
+        __CLIENT__: true,
+        __SERVER__: true,
+        __GRAPHQL_ENDPOINT__: true,
+        __SSR__: true,
+        __PERSIST_GQL__: true,
+        __API_URL__: true,
+        __WEBSITE_URL__: true,
+        __FRONTEND_BUILD_DIR__: true,
+    },
 };
 
 module.exports = {
