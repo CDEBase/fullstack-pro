@@ -231,7 +231,6 @@
     "dotenv-safe": "^8.2.0",
     "dotenv-webpack": "^8.0.1",
     "easygraphql-load-tester": "^2.0.5",
-    "envalid": "~7.3.1",
     "enzyme": "^3.11.0",
     "esbuild": "^0.15.13",
     "eslint": "^8.27.0",

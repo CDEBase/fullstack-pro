@@ -280,14 +280,18 @@ For now, what we do is manually update the dependencies version in the `package.
 
 To update in all packages
 ```
-lerna exec "ncu -u --newest --timeout 60000 -f /@sample-stack*/"
+lerna exec "ncu -u --semverLevel minor --timeout 60000 -f /@sample-stack*/"
 ```
 
 To update in the root package.json
 ```
-ncu -u --newest --timeout 60000 -f /@sample-stack*/
+ncu -u --semverLevel minor --timeout 60000 -f /@sample-stack*/
 ```
 
+To update the major version. You need to check with team before updating major version
+```
+lerna exec "ncu -u --semverLevel major --timeout 60000 -f /@sample-stack*/"
+```
 ***note** after updating packages you need to run `yarn` to install them. 
 
 ### Removing dependencies
