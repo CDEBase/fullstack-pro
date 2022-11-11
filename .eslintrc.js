@@ -5,7 +5,7 @@ const common = {
         'jest/globals': true,
     },
     plugins: ['prettier', 'jest', 'markdown'],
-    extends: ['airbnb-base', 'prettier', 'plugin:jest/all'],
+    extends: ['airbnb-base', 'prettier', 'plugin:jest/all', 'plugin:json/recommended'],
     rules: {
         'prettier/prettier': 'error',
         'jest/no-disabled-tests': 'warn',
@@ -25,6 +25,10 @@ const common = {
         'consistent-return': 'off',
         'no-shadow': 'off',
         'no-unused-vars': 'off',
+        "jsonc/indent": ["error",
+            2,
+            {}
+        ]
     },
 };
 
