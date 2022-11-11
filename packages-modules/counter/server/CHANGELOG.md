@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.0.55-alpha.31 (2022-11-11)
+
+### Reverts
+
+-   Revert "dep break" ([e09ba1e](https://github.com/cdmbase/fullstack-pro/commit/e09ba1e1738f091c7071c807abeeb5f30978a271))
+
 ## [0.0.55-alpha.29](https://github.com/cdmbase/fullstack-pro/compare/v0.0.55-alpha.28...v0.0.55-alpha.29) (2022-11-10)
 
 **Note:** Version bump only for package @sample-stack/counter-module-server
