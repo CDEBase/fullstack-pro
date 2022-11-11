@@ -1,55 +1,55 @@
 {
-  "name": "@sample-stack/counter-module-server",
-  "version": "0.0.1",
-  "description": "Sample core for higher packages to depend on",
-  "license": "ISC",
-  "author": "CDMBase LLC",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "scripts": {
-    "build": "yarn build:clean && yarn build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "webpack",
-    "build:lib:watch": "yarn build:lib -- --watch",
-    "jest": "./node_modules/.bin/jest",
-    "prepublish": "yarn build",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "watch": "yarn build:lib:watch"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
-    "roots": [
-      "src"
-    ],
-    "testEnvironment": "node",
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    "name": "@sample-stack/counter-module-server",
+    "version": null,
+    "description": "Sample core for higher packages to depend on",
+    "license": "ISC",
+    "author": "CDMBase LLC",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "scripts": {
+        "build": "yarn build:clean && yarn build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "webpack",
+        "build:lib:watch": "yarn build:lib -- --watch",
+        "jest": "./node_modules/.bin/jest",
+        "prepublish": "yarn build",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "watch": "yarn build:lib:watch"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "json"
+        ],
+        "modulePaths": [
+            "node_modules"
+        ],
+        "roots": [
+            "src"
+        ],
+        "testEnvironment": "node",
+        "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
+        "transform": {
+            "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+        }
+    },
+    "peerDependencies": {
+        "@cdm-logger/server": "*",
+        "@common-stack/core": "*",
+        "@common-stack/server-core": "*",
+        "apollo-server-caching": "*",
+        "dataloader": "*",
+        "inversify": "*",
+        "moleculer": "*"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "typescript": {
+        "definition": "lib/index.d.ts"
     }
-  },
-  "peerDependencies": {
-    "@cdm-logger/server": "*",
-    "@common-stack/core": "*",
-    "@common-stack/server-core": "*",
-    "apollo-server-caching": "*",
-    "dataloader": "*",
-    "inversify": "*",
-    "moleculer": "*"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "typescript": {
-    "definition": "lib/index.d.ts"
-  }
 }
