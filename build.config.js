@@ -2,11 +2,11 @@ process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.EN
 
 const __API_SERVER_PORT__ = process.env.GRAPHQL_URL
     ? new URL(process.env.GRAPHQL_URL).port
-    : process.env.GRAPHQL_URL || 8091;
-const __WEB_SERVER_PORT__ = process.env.GRAPHQL_URL
-    ? new URL(process.env.GRAPHQL_URL).port
-    : process.env.GRAPHQL_URL || 8091;
-const __WEB_DEV_SERVER_PORT__ = 3011;
+    : process.env.GRAPHQL_URL || 8080;
+const __WEB_SERVER_PORT__ = process.env.LOCAL_BACKEND_URL
+    ? new URL(process.env.LOCAL_BACKEND_URL).port
+    : process.env.LOCAL_BACKEND_URL || 3000;
+const __WEB_DEV_SERVER_PORT__ = 3000;
 const __SERVER_PROTOCOL__ = 'http';
 const __SERVER_HOST__ = 'localhost';
 const __GRAPHQL_ENDPOINT__ = '/graphql';
