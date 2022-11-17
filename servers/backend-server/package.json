@@ -61,9 +61,9 @@
   "dependencies": {
     "@apollo/client": "~3.3.21",
     "@cdm-logger/server": "^7.0.12",
-    "@common-stack/core": "0.2.16",
-    "@common-stack/server-core": "0.2.16",
-    "@common-stack/store-mongo": "0.2.16",
+    "@common-stack/core": "0.2.21",
+    "@common-stack/server-core": "0.2.21",
+    "@common-stack/store-mongo": "0.2.21",
     "@graphql-tools/links": "^7.0.0",
     "@sample-stack/core": "link:../../packages/sample-core",
     "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
