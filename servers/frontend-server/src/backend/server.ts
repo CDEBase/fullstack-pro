@@ -48,10 +48,6 @@ app.use(
     }),
 );
 
-if (__DEV__) {
-    app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
-}
-
 app.use(websiteMiddleware);
 
 if (__DEV__) {

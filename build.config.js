@@ -1,5 +1,5 @@
 process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
-
+process.env.SSR = true;
 const __API_SERVER_PORT__ = process.env.GRAPHQL_URL
     ? new URL(process.env.GRAPHQL_URL).port
     : process.env.GRAPHQL_URL || 8080;
@@ -13,7 +13,8 @@ const __GRAPHQL_ENDPOINT__ = '/graphql';
 const config = {
     __SERVER__: false,
     __CLIENT__: true,
-    __SSR__: process.env.NODE_ENV === 'production', // enableing SSR only in Production as in Dev we have a issue
+    __SSR__: true, //process.env.NODE_ENV === 'production', // enableing SSR only in Production as in Dev we have a issue
+    __SSR_BACKEND__: process.env.SSR_BACKEND,
     __DEBUGGING__: false,
     __TEST__: false,
     __WEB_DEV_SERVER_PORT__,
