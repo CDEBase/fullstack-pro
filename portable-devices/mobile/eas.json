@@ -31,8 +31,7 @@
       "node": "16.17.0",
       "distribution": "internal",
       "ios": {
-        "autoIncrement": "buildNumber",
-        "simulator": true
+        "autoIncrement": "buildNumber"
       },
       "env": {
         "NODE_ENV": "development",
