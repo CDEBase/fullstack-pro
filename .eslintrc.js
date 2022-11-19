@@ -25,10 +25,7 @@ const common = {
         'consistent-return': 'off',
         'no-shadow': 'off',
         'no-unused-vars': 'off',
-        "jsonc/indent": ["error",
-            2,
-            {}
-        ]
+        'jsonc/indent': ['error', 2, {}],
     },
     globals: {
         fetch: true,
