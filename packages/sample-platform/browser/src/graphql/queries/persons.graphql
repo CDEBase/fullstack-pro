@@ -1,6 +1,6 @@
 query getPersons {
-    persons {
-        id
-        name
-    }
+	persons {
+		id
+		name
+	}
 }

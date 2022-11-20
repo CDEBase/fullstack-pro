@@ -17,9 +17,9 @@ export default container;
  * Load asynchronous objects
  */
 export const asyncBindings = new AsyncContainerModule(async (bind) => {
-    await getDBConnection();
+	await getDBConnection();
 
-    bind<Repository<User>>(TYPES.UserRepository)
-        .toDynamicValue(() => getRepository(User))
-        .inRequestScope();
+	bind<Repository<User>>(TYPES.UserRepository)
+		.toDynamicValue(() => getRepository(User))
+		.inRequestScope();
 });

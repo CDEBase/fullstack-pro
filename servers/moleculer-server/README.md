@@ -3,6 +3,7 @@
 # servers
 
 ## NPM scripts
+
 - `yarn dev` - Start development mode (load all services locally with hot-reload & REPL)
 - `yarn build`- Uses typescript to transpile service to javascript
 - `npm start` - Start production mode (set `SERVICES` env variable to load certain services) (previous build needed)

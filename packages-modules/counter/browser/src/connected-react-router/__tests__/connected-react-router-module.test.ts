@@ -3,15 +3,15 @@ import Module from '../module';
 import 'jest';
 
 describe('connector modules', () => {
-    it('module configuredRoutes', () => {
-        const configuredRoutes = Module.getConfiguredRoutes();
+	it('module configuredRoutes', () => {
+		const configuredRoutes = Module.getConfiguredRoutes();
 
-        expect(configuredRoutes).toMatchSnapshot();
-    });
+		expect(configuredRoutes).toMatchSnapshot();
+	});
 
-    it('module routes', () => {
-        const routes = Module.getRoutes();
+	it('module routes', () => {
+		const routes = Module.getRoutes();
 
-        expect(routes).toMatchSnapshot();
-    });
+		expect(routes).toMatchSnapshot();
+	});
 });

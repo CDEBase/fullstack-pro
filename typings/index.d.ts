@@ -16,110 +16,110 @@ declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 declare const __DEBUGGING__;
 
 declare interface Window {
-    /** Apollo Cache to restore in the browser in SSR mode */
-    __APOLLO_STATE__?: any;
-    /** Apollo Dev tools  */
-    __APOLLO_CLIENT__?: any;
-    __PRELOADED_STATE__?: any;
-    __INITIAL_STATE__?: any;
-    __ENV__?: any;
-    __SERVER_ERROR__?: any;
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: <F extends Function>(f: F) => F;
+	/** Apollo Cache to restore in the browser in SSR mode */
+	__APOLLO_STATE__?: any;
+	/** Apollo Dev tools  */
+	__APOLLO_CLIENT__?: any;
+	__PRELOADED_STATE__?: any;
+	__INITIAL_STATE__?: any;
+	__ENV__?: any;
+	__SERVER_ERROR__?: any;
+	__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: <F extends Function>(f: F) => F;
 }
 declare module '*settings.json' {
-    export const app: {
-        apolloLogging: boolean;
-    };
-    export const database: {};
+	export const app: {
+		apolloLogging: boolean;
+	};
+	export const database: {};
 }
 
 declare interface __ZEN_OPTIONS__ {
-    backendBuildDir?: string;
-    frontendBuildDir?: string;
-    webpackDevPort?: number;
-    ssr?: boolean;
-    webpackDll?: boolean;
-    dllBuildDir?: string;
-    frontendRefreshOnBackendChange?: boolean;
-    reactHotLoader?: boolean;
-    debugSQL?: boolean;
-    persistGraphQL?: boolean;
+	backendBuildDir?: string;
+	frontendBuildDir?: string;
+	webpackDevPort?: number;
+	ssr?: boolean;
+	webpackDll?: boolean;
+	dllBuildDir?: string;
+	frontendRefreshOnBackendChange?: boolean;
+	reactHotLoader?: boolean;
+	debugSQL?: boolean;
+	persistGraphQL?: boolean;
 }
 
 declare interface __PUBLIC_SETTINGS__ {
-    apolloLogging: boolean;
-    GRAPHQL_URL: string;
-    GRAPHQL_SUBSCRIPTION_URL?: string;
-    LOCAL_GRAPHQL_URL?: string;
-    LOG_LEVEL?: string;
+	apolloLogging: boolean;
+	GRAPHQL_URL: string;
+	GRAPHQL_SUBSCRIPTION_URL?: string;
+	LOCAL_GRAPHQL_URL?: string;
+	LOG_LEVEL?: string;
 }
 
 declare interface __SETTINGS__ extends __ZEN_OPTIONS__, __PUBLIC_SETTINGS__ {
-    CLIENT_URL: string;
-    BACKEND_URL: string;
-    NATS_URL: string;
-    NATS_USER: string;
-    NATS_PW: number | string;
+	CLIENT_URL: string;
+	BACKEND_URL: string;
+	NATS_URL: string;
+	NATS_USER: string;
+	NATS_PW: number | string;
 }
 
 declare namespace NodeJS {
-    export interface Process {
-        APP_ENV?: ProcessEnv;
-        env: ProcessEnv;
-    }
+	export interface Process {
+		APP_ENV?: ProcessEnv;
+		env: ProcessEnv;
+	}
 }
 
 declare module '*zenrc.json' {
-    export const options: __ZEN_OPTIONS__;
+	export const options: __ZEN_OPTIONS__;
 }
 
 declare module '*.json' {
-    const value: any;
-    export = value;
+	const value: any;
+	export = value;
 }
 
 declare module '*.graphql' {
-    const value: string;
-    export default value;
+	const value: string;
+	export default value;
 }
 
 declare module '*.graphqls' {
-    const value: string;
-    export default value;
+	const value: string;
+	export default value;
 }
 
 declare module '*.png' {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
 }
 
 declare module '*.jpg' {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
 }
 
 declare module '*.svg' {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
 }
 
 declare module '*.gif' {
-    const fileName: string;
-    export = fileName;
+	const fileName: string;
+	export = fileName;
 }
 
 declare module '*.html' {
-    const fileName: string;
-    export = fileName;
+	const fileName: string;
+	export = fileName;
 }
 
 // This definition is used before typings-for-css-modules-loader generates .d.ts files.
 // As soon as typings are found tsc will prefer them.
 declare module '*.css' {
-    interface IClassNames {
-        [className: string]: string;
-    }
+	interface IClassNames {
+		[className: string]: string;
+	}
 
-    const classNames: IClassNames;
-    export = classNames;
+	const classNames: IClassNames;
+	export = classNames;
 }

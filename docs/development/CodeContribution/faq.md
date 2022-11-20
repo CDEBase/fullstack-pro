@@ -6,11 +6,9 @@ layout: docs
 category: FAQ
 ---
 
-
-### From where this `@sample-stack/platform-browser` comes  in `packages/sample-platform/browser/src/containers/Counter.tsx`?
+### From where this `@sample-stack/platform-browser` comes in `packages/sample-platform/browser/src/containers/Counter.tsx`?
 
 We use [lerna](https://github.com/lerna/lerna) for monorepo. For example all packages starts with `@sample-stack` are either under `packages` or `pacakges-modules` directories.
-
 
 ### What is use of rehydrate?
 

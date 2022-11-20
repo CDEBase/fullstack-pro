@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-import { lazy } from '@loadable/component'
+import { lazy } from '@loadable/component';
 
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
 const Home = lazy(() => import('../common/components/Home'));
 
 export const commonPageStore: any[] = [
-    {
-        path: '/',
-        key: 'home',
-        exact: true,
-        name: 'Home',
-        component: Home,
-        position: IMenuPosition.MIDDLE,
-    },
+	{
+		path: '/',
+		key: 'home',
+		exact: true,
+		name: 'Home',
+		component: Home,
+		position: IMenuPosition.MIDDLE,
+	},
 ];
 
 const selectedRoutesAndMenus = ['home'];
@@ -23,6 +23,9 @@ const selectedRoutesAndMenus = ['home'];
 const filteredMenus = getFilteredMenus(commonPageStore, selectedRoutesAndMenus);
 
 // get routes
-const filteredRoutes = getFilteredRoutes(commonPageStore, selectedRoutesAndMenus);
+const filteredRoutes = getFilteredRoutes(
+	commonPageStore,
+	selectedRoutesAndMenus
+);
 
 export { filteredMenus, filteredRoutes };

@@ -1,21 +1,21 @@
 {
-  "title": "SampleDesktop",
-  "renderer": {
-    "dll": [],
-    "webpackConfig": "webpack.renderer.additions.js"
-  },
-  "main": {
-    "webpackConfig": "webpack.main.additions.js"
-  },
-  "whiteListedModules": [
-    "antd",
-    "react-redux",
-    "react-fela",
-    "react-helmet",
-    "react-loadable",
-    "react-router",
-    "react-router-config",
-    "react-router-dom",
-    "react-transition-group"
-  ]
+	"title": "SampleDesktop",
+	"renderer": {
+		"dll": [],
+		"webpackConfig": "webpack.renderer.additions.js"
+	},
+	"main": {
+		"webpackConfig": "webpack.main.additions.js"
+	},
+	"whiteListedModules": [
+		"antd",
+		"react-redux",
+		"react-fela",
+		"react-helmet",
+		"react-loadable",
+		"react-router",
+		"react-router-config",
+		"react-router-dom",
+		"react-transition-group"
+	]
 }

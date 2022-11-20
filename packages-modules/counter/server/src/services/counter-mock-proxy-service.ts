@@ -10,26 +10,31 @@ import { CounterCommands, NATS_MOLECULER_COUNTER_SERIVCE } from '../constants';
  */
 @injectable()
 export class CounterMockProxyService implements ICounterService {
-    constructor(
-        @inject('MoleculerBroker')
-        private broker: ServiceBroker,
+	constructor(
+		@inject('MoleculerBroker')
+		private broker: ServiceBroker,
 
-        @inject('Settings')
-        @tagged(TaggedType.MICROSERVICE, true)
-        private settings: { subTopic: string },
-    ) {}
+		@inject('Settings')
+		@tagged(TaggedType.MICROSERVICE, true)
+		private settings: { subTopic: string }
+	) {}
 
-    private topic = NATS_MOLECULER_COUNTER_SERIVCE;
+	private topic = NATS_MOLECULER_COUNTER_SERIVCE;
 
-    public counterQuery() {
-        return this.broker.call<Counter>(this.fullActionName(CounterCommands.COUNTER_QUERY));
-    }
+	public counterQuery() {
+		return this.broker.call<Counter>(
+			this.fullActionName(CounterCommands.COUNTER_QUERY)
+		);
+	}
 
-    public addCounter(amount?: number) {
-        return this.broker.call<void, any>(this.fullActionName(CounterCommands.ADD_COUNTER), { amount });
-    }
+	public addCounter(amount?: number) {
+		return this.broker.call<void, any>(
+			this.fullActionName(CounterCommands.ADD_COUNTER),
+			{ amount }
+		);
+	}
 
-    private fullActionName(subCommand: string) {
-        return `${this.settings.subTopic}.${this.topic}.${subCommand}`;
-    }
+	private fullActionName(subCommand: string) {
+		return `${this.settings.subTopic}.${this.topic}.${subCommand}`;
+	}
 }

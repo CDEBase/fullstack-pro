@@ -1,4 +1,3 @@
-
 Reference:
 https://github.com/barakbd/docker_typescript_debug_vscode/blob/8454ab4bdd9713da373e898e7c606193bfbfc5e2/src/config/mongoose_connection.ts
 

@@ -4,6 +4,6 @@ import { connectedReactRouterCounter } from './redux';
 import { filteredRoutes } from './compute';
 
 export default new Feature({
-    routeConfig: filteredRoutes,
-    reducer: { connectedReactRouterCounter },
+	routeConfig: filteredRoutes,
+	reducer: { connectedReactRouterCounter },
 });

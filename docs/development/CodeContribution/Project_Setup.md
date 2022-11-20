@@ -3,6 +3,7 @@
 If you want to develop FullStack locally you must follow the following instructions:
 
 1. Clone fullstack-pro locally
+
 ```
 git clone https://github.com/cdmbase/fullstack-pro
 cd fullstack-pro
@@ -10,20 +11,21 @@ cd fullstack-pro
 
 2. Install dependencies and build packages.
 
-    a. make sure `python` version `2.7.16` or higher in `^2` version installed.
+   a. make sure `python` version `2.7.16` or higher in `^2` version installed.
 
-    b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
+   b. install `node-gyp` globally. For installation check [this document](https://github.com/nodejs/node-gyp#installation).
 
-    c. install `watchman` for macOS users
+   c. install `watchman` for macOS users
 
-    d. Node version supported is `>=12.18.4` and `yarn` version is `1.22`. You can Download Node from [here](https://nodejs.org/dist/v12.18.4/)
+   d. Node version supported is `>=12.18.4` and `yarn` version is `1.22`. You can Download Node from [here](https://nodejs.org/dist/v12.18.4/)
 
-    e. Insall and build packages using following command. Run from the root folder of this project.
+   e. Insall and build packages using following command. Run from the root folder of this project.
+
 ```
     yarn global add lerna
     yarn bootstrap
 ```
-    
+
 3. Setup environment file
 
 You need to have environemnt file before you start the project. There is a sample file exist at `config/development/dev.env.sample` which you can copy as `config/development/dev.env`.
@@ -41,18 +43,22 @@ You may need to set personalized values in the `dev.env` file.
 > mongod
 
 5. Start both client and server together
+
 ```
 yarn start
 ```
+
 Alternatively, if you need to run `backend` and `frontend` on its respective terminal instead of one terminal then follow [How to Start Backend and Frontend seperately](./How_to_Run_Various_Options.md#how-to-start-backend-and-frontend-seperately)
 
-### Server Enpoints: 
+### Server Enpoints:
+
 The graphql server endpoints are
->http://localhost:8080/graphql
+
+> http://localhost:8080/graphql
 
 The browser server endopoint is
->http://localhost:3000
 
+> http://localhost:3000
 
 ## How to run with HotReload for live changes both in the server and browser?
 
@@ -62,7 +68,7 @@ To run build with watch for dependent packages, for auto reloading changes into 
 yarn watch-packages
 ```
 
-If you also need to watch along with it, you can use as many scopes as required like below. 
+If you also need to watch along with it, you can use as many scopes as required like below.
 
 ```
 yarn watch-packages -- --scope=@sample-stack/counter-module* --scope=@packageb
@@ -91,6 +97,7 @@ But in some cases when `lerna's packages` are added or versions in `packages.jso
 ```
 yarn clean:force && git pull <branch_name> && yarn install && yarn build
 ```
+
 - here <branch_name> should be replaced with the branch you getting updates.
 
 ## Installation of Prerequisties servers
@@ -101,42 +108,51 @@ Please check the installation documentation of each one.
 MongoDB install : https://www.mongodb.com/docs/manual/administration/install-community/
 Redis install: https://redis.io/docs/getting-started/
 
-
 ## Advance Options
+
 ### To test Production build and run
-You need to run Frontend and Backend in two seperate servers. 
+
+You need to run Frontend and Backend in two seperate servers.
 
 to start frontend server
+
 ```
 lerna exec --scope=*frontend-server yarn build
 lerna exec --scope=*frontend-server yarn start:dev
 ```
+
 to start backend server
+
 ```
 lerna exec --scope=*backend-server yarn build
 lerna exec --scope=*backend-server yarn start:dev
 ```
 
 Note: you can pass `:<env>` next to `start` to use env config.
+
 - dev: to use `/config/development/dev.env`
 - stage: to use `/config/staging/staging.env`
-
-
 
 ### Docker build and run
 
 Build three docker images by following the steps:
+
 - Frontend Server
+
 ```
 lerna exec --scope=*frontend-server yarn docker:build
 lerna exec --scope=*frontend-server yarn docker:run
 ```
+
 - Backend Server
+
 ```
 lerna exec --scope=*backend-server yarn docker:build
 lerna exec --scope=*backend-server yarn docker:run
 ```
+
 - moleculer-server
+
 ```
 lerna exec --scope=*moleculer-server yarn docker:build
 lerna exec --scope=*moleculer-server yarn docker:run
@@ -145,6 +161,7 @@ lerna exec --scope=*moleculer-server yarn docker:run
 Note: It uses `/config/staging/staging.env` for environment variables.
 
 ### Environment settings for non-development
+
 ```
 GRAPHQL_URL
 CLIENT_URL
@@ -152,8 +169,11 @@ NATS_URL
 NATS_USER
 NATS_PW
 ```
+
 ## Troubleshoot
+
 To troubleshoot webpack configuration run
+
 ```
 yarn zen:watch:debug
 ```

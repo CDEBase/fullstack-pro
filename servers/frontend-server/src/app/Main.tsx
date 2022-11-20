@@ -21,30 +21,28 @@ const history = createBrowserHistory();
 const { store } = createReduxStore(history);
 
 export class Main extends React.Component<{}, {}> {
-  public render() {
-    const renderer = createRenderer();
-    let persistor = persistStore(store);
-    rehydrate(renderer);
-    return (
-      <ErrorBoundary>
-        <Provider store={store}>
-          <ApolloProvider client={client}>
-            <RendererProvider renderer={renderer}>
-              <PersistGate persistor={persistor}>
-                {modules.getWrappedRoot(
-                  (
-                    <ConnectedRouter history={history}>
-                      <MainRoute />
-                    </ConnectedRouter>
-                  ),
-                )}
-              </PersistGate>
-            </RendererProvider>
-          </ApolloProvider>
-        </Provider>
-      </ErrorBoundary>
-    );
-  }
+	public render() {
+		const renderer = createRenderer();
+		let persistor = persistStore(store);
+		rehydrate(renderer);
+		return (
+			<ErrorBoundary>
+				<Provider store={store}>
+					<ApolloProvider client={client}>
+						<RendererProvider renderer={renderer}>
+							<PersistGate persistor={persistor}>
+								{modules.getWrappedRoot(
+									<ConnectedRouter history={history}>
+										<MainRoute />
+									</ConnectedRouter>
+								)}
+							</PersistGate>
+						</RendererProvider>
+					</ApolloProvider>
+				</Provider>
+			</ErrorBoundary>
+		);
+	}
 }
 
 export default Main;

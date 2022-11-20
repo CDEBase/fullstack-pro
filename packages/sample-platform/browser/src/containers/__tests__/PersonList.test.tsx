@@ -27,12 +27,10 @@
 //       networkInterface: networkInterface,
 //     });
 
-
 //     const store = createStore(combineReducers({
 //       ...reducers,
 //       apollo: client.reducer(),
 //     }), applyMiddleware(client.middleware()));
-
 
 //     expect(mount(
 //       <ApolloProvider client={client} store={store}>

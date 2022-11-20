@@ -1,4 +1,3 @@
-
 {
 	"dictionaries": ["typescript"],
 	"ignorePaths": [".github", "dist", "node_modules"],

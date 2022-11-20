@@ -6,42 +6,44 @@ import { increment, decrement } from '../redux';
 import { State } from '../interfaces';
 
 interface CounterStateProps {
-    count: number;
+	count: number;
 }
 
 interface CounterDispatchProps {
-    increment: () => void;
-    decrement: () => void;
+	increment: () => void;
+	decrement: () => void;
 }
 
-const CounterScreen: React.FC<CounterStateProps & CounterDispatchProps> = (props) => {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <View style={{ marginTop: 20 }}>
-                <View style={{ marginBottom: 20 }}>
-                    <Text>Counter value: {props.count}</Text>
-                </View>
+const CounterScreen: React.FC<CounterStateProps & CounterDispatchProps> = (
+	props
+) => {
+	return (
+		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			<View style={{ marginTop: 20 }}>
+				<View style={{ marginBottom: 20 }}>
+					<Text>Counter value: {props.count}</Text>
+				</View>
 
-                <Button onPress={props.increment} title="Increment Counter" />
+				<Button onPress={props.increment} title='Increment Counter' />
 
-                <View style={{ marginTop: 10 }}>
-                    <Button onPress={props.decrement} title="Decrement Counter" />
-                </View>
-            </View>
-        </View>
-    );
+				<View style={{ marginTop: 10 }}>
+					<Button onPress={props.decrement} title='Decrement Counter' />
+				</View>
+			</View>
+		</View>
+	);
 };
 
 const mapStateToProps = (state: State) => ({
-    count: state.connectedReactRouterCounter,
+	count: state.connectedReactRouterCounter,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    increment: () => dispatch(increment()),
-    decrement: () => dispatch(decrement()),
+	increment: () => dispatch(increment()),
+	decrement: () => dispatch(decrement()),
 });
 
 export const Counter = connect<CounterStateProps, CounterDispatchProps>(
-    mapStateToProps as any,
-    mapDispatchToProps,
+	mapStateToProps as any,
+	mapDispatchToProps
 )(CounterScreen);

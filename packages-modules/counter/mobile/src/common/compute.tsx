@@ -5,20 +5,22 @@ import { Home } from '../common/components/Home';
 import { getFilteredRoutes } from '../utils';
 
 export const commonPageStore: any[] = [
-    {
-        path: '/',
-        key: 'home',
-        exact: true,
-        name: 'Home',
-        component: Home,
-        position: IMenuPosition.MIDDLE,
-    },
+	{
+		path: '/',
+		key: 'home',
+		exact: true,
+		name: 'Home',
+		component: Home,
+		position: IMenuPosition.MIDDLE,
+	},
 ];
 
 const selectedRoutesAndMenus = ['home'];
 
-
 // get routes
-const filteredRoutes = getFilteredRoutes(commonPageStore, selectedRoutesAndMenus);
+const filteredRoutes = getFilteredRoutes(
+	commonPageStore,
+	selectedRoutesAndMenus
+);
 
 export { filteredRoutes };

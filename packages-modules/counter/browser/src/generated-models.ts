@@ -3,309 +3,379 @@ import { GraphQLResolveInfo } from 'graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+	[K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+	[SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+	[SubKey in K]: Maybe<T[SubKey]>;
+};
+export type RequireFields<T, K extends keyof T> = {
+	[X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+	ID: string;
+	String: string;
+	Boolean: boolean;
+	Int: number;
+	Float: number;
 };
 
 export type ClientCounter = {
-  __typename?: 'ClientCounter';
-  counter?: Maybe<Scalars['Int']>;
+	__typename?: 'ClientCounter';
+	counter?: Maybe<Scalars['Int']>;
 };
 
 /**  Database counter  */
 export type Counter = {
-  __typename?: 'Counter';
-  /**  Current amount  */
-  amount: Scalars['Int'];
+	__typename?: 'Counter';
+	/**  Current amount  */
+	amount: Scalars['Int'];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  /**  Increase counter value returns current counter amount  */
-  addCounter?: Maybe<Counter>;
-  addCounterState?: Maybe<ClientCounter>;
-  /**  add Counter  */
-  addMoleculerCounter?: Maybe<Counter>;
-  /**  sync cached counter with current value  */
-  syncCachedCounter?: Maybe<Scalars['Boolean']>;
+	__typename?: 'Mutation';
+	/**  Increase counter value returns current counter amount  */
+	addCounter?: Maybe<Counter>;
+	addCounterState?: Maybe<ClientCounter>;
+	/**  add Counter  */
+	addMoleculerCounter?: Maybe<Counter>;
+	/**  sync cached counter with current value  */
+	syncCachedCounter?: Maybe<Scalars['Boolean']>;
 };
-
 
 export type MutationAddCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+	amount?: Maybe<Scalars['Int']>;
 };
-
 
 export type MutationAddCounterStateArgs = {
-  amount: Scalars['Int'];
+	amount: Scalars['Int'];
 };
 
-
 export type MutationAddMoleculerCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+	amount?: Maybe<Scalars['Int']>;
 };
 
 export type Query = {
-  __typename?: 'Query';
-  /**  Counter  */
-  counter?: Maybe<Counter>;
-  /**  Counter from Datasource  */
-  counterCache?: Maybe<Counter>;
-  counterState?: Maybe<ClientCounter>;
-  /**  Moleculer Counter  */
-  moleculerCounter?: Maybe<Counter>;
+	__typename?: 'Query';
+	/**  Counter  */
+	counter?: Maybe<Counter>;
+	/**  Counter from Datasource  */
+	counterCache?: Maybe<Counter>;
+	counterState?: Maybe<ClientCounter>;
+	/**  Moleculer Counter  */
+	moleculerCounter?: Maybe<Counter>;
 };
 
 export type Subscription = {
-  __typename?: 'Subscription';
-  /**  Subscription fired when anyone increases counter  */
-  counterUpdated?: Maybe<Counter>;
-  moleculerCounterUpdate?: Maybe<Counter>;
+	__typename?: 'Subscription';
+	/**  Subscription fired when anyone increases counter  */
+	counterUpdated?: Maybe<Counter>;
+	moleculerCounterUpdate?: Maybe<Counter>;
 };
 
 export type AddCounterStateMutationVariables = Exact<{
-  amount: Scalars['Int'];
+	amount: Scalars['Int'];
 }>;
 
-
-export type AddCounterStateMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
+export type AddCounterStateMutation = { __typename?: 'Mutation' } & {
+	addCounterState?: Maybe<
+		{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>
+	>;
+};
 
 export type AddCounterMutationVariables = Exact<{
-  amount: Scalars['Int'];
+	amount: Scalars['Int'];
 }>;
 
-
-export type AddCounterMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type AddCounterMutation = { __typename?: 'Mutation' } & {
+	addCounter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+};
 
 export type AddCounter_WsMutationVariables = Exact<{
-  amount: Scalars['Int'];
+	amount: Scalars['Int'];
 }>;
 
+export type AddCounter_WsMutation = { __typename?: 'Mutation' } & {
+	addCounter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+};
 
-export type AddCounter_WsMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type SyncCachedCounterMutationVariables = Exact<{
+	[key: string]: never;
+}>;
 
-export type SyncCachedCounterMutationVariables = Exact<{ [key: string]: never; }>;
+export type SyncCachedCounterMutation = { __typename?: 'Mutation' } & Pick<
+	Mutation,
+	'syncCachedCounter'
+>;
 
+export type CounterCacheQueryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type SyncCachedCounterMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'syncCachedCounter'>
-);
+export type CounterCacheQueryQuery = { __typename?: 'Query' } & {
+	counterCache?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+};
 
-export type CounterCacheQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type CounterStateQueryVariables = Exact<{ [key: string]: never }>;
 
+export type CounterStateQuery = { __typename?: 'Query' } & {
+	counterState?: Maybe<
+		{ __typename?: 'ClientCounter' } & Pick<ClientCounter, 'counter'>
+	>;
+};
 
-export type CounterCacheQueryQuery = (
-  { __typename?: 'Query' }
-  & { counterCache?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type CounterQueryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type CounterStateQueryVariables = Exact<{ [key: string]: never; }>;
+export type CounterQueryQuery = { __typename?: 'Query' } & {
+	counter?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+};
 
+export type OnCounterUpdatedSubscriptionVariables = Exact<{
+	[key: string]: never;
+}>;
 
-export type CounterStateQuery = (
-  { __typename?: 'Query' }
-  & { counterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
-
-export type CounterQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CounterQueryQuery = (
-  { __typename?: 'Query' }
-  & { counter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
-
-export type OnCounterUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type OnCounterUpdatedSubscription = (
-  { __typename?: 'Subscription' }
-  & { counterUpdated?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
-
-
+export type OnCounterUpdatedSubscription = { __typename?: 'Subscription' } & {
+	counterUpdated?: Maybe<{ __typename?: 'Counter' } & Pick<Counter, 'amount'>>;
+};
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
-
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+	resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
 
 export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+	fragment: string;
+	resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
 
 export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+	selectionSet: string;
+	resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type StitchingResolver<TResult, TParent, TContext, TArgs> =
+	| LegacyStitchingResolver<TResult, TParent, TContext, TArgs>
+	| NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+	| ResolverFn<TResult, TParent, TContext, TArgs>
+	| ResolverWithResolve<TResult, TParent, TContext, TArgs>
+	| StitchingResolver<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
+	parent: TParent,
+	args: TArgs,
+	context: TContext,
+	info: GraphQLResolveInfo
 ) => Promise<TResult> | TResult;
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
+	parent: TParent,
+	args: TArgs,
+	context: TContext,
+	info: GraphQLResolveInfo
 ) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
+	parent: TParent,
+	args: TArgs,
+	context: TContext,
+	info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+export interface SubscriptionSubscriberObject<
+	TResult,
+	TKey extends string,
+	TParent,
+	TContext,
+	TArgs
+> {
+	subscribe: SubscriptionSubscribeFn<
+		{ [key in TKey]: TResult },
+		TParent,
+		TContext,
+		TArgs
+	>;
+	resolve?: SubscriptionResolveFn<
+		TResult,
+		{ [key in TKey]: TResult },
+		TContext,
+		TArgs
+	>;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
-  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+	subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+	resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
-  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
-  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+export type SubscriptionObject<
+	TResult,
+	TKey extends string,
+	TParent,
+	TContext,
+	TArgs
+> =
+	| SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+	| SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
-  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
-  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+export type SubscriptionResolver<
+	TResult,
+	TKey extends string,
+	TParent = {},
+	TContext = {},
+	TArgs = {}
+> =
+	| ((
+			...args: any[]
+	  ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+	| SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
-  parent: TParent,
-  context: TContext,
-  info: GraphQLResolveInfo
+	parent: TParent,
+	context: TContext,
+	info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+	obj: T,
+	context: TContext,
+	info: GraphQLResolveInfo
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
-  next: NextResolverFn<TResult>,
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
+export type DirectiveResolverFn<
+	TResult = {},
+	TParent = {},
+	TContext = {},
+	TArgs = {}
+> = (
+	next: NextResolverFn<TResult>,
+	parent: TParent,
+	args: TArgs,
+	context: TContext,
+	info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
-  Counter: ResolverTypeWrapper<Counter>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  ClientCounter: ResolverTypeWrapper<ClientCounter>;
-  Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Subscription: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+	Query: ResolverTypeWrapper<{}>;
+	Counter: ResolverTypeWrapper<Counter>;
+	Int: ResolverTypeWrapper<Scalars['Int']>;
+	ClientCounter: ResolverTypeWrapper<ClientCounter>;
+	Mutation: ResolverTypeWrapper<{}>;
+	Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+	Subscription: ResolverTypeWrapper<{}>;
+	String: ResolverTypeWrapper<Scalars['String']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
-  Counter: Counter;
-  Int: Scalars['Int'];
-  ClientCounter: ClientCounter;
-  Mutation: {};
-  Boolean: Scalars['Boolean'];
-  Subscription: {};
-  String: Scalars['String'];
+	Query: {};
+	Counter: Counter;
+	Int: Scalars['Int'];
+	ClientCounter: ClientCounter;
+	Mutation: {};
+	Boolean: Scalars['Boolean'];
+	Subscription: {};
+	String: Scalars['String'];
 };
 
-export type ClientCounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
-  counter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+export type ClientCounterResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']
+> = {
+	counter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter']> = {
-  amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+export type CounterResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes['Counter'] = ResolversParentTypes['Counter']
+> = {
+	amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddCounterArgs, never>>;
-  addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>;
-  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddMoleculerCounterArgs, never>>;
-  syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+export type MutationResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+	addCounter?: Resolver<
+		Maybe<ResolversTypes['Counter']>,
+		ParentType,
+		ContextType,
+		RequireFields<MutationAddCounterArgs, never>
+	>;
+	addCounterState?: Resolver<
+		Maybe<ResolversTypes['ClientCounter']>,
+		ParentType,
+		ContextType,
+		RequireFields<MutationAddCounterStateArgs, 'amount'>
+	>;
+	addMoleculerCounter?: Resolver<
+		Maybe<ResolversTypes['Counter']>,
+		ParentType,
+		ContextType,
+		RequireFields<MutationAddMoleculerCounterArgs, never>
+	>;
+	syncCachedCounter?: Resolver<
+		Maybe<ResolversTypes['Boolean']>,
+		ParentType,
+		ContextType
+	>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
-  counterCache?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
-  counterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType>;
-  moleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
+export type QueryResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = {
+	counter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType>;
+	counterCache?: Resolver<
+		Maybe<ResolversTypes['Counter']>,
+		ParentType,
+		ContextType
+	>;
+	counterState?: Resolver<
+		Maybe<ResolversTypes['ClientCounter']>,
+		ParentType,
+		ContextType
+	>;
+	moleculerCounter?: Resolver<
+		Maybe<ResolversTypes['Counter']>,
+		ParentType,
+		ContextType
+	>;
 };
 
-export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
-  counterUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "counterUpdated", ParentType, ContextType>;
-  moleculerCounterUpdate?: SubscriptionResolver<Maybe<ResolversTypes['Counter']>, "moleculerCounterUpdate", ParentType, ContextType>;
+export type SubscriptionResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']
+> = {
+	counterUpdated?: SubscriptionResolver<
+		Maybe<ResolversTypes['Counter']>,
+		'counterUpdated',
+		ParentType,
+		ContextType
+	>;
+	moleculerCounterUpdate?: SubscriptionResolver<
+		Maybe<ResolversTypes['Counter']>,
+		'moleculerCounterUpdate',
+		ParentType,
+		ContextType
+	>;
 };
 
 export type Resolvers<ContextType = any> = {
-  ClientCounter?: ClientCounterResolvers<ContextType>;
-  Counter?: CounterResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
+	ClientCounter?: ClientCounterResolvers<ContextType>;
+	Counter?: CounterResolvers<ContextType>;
+	Mutation?: MutationResolvers<ContextType>;
+	Query?: QueryResolvers<ContextType>;
+	Subscription?: SubscriptionResolvers<ContextType>;
 };
-
 
 /**
  * @deprecated
@@ -313,14 +383,13 @@ export type Resolvers<ContextType = any> = {
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
-
 export const AddCounterStateDocument = gql`
-    mutation addCounterState($amount: Int!) {
-  addCounterState(amount: $amount) @client {
-    counter
-  }
-}
-    `;
+	mutation addCounterState($amount: Int!) {
+		addCounterState(amount: $amount) @client {
+			counter
+		}
+	}
+`;
 
 /**
  * __useAddCounterStateMutation__
@@ -339,20 +408,34 @@ export const AddCounterStateDocument = gql`
  *   },
  * });
  */
-export function useAddCounterStateMutation(baseOptions?: Apollo.MutationHookOptions<AddCounterStateMutation, AddCounterStateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddCounterStateMutation, AddCounterStateMutationVariables>(AddCounterStateDocument, options);
-      }
-export type AddCounterStateMutationHookResult = ReturnType<typeof useAddCounterStateMutation>;
-export type AddCounterStateMutationResult = Apollo.MutationResult<AddCounterStateMutation>;
-export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<AddCounterStateMutation, AddCounterStateMutationVariables>;
-export const AddCounterDocument = gql`
-    mutation addCounter($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
+export function useAddCounterStateMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		AddCounterStateMutation,
+		AddCounterStateMutationVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<
+		AddCounterStateMutation,
+		AddCounterStateMutationVariables
+	>(AddCounterStateDocument, options);
 }
-    `;
+export type AddCounterStateMutationHookResult = ReturnType<
+	typeof useAddCounterStateMutation
+>;
+export type AddCounterStateMutationResult =
+	Apollo.MutationResult<AddCounterStateMutation>;
+export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<
+	AddCounterStateMutation,
+	AddCounterStateMutationVariables
+>;
+export const AddCounterDocument = gql`
+	mutation addCounter($amount: Int!) {
+		addCounter(amount: $amount) {
+			amount
+		}
+	}
+`;
 
 /**
  * __useAddCounterMutation__
@@ -371,20 +454,34 @@ export const AddCounterDocument = gql`
  *   },
  * });
  */
-export function useAddCounterMutation(baseOptions?: Apollo.MutationHookOptions<AddCounterMutation, AddCounterMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddCounterMutation, AddCounterMutationVariables>(AddCounterDocument, options);
-      }
-export type AddCounterMutationHookResult = ReturnType<typeof useAddCounterMutation>;
-export type AddCounterMutationResult = Apollo.MutationResult<AddCounterMutation>;
-export type AddCounterMutationOptions = Apollo.BaseMutationOptions<AddCounterMutation, AddCounterMutationVariables>;
-export const AddCounter_WsDocument = gql`
-    mutation AddCounter_WS($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
+export function useAddCounterMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		AddCounterMutation,
+		AddCounterMutationVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<AddCounterMutation, AddCounterMutationVariables>(
+		AddCounterDocument,
+		options
+	);
 }
-    `;
+export type AddCounterMutationHookResult = ReturnType<
+	typeof useAddCounterMutation
+>;
+export type AddCounterMutationResult =
+	Apollo.MutationResult<AddCounterMutation>;
+export type AddCounterMutationOptions = Apollo.BaseMutationOptions<
+	AddCounterMutation,
+	AddCounterMutationVariables
+>;
+export const AddCounter_WsDocument = gql`
+	mutation AddCounter_WS($amount: Int!) {
+		addCounter(amount: $amount) {
+			amount
+		}
+	}
+`;
 
 /**
  * __useAddCounter_WsMutation__
@@ -403,18 +500,32 @@ export const AddCounter_WsDocument = gql`
  *   },
  * });
  */
-export function useAddCounter_WsMutation(baseOptions?: Apollo.MutationHookOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddCounter_WsMutation, AddCounter_WsMutationVariables>(AddCounter_WsDocument, options);
-      }
-export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
-export type AddCounter_WsMutationResult = Apollo.MutationResult<AddCounter_WsMutation>;
-export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>;
-export const SyncCachedCounterDocument = gql`
-    mutation SyncCachedCounter {
-  syncCachedCounter
+export function useAddCounter_WsMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		AddCounter_WsMutation,
+		AddCounter_WsMutationVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<
+		AddCounter_WsMutation,
+		AddCounter_WsMutationVariables
+	>(AddCounter_WsDocument, options);
 }
-    `;
+export type AddCounter_WsMutationHookResult = ReturnType<
+	typeof useAddCounter_WsMutation
+>;
+export type AddCounter_WsMutationResult =
+	Apollo.MutationResult<AddCounter_WsMutation>;
+export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<
+	AddCounter_WsMutation,
+	AddCounter_WsMutationVariables
+>;
+export const SyncCachedCounterDocument = gql`
+	mutation SyncCachedCounter {
+		syncCachedCounter
+	}
+`;
 
 /**
  * __useSyncCachedCounterMutation__
@@ -432,20 +543,34 @@ export const SyncCachedCounterDocument = gql`
  *   },
  * });
  */
-export function useSyncCachedCounterMutation(baseOptions?: Apollo.MutationHookOptions<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>(SyncCachedCounterDocument, options);
-      }
-export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
-export type SyncCachedCounterMutationResult = Apollo.MutationResult<SyncCachedCounterMutation>;
-export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>;
-export const CounterCacheQueryDocument = gql`
-    query counterCacheQuery {
-  counterCache {
-    amount
-  }
+export function useSyncCachedCounterMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		SyncCachedCounterMutation,
+		SyncCachedCounterMutationVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<
+		SyncCachedCounterMutation,
+		SyncCachedCounterMutationVariables
+	>(SyncCachedCounterDocument, options);
 }
-    `;
+export type SyncCachedCounterMutationHookResult = ReturnType<
+	typeof useSyncCachedCounterMutation
+>;
+export type SyncCachedCounterMutationResult =
+	Apollo.MutationResult<SyncCachedCounterMutation>;
+export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<
+	SyncCachedCounterMutation,
+	SyncCachedCounterMutationVariables
+>;
+export const CounterCacheQueryDocument = gql`
+	query counterCacheQuery {
+		counterCache {
+			amount
+		}
+	}
+`;
 
 /**
  * __useCounterCacheQueryQuery__
@@ -462,24 +587,47 @@ export const CounterCacheQueryDocument = gql`
  *   },
  * });
  */
-export function useCounterCacheQueryQuery(baseOptions?: Apollo.QueryHookOptions<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
-      }
-export function useCounterCacheQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
-        }
-export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
-export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
-export type CounterCacheQueryQueryResult = Apollo.QueryResult<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>;
-export const CounterStateDocument = gql`
-    query CounterState {
-  counterState @client {
-    counter
-  }
+export function useCounterCacheQueryQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		CounterCacheQueryQuery,
+		CounterCacheQueryQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<
+		CounterCacheQueryQuery,
+		CounterCacheQueryQueryVariables
+	>(CounterCacheQueryDocument, options);
 }
-    `;
+export function useCounterCacheQueryLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		CounterCacheQueryQuery,
+		CounterCacheQueryQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<
+		CounterCacheQueryQuery,
+		CounterCacheQueryQueryVariables
+	>(CounterCacheQueryDocument, options);
+}
+export type CounterCacheQueryQueryHookResult = ReturnType<
+	typeof useCounterCacheQueryQuery
+>;
+export type CounterCacheQueryLazyQueryHookResult = ReturnType<
+	typeof useCounterCacheQueryLazyQuery
+>;
+export type CounterCacheQueryQueryResult = Apollo.QueryResult<
+	CounterCacheQueryQuery,
+	CounterCacheQueryQueryVariables
+>;
+export const CounterStateDocument = gql`
+	query CounterState {
+		counterState @client {
+			counter
+		}
+	}
+`;
 
 /**
  * __useCounterStateQuery__
@@ -496,24 +644,47 @@ export const CounterStateDocument = gql`
  *   },
  * });
  */
-export function useCounterStateQuery(baseOptions?: Apollo.QueryHookOptions<CounterStateQuery, CounterStateQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
-      }
-export function useCounterStateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CounterStateQuery, CounterStateQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
-        }
-export type CounterStateQueryHookResult = ReturnType<typeof useCounterStateQuery>;
-export type CounterStateLazyQueryHookResult = ReturnType<typeof useCounterStateLazyQuery>;
-export type CounterStateQueryResult = Apollo.QueryResult<CounterStateQuery, CounterStateQueryVariables>;
-export const CounterQueryDocument = gql`
-    query counterQuery {
-  counter {
-    amount
-  }
+export function useCounterStateQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		CounterStateQuery,
+		CounterStateQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<CounterStateQuery, CounterStateQueryVariables>(
+		CounterStateDocument,
+		options
+	);
 }
-    `;
+export function useCounterStateLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		CounterStateQuery,
+		CounterStateQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<CounterStateQuery, CounterStateQueryVariables>(
+		CounterStateDocument,
+		options
+	);
+}
+export type CounterStateQueryHookResult = ReturnType<
+	typeof useCounterStateQuery
+>;
+export type CounterStateLazyQueryHookResult = ReturnType<
+	typeof useCounterStateLazyQuery
+>;
+export type CounterStateQueryResult = Apollo.QueryResult<
+	CounterStateQuery,
+	CounterStateQueryVariables
+>;
+export const CounterQueryDocument = gql`
+	query counterQuery {
+		counter {
+			amount
+		}
+	}
+`;
 
 /**
  * __useCounterQueryQuery__
@@ -530,24 +701,47 @@ export const CounterQueryDocument = gql`
  *   },
  * });
  */
-export function useCounterQueryQuery(baseOptions?: Apollo.QueryHookOptions<CounterQueryQuery, CounterQueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
-      }
-export function useCounterQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CounterQueryQuery, CounterQueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
-        }
-export type CounterQueryQueryHookResult = ReturnType<typeof useCounterQueryQuery>;
-export type CounterQueryLazyQueryHookResult = ReturnType<typeof useCounterQueryLazyQuery>;
-export type CounterQueryQueryResult = Apollo.QueryResult<CounterQueryQuery, CounterQueryQueryVariables>;
-export const OnCounterUpdatedDocument = gql`
-    subscription onCounterUpdated {
-  counterUpdated {
-    amount
-  }
+export function useCounterQueryQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		CounterQueryQuery,
+		CounterQueryQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<CounterQueryQuery, CounterQueryQueryVariables>(
+		CounterQueryDocument,
+		options
+	);
 }
-    `;
+export function useCounterQueryLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		CounterQueryQuery,
+		CounterQueryQueryVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<CounterQueryQuery, CounterQueryQueryVariables>(
+		CounterQueryDocument,
+		options
+	);
+}
+export type CounterQueryQueryHookResult = ReturnType<
+	typeof useCounterQueryQuery
+>;
+export type CounterQueryLazyQueryHookResult = ReturnType<
+	typeof useCounterQueryLazyQuery
+>;
+export type CounterQueryQueryResult = Apollo.QueryResult<
+	CounterQueryQuery,
+	CounterQueryQueryVariables
+>;
+export const OnCounterUpdatedDocument = gql`
+	subscription onCounterUpdated {
+		counterUpdated {
+			amount
+		}
+	}
+`;
 
 /**
  * __useOnCounterUpdatedSubscription__
@@ -564,9 +758,20 @@ export const OnCounterUpdatedDocument = gql`
  *   },
  * });
  */
-export function useOnCounterUpdatedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<OnCounterUpdatedSubscription, OnCounterUpdatedSubscriptionVariables>(OnCounterUpdatedDocument, options);
-      }
-export type OnCounterUpdatedSubscriptionHookResult = ReturnType<typeof useOnCounterUpdatedSubscription>;
-export type OnCounterUpdatedSubscriptionResult = Apollo.SubscriptionResult<OnCounterUpdatedSubscription>;
+export function useOnCounterUpdatedSubscription(
+	baseOptions?: Apollo.SubscriptionHookOptions<
+		OnCounterUpdatedSubscription,
+		OnCounterUpdatedSubscriptionVariables
+	>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSubscription<
+		OnCounterUpdatedSubscription,
+		OnCounterUpdatedSubscriptionVariables
+	>(OnCounterUpdatedDocument, options);
+}
+export type OnCounterUpdatedSubscriptionHookResult = ReturnType<
+	typeof useOnCounterUpdatedSubscription
+>;
+export type OnCounterUpdatedSubscriptionResult =
+	Apollo.SubscriptionResult<OnCounterUpdatedSubscription>;

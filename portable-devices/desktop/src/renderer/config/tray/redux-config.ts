@@ -2,7 +2,12 @@
 /* eslint-disable global-require */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-import { forwardToMain, replayActionRenderer, forwardToMainWithParams, getInitialStateRenderer } from 'electron-redux';
+import {
+	forwardToMain,
+	replayActionRenderer,
+	forwardToMainWithParams,
+	getInitialStateRenderer,
+} from 'electron-redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import modules from '../../modules/tray';
@@ -15,13 +20,13 @@ export const history = require('../router-history');
 
 const { apolloClient, container, services, logger } = createClientContainer();
 export const epicMiddleware = createEpicMiddleware({
-    dependencies: {
-        apolloClient,
-        routes: modules.getConfiguredRoutes(),
-        services,
-        container,
-        logger,
-    },
+	dependencies: {
+		apolloClient,
+		routes: modules.getConfiguredRoutes(),
+		services,
+		container,
+		logger,
+	},
 });
 
 /**
@@ -29,29 +34,29 @@ export const epicMiddleware = createEpicMiddleware({
  * `combineReducers`
  */
 export const createReduxStore = () => {
-    // middleware
-    const router = connectRouter(history);
+	// middleware
+	const router = connectRouter(history);
 
-    // If we have preloaded state, save it.
-    const store = createBaseReduxStore({
-        scope: 'browser',
-        isDebug: __DEBUGGING__,
-        isDev,
-        initialState: {},
-        middleware: [routerMiddleware(history)],
-        // epicMiddleware,
-        preMiddleware: [forwardToMain],
-        // rootEpic,
-        reducers: { router, ...modules.reducers },
-    });
+	// If we have preloaded state, save it.
+	const store = createBaseReduxStore({
+		scope: 'browser',
+		isDebug: __DEBUGGING__,
+		isDev,
+		initialState: {},
+		middleware: [routerMiddleware(history)],
+		// epicMiddleware,
+		preMiddleware: [forwardToMain],
+		// rootEpic,
+		reducers: { router, ...modules.reducers },
+	});
 
-    // Delete it once we have it stored in a variable
-    if (__CLIENT__) {
-        delete window.__PRELOADED_STATE__;
-        // electron
-        replayActionRenderer(store);
-    }
-    container.bind('ReduxStore').toConstantValue(store);
+	// Delete it once we have it stored in a variable
+	if (__CLIENT__) {
+		delete window.__PRELOADED_STATE__;
+		// electron
+		replayActionRenderer(store);
+	}
+	container.bind('ReduxStore').toConstantValue(store);
 
-    return store;
+	return store;
 };

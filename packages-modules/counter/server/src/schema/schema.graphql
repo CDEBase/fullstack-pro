@@ -1,37 +1,57 @@
-""" Database counter """
+"""
+Database counter
+"""
 type Counter {
-  """ Current amount """
-  amount: Int!
+	"""
+	Current amount
+	"""
+	amount: Int!
 }
 
 extend type Query {
-  """ Counter """
-  counter: Counter
+	"""
+	Counter
+	"""
+	counter: Counter
 
-  """ Counter from Datasource """
-  counterCache: Counter
+	"""
+	Counter from Datasource
+	"""
+	counterCache: Counter
 
-  """ Moleculer Counter """
-  moleculerCounter: Counter
+	"""
+	Moleculer Counter
+	"""
+	moleculerCounter: Counter
 }
 
 extend type Mutation {
-  """ Increase counter value returns current counter amount """
-  addCounter(
-    """ Amount to add to counter """
-    amount: Int
-  ): Counter
+	"""
+	Increase counter value returns current counter amount
+	"""
+	addCounter(
+		"""
+		Amount to add to counter
+		"""
+		amount: Int
+	): Counter
 
-  """ sync cached counter with current value """
-  syncCachedCounter: Boolean
+	"""
+	sync cached counter with current value
+	"""
+	syncCachedCounter: Boolean
 
-  """ add Counter """
-  addMoleculerCounter(amount: Int): Counter
+	"""
+	add Counter
+	"""
+	addMoleculerCounter(amount: Int): Counter
 }
 
 extend type Subscription {
-  """ Subscription fired when anyone increases counter """
-  counterUpdated: Counter
+	"""
+	Subscription fired when anyone increases counter
+	"""
+	counterUpdated: Counter
 
-  moleculerCounterUpdate: Counter
+	moleculerCounterUpdate: Counter
 }

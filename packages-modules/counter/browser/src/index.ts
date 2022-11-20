@@ -7,5 +7,11 @@ import Fela from './fela';
 import emotion from './emotion';
 import { ElectronTrayModule } from './connected-react-router/index.electron';
 
-export default new Feature(Common, ConnectedReactRouter, ApolloCounter, Fela, emotion);
+export default new Feature(
+	Common,
+	ConnectedReactRouter,
+	ApolloCounter,
+	Fela,
+	emotion
+);
 export { ElectronTrayModule };

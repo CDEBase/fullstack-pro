@@ -1,25 +1,25 @@
 {
-  "appId": "io.github.sample-stack",
-  "productName": "Sample-Stack-Electron",
-  "copyright": "Copyright © 2021 Sample-Stack",
-  "mac": {
-    "category": "public.app-category.productivity",
-    "darkModeSupport": true,
-    "hardenedRuntime": true,
-    "gatekeeperAssess": false,
-    "entitlements": "entitlements.mac.plist",
-    "entitlementsInherit": "entitlements.mac.plist"
-  },
-  "win": {
-    "target": ["nsis"]
-  },
-  "linux": {
-    "executableName": "sample-stack-desktop",
-    "category": "Application",
-    "desktop": "sample-stack-desktop",
-    "target": ["deb", "AppImage"]
-  },
-  "directories": {
-    "output": "release"
-  }
+	"appId": "io.github.sample-stack",
+	"productName": "Sample-Stack-Electron",
+	"copyright": "Copyright © 2021 Sample-Stack",
+	"mac": {
+		"category": "public.app-category.productivity",
+		"darkModeSupport": true,
+		"hardenedRuntime": true,
+		"gatekeeperAssess": false,
+		"entitlements": "entitlements.mac.plist",
+		"entitlementsInherit": "entitlements.mac.plist"
+	},
+	"win": {
+		"target": ["nsis"]
+	},
+	"linux": {
+		"executableName": "sample-stack-desktop",
+		"category": "Application",
+		"desktop": "sample-stack-desktop",
+		"target": ["deb", "AppImage"]
+	},
+	"directories": {
+		"output": "release"
+	}
 }

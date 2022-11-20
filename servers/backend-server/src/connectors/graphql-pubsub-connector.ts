@@ -9,43 +9,48 @@ import { CdmLogger } from '@cdm-logger/core';
 type ILogger = CdmLogger.ILogger;
 
 type PubSubOptions = {
-    apolloLogging?: boolean;
-    logger: ILogger;
+	apolloLogging?: boolean;
+	logger: ILogger;
 } & GenericObject;
 
 export class GraphqlPubSubConnector {
-    private client: PubSubEngine | NatsPubSub;
+	private client: PubSubEngine | NatsPubSub;
 
-    private opts: PubSubOptions;
+	private opts: PubSubOptions;
 
-    private logger: ILogger;
+	private logger: ILogger;
 
-    /**
-     * Creates an instance of GraphqlPubSubConnector.
-     * @param {*} opts
-     * @memberof GraphqlPubSubConnector
-     */
-    constructor(opts?: PubSubOptions) {
-        if (opts === undefined || opts.type === undefined) {
-            this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
-        }
-        this.opts = opts;
-        this.logger = opts.logger.child({ className: 'GraphqlPubSubConnector' });
-    }
+	/**
+	 * Creates an instance of GraphqlPubSubConnector.
+	 * @param {*} opts
+	 * @memberof GraphqlPubSubConnector
+	 */
+	constructor(opts?: PubSubOptions) {
+		if (opts === undefined || opts.type === undefined) {
+			this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
+		}
+		this.opts = opts;
+		this.logger = opts.logger.child({ className: 'GraphqlPubSubConnector' });
+	}
 
-    public async getClient() {
-        if (this.opts.type === 'TCP') {
-            if (this.opts.apolloLogging) {
-                return (this.client = wrapPubSub(new PubSub(), { logger: this.logger.trace.bind(this.logger) }));
-            }
-            return (this.client = new PubSub());
-        }
-        if (this.opts.type === 'NATS') {
-            // console.log('--this.copts', this.opts.client)
-            const natsClient = await this.opts.client.connect();
-            return (this.client = new NatsPubSub({ client: natsClient, logger }));
-        }
-        this.logger.warn('Did not defined known transporter [%s], return default pubsub', this.opts.type);
-        return (this.client = new PubSub());
-    }
+	public async getClient() {
+		if (this.opts.type === 'TCP') {
+			if (this.opts.apolloLogging) {
+				return (this.client = wrapPubSub(new PubSub(), {
+					logger: this.logger.trace.bind(this.logger),
+				}));
+			}
+			return (this.client = new PubSub());
+		}
+		if (this.opts.type === 'NATS') {
+			// console.log('--this.copts', this.opts.client)
+			const natsClient = await this.opts.client.connect();
+			return (this.client = new NatsPubSub({ client: natsClient, logger }));
+		}
+		this.logger.warn(
+			'Did not defined known transporter [%s], return default pubsub',
+			this.opts.type
+		);
+		return (this.client = new PubSub());
+	}
 }

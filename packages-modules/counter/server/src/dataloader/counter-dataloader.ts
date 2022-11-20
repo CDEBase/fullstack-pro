@@ -8,36 +8,44 @@ import { setupCaching } from './cache';
 import { Counter } from '../generated-models';
 
 export interface CacheOptions {
-    ttl?: number;
+	ttl?: number;
 }
 
-export class CounterDataSource extends DataSource<IService> implements ICounterService {
-    private context!: IContext;
+export class CounterDataSource
+	extends DataSource<IService>
+	implements ICounterService
+{
+	private context!: IContext;
 
-    private cacheCounterService: ICounterService;
+	private cacheCounterService: ICounterService;
 
-    constructor() {
-        super();
-    }
+	constructor() {
+		super();
+	}
 
-    public counterQuery(): Counter | Promise<Counter> | PromiseLike<Counter> {
-        return this.cacheCounterService.counterQuery();
-    }
+	public counterQuery(): Counter | Promise<Counter> | PromiseLike<Counter> {
+		return this.cacheCounterService.counterQuery();
+	}
 
-    public addCounter(amount?: number) {
-        return this.cacheCounterService.addCounter();
-    }
+	public addCounter(amount?: number) {
+		return this.cacheCounterService.addCounter();
+	}
 
-    public initialize(config: DataSourceConfig<IContext>) {
-        this.context = config.context;
-        if (!this.context.counterMockService) {
-            throw new ApolloError('Missing TextFileService in the context!');
-        }
-        try {
-            const cache = config.cache || new InMemoryLRUCache<string>();
-            this.cacheCounterService = setupCaching({ counterService: config.context.counterMockService, cache });
-        } catch (err) {
-            throw new ApolloError(`Setting up cache in the FilesDataSource failed due to ${err}`);
-        }
-    }
+	public initialize(config: DataSourceConfig<IContext>) {
+		this.context = config.context;
+		if (!this.context.counterMockService) {
+			throw new ApolloError('Missing TextFileService in the context!');
+		}
+		try {
+			const cache = config.cache || new InMemoryLRUCache<string>();
+			this.cacheCounterService = setupCaching({
+				counterService: config.context.counterMockService,
+				cache,
+			});
+		} catch (err) {
+			throw new ApolloError(
+				`Setting up cache in the FilesDataSource failed due to ${err}`
+			);
+		}
+	}
 }

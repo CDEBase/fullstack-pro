@@ -24,7 +24,7 @@ app.use(corsMiddleware);
 app.options('*', corsMiddleware);
 
 for (const applyBeforeware of modules.beforewares) {
-    applyBeforeware(app);
+	applyBeforeware(app);
 }
 
 app.use(cookiesMiddleware());
@@ -35,54 +35,54 @@ const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 // Don't rate limit heroku
 app.enable('trust proxy');
 if (!__DEV__) {
-    app.use(compression());
+	app.use(compression());
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(
-    '/',
-    express.static(path.join(__FRONTEND_BUILD_DIR__), {
-        maxAge: '180 days',
-    }),
+	'/',
+	express.static(path.join(__FRONTEND_BUILD_DIR__), {
+		maxAge: '180 days',
+	})
 );
 
 if (__DEV__) {
-    app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
+	app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
 }
 
 app.use(websiteMiddleware);
 
 if (__DEV__) {
-    app.use(errorMiddleware);
+	app.use(errorMiddleware);
 }
 
 server = http.createServer(app);
 
 server.listen(serverPort, () => {
-    logger.info(`Client Server is now running on port ${serverPort}`);
+	logger.info(`Client Server is now running on port ${serverPort}`);
 });
 
 server.on('close', () => {
-    server = undefined;
+	server = undefined;
 });
 
 if ((module as any).hot) {
-    (module as any).hot.dispose(() => {
-        try {
-            if (server) {
-                server.close();
-            }
-        } catch (error) {
-            logger.error(error.stack);
-        }
-    });
-    (module as any).hot.accept(['./website'], () => {
-        logger.debug('...reloading middleware');
-    });
+	(module as any).hot.dispose(() => {
+		try {
+			if (server) {
+				server.close();
+			}
+		} catch (error) {
+			logger.error(error.stack);
+		}
+	});
+	(module as any).hot.accept(['./website'], () => {
+		logger.debug('...reloading middleware');
+	});
 
-    (module as any).hot.accept();
+	(module as any).hot.accept();
 }
 
 export default server;

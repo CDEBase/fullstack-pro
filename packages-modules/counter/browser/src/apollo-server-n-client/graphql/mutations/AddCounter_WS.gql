@@ -1,5 +1,5 @@
 mutation AddCounter_WS($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
+	addCounter(amount: $amount) {
+		amount
+	}
 }

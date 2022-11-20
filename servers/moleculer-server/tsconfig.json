@@ -1,21 +1,12 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "sourceMap": true,
-    "declaration": false,
-    "outDir": "./dist",
-    "pretty": true,
-    "skipLibCheck": true,
-    "types": [
-      "jest",
-      "node"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "test",
-    "lib",
-    "dist",
-    "webpack.config.js"
-  ]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": false,
+		"outDir": "./dist",
+		"pretty": true,
+		"skipLibCheck": true,
+		"types": ["jest", "node"]
+	},
+	"exclude": ["node_modules", "test", "lib", "dist", "webpack.config.js"]
 }

@@ -1,7 +1,8 @@
 /* eslint-disable import/first */
 /// <reference types="webpack-env" />
 // eslint-disable-next-line global-require, import/first, no-unused-expressions, @typescript-eslint/no-var-requires
-process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+process.env.ENV_FILE !== null &&
+	require('dotenv').config({ path: process.env.ENV_FILE });
 
 import 'reflect-metadata';
 import { logger } from '@cdm-logger/server';
@@ -10,18 +11,18 @@ import { Service } from './service';
 declare let module: __WebpackModuleApi.Module;
 
 process.on('uncaughtException', (ex) => {
-    logger.error(ex);
-    process.exit(1);
+	logger.error(ex);
+	process.exit(1);
 });
 
 process.on('unhandledRejection', (reason) => {
-    logger.error(reason);
+	logger.error(reason);
 });
 const service = new Service();
 
 async function start() {
-    await service.initialize();
-    await service.start();
+	await service.initialize();
+	await service.start();
 }
 // if (module.hot) {
 //     module.hot.status((event) => {
@@ -38,17 +39,17 @@ async function start() {
 //     module.hot.accept();
 // }
 if (module.hot) {
-    module.hot.dispose((data) => {
-        // Shutdown server if changes to this module code are made
-        // So that it was started afresh
-        console.log('--data---', data);
-        try {
-            if (service) {
-                service.gracefulShutdown(null);
-            }
-        } catch (error) {
-            logger.error(error.stack);
-        }
-    });
+	module.hot.dispose((data) => {
+		// Shutdown server if changes to this module code are made
+		// So that it was started afresh
+		console.log('--data---', data);
+		try {
+			if (service) {
+				service.gracefulShutdown(null);
+			}
+		} catch (error) {
+			logger.error(error.stack);
+		}
+	});
 }
 start();
