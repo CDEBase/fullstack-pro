@@ -99,12 +99,6 @@
         "zen:watch": "zen  watch -x",
         "zen:watch:debug": "yarn zen:watch -- -v"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
-    },
     "resolutions": {
         "@apollo/client": "~3.3.21",
         "@types/react": "^18.0.25",
