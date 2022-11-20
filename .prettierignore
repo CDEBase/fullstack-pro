@@ -3,3 +3,4 @@ dist
 lib
 **/desktop/release/**
 values-*.yaml
+values.secret.json

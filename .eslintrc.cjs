@@ -73,6 +73,10 @@ module.exports = {
 			],
 			files: ['**/*.{ts,tsx}'],
 			globals: common.globals,
+			rules: {
+				...common.rules,
+                '@typescript-eslint/explicit-function-return-type': 'off',
+			}
 		},
 		{
 			files: '*.json',
