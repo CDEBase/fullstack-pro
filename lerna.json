@@ -16,7 +16,8 @@
             "graphType": "all",
             "allowBranch": [
                 "publish",
-                "devpublish"
+				"devpublish",
+				"devpublishn2"
             ],
             "message": "chore(release): publish",
             "ignoreChanges": [
@@ -31,7 +32,8 @@
                 "master",
                 "develop",
                 "publish",
-                "devpublish"
+				"devpublish",
+				"devpublishn2"
             ],
             "private": true,
             "conventionalCommits": true,
