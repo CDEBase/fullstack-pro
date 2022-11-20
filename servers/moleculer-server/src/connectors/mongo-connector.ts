@@ -1,14 +1,14 @@
-import {
-	createConnection,
-	connection,
-	Connection,
-	ConnectOptions,
-	plugin,
-} from 'mongoose';
+import { CdmLogger } from '@cdm-logger/core';
+import { logger } from '@cdm-logger/server';
 import * as _ from 'lodash';
 import { Db } from 'mongodb';
-import { logger } from '@cdm-logger/server';
-import { CdmLogger } from '@cdm-logger/core';
+import {
+	Connection,
+	connection,
+	ConnectOptions,
+	createConnection,
+	plugin,
+} from 'mongoose';
 
 type ILogger = CdmLogger.ILogger;
 
@@ -53,7 +53,7 @@ export class MongoConnector {
 			);
 		});
 
-		// eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
+		 
 		// plugin(require('@kolinalabs/mongoose-consistent'), {
 		//     actionDefault: 'no_action',
 		// });

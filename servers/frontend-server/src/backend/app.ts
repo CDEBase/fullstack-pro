@@ -1,15 +1,15 @@
-/* eslint-disable import/first */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable global-require */
+ 
+ 
+ 
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable jest/require-hook */
+ 
 // tslint:disable-next-line:no-unused-expression
 process.env.ENV_FILE !== null &&
 	require('dotenv').config({ path: process.env.ENV_FILE });
 
-import { logger } from '@cdm-logger/server';
-
 import './server';
+
+import { logger } from '@cdm-logger/server';
 
 process.on('uncaughtException', (ex: Error) => {
 	logger.error(ex, 'uncaughtException');

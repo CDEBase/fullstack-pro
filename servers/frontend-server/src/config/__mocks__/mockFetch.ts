@@ -4,17 +4,17 @@ import 'whatwg-fetch';
 // structure to the MockedNetworkInterface.
 
 export interface MockedIResponse {
+	json(): Promise<Object>;
 	ok: boolean;
 	status: number;
 	statusText?: string;
-	json(): Promise<Object>;
 }
 
 export interface MockedFetchResponse {
-	url: string;
+	delay?: number;
 	opts: RequestInit;
 	result: MockedIResponse;
-	delay?: number;
+	url: string;
 }
 
 export function createMockedIResponse(

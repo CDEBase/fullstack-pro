@@ -1,13 +1,13 @@
 import * as ILogger from 'bunyan';
 const Hp = require('hemera-plugin');
-import * as Hemera from 'nats-hemera';
 import { Container } from 'inversify';
+import * as Hemera from 'nats-hemera';
 const HemeraJoi = require('hemera-joi');
 import { NatsPubSub } from 'graphql-nats-subscriptions';
 
 function WorkspaceServicePlugin(
 	hemera: Hemera,
-	options: { settings: any; client: any },
+	options: { client: any, settings: any; },
 	done
 ) {
 	const { settings, client } = options;
@@ -15,7 +15,7 @@ function WorkspaceServicePlugin(
 
 	const pubsub = new NatsPubSub({ client, logger: hemera.log });
 
-	let container = new Container();
+	const container = new Container();
 }
 
 module.exports = Hp(WorkspaceServicePlugin, {

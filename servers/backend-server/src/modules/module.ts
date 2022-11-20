@@ -1,7 +1,8 @@
-import { ContainerModule, interfaces } from 'inversify';
+import { TaggedType } from '@common-stack/core';
 import { Feature } from '@common-stack/server-core';
 import CounterModule from '@sample-stack/counter-module-server';
-import { TaggedType } from '@common-stack/core';
+import { ContainerModule, interfaces } from 'inversify';
+
 import { config } from '../config';
 
 export const settings = {

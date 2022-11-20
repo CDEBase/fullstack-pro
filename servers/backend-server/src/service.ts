@@ -1,7 +1,8 @@
-import { StackServer } from './stack-server';
 import { logger } from '@cdm-logger/server';
 import * as url from 'url';
+
 import { config } from './config';
+import { StackServer } from './stack-server';
 
 const { port: serverPort, pathname, hostname } = url.parse(config.BACKEND_URL);
 

@@ -2,3 +2,6 @@ node_modules
 dist
 lib
 **/desktop/release/**
+tools/**
+values-*.yaml
+webpack.config.js

@@ -1,8 +1,9 @@
 /// <reference path='../../../../../typings/index.d.ts' />
 
 import * as React from 'react';
-import serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
+import serialize from 'serialize-javascript';
+
 import modules from '../../modules';
 
 /**
@@ -24,15 +25,15 @@ const Html = ({
 	styleSheet,
 	helmet,
 }: {
-	content?: any;
-	state: any;
-	reduxState: any;
-	headElements: React.ReactElement<any>[];
 	assetMap?: string[];
+	content?: any;
 	env: any;
 	fela?: any;
-	styleSheet?: any[];
+	headElements: React.ReactElement<any>[];
 	helmet?: HelmetData;
+	reduxState: any;
+	state: any;
+	styleSheet?: any[];
 }) => {
 	const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
 	const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags

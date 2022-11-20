@@ -1,9 +1,9 @@
-import { PubSub, PubSubEngine } from 'graphql-subscriptions';
-import { NatsPubSub } from 'graphql-nats-subscriptions';
-import { logger } from '@cdm-logger/server';
-import { ClientOpts } from 'nats';
-import { Transporter, GenericObject } from 'moleculer';
 import { CdmLogger } from '@cdm-logger/core';
+import { logger } from '@cdm-logger/server';
+import { NatsPubSub } from 'graphql-nats-subscriptions';
+import { PubSub, PubSubEngine } from 'graphql-subscriptions';
+import { GenericObject,Transporter } from 'moleculer';
+import { ClientOpts } from 'nats';
 type ILogger = CdmLogger.ILogger;
 
 type PubSubOptions = {

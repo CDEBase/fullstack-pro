@@ -1,6 +1,8 @@
 import '../config/public-config';
+
 import { ClientLogger } from '@cdm-logger/client';
 import { ClientTypes } from '@common-stack/client-react';
+
 import modules, { MainRoute } from './module';
 
 class UtilityClass {
@@ -23,4 +25,4 @@ container.bind(ClientTypes.Logger).toConstantValue(logger);
 container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
 
 export default modules;
-export { MainRoute, container, logger };
+export { container, logger,MainRoute };

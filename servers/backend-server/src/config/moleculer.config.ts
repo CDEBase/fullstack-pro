@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { BrokerOptions, Errors } from 'moleculer';
+
 import { config } from './config';
 
 /**

@@ -1,10 +1,11 @@
+import { CdmLogger } from '@cdm-logger/core';
+import { GenericObject,Transporter } from 'moleculer';
+
+import { config } from '../config';
+import { GraphqlPubSubConnector } from './graphql-pubsub-connector';
 import { MongoConnector } from './mongo-connector';
 import { NatsConnector } from './nats-connector';
 import { RedisConnector } from './redis-connector';
-import { config } from '../config';
-import { GraphqlPubSubConnector } from './graphql-pubsub-connector';
-import { Transporter, GenericObject } from 'moleculer';
-import { CdmLogger } from '@cdm-logger/core';
 type ILogger = CdmLogger.ILogger;
 
 /**

@@ -1,11 +1,11 @@
-import gql from 'graphql-tag';
 import { Operation } from '@apollo/client';
+import { mockObservableLink,mockSingleLink } from '@apollo/client/testing';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { DocumentNode, OperationDefinitionNode } from 'graphql';
-import { mockSingleLink, mockObservableLink } from '@apollo/client/testing';
+import gql from 'graphql-tag';
 
 const isSub = (operation: Operation) =>
-	(operation.query as DocumentNode).definitions
+	(operation.query ).definitions
 		.filter((x) => x.kind === 'OperationDefinition')
 		.some((x: OperationDefinitionNode) => x.operation === 'subscription');
 

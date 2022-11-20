@@ -1,10 +1,12 @@
 ///<reference types="webpack-env" />
 
 import 'reflect-metadata';
-import { StackServer } from './stack-server';
+
 import { logger } from '@cdm-logger/server';
 
-declare var module: __WebpackModuleApi.Module;
+import { StackServer } from './stack-server';
+
+declare let module: __WebpackModuleApi.Module;
 
 const service = new StackServer();
 async function start() {

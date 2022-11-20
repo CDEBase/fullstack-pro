@@ -1,9 +1,9 @@
 /// <reference path='../../../../../typings/index.d.ts' />
 
-import * as path from 'path';
-import * as fs from 'fs';
-import * as url from 'url';
 import { logger } from '@cdm-logger/server';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as url from 'url';
 
 let assetMap;
 

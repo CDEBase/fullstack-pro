@@ -1,10 +1,11 @@
-/* eslint-disable no-underscore-dangle */
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/no-extraneous-dependencies */
-import { ClientTypes } from '@common-stack/client-core';
-import { Container } from 'inversify';
+ 
 import { ApolloClient } from '@apollo/client';
 import { CdmLogger } from '@cdm-logger/core';
+import { ClientTypes } from '@common-stack/client-core';
+import { Container } from 'inversify';
+
 import modules, { container, logger } from '../modules';
 import { createApolloClient } from './base-apollo-client';
 import { PUBLIC_SETTINGS } from './public-config';
@@ -12,8 +13,8 @@ import { PUBLIC_SETTINGS } from './public-config';
 let __CLIENT_SERVICE__: {
 	apolloClient: ApolloClient<any>;
 	container: Container;
-	services: any;
 	logger: CdmLogger.ILogger;
+	services: any;
 };
 export const createClientContainer = () => {
 	if (__CLIENT_SERVICE__) {

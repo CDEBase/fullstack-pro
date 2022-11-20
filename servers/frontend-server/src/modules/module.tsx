@@ -1,9 +1,11 @@
-import * as React from 'react';
-import { Layout } from 'antd';
-import counterModules from '@sample-stack/counter-module-browser';
-import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
-import { SiderMenu } from './layout';
 import '@sample-stack/assets';
+
+import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
+import counterModules from '@sample-stack/counter-module-browser';
+import { Layout } from 'antd';
+import * as React from 'react';
+
+import { SiderMenu } from './layout';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 

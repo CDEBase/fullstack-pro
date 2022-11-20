@@ -5,12 +5,12 @@ export const TYPES = {
 };
 
 export enum EActivityScopes {
-	User = 'user',
-	Team = 'team',
 	Cluster = 'cluster',
 	Default = 'default',
-	Workspace = 'workspace',
 	Organization = 'organization',
+	Team = 'team',
+	User = 'user',
+	Workspace = 'workspace'
 }
 
 export const MODELS = {
@@ -18,17 +18,17 @@ export const MODELS = {
 };
 
 export enum HemeraTopics {
-	ActivityStorage = 'ActivityStorage',
 	ActivityCollector = 'ActivityCollector',
+	ActivityStorage = 'ActivityStorage'
 }
 
 export enum HemeraCommands {
 	Collect = 'Collect',
 
-	StorageSet = 'StorageSet',
-	StorageGet = 'StorageGet',
 	StorageDelete = 'StorageDelete',
-
+	StorageGet = 'StorageGet',
 	StorageGetActive = 'StorageGetActive',
+
 	StorageGetInactive = 'StorageGetInactive',
+	StorageSet = 'StorageSet'
 }

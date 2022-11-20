@@ -1,19 +1,20 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
+ 
+ 
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import { createEpicMiddleware } from 'redux-observable';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { persistReducer } from 'redux-persist';
-import thunkMiddleware from 'redux-thunk';
+ 
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
-import { createReduxStore as createBaseReduxStore } from './base-redux-config';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { combineReducers } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { persistReducer } from 'redux-persist';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import storage from 'redux-persist/lib/storage';
+import thunkMiddleware from 'redux-thunk';
+
 import modules, { logger } from '../modules';
+import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import { createClientContainer } from './client.service';
-import { rootEpic, epic$ } from './epic-config';
+import { epic$,rootEpic } from './epic-config';
 
 const { apolloClient, container, services } = createClientContainer();
 

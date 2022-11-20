@@ -1,11 +1,13 @@
-/* eslint-disable import/first */
+ 
 /// <reference types="webpack-env" />
-// eslint-disable-next-line global-require, import/first, no-unused-expressions, @typescript-eslint/no-var-requires
+ 
 process.env.ENV_FILE !== null &&
 	require('dotenv').config({ path: process.env.ENV_FILE });
 
 import 'reflect-metadata';
+
 import { logger } from '@cdm-logger/server';
+
 import { Service } from './service';
 
 declare let module: __WebpackModuleApi.Module;

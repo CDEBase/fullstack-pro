@@ -1,10 +1,10 @@
+import { IMenuPosition } from '@common-stack/client-react';
+import { Avatar,Layout, Menu } from 'antd';
 import * as H from 'history';
+import pathToRegexp from 'path-to-regexp';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import * as PropTypes from 'prop-types';
-import pathToRegexp from 'path-to-regexp';
-import { Layout, Menu, Avatar } from 'antd';
-import { IMenuPosition } from '@common-stack/client-react';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -53,22 +53,22 @@ export const getMenuMatchKeys = (flatMenuKeys, paths) =>
 
 export namespace ISiderMenu {
 	export interface CompProps {
-		menuData: any;
-		segments: any;
-		onCollapse?: any;
-		state?: boolean;
-		isMobile?: boolean;
-		renderer?: any;
 		Authorized?: any;
 		collapsed?: boolean;
+		isMobile?: boolean;
 		logo?: any;
-		user?: any;
+		menuData: any;
+		onCollapse?: any;
+		renderer?: any;
+		segments: any;
+		state?: boolean;
 		styles?: {
 			grow?: any;
+			icon?: any;
 			logo?: any;
 			sider?: any;
-			icon?: any;
 		};
+		user?: any;
 	}
 
 	export interface StateProps {

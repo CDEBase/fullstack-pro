@@ -7,7 +7,7 @@
 		"rootDirs": ["./src", "../knexfile.ts"],
 		"outDir": "./dist"
 	},
-	"include": ["../../typings/*.d.ts"],
+	"include": ["../../typings/*.d.ts", "src", "babel.config.js", "build.config.js"],
 	"awesomeTypescriptLoaderOptions": {
 		"reportFiles": ["../../typings/*.d.ts", "**/*.ts", "**/*.tsx"]
 	},

@@ -10,6 +10,6 @@
 		"rootDir": "./src",
 		"skipLibCheck": true
 	},
-	"include": ["../../typings/*.d.ts"],
+	"include": ["../../typings/*.d.ts", "src", "babel.config.js", "build.config.js"],
 	"exclude": ["node_modules", "lib", "dist", "webpack.config.js"]
 }

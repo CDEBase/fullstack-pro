@@ -1,37 +1,37 @@
 // version 09/18/2021
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+ 
+ 
+ 
 import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
-import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
+import { createHttpLink,HttpLink } from '@apollo/client/link/http';
+import { RetryLink } from '@apollo/client/link/retry';
 import { WebSocketLink } from '@apollo/client/link/ws';
-import { getOperationAST } from 'graphql';
-import { invariant } from 'ts-invariant';
+import { CdmLogger } from '@cdm-logger/core';
 import { IClientState } from '@common-stack/client-core';
+import { getOperationAST } from 'graphql';
+import { isBoolean, merge } from 'lodash';
 import fetch from 'node-fetch';
 import { ConnectionParams } from 'subscriptions-transport-ws';
-import { isBoolean, merge } from 'lodash';
-import { CdmLogger } from '@cdm-logger/core';
-import { RetryLink } from '@apollo/client/link/retry';
+import { invariant } from 'ts-invariant';
 
 const schema = `
 
 `;
 
 interface IApolloClientParams {
-	initialState?: any;
-	scope: 'browser' | 'server' | 'native';
-	getDataIdFromObject: (x?: any) => string;
 	clientState: IClientState;
+	getDataIdFromObject: (x?: any) => string;
+	httpGraphqlURL: string;
+	httpLocalGraphqlURL: string;
+	initialState?: any;
 	isDebug: boolean;
 	isDev: boolean;
 	isSSR: boolean;
-	httpGraphqlURL: string;
-	httpLocalGraphqlURL: string;
 	logger: CdmLogger.ILogger;
+	scope: 'browser' | 'server' | 'native';
 }
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

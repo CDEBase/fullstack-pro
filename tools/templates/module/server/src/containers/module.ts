@@ -1,10 +1,9 @@
 import { TaggedType } from '@common-stack/core';
-import { ContainerModule, interfaces, Container } from 'inversify';
+import { Container,ContainerModule, interfaces } from 'inversify';
 
 import { TYPES } from '../constants';
 import { IActivityCollector } from '../interfaces';
 import { ActivityLocalservice, ActivityMicroservice } from '../services';
-
 import { Redis } from '../storage/Redis';
 
 export const activityModule: (

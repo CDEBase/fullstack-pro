@@ -1,6 +1,6 @@
-/* eslint-disable no-param-reassign */
-import { ServiceBroker, Middleware } from 'moleculer';
+ 
 import * as _ from 'lodash';
+import { Middleware,ServiceBroker } from 'moleculer';
 
 export const InterNamespaceMiddleware = function (options): Middleware {
 	if (!Array.isArray(options)) {

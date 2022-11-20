@@ -1,35 +1,35 @@
 // version 11/12/2021
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-/* eslint-disable no-underscore-dangle */
+ 
+ 
 import {
-	createStore,
-	combineReducers,
-	applyMiddleware,
-	StoreEnhancer,
-	Middleware,
-	compose,
 	Action,
-	ReducersMapObject,
+	applyMiddleware,
+	combineReducers,
+	compose,
+	createStore,
+	Middleware,
 	PreloadedState,
+	ReducersMapObject,
+	StoreEnhancer,
 } from 'redux';
-import { EpicMiddleware, Epic } from 'redux-observable';
-import { persistReducer, PersistConfig } from 'redux-persist';
+import { Epic,EpicMiddleware } from 'redux-observable';
+import { PersistConfig,persistReducer } from 'redux-persist';
 
 interface IReduxStore<S = any> {
-	scope: 'browser' | 'server' | 'native' | 'ElectronMain';
+	epicMiddleware?: EpicMiddleware<Action<S>, Action<any>>;
+	initialState: PreloadedState<S>;
 	isDebug: boolean;
 	isDev: boolean;
+	middleware?: Middleware[];
+	persistConfig?: PersistConfig<S, any>;
+	postMiddleware?: Middleware[];
+	preMiddleware?: Middleware[];
 	reducers: ReducersMapObject<S>;
 	rootEpic?: Epic<Action<S>, Action<any>, void, any>;
-	epicMiddleware?: EpicMiddleware<Action<S>, Action<any>>;
-	preMiddleware?: Middleware[];
-	postMiddleware?: Middleware[];
-	middleware?: Middleware[];
-	initialState: PreloadedState<S>;
-	persistConfig?: PersistConfig<S, any>;
+	scope: 'browser' | 'server' | 'native' | 'ElectronMain';
 }
 /**
  * Add any reducers required for this app dirctly in to

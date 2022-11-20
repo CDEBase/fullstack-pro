@@ -1,37 +1,38 @@
-/* eslint-disable global-require */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable import/no-extraneous-dependencies */
-import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+ 
+ 
+ 
+ 
+import { split } from '@apollo/client';
+import { HttpLink } from '@apollo/client/link/http';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { logger } from '@common-stack/server-core';
+import { linkToExecutor } from '@graphql-tools/links';
 import { mergeSchemas } from '@graphql-tools/merge';
 import {
-	makeExecutableSchema,
 	addErrorLoggingToSchema,
+	makeExecutableSchema,
 } from '@graphql-tools/schema';
-import { linkToExecutor } from '@graphql-tools/links';
 import {
 	introspectSchema,
 	makeRemoteExecutableSchema,
 } from '@graphql-tools/wrap';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import * as fetch from 'isomorphic-fetch';
 // import { transformSchema } from '@graphql-tools/delegate';
 import * as ws from 'ws';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { split } from '@apollo/client';
-import { logger } from '@common-stack/server-core';
-import { HttpLink } from '@apollo/client/link/http';
-import * as fetch from 'isomorphic-fetch';
+
 import { remoteSchemaDetails } from './remote-config';
-import rootSchemaDef from './root-schema.graphqls';
 import { resolvers as rootResolver } from './resolver';
+import rootSchemaDef from './root-schema.graphqls';
 
 export class GatewaySchemaBuilder {
 	constructor(
 		private options: {
-			schema: string | string[];
-			resolvers;
 			directives;
 			logger;
+			resolvers;
+			schema: string | string[];
 		}
 	) {}
 
@@ -47,7 +48,7 @@ export class GatewaySchemaBuilder {
 				schemas: [ownSchema, remoteSchema],
 			});
 			// TODO after updating graphql-tools to v8
-			addErrorLoggingToSchema(schema, { log: (e) => logger.error(e as Error) });
+			addErrorLoggingToSchema(schema, { log: (e) => logger.error(e ) });
 		} catch (err) {
 			logger.error(
 				'[Graphql Schema Errors] when building schema::',
@@ -61,9 +62,9 @@ export class GatewaySchemaBuilder {
 
 	private async load() {
 		const schemas = [];
-		// eslint-disable-next-line no-plusplus
+		 
 		for (let i = 0; i < remoteSchemaDetails.length; i++) {
-			// eslint-disable-next-line no-await-in-loop
+			 
 			const schema = await this.loadRemoteSchema(remoteSchemaDetails[i]);
 			schemas.push(schema);
 		}

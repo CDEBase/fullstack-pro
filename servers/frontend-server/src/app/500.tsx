@@ -1,5 +1,5 @@
+import { Button,Result } from 'antd';
 import * as React from 'react';
-import { Result, Button } from 'antd';
 
 export const Error500 = ({ error }: any) => {
 	React.useEffect(() => {

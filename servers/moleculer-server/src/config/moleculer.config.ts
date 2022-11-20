@@ -1,4 +1,5 @@
 import { BrokerOptions, Errors } from 'moleculer';
+
 import { config } from './config';
 
 /**

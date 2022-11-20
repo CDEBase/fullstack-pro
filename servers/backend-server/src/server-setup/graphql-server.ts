@@ -1,9 +1,11 @@
-import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
 import 'isomorphic-fetch';
+
+import { CdmLogger } from '@cdm-logger/core';
+import { RedisCache,RedisClusterCache } from 'apollo-server-cache-redis';
+import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
 import { Express } from 'express';
 import * as http from 'http';
-import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
-import { CdmLogger } from '@cdm-logger/core';
+
 import { IModuleService } from '../interfaces';
 
 type ILogger = CdmLogger.ILogger;
@@ -23,7 +25,7 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
 		instance.initialize({ context, cache });
 	};
 	// tslint:disable-next-line:forin
-	// eslint-disable-next-line guard-for-in
+	 
 	for (const prop in dataSources) {
 		// tslint:disable-next-line:no-console
 		intializeDataSource(dataSources[prop]);
@@ -71,9 +73,9 @@ export class GraphqlServer {
 				res,
 				connection,
 			}: {
+				connection: any;
 				req: Express.Request;
 				res: Express.Response;
-				connection: any;
 			}) => {
 				let context;
 				let addons = {};

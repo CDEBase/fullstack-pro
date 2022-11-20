@@ -1,18 +1,20 @@
-/* eslint-disable jest/require-hook */
+ 
 import 'reflect-metadata';
-import express from 'express';
-import compression from 'compression';
+import 'isomorphic-fetch';
+
+import { logger } from '@cdm-logger/server';
 import * as bodyParser from 'body-parser';
+import compression from 'compression';
+import express from 'express';
 import * as http from 'http';
 import * as path from 'path';
 import * as url from 'url';
-import 'isomorphic-fetch';
-import { logger } from '@cdm-logger/server';
-import { websiteMiddleware } from './website';
+
+import { config } from '../config';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
-import { config } from '../config';
 import modules from './modules';
+import { websiteMiddleware } from './website';
 
 const cookiesMiddleware = require('universal-cookie-express');
 

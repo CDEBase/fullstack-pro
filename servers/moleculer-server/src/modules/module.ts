@@ -1,8 +1,8 @@
-import { ContainerModule, interfaces } from 'inversify';
-import CounterModule from '@sample-stack/counter-module-server';
-import { config } from '../config';
-import { NATS_MOLECULER_COUNTER_SERIVCE } from '@sample-stack/counter-module-server';
 import { Feature } from '@common-stack/server-core';
+import CounterModule, { NATS_MOLECULER_COUNTER_SERIVCE } from '@sample-stack/counter-module-server';
+import { ContainerModule, interfaces } from 'inversify';
+
+import { config } from '../config';
 
 const subTopic = config.CONNECTION_ID; // version.topic.action
 

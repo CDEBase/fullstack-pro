@@ -1,6 +1,7 @@
-/* eslint-disable jest/require-hook */
-import cors from 'cors';
+ 
 import { logger } from '@common-stack/client-core';
+import cors from 'cors';
+
 import { config } from '../../config';
 
 const { CLIENT_URL, BACKEND_URL } = config;

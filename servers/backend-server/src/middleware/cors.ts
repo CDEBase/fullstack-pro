@@ -1,7 +1,8 @@
+import { logger } from '@cdm-logger/server';
 import * as cors from 'cors';
 import * as express from 'express';
+
 import { config } from '../config';
-import { logger } from '@cdm-logger/server';
 
 const CLIENT_URL = config.CLIENT_URL;
 const BACKEND_URL = config.BACKEND_URL;

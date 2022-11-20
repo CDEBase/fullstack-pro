@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable consistent-return */
+ 
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-console */
+ 
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Schema, Connection } from 'mongoose';
-import { Container } from 'inversify';
 import { CdmLogger } from '@cdm-logger/core';
+import { Container } from 'inversify';
+import { Connection,Schema } from 'mongoose';
 
 export const MigrationSchema = new Schema({
 	migrated_at: Date,
@@ -21,7 +21,7 @@ export async function migrate(
 	logger: CdmLogger.ILogger
 ) {
 	try {
-		const migrations = container.getAll<{ up: any; id: any }>(
+		const migrations = container.getAll<{ id: any, up: any; }>(
 			'MongodbMigration'
 		);
 		const model = db.model<any, any>('Migration', MigrationSchema);

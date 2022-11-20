@@ -1,26 +1,27 @@
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider } from '@apollo/client';
 import { getDataFromTree } from '@apollo/client/react/ssr';
-import { Html } from './ssr/html';
-import Helmet from 'react-helmet';
-import path from 'path';
-import fs from 'fs';
+import { logger } from '@cdm-logger/server';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+import createEmotionServer from '@emotion/server/create-instance';
+import { ChunkExtractor } from '@loadable/server';
 import { renderToMarkup, renderToSheetList } from 'fela-dom';
+import fs from 'fs';
+import { createMemoryHistory } from 'history';
+import path from 'path';
+import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server';
+import * as ReactFela from 'react-fela';
+import Helmet from 'react-helmet';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { logger } from '@cdm-logger/server';
-import { ChunkExtractor } from '@loadable/server';
-import { createMemoryHistory } from 'history';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import createEmotionServer from '@emotion/server/create-instance';
+
 import { createClientContainer } from '../config/client.service';
-import * as ReactFela from 'react-fela';
 import createRenderer from '../config/fela-renderer';
-import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
+import { createReduxStore } from '../config/redux-config';
 import clientModules, { MainRoute } from '../modules';
+import { Html } from './ssr/html';
 
 let assetMap;
 const key = 'custom';
@@ -31,7 +32,7 @@ async function renderServerSide(req, res) {
 	try {
 		const { apolloClient: client } = createClientContainer();
 
-		let context: { pageNotFound?: boolean; url?: string } = {
+		const context: { pageNotFound?: boolean; url?: string } = {
 			pageNotFound: false,
 		};
 		const history = createMemoryHistory({ initialEntries: [req.url] });

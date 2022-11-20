@@ -1,27 +1,28 @@
-/* eslint-disable import/namespace */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
+ 
+ 
+ 
 // version 08/25/2021
-import * as http from 'http';
-import * as express from 'express';
-import { logger as serverLogger } from '@cdm-logger/server';
-import { Feature } from '@common-stack/server-core';
-import { ContainerModule, interfaces, Container } from 'inversify';
-import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
-import { CommonType } from '@common-stack/core';
-import * as _ from 'lodash';
 import { CdmLogger } from '@cdm-logger/core';
-import { expressApp } from './express-app';
-import { GraphqlServer } from './server-setup/graphql-server';
-import { config } from './config';
-import { ConnectionBroker } from './connectors/connection-broker';
-import { brokerConfig } from './config/moleculer.config';
-import modules, { settings } from './modules';
+import { logger as serverLogger } from '@cdm-logger/server';
+import { CommonType } from '@common-stack/core';
+import { Feature } from '@common-stack/server-core';
+import * as express from 'express';
+import * as http from 'http';
+import { Container,ContainerModule, interfaces } from 'inversify';
+import * as _ from 'lodash';
+import { ServiceBroker, ServiceSettingSchema } from 'moleculer';
+
 import { GatewaySchemaBuilder } from './api/schema-builder';
-import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
+import { config } from './config';
+import { brokerConfig } from './config/moleculer.config';
+import { ConnectionBroker } from './connectors/connection-broker';
+import { expressApp } from './express-app';
 import { IModuleService } from './interfaces';
-import { migrate } from './utils/migrations';
 import { InterNamespaceMiddleware } from './middleware/moleculer-inter-namespace';
+import modules, { settings } from './modules';
+import { GraphqlServer } from './server-setup/graphql-server';
+import { WebsocketMultiPathServer } from './server-setup/websocket-multipath-update';
+import { migrate } from './utils/migrations';
 // This is temp and will be replaced one we add support for rules in Feature
 
 type ILogger = CdmLogger.ILogger;
@@ -81,7 +82,7 @@ export class StackServer {
 	public async initialize() {
 		this.logger.info('StackServer initializing');
 
-		// eslint-disable-next-line import/namespace
+		 
 		this.connectionBroker = new ConnectionBroker(
 			brokerConfig.transporter,
 			this.logger

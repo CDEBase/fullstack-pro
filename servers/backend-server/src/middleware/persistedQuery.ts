@@ -1,10 +1,11 @@
-import { invert, isArray } from 'lodash';
-import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
 import { logger } from '@cdm-logger/server';
+import { invert, isArray } from 'lodash';
 
-let reqlib: any = require('app-root-path');
+import { GRAPHIQL_ROUTE } from '../ENDPOINTS';
 
-let persistCache = true;
+const reqlib: any = require('app-root-path');
+
+const persistCache = true;
 let queryMap;
 try {
 	queryMap = reqlib.require(

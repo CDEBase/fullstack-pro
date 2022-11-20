@@ -1,10 +1,10 @@
-/* eslint-disable no-return-assign */
-import { PubSub, PubSubEngine } from 'graphql-subscriptions';
-import { NatsPubSub } from 'graphql-nats-subscriptions';
-import { wrapPubSub } from 'apollo-logger';
-import { logger } from '@cdm-logger/server';
-import { GenericObject } from 'moleculer';
+ 
 import { CdmLogger } from '@cdm-logger/core';
+import { logger } from '@cdm-logger/server';
+import { wrapPubSub } from 'apollo-logger';
+import { NatsPubSub } from 'graphql-nats-subscriptions';
+import { PubSub, PubSubEngine } from 'graphql-subscriptions';
+import { GenericObject } from 'moleculer';
 
 type ILogger = CdmLogger.ILogger;
 

@@ -1,9 +1,10 @@
-import * as url from 'url';
-import { GraphqlSubscriptionServer } from './graphql-subscription-server';
-import * as WebSocket from 'ws';
-import { IModuleService } from '../interfaces';
+import { RedisCache,RedisClusterCache } from 'apollo-server-cache-redis';
 import { Server } from 'http';
-import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
+import * as url from 'url';
+import * as WebSocket from 'ws';
+
+import { IModuleService } from '../interfaces';
+import { GraphqlSubscriptionServer } from './graphql-subscription-server';
 
 interface WebSocketsCache {
 	[key: string]: WebSocket.Server;
@@ -26,7 +27,7 @@ export class WebsocketMultiPathServer {
 		);
 		this.webSockets[__GRAPHQL_ENDPOINT__] =
 			this.graphqlSubscriptionServer.create().server;
-		for (let key in multiplePathConfig) {
+		for (const key in multiplePathConfig) {
 			if (!multiplePathConfig.hasOwnProperty(key)) {
 				continue;
 			}
@@ -62,7 +63,7 @@ export class WebsocketMultiPathServer {
 
 	public close() {
 		// tslint:disable-next-line:forin
-		for (let key in this.webSockets) {
+		for (const key in this.webSockets) {
 			this.webSockets[key].close();
 		}
 	}

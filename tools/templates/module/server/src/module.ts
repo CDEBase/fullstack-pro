@@ -1,12 +1,12 @@
-import * as _ from 'lodash';
 import { TaggedType } from '@common-stack/core';
 import { Feature } from '@common-stack/server-core';
+import { interfaces } from 'inversify';
+import * as _ from 'lodash';
 
+import { config } from './config';
 import { TYPES } from './constants';
 import { activityModule, activityModuleNats } from './containers';
-import { interfaces } from 'inversify';
 import { IActivityCollector } from './interfaces';
-import { config } from './config';
 
 const createActivityServiceFunc = (container: interfaces.Container) => {
 	const environment = container.get('Environment');

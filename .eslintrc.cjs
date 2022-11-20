@@ -80,7 +80,8 @@ module.exports = {
 			rules: {
 				'jsonc/sort-keys': 'error',
 			},
-			extends: ['plugin:jsonc/recommended-with-json'],
+			extends: ['plugin:jsonc/recommended-with-json', 'plugin:package-json/recommended'],
+			plugins: ['package-json']
 		},
 		{
 			files: '**/*.test.ts',
@@ -93,7 +94,14 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		tsconfigRootDir: __dirname,
-		project: ['./tsconfig.json'],
+		project: [
+			'./tsconfig.eslint.json',
+			'./packages/*/tsconfig.json',
+			'./packages-modules/*/tsconfig.json',
+			'./servers/*/tsconfig.json',
+		],
+		warnOnUnsupportedTypeScriptVersion: false,
+		EXPERIMENTAL_useSourceOfProjectReferenceRedirect: false,
 	},
 	plugins: ['@typescript-eslint', 'simple-import-sort', 'typescript-sort-keys'],
 	root: true,

@@ -1,15 +1,16 @@
-/* eslint-disable import/no-extraneous-dependencies */
+ 
 /* eslint-disable import/namespace */
-import { logger as serverLogger } from '@cdm-logger/server';
-import { Feature } from '@common-stack/server-core';
-import { ContainerModule, interfaces, Container } from 'inversify';
-import { ServiceBroker } from 'moleculer';
-import { CommonType } from '@common-stack/core';
 import { CdmLogger } from '@cdm-logger/core';
-import * as brokerConfig from './config/moleculer.config';
-import modules, { settings } from './modules';
+import { logger as serverLogger } from '@cdm-logger/server';
+import { CommonType } from '@common-stack/core';
+import { Feature } from '@common-stack/server-core';
+import { Container,ContainerModule, interfaces } from 'inversify';
+import { ServiceBroker } from 'moleculer';
+
 import { config } from './config';
+import * as brokerConfig from './config/moleculer.config';
 import { ConnectionBroker } from './connectors/connection-broker';
+import modules, { settings } from './modules';
 
 type ILogger = CdmLogger.ILogger;
 

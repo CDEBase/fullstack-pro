@@ -1,7 +1,7 @@
-import * as nats from 'nats';
-import * as _ from 'lodash';
-import { logger } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
+import { logger } from '@cdm-logger/server';
+import * as _ from 'lodash';
+import * as nats from 'nats';
 
 type ILogger = CdmLogger.ILogger;
 
