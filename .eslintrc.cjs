@@ -72,7 +72,7 @@ module.exports = {
 				'plugin:import/typescript',
 			],
 			files: ['**/*.{ts,tsx}'],
-			globals: [...common.globals],
+			globals: common.globals,
 		},
 		{
 			files: '*.json',
