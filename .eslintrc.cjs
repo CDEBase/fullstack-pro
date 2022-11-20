@@ -46,6 +46,12 @@ const common = {
 		__API_URL__: true,
 		__WEBSITE_URL__: true,
 		__FRONTEND_BUILD_DIR__: true,
+		__API_SERVER_PORT__: true,
+		__WEB_SERVER_PORT__: true,
+		__WEB_DEV_SERVER_PORT__: true,
+		__SERVER_PROTOCOL__: true,
+		__SERVER_HOST__: true,
+		__GRAPHQL_ENDPOINT__: true,
 	},
 };
 module.exports = {
