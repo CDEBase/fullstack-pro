@@ -2,7 +2,6 @@
 
 [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) allow us to run `yarn install` only once, although we have several packages. Yarn uses a single lock file rather than a different one for each project, which means fewer conflicts. Once all the dependencies are installed together, Yarn can better optimize them. Its most important feature is that when we have one package depending on another package of our repository, yarn link them together, allowing us to use always the most up-to-date code available.
 
-
 ## Yarn & Yarn Workspaces
 
 ### Set up yarn
@@ -68,7 +67,7 @@ In the **package.json** file, we add the **workspaces** key with a list of globs
 }
 ```
 
-In the **lerna.json** file, we can remove the **packages** key because the  **workspaces** key in the **package.json** file overrides it. We also need to add the **useWorkspaces** key with the value `true`.
+In the **lerna.json** file, we can remove the **packages** key because the **workspaces** key in the **package.json** file overrides it. We also need to add the **useWorkspaces** key with the value `true`.
 
 ```json[lerna.json]
 {
@@ -79,4 +78,5 @@ In the **lerna.json** file, we can remove the **packages** key because the  **wo
 ```
 
 ### Lerna
+
 - [Getting Started with lerna](./lerna-build-tools.md)

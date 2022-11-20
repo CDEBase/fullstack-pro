@@ -2,29 +2,28 @@ scalar AnyObject
 scalar JSON
 scalar JSONObject
 type FieldError {
-  field: String!
-  message: String!
+	field: String!
+	message: String!
 }
 
 type Query {
-    dummy: Int
+	dummy: Int
 }
 
 type Mutation {
-    dummy: Int
+	dummy: Int
 }
 
 type Subscription {
-    dummy: Int
+	dummy: Int
 }
 
 interface Node {
-      id: ID!
+	id: ID!
 }
 
-
 schema {
-    query: Query
-    mutation: Mutation
-    subscription: Subscription
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
 }

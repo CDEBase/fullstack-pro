@@ -1,8 +1,6 @@
-
-
 # Jenkins Deployment
 
-The branches used for Jenkins deployment will be `devpublish` for testing `develop` branch. This is used for pre production testing. 
+The branches used for Jenkins deployment will be `devpublish` for testing `develop` branch. This is used for pre production testing.
 
 `publish` branch is used for testing `master` branch. This is also used for production deployment.
 
@@ -13,4 +11,3 @@ All modification in `Jenkinsfile` should be done in `develop` branch. As these c
 ```
 yarn devpublish:push
 ```
-

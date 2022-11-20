@@ -1,12 +1,10 @@
+# What is lerna?
 
-What is lerna?
-===
 [Lerna](https://github.com/lerna/lerna) allows us to manage multiple packages inside the same repository instead of creating one repository per package. With Lerna, we can unify processes like linting, building, testing, and releasing, have a single place to report issues, and becomes easier to set up our development environment.
 
+## Things to know about current package structure
 
-Things to know about current package structure
---
-- We run `lerna` commands by wrapped into `npm/yarn` commands. 
+- We run `lerna` commands by wrapped into `npm/yarn` commands.
 - You will notice there are following commands which run's lerna comamnds.
 
 ```json
@@ -27,29 +25,27 @@ Things to know about current package structure
 }
 ```
 
-Details on each command that wrapped for lerna
---
+## Details on each command that wrapped for lerna
+
 - `yarn install` - This command need to be run in the root of the package only to install all the dependencies. We have post step(`postinstall`) to run `yarn lerna` after install finishes so `lerna` will installs all of packages (seen under packages directory) dependencies and links any cross-dependencies.
-Note: We do not need to run `yarn` under any packages with `package.json` files seen under `packages` and `servers` directories. 
+  Note: We do not need to run `yarn` under any packages with `package.json` files seen under `packages` and `servers` directories.
 - `yarn lerna` - This triggers `lerna bootstrap --hoist`. Normally this get triggered as post install step. You can run this command to install any packages' dependencies. More information about this command can be found [here](https://github.com/lerna/lerna/blob/master/doc/hoist.md). The bottom line, the `hoist` will try to install all common dependencies to the top-level node_modules, and omitted from individual package's `node_modules`.
-The outlier packages with different versions will get a normal, local node_modules installation of the necessary dependencies.
+  The outlier packages with different versions will get a normal, local node_modules installation of the necessary dependencies.
 - `yarn clean` - Removes the `node_modules` directory from all packages.
 - `yarn clean:force` - Removes the `node_modules` directory from all packages as well as `package-lock.json` file.
-- `yarn build` - It invokes `yarn build` in each packages parallely. 
+- `yarn build` - It invokes `yarn build` in each packages parallely.
 - `yarn watch` - Automatically builds the packages that are changed. Recommended to run this when actively coding, so you would know anything (compilation errors) breaks instantly. You may also see `Error: ENOSPC: System limit for number of file watchers reached` if you OS is not configured with high open files. Check [Not Enough Watchers](#not-enough-watchers) section for futher information.
-- `yarn watch-packages` - Abutomatically builds the dependent packages mostly under `packages` folder. 
+- `yarn watch-packages` - Abutomatically builds the dependent packages mostly under `packages` folder.
 - `yarn watch-packages -- --scope @sample-stack/counter-module-*` - By adding package module you like to watch along with the dependent packages. If you have more packages to watch keep adding with `-- --scope packageA* --scope packageB`
 
+## Not Enough Watchers
 
-
-Not Enough Watchers
-----
-Based on the project, we may have multiple `packages` and `packages-modules` to watch for file changes in order to automatically apply the changes in the browser. 
-When we have more modules to watch, we need laptop resource to support it. If the laptop OS is configured with default `open files`, we need to increase it. 
+Based on the project, we may have multiple `packages` and `packages-modules` to watch for file changes in order to automatically apply the changes in the browser.
+When we have more modules to watch, we need laptop resource to support it. If the laptop OS is configured with default `open files`, we need to increase it.
 Follow notes from webpack to change OS configuration to increase file watchers https://webpack.js.org/configuration/watch/#not-enough-watchers
 
-But, in case, if you are working in only one or two modules and need to watch them only then you can run below command on each packages, 
-respectively. 
+But, in case, if you are working in only one or two modules and need to watch them only then you can run below command on each packages,
+respectively.
 
 `lerna exec --scope=<package name> yarn watch`
 
@@ -60,10 +56,9 @@ lerna exec --scope=@sample-stack/counter-module-browser yarn watch
 lerna exec --scope=@sample-stack/counter-module-server yarn watch
 ```
 
-Adding packages as dependencies to sibling packages (not needed anymore)
---
-When you add sibling package to one of the packages, you need to run `yarn lerna` symlink the packages that are dependencies of each other.
+## Adding packages as dependencies to sibling packages (not needed anymore)
 
+When you add sibling package to one of the packages, you need to run `yarn lerna` symlink the packages that are dependencies of each other.
 
 ### List packages
 
@@ -73,13 +68,13 @@ Using the following folder structure, versions, and privacy as an example:
 fullstack-pro/
 ├── packages
 │   ├── sample-core         # 1.1.1 - public
-│   ├── sample-platform    
+│   ├── sample-platform
 │   │   ├── browser         # 1.1.1 - public
 │   │   └── server          # 1.1.1 - public
 │   ...
 ├── packages-modules
-│   └── counter 
-│   │   ├── browser     
+│   └── counter
+│   │   ├── browser
 │   │   └── server
 ├── servers
 │   ├── backend-server      # 1.0.0 - private
@@ -172,6 +167,7 @@ When we use scoped packages, naming is not a problem because we are naming packa
 If I were creating a new scoped package called **core**, its name in the **package.json** file would be **@sample-stack/core**.
 
 ## Dependencies
+
 The dependencies of our projects are registered inside the **package.json** file. This file is usually in the project's root folder, but it is also inside each package in the Lerna projects. **Each package has its dependencies.**
 
 ```bash
@@ -207,6 +203,7 @@ fullstack-pro/
 |── package.json
 └── lerna.json
 ```
+
 To add dependencies to the packages, Lerna provides us the command `lerna add`. Note that only a single package can be added at a time compared to `yarn add` or `yarn install`.
 
 ### Add dependencies
@@ -249,7 +246,7 @@ lerna add lodash -w  --dev
 
 ### Add peerDependencies
 
-The  **peerDependencies** key is **used when our package has a dependency that can also be a dependency of the project using it**. If our package has a dependency that can also be used by its dependent, we can specify the version required by us and the dependent will receive a warning when not matching that requirement.
+The **peerDependencies** key is **used when our package has a dependency that can also be a dependency of the project using it**. If our package has a dependency that can also be used by its dependent, we can specify the version required by us and the dependent will receive a warning when not matching that requirement.
 
 ```bash
 # add a peerDependency to one package
@@ -271,24 +268,31 @@ Well, that is a problem. Lerna has no direct command to upgrade dependencies, wh
 yarn upgrade lodash
 ```
 
-However, when we want to  upgrade a dependency inside a package, nothing seems to work. Using `lerna exec` as we use it to remove dependencies does not work.
+However, when we want to upgrade a dependency inside a package, nothing seems to work. Using `lerna exec` as we use it to remove dependencies does not work.
 
 For now, what we do is manually update the dependencies version in the `package.json` file of each package and then run `yarn install`.
-
 
 ### Updating all sub packages of a **scoped** packages to newest release
 
 To update in all packages
+
 ```
-lerna exec "ncu -u --newest --timeout 60000 -f /@sample-stack*/"
+lerna exec "ncu -u --semverLevel minor --timeout 60000 -f /@sample-stack*/"
 ```
 
 To update in the root package.json
+
 ```
-ncu -u --newest --timeout 60000 -f /@sample-stack*/
+ncu -u --semverLevel minor --timeout 60000 -f /@sample-stack*/
 ```
 
-***note** after updating packages you need to run `yarn` to install them. 
+To update the major version. You need to check with team before updating major version
+
+```
+lerna exec "ncu -u --semverLevel major --timeout 60000 -f /@sample-stack*/"
+```
+
+**\*note** after updating packages you need to run `yarn` to install them.
 
 ### Removing dependencies
 
@@ -331,6 +335,7 @@ lerna diff
 # modifications in a specific package
 lerna diff @sample-stack/counter-module-browser
 ```
+
 ## Publish
 
 To publish our packages using Lerna we use the command `lerna publish` but, first, let's configure Lerna only to allow us to create newer versions of our packages from our main branch (eg. master).
@@ -359,6 +364,7 @@ To publish a **scoped package** we also need to set the `publishConfig.access` t
   }
 }
 ```
+
 Setting this configuration in a package without a scope fails to publish.
 
 Imagine that we started developing the **sample-core** package, and although we merged some initial versions, we didn't finish yet, and **we don't want to release it to npm yet**. We can add to its **package.json** the **private** key with the value `true`, and Lerna will ignore it.
@@ -452,17 +458,20 @@ lerna publish
 Lerna allows us to use the [Conventional Commits Specification](https://www.conventionalcommits.org/) to determine the bump version and generate the CHANGELOG.md files automatically.
 
 Follow the specification, when we are creating a new release, Lerna checks all the commits since the last release and it increments:
+
 - the PATCH number when the subject of the commit is prefixed with `fix:`;
 - the MINOR number when the subject of the commit is prefixed with `feat:`. It has precedence over the PATCH;
-- the MAJOR number when in the body of some commit it finds a string `BREAKING CHANGE:`. It can have any type provided in the subject and it has precedence over PATCH and MINOR. 
+- the MAJOR number when in the body of some commit it finds a string `BREAKING CHANGE:`. It can have any type provided in the subject and it has precedence over PATCH and MINOR.
 
 Considering that we are using fixed versions and our project is in the version `1.0.0`. If we try to create a new release with the following commit, our project version is updated to `1.0.1`.
+
 ```bash
 # commit 1
 subject -> "fix: fix button font size"
 ```
 
 Then, if we do two more commits and publish again, the version is updated to `1.1.0`.
+
 ```bash
 # commit 1
 subject -> "fix: fix button border-radius"
@@ -471,6 +480,7 @@ subject -> "feat: added loading status to the button"
 ```
 
 Finally, if we do three more commits, the version is updated to `2.0.0`.
+
 ```bash
 # commit 1
 subject -> "fix: fix button text color"
@@ -490,7 +500,7 @@ To do that, we update our `lerna.json` file:
   ...
   "command": {
     "publish": {
-       "conventionalCommits": true, 
+       "conventionalCommits": true,
        "yes": true
     }
   }

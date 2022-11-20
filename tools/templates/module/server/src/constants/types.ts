@@ -1,34 +1,34 @@
 export const TYPES = {
-    ActivityStorage: 'ActivityStorage',
-    ActivityCollector: 'ActivityCollector',
-    ActivityDBConnection: 'ActivityDBConnection',
+	ActivityStorage: 'ActivityStorage',
+	ActivityCollector: 'ActivityCollector',
+	ActivityDBConnection: 'ActivityDBConnection',
 };
 
 export enum EActivityScopes {
-    User = 'user',
-    Team = 'team',
-    Cluster = 'cluster',
-    Default = 'default',
-    Workspace = 'workspace',
-    Organization = 'organization',
+	Cluster = 'cluster',
+	Default = 'default',
+	Organization = 'organization',
+	Team = 'team',
+	User = 'user',
+	Workspace = 'workspace'
 }
 
 export const MODELS = {
-    ActivityStorageModel: 'ActivityStorageModel',
+	ActivityStorageModel: 'ActivityStorageModel',
 };
 
 export enum HemeraTopics {
-    ActivityStorage = 'ActivityStorage',
-    ActivityCollector = 'ActivityCollector',
+	ActivityCollector = 'ActivityCollector',
+	ActivityStorage = 'ActivityStorage'
 }
 
 export enum HemeraCommands {
-    Collect = 'Collect',
+	Collect = 'Collect',
 
-    StorageSet = 'StorageSet',
-    StorageGet = 'StorageGet',
-    StorageDelete = 'StorageDelete',
+	StorageDelete = 'StorageDelete',
+	StorageGet = 'StorageGet',
+	StorageGetActive = 'StorageGetActive',
 
-    StorageGetActive = 'StorageGetActive',
-    StorageGetInactive = 'StorageGetInactive',
+	StorageGetInactive = 'StorageGetInactive',
+	StorageSet = 'StorageSet'
 }

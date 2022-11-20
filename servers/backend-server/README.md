@@ -1,8 +1,9 @@
 # webpack-apollo-server
+
 Starter kit for apollo server using webpack and typescript
 
-What does it include:
-----
+## What does it include:
+
     1. exported schema as example for GraphQL Schema
     2. Working Apollo Server (webpack + tslint + tsloader)
     3. Typescript 2.0.0 => ES6
@@ -11,28 +12,28 @@ What does it include:
     6. working with graphql-tools
     7. standard-version for auto SemVer.
 
-Notes
-----
+## Notes
+
 Please note that you will need to rename the library name in some files:
 
     1. package.json (ofcourse ;))
 
-Useful commands:
-----
+## Useful commands:
+
     yarn build       - build the library files (Required for start:watch)
     yarn build:watch - build the library files in watchmode (Useful for development)
     npm test            - run tests once
     yarn test:watch  - run tests in watchmode (Useful for development)
     yarn test:growl  - run tests in watchmode with growl notification (even more useful for development)
 
-How to run it:
-----
+## How to run it:
+
 ```bash
     npm start
 ```
 
-Files explained:
-----
+## Files explained:
+
     1. src                         - directory is used for typescript code that is part of the project
         1a. main.ts                - Main server file. (Starting Apollo server)
         1b. main.spec.ts           - Tests file for main
@@ -50,35 +51,37 @@ Files explained:
     10. Dockerfile                 - Dockerfile used to describe how to make a container out of apollo server
     11. mocha-webpack.opts         - Options file for mocha-webpack
 
-Output files explained:
-----
+## Output files explained:
+
     1. node_modules - directory npm creates with all the dependencies of the module (result of yarn install)
     2. dist         - directory contains the compiled server (javascript)
     3. html-report  - output of npm test, code coverage html report.
 
+## Database
 
-Database
-----
 Connects to memory database through Knex
 
 Database configuration is set in `db-config.json`
 
-Setup
-----
+## Setup
+
 Create a database and fill the data
+
 ```
-yarn db:seed         
+yarn db:seed
 ```
-What files to be customized? 
-----
+
+## What files to be customized?
+
 Customizable files for a specific project would be the following
+
 ```
 src/container
 src/middleware/graphql.ts
 ```
 
-The Person type - dynamic/parametrized query and drill down:
-----
+## The Person type - dynamic/parametrized query and drill down:
+
 The person type was added to demonstrate a database like access, parametrized queries, resolvers and drill down.
 The data is currently hard coded but simulates a storage. Each person has an id, name and sex. It also has a dynamic
 field called matches. For demonstration purposes, this field will retrieve all members of the other sex by using a

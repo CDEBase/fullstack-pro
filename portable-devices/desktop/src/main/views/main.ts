@@ -7,43 +7,43 @@ import { IPC_EVENTS } from '../../common';
 
 @provideSingleton(ElectronTypes.MainWindow)
 export class MainWindow {
-    private window: BrowserWindow;
+	private window: BrowserWindow;
 
-    constructor() {
-        this.startWindow();
-    }
+	constructor() {
+		this.startWindow();
+	}
 
-    private startWindow() {
-        this.window = createWindow({
-            name: 'main-page',
-            show: true,
-            remote: true,
-            webPreferences: {
-                nodeIntegration: true,
-                webSecurity: false,
-                enableRemoteModule: true,
-                // add preload to load esm
-                preload: path.resolve(path.join(__dirname, 'preload.js')),
-            },
-        });
-        this.window.on('close', (event) => {
-            (event as any).sender.hide();
-            event.preventDefault(); // prevent quit process
-        });
-        // Custom events MAIN WINDOW
-        ipcMain.on(IPC_EVENTS.SHOW_MAIN, function () {
-            if (this.window) {
-                this.window.show();
-            }
-        });
-    }
+	private startWindow() {
+		this.window = createWindow({
+			name: 'main-page',
+			show: true,
+			remote: true,
+			webPreferences: {
+				nodeIntegration: true,
+				webSecurity: false,
+				enableRemoteModule: true,
+				// add preload to load esm
+				preload: path.resolve(path.join(__dirname, 'preload.js')),
+			},
+		});
+		this.window.on('close', (event) => {
+			(event as any).sender.hide();
+			event.preventDefault(); // prevent quit process
+		});
+		// Custom events MAIN WINDOW
+		ipcMain.on(IPC_EVENTS.SHOW_MAIN, function () {
+			if (this.window) {
+				this.window.show();
+			}
+		});
+	}
 
-    show() {
-        this.window.show();
-    }
+	show() {
+		this.window.show();
+	}
 
-    close() {
-        this.window.close();
-        this.window = null;
-    }
+	close() {
+		this.window.close();
+		this.window = null;
+	}
 }

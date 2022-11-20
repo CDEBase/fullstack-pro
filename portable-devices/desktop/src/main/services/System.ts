@@ -6,11 +6,11 @@ import { isMacOS } from '../../common';
 
 @provideSingleton(SystemService)
 export class SystemService {
-    /**
-     * Check availability
-     */
-    checkAccessibilityForMacOS() {
-        if (!isMacOS) return;
-        return systemPreferences.isTrustedAccessibilityClient(true);
-    }
+	/**
+	 * Check availability
+	 */
+	checkAccessibilityForMacOS() {
+		if (!isMacOS) return;
+		return systemPreferences.isTrustedAccessibilityClient(true);
+	}
 }

@@ -1,31 +1,27 @@
 {
-  "extends": "../../../tsconfig.json",
-  "compilerOptions": {
-    "target": "esnext",
-    "jsx": "react-native",
-    "lib": ["es2017"],
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "rootDir": "src",
-    "outDir": "lib",
-    "declaration": true,
-    "declarationDir": "lib",
-    "types": [
-      "@types/node",
-      "@types/jest",
-      "../../../typings",
-    ],
-    "skipLibCheck": true
-  },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "jest.config.js",
-    "webpack.config.js",
-    "rollup.config.js"
-  ]
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"jsx": "react-native",
+		"lib": ["es2017"],
+		"esModuleInterop": true,
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"rootDir": "src",
+		"outDir": "lib",
+		"declaration": true,
+		"declarationDir": "lib",
+		"types": ["@types/node", "@types/jest", "../../../typings"],
+		"skipLibCheck": true
+	},
+	"include": ["src"],
+	"exclude": [
+		"node_modules",
+		"lib",
+		"jest.config.js",
+		"webpack.config.js",
+		"rollup.config.js"
+	]
 }

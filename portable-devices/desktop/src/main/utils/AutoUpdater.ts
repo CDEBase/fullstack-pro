@@ -4,7 +4,7 @@ import { provide } from 'inversify-binding-decorators';
 
 @provide(AppUpdater)
 export class AppUpdater {
-    constructor() {
-        autoUpdater.checkForUpdatesAndNotify();
-    }
+	constructor() {
+		autoUpdater.checkForUpdatesAndNotify();
+	}
 }

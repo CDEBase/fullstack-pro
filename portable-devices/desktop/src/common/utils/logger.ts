@@ -8,9 +8,9 @@ import { CdmLogger } from '@cdm-logger/core';
  * @return {function}
  */
 export const createLogProxy =
-    (logLevel: string, mainLogger: CdmLogger.ILogger) =>
-    (fn: Function) =>
-    (...args: any) => {
-        fn(...args);
-        mainLogger[logLevel](...args);
-    };
+	(logLevel: string, mainLogger: CdmLogger.ILogger) =>
+	(fn: Function) =>
+	(...args: any) => {
+		fn(...args);
+		mainLogger[logLevel](...args);
+	};

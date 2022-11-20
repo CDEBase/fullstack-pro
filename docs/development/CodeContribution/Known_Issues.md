@@ -1,14 +1,11 @@
-
-
 # Kown Issues
-
 
 1. EACCES: permission denied, scandir .....
 
 Follow the workaround https://github.com/cdmbase/fullstack-pro/issues/176
 
 2. OS X: "Error: EMFILE: too many open files, watch"
-Follow https://github.com/facebook/create-react-app/issues/4540
+   Follow https://github.com/facebook/create-react-app/issues/4540
 
 ```
 brew install watchman

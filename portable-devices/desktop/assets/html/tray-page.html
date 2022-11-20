@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<script>
+			require('source-map-support/source-map-support.js').install();
+		</script>
+		<link href="styles.css" rel="stylesheet" />
+		<script type="text/javascript">
+			window.ipcRenderer = require('electron').ipcRenderer;
+		</script>
+	</head>
 
-<head>
-  <script>require("source-map-support/source-map-support.js").install()</script>
-  <link href="styles.css" rel="stylesheet">
-  <script type='text/javascript'>
-    window.ipcRenderer = require('electron').ipcRenderer;
-  </script>
-</head>
+	<body>
+		<div id="app"></div>
 
-<body>
-  <div id="app"></div>
+		<script type="text/javascript">
+			var bundlePath = './tray.js';
+			if (process.env.NODE_ENV === 'development') {
+				bundlePath = `http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}/tray.js`;
+			}
 
-  <script type='text/javascript'>
-    var bundlePath = './tray.js';
-    if (process.env.NODE_ENV === 'development') {
-      bundlePath = `http://${process.env.ELECTRON_WEBPACK_WDS_HOST}:${process.env.ELECTRON_WEBPACK_WDS_PORT}/tray.js`;
-    }
-
-    var js_script = document.createElement('script');
-    js_script.src = bundlePath;
-    js_script.async = true;
-    document.body.appendChild(js_script);
-
-  </script>
-</body>
-
+			var js_script = document.createElement('script');
+			js_script.src = bundlePath;
+			js_script.async = true;
+			document.body.appendChild(js_script);
+		</script>
+	</body>
 </html>

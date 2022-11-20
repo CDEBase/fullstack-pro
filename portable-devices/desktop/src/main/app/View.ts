@@ -6,32 +6,32 @@ import { logAfter, logBefore, provideSingleton } from '../utils';
 
 @provideSingleton(View)
 export class View {
-    @inject(ElectronTypes.MainWindow)
-    main!: MainWindow;
+	@inject(ElectronTypes.MainWindow)
+	main!: MainWindow;
 
-    @inject(ElectronTypes.AboutWindow)
-    about!: AboutWindow;
+	@inject(ElectronTypes.AboutWindow)
+	about!: AboutWindow;
 
-    @inject(ElectronTypes.TrayWindow)
-    tray!: TrayWindow;
+	@inject(ElectronTypes.TrayWindow)
+	tray!: TrayWindow;
 
-    /**
-     * Process all window initialization
-     */
-    @logBefore('[View] Initialization...')
-    @logAfter('[View] Initialization complete!')
-    init() {
-        // Window on the bridge
-        // global.windows = {
-        //     home: this.home,
-        //     tray: this.tray,
-        //     about: this.about,
-        // };
-    }
+	/**
+	 * Process all window initialization
+	 */
+	@logBefore('[View] Initialization...')
+	@logAfter('[View] Initialization complete!')
+	init() {
+		// Window on the bridge
+		// global.windows = {
+		//     home: this.home,
+		//     tray: this.tray,
+		//     about: this.about,
+		// };
+	}
 
-    close() {
-        this.main.close();
-        this.about.close();
-        this.tray.close();
-    }
+	close() {
+		this.main.close();
+		this.about.close();
+		this.tray.close();
+	}
 }

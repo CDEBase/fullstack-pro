@@ -10,7 +10,6 @@
 // import { Provider } from 'react-redux';
 // import './setup';
 
-
 // describe('components/Counter', () => {
 //   it('renders', () => {
 //     const store: any = createStore(combineReducers<Store.Sample>(reducers));
@@ -33,13 +32,11 @@
 //       );
 //     });
 
-
 //     it('+++ check Props after increments counter', () => {
 //       const increment = counter.find('button').first();
 //       increment.simulate('click');
 //       increment.simulate('click');
 //       increment.simulate('click');
-
 
 //       const getText = () => counter.find('pre').text();
 //       expect(JSON.parse(getText()).counter.value).toBe(3);

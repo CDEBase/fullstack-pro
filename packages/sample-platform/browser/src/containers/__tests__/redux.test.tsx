@@ -26,7 +26,6 @@
 //             { request: { query, variables: variables2 }, result: { data: data2 } },
 //         );
 
-
 //         const client = new ApolloClient({ networkInterface, addTypename: false });
 //         let wrapper;
 
@@ -49,7 +48,6 @@
 //             }),
 //             applyMiddleware(client.middleware()),
 //         );
-
 
 //         class Component extends React.Component<any, any> {
 //             public componentWillReceiveProps(nextProps) {

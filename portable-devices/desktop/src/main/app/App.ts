@@ -10,46 +10,46 @@ import { View } from './View';
 
 @provideSingleton(App)
 export class App {
-    constructor() {
-        app.whenReady().then(() => {
-            this.services.init();
+	constructor() {
+		app.whenReady().then(() => {
+			this.services.init();
 
-            this.views.init();
+			this.views.init();
 
-            logger.info('The app is initialized!');
-        });
+			logger.info('The app is initialized!');
+		});
 
-        app.on('window-all-closed', () => {
-            if (windows()) {
-                app.quit();
-            }
-        });
-        app.on('activate', this.onActivate);
+		app.on('window-all-closed', () => {
+			if (windows()) {
+				app.quit();
+			}
+		});
+		app.on('activate', this.onActivate);
 
-        app.on('before-quit', () => {
-            this.beforeQuit();
-            app.exit();
-        });
+		app.on('before-quit', () => {
+			this.beforeQuit();
+			app.exit();
+		});
 
-        ipcMain.on('show-main-window-event', () => {
-            app.dock.show();
-        });
+		ipcMain.on('show-main-window-event', () => {
+			app.dock.show();
+		});
 
-        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-    }
+		Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+	}
 
-    @inject(View)
-    views!: View;
+	@inject(View)
+	views!: View;
 
-    @inject(Service)
-    services!: Service;
+	@inject(Service)
+	services!: Service;
 
-    onActivate = () => {
-        this.views.main.show();
-        app.dock.show();
-    };
+	onActivate = () => {
+		this.views.main.show();
+		app.dock.show();
+	};
 
-    beforeQuit() {
-        this.views.close();
-    }
+	beforeQuit() {
+		this.views.close();
+	}
 }

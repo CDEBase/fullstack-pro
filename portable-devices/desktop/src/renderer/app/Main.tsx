@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/client';
@@ -18,29 +17,29 @@ const { apolloClient: client } = createClientContainer();
 
 const { store, history } = createReduxStore();
 export class Main extends React.Component<{}, {}> {
-    render() {
-        const renderer = createRenderer();
-        const persistor = persistStore(store);
-        rehydrate(renderer);
-        return (
-            <ErrorBoundary>
-                <Provider store={store}>
-                    <ApolloProvider client={client}>
-                        <RendererProvider renderer={renderer}>
-                            <PersistGate persistor={persistor}>
-                                <PluginArea />
-                                {modules.getWrappedRoot(
-                                    <ConnectedRouter history={history}>
-                                        <MainRoute />
-                                    </ConnectedRouter>,
-                                )}
-                            </PersistGate>
-                        </RendererProvider>
-                    </ApolloProvider>
-                </Provider>
-            </ErrorBoundary>
-        );
-    }
+	render() {
+		const renderer = createRenderer();
+		const persistor = persistStore(store);
+		rehydrate(renderer);
+		return (
+			<ErrorBoundary>
+				<Provider store={store}>
+					<ApolloProvider client={client}>
+						<RendererProvider renderer={renderer}>
+							<PersistGate persistor={persistor}>
+								<PluginArea />
+								{modules.getWrappedRoot(
+									<ConnectedRouter history={history}>
+										<MainRoute />
+									</ConnectedRouter>
+								)}
+							</PersistGate>
+						</RendererProvider>
+					</ApolloProvider>
+				</Provider>
+			</ErrorBoundary>
+		);
+	}
 }
 
-export default hot(Main);
+export default Main;

@@ -5,12 +5,12 @@ import parentContainer from '../ioc';
 import { logger } from '../utils/logger';
 
 class UtilityClass {
-    // tslint:disable-next-line:no-shadowed-variable
-    constructor(private modules) {}
+	// tslint:disable-next-line:no-shadowed-variable
+	constructor(private modules) {}
 
-    public getCacheKey(storeObj) {
-        return this.modules.getDataIdFromObject(storeObj);
-    }
+	public getCacheKey(storeObj) {
+		return this.modules.getDataIdFromObject(storeObj);
+	}
 }
 
 const utility = new UtilityClass(modules);

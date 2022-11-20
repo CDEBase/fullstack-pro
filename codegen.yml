@@ -1,23 +1,23 @@
 overwrite: true
-schema: "./servers/backend-server/generated-schema.graphql"
+schema: './servers/backend-server/generated-schema.graphql'
 generates:
   typings/graphql.d.ts:
-    schema: 
-      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema:
+      - 'packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql'
       - packages-modules/counter/server/src/schema/**/*.graphql
-    documents: "packages-modules/counter/browser/src/**/*.gql"
+    documents: 'packages-modules/counter/browser/src/**/*.gql'
     plugins:
       - typescript-graphql-files-modules
   packages-modules/counter/browser/src/generated-models.ts:
-    schema: 
-      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema:
+      - 'packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql'
       - packages-modules/counter/server/src/schema/**/*.graphql
-    documents: "packages-modules/counter/browser/src/**/*.gql"
+    documents: 'packages-modules/counter/browser/src/**/*.gql'
     config:
-        noNamespaces: true
-        withMutationFn: false
-        withHOC: false
-        withComponent: false
+      noNamespaces: true
+      withMutationFn: false
+      withHOC: false
+      withComponent: false
     plugins:
       - add:
           content: /* tslint:disable */
@@ -26,10 +26,10 @@ generates:
       - typescript-resolvers
       - typescript-react-apollo
   packages-modules/counter/browser/src/apollo-server-n-client/generated-model.tsx:
-    schema: 
-      - "packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql"
+    schema:
+      - 'packages-modules/counter/browser/src/apollo-server-n-client/**/*.graphql'
       - packages-modules/counter/server/src/schema/**/*.graphql
-    documents: "packages-modules/counter/browser/src/**/*.gql"
+    documents: 'packages-modules/counter/browser/src/**/*.gql'
     config:
       withMutationFn: false
       withHOC: false
@@ -37,7 +37,7 @@ generates:
       withHooks: true
     preset: import-types-preset
     presetConfig:
-      typesPath: "../generated-models"
+      typesPath: '../generated-models'
       importTypesNamespace: SchemaTypes
     plugins:
       - add:

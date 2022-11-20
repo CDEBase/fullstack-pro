@@ -3,8 +3,8 @@ import { connectedReactRouterCounter } from '@sample-stack/counter-module-browse
 import { onCountChangedEpic } from './epics';
 
 const ElectronMainModule = new Feature({
-    reducer: { connectedReactRouterCounter },
-    epic: [onCountChangedEpic],
+	reducer: { connectedReactRouterCounter },
+	epic: [onCountChangedEpic],
 });
 
 export default new Feature(ElectronMainModule);

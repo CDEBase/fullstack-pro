@@ -1,4 +1,3 @@
-
 Refernce: https://medium.com/@j5bot/react-dynamically-rendering-different-components-without-switch-the-capitalized-reference-e668d89e460b
 
 ```

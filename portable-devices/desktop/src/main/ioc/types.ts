@@ -1,5 +1,5 @@
 const TYPES = {
-    UserRepository: Symbol.for('UserRepository'),
+	UserRepository: Symbol.for('UserRepository'),
 };
 
 export default TYPES;

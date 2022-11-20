@@ -1,5 +1,3 @@
-
-
 ## To run tests
 
     `npm link`

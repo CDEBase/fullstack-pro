@@ -13,20 +13,20 @@ export { history };
 const { apolloClient, container, services } = createClientContainer();
 
 export const epicMiddleware = createEpicMiddleware({
-    dependencies: {
-        apolloClient,
-        routes: modules.getConfiguredRoutes(),
-        services,
-        container,
-        logger,
-    },
+	dependencies: {
+		apolloClient,
+		routes: modules.getConfiguredRoutes(),
+		services,
+		container,
+		logger,
+	},
 });
 
 export const persistConfig = {
-    key: REDUX_PERSIST_KEY,
-    storage,
-    stateReconciler: autoMergeLevel2,
-    transforms: modules.reduxPersistStateTransformers,
+	key: REDUX_PERSIST_KEY,
+	storage,
+	stateReconciler: autoMergeLevel2,
+	transforms: modules.reduxPersistStateTransformers,
 };
 
 /**
@@ -34,21 +34,21 @@ export const persistConfig = {
  * `combineReducers`
  */
 export const createReduxStore = () => {
-    // middleware
-    const router = connectRouter(history);
+	// middleware
+	const router = connectRouter(history);
 
-    const store = createBaseReduxStore({
-        scope: 'browser',
-        isDebug: __DEBUGGING__,
-        isDev: process.env.NODE_ENV === 'development',
-        initialState: {},
-        persistConfig,
-        middleware: [routerMiddleware(history)],
-        epicMiddleware,
-        rootEpic: rootEpic as any,
-        reducers: { router, ...modules.reducers },
-    });
-    container.bind('ReduxStore').toConstantValue(store);
+	const store = createBaseReduxStore({
+		scope: 'browser',
+		isDebug: __DEBUGGING__,
+		isDev: process.env.NODE_ENV === 'development',
+		initialState: {},
+		persistConfig,
+		middleware: [routerMiddleware(history)],
+		epicMiddleware,
+		rootEpic: rootEpic as any,
+		reducers: { router, ...modules.reducers },
+	});
+	container.bind('ReduxStore').toConstantValue(store);
 
-    return store;
+	return store;
 };

@@ -1,16 +1,13 @@
-import { GraphQLSchema } from 'graphql';
 import { CdmLogger } from '@cdm-logger/core';
+import { GraphQLSchema } from 'graphql';
 type ILogger = CdmLogger.ILogger;
 
-
 export interface IModuleService {
-    serviceContainer: any;
-    serviceContext: any;
-    dataSource: any;
-    defaultPreferences: any;
-    createContext: any;
-    schema: GraphQLSchema;
-    logger: ILogger;
+	createContext: any;
+	dataSource: any;
+	defaultPreferences: any;
+	logger: ILogger;
+	schema: GraphQLSchema;
+	serviceContainer: any;
+	serviceContext: any;
 }
-
-

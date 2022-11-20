@@ -1,42 +1,55 @@
 {
-  "expo": {
-    "name": "FullStack Pro",
-    "owner": "cdmbase",
-    "slug": "sample-stack",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.cdebase.samplestack"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.cdmbase.samplestack"
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "a2a019ee-d784-46b5-b595-401a91c61844"
-      }
-    }
-  }
+	"expo": {
+		"name": "FullStack Pro",
+		"owner": "cdmbase",
+		"slug": "sample-stack",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "myapp",
+		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/images/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"plugins": [
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"compileSdkVersion": 31,
+						"targetSdkVersion": 31,
+						"buildToolsVersion": "31.0.0"
+					},
+					"ios": {
+						"deploymentTarget": "13.0"
+					}
+				}
+			]
+		],
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.cdebase.samplestack"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			},
+			"package": "com.cdmbase.samplestack"
+		},
+		"web": {
+			"favicon": "./assets/images/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "a2a019ee-d784-46b5-b595-401a91c61844"
+			}
+		}
+	}
 }

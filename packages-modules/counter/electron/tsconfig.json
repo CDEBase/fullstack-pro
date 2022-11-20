@@ -1,25 +1,22 @@
 {
-  "extends": "../../../tsconfig.json",
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "rootDir": "./src",
-    "outDir": "lib",
-    "declarationDir": "lib",
-    "declaration": true,
-    "declarationMap": true
-  },
-  "exclude": [
-    "node_modules",
-    "lib",
-    "dist",
-    "webpack.config.js",
-    "rollup.config.js"
-  ],
-  "include": [
-    "src",
-    "./typings/*.d.ts"
-  ]
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"rootDir": "./src",
+		"outDir": "lib",
+		"declarationDir": "lib",
+		"declaration": true,
+		"declarationMap": true
+	},
+	"exclude": [
+		"node_modules",
+		"lib",
+		"dist",
+		"webpack.config.js",
+		"rollup.config.js"
+	],
+	"include": ["src", "./typings/*.d.ts"]
 }
