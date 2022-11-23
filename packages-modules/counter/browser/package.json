@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "@sample-stack/platform-browser": "./packages/sample-platform/browser",
     "antd": "~4.15.3"
   },
   "devDependencies": {},
