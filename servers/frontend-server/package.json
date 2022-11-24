@@ -17,7 +17,7 @@
   "type": "module",
   "scripts": {
     "prebuild": "yarn build:clean",
-    "build": "cross-env NODE_ENV=production webpack -c webpack.config.cjs",
+    "build": "cross-env NODE_ENV=production webpack -c webpack.config.mjs",
     "build:clean": "rimraf dist .awcache",
     "build:debug": "cross-env DEBUGGING=true NODE_ENV=production webpack",
     "build:debug:verbose": "yarn build:debug -- -v",

@@ -1,22 +1,26 @@
 /* eslint-disable no-underscore-dangle */
-const webpack = require('webpack');
-const path = require('path');
-const waitOn = require('wait-on');
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const LoadablePlugin = require('@loadable/webpack-plugin');
-const Dotenv = require('dotenv-webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CompressionPlugin = require('compression-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const zlib = require('zlib');
-const ServerConfig = require('../../tools/webpack/server.config.cjs');
+import webpack from 'webpack';
+import path from 'path';
+import waitOn from 'wait-on';
+import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import LoadablePlugin from '@loadable/webpack-plugin';
+import Dotenv from 'dotenv-webpack';
+import dotenvSafe from 'dotenv-safe';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import CompressionPlugin from 'compression-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import zlib from 'zlib';
+import ServerConfig from '../../tools/webpack/server.config.mjs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import buildConfig from './build.config.mjs';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const bundleStats = process.env.BUNDLE_STATS || false;
-
-const buildConfig = require('./build.config.cjs');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
@@ -32,7 +36,7 @@ if (bundleStats) {
 }
 
 if (!buildConfig.__SSR__ && buildConfig.__DEV__) {
-    const dotenv = require('dotenv-safe').config({
+    const dotenv = dotenvSafe.config({
         allowEmptyValues: true,
         path: process.env.ENV_FILE,
         example: '../../config/development/dev.env',
@@ -133,7 +137,7 @@ const config = {
                     options: {
                         babelrc: true,
                         rootMode: 'upward-optional',
-                        plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                        // plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
                     },
                 },
             },
@@ -159,7 +163,7 @@ const config = {
         ],
         fallback: {
             fs: false,
-            path: require.resolve('path-browserify'),
+            // path: require.resolve('path-browserify'),
         },
     },
     watchOptions: { ignored: /dist/ },
@@ -169,6 +173,12 @@ const config = {
         chunkFilename: '[name].[chunkhash].js',
         path: path.join(__dirname, `${buildConfig.__FRONTEND_BUILD_DIR__}`),
         publicPath: '/',
+        library: {
+            type: 'module',
+        },
+    },
+    experiments: {
+        outputModule: true,
     },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
     mode: process.env.NODE_ENV || 'development',
@@ -283,4 +293,4 @@ if (buildConfig.__SSR__) {
         }),
     );
 }
-module.exports = ServersConfig;
+export default ServersConfig;

@@ -14,7 +14,7 @@ import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';
 import modules from './modules';
 
-const cookiesMiddleware = require('universal-cookie-express');
+// const cookiesMiddleware = require('universal-cookie-express'); // TODO
 
 let server;
 
@@ -27,7 +27,7 @@ for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
 }
 
-app.use(cookiesMiddleware());
+// app.use(cookiesMiddleware());
 
 // By default it uses backend_url port, which may conflict with graphql server.
 const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);

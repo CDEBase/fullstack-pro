@@ -1,4 +1,6 @@
-process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+import dotenv from 'dotenv'
+
+process.env.ENV_FILE !== null && dotenv.config({ path: process.env.ENV_FILE });
 
 const __API_SERVER_PORT__ = process.env.GRAPHQL_URL
     ? new URL(process.env.GRAPHQL_URL).port
@@ -27,4 +29,4 @@ const config = {
     __BACKEND_URL__: process.env.BACKEND_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__WEB_SERVER_PORT__}`,
 };
 
-module.exports = config;
+export default config

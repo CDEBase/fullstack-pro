@@ -1,11 +1,11 @@
-const webpack = require('webpack');
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import webpack from 'webpack';
+import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const Dotenv = require('dotenv-webpack');
-const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
+import Dotenv from 'dotenv-webpack';
+import NodemonPlugin from 'nodemon-webpack-plugin'; // Ding
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
@@ -154,4 +154,4 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     node: { __dirname: true, __filename: true },
 });
 
-module.exports = config;
+export default config

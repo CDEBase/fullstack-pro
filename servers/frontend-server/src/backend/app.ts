@@ -4,7 +4,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable jest/require-hook */
 // tslint:disable-next-line:no-unused-expression
-process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+import dotenv from 'dotenv';
+process.env.ENV_FILE !== null && dotenv.config({ path: process.env.ENV_FILE });
 
 import { logger } from '@cdm-logger/server';
 
