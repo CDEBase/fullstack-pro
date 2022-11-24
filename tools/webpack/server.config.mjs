@@ -70,8 +70,8 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                     loader: 'esbuild-loader',
                     options: {
                         loader: 'tsx',
-                        target: 'es2021'
-                    }
+                        target: 'es2021',
+                    },
                 },
             },
             { test: /locales/, use: { loader: '@alienfast/i18next-loader' } },
@@ -95,6 +95,16 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
             '.tsx',
             '.json',
         ],
+        // fallback: {
+        //     // fs: false,
+        //     // // path: import('path-browserify'),
+        //     // path: false,
+        //     http: false,
+        //     buffer: path.resolve(currentDir, 'node_modules/buffer'),
+        //     fs: false,
+        //     path: path.resolve(currentDir, 'node_modules/path-browserify'),
+        //     stream: path.resolve(currentDir, 'node_modules/stream-browserify'),
+        // },
     },
     watchOptions: { ignored: /dist/ },
     output: {
@@ -102,27 +112,27 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         filename: 'index.js',
         path: path.join(currentDir, 'dist'),
         library: {
-            type: "module",
+            type: 'module',
         },
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
     },
     experiments: {
         outputModule: true,
-      },
+    },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
     mode: process.env.NODE_ENV || 'development',
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
         ? [
-            //  new Dotenv(),
-            new webpack.HotModuleReplacementPlugin(),
-            new NodemonPlugin({ script: './dist/index.js' }),
-        ]
+              //  new Dotenv(),
+              new webpack.HotModuleReplacementPlugin(),
+              new NodemonPlugin({ script: './dist/index.js' }),
+          ]
         : []
     ).concat([
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
-        new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: true }),
+        // new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: true }),
         new webpack.DefinePlugin(
             Object.assign(
                 ...Object.entries(buildConfig).map(([k, v]) => ({
@@ -139,7 +149,7 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         //     ],
         // }),
     ]),
-    target: 'node',
+    target: 'node16.0',
     externals: [
         nodeExternals(),
         nodeExternals({
@@ -151,7 +161,7 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         concatenateModules: false,
         minimize: false,
     },
-    node: { __dirname: true, __filename: true },
+    // node: { __dirname: true, __filename: true },
 });
 
-export default config
+export default config;
