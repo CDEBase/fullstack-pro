@@ -14,10 +14,20 @@ const modulenameRegex = new RegExp(
 
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     entry: {
-        index: (process.env.NODE_ENV !== 'production' ? ['webpack/hot/poll?200'] : []).concat([
-            // 'raf/polyfill',
-            indexFilePath,
-        ]),
+        // index: (process.env.NODE_ENV !== 'production' ? ['webpack/hot/poll?200'] : []).concat([
+        //     // 'raf/polyfill',
+        //     indexFilePath,
+        // ]),
+        server: {
+            import: indexFilePath,
+            /*
+             * This prevents code-splitting of async imports into separate chunks.
+             * We can't allow that for the server, because Webpack will duplicate
+             * certain modules that must be shared into each chunk (context,
+             * gettext, DBDefs, linkedEntities, ...).
+             */
+            chunkLoading: false,
+          },
     },
     name: 'server',
     module: {
@@ -65,13 +75,20 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
             {
                 test: /\.[tj]sx?$/,
                 use: {
-                    // loader: 'babel-loader',
-                    // options: { babelrc: true, rootMode: 'upward-optional' },
-                    loader: 'esbuild-loader',
-                    options: {
-                        loader: 'tsx',
-                        target: 'es2021',
-                    },
+                    loader: 'babel-loader',
+                    options: { babelrc: true, rootMode: 'upward-optional',
+                    plugins: [
+                        // ['babel-plugin-transform-require-ignore', {}],
+                        '@babel/plugin-proposal-class-properties',
+                        '@babel/plugin-proposal-object-rest-spread',
+                      ],
+                },
+                    // loader: 'esbuild-loader',
+                    // options: {
+                    //     loader: 'tsx',
+                    //     target: 'es2021',
+                    // },
+
                 },
             },
             { test: /locales/, use: { loader: '@alienfast/i18next-loader' } },
@@ -95,16 +112,6 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
             '.tsx',
             '.json',
         ],
-        // fallback: {
-        //     // fs: false,
-        //     // // path: import('path-browserify'),
-        //     // path: false,
-        //     http: false,
-        //     buffer: path.resolve(currentDir, 'node_modules/buffer'),
-        //     fs: false,
-        //     path: path.resolve(currentDir, 'node_modules/path-browserify'),
-        //     stream: path.resolve(currentDir, 'node_modules/stream-browserify'),
-        // },
     },
     watchOptions: { ignored: /dist/ },
     output: {
@@ -114,7 +121,7 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
         library: {
             type: 'module',
         },
-        publicPath: '/',
+        // publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
     },
     experiments: {
@@ -140,16 +147,8 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
-        // new CopyWebpackPlugin({
-        //     patterns: [
-        //         {
-        //             from: '../../tools/esm-wrapper.js',
-        //             to: 'index.js',
-        //         },
-        //     ],
-        // }),
     ]),
-    target: 'node16.0',
+    target: 'node18.0',
     externals: [
         nodeExternals(),
         nodeExternals({

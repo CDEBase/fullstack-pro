@@ -17,9 +17,10 @@ const modulenameRegex = new RegExp(
 
 export default {
     mode: 'development',
-    entry: './src/webpack-index.js',
+    entry: './src/webpack-test.js',
+    target: ["node", "es2021"],
     output: {
-        filename: 'bundle.js',
+        filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
         library: {
             type: 'module',
