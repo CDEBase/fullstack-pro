@@ -189,7 +189,7 @@ const config = {
                       path: process.env.ENV_FILE,
                   }),
               )
-              .concat(new ReactRefreshWebpackPlugin())
+              .concat(new ReactRefreshWebpackPlugin({ overlay: false }))
         : [
               new MiniCSSExtractPlugin({
                   chunkFilename: '[name].[id].[chunkhash].css',
