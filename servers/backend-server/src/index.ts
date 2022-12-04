@@ -20,8 +20,13 @@ process.on('unhandledRejection', (reason) => {
 const service = new Service();
 
 async function start() {
-    await service.initialize();
-    await service.start();
+    try {
+        await service.initialize();
+        await service.start();
+    } catch(err) {
+        console.error('START FAILED', err)
+    }
+
 }
 // if (module.hot) {
 //     module.hot.status((event) => {

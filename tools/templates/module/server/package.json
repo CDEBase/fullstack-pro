@@ -47,6 +47,5 @@
     "typescript": {
         "definition": "lib/index.d.ts"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }

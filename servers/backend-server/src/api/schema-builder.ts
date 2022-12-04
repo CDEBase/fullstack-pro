@@ -3,10 +3,10 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable import/no-extraneous-dependencies */
 import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
-import { mergeSchemas } from '@graphql-tools/merge';
-import { makeExecutableSchema, addErrorLoggingToSchema } from '@graphql-tools/schema';
+import { stitchSchemas } from '@graphql-tools/stitch';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { linkToExecutor } from '@graphql-tools/links';
-import { introspectSchema, makeRemoteExecutableSchema } from '@graphql-tools/wrap';
+import { introspectSchema, wrapSchema } from '@graphql-tools/wrap';
 // import { transformSchema } from '@graphql-tools/delegate';
 import * as ws from 'ws';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -23,24 +23,24 @@ export class GatewaySchemaBuilder {
     constructor(private options: { schema: string | string[]; resolvers; directives; logger }) {}
 
     public async build(): Promise<GraphQLSchema> {
-        let schema;
+        let gatewaySchema;
         let ownSchema;
         try {
             ownSchema = this.createOwnSchema();
             const remoteSchema = await this.load();
             // techSchema = this.patchSchema(techSchema, 'TechService');
 
-            schema = mergeSchemas({
-                schemas: [ownSchema, remoteSchema],
+            gatewaySchema = stitchSchemas({
+                subschemas: [ownSchema, remoteSchema],
             });
             // TODO after updating graphql-tools to v8
-            addErrorLoggingToSchema(schema, { log: (e) => logger.error(e as Error) });
+            // addErrorLoggingToSchema(schema, { log: (e) => logger.error(e as Error) });
         } catch (err) {
             logger.error('[Graphql Schema Errors] when building schema::', err.message);
-            schema = ownSchema;
+            gatewaySchema = ownSchema;
         }
 
-        return schema;
+        return gatewaySchema;
     }
 
     private async load() {
@@ -83,7 +83,7 @@ export class GatewaySchemaBuilder {
         const remoteSchema = await introspectSchema(link as any);
 
         // 3. Create the executable schema based on schema definition and Apollo Link
-        return makeRemoteExecutableSchema({
+        return wrapSchema({
             schema: remoteSchema,
             executor,
         });
@@ -116,7 +116,7 @@ export class GatewaySchemaBuilder {
             }
             const executor: any = linkToExecutor(link);
             const remoteSchema = await introspectSchema(link);
-            const executableSchema = makeRemoteExecutableSchema({
+            const executableSchema = wrapSchema({
                 schema: remoteSchema,
                 executor,
             });
@@ -152,9 +152,9 @@ export class GatewaySchemaBuilder {
             resolvers: [rootResolver, this.options.resolvers],
             typeDefs,
             // TODO disabled https://github.com/ardatan/graphql-tools/blob/e1fbc79e2714bae61aa0fa014a6231b151bb6c8e/website/docs/schema-directives.mdx#what-about-directiveresolvers
-            directiveResolvers: this.options.directives,
+            // directiveResolvers: this.options.directives,
             resolverValidationOptions: {
-                requireResolversForResolveType: true,
+                requireResolversForResolveType: 'warn',
             },
         });
     }

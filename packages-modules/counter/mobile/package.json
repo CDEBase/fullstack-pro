@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/counter-module-mobile",
-    "version": "0.0.55-alpha.32",
+    "version": "0.0.1",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
@@ -38,7 +38,7 @@
         }
     },
     "dependencies": {
-        "@sample-stack/platform-browser": "0.0.55-alpha.32",
+        "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
         "antd": "~4.24.1"
     },
     "peerDependencies": {

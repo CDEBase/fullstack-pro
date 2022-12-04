@@ -158,8 +158,11 @@ const config = {
             '.json',
         ],
         fallback: {
+            assert: "assert/",
+            buffer: "buffer/",
             fs: false,
             path: require.resolve('path-browserify'),
+            process: 'process/browser.js',
         },
     },
     watchOptions: { ignored: /dist/ },
@@ -189,7 +192,7 @@ const config = {
                       path: process.env.ENV_FILE,
                   }),
               )
-              .concat(new ReactRefreshWebpackPlugin())
+              .concat(new ReactRefreshWebpackPlugin({ overlay: false }))
         : [
               new MiniCSSExtractPlugin({
                   chunkFilename: '[name].[id].[chunkhash].css',
