@@ -7,7 +7,7 @@ import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
@@ -16,6 +16,7 @@ import { ConnectionParams } from 'subscriptions-transport-ws';
 import { isBoolean, merge } from 'lodash';
 import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
+import { createClient } from 'graphql-ws';
 
 const schema = `
 
@@ -103,31 +104,36 @@ export const createApolloClient = ({
             return param;
         };
 
-        const wsLink = new WebSocketLink({
-            uri: httpGraphqlURL.replace(/^http/, 'ws'),
-            options: {
-                reconnect: true,
-                timeout: 20000,
-                reconnectionAttempts: 10,
+        const graphqlWs = createClient({
+            url: httpGraphqlURL.replace(/^http/, 'ws'),
+            retryAttempts: 10,
+            lazy: true,
+            connectionParams,
+        });
+        const wsLink = new GraphQLWsLink(
+            createClient({
+                url: httpGraphqlURL.replace(/^http/, 'ws'),
+                retryAttempts: 10,
                 lazy: true,
                 connectionParams,
-                connectionCallback: async (error, result) => {
-                    if (error) {
+                on: {
+                    error: async (error: Error[]) => {
                         logger.error(error, '[WS connectionCallback error] %j');
-                    }
-                    const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
-                        func(wsLink, error, result),
-                    );
-                    try {
-                        await promises;
-                    } catch (e) {
-                        logger.trace('Error occured in connectionCallback condition', e);
-                        throw e;
-                    }
+                        const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
+                            func(wsLink, error, {}),
+                        );
+                        try {
+                            await promises;
+                        } catch (err) {
+                            logger.trace('Error occurred in connectionCallback condition', err);
+                            throw err;
+                        }
+                    },
+                    // connected: (socket, payload) => {}
                 },
-            },
-            inactivityTimeout: 10000,
-        });
+                // inactivityTimeout: 10000,
+            }),
+        );
 
         link = ApolloLink.split(
             ({ query, operationName }) => {

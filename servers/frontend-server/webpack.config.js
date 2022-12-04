@@ -158,8 +158,11 @@ const config = {
             '.json',
         ],
         fallback: {
+            assert: "assert/",
+            buffer: "buffer/",
             fs: false,
             path: require.resolve('path-browserify'),
+            process: 'process/browser.js',
         },
     },
     watchOptions: { ignored: /dist/ },
