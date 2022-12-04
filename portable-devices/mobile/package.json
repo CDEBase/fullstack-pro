@@ -95,6 +95,7 @@
     "expo-status-bar": "~1.4.0",
     "expo-updates": "~0.14.6",
     "expo-web-browser": "~11.0.0",
+    "graphql-ws": "^5.11.2",
     "history": "^4.10.1",
     "immutability-helper": "^3.0.1",
     "inversify": "^5.0.1",
@@ -138,7 +139,6 @@
     "rxjs-compat": "^6.5.3",
     "rxjs-hooks": "^0.5.2",
     "sentry-expo": "~5.0.0",
-    "subscriptions-transport-ws": "0.9.18",
     "text-encoding-polyfill": "^0.6.7"
   },
   "devDependencies": {

@@ -104,12 +104,6 @@ export const createApolloClient = ({
             return param;
         };
 
-        const graphqlWs = createClient({
-            url: httpGraphqlURL.replace(/^http/, 'ws'),
-            retryAttempts: 10,
-            lazy: true,
-            connectionParams,
-        });
         const wsLink = new GraphQLWsLink(
             createClient({
                 url: httpGraphqlURL.replace(/^http/, 'ws'),
