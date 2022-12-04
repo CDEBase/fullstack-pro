@@ -56,7 +56,6 @@
         "apollo-link-debounce": "^2.1.0",
         "apollo-link-logger": "^1.2.3",
         "apollo-logger": "^0.3.3",
-        "aws-sdk": "^2.880.0",
         "check-internet-connected": "^2.0.5",
         "classnames": "^2.2.6",
         "connected-react-router": "^6.9.1",
