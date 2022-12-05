@@ -58,9 +58,6 @@
         "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env yarn zen:watch",
         "zen:watch": "zen watch -x"
     },
-    "resolutions": {
-        "ts-invariant": "~0.9.0"
-    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@cdm-logger/server": "^7.0.12",
@@ -100,7 +97,6 @@
         "graphql-type-json": "^0.3.1",
         "inversify": "^5.0.1",
         "ioredis": "^4.14.0",
-        "ts-invariant": "~0.9.0",
         "isomorphic-fetch": "^2.2.1",
         "knex": "^0.20.4",
         "lodash": "^4.17.15",
