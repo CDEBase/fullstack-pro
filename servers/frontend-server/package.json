@@ -72,7 +72,6 @@
         "@loadable/server": "^5.15.2",
         "apollo-link-debounce": "^2.1.0",
         "apollo-link-logger": "^1.2.3",
-        "apollo-logger": "^0.3.3",
         "classnames": "^2.2.6",
         "compression": "^1.7.4",
         "connected-react-router": "^6.9.1",

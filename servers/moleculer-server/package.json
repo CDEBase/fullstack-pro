@@ -44,7 +44,6 @@
         "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
         "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
         "apollo-datasource": "^0.7.0",
-        "apollo-logger": "^0.3.3",
         "apollo-server-cache-memcached": "^3.3.1",
         "apollo-server-cache-redis": "^3.3.1",
         "apollo-server-caching": "^3.3.0",

@@ -11,5 +11,4 @@ export const config = envalid.cleanEnv(process.env, {
     // GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
     CLIENT_URL: str({ default: 'http://localhost' }),
     NAMESPACE: str({ default: 'default' }),
-    apolloLogging: bool({ default: false, devDefault: true }),
 });
