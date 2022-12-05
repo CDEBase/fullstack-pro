@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-backend-server",
-    "version": "0.0.57-alpha.0",
+    "version": "0.0.57-alpha.2",
     "private": true,
     "description": "Starter kit for apollo server using webpack and typescript",
     "keywords": [
@@ -63,11 +63,11 @@
     },
     "dependencies": {
         "@apollo/client": "~3.7.1",
+        "@babel/runtime": "^7.20.1",
         "@cdm-logger/server": "^7.0.12",
         "@common-stack/core": "0.2.29",
         "@common-stack/server-core": "0.2.29",
         "@common-stack/store-mongo": "0.2.29",
-        "@babel/runtime": "^7.20.1",
         "@graphql-tools/links": "^8.3.21",
         "@graphql-tools/stitch": "^8.7.29",
         "@sample-stack/core": "0.0.57-alpha.0",
