@@ -40,7 +40,6 @@ const dependencyPlatforms = {
     'source-map-support': 'server',
     sqlite3: 'server',
     'styled-components': ['server', 'web'],
-    'subscriptions-transport-ws': ['ios', 'android', 'web'],
     ws: ['server'],
 };
 

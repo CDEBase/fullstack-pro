@@ -12,7 +12,6 @@ import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
 import fetch from 'node-fetch';
-import { ConnectionParams } from 'subscriptions-transport-ws';
 import { isBoolean, merge } from 'lodash';
 import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
@@ -97,7 +96,7 @@ export const createApolloClient = ({
     _memoryCache = cache;
     if (isBrowser) {
         const connectionParams = async () => {
-            const param: ConnectionParams = {};
+            const param: {[key: string]: string} = {};
             for (const connectionParam of clientState.connectionParams) {
                 merge(param, await connectionParam);
             }
