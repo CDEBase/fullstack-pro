@@ -58,9 +58,6 @@
         "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env yarn zen:watch",
         "zen:watch": "zen watch -x"
     },
-    "resolutions": {
-        "ts-invariant": "~0.9.0"
-    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@babel/runtime": "^7.20.1",
