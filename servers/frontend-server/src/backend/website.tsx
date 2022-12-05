@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import { getDataFromTree } from '@apollo/client/react/ssr';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
