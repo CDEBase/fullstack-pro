@@ -17,7 +17,7 @@ const publicEnv = [
 const isBrowser = typeof window !== 'undefined';
 
 if (!isBrowser) {
-    process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+    // process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 }
 const base = (isBrowser ? ( window.__ENV__ || __ENV__) : process.env) || {};
 const env: any = {};

@@ -34,9 +34,9 @@ const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
 
 // Don't rate limit heroku
 app.enable('trust proxy');
-if (!__DEV__) {
-    app.use(compression());
-}
+// if (!__DEV__) {
+//     app.use(compression());
+// }
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -68,21 +68,21 @@ server.on('close', () => {
     server = undefined;
 });
 
-if ((module as any).hot) {
-    (module as any).hot.dispose(() => {
-        try {
-            if (server) {
-                server.close();
-            }
-        } catch (error) {
-            logger.error(error.stack);
-        }
-    });
-    (module as any).hot.accept(['./website'], () => {
-        logger.debug('...reloading middleware');
-    });
+// if ((module as any).hot) {
+//     (module as any).hot.dispose(() => {
+//         try {
+//             if (server) {
+//                 server.close();
+//             }
+//         } catch (error) {
+//             logger.error(error.stack);
+//         }
+//     });
+//     (module as any).hot.accept(['./website'], () => {
+//         logger.debug('...reloading middleware');
+//     });
 
-    (module as any).hot.accept();
-}
+//     (module as any).hot.accept();
+// }
 
 export default server;

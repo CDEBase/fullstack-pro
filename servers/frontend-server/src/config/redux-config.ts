@@ -2,9 +2,9 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/es/storage/index.mjs';
 import { combineReducers } from 'redux';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+// import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2.mjs';
 import { createEpicMiddleware } from 'redux-observable';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
@@ -29,8 +29,8 @@ export const epicMiddleware = createEpicMiddleware({
 
 export const persistConfig = {
     key: REDUX_PERSIST_KEY,
-    storage,
-    stateReconciler: autoMergeLevel2,
+    // storage,
+    // stateReconciler: autoMergeLevel2,
     transforms: modules.reduxPersistStateTransformers,
 };
 
@@ -92,11 +92,11 @@ export const createReduxStore = (history) => {
         (module as any).hot.accept('../config/epic-config', () => {
             // we may need to reload epic always as we don't
             // know whether it is updated using our `modules`
-            const nextRootEpic = require('./epic-config').rootEpic;
-            // First kill any running epics
-            store.dispatch({ type: 'EPIC_END' });
-            // Now setup the new one
-            epic$.next(nextRootEpic);
+            // const nextRootEpic = require('./epic-config').rootEpic;
+            // // First kill any running epics
+            // store.dispatch({ type: 'EPIC_END' });
+            // // Now setup the new one
+            // epic$.next(nextRootEpic);
         });
     }
     container.bind('ReduxStore').toConstantValue(store);

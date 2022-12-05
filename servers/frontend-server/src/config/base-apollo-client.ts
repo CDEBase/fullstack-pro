@@ -151,10 +151,10 @@ export const createApolloClient = ({
     const links = [errorLink, retrylink, ...(clientState.preLinks || []), link];
 
     // Add apollo logger during development only
-    if (isBrowser && (isDev || isDebug)) {
-        const apolloLogger = require('apollo-link-logger');
-        links.unshift(apolloLogger.default);
-    }
+    // if (isBrowser && (isDev || isDebug)) {
+    //     const apolloLogger = require('apollo-link-logger');
+    //     links.unshift(apolloLogger.default);
+    // }
 
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,

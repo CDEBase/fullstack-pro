@@ -63,16 +63,16 @@ export const createReduxStore = ({
         middlewares.unshift(...preMiddleware);
     }
     // Add redux logger during development only
-    if ((isDev || isDebug) && isBrowser) {
-        const { createLogger } = require('redux-logger');
+    // if ((isDev || isDebug) && isBrowser) {
+    //     const { createLogger } = require('redux-logger');
 
-        middlewares.push(
-            createLogger({
-                level: 'info',
-                collapsed: true,
-            }),
-        );
-    }
+    //     middlewares.push(
+    //         createLogger({
+    //             level: 'info',
+    //             collapsed: true,
+    //         }),
+    //     );
+    // }
 
     if (middleware) {
         middlewares.push(...middleware);
