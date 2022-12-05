@@ -23,7 +23,7 @@ const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sa
 
 const plugins = [
     new webpack.ProvidePlugin({
-        process: 'process/browser',
+        process: 'process/browser.js',
         Buffer: ['buffer', 'Buffer'],
     }),
 ];
