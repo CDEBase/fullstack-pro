@@ -67,6 +67,7 @@
         "@common-stack/core": "0.2.29",
         "@common-stack/server-core": "0.2.29",
         "@common-stack/store-mongo": "0.2.29",
+        "@babel/runtime": "^7.20.1",
         "@graphql-tools/links": "^8.3.21",
         "@graphql-tools/stitch": "^8.7.29",
         "@sample-stack/core": "0.0.57-alpha.0",
