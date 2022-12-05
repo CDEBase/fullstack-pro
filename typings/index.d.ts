@@ -28,7 +28,6 @@ declare interface Window {
 }
 declare module '*settings.json' {
     export const app: {
-        apolloLogging: boolean;
     };
     export const database: {};
 }
@@ -47,7 +46,6 @@ declare interface __ZEN_OPTIONS__ {
 }
 
 declare interface __PUBLIC_SETTINGS__ {
-    apolloLogging: boolean;
     GRAPHQL_URL: string;
     GRAPHQL_SUBSCRIPTION_URL?: string;
     LOCAL_GRAPHQL_URL?: string;
