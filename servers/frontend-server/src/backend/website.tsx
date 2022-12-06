@@ -21,7 +21,6 @@ import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
-import modules from '../modules';
 
 let assetMap;
 const key = 'custom';
@@ -102,8 +101,8 @@ async function renderServerSide(req, res) {
                     styleSheet={appStyles}
                     env={env}
                     reduxState={reduxState}
-                    scriptsInserts={modules.scriptsInserts}
-                    stylesInserts={modules.stylesInserts}
+                    scriptsInserts={clientModules.scriptsInserts}
+                    stylesInserts={clientModules.stylesInserts}
                 />
             );
             res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
