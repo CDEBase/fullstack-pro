@@ -2320,67 +2320,43 @@
   dependencies:
     chalk "^4.1.0"
 
-"@common-stack/client-core@0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.2.31.tgz#a79c3780dffe68800b0ad87060b4aa2a80e6353e"
-  integrity sha512-i/KV8fW9lrmPaSYL7u7dBBLitljTUd5E0bGWCfpyUSilB3wugTcwnpYv92HNGvHFUS+3OnWXKeCnESXDcMbzIA==
-  dependencies:
-    "@common-stack/core" "0.2.30"
-
-"@common-stack/client-core@0.2.32", "@common-stack/client-core@^0.2.31":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.2.32.tgz#1965a34085d7a2328e7a295a34887dffcad0afed"
-  integrity sha512-pjYMYKOk3MZSB0JQ+Ee3ZfOTcRIpdnZA8Bm/tCrIxqmCDCnw4vRInX16+crugKHLEpPx/YgqAMO6ya2sDcVYbA==
+"@common-stack/client-core@0.2.33", "@common-stack/client-core@^0.2.33":
+  version "0.2.33"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.2.33.tgz#51e56a16d05655987d80280db1b69c7a881c7f51"
+  integrity sha512-qSjZ+GsCX8BGFIT9IksKg+MjB+p/4kr+vl9u+w2wORfS8IzCWkoNIvEmO/RPiP+alsKslenA6DwAvgokhinb5Q==
   dependencies:
     "@common-stack/core" "0.2.32"
 
-"@common-stack/client-react@0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.31.tgz#547352ff1717a2bb1b2d9ce53570609a9f9953a4"
-  integrity sha512-KAhJMhaed0PGsQZE+GFznm3Ew3+Yzo0EHyqzFMBezLoIIC5FqfHeY//2v3fvoumidjhcBOPXqCPHc5/oUbZJ9g==
+"@common-stack/client-react@0.2.33", "@common-stack/client-react@^0.2.33":
+  version "0.2.33"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.33.tgz#dcaec5c14b0a2db9a528031db31b0d4977ce5809"
+  integrity sha512-rA4eze5Nh1a7qy8uSfk08cf/lvhbeqe1rGjdbJFGeqQC3dKBVzqrhvBA1XCicUGMsSrPI9V9PfFouiljAX7wpA==
   dependencies:
-    "@common-stack/client-core" "0.2.31"
-    "@common-stack/core" "0.2.30"
-    "@wordpress/hooks" "^2.10.0"
-    browser-bunyan "^1.6.3"
-    history-with-query "^4.10.4"
-    sort-keys "^4.1.0"
-
-"@common-stack/client-react@^0.2.31":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.32.tgz#1129f6029947bb60b838d95ab3877713d96432f9"
-  integrity sha512-wj9A7j11PTU8n7qM6xW8TIrecBSfcPC2I9oJn9WSnjr9mCneGknkPMfCmv5tEpSCXJjSKtRmVch/afsgmHavCQ==
-  dependencies:
-    "@common-stack/client-core" "0.2.32"
+    "@common-stack/client-core" "0.2.33"
     "@common-stack/core" "0.2.32"
     "@wordpress/hooks" "^2.10.0"
     browser-bunyan "^1.6.3"
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/core@0.2.30", "@common-stack/core@^0.2.30":
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.2.30.tgz#a630e5095935944ea1f193c718f396ef9e573d12"
-  integrity sha512-ovZ0i/13uso1tLXhSBcKxJWXg7FH5FXkfdjBkbcJmKnD1UKjtHX0g0swcQ5E4tOF6spuXkPYYm/3VebPfCah3g==
-
-"@common-stack/core@0.2.32":
+"@common-stack/core@0.2.32", "@common-stack/core@^0.2.32":
   version "0.2.32"
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.2.32.tgz#9a9cb6827720ab8e06f25682a1394e1a7aff7718"
   integrity sha512-U6ckOloQU7LhQmklL+vCjvup/ML+WXopvkJD/q4kasGBxCqcNS3skOVYmXuBVtyWjAQ1vsSCbOfA79PBv7O33g==
 
-"@common-stack/server-core@0.2.30":
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.2.30.tgz#5a000dcabe13156e4a8ed55741116a336fb89059"
-  integrity sha512-Ml0JcAdTd5aZXi45wtuqGLe/Wiq0r3DB/PyRtD6QwunkA+wFN21q4W6jKiX0xcFYDpjoctpDmgpYM01tCKYs3Q==
+"@common-stack/server-core@0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.2.32.tgz#7be41f2ac8e9d2695853c859d70bdf8339849665"
+  integrity sha512-Z71MZh6tpg9IKPHASaGn44OjOyCTmeB1yHhWCBWZd/jOwetDHO0wn8/ZyzpPOTcgiOp8Rh54P7cgd8LhyHiiBw==
   dependencies:
-    "@common-stack/core" "0.2.30"
+    "@common-stack/core" "0.2.32"
 
-"@common-stack/store-mongo@0.2.30":
-  version "0.2.30"
-  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-0.2.30.tgz#6c5f8744f03ff1bea5c299872a89da450c884b3f"
-  integrity sha512-uGJiaSOih+5A5P+tO2H6YKPDkeXWWYSOC+X+YrlH5KSxx0SChjWeWCu0hiWjl1TlLnSRHO2BpWHr/XiTn4+3OQ==
+"@common-stack/store-mongo@0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-0.2.32.tgz#7e8379accfda2d651e022f17c9edc1815cc0b6f3"
+  integrity sha512-XWGqisVx7NnVfMVYtGy1pITgOB5CK3FFHUyHazYT4HM78Z8oYV1rqTG93dSJfkj+G2JiiYxFZyMBHm2N6ebshA==
   dependencies:
-    "@common-stack/core" "0.2.30"
+    "@common-stack/core" "0.2.32"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
