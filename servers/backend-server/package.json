@@ -61,9 +61,9 @@
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@cdm-logger/server": "^7.0.12",
-        "@common-stack/core": "0.2.30",
-        "@common-stack/server-core": "0.2.30",
-        "@common-stack/store-mongo": "0.2.30",
+        "@common-stack/core": "0.2.32",
+        "@common-stack/server-core": "0.2.32",
+        "@common-stack/store-mongo": "0.2.32",
         "@babel/runtime": "^7.20.1",
         "@graphql-tools/links": "^8.3.21",
         "@graphql-tools/stitch": "^8.7.29",
