@@ -2320,14 +2320,21 @@
   dependencies:
     chalk "^4.1.0"
 
-"@common-stack/client-core@0.2.31", "@common-stack/client-core@^0.2.31":
+"@common-stack/client-core@0.2.31":
   version "0.2.31"
   resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.2.31.tgz#a79c3780dffe68800b0ad87060b4aa2a80e6353e"
   integrity sha512-i/KV8fW9lrmPaSYL7u7dBBLitljTUd5E0bGWCfpyUSilB3wugTcwnpYv92HNGvHFUS+3OnWXKeCnESXDcMbzIA==
   dependencies:
     "@common-stack/core" "0.2.30"
 
-"@common-stack/client-react@0.2.31", "@common-stack/client-react@^0.2.31":
+"@common-stack/client-core@0.2.32", "@common-stack/client-core@^0.2.31":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-0.2.32.tgz#1965a34085d7a2328e7a295a34887dffcad0afed"
+  integrity sha512-pjYMYKOk3MZSB0JQ+Ee3ZfOTcRIpdnZA8Bm/tCrIxqmCDCnw4vRInX16+crugKHLEpPx/YgqAMO6ya2sDcVYbA==
+  dependencies:
+    "@common-stack/core" "0.2.32"
+
+"@common-stack/client-react@0.2.31":
   version "0.2.31"
   resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.31.tgz#547352ff1717a2bb1b2d9ce53570609a9f9953a4"
   integrity sha512-KAhJMhaed0PGsQZE+GFznm3Ew3+Yzo0EHyqzFMBezLoIIC5FqfHeY//2v3fvoumidjhcBOPXqCPHc5/oUbZJ9g==
@@ -2339,10 +2346,27 @@
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
+"@common-stack/client-react@^0.2.31":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.2.32.tgz#1129f6029947bb60b838d95ab3877713d96432f9"
+  integrity sha512-wj9A7j11PTU8n7qM6xW8TIrecBSfcPC2I9oJn9WSnjr9mCneGknkPMfCmv5tEpSCXJjSKtRmVch/afsgmHavCQ==
+  dependencies:
+    "@common-stack/client-core" "0.2.32"
+    "@common-stack/core" "0.2.32"
+    "@wordpress/hooks" "^2.10.0"
+    browser-bunyan "^1.6.3"
+    history-with-query "^4.10.4"
+    sort-keys "^4.1.0"
+
 "@common-stack/core@0.2.30", "@common-stack/core@^0.2.30":
   version "0.2.30"
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.2.30.tgz#a630e5095935944ea1f193c718f396ef9e573d12"
   integrity sha512-ovZ0i/13uso1tLXhSBcKxJWXg7FH5FXkfdjBkbcJmKnD1UKjtHX0g0swcQ5E4tOF6spuXkPYYm/3VebPfCah3g==
+
+"@common-stack/core@0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.2.32.tgz#9a9cb6827720ab8e06f25682a1394e1a7aff7718"
+  integrity sha512-U6ckOloQU7LhQmklL+vCjvup/ML+WXopvkJD/q4kasGBxCqcNS3skOVYmXuBVtyWjAQ1vsSCbOfA79PBv7O33g==
 
 "@common-stack/server-core@0.2.30":
   version "0.2.30"
@@ -28991,6 +29015,17 @@ stylis@4.1.3, stylis@^4.0.13:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.1.3.tgz#fd2fbe79f5fed17c55269e16ed8da14c84d069f7"
   integrity sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==
+
+subscriptions-transport-ws@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.11.0.tgz#baf88f050cba51d52afe781de5e81b3c31f89883"
+  integrity sha512-8D4C6DIH5tGiAIpp5I0wD/xRlNiZAPGHygzCe7VzyzUoxHtawzjNAY9SUTXU05/EY2NMY9/9GF0ycizkXr1CWQ==
+  dependencies:
+    backo2 "^1.0.2"
+    eventemitter3 "^3.1.0"
+    iterall "^1.2.1"
+    symbol-observable "^1.0.4"
+    ws "^5.2.0 || ^6.0.0 || ^7.0.0"
 
 subscriptions-transport-ws@^0.9.18:
   version "0.9.19"
