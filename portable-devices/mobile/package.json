@@ -49,9 +49,6 @@
         "watch:android": "expo start --android",
         "watch:ios": "expo start --ios"
     },
-    "jest": {
-        "preset": "jest-expo"
-    },
     "resolutions": {
         "@types/react": "^18.0.0"
     },
