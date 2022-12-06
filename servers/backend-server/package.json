@@ -78,6 +78,7 @@
         "apollo-server-cache-redis": "^3.3.1",
         "apollo-server-caching": "^3.3.0",
         "apollo-server-core": "^3.11.1",
+        "apollo-server-errors": "^3.3.1",
         "apollo-server-express": "^3.11.1",
         "apollo-server-plugin-response-cache": "^3.8.1",
         "app-root-path": "^3.0.0",
