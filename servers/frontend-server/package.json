@@ -39,17 +39,6 @@
         "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env yarn webpack-dev-server",
         "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn webpack-dev-server"
     },
-    "jest": {
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js"
-        ],
-        "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
-        "transform": {
-            "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-        }
-    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@apollo/react-components": "^4.0.0",
