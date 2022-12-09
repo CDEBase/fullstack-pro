@@ -15,12 +15,21 @@ import { split } from '@apollo/client';
 import { logger } from '@common-stack/server-core';
 import { HttpLink } from '@apollo/client/link/http';
 import * as fetch from 'isomorphic-fetch';
+import { CdmLogger } from '@cdm-logger/core';
 import { remoteSchemaDetails } from './remote-config';
 import rootSchemaDef from './root-schema.graphqls';
 import { resolvers as rootResolver } from './resolver';
+import { attachDirectiveResolvers } from './utils';
 
+interface IGraphqlOptions {
+    schema: string | string[];
+    resolvers: any;
+    directives: any[];
+    directiveResolvers: { [key: string]: any};
+    logger: CdmLogger.ILogger;
+}
 export class GatewaySchemaBuilder {
-    constructor(private options: { schema: string | string[]; resolvers; directives; logger }) {}
+    constructor(private options: IGraphqlOptions) {}
 
     public async build(): Promise<GraphQLSchema> {
         let gatewaySchema;
@@ -148,14 +157,18 @@ export class GatewaySchemaBuilder {
             const writeData = `${externalSchema}`;
             fs.writeFileSync('./generated-schema.graphql', writeData);
         }
-        return makeExecutableSchema({
+        let mergedSchema =  makeExecutableSchema({
             resolvers: [rootResolver, this.options.resolvers],
             typeDefs,
-            // TODO disabled https://github.com/ardatan/graphql-tools/blob/e1fbc79e2714bae61aa0fa014a6231b151bb6c8e/website/docs/schema-directives.mdx#what-about-directiveresolvers
-            // directiveResolvers: this.options.directives,
             resolverValidationOptions: {
                 requireResolversForResolveType: 'warn',
             },
         });
+        mergedSchema = this.options.directives.reduce((curSchema,transform) => transform(curSchema), mergedSchema)
+        if (this.options.directiveResolvers && this.options.directiveResolvers.length > 0) {
+            this.options.logger.warn('directiveResolvers deprecated replaced with directives');
+            mergedSchema = attachDirectiveResolvers(mergedSchema, this.options.directiveResolvers);
+        }
+        return mergedSchema;
     }
 }
