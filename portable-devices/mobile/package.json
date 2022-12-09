@@ -74,6 +74,7 @@
         "@sample-stack/counter-module-mobile": "link:../../packages-modules/counter/mobile",
         "apollo-link-debounce": "^2.1.0",
         "apollo-link-logger": "^1.2.3",
+        "apollo-server-errors": "^3.3.1",
         "big-integer": "^1.6.51",
         "connected-react-router": "^6.9.1",
         "expo": "~46.0.16",

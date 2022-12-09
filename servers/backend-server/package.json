@@ -118,11 +118,6 @@
         "pm2": "^5.2.2",
         "rimraf": "^3.0.2"
     },
-    "peerDependencies": {
-        "@cdm-logger/core": "*",
-        "apollo-server-errors": "*",
-        "mongodb": "*"
-    },
     "typescript": {
         "definition": "dist/main.d.ts"
     }

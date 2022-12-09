@@ -55,6 +55,7 @@
         "antd": "~4.24.1",
         "apollo-link-debounce": "^2.1.0",
         "apollo-link-logger": "^1.2.3",
+        "apollo-server-errors": "^3.3.1",
         "check-internet-connected": "^2.0.5",
         "classnames": "^2.2.6",
         "connected-react-router": "^6.9.1",
