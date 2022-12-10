@@ -58,6 +58,9 @@
         "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env yarn zen:watch",
         "zen:watch": "zen watch -x"
     },
+    "resolutions": {
+        "html-to-text": "^8.0.0"
+    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@cdm-logger/server": "^7.0.12",
@@ -117,11 +120,6 @@
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "rimraf": "^3.0.2"
-    },
-    "peerDependencies": {
-        "@cdm-logger/core": "*",
-        "apollo-server-errors": "*",
-        "mongodb": "*"
     },
     "typescript": {
         "definition": "dist/main.d.ts"

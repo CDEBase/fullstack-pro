@@ -165,7 +165,7 @@ export class GatewaySchemaBuilder {
             },
         });
         mergedSchema = this.options.directives.reduce((curSchema,transform) => transform(curSchema), mergedSchema)
-        if (this.options.directiveResolvers && this.options.directiveResolvers.length > 0) {
+        if (this.options.directiveResolvers && Object.keys(this.options.directiveResolvers).length !== 0 ) {
             this.options.logger.warn('directiveResolvers deprecated replaced with directives');
             mergedSchema = attachDirectiveResolvers(mergedSchema, this.options.directiveResolvers);
         }
