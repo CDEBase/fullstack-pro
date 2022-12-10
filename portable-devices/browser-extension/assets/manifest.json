@@ -1,0 +1,31 @@
+{
+  "name": "Admin-layout Extension",
+  "description": "Chrome Extension in React!",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Admin-layout Extension",
+    "default_icon": "icons/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "identity",
+    "notifications"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ]
+}
