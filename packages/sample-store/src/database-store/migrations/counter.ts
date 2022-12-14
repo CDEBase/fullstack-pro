@@ -1,19 +1,19 @@
-import * as Knex from 'knex';
+// import * as Knex from 'knex';
 
-export const Counter_Table = 'count';
-export const createCounter = async (driver) =>
-    driver.schema.createTable(Counter_Table, (table) => {
-        table.increments();
-        table.timestamps(false, true);
-        table.integer('amount').notNull();
-    });
-export const dropCounter = async (driver) =>
-    driver.schema.dropTable(Counter_Table);
+// export const Counter_Table = 'count';
+// export const createCounter = async (driver) =>
+//     driver.schema.createTable(Counter_Table, (table) => {
+//         table.increments();
+//         table.timestamps(false, true);
+//         table.integer('amount').notNull();
+//     });
+// export const dropCounter = async (driver) =>
+//     driver.schema.dropTable(Counter_Table);
 
-export async function up(knex: Knex) {
-    return createCounter(knex);
-}
+// export async function up(knex: Knex) {
+//     return createCounter(knex);
+// }
 
-export async function down(knex: Knex) {
-    return dropCounter(knex);
-}
+// export async function down(knex: Knex) {
+//     return dropCounter(knex);
+// }

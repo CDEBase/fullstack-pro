@@ -58,6 +58,9 @@
         "watch:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env yarn zen:watch",
         "zen:watch": "zen watch -x"
     },
+    "resolutions": {
+        "html-to-text": "^8.0.0"
+    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@babel/runtime": "^7.20.1",
@@ -66,11 +69,14 @@
         "@common-stack/server-core": "0.2.32",
         "@common-stack/store-mongo": "0.2.32",
         "@graphql-tools/links": "^8.3.21",
+        "@graphql-tools/utils": "^8.0.0",
+        "@graphql-tools/schema": "^8.3.14",
         "@graphql-tools/stitch": "^8.7.29",
-        "@sample-stack/core": "0.0.57-alpha.0",
-        "@sample-stack/counter-module-server": "0.0.57-alpha.12",
-        "@sample-stack/platform-server": "0.0.57-alpha.12",
-        "@sample-stack/store": "0.0.57-alpha.12",
+        "@graphql-tools/wrap": "^8.4.20",
+        "@sample-stack/core": "link:../../packages/sample-core",
+        "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
+        "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
+        "@sample-stack/store": "link:../../packages/sample-store",
         "apollo-datasource": "^3.3.1",
         "apollo-datasource-rest": "^3.3.1",
         "apollo-errors": "^1.9.0",
@@ -78,6 +84,7 @@
         "apollo-server-cache-redis": "^3.3.1",
         "apollo-server-caching": "^3.3.0",
         "apollo-server-core": "^3.11.1",
+        "apollo-server-errors": "^3.3.1",
         "apollo-server-express": "^3.11.1",
         "apollo-server-plugin-response-cache": "^3.8.1",
         "app-root-path": "^3.0.0",
@@ -98,7 +105,6 @@
         "inversify": "^5.0.1",
         "ioredis": "^4.14.0",
         "isomorphic-fetch": "^2.2.1",
-        "knex": "^0.20.4",
         "lodash": "^4.17.15",
         "moleculer": "^0.14.2",
         "moleculer-zipkin": "0.2.2",
@@ -117,11 +123,6 @@
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "rimraf": "^3.0.2"
-    },
-    "peerDependencies": {
-        "@cdm-logger/core": "*",
-        "apollo-server-errors": "*",
-        "mongodb": "*"
     },
     "typescript": {
         "definition": "dist/main.d.ts"

@@ -112,6 +112,8 @@
         "@types/react": "^18.0.25",
         "@types/react-dom": "^18.0.8",
         "chokidar": "^3.5.3",
+        "html-to-text": "^8.0.0",
+        "nx": "15.3.0",
         "react": "18.0.0",
         "react-dom": "18.0.0",
         "react-native-gesture-handler": "~2.5.0"
@@ -168,6 +170,7 @@
         "@redux-devtools/log-monitor": "^4.0.1",
         "@rollup/plugin-graphql": "2.0.2",
         "@rollup/plugin-image": "^3.0.1",
+        "@rollup/plugin-json": "^5.0.2",
         "@rollup/plugin-typescript": "^9.0.2",
         "@shelf/jest-mongodb": "^4.1.3",
         "@svgr/webpack": "^6.5.1",

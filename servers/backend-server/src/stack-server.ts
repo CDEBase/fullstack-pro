@@ -173,7 +173,8 @@ export class StackServer {
                 logger: serverLogger,
                 subscriptionID: `${settings.subTopic}`,
             }),
-            directives: allModules.createDirectives({ logger: this.logger }),
+            directives: [],
+            directiveResolvers: allModules.createDirectives({ logger: this.logger }),
             logger: serverLogger,
         }).build();
 
