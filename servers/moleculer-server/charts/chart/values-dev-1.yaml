@@ -1,0 +1,20 @@
+cdebase:
+  buildID: 1
+
+  env:
+    LOG_LEVEL: trace
+
+  ingress:
+    enabled: true
+    domainPrefix: molecular
+    domain: cdebase.dev
+    onlyDomainBase: false
+    domainBase: cdebase.dev
+    ssl: true
+    annotations:
+      external-dns.alpha.kubernetes.io/target: cdebase.dev
+
+  createConfigMapFromEnv: true 
+  createSecretFromEnv: true
+  #configMapReference: default-backend-configuration
+  #SecretReference: clockbook-app-backend-secret
