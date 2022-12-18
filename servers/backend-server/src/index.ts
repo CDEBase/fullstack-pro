@@ -1,9 +1,10 @@
-/* eslint-disable import/first */
 /// <reference types="webpack-env" />
-// eslint-disable-next-line global-require, import/first, no-unused-expressions, @typescript-eslint/no-var-requires
-process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
-
+import * as dotenv from 'dotenv';
 import 'reflect-metadata';
+
+if (process.env.ENV_FILE) {
+    dotenv.config({ path: process.env.ENV_FILE })
+}
 import { logger } from '@cdm-logger/server';
 import { Service } from './service';
 
@@ -48,9 +49,9 @@ if (module.hot) {
         // So that it was started afresh
         console.log('--data---', data);
         try {
-            if (service) {
-                service.gracefulShutdown(null);
-            }
+            // if (service) {
+            //     service.gracefulShutdown(null);
+            // }
         } catch (error) {
             logger.error(error.stack);
         }
