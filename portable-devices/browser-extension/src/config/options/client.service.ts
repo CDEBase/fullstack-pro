@@ -8,6 +8,7 @@ import { CdmLogger } from '@cdm-logger/core';
 import modules, { container, logger } from '../../modules/popup';
 import { createApolloClient } from '../base-apollo-client';
 import { PUBLIC_SETTINGS } from '../public-config';
+import { config } from '../config';
 
 let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;
@@ -23,9 +24,9 @@ export const createClientContainer = () => {
     const { cache, apolloClient } = createApolloClient({
         httpGraphqlURL: PUBLIC_SETTINGS.GRAPHQL_URL,
         httpLocalGraphqlURL: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL,
-        isDev: process.env.NODE_ENV === 'development',
-        isDebug: __DEBUGGING__,
-        isSSR: __SSR__,
+        isDev: config.NODE_ENV === 'development',
+        isDebug: config.NODE_ENV !== 'production',
+        isSSR: true,
         scope: 'browser',
         clientState,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),

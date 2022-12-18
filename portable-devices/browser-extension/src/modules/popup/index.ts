@@ -1,6 +1,7 @@
+// eslint-disable-next-line jsonc/indent
 import { logger } from '@cdm-logger/client';
 import { ClientTypes } from '@common-stack/client-react';
-import modules, { MainRoute } from './module';
+import features, { MainRoute } from './module';
 
 class UtilityClass {
     // eslint-disable-next-line no-useless-constructor
@@ -11,12 +12,14 @@ class UtilityClass {
     }
 }
 
-const utility = new UtilityClass(modules);
+const utility = new UtilityClass(features);
 
 // additional bindings to container
-const container = modules.createContainers({}) as any;
+const container = features.createContainers({}) as any;
+// eslint-disable-next-line jest/require-hook
 container.bind(ClientTypes.Logger).toConstantValue(logger);
+// eslint-disable-next-line jest/require-hook
 container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
 
-export default modules;
+export default features;
 export { MainRoute, container, logger };

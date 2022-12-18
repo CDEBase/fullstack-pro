@@ -5,8 +5,9 @@ import { createReduxStore as createBaseReduxStore } from '../base-redux-config';
 import modules, { logger, container } from '../../modules/popup';
 import { rootEpic } from './epic-config';
 import { createClientContainer } from './client.service';
+import { config } from '../config';
 
-export { history };
+export const history = {};
 const { apolloClient, services } = createClientContainer();
 
 export const epicMiddleware = createEpicMiddleware({
@@ -36,8 +37,8 @@ export const createReduxStore = (history) => {
 
     const store = createBaseReduxStore({
         scope: 'browser',
-        isDebug: __DEBUGGING__,
-        isDev: process.env.NODE_ENV === 'development',
+        isDebug: config.NODE_ENV !== 'production',
+        isDev: config.NODE_ENV === 'development',
         initialState: {},
         // persistConfig,
         middleware: [routerMiddleware(history)],

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { config } from '../config/config';
 import { Error500 } from './500';
 import { ServerError } from './ServerError';
 
@@ -18,7 +19,7 @@ export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     componentDidCatch(error) {
         let type;
 
-        if (process.env.NODE_ENV === 'production') {
+        if (config.NODE_ENV === 'production') {
             type = '404';
         } else {
             type = '500';

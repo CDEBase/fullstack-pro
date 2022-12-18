@@ -11,7 +11,7 @@ import Options from './app/Options';
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 import 'antd/dist/antd.css';
-import 'react-table/react-table.css';
+// import 'react-table/react-table.css';
 
 const rootEl = document.getElementById('root');
 let frontendReloadCount = 0;
