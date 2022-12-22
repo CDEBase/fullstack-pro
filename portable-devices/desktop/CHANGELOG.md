@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.57-alpha.17](https://github.com/cdmbase/fullstack-pro/compare/v0.0.57-alpha.16...v0.0.57-alpha.17) (2022-12-22)
+
+**Note:** Version bump only for package sample-stack-desktop-device
+
 ## [0.0.57-alpha.13](https://github.com/cdmbase/fullstack-pro/compare/v0.0.57-alpha.12...v0.0.57-alpha.13) (2022-12-14)
 
 **Note:** Version bump only for package sample-stack-desktop-device
