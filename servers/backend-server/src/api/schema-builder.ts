@@ -1,7 +1,7 @@
-/* eslint-disable global-require */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable import/no-extraneous-dependencies */
+import * as fs from 'fs';
 import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
 import { stitchSchemas } from '@graphql-tools/stitch';
 import { makeExecutableSchema } from '@graphql-tools/schema';
@@ -40,12 +40,12 @@ export class GatewaySchemaBuilder {
             // techSchema = this.patchSchema(techSchema, 'TechService');
 
             gatewaySchema = stitchSchemas({
-                subschemas: [ownSchema, remoteSchema],
+                subschemas: [ownSchema],
             });
             // TODO after updating graphql-tools to v8
             // addErrorLoggingToSchema(schema, { log: (e) => logger.error(e as Error) });
         } catch (err) {
-            logger.error('[Graphql Schema Errors] when building schema::', err.message);
+            logger.error('[Graphql Schema Errors] when building schema:', err.message);
             gatewaySchema = ownSchema;
         }
 
@@ -151,11 +151,13 @@ export class GatewaySchemaBuilder {
     private createOwnSchema(): GraphQLSchema {
         const typeDefs = [rootSchemaDef, this.options.schema].join('\n');
         if (__DEV__) {
-            const { ExternalModules } = require('../modules/module');
-            const externalSchema = ExternalModules.schemas;
-            const fs = require('fs');
-            const writeData = `${externalSchema}`;
-            fs.writeFileSync('./generated-schema.graphql', writeData);
+            import('../modules/module').then(
+                ({ ExternalModules }) => {
+                    const externalSchema = ExternalModules.schemas;
+                    const writeData = `${externalSchema}`;
+                    fs.writeFileSync('./generated-schema.graphql', writeData);
+                }
+            )
         }
         let mergedSchema =  makeExecutableSchema({
             resolvers: [rootResolver, this.options.resolvers],
@@ -164,7 +166,7 @@ export class GatewaySchemaBuilder {
                 requireResolversForResolveType: 'warn',
             },
         });
-        mergedSchema = this.options.directives.reduce((curSchema,transform) => transform(curSchema), mergedSchema)
+        // mergedSchema = this.options.directives.reduce((curSchema,transform) => transform(curSchema), mergedSchema);
         if (this.options.directiveResolvers && Object.keys(this.options.directiveResolvers).length !== 0 ) {
             this.options.logger.warn('directiveResolvers deprecated replaced with directives');
             mergedSchema = attachDirectiveResolvers(mergedSchema, this.options.directiveResolvers);
