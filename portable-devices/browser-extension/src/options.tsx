@@ -1,20 +1,18 @@
-import 'reflect-metadata';
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-// load environment config
-import './config/public-config';
+import { createRoot } from 'react-dom/client';
 import Options from './app/Options';
 
-// Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
-// tslint:disable-next-line
-import 'antd/dist/antd.css';
-// import 'react-table/react-table.css';
 
-const rootEl = document.getElementById('root');
-let frontendReloadCount = 0;
+import './config/public-config';
+import 'reflect-metadata';
+import './index.css';
 
-const renderApp = ({ key }: { key: number }) => ReactDOM.render(<Options key={key} />, rootEl);
-renderApp({ key: frontendReloadCount });
+
+
+const container = document.getElementById('root') as HTMLElement;
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<React.StrictMode>
+    <Options />
+</React.StrictMode>);
+

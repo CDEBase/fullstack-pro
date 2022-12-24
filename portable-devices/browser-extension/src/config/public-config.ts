@@ -54,7 +54,7 @@ for (const v of publicEnv) {
 }
 
 // add subscription url for temporary
-env.GRAPHQL_URL = env.GRAPHQL_URL || 'http://localhost:8080/graphql';
+env.GRAPHQL_URL = env.GRAPHQL_URL || __GRAPHQL_URL__;
 env.GRAPHQL_SUBSCRIPTION_URL = env.GRAPHQL_SUBSCRIPTION_URL || env.GRAPHQL_URL.replace(/^http/, 'ws');
 export default env;
 
@@ -73,8 +73,8 @@ try {
 }
 export const PUBLIC_SETTINGS: __PUBLIC_SETTINGS__ = {
     apolloLogging: false,
-    GRAPHQL_URL: process.env.GRAPHQL_URL || env.GRAPHQL_URL || 'http://localhost:8080/graphql',
+    GRAPHQL_URL: process.env.GRAPHQL_URL || env.GRAPHQL_URL || __GRAPHQL_URL__,
     GRAPHQL_SUBSCRIPTION_URL: env.GRAPHQL_SUBSCRIPTION_URL,
-    LOCAL_GRAPHQL_URL: process.env.LOCAL_GRAPHQL_URL || 'http://localhost:8080/graphql',
+    LOCAL_GRAPHQL_URL: process.env.LOCAL_GRAPHQL_URL || __GRAPHQL_URL__,
     LOG_LEVEL: process.env.LOG_LEVEL || 'debug',
 };

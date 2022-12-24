@@ -13,6 +13,7 @@ export const MainRoute = props => {
     return (
         <React.Suspense fallback={<span>Loading....</span>}>
                 {routes}
+                <h3>Extension Options</h3>  
         </React.Suspense>
     );
 };

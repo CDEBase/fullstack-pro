@@ -7,7 +7,6 @@ import { ApolloClient } from '@apollo/client';
 import modules, { container } from '../../modules/popup';
 import { createApolloClient } from '../base-apollo-client';
 import { PUBLIC_SETTINGS } from '../public-config';
- 
 
 let __CLIENT_SERVICE__: {
     apolloClient: ApolloClient<any>;

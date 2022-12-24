@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { config } from '../config/config';
 import { Error500 } from './500';
 import { ServerError } from './ServerError';
 
@@ -8,7 +7,7 @@ type IErrorBoundryState = { error: any; type: string };
 export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     constructor(props) {
         super(props);
-        const serverError: any = __CLIENT__ ? window.__SERVER_ERROR__ : null;
+        const serverError: any = 'http://localhost:3000' ? window.__SERVER_ERROR__ : null;
         if (serverError) {
             this.state = { error: new ServerError(serverError), type: 'serverError' };
         } else {
@@ -19,7 +18,7 @@ export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     componentDidCatch(error) {
         let type;
 
-        if (config.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'production') {
             type = '404';
         } else {
             type = '500';

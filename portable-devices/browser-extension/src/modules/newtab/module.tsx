@@ -18,7 +18,7 @@ export const MainRoute = props => {
     return (
         <React.Suspense fallback={<span>Loading....</span>}>
             {routes}
-            <h1>Chrome Extension Popup</h1>
+            <h1>Chrome Extension New Tab</h1>
         </React.Suspense>
     );
 };

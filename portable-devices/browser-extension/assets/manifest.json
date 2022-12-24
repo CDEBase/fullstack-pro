@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
-    "16": "icons/icon.png",
-    "48": "icons/icon.png",
-    "128": "icons/icon.png"
+    "16": "icons/favicon-16x16.png",
+    "48": "icons/favicon-32x32.png",
+    "128": "icons/apple-touch-icon-120x120.png"
   },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Admin-layout Extension",
-    "default_icon": "icons/icon.png"
+    "default_icon": "icons/favicon-32x32.png"
   },
   "permissions": [
     "storage",
@@ -26,6 +26,16 @@
     {
       "matches": ["<all_urls>"],
       "js": ["contentScript.js"]
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "devtools_page": "devtools.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/favicon-32x32.png", "icons/apple-touch-icon-120x120.png", "icons/favicon-16x16.png"],
+      "matches": []
     }
   ]
 }

@@ -1,11 +1,11 @@
 import { createRenderer } from 'fela';
 import webPreset from 'fela-preset-web';
-import { config } from '../config';
+ 
 
 export default () => {
     const renderer = createRenderer({
         plugins: [...webPreset],
-        devMode: config.NODE_ENV ? config.NODE_ENV !== 'production' : false,
+        devMode: process.env.NODE_ENV ? process.env.NODE_ENV !== 'production' : false,
     });
     renderer.renderStatic(
         `

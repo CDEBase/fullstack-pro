@@ -35,6 +35,7 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+const buildConfig = require('./build.config');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 /** 改动：build 不打 map */
@@ -659,7 +660,7 @@ module.exports = function (webpackEnv) {
           issue: {
             // This one is specifically to match during CI tests,
             // as micromatch doesn't match
-            // '../cra-template-typescript/template/src/App.tsx'
+            // ''
             // otherwise.
             include: [
               { file: '../**/src/**/*.{ts,tsx}' },
@@ -705,9 +706,16 @@ module.exports = function (webpackEnv) {
         process: 'process/browser.js',
         Buffer: ['buffer', 'Buffer'],
     }),
-        new webpack.DefinePlugin({
-          'process.env': JSON.stringify(process.env)
-       }),
+        
+       new webpack.DefinePlugin(
+        Object.assign(
+         {'process.env': JSON.stringify(process.env)},
+            ...Object.entries(buildConfig).map(([k, v]) => ({
+                [k]: typeof v !== 'string' ? v : `"${v.replace(/\\/g, '\\\\')}"`,
+            })),
+        ),
+    ),
+
       new webpack.EnvironmentPlugin(),
     ].filter(Boolean),
     // Turn off performance processing because we utilize

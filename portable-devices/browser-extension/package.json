@@ -94,7 +94,8 @@
         "serialize-javascript": "^4.0.0",
         "@common-stack/components-pro":"^0.3.1-alpha.1",
         "@apollo/react-common":"^3.1.4",
-        "@admin-layout/ant-ui":"^2.0.1-alpha.78"
+        "@admin-layout/ant-ui":"^2.0.1-alpha.78",
+        "antd": "~4.24.1"
     },
     "devDependencies": {
         "@babel/polyfill": "7.7.0",

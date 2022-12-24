@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import Main from './app/Popup';
+import Main from './app/Panel';
 import { createRoot } from 'react-dom/client';
 import './config/public-config';
 import 'reflect-metadata';
