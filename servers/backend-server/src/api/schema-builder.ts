@@ -153,7 +153,7 @@ export class GatewaySchemaBuilder {
         if (__DEV__) {
             import('../modules/module').then(
                 ({ ExternalModules }) => {
-                    const externalSchema = ExternalModules.schemas;
+                    const externalSchema = ExternalModules?.schemas || ``;
                     const writeData = `${externalSchema}`;
                     fs.writeFileSync('./generated-schema.graphql', writeData);
                 }
