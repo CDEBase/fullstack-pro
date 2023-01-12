@@ -9,10 +9,19 @@
       }
     }
   },
+  "namedInputs": {
+    "adminide": [
+      "{projectRoot}/packages/**/*",
+      "{projectRoot}/packages-modules/**/*"
+    ]
+  },
   "targetDefaults": {
     "build": {
       "dependsOn": [
         "^build"
+      ],
+      "inputs": [
+        "adminide"
       ]
     },
     "test": {
