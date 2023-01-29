@@ -1,15 +1,6 @@
 {
-    "changelog": {
-        "repo": "cdmbase/lerna-bootstrap",
-        "labels": {
-            "tag: breaking change": ":boom: Breaking Change",
-            "tag: new feature": ":rocket: New Feature",
-            "tag: bug fix": ":bug: Bug Fix",
-            "tag: polish": ":nail_care: Polish",
-            "tag: documentation": "Documentation",
-            "tag: internal": ":house: Internal"
-        }
-    },
+    "$schema": "./node_modules/lerna/schemas/lerna-schema.json",
+    "changelog": true,
     "command": {
         "publish": {
             "registry": "https://registry.npmjs.org",
