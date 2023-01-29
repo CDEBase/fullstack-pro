@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-desktop-device",
-    "version": "0.0.57-alpha.17",
+    "version": "0.0.57-alpha.18",
     "private": true,
     "description": "App is based on Electron, React, Redux and NodeJS as a back end",
     "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
@@ -49,8 +49,8 @@
         "@common-stack/core": "0.2.32",
         "@common-stack/server-core": "0.2.32",
         "@sample-stack/core": "0.0.57-alpha.0",
-        "@sample-stack/counter-module-browser": "0.0.57-alpha.12",
-        "@sample-stack/counter-module-electron": "0.0.57-alpha.12",
+        "@sample-stack/counter-module-browser": "0.0.57-alpha.18",
+        "@sample-stack/counter-module-electron": "0.0.57-alpha.18",
         "@sample-stack/platform-browser": "0.0.57-alpha.12",
         "antd": "~4.24.1",
         "apollo-link-debounce": "^3.0.0",
