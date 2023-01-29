@@ -30,7 +30,7 @@ const Html = ({
     headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
-    styleSheet?: any[];
+    styleSheet?: any;
     helmet?: HelmetData;
     stylesInserts?: any[];
     scriptsInserts?: string[];
@@ -64,17 +64,7 @@ const Html = ({
                         }}
                     />
                 )}
-                {styleSheet.map(({ type, rehydration, css, media, support }) => (
-                    <style
-                        id="stylesheet"
-                        dangerouslySetInnerHTML={{ __html: css }}
-                        data-fela-rehydration={rehydration}
-                        data-fela-type={type}
-                        data-fela-support={support}
-                        key={`${type}-${media}`}
-                        media={media}
-                    />
-                ))}
+                {/* {styleSheet} */}
                 {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;

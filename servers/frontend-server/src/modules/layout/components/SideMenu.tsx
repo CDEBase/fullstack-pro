@@ -53,7 +53,7 @@ export namespace ISiderMenu {
         onCollapse?: any;
         state?: boolean;
         isMobile?: boolean;
-        renderer?: any;
+        // renderer?: any;
         Authorized?: any;
         collapsed?: boolean;
         logo?: any;
@@ -91,9 +91,9 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
         };
     }
 
-    public static contextTypes = {
-        renderer: PropTypes.any.isRequired,
-    };
+    // public static contextTypes = {
+    //     renderer: PropTypes.any.isRequired,
+    // };
 
     public static defaultProps() {
         return {
@@ -271,7 +271,7 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
     }
 
     public render() {
-        const { renderer } = this.context;
+        // const { renderer } = this.context;
         const { logo, collapsed, segments = [], onCollapse, styles = {} } = this.props;
         const { openKeys } = this.state;
         // Don't show popup menu when it is been collapsed
