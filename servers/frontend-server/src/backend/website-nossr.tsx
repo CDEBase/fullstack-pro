@@ -4,31 +4,27 @@ import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
 import path from 'path';
 import fs from 'fs';
-import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor } from '@loadable/server';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import * as ReactFela from 'react-fela';
-import createRenderer from '../config/fela-renderer';
+import createEmotionServer from '@emotion/server/create-instance'
 import publicEnv from '../config/public-config';
 
 let assetMap;
 const key = 'custom';
 const cache = createCache({ key });
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
 async function renderServerSide(req, res) {
     try {
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
-        const renderer = createRenderer();
         const App = () => (
-            <ReactFela.Provider renderer={renderer}>
                 <CacheProvider value={cache}>
                     <StaticRouter location={req.url} context={context}>
                         <div>test</div>
                     </StaticRouter>
                 </CacheProvider>
-            </ReactFela.Provider>
         );
         if (context.pageNotFound === true) {
             res.status(404);
@@ -44,8 +40,10 @@ async function renderServerSide(req, res) {
         const JSX = extractor.collectChunks(App);
         const content = ReactDOMServer.renderToString(JSX);
 
-        // this comes after Html render otherwise we don't see fela rules generated
-        const appStyles = renderToSheetList(renderer);
+        
+        const chunks = extractCriticalToChunks(JSX)
+
+        const appStyles = constructStyleTagsFromChunks(chunks)
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
         if (context.url) {

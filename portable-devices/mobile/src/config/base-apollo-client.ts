@@ -68,6 +68,7 @@ export const createApolloClient = ({
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
         possibleTypes: clientState.possibleTypes,
+        typePolicies: clientState.typePolicies,
     });
 
     const attemptConditions = async (count: number, operation: any, error: Error) => {

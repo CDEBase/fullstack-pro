@@ -1,0 +1,33 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build"
+        ]
+      }
+    }
+  },
+  "namedInputs": {
+    "adminide": [
+      "{projectRoot}/packages/**/*",
+      "{projectRoot}/packages-modules/**/*"
+    ]
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "adminide"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ]
+    }
+  }
+}
