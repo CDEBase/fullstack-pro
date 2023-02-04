@@ -1,41 +1,41 @@
 {
-  "name": "@sample-stack/counter-module-mobile",
-  "version": "0.0.57-alpha.12",
-  "description": "Sample core for higher packages to depend on",
-  "license": "ISC",
-  "author": "CDMBase LLC",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "scripts": {
-    "build": "yarn build:clean && yarn build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "tsc",
-    "build:lib:watch": "yarn build:lib -- --watch",
-    "jest": "./node_modules/.bin/jest",
-    "prepublish": "yarn build",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "watch": "yarn build:lib:watch"
-  },
-  "dependencies": {
-    "@sample-stack/platform-browser": "0.0.57-alpha.12",
-    "antd": "~5.1.7"
-  },
-  "peerDependencies": {
-    "@common-stack/client-react": "*",
-    "native-base": "*",
-    "react": "*",
-    "react-native": "*",
-    "react-redux": "*",
-    "react-router": "*",
-    "react-router-dom": "*",
-    "redux": "*"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "typescript": {
-    "definition": "lib/index.d.ts"
-  }
+    "name": "@sample-stack/counter-module-mobile",
+    "version": "0.0.57-alpha.19",
+    "description": "Sample core for higher packages to depend on",
+    "license": "ISC",
+    "author": "CDMBase LLC",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "scripts": {
+        "build": "yarn build:clean && yarn build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "tsc",
+        "build:lib:watch": "yarn build:lib -- --watch",
+        "jest": "./node_modules/.bin/jest",
+        "prepublish": "yarn build",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "watch": "yarn build:lib:watch"
+    },
+    "dependencies": {
+        "@sample-stack/platform-browser": "0.0.57-alpha.12",
+        "antd": "~5.1.7"
+    },
+    "peerDependencies": {
+        "@common-stack/client-react": "*",
+        "native-base": "*",
+        "react": "*",
+        "react-native": "*",
+        "react-redux": "*",
+        "react-router": "*",
+        "react-router-dom": "*",
+        "redux": "*"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "typescript": {
+        "definition": "lib/index.d.ts"
+    }
 }
