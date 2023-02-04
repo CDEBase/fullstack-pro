@@ -39,6 +39,9 @@
         "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env yarn webpack-dev-server",
         "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn webpack-dev-server"
     },
+    "resolutions": {
+        "antd": "~5.1.7"
+    },
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@apollo/react-components": "^4.0.0",
