@@ -52,7 +52,7 @@
         "@sample-stack/counter-module-browser": "link:../../packages-modules/counter/browser",
         "@sample-stack/counter-module-electron": "link:../../packages-modules/counter/electron",
         "@sample-stack/platform-browser": "link:../../packages/sample-platform/browser",
-        "antd": "~4.24.1",
+        "antd": "~5.1.7",
         "apollo-link-debounce": "^3.0.0",
         "apollo-link-logger": "^2.0.0",
         "apollo-server-errors": "^3.3.1",
