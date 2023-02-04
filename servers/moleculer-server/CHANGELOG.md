@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.0.57-alpha.22 (2023-02-04)
+
+### Reverts
+
+-   Revert "udpate redis typefix" ([a262508](https://github.com/CDEBase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
+
 ## [0.0.57-alpha.15](https://github.com/cdmbase/fullstack-pro/compare/v0.0.57-alpha.14...v0.0.57-alpha.15) (2022-12-14)
 
 **Note:** Version bump only for package sample-stack-moleculer-server
