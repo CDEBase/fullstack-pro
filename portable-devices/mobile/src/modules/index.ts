@@ -3,6 +3,7 @@
 import { ClientTypes } from '@common-stack/client-react';
 import { logger } from '@cdm-logger/client';
 import modules, { MainRoute } from './modules';
+import { navigate } from './navigator';
 
 Object.assign(global, require('../../build.config'));
 
@@ -13,6 +14,10 @@ class UtilityClass {
 
     public getCacheKey(storeObj) {
         return this.modules.getDataIdFromObject(storeObj);
+    }
+
+    public navigate(name: string, params: never){
+        return navigate(name, params);
     }
 }
 
