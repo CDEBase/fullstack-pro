@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-backend-server",
-    "version": "0.0.57-alpha.22",
+    "version": "0.0.57-alpha.23",
     "private": true,
     "description": "Starter kit for apollo server using webpack and typescript",
     "keywords": [
@@ -68,7 +68,6 @@
         "@common-stack/core": "0.5.1",
         "@common-stack/server-core": "0.5.1",
         "@common-stack/store-mongo": "0.5.1",
-        "@babel/runtime": "^7.20.1",
         "@graphql-tools/links": "^8.3.21",
         "@graphql-tools/schema": "^8.3.14",
         "@graphql-tools/stitch": "^8.7.29",
