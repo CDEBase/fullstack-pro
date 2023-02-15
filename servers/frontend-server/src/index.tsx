@@ -10,8 +10,6 @@ import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
-// import 'backend_reload';
-
 const rootEl = document.getElementById('content');
 let frontendReloadCount = 0;
 
