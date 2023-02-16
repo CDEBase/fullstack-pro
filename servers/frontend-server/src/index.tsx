@@ -6,12 +6,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 // load environment config
 import './config/public-config';
+
+// add any css files
+
 import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
-// import 'backend_reload';
-
 const rootEl = document.getElementById('content');
 let frontendReloadCount = 0;
 
