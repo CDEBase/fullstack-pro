@@ -7,7 +7,7 @@ import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
 const ComplexWithTheme = lazy(() => import('./components/CompledWithTheme'));
 
-export const felaPageStore: any[] = [
+export const emotionPageStore: any[] = [
     {
         component: ComplexWithTheme,
         tab: 'Emotion Styling',
@@ -21,9 +21,9 @@ export const felaPageStore: any[] = [
 const selectedRoutesAndMenus = ['emotion'];
 
 // get menus
-const filteredMenus = getFilteredMenus(felaPageStore, selectedRoutesAndMenus);
+const filteredMenus = getFilteredMenus(emotionPageStore, selectedRoutesAndMenus);
 
 // get routes
-const filteredRoutes = getFilteredRoutes(felaPageStore, selectedRoutesAndMenus);
+const filteredRoutes = getFilteredRoutes(emotionPageStore, selectedRoutesAndMenus);
 
 export { filteredMenus, filteredRoutes };

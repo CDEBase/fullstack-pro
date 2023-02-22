@@ -54,9 +54,11 @@ const config = {
     },
     externals: [
         '@apollo/client',
+        '@emotion/react',
+        '@emotion/css',
+        '@emotion/styled',
         'react',
         'react-redux',
-        'react-fela',
         'react-helmet',
         'react-loadable',
         'react-router',
