@@ -3,7 +3,7 @@ import 'reflect-metadata';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 // load environment config
 import './config/public-config';
 
@@ -16,7 +16,7 @@ import Main from './app/Main';
 const rootEl = document.getElementById('content');
 let frontendReloadCount = 0;
 
-const renderApp = ({ key }: { key: number }) => ReactDOM.render(<Main key={key} />, rootEl);
+const renderApp = ({ key }: { key: number }) => createRoot(rootEl!).render(<Main key={key} />);
 renderApp({ key: frontendReloadCount });
 if (__DEV__) {
     if ((module as any).hot) {
