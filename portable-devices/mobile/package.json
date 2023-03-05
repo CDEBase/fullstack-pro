@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-mobile-device",
-    "version": "0.0.57-alpha.23",
+    "version": "0.0.57-alpha.26",
     "private": true,
     "main": "index.js",
     "scripts": {
@@ -144,7 +144,7 @@
         "@babel/core": "^7.20.2",
         "@expo/config-plugins": "^5.0.0",
         "@expo/dev-server": "0.1.120",
-        "@expo/webpack-config": "~18.0.1",        
+        "@expo/webpack-config": "~18.0.1",
         "@testing-library/react-native": "^9.1.0",
         "@types/react-native": "~0.64.12",
         "@types/react-native-dotenv": "^0.2.0",
