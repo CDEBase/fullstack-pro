@@ -1,6 +1,6 @@
 {
     "name": "sample-stack",
-    "version": "0.12.0",
+    "version": "0.12.2",
     "private": true,
     "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
     "bugs": {
