@@ -7,7 +7,7 @@
         "android": "expo run:android",
         "build": "yarn easBuild --profile development",
         "build:all": "yarn build -p all",
-        "build:web": "GENERATE_SOURCEMAP=false expo export:web",
+        "build:web": "cross-env GENERATE_SOURCEMAP=false expo export:web",
         "build:android": "yarn build -p android --clear-cache",
         "build:auto": "yarn build:all --non-interactive",
         "build:clean": "rimraf build .expo .tmp",

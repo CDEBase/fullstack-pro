@@ -2462,6 +2462,13 @@
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.5.1.tgz#faf8690841cde252b780bea2866f17070dcdb27a"
   integrity sha512-q0uw9WLyQDcs/kfoLEeUgRk+n+T8we/810djDZGIQlpf84OTOH3w1fSqf7Ohc4TBpHi4WwS74479VtVAOw+SCA==
 
+"@common-stack/env-list-loader@0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@common-stack/env-list-loader/-/env-list-loader-0.5.7.tgz#54b1ed9391301741cab5e7ba53465e494a6a5ab2"
+  integrity sha512-6c0n+qy252uGqvRcC2hMIpwZlUJqwjdQdtAEZPnzekS+L/6LtXYJhEArHfkFo4y9cqUSlts8iG5oQBIRM/9NMg==
+  dependencies:
+    strip-comments "^2.0.1"
+
 "@common-stack/server-core@0.5.1":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-0.5.1.tgz#fc666c24cec43aa0138ff4e3443414a5c3a02515"
