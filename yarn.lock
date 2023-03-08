@@ -2445,10 +2445,10 @@
   dependencies:
     "@common-stack/core" "0.5.1"
 
-"@common-stack/client-react@0.5.1", "@common-stack/client-react@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.5.1.tgz#57c01a7649c03c8739dc9960caa67de8f3bbdbda"
-  integrity sha512-MJ0u8t38Jv1bUG0vSCUyxRE4Mvjfj54Lu0OthxKC1sXEs/ssH6HlUwTO3mwcPoIL0ewFg6ZNkFrLFBNOjL4iWQ==
+"@common-stack/client-react@0.5.6", "@common-stack/client-react@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-0.5.6.tgz#8412b8c7f46535f5d2d2517effb8f82d27fcaeec"
+  integrity sha512-ndpXOLK1IFejSlyxrftEzJn7/jqMO2BpSoB91cxNU4VUXMH0/H36qTY83WjJtwOov8m1rEZLwBVrP8azFa/s6A==
   dependencies:
     "@common-stack/client-core" "0.5.1"
     "@common-stack/core" "0.5.1"
@@ -2462,10 +2462,10 @@
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-0.5.1.tgz#faf8690841cde252b780bea2866f17070dcdb27a"
   integrity sha512-q0uw9WLyQDcs/kfoLEeUgRk+n+T8we/810djDZGIQlpf84OTOH3w1fSqf7Ohc4TBpHi4WwS74479VtVAOw+SCA==
 
-"@common-stack/env-list-loader@0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@common-stack/env-list-loader/-/env-list-loader-0.5.7.tgz#54b1ed9391301741cab5e7ba53465e494a6a5ab2"
-  integrity sha512-6c0n+qy252uGqvRcC2hMIpwZlUJqwjdQdtAEZPnzekS+L/6LtXYJhEArHfkFo4y9cqUSlts8iG5oQBIRM/9NMg==
+"@common-stack/env-list-loader@0.5.8":
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/env-list-loader/-/env-list-loader-0.5.8.tgz#88355d0b9ea4e98f11e5dcc1d5fa9b2d9b11c061"
+  integrity sha512-I8yEvFr1SZmdHlCZrHa/vFGbtoCYGqlc+OayeQuB9JtIHIT+StcN1yZPUATPuNw+bOEkQOD53Q/zIFjbDLduAQ==
   dependencies:
     strip-comments "^2.0.1"
 
@@ -2476,10 +2476,10 @@
   dependencies:
     "@common-stack/core" "0.5.1"
 
-"@common-stack/store-mongo@0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-0.5.1.tgz#633ac656fafdb336e1870c8d5e7b82d1fec1795a"
-  integrity sha512-UFpLoy2pSu4XEAlqqSAd2dmuAgpi63ULow4UU+l7zY9P7+c+YisooxA7D/MkmxkqeeneSmWnbOo9Dldbv+/sng==
+"@common-stack/store-mongo@0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-0.5.3.tgz#ab89f3a4f0c710f8590aee316129928c9988e9b0"
+  integrity sha512-5TDxJbvxbo4mIR84pBoN9nXa0XSVgGOhirfCBsDz+KKHZMlEHIdBWC6FUK5LC4xeHyEOqeyhO/vg1BC8y0w35A==
   dependencies:
     "@common-stack/core" "0.5.1"
 
