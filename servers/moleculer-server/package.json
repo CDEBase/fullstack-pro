@@ -39,7 +39,7 @@
         "@common-stack/client-core": "0.5.1",
         "@common-stack/core": "0.5.1",
         "@common-stack/server-core": "0.5.1",
-        "@common-stack/store-mongo": "0.5.1",
+        "@common-stack/store-mongo": "0.5.3",
         "@sample-stack/core": "link:../../packages/sample-core",
         "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
         "@sample-stack/platform-server": "link:../../packages/sample-platform/server",

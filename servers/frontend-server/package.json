@@ -46,7 +46,7 @@
         "@cdm-logger/client": "^7.0.12",
         "@cdm-logger/server": "^7.0.12",
         "@common-stack/client-core": "0.5.1",
-        "@common-stack/client-react": "0.5.1",
+        "@common-stack/client-react": "0.5.6",
         "@common-stack/core": "0.5.1",
         "@common-stack/server-core": "0.5.1",
         "@emotion/css": "^11.10.0",
