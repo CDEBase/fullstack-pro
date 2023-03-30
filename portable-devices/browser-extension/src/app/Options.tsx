@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/react-common';
-import { Provider } from 'react-redux';
+import { Provider, ReactReduxContext } from 'react-redux';
 import { rehydrate } from 'fela-dom';
 import createRenderer from '../config/options/fela-renderer';
 import { createClientContainer } from '../config/options/client.service';
@@ -29,7 +29,7 @@ export class Main extends React.Component<{}, {}> {
                 <Provider store={store}>
                     <ApolloProvider client={client}>
                         <RendererProvider renderer={renderer}>
-                            <ConnectedRouter history={history}>
+                            <ConnectedRouter history={history} context={ReactReduxContext}>
                                 <MainRoute />
                             </ConnectedRouter>,
                         </RendererProvider>

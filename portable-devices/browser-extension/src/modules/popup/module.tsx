@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
-import { config } from '../../config/config';
-// import ExtensionModule from '../../compute';
+import { ThemeProvider } from 'react-fela';
+
 
 
 const features = new Feature(
@@ -17,7 +17,7 @@ export const MainRoute = props => {
 
     return (
         <React.Suspense fallback={<span>Loading....</span>}>
-            {routes}
+                  <ThemeProvider theme={{ name: 'light' }}>{routes}</ThemeProvider>
             <h1>Chrome Extension Popup</h1>
         </React.Suspense>
     );

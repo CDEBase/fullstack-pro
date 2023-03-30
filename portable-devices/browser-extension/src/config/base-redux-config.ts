@@ -17,6 +17,7 @@ import {
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
+import thunk from 'redux-thunk';
 
 interface IReduxStore<S = any> {
     scope: 'browser' | 'server' | 'native' | 'ElectronMain';
@@ -54,7 +55,8 @@ export const createReduxStore = ({
      * Add middleware that required for this app.
      */
 
-    const middlewares: Middleware[] = [];
+
+    const middlewares: Middleware[] = [thunk];
     // add epicMiddleware
     if (epicMiddleware) {
         middlewares.push(epicMiddleware);
@@ -88,6 +90,9 @@ export const createReduxStore = ({
         ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     const rootReducer = combineReducers(reducers);
+    console.log("___________")
+    console.log("___________")
+    console.log("_____persistConfig______", persistConfig)
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
@@ -97,6 +102,6 @@ export const createReduxStore = ({
             epicMiddleware.run(rootEpic);
         }
     }
-
+    
     return store;
 };

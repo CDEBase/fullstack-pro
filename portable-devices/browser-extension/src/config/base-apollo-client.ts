@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { ApolloClient, ApolloClientOptions, ApolloLink, gql } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
@@ -98,7 +98,8 @@ export const createApolloClient = ({
         const connectionParams = async () => {
             const param: {[key: string]: any} = {};
             for (const connectionParam of clientState.connectionParams) {
-                merge(param, await connectionParam);
+                const result = await connectionParam as Function
+                merge(param, await result());
             }
             return param;
         };
@@ -174,13 +175,24 @@ export const createApolloClient = ({
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-
     clientState?.defaults?.forEach((x) => {
-        if (x.type === 'query') {
-            cache.writeQuery(x);
-        } else if (x.type === 'fragment') {
-            cache.writeFragment(x);
+        try {
+            if (x.type === 'query') {
+                cache.writeQuery({
+                    query: x.query,
+                    data: x.data,
+                })
+            } else if (x.type === 'fragment') {
+                cache.writeFragment({
+                    id: x.id,
+                    fragment: x.fragment,
+                    data: x.data,
+                });
+            }
+        } catch (err) {
+            console.error('error writing cache', err);
         }
+
     });
 
     return { apolloClient: _apolloClient, cache };

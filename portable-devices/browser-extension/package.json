@@ -95,7 +95,32 @@
         "@common-stack/components-pro":"^0.3.1-alpha.1",
         "@apollo/react-common":"^3.1.4",
         "@admin-layout/ant-ui":"^2.0.1-alpha.78",
-        "antd": "~4.24.1"
+        "antd": "~4.24.1",
+        "@adminide-stack/account-api-browser": "link:../../packages-modules/account-api/browser",
+        "@adminide-stack/billing-api-browser": "link:../../packages-modules/billing-api/browser",
+        "@adminide-stack/core": "link:../../packages/adminide-core",
+        "@adminide-stack/platform-browser": "link:../../packages/adminide-platform/browser",
+        "@adminide-stack/react-shared-components": "link:../../packages-modules/react-shared-components",
+        "@adminide-stack/repository-api-browser": "link:../../packages-modules/repository-api/browser",
+        "@adminide-stack/user-activity-browser": "link:../../packages-modules/user-activity/browser",
+        "@adminide-stack/user-auth0-browser": "link:../../packages-modules/user-auth0/browser",
+        "@clockbook-app/timetracker-browser-extension":"link:../../src",
+        "@clockbook-app/timetracker-client": "link:../../lib",
+        "apollo-logger": "^0.3.3",
+        "apollo-server-errors": "^3.3.1",
+        "apollo-upload-client": "^16.0.0",
+        "axios": "^0.19.0",
+        "base-64": "^0.1.0",
+        "body-parser": "^1.18.2",
+        "browser-bunyan": "^1.6.3",
+        "fela-font-renderer": "^5.0.25",
+        "fela-plugin-lvha": "^5.0.16",
+        "react-highlight": "^0.12.0",
+        "react-highlight-words": "^0.16.0",
+        "url-match-patterns": "^0.2.0",
+        "@common-stack/env-list-loader": "0.5.1-alpha.1",
+        "webext-redux": "^2.1.9",
+        "redux-persist-chrome-storage": "^1.0.8"
     },
     "devDependencies": {
         "@babel/polyfill": "7.7.0",
@@ -118,9 +143,10 @@
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "terser-webpack-plugin": "^5.2.5",
         "css-minimizer-webpack-plugin": "^3.2.0",
-    "eslint-webpack-plugin": "^3.2.0",
-    "copy-webpack-plugin": "^10.2.4",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
-    "eslint-config-react-app": "^7.0.1"
+        "eslint-webpack-plugin": "^3.2.0",
+        "copy-webpack-plugin": "^10.2.4",
+        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+        "eslint-config-react-app": "^7.0.1",
+        "babel-loader":"^9.1.2"
     }
 }

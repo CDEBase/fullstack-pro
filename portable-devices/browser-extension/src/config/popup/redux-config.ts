@@ -6,10 +6,12 @@ import modules, { logger, container } from '../../modules/popup';
 import { rootEpic } from './epic-config';
 import { history } from '../router-history';
 import { createClientContainer } from './client.service';
- 
+import createChromeStorage from 'redux-persist-chrome-storage'
+import thunkMiddleware from 'redux-thunk';
 
 export { history };
 const { apolloClient, services } = createClientContainer();
+const storage = createChromeStorage(window.chrome, 'sync');
 
 export const epicMiddleware = createEpicMiddleware({
     dependencies: {
@@ -21,12 +23,10 @@ export const epicMiddleware = createEpicMiddleware({
     },
 });
 
-// export const persistConfig = {
-//     key: 'root',
-//     storage,
-//     stateReconciler: autoMergeLevel2,
-//     whitelist: ['user'],
-// };
+export const persistConfig = {
+    key: 'root',
+    storage,
+};
 
 /**
  * Add any reducers required for this app dirctly in to
@@ -38,16 +38,15 @@ export const createReduxStore = () => {
 
     const store = createBaseReduxStore({
         scope: 'browser',
-        isDebug: process.env.NODE_ENV !== 'production',
+        isDebug: __DEBUGGING__,
         isDev: process.env.NODE_ENV === 'development',
-        history,
         initialState: {},
-        // persistConfig,
-        middleware: [routerMiddleware(history)],
+        persistConfig,
         epicMiddleware,
         rootEpic: rootEpic as any,
+        middleware: [thunkMiddleware, routerMiddleware(history)],
         reducers: { router, ...modules.reducers },
     });
-
+    container.bind('ReduxStore').toConstantValue(store);
     return store;
 };
