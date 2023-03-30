@@ -9,7 +9,7 @@
     },
     "babel": {
         "presets": [
-          "react-app"
+          "react-app" 
         ]
       },
     "repository": {
