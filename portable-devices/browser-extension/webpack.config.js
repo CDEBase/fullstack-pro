@@ -33,6 +33,7 @@ const ForkTsCheckerWebpackPlugin =
     ? require('react-dev-utils/ForkTsCheckerWarningWebpackPlugin')
     : require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const EnvListPlugin = require('@common-stack/env-list-loader');
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 const buildConfig = require('./build.config');
@@ -362,8 +363,22 @@ module.exports = function (webpackEnv) {
         },
         {
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          }
+        },
+        {
+          test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           resolve: {
             fullySpecified: false,
+          },
+        },
+        {
+          // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
+          test: /config\/(env-config|public-config)\.(j|t)s/,
+          use: {
+              loader: '@common-stack/env-list-loader',
           },
         },
         {
@@ -607,7 +622,6 @@ module.exports = function (webpackEnv) {
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/main/packages/react-refresh
       isEnvDevelopment &&
@@ -705,16 +719,18 @@ module.exports = function (webpackEnv) {
       new webpack.ProvidePlugin({
         process: 'process/browser.js',
         Buffer: ['buffer', 'Buffer'],
-    }),
+      }),
         
-       new webpack.DefinePlugin(
-        Object.assign(
-         {'process.env': JSON.stringify(process.env)},
-            ...Object.entries(buildConfig).map(([k, v]) => ({
-                [k]: typeof v !== 'string' ? v : `"${v.replace(/\\/g, '\\\\')}"`,
-            })),
-        ),
+    new webpack.DefinePlugin(
+      Object.assign(
+        {'process.env': JSON.stringify(process.env)},
+        ...Object.entries(buildConfig).map(([k, v]) => ({
+          [k]: typeof v !== 'string' ? v : `"${v.replace(/\\/g, '\\\\')}"`,
+        })),
+      ),
     ),
+    // The plugin lists the environment that required as well recommendation about the keys used.
+      new EnvListPlugin.Plugin(),
 
       new webpack.EnvironmentPlugin(),
     ].filter(Boolean),

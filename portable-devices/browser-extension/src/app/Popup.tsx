@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/react-common';
-import { Provider } from 'react-redux';
+import { Provider, ReactReduxContext } from 'react-redux';
 import { rehydrate } from 'fela-dom';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { PluginArea, InversifyProvider } from '@common-stack/client-react';
@@ -32,7 +32,7 @@ export class Main extends React.Component<{}, {}> {
                                 <RendererProvider renderer={renderer}>
                                     <PluginArea />
                                     {modules.getWrappedRoot(
-                                        <ConnectedRouter history={history}>
+                                        <ConnectedRouter history={history} context={ReactReduxContext}>
                                             <MainRoute />
                                         </ConnectedRouter>,
                                     )}

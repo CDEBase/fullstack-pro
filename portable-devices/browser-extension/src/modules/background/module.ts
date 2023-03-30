@@ -1,4 +1,6 @@
+import * as React from 'react';
 import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
+import { ThemeProvider } from 'react-fela';
 
 const features = new Feature(
     FeatureWithRouterFactory,
@@ -10,7 +12,12 @@ const routes = renderRoutes2({ routes: configuredRoutes });
 
 export const MainRoute = props => {
     return (
-    )
+        <React.Suspense fallback={<span>Loading....</span>}>
+            <ThemeProvider theme={{ name: 'light' }}>
+                {routes}
+            </ThemeProvider>
+        </React.Suspense>
+    );
 };
 
 export default features;
