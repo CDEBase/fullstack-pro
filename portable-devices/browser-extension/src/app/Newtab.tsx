@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/react-common';
 import { Provider, ReactReduxContext } from 'react-redux';
 import { rehydrate } from 'fela-dom';
@@ -29,14 +28,12 @@ export class Main extends React.Component<{}, {}> {
                     <Provider store={store}>
                         <ApolloProvider client={client}>
                             <InversifyProvider container={container} modules={modules}>
-                                <RendererProvider renderer={renderer}>
                                     <PluginArea />
                                     {modules.getWrappedRoot(
                                         <ConnectedRouter history={history} context={ReactReduxContext}>
                                             <MainRoute />
                                         </ConnectedRouter>,
                                     )}
-                                </RendererProvider>
                             </InversifyProvider>
                         </ApolloProvider>
                     </Provider>
