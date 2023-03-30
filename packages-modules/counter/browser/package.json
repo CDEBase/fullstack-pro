@@ -20,7 +20,7 @@
     },
     "dependencies": {
         "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-        "antd": "~4.24.1"
+        "antd": "~5.1.7"
     },
     "devDependencies": {},
     "peerDependencies": {

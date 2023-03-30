@@ -12,6 +12,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const zlib = require('zlib');
+const EnvListPlugin = require('@common-stack/env-list-loader');
 const ServerConfig = require('../../tools/webpack/server.config');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
@@ -137,6 +138,13 @@ const config = {
                     },
                 },
             },
+            {
+                // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
+                test: /config\/(env-config|public-config)\.(j|t)s/,
+                use: {
+                    loader: '@common-stack/env-list-loader',
+                },
+            },
         ],
         unsafeCache: false,
     },
@@ -219,6 +227,8 @@ const config = {
     )
         .concat([
             ...plugins,
+            // The plugin lists the environment that required as well recommendation about the keys used.
+            new EnvListPlugin.Plugin(),
             new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
             new webpack.DefinePlugin(
                 Object.assign(

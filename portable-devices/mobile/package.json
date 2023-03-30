@@ -7,6 +7,7 @@
         "android": "expo run:android",
         "build": "yarn easBuild --profile development",
         "build:all": "yarn build -p all",
+        "build:web": "cross-env GENERATE_SOURCEMAP=false expo export:web",
         "build:android": "yarn build -p android --clear-cache",
         "build:auto": "yarn build:all --non-interactive",
         "build:clean": "rimraf build .expo .tmp",
@@ -55,9 +56,9 @@
     "dependencies": {
         "@apollo/client": "~3.7.1",
         "@cdm-logger/client": "^7.0.12",
-        "@common-stack/client-core": "^0.2.33",
-        "@common-stack/client-react": "^0.2.33",
-        "@common-stack/core": "^0.2.32",
+        "@common-stack/client-core": "^0.5.1",
+        "@common-stack/client-react": "^0.5.6",
+        "@common-stack/core": "^0.5.1",
         "@expo/vector-icons": "~13.0.0",
         "@react-native-async-storage/async-storage": "~1.17.3",
         "@react-native-community/cameraroll": "~4.1.2",
@@ -140,9 +141,10 @@
         "text-encoding-polyfill": "^0.6.7"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.9",
+        "@babel/core": "^7.20.2",
         "@expo/config-plugins": "^5.0.0",
-        "@expo/webpack-config": "~0.17.3",
+        "@expo/dev-server": "0.1.120",
+        "@expo/webpack-config": "~18.0.1",        
         "@testing-library/react-native": "^9.1.0",
         "@types/react-native": "~0.64.12",
         "@types/react-native-dotenv": "^0.2.0",
