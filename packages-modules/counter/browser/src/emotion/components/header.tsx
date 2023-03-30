@@ -22,7 +22,7 @@ const Navbar = () => {
     ];
     return (
         <div css={styleSheet.header}>
-            <div css={styleSheet.logo}>CDNBase LLC</div>
+            <div css={styleSheet.logo}>CDMBase LLC</div>
             <div>
                 <div>
                     <ul css={styleSheet.itemList}>

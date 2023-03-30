@@ -1,9 +1,9 @@
-import * as Knex from 'knex';
+// import * as Knex from 'knex';
 
-const initialAmount = 5;
+// const initialAmount = 5;
 
-export async function seed(knex: Knex) {
-    await knex('count').truncate();
+// export async function seed(knex: Knex) {
+//     await knex('count').truncate();
 
-    return knex('count').insert({ amount: initialAmount });
-}
+//     return knex('count').insert({ amount: initialAmount });
+// }

@@ -39,7 +39,7 @@ const CounterView = ({
       {renderMetaData()}
       <section>
           <p>
-            Current counter, is {counter.amount} and cached data. This is being stored
+            Current counter, is {counter?.amount} and cached data. This is being stored
             server-side in the database and using Apollo subscription for
             real-time updates.
           </p>
@@ -53,7 +53,7 @@ const CounterView = ({
       <section>
         <p>
           Get Counter Cache
-            {getCounterLoading ? "Loading Counter Data..." : cachedData ? <span style={{ fontStyle: 'bold' }}> {cachedData.counterCache.amount}</span> : null}
+            {getCounterLoading ? "Loading Counter Data..." : cachedData ? <span style={{ fontStyle: 'bold' }}> {cachedData?.counterCache?.amount}</span> : null}
           <br />
           <button id="get-cached-counter" onClick={() => getCounter()}>
             Click to get cached counter
