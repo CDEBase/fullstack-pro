@@ -3,20 +3,20 @@ Sample Style Sheet implementation.
 
 ```js
 import * as CSS from 'csstype';
+import { css } from '@emotion/react'
 
 const DefaultSettingsView = (props: IDefaultSettings) => {
 
-    const { css, theme } = useFela();
 
     return(()=> {
-            <div className={css(styleSheet.title)}>
+            <div className={css(styleSheet.title({title:title}))}>
                 <span className={css(styleSheet.note({ width: width || 0 }))}>test</span>
             </div>
     })
 
 }
 const styleSheet: { [key: string]: (x: any) => CSS.Properties } = {
-    resizable: () => ({
+    resizable: {
         position: 'relative',
         '> .react-resizable-handle': {
             position: 'absolute',
@@ -28,7 +28,7 @@ const styleSheet: { [key: string]: (x: any) => CSS.Properties } = {
             boxSizing: 'border-box',
             cursor: 'col-resize',
         },
-    }),
+    },
     title: ({ theme }) => ({
         textTransform: 'uppercase',
         padding: '5px 0',
