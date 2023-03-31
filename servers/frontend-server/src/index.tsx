@@ -2,21 +2,21 @@ import 'reflect-metadata';
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import 'antd/dist/antd.css';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 // load environment config
 import './config/public-config';
+
+// add any css files
+
 import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
-// import 'backend_reload';
-
 const rootEl = document.getElementById('content');
 let frontendReloadCount = 0;
 
-const renderApp = ({ key }: { key: number }) => ReactDOM.render(<Main key={key} />, rootEl);
+const renderApp = ({ key }: { key: number }) => createRoot(rootEl!).render(<Main key={key} />);
 renderApp({ key: frontendReloadCount });
 if (__DEV__) {
     if ((module as any).hot) {
