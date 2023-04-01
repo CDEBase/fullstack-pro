@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
-import { ThemeProvider } from 'react-fela';
 
 // import ExtensionModule from '../../compute';
 
@@ -18,7 +17,7 @@ export const MainRoute = props => {
 
     return (
         <React.Suspense fallback={<span>Loading....</span>}>
-            <ThemeProvider theme={{ name: 'light' }}>{routes}</ThemeProvider>
+            {routes}
             <h1>Chrome Extension New Tab</h1>
         </React.Suspense>
     );
