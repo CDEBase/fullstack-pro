@@ -96,10 +96,15 @@ pipeline {
         expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
-        sh """
-            rm .npmrc
-            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
-        """
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
+          sh """
+              rm .npmrc
+              lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
+              git checkout -- .npmrc
+              yarn gitcommit
+              git push origin ${params.REPOSITORY_BRANCH}
+          """
+        }
       }
     }
 
