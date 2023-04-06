@@ -24,7 +24,7 @@ interface IReduxStore<S = any> {
     isDebug: boolean;
     isDev: boolean;
     reducers: ReducersMapObject<S>;
-    rootEpic?: Epic<Action<S>, Action<any>, void, any>;
+    rootEpic?: Epic<Action<S>, Action<any>, void, any> | any;
     epicMiddleware?: EpicMiddleware<Action<S>, Action<any>>;
     preMiddleware?: Middleware[];
     postMiddleware?: Middleware[];
@@ -54,7 +54,6 @@ export const createReduxStore = ({
     /**
      * Add middleware that required for this app.
      */
-
 
     const middlewares: Middleware[] = [thunk];
     // add epicMiddleware
@@ -90,9 +89,6 @@ export const createReduxStore = ({
         ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     const rootReducer = combineReducers(reducers);
-    console.log("___________")
-    console.log("___________")
-    console.log("_____persistConfig______", persistConfig)
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
@@ -102,6 +98,6 @@ export const createReduxStore = ({
             epicMiddleware.run(rootEpic);
         }
     }
-    
+
     return store;
 };

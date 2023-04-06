@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // version 09/18/2021
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
@@ -31,7 +34,10 @@ interface IApolloClientParams {
     isSSR: boolean;
     httpGraphqlURL: string;
     httpLocalGraphqlURL: string;
-    logger: CdmLogger.ILogger;
+    logger?: CdmLogger.ILogger;
+    linkConnectionParams?: any;
+    additionalLinks?: any;
+    possibleTypes?: any;
 }
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -77,7 +83,7 @@ export const createApolloClient = ({
             const result = await promises;
             return !!result.find((item) => item && isBoolean(item));
         } catch (e) {
-            logger.trace('Error occured in retryLink Attempt condition', e);
+            logger?.trace('Error occured in retryLink Attempt condition', e);
             throw e;
         }
     };
@@ -96,9 +102,9 @@ export const createApolloClient = ({
     _memoryCache = cache;
     if (isBrowser) {
         const connectionParams = async () => {
-            const param: {[key: string]: any} = {};
+            const param: { [key: string]: any } = {};
             for (const connectionParam of clientState.connectionParams) {
-                const result = await connectionParam as Function
+                const result = (await connectionParam) as Function;
                 merge(param, await result());
             }
             return param;
@@ -112,14 +118,14 @@ export const createApolloClient = ({
                 connectionParams,
                 on: {
                     error: async (error: Error[]) => {
-                        logger.error(error, '[WS connectionCallback error] %j');
+                        logger?.error(error, '[WS connectionCallback error] %j');
                         const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
                             func(wsLink, error, {}),
                         );
                         try {
                             await promises;
                         } catch (err) {
-                            logger.trace('Error occurred in connectionCallback condition', err);
+                            logger?.trace('Error occurred in connectionCallback condition', err);
                             throw err;
                         }
                     },
@@ -181,7 +187,7 @@ export const createApolloClient = ({
                 cache.writeQuery({
                     query: x.query,
                     data: x.data,
-                })
+                });
             } else if (x.type === 'fragment') {
                 cache.writeFragment({
                     id: x.id,
@@ -192,7 +198,6 @@ export const createApolloClient = ({
         } catch (err) {
             console.error('error writing cache', err);
         }
-
     });
 
     return { apolloClient: _apolloClient, cache };

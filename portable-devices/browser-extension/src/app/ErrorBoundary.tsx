@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Error500 } from './500';
 import { ServerError } from './ServerError';
 
-type IErrorBoundryState = { error: any; type: string };
+type IErrorBoundryState = { error: any; type: string | undefined };
 
 export class ErrorBoundary extends React.Component<any, IErrorBoundryState> {
     constructor(props) {

@@ -4,7 +4,7 @@ import { Provider, ReactReduxContext } from 'react-redux';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { PluginArea, InversifyProvider } from '@common-stack/client-react';
 import { ConnectedRouter } from 'connected-react-router';
-import { ErrorBoundary } from '@admin-layout/ant-ui';
+import { ErrorBoundary } from './ErrorBoundary';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import modules, { MainRoute } from '../modules/popup';

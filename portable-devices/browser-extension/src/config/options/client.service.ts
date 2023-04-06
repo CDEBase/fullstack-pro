@@ -22,7 +22,7 @@ export const createClientContainer = () => {
     const clientState = modules.getStateParams({ resolverContex: () => modules.createService({}, {}) });
     const { cache, apolloClient } = createApolloClient({
         httpGraphqlURL: PUBLIC_SETTINGS.GRAPHQL_URL,
-        httpLocalGraphqlURL: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL,
+        httpLocalGraphqlURL: PUBLIC_SETTINGS.LOCAL_GRAPHQL_URL || '',
         isDev: process.env.NODE_ENV === 'development',
         isDebug: process.env.NODE_ENV !== 'production',
         isSSR: true,
