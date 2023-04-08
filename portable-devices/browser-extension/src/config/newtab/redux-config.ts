@@ -40,7 +40,6 @@ export const createReduxStore = () => {
         scope: 'browser',
         isDebug: process.env.NODE_ENV !== 'production',
         isDev: process.env.NODE_ENV === 'development',
-        history,
         initialState: {},
         // persistConfig,
         middleware: [routerMiddleware(history)],

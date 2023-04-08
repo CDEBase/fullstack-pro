@@ -1,13 +1,12 @@
-// import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
+import createChromeStorage from 'redux-persist-chrome-storage';
+import thunkMiddleware from 'redux-thunk';
 import { createReduxStore as createBaseReduxStore } from '../base-redux-config';
 import modules, { logger, container } from '../../modules/popup';
 import { rootEpic } from './epic-config';
 import { history } from '../router-history';
 import { createClientContainer } from './client.service';
-import createChromeStorage from 'redux-persist-chrome-storage'
-import thunkMiddleware from 'redux-thunk';
 
 export { history };
 const { apolloClient, services } = createClientContainer();
