@@ -13,7 +13,7 @@ import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
-const rootEl = document.getElementById('content');
+const rootEl = document.getElementById('root');
 let frontendReloadCount = 0;
 
 const renderApp = ({ key }: { key: number }) => createRoot(rootEl!).render(<Main key={key} />);
