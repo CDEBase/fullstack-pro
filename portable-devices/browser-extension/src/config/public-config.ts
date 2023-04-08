@@ -48,6 +48,7 @@ const base = {
     CONNECTION_ID: 'default',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const env: any = {};
 for (const v of publicEnv) {
     env[v] = base[v];
