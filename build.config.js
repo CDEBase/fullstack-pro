@@ -32,4 +32,4 @@ const config = {
 };
 
 console.log('---CONFIG', config);
-export default config;
+module.exports = config;
