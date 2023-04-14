@@ -36,7 +36,7 @@ pipeline {
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
-  // Setup common + secret key variables for pipeline.
+ // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
@@ -344,7 +344,7 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.231.34.237']) {
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -426,7 +426,7 @@ pipeline {
           
           // Now do the actual work here
           load "./jenkins_variables.groovy"
-          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://35.229.71.215']) {
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster-r1', serverUrl: 'https://35.229.71.215']) {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
@@ -569,7 +569,7 @@ def generateStage(server, environmentType) {
         } else {
           sh """
             cd .${params.DEPLOYMENT_PATH}/${server}
-            helm dependency update  charts/chart/ --debug
+            helm dependency update  charts/chart/
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
@@ -624,4 +624,4 @@ def getName(json_file_path){
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def name = InputJSON.name
   return name
-}
+} 
