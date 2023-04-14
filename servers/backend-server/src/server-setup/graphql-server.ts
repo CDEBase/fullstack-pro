@@ -4,10 +4,9 @@ import { Express } from 'express';
 import * as http from 'http';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
-import { IModuleService } from '../interfaces';
 import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 import { WebSocketServer } from 'ws';
-import { useServer } from 'graphql-ws/lib/use/ws';
+import { IModuleService } from '../interfaces';
 import { GraphqlWs } from './graphql-ws';
 
 type ILogger = CdmLogger.ILogger;
@@ -35,6 +34,7 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
 let wsServerCleanup: any;
 export class GraphqlServer {
     private logger: ILogger;
+
     // private wsServerCleanup: any;
     constructor(
         private app: Express,
@@ -61,6 +61,14 @@ export class GraphqlServer {
         await apolloServer.start();
         apolloServer.applyMiddleware({ app: this.app });
         this.logger.info('GraphqlServer initialized');
+    }
+
+    getUserIpAddress(req) {
+        let ip = (req?.headers['x-forwarded-for'] || '').split(',')[0] || req?.connection?.remoteAddress;
+        if (ip === '::1') {
+            ip = '127.0.0.1';
+        }
+        return ip;
     }
 
     private configureApolloServer(): ApolloServer {
@@ -108,12 +116,14 @@ export class GraphqlServer {
                             // update: updateContainers,
                         };
                     }
+                    context.userIp = this.getUserIpAddress(req);
                 } catch (err) {
                     this.logger.error('adding context to graphql failed due to [%o]', err);
                     throw err;
                 }
                 return {
                     req,
+                    // res,
                     ...context,
                     ...addons,
                 };

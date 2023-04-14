@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.57-alpha.29](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.28...v0.0.57-alpha.29) (2023-03-08)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
+## [0.0.57-alpha.28](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.27...v0.0.57-alpha.28) (2023-03-06)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
+## [0.0.57-alpha.27](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.26...v0.0.57-alpha.27) (2023-03-05)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
+## [0.0.57-alpha.26](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.25...v0.0.57-alpha.26) (2023-03-05)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
+## [0.0.57-alpha.23](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.22...v0.0.57-alpha.23) (2023-02-05)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
+## 0.0.57-alpha.22 (2023-02-04)
+
+**Note:** Version bump only for package sample-stack-mobile-device
+
 ## [0.0.57-alpha.19](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.18...v0.0.57-alpha.19) (2023-02-04)
 
 **Note:** Version bump only for package sample-stack-mobile-device

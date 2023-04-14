@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.57-alpha.31](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.30...v0.0.57-alpha.31) (2023-04-08)
+
+**Note:** Version bump only for package sample-stack-moleculer-server
+
+## [0.0.57-alpha.29](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.28...v0.0.57-alpha.29) (2023-03-08)
+
+**Note:** Version bump only for package sample-stack-moleculer-server
+
+## [0.0.57-alpha.28](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.27...v0.0.57-alpha.28) (2023-03-06)
+
+**Note:** Version bump only for package sample-stack-moleculer-server
+
+## [0.0.57-alpha.23](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.22...v0.0.57-alpha.23) (2023-02-05)
+
+**Note:** Version bump only for package sample-stack-moleculer-server
+
+## 0.0.57-alpha.22 (2023-02-04)
+
+### Reverts
+
+-   Revert "udpate redis typefix" ([a262508](https://github.com/CDEBase/fullstack-pro/commit/a262508a6fc45236ffd14622fc23dd689698c435))
+
 ## [0.0.57-alpha.15](https://github.com/cdmbase/fullstack-pro/compare/v0.0.57-alpha.14...v0.0.57-alpha.15) (2022-12-14)
 
 **Note:** Version bump only for package sample-stack-moleculer-server

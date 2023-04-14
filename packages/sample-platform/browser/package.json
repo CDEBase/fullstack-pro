@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/platform-browser",
-    "version": "0.0.1",
+    "version": "0.0.57-alpha.22",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/core": "link:../../sample-core"
+        "@sample-stack/core": "0.0.57-alpha.22"
     },
     "publishConfig": {
         "access": "public"

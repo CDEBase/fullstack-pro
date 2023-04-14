@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-backend-server",
-    "version": "0.0.1",
+    "version": "0.0.57-alpha.31",
     "private": true,
     "description": "Starter kit for apollo server using webpack and typescript",
     "keywords": [
@@ -63,20 +63,20 @@
     },
     "dependencies": {
         "@apollo/client": "~3.7.1",
-        "@cdm-logger/server": "^7.0.12",
-        "@common-stack/core": "0.2.32",
-        "@common-stack/server-core": "0.2.32",
-        "@common-stack/store-mongo": "0.2.32",
         "@babel/runtime": "^7.20.1",
+        "@cdm-logger/server": "^7.0.12",
+        "@common-stack/core": "0.5.1",
+        "@common-stack/server-core": "0.5.1",
+        "@common-stack/store-mongo": "0.5.3",
         "@graphql-tools/links": "^8.3.21",
-        "@graphql-tools/utils": "^8.0.0",
         "@graphql-tools/schema": "^8.3.14",
         "@graphql-tools/stitch": "^8.7.29",
+        "@graphql-tools/utils": "^8.0.0",
         "@graphql-tools/wrap": "^8.4.20",
-        "@sample-stack/core": "link:../../packages/sample-core",
-        "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
-        "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
-        "@sample-stack/store": "link:../../packages/sample-store",
+        "@sample-stack/core": "0.0.57-alpha.22",
+        "@sample-stack/counter-module-server": "0.0.57-alpha.28",
+        "@sample-stack/platform-server": "0.0.57-alpha.22",
+        "@sample-stack/store": "0.0.57-alpha.22",
         "apollo-datasource": "^3.3.1",
         "apollo-datasource-rest": "^3.3.1",
         "apollo-errors": "^1.9.0",
@@ -96,12 +96,12 @@
         "esm": "^3.2.25",
         "express": "^4.17.1",
         "graphql": "^15.0.0",
-        "graphql-ws": "^5.11.2",
         "graphql-bigint": "^1.0.0",
         "graphql-nats-subscriptions": "^1.5.0",
         "graphql-subscriptions": "^2.0.0",
         "graphql-tools": "^8.0.0",
         "graphql-type-json": "^0.3.1",
+        "graphql-ws": "^5.11.2",
         "inversify": "^5.0.1",
         "ioredis": "^4.14.0",
         "isomorphic-fetch": "^2.2.1",
@@ -123,6 +123,9 @@
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "rimraf": "^3.0.2"
+    },
+    "peerDependencies": {
+        "@cdm-logger/core": "*"
     },
     "typescript": {
         "definition": "dist/main.d.ts"
