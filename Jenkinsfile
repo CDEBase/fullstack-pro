@@ -29,14 +29,14 @@ pipeline {
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobilePreviewSubmit', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
     string(name: 'BUILD_TIME_OUT', defaultValue: '120', description: 'Build timeout in minutes', trim: true)
   }
 
- // Setup common + secret key variables for pipeline.
+  // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
@@ -93,7 +93,7 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobilePreviewSubmit' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
         sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
@@ -102,6 +102,7 @@ pipeline {
               lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
               git checkout -- .npmrc
               yarn gitcommit
+              git pull origin ${params.REPOSITORY_BRANCH}
               git push origin ${params.REPOSITORY_BRANCH}
           """
         }
@@ -345,6 +346,7 @@ pipeline {
       steps {
         load "./jenkins_variables.groovy"
         withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
+          
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -473,6 +475,9 @@ def getBuildCommand(){
   }
   if(params.ENV_CHOICE == 'mobilePreviewLocal'){
     return 'build:previewLocal:' + params.MOBILE_CHOICE
+  }
+  if(params.ENV_CHOICE == 'mobilePreviewSubmit'){
+    return 'build:previewSubmit:' + params.MOBILE_CHOICE
   }
   if(params.ENV_CHOICE == 'mobileProd'){
     return 'build:prod:' + params.MOBILE_CHOICE
@@ -624,4 +629,4 @@ def getName(json_file_path){
   def InputJSON = new JsonSlurper().parseText(inputFile)
   def name = InputJSON.name
   return name
-} 
+}
