@@ -13,6 +13,7 @@ pipeline {
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
+    string(name: 'VERSION', defaultValue: 'v1', description: 'version of the deployment', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
@@ -558,7 +559,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
-            ${namespace} \
+            ${namespace}-${VERSION} \
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
@@ -567,6 +568,7 @@ def generateStage(server, environmentType) {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
+            --set VERSION=${VERSION} \
             --version=${IDESTACK_CHART_VERSION} \
               kube-orchestration/idestack
             """
@@ -578,9 +580,10 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
-            ${namespace} \
+            ${namespace}-${VERSION} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
+            --set VERSION=${VERSION} \
             charts/chart
           """
 
