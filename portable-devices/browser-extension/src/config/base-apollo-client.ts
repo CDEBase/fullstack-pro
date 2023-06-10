@@ -110,30 +110,53 @@ export const createApolloClient = ({
             return param;
         };
 
+        let timedOut, activeSocket;
+
         const wsLink = new GraphQLWsLink(
             createClient({
                 url: httpGraphqlURL.replace(/^http/, 'ws'),
                 retryAttempts: 10,
                 lazy: true,
+                reconnect: true,
+                timeout: 30000,
+                shouldRetry: () => true,
+                keepAlive: 10000,
                 connectionParams,
                 on: {
+                    connected: (socket) => {
+                        activeSocket = socket
+                    },
                     error: async (error: Error[]) => {
-                        logger?.error(error, '[WS connectionCallback error] %j');
+                        logger.error(error, '[WS connectionCallback error] %j');
                         const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
                             func(wsLink, error, {}),
                         );
                         try {
                             await promises;
                         } catch (err) {
-                            logger?.trace('Error occurred in connectionCallback condition', err);
+                            logger.trace('Error occurred in connectionCallback condition', err);
                             throw err;
                         }
                     },
                     // connected: (socket, payload) => {}
+                    ping: (received) => {
+                        logger.trace("Pinged Server")
+                        if (!received)
+                            // sent
+                            timedOut = setTimeout(() => {
+                                if (activeSocket?.readyState === WebSocket?.OPEN)
+                                    activeSocket?.close(4408, 'Request Timeout');
+                            }, 5000); // wait 5 seconds for the pong and then close the connection
+                    },
+                    pong: (received) => {
+                        logger.trace("Pong received")
+                        if (received) clearTimeout(timedOut); // pong is received, clear connection close timeout
+                    }
+                    // inactivityTimeout: 10000,
                 },
-                // inactivityTimeout: 10000,
             }),
         );
+
 
         link = ApolloLink.split(
             ({ query, operationName }) => {
