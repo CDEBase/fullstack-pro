@@ -44,7 +44,7 @@
         "db:migrate:rollback": "knex migrate:rollback  --cwd . --knexfile ./servers/backend-server/knexfile.js",
         "db:seed": "yarn db:migrate && knex seed:run  --cwd . --knexfile ./servers/backend-server/knexfile.js",
         "setBranchEnv": "cross-env REPOSITORY_BRANCH=${1:-$REPOSITORY_BRANCH} PUBLISH_BRANCH=${2:-$PUBLISH_BRANCH}",
-        "predevpublish": "yarn setBranchEnv $1 $2 && if ! git show-ref --verify --quiet refs/remotes/origin/$PUBLISH_BRANCH; then git checkout -b $PUBLISH_BRANCH && git push -u origin $PUBLISH_BRANCH; fi && git fetch origin $PUBLISH_BRANCH && git merge -s recursive -X theirs origin/$REPOSITORY_BRANCH -m \"merge from $REPOSITORY_BRANCH\" && yarn gitcommit && node tools/update-dependency-version.js && yarn gitcommit",
+        "predevpublish": "yarn setBranchEnv $1 $2 && if ! git show-ref --verify --quiet refs/remotes/origin/$PUBLISH_BRANCH; then git checkout -b $PUBLISH_BRANCH && git push -u origin $PUBLISH_BRANCH; fi && git fetch origin $PUBLISH_BRANCH && git merge -s recursive -X theirs $REPOSITORY_BRANCH -m \"merge from $REPOSITORY_BRANCH\" && yarn gitcommit && node tools/update-dependency-version.js && yarn gitcommit",
         "devpublish": "yarn setBranchEnv $1 $2 && yarn devpublish -- --yes",
         "postdevpublish": "git checkout $REPOSITORY_BRANCH",
         "devpublish:auto": "yarn setBranchEnv $1 $2 && yarn devpublish -- --yes",
