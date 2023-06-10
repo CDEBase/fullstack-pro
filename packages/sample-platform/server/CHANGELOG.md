@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.57-alpha.38](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.37...v0.0.57-alpha.38) (2023-06-10)
+
+**Note:** Version bump only for package @sample-stack/platform-server
+
 ## [0.0.57-alpha.37](https://github.com/CDEBase/fullstack-pro/compare/v0.0.57-alpha.36...v0.0.57-alpha.37) (2023-06-10)
 
 **Note:** Version bump only for package @sample-stack/platform-server

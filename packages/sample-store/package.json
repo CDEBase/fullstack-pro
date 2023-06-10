@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/store",
-    "version": "0.0.57-alpha.37",
+    "version": "0.0.57-alpha.38",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
