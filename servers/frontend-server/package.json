@@ -55,7 +55,7 @@
         "@emotion/styled": "^11.10.4",
         "@loadable/component": "^5.15.2",
         "@loadable/server": "^5.15.2",
-        "@sample-stack/assets": "0.0.1",
+        "@sample-stack/assets": "0.0.57-alpha.37",
         "@sample-stack/core": "0.0.53",
         "@sample-stack/counter-module-browser": "0.0.57-alpha.36",
         "@sample-stack/platform-browser": "0.0.57-alpha.36",
