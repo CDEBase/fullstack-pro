@@ -6590,49 +6590,6 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
-"@sample-stack/assets@link:packages/assets":
-  version "0.0.1"
-
-"@sample-stack/core@link:packages/sample-core":
-  version "0.0.1"
-
-"@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
-    antd "~5.1.7"
-
-"@sample-stack/counter-module-electron@link:packages-modules/counter/electron":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
-
-"@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
-    antd "~5.1.7"
-
-"@sample-stack/counter-module-server@link:packages-modules/counter/server":
-  version "0.0.1"
-
-"@sample-stack/platform-browser@link:packages/sample-platform/browser":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/platform-server@link:packages/sample-platform/server":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/store@link:packages/sample-store":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-    knex "^2.3.0"
-    sequelize "^5.21.3"
-
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"
