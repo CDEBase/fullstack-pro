@@ -39,7 +39,7 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
                 );
                 throw err;
             }
-            glob(`${dependencyFolder}/package.json`, null, (err, files) => {
+            glob(`${dependencyFolder}/package.json`, { ignore: '**/node_modules/**' }, (err, files) => {
                 if (err) return console.error(`Unable to scan directory: ${err}`);
                 console.log(files);
                 files.forEach((file) => {
