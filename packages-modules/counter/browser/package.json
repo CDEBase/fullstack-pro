@@ -1,47 +1,47 @@
 {
-    "name": "@sample-stack/counter-module-browser",
-    "version": "0.0.1",
-    "description": "Sample core for higher packages to depend on",
-    "license": "ISC",
-    "author": "CDMBase LLC",
-    "main": "lib/index.js",
-    "typings": "lib/index.d.ts",
-    "scripts": {
-        "build": "yarn build:clean && yarn build:lib",
-        "build:clean": "rimraf lib",
-        "build:lib": "rollup -c rollup.config.mjs",
-        "build:lib:watch": "yarn build:lib -- --watch",
-        "jest": "./node_modules/.bin/jest",
-        "prepublish": "yarn build",
-        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-        "test:debug": "npm test -- --runInBand",
-        "test:watch": "npm test -- --watch",
-        "watch": "yarn build:lib:watch"
-    },
-    "dependencies": {
-        "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-        "antd": "~5.1.7"
-    },
-    "devDependencies": {},
-    "peerDependencies": {
-        "@common-stack/client-react": "*",
-        "@rollup/plugin-graphql": "*",
-        "@rollup/plugin-image": "*",
-        "@rollup/plugin-typescript": "*",
-        "react": "*",
-        "react-native": "*",
-        "react-redux": "*",
-        "react-router": "*",
-        "react-router-dom": "*",
-        "redux": "*",
-        "redux-observable": "*",
-        "rollup-plugin-string": "*",
-        "rxjs": "*"
-    },
-    "publishConfig": {
-        "access": "public"
-    },
-    "typescript": {
-        "definition": "lib/index.d.ts"
-    }
+  "name": "@sample-stack/counter-module-browser",
+  "version": "0.0.1",
+  "description": "Sample core for higher packages to depend on",
+  "license": "ISC",
+  "author": "CDMBase LLC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn build:clean && yarn build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "rollup -c rollup.config.mjs",
+    "build:lib:watch": "yarn build:lib -- --watch",
+    "jest": "./node_modules/.bin/jest",
+    "prepublish": "yarn build",
+    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+    "test:debug": "npm test -- --runInBand",
+    "test:watch": "npm test -- --watch",
+    "watch": "yarn build:lib:watch"
+  },
+  "dependencies": {
+    "@sample-stack/platform-browser": "0.0.1",
+    "antd": "~5.1.7"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@common-stack/client-react": "*",
+    "@rollup/plugin-graphql": "*",
+    "@rollup/plugin-image": "*",
+    "@rollup/plugin-typescript": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-redux": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "redux": "*",
+    "redux-observable": "*",
+    "rollup-plugin-string": "*",
+    "rxjs": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "typescript": {
+    "definition": "lib/index.d.ts"
+  }
 }
