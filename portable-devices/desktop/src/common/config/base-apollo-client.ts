@@ -97,20 +97,29 @@ export const createApolloClient = ({
     _memoryCache = cache;
     if (isBrowser) {
         const connectionParams = async () => {
-            const param: {[key: string]: any} = {};
+            const param: { [key: string]: any } = {};
             for (const connectionParam of clientState.connectionParams) {
                 merge(param, await connectionParam);
             }
             return param;
         };
 
+        let timedOut, activeSocket;
+
         const wsLink = new GraphQLWsLink(
             createClient({
                 url: httpGraphqlURL.replace(/^http/, 'ws'),
                 retryAttempts: 10,
                 lazy: true,
+                reconnect: true,
+                timeout: 30000,
+                shouldRetry: () => true,
+                keepAlive: 10000,
                 connectionParams,
                 on: {
+                    connected: (socket) => {
+                        activeSocket = socket
+                    },
                     error: async (error: Error[]) => {
                         logger.error(error, '[WS connectionCallback error] %j');
                         const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
@@ -124,8 +133,21 @@ export const createApolloClient = ({
                         }
                     },
                     // connected: (socket, payload) => {}
+                    ping: (received) => {
+                        logger.trace("Pinged Server")
+                        if (!received)
+                            // sent
+                            timedOut = setTimeout(() => {
+                                if (activeSocket?.readyState === WebSocket?.OPEN)
+                                    activeSocket?.close(4408, 'Request Timeout');
+                            }, 5000); // wait 5 seconds for the pong and then close the connection
+                    },
+                    pong: (received) => {
+                        logger.trace("Pong received")
+                        if (received) clearTimeout(timedOut); // pong is received, clear connection close timeout
+                    }
+                    // inactivityTimeout: 10000,
                 },
-                // inactivityTimeout: 10000,
             }),
         );
 
