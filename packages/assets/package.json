@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/assets",
-    "version": "0.0.57-alpha.22",
+    "version": "0.0.57-alpha.34",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
