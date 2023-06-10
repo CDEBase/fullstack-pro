@@ -13,7 +13,7 @@ pipeline {
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
-    string(name: 'UNIQUE_VERSION', defaultValue: 'v1', description: 'app version', trim: true)
+    string(name: 'UNIQUE_VERSION', defaultValue: 'v1', description: 'helm chart version', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
@@ -557,7 +557,7 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server}-${UNIQUE_VERSION} \
+            ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
             ${namespace}-${UNIQUE_VERSION} \
             ${deployment_flag} \
@@ -568,6 +568,7 @@ def generateStage(server, environmentType) {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
+            --set VERSION=${UNIQUE_VERSION} \
             --version=${IDESTACK_CHART_VERSION} \
               kube-orchestration/idestack
             """
@@ -577,11 +578,12 @@ def generateStage(server, environmentType) {
             cd .${params.DEPLOYMENT_PATH}/${server}
             helm dependency update  charts/chart/
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server}-api-${UNIQUE_VERSION} \
+            ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace}-${UNIQUE_VERSION} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
+            --set VERSION=${UNIQUE_VERSION} \
             charts/chart
           """
 
