@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/counter-module-browser": "0.0.57-alpha.35"
+        "@sample-stack/counter-module-browser": "0.0.57-alpha.36"
     },
     "devDependencies": {
         "@open-wc/building-rollup": "^1.10.0",

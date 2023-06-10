@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/core": "0.0.1"
+        "@sample-stack/core": "0.0.53"
     },
     "publishConfig": {
         "access": "public"

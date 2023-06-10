@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/platform-browser": "0.0.57-alpha.35",
+        "@sample-stack/platform-browser": "0.0.57-alpha.36",
         "antd": "~5.1.7"
     },
     "peerDependencies": {
