@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/counter-module-mobile",
-    "version": "0.0.57-alpha.37",
+    "version": "0.0.57-alpha.38",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/platform-browser": "0.0.57-alpha.37",
+        "@sample-stack/platform-browser": "0.0.57-alpha.38",
         "antd": "~5.1.7"
     },
     "peerDependencies": {
