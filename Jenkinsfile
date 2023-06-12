@@ -231,8 +231,8 @@ pipeline {
             helm repo update
          """
           script {
-
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            println "nameSpaceCheck: ${nameSpaceCheck}" 
             if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
