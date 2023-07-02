@@ -9,7 +9,7 @@ pipeline {
   }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
-    string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
+    string(name: 'BASE_NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
@@ -41,6 +41,7 @@ pipeline {
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
+    NAMESPACE=params.BASE_NAMESPACE + params.VERSION
     GCR_KEY = credentials('jenkins-gcr-login-key')
     EXPO_TOKEN = credentials('expo_cdmbase_token')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
@@ -559,7 +560,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace} \
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
@@ -580,7 +581,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
             --set VERSION=${VERSION} \
