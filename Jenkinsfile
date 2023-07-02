@@ -41,7 +41,7 @@ pipeline {
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
-    NAMESPACE = "${env.BASE_NAMESPACE}-${env.VERSION}"
+    NAMESPACE = "${param.BASE_NAMESPACE}-${param.VERSION}"
     GCR_KEY = credentials('jenkins-gcr-login-key')
     EXPO_TOKEN = credentials('expo_cdmbase_token')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
@@ -232,7 +232,7 @@ pipeline {
             helm repo update
          """
           script {
-            echo "${env.NAMESPACE}"
+            echo "${env.NAMESPACE}->${params.NAMESPACE}->${env.BASE_NAMESPACE}->${params.BASE_NAMESPACE}"
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
             if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
