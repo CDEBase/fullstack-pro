@@ -560,7 +560,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace}\
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
@@ -581,7 +581,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
             --set VERSION=${VERSION} \
