@@ -232,6 +232,7 @@ pipeline {
             helm repo update
          """
           script {
+            echo "${env.NAMESPACE}"
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
             if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
