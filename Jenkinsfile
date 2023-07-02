@@ -41,7 +41,7 @@ pipeline {
   environment {
     BUILD_COMMAND = getBuildCommand()
     PYTHON='/usr/bin/python'
-    NAMESPACE=params.BASE_NAMESPACE + params.VERSION
+    NAMESPACE = env['BASE_NAMESPACE'] + env['VERSION']
     GCR_KEY = credentials('jenkins-gcr-login-key')
     EXPO_TOKEN = credentials('expo_cdmbase_token')
     GIT_PR_BRANCH_NAME = getGitPrBranchName()
