@@ -233,7 +233,7 @@ pipeline {
          """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            println "nameSpaceCheck: ${nameSpaceCheck}" 
+            NAMESPACE = '${env.BASE_NAMESPACE}-${env.VERSION}'
             if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
@@ -357,6 +357,7 @@ pipeline {
           """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+            NAMESPACE = '${env.BASE_NAMESPACE}-${env.VERSION}'
             if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
@@ -439,6 +440,7 @@ pipeline {
              """
             script {
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
+              NAMESPACE = '${env.BASE_NAMESPACE}-${env.VERSION}'
               if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
             
               def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
