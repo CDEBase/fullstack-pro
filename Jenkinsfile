@@ -234,8 +234,7 @@ pipeline {
           script {
 
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            echo "${env.NAMESPACE} -> ${params.BASE_NAMESPACE}"
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -358,7 +357,7 @@ pipeline {
           """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -440,7 +439,7 @@ pipeline {
              """
             script {
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-              if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+              if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
             
               def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
               def parallelStagesMap = servers.collectEntries {
@@ -540,7 +539,7 @@ def generateStage(server, environmentType) {
     stage("stage: ${server}") {
       echo "This is ${server}."
       def filterExist = "${server}".contains(params.EXCLUDE_SETTING_NAMESPACE_FILTER)
-      def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
+      def namespace = filterExist ? '' : "--namespace=${env.NAMESPACE}"
       def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def valuesFile = "values-${environmentType}.yaml"
