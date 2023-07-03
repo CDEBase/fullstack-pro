@@ -9,7 +9,7 @@ pipeline {
   }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
-    string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
+    string(name: 'BASE_NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
@@ -28,7 +28,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.7.8','0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobilePreviewSubmit', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
@@ -40,6 +40,7 @@ pipeline {
   // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
+    NAMESPACE = "${params.BASE_NAMESPACE}-${params.VERSION}"
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
     EXPO_TOKEN = credentials('expo_cdmbase_token')
@@ -233,7 +234,7 @@ pipeline {
           script {
 
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -356,7 +357,7 @@ pipeline {
           """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -438,7 +439,7 @@ pipeline {
              """
             script {
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-              if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+              if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
             
               def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
               def parallelStagesMap = servers.collectEntries {
@@ -538,7 +539,7 @@ def generateStage(server, environmentType) {
     stage("stage: ${server}") {
       echo "This is ${server}."
       def filterExist = "${server}".contains(params.EXCLUDE_SETTING_NAMESPACE_FILTER)
-      def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
+      def namespace = filterExist ? '' : "--namespace=${env.NAMESPACE}"
       def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def valuesFile = "values-${environmentType}.yaml"
@@ -559,7 +560,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server} \
             -f "${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace}\
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
@@ -580,7 +581,7 @@ def generateStage(server, environmentType) {
             helm upgrade -i \
             ${UNIQUE_NAME}-${server}-api \
             -f "charts/chart/${valuesFile}" \
-            ${namespace}-${VERSION} \
+            ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
             --set VERSION=${VERSION} \
