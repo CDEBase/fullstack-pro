@@ -558,7 +558,7 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server} \
+            ${server} \
             -f "${valuesFile}" \
             ${namespace}\
             ${deployment_flag} \
@@ -579,7 +579,7 @@ def generateStage(server, environmentType) {
             cd .${params.DEPLOYMENT_PATH}/${server}
             helm dependency update  charts/chart/
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server}-api \
+            ${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
