@@ -28,7 +28,7 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.7.8','0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['0.7.9','0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
     choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobilePreviewSubmit', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
@@ -558,7 +558,7 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server} \
+            ${server} \
             -f "${valuesFile}" \
             ${namespace}\
             ${deployment_flag} \
@@ -579,7 +579,7 @@ def generateStage(server, environmentType) {
             cd .${params.DEPLOYMENT_PATH}/${server}
             helm dependency update  charts/chart/
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server}-api \
+            ${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
