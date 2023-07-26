@@ -1,8 +1,10 @@
 import { createConnection, connection, Connection, ConnectOptions, plugin } from 'mongoose';
 import * as _ from 'lodash';
 import { Db } from 'mongodb';
+import { logExecutionTime, LoggerVerbosity } from 'mongoose-execution-time';
 import { logger } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
+import { config } from '../config';
 
 type ILogger = CdmLogger.ILogger;
 
@@ -42,6 +44,18 @@ export class MongoConnector {
             result.on('error', (err) => this.logger.error('MongoDB error.', err));
             result.on('reconnect', () => this.logger.info('Mongoose has reconnected.'));
         });
+        if (
+            config.NODE_ENV === 'development' ||
+            __DEBUGGING__ ||
+            config.LOG_LEVEL === 'debug' ||
+            config.LOG_LEVEL === 'trace'
+        ) {
+            plugin(logExecutionTime, {
+                logger: this.logger,
+                loggerVerbosity: LoggerVerbosity.High,
+                loggerLevel: config.LOG_LEVEL,
+            });
+        }
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
         // plugin(require('@kolinalabs/mongoose-consistent'), {
