@@ -104,7 +104,8 @@ export const createApolloClient = ({
             return param;
         };
 
-        let timedOut, activeSocket;
+        let timedOut: NodeJS.Timeout;
+        let activeSocket: unknown;
 
         const wsLink = new GraphQLWsLink(
             createClient({
@@ -118,7 +119,7 @@ export const createApolloClient = ({
                 connectionParams,
                 on: {
                     connected: (socket) => {
-                        activeSocket = socket
+                        activeSocket = socket;
                     },
                     error: async (error: Error[]) => {
                         logger.error(error, '[WS connectionCallback error] %j');
@@ -134,7 +135,7 @@ export const createApolloClient = ({
                     },
                     // connected: (socket, payload) => {}
                     ping: (received) => {
-                        logger.trace("Pinged Server")
+                        logger.trace('Pinged Server');
                         if (!received)
                             // sent
                             timedOut = setTimeout(() => {
@@ -143,9 +144,9 @@ export const createApolloClient = ({
                             }, 5000); // wait 5 seconds for the pong and then close the connection
                     },
                     pong: (received) => {
-                        logger.trace("Pong received")
+                        logger.trace('Pong received');
                         if (received) clearTimeout(timedOut); // pong is received, clear connection close timeout
-                    }
+                    },
                     // inactivityTimeout: 10000,
                 },
             }),
