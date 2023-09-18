@@ -46,7 +46,7 @@ export class MongoConnector {
         });
         if (
             config.NODE_ENV === 'development' ||
-            __DEBUGGING__ ||
+            // __DEBUGGING__ ||
             config.LOG_LEVEL === 'debug' ||
             config.LOG_LEVEL === 'trace'
         ) {
