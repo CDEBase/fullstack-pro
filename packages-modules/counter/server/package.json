@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/counter-module-server",
-    "version": "0.0.57-alpha.38",
+    "version": "0.0.59-alpha.0",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
