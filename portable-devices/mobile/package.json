@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-mobile-device",
-    "version": "0.0.57-alpha.38",
+    "version": "0.0.1",
     "private": true,
     "main": "index.js",
     "scripts": {
@@ -76,7 +76,7 @@
         "@react-navigation/native": "^6.0.10",
         "@react-navigation/native-stack": "^6.6.2",
         "@react-navigation/stack": "^6.2.1",
-        "@sample-stack/counter-module-mobile": "0.0.57-alpha.38",
+        "@sample-stack/counter-module-mobile": "0.0.1",
         "apollo-link-debounce": "^3.0.0",
         "apollo-link-logger": "^2.0.0",
         "apollo-server-errors": "^3.3.1",
@@ -154,7 +154,7 @@
         "@types/react-native-dotenv": "^0.2.0",
         "@types/react-native-keyboard-spacer": "^0.4.1",
         "@types/react-router-native": "^5.1.0",
-        "typescript": "~4.7.3"
+        "typescript": "~4.9.5"
     },
     "peerDependencies": {
         "webpack": "*"

@@ -65,6 +65,9 @@ export class GraphqlServer {
 
     getUserIpAddress(req) {
         let ip = (req?.headers['x-forwarded-for'] || '').split(',')[0] || req?.connection?.remoteAddress;
+        if (ip.substr(0, 7) === '::ffff:') {
+            ip = ip.substr(7);
+        }
         if (ip === '::1') {
             ip = '127.0.0.1';
         }

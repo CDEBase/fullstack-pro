@@ -104,7 +104,8 @@ export const createApolloClient = ({
             return param;
         };
 
-        let timedOut, activeSocket;
+        let timedOut: NodeJS.Timeout;
+        let activeSocket: unknown;
 
         const wsLink = new GraphQLWsLink(
             createClient({

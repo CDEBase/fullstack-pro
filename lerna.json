@@ -18,6 +18,12 @@
     },
     "npmClient": "yarn",
     "useWorkspaces": true,
-    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
-    "version": "0.0.57-alpha.39"
+    "useNx": true,
+    "packages": [
+        "packages-modules/**",
+        "packages/**",
+        "servers/*",
+        "portable-devices/*"
+    ],
+    "version": "0.0.0"
 }
