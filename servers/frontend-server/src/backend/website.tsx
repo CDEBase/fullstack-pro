@@ -22,7 +22,7 @@ import clientModules, { MainRoute } from '../modules';
 let assetMap;
 const key = 'custom';
 const cache = createCache({ key });
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
 async function renderServerSide(req, res) {
     try {
         const { apolloClient: client } = createClientContainer();
@@ -30,8 +30,7 @@ async function renderServerSide(req, res) {
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
         const { store } = createReduxStore(history);
-        const App = () =>
-            clientModules.getWrappedRoot(
+        const App = clientModules.getWrappedRoot(
                 // tslint:disable-next-line:jsx-wrap-multiline
                 <ReduxProvider store={store}>
                     <ApolloProvider client={client}>
@@ -61,9 +60,9 @@ async function renderServerSide(req, res) {
         const content = ReactDOMServer.renderToString(JSX);
 
         
-        const chunks = extractCriticalToChunks(JSX)
+        const chunks = extractCriticalToChunks(JSX);
 
-        const appStyles = constructStyleTagsFromChunks(chunks)
+        const appStyles = constructStyleTagsFromChunks(chunks);
 
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
