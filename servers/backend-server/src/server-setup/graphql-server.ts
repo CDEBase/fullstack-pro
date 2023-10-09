@@ -4,7 +4,10 @@ import { Express } from 'express';
 import * as http from 'http';
 import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
+import { WebSocketServer } from 'ws';
 import { IModuleService } from '../interfaces';
+import { GraphqlWs } from './graphql-ws';
 
 type ILogger = CdmLogger.ILogger;
 
@@ -28,9 +31,11 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
     return dataSources;
 };
 
+let wsServerCleanup: any;
 export class GraphqlServer {
     private logger: ILogger;
 
+    // private wsServerCleanup: any;
     constructor(
         private app: Express,
         private httpServer: http.Server,
@@ -39,22 +44,40 @@ export class GraphqlServer {
         private enableSubscription = true,
     ) {
         this.logger = this.moduleService.logger.child({ className: 'GraphqlServer' });
+        if (enableSubscription) {
+            const wsServer = new WebSocketServer({
+                server: this.httpServer,
+                path: __GRAPHQL_ENDPOINT__,
+            });
+            const graphqlWs = new GraphqlWs(wsServer, this.moduleService, this.cache);
+            wsServerCleanup = graphqlWs.create();
+            // wsServerCleanup = useServer({ schema: this.moduleService.schema}, wsServer)
+        }
     }
 
     public async initialize() {
         this.logger.info('GraphqlServer initializing...');
         const apolloServer = this.configureApolloServer();
-        apolloServer.applyMiddleware({ app: this.app, disableHealthCheck: false, path: __GRAPHQL_ENDPOINT__ });
-        if (this.enableSubscription) {
-            apolloServer.installSubscriptionHandlers(this.httpServer);
-        }
+        await apolloServer.start();
+        apolloServer.applyMiddleware({ app: this.app });
         this.logger.info('GraphqlServer initialized');
+    }
+
+    getUserIpAddress(req) {
+        let ip = (req?.headers['x-forwarded-for'] || '').split(',')[0] || req?.connection?.remoteAddress;
+        if (ip.substr(0, 7) === '::ffff:') {
+            ip = ip.substr(7);
+        }
+        if (ip === '::1') {
+            ip = '127.0.0.1';
+        }
+        return ip;
     }
 
     private configureApolloServer(): ApolloServer {
         const serverConfig: ApolloServerExpressConfig = {
             debug,
-            schema: this.moduleService.schema as any,
+            schema: this.moduleService.schema,
             dataSources: () => this.moduleService.dataSource,
             cache: this.cache,
             context: async ({
@@ -96,32 +119,37 @@ export class GraphqlServer {
                             // update: updateContainers,
                         };
                     }
+                    context.userIp = this.getUserIpAddress(req);
                 } catch (err) {
                     this.logger.error('adding context to graphql failed due to [%o]', err);
                     throw err;
                 }
                 return {
                     req,
+                    // res,
                     ...context,
                     ...addons,
                 };
             },
+            plugins: [
+                // process.env.NODE_ENV === 'production'
+                //     ? ApolloServerPluginLandingPageDisabled()
+                //     :
+                // ApolloServerPluginLandingPageGraphQLPlayground(),
+                // ApolloServerPluginLandingPageDisabled(),
+                ApolloServerPluginDrainHttpServer({ httpServer: this.httpServer }),
+            ],
         };
         if (this.enableSubscription) {
-            serverConfig.subscriptions = {
-                onConnect: async (connectionParams, webSocket) => {
-                    this.logger.debug(`Subscription client connected using built-in SubscriptionServer.`);
-                    const pureContext = await this.moduleService.createContext(connectionParams, webSocket);
-                    const contextServices = await this.moduleService.serviceContext(connectionParams, webSocket);
+            serverConfig.plugins.push({
+                async serverWillStart() {
                     return {
-                        ...contextServices,
-                        ...pureContext,
-                        preferences: this.moduleService.defaultPreferences,
-                        // update: updateContainers,
+                        drainServer: async () => {
+                            await wsServerCleanup.dispose();
+                        },
                     };
                 },
-                // onDisconnect: () => {},
-            };
+            });
         }
         return new ApolloServer(serverConfig);
     }

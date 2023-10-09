@@ -7,15 +7,15 @@ import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
 import fetch from 'node-fetch';
-import { ConnectionParams } from 'subscriptions-transport-ws';
 import { isBoolean, merge } from 'lodash';
 import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
+import { createClient } from 'graphql-ws';
 
 const schema = `
 
@@ -68,6 +68,7 @@ export const createApolloClient = ({
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
         possibleTypes: clientState.possibleTypes,
+        typePolicies: clientState.typePolicies,
     });
 
     const attemptConditions = async (count: number, operation: any, error: Error) => {
@@ -96,38 +97,59 @@ export const createApolloClient = ({
     _memoryCache = cache;
     if (isBrowser) {
         const connectionParams = async () => {
-            const param: ConnectionParams = {};
+            const param: { [key: string]: any } = {};
             for (const connectionParam of clientState.connectionParams) {
                 merge(param, await connectionParam);
             }
             return param;
         };
 
-        const wsLink = new WebSocketLink({
-            uri: httpGraphqlURL.replace(/^http/, 'ws'),
-            options: {
-                reconnect: true,
-                timeout: 20000,
-                reconnectionAttempts: 10,
+        let timedOut, activeSocket;
+
+        const wsLink = new GraphQLWsLink(
+            createClient({
+                url: httpGraphqlURL.replace(/^http/, 'ws'),
+                retryAttempts: 10,
                 lazy: true,
+                reconnect: true,
+                timeout: 30000,
+                shouldRetry: () => true,
+                keepAlive: 10000,
                 connectionParams,
-                connectionCallback: async (error, result) => {
-                    if (error) {
+                on: {
+                    connected: (socket) => {
+                        activeSocket = socket
+                    },
+                    error: async (error: Error[]) => {
                         logger.error(error, '[WS connectionCallback error] %j');
+                        const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
+                            func(wsLink, error, {}),
+                        );
+                        try {
+                            await promises;
+                        } catch (err) {
+                            logger.trace('Error occurred in connectionCallback condition', err);
+                            throw err;
+                        }
+                    },
+                    // connected: (socket, payload) => {}
+                    ping: (received) => {
+                        logger.trace("Pinged Server")
+                        if (!received)
+                            // sent
+                            timedOut = setTimeout(() => {
+                                if (activeSocket?.readyState === WebSocket?.OPEN)
+                                    activeSocket?.close(4408, 'Request Timeout');
+                            }, 5000); // wait 5 seconds for the pong and then close the connection
+                    },
+                    pong: (received) => {
+                        logger.trace("Pong received")
+                        if (received) clearTimeout(timedOut); // pong is received, clear connection close timeout
                     }
-                    const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
-                        func(wsLink, error, result),
-                    );
-                    try {
-                        await promises;
-                    } catch (e) {
-                        logger.trace('Error occured in connectionCallback condition', e);
-                        throw e;
-                    }
+                    // inactivityTimeout: 10000,
                 },
-            },
-            inactivityTimeout: 10000,
-        });
+            }),
+        );
 
         link = ApolloLink.split(
             ({ query, operationName }) => {

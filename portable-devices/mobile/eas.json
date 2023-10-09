@@ -4,20 +4,15 @@
   },
   "build": {
     "development": {
+      "extends": "common",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
         "buildConfiguration": "Debug",
         "simulator": true
       },
-      "node": "16.17.0",
       "env": {
-        "NODE_ENV": "development",
-        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
-        "GA_ID": "jjj",
-        "LOG_LEVEL": "trace",
-        "CLIENT_URL": "http://localhost:3000",
-        "APP_NAME": "fullstack-pro"
+        "NODE_ENV": "development"
       }
     },
     "previewlocal": {
@@ -27,12 +22,10 @@
       }
     },
     "preview": {
-      "extends": "production",
-      "node": "16.17.0",
+      "extends": "common",
       "distribution": "internal",
       "ios": {
-        "autoIncrement": "buildNumber",
-        "simulator": true
+        "autoIncrement": "buildNumber"
       },
       "env": {
         "NODE_ENV": "development",
@@ -43,15 +36,32 @@
         "APP_NAME": "fullstack-pro"
       }
     },
-    "production": {
+    "previewSubmit": {
+      "extends": "common",
+      "ios": {
+        "image": "default",
+        "autoIncrement": "buildNumber"
+      } 
+    },
+    "common": {
       "node": "16.17.0",
+      "env": {
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.dev/graphql",
+        "GA_ID": "jjj",
+        "LOG_LEVEL": "trace",
+        "CLIENT_URL": "http://localhost:3000",
+        "APP_NAME": "fullstack-pro" 
+      }
+    },
+    "production": {
+      "extends": "common",
       "ios": {
         "image": "default",
         "autoIncrement": "buildNumber"
       },
       "releaseChannel": "production",
       "env": {
-        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.io/graphql",
+        "GRAPHQL_URL": "https://ideback-default-v1.cdebase.com/graphql",
         "GA_ID": "jjj",
         "LOG_LEVEL": "trace",
         "CLIENT_URL": "http://localhost:3000",
@@ -66,7 +76,25 @@
         "changesNotSentForReview": true,
         "track": "internal",
         "releaseStatus": "draft"
+      },
+      "ios": {
+        "appleId": "mvasireddy@cdmbase.com",
+        "ascAppId": "1624306154",
+        "appleTeamId": "28262MC5DF"
       }
+    },
+    "previewSubmit": {
+      "android": {
+        "serviceAccountKeyPath": "google-cred.json",
+        "changesNotSentForReview": true,
+        "track": "internal",
+        "releaseStatus": "draft"
+      },
+      "ios": {
+        "appleId": "mvasireddy@cdmbase.com",
+        "ascAppId": "1624306154",
+        "appleTeamId": "28262MC5DF"
+      } 
     }
   }
 }

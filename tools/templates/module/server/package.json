@@ -15,30 +15,11 @@
         "build:lib": "webpack",
         "build:lib:watch": "yarn build:lib -- --watch"
     },
-    "jest": {
-        "testEnvironment": "node",
-        "roots": [
-            "src"
-        ],
-        "modulePaths": [
-            "node_modules"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "json"
-        ],
-        "transform": {
-            "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-        },
-        "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$"
-    },
     "author": "CDMBase LLC",
     "license": "ISC",
     "devDependencies": {
         "apollo": "^2.9.0",
-        "cross-env": "^5.2.0",
+        "cross-env": "^7.0.3",
         "jest": "^22.4.2",
         "rimraf": "^2.6.1",
         "webpack": "4.46.0"
@@ -47,6 +28,5 @@
     "typescript": {
         "definition": "lib/index.d.ts"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }

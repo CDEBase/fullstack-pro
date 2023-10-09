@@ -18,28 +18,9 @@
     "test:watch": "npm test -- --watch",
     "watch": "yarn build:lib:watch"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "modulePaths": [
-      "node_modules"
-    ],
-    "roots": [
-      "src"
-    ],
-    "testEnvironment": "node",
-    "testRegex": "/__tests__/.*test*\\.(ts|tsx|js)$",
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
-    }
-  },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "~4.24.1"
+    "antd": "~5.1.7"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",

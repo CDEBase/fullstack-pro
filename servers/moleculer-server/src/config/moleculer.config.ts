@@ -1,5 +1,5 @@
 import { BrokerOptions, Errors } from 'moleculer';
-import { config } from './config';
+import { config } from './env-config';
 
 /**
  * Moleculer ServiceBroker configuration file

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import serialize from 'serialize-javascript';
 import { HelmetData } from 'react-helmet';
-import modules from '../../modules';
 
 /**
  * A simple herlper function to prepare the HTML markup. This loads:
@@ -18,13 +17,24 @@ const Html = ({
     state,
     reduxState,
     headElements,
-    fela,
     env,
     assetMap,
     styleSheet,
     helmet,
-}:
-    { content?: any, state: any, reduxState: any, headElements: React.ReactElement<any>[], assetMap?: string[], env: any, fela?: any, styleSheet?: any[], helmet?: HelmetData }) => {
+    stylesInserts = [],
+    scriptsInserts = [],
+}: {
+    content?: any;
+    state: any;
+    reduxState: any;
+    headElements: React.ReactElement<any>[];
+    assetMap?: string[];
+    env: any;
+    styleSheet?: any;
+    helmet?: HelmetData;
+    stylesInserts?: any[];
+    scriptsInserts?: string[];
+}) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
     return (
@@ -50,22 +60,12 @@ const Html = ({
                 {!!__DEV__ && (
                     <style
                         dangerouslySetInnerHTML={{
-                            __html: modules.stylesInserts.map(style => style._getCss()).join(''),
+                            __html: stylesInserts.map((style) => style._getCss()).join(''),
                         }}
                     />
                 )}
-                {styleSheet.map(({ type, rehydration, css, media, support }) => (
-                    <style
-                        id="stylesheet"
-                        dangerouslySetInnerHTML={{ __html: css }}
-                        data-fela-rehydration={rehydration}
-                        data-fela-type={type}
-                        data-fela-support={support}
-                        key={`${type}-${media}`}
-                        media={media}
-                    />
-                ))}
-                {modules.scriptsInserts.map((script, i) => {
+                {/* {styleSheet} */}
+                {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;
                     }
@@ -76,10 +76,9 @@ const Html = ({
                 <div className="demo">
                     <div
                         id="content"
-                        dangerouslySetInnerHTML={
-                            {
-                                __html: content || ''                            
-                            }}
+                        dangerouslySetInnerHTML={{
+                            __html: content || '',
+                        }}
                     />
                 </div>
                 <script

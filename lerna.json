@@ -1,22 +1,14 @@
 {
-    "changelog": {
-        "repo": "cdmbase/lerna-bootstrap",
-        "labels": {
-            "tag: breaking change": ":boom: Breaking Change",
-            "tag: new feature": ":rocket: New Feature",
-            "tag: bug fix": ":bug: Bug Fix",
-            "tag: polish": ":nail_care: Polish",
-            "tag: documentation": "Documentation",
-            "tag: internal": ":house: Internal"
-        }
-    },
+    "$schema": "./node_modules/lerna/schemas/lerna-schema.json",
+    "changelog": true,
     "command": {
         "publish": {
             "registry": "https://registry.npmjs.org",
             "graphType": "all",
             "allowBranch": [
                 "publish",
-                "devpublish"
+				"devpublish",
+				"devpublishn2"
             ],
             "message": "chore(release): publish",
             "ignoreChanges": [
@@ -31,7 +23,8 @@
                 "master",
                 "develop",
                 "publish",
-                "devpublish"
+				"devpublish",
+				"devpublishn2"
             ],
             "private": true,
             "conventionalCommits": true,
@@ -40,6 +33,7 @@
     },
     "npmClient": "yarn",
     "useWorkspaces": true,
+    "useNx": true,
     "packages": [
         "packages-modules/**",
         "packages/**",

@@ -1,7 +1,6 @@
 /* eslint-disable no-return-assign */
 import { PubSub, PubSubEngine } from 'graphql-subscriptions';
 import { NatsPubSub } from 'graphql-nats-subscriptions';
-import { wrapPubSub } from 'apollo-logger';
 import { logger } from '@cdm-logger/server';
 import { GenericObject } from 'moleculer';
 import { CdmLogger } from '@cdm-logger/core';
@@ -9,7 +8,6 @@ import { CdmLogger } from '@cdm-logger/core';
 type ILogger = CdmLogger.ILogger;
 
 type PubSubOptions = {
-    apolloLogging?: boolean;
     logger: ILogger;
 } & GenericObject;
 
@@ -26,18 +24,12 @@ export class GraphqlPubSubConnector {
      * @memberof GraphqlPubSubConnector
      */
     constructor(opts?: PubSubOptions) {
-        if (opts === undefined || opts.type === undefined) {
-            this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
-        }
         this.opts = opts;
         this.logger = opts.logger.child({ className: 'GraphqlPubSubConnector' });
     }
 
     public async getClient() {
         if (this.opts.type === 'TCP') {
-            if (this.opts.apolloLogging) {
-                return (this.client = wrapPubSub(new PubSub(), { logger: this.logger.trace.bind(this.logger) }));
-            }
             return (this.client = new PubSub());
         }
         if (this.opts.type === 'NATS') {

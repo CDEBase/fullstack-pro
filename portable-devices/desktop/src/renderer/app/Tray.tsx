@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
-import { rehydrate } from 'fela-dom';
-import createRenderer from '../config/tray/fela-renderer';
 import { createClientContainer } from '../config/main/client.service';
 import { epic$ } from '../config/tray/epic-config';
 import { ConnectedRouter } from 'connected-react-router';
@@ -43,17 +40,13 @@ if ((module as any).hot) {
 }
 export class Main extends React.Component<{}, {}> {
     public render() {
-        const renderer = createRenderer();
-        rehydrate(renderer);
         return (
             <ErrorBoundary>
                 <Provider store={store}>
                     <ApolloProvider client={client}>
-                        <RendererProvider renderer={renderer}>
-                            <ConnectedRouter history={history}>
-                                <MainRoute />
-                            </ConnectedRouter>,
-                        </RendererProvider>
+                        <ConnectedRouter history={history}>
+                            <MainRoute />
+                        </ConnectedRouter>,
                     </ApolloProvider>
                 </Provider>
             </ErrorBoundary>

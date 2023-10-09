@@ -8,9 +8,11 @@
     "webpackConfig": "webpack.main.additions.js"
   },
   "whiteListedModules": [
+    "@emotion/react",
+    "@emotion/css",
+    "@emotion/styled",
     "antd",
     "react-redux",
-    "react-fela",
     "react-helmet",
     "react-loadable",
     "react-router",

@@ -39,22 +39,22 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
                 );
                 throw err;
             }
-            glob(`${dependencyFolder}/package.json`, null, (err, files) => {
+            glob(`${dependencyFolder}/package.json`, { ignore: '**/node_modules/**' }, (err, files) => {
                 if (err) return console.error(`Unable to scan directory: ${err}`);
                 console.log(files);
                 files.forEach((file) => {
                     fs.readFile(file, 'utf-8', (err, data) => {
                         if (err) return console.error(`Unable to scan directory: ${err}`);
-                    try {
-                        const objVersion = JSON.parse(data);
-                        const { version } = objVersion;
-                        dependencies[key] = `${version}`;
-                        const str = JSON.stringify(obj, null, 2);
-                        fs.writeFileSync(fileWrie, str, 'ascii');
-                    } catch(err) {
-                        console.error(`Failed at file: ${file}`)
-                        throw(err);
-                    }
+                        try {
+                            const objVersion = JSON.parse(data);
+                            const { version } = objVersion;
+                            dependencies[key] = `${version}`;
+                            const str = JSON.stringify(obj, null, 2);
+                            fs.writeFileSync(fileWrie, str, 'ascii');
+                        } catch (err) {
+                            console.error(`Failed at file: ${file}`)
+                            throw (err);
+                        }
 
                     });
                 });
@@ -65,23 +65,25 @@ const searchAndUpdate = (dependencies, filePath, obj) => {
 
 glob(
     './+(servers|portable-devices|packages|packages-modules)/**/package.json',
-    { onlyFiles: false, ignore: ['**/node_modules/**'] },
+    { onlyFiles: false, ignore: '**/node_modules/**' },
     (err, files) => {
         if (err) return console.error(`Unable to scan directory: ${err}`);
         files.forEach((file) => {
-            fs.readFile(file, 'utf-8', (err, data) => {
-                if (err) return console.error(`Unable to scan directory: ${err}`);
-                try {
-                    const obj = JSON.parse(data);
-                    const { dependencies, peerDependencies, devDependencies } = obj;
-                    searchAndUpdate(dependencies, file, obj);
-                    searchAndUpdate(peerDependencies, file, obj);
-                    searchAndUpdate(devDependencies, file, obj);
-                } catch (err) {
-                    console.error(`Errored at ${file}`);
-                    console.error(err);
-                }
-            });
+            if (!file.includes('node_modules')) {
+                fs.readFile(file, 'utf-8', (err, data) => {
+                    if (err) return console.error(`Unable to scan directory: ${err}`);
+                    try {
+                        const obj = JSON.parse(data);
+                        const { dependencies, peerDependencies, devDependencies } = obj;
+                        searchAndUpdate(dependencies, file, obj);
+                        searchAndUpdate(peerDependencies, file, obj);
+                        searchAndUpdate(devDependencies, file, obj);
+                    } catch (err) {
+                        console.error(`Errored at ${file}`);
+                        console.error(err);
+                    }
+                });
+            }
         });
         git.add('.')
             .then(() => {

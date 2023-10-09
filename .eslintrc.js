@@ -7,6 +7,7 @@ const common = {
     plugins: ['prettier', 'jest', 'markdown'],
     extends: ['airbnb-base', 'prettier', 'plugin:jest/all', 'plugin:json/recommended'],
     rules: {
+        "jest/unbound-method":'off',
         'prettier/prettier': 'error',
         'jest/no-disabled-tests': 'warn',
         'jest/no-focused-tests': 'error',

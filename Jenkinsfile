@@ -9,17 +9,18 @@ pipeline {
   }
   parameters {
     string(name: 'REPOSITORY_SERVER', defaultValue: 'gcr.io/stack-test-186501', description: 'Registry server URL to pull/push images', trim: true)
-    string(name: 'NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
+    string(name: 'BASE_NAMESPACE', defaultValue: 'default', description: 'In which namespace micro services needs to be deploy', trim: true)
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
+    string(name: 'VERSION', defaultValue: 'v1', description: 'version of the deployment', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
     string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
-    string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:cdmbase/fullstack-pro.git', description: 'ssh url of the git repository')
+    string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:CDEBase/fullstack-pro.git', description: 'ssh url of the git repository')
     string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
     string(name: 'DEVELOP_BRANCH', defaultValue: 'develop', description: 'Develop branch as default for the development.')
     string(name: 'MASTER_BRANCH', defaultValue: 'master', description: 'Master branch as default branch for production.')
@@ -27,9 +28,9 @@ pipeline {
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
-    choice choices: ['0.7.4', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
-    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
+    choice choices: ['0.7.9','0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
+    choice choices: ['nodejs18', 'nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
+    choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobilePreviewSubmit', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
     booleanParam (defaultValue: false, description: 'Tick to enable debug mode', name: 'ENABLE_DEBUG')
@@ -39,6 +40,7 @@ pipeline {
   // Setup common + secret key variables for pipeline.
   environment {
     BUILD_COMMAND = getBuildCommand()
+    NAMESPACE = "${params.BASE_NAMESPACE}-${params.VERSION}"
     PYTHON='/usr/bin/python'
     GCR_KEY = credentials('jenkins-gcr-login-key')
     EXPO_TOKEN = credentials('expo_cdmbase_token')
@@ -93,13 +95,19 @@ pipeline {
 
     stage ('Mobile Build'){
       when {
-        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
+        expression { params.ENV_CHOICE == 'mobileBuild' || params.ENV_CHOICE == 'mobilePreview' || params.ENV_CHOICE == 'mobilePreviewLocal' || params.ENV_CHOICE == 'mobilePreviewSubmit' || params.ENV_CHOICE == 'mobileProd' || params.ENV_CHOICE == 'mobileProdSubmit' }
       }
       steps{
-        sh """
-            rm .npmrc
-            lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
-        """
+        sshagent (credentials: [params.GIT_CREDENTIAL_ID]) {
+          sh """
+              rm .npmrc
+              lerna exec --scope=*mobile-device ${params.BUILD_STRATEGY} ${env.BUILD_COMMAND}
+              git checkout -- .npmrc
+              yarn gitcommit
+              git pull origin ${params.REPOSITORY_BRANCH}
+              git push origin ${params.REPOSITORY_BRANCH}
+          """
+        }
       }
     }
 
@@ -226,7 +234,7 @@ pipeline {
           script {
 
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -339,7 +347,8 @@ pipeline {
 
       steps {
         load "./jenkins_variables.groovy"
-        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://35.231.34.237']) {
+        withKubeConfig([credentialsId: 'kubernetes-staging-cluster', serverUrl: 'https://34.139.244.149']) {
+          
           sh """
             helm repo add stable https://charts.helm.sh/stable
             helm repo add incubator https://charts.helm.sh/incubator
@@ -348,7 +357,7 @@ pipeline {
           """
           script {
             nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-            if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+            if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
 
             def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
             def parallelStagesMap = servers.collectEntries {
@@ -421,7 +430,7 @@ pipeline {
           
           // Now do the actual work here
           load "./jenkins_variables.groovy"
-          withKubeConfig([credentialsId: 'kubernetes-prod-cluster', serverUrl: 'https://35.229.71.215']) {
+          withKubeConfig([credentialsId: 'kubernetes-prod-cluster-r1', serverUrl: 'https://35.229.71.215']) {
             sh """
                helm repo add stable https://charts.helm.sh/stable
                helm repo add incubator https://charts.helm.sh/incubator
@@ -430,7 +439,7 @@ pipeline {
              """
             script {
               nameSpaceCheck = sh(script: "kubectl get ns | tr '\\n' ','", returnStdout: true)
-              if (!nameSpaceCheck.contains(params.NAMESPACE)) { sh "kubectl create ns " + params.NAMESPACE }
+              if (!nameSpaceCheck.contains(env.NAMESPACE)) { sh "kubectl create ns " + env.NAMESPACE }
             
               def servers = getDirs(pwd() + params.DEPLOYMENT_PATH)
               def parallelStagesMap = servers.collectEntries {
@@ -468,6 +477,9 @@ def getBuildCommand(){
   }
   if(params.ENV_CHOICE == 'mobilePreviewLocal'){
     return 'build:previewLocal:' + params.MOBILE_CHOICE
+  }
+  if(params.ENV_CHOICE == 'mobilePreviewSubmit'){
+    return 'build:previewSubmit:' + params.MOBILE_CHOICE
   }
   if(params.ENV_CHOICE == 'mobileProd'){
     return 'build:prod:' + params.MOBILE_CHOICE
@@ -527,7 +539,7 @@ def generateStage(server, environmentType) {
     stage("stage: ${server}") {
       echo "This is ${server}."
       def filterExist = "${server}".contains(params.EXCLUDE_SETTING_NAMESPACE_FILTER)
-      def namespace = filterExist ? '' : "--namespace=${params.NAMESPACE}"
+      def namespace = filterExist ? '' : "--namespace=${env.NAMESPACE}"
       def name = getName(pwd() + "${params.DEPLOYMENT_PATH}/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def valuesFile = "values-${environmentType}.yaml"
@@ -546,9 +558,9 @@ def generateStage(server, environmentType) {
 
           sh """
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server} \
+            ${server} \
             -f "${valuesFile}" \
-            ${namespace} \
+            ${namespace}\
             ${deployment_flag} \
             --set frontend.image="${REPOSITORY_SERVER}/${name}" \
             --set frontend.imageTag=${version} \
@@ -557,6 +569,7 @@ def generateStage(server, environmentType) {
             --set settings.workspaceId="${WORKSPACE_ID}" \
             --set frontend.pullPolicy=Always \
             --set backend.pullPolicy=Always \
+            --set VERSION=${VERSION} \
             --version=${IDESTACK_CHART_VERSION} \
               kube-orchestration/idestack
             """
@@ -566,11 +579,12 @@ def generateStage(server, environmentType) {
             cd .${params.DEPLOYMENT_PATH}/${server}
             helm dependency update  charts/chart/
             helm upgrade -i \
-            ${UNIQUE_NAME}-${server}-api \
+            ${server}-api \
             -f "charts/chart/${valuesFile}" \
             ${namespace} \
             --set global.image.repository=${REPOSITORY_SERVER}/${name} \
             --set global.image.tag=${version} \
+            --set VERSION=${VERSION} \
             charts/chart
           """
 

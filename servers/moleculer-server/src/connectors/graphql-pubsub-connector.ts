@@ -9,7 +9,6 @@ type ILogger = CdmLogger.ILogger;
 
 
 type PubSubOptions = {
-    apolloLogging?: boolean;
     logger: ILogger;
 } & GenericObject;
 
@@ -28,7 +27,7 @@ export class GraphqlPubSubConnector {
      */
     constructor(opts?: PubSubOptions) {
         if (opts === undefined || opts.type === undefined) {
-            this.opts = { ...opts, apolloLogging: true, type: 'TCP' };
+            this.opts = { ...opts, type: 'TCP' };
         }
         this.opts = opts;
         this.logger = opts.logger.child({className: 'GraphqlPubSubConnector'});

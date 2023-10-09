@@ -1,12 +1,11 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { ApolloProvider } from '@apollo/client';
-import { getDataFromTree } from '@apollo/client/react/ssr';
+import { ApolloProvider } from '@apollo/client/react/react.cjs';
+import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
 import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
 import path from 'path';
 import fs from 'fs';
-import { renderToMarkup, renderToSheetList } from 'fela-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
@@ -16,8 +15,6 @@ import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import createEmotionServer from '@emotion/server/create-instance'
 import { createClientContainer } from '../config/client.service';
-import * as ReactFela from 'react-fela';
-import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
@@ -25,7 +22,7 @@ import clientModules, { MainRoute } from '../modules';
 let assetMap;
 const key = 'custom';
 const cache = createCache({ key });
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
 async function renderServerSide(req, res) {
     try {
         const { apolloClient: client } = createClientContainer();
@@ -33,19 +30,15 @@ async function renderServerSide(req, res) {
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
         const { store } = createReduxStore(history);
-        const renderer = createRenderer();
-        const App = () =>
-            clientModules.getWrappedRoot(
+        const App = clientModules.getWrappedRoot(
                 // tslint:disable-next-line:jsx-wrap-multiline
                 <ReduxProvider store={store}>
                     <ApolloProvider client={client}>
-                        <ReactFela.Provider renderer={renderer}>
                             <CacheProvider value={cache}>
                                 <StaticRouter location={req.url} context={context}>
                                     <MainRoute />
                                 </StaticRouter>
                             </CacheProvider>
-                        </ReactFela.Provider>
                     </ApolloProvider>
                 </ReduxProvider>,
                 req,
@@ -66,12 +59,10 @@ async function renderServerSide(req, res) {
         const JSX = extractor.collectChunks(App);
         const content = ReactDOMServer.renderToString(JSX);
 
-        // this comes after Html render otherwise we don't see fela rules generated
-        const appStyles = renderToSheetList(renderer);
         
-        const chunks = extractCriticalToChunks(JSX)
+        const chunks = extractCriticalToChunks(JSX);
 
-        const emotionEtyles = constructStyleTagsFromChunks(chunks)
+        const appStyles = constructStyleTagsFromChunks(chunks);
 
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
@@ -101,6 +92,8 @@ async function renderServerSide(req, res) {
                     styleSheet={appStyles}
                     env={env}
                     reduxState={reduxState}
+                    scriptsInserts={clientModules.scriptsInserts}
+                    stylesInserts={clientModules.stylesInserts}
                 />
             );
             res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);

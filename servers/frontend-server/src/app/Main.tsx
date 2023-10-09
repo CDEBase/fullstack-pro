@@ -1,15 +1,12 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import * as React from 'react';
-import { RendererProvider } from 'react-fela';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
-import { rehydrate } from 'fela-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 
-import createRenderer from '../config/fela-renderer';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
@@ -22,14 +19,11 @@ const { store } = createReduxStore(history);
 
 export class Main extends React.Component<{}, {}> {
   public render() {
-    const renderer = createRenderer();
     let persistor = persistStore(store);
-    rehydrate(renderer);
     return (
       <ErrorBoundary>
         <Provider store={store}>
           <ApolloProvider client={client}>
-            <RendererProvider renderer={renderer}>
               <PersistGate persistor={persistor}>
                 {modules.getWrappedRoot(
                   (
@@ -39,7 +33,6 @@ export class Main extends React.Component<{}, {}> {
                   ),
                 )}
               </PersistGate>
-            </RendererProvider>
           </ApolloProvider>
         </Provider>
       </ErrorBoundary>

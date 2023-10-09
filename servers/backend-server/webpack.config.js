@@ -5,12 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
-
+const EnvListPlugin = require('@common-stack/env-list-loader');
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack*|client|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    `(${modulenameExtra}@sample-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
 );
 
 const config = {
@@ -70,6 +70,13 @@ const config = {
                     options: { babelrc: true, rootMode: 'upward-optional' },
                 },
             },
+            {
+                // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
+                test: /config\/(env-config|public-config)\.(j|t)s/,
+                use: {
+                    loader: '@common-stack/env-list-loader',
+                },
+            },
             { test: /locales/, use: { loader: '@alienfast/i18next-loader' } },
         ],
         unsafeCache: false,
@@ -111,6 +118,8 @@ const config = {
           ]
         : []
     ).concat([
+        // The plugin lists the environment that required as well recommendation about the keys used.
+        new EnvListPlugin.Plugin(),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
         new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: true }),
         new webpack.DefinePlugin(
