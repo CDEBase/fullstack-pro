@@ -36,6 +36,7 @@
         "watch": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env webpack-dev-server",
         "watch:debug": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env yarn webpack-dev-server -- -v",
         "watch:ssr": "cross-env SSR=true yarn watch",
+        "watch:ssr:backend": "cross-env SSR_BACKEND=true && webpack --watch",
         "watch:staging": "cross-env ENV_FILE=../../config/staging/staging.env yarn webpack-dev-server",
         "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn webpack-dev-server"
     },

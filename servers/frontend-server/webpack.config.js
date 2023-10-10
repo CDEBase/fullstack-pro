@@ -262,7 +262,7 @@ const config = {
     devServer: {
         hot: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        open: true,
+        // open: true,
         historyApiFallback: true,
         port: buildConfig.__WEB_DEV_SERVER_PORT__,
         devMiddleware: {
@@ -273,7 +273,7 @@ const config = {
             ? {
                   proxy: {
                       '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
-                          target: 'http://localhost:8080',
+                          target: 'http://localhost:3000',
                           logLevel: 'info',
                       },
                   },
@@ -282,7 +282,7 @@ const config = {
     },
 };
 
-const ServersConfig = [config];
+const ServersConfig = (buildConfig.__SSR__ && buildConfig.__SSR_BACKEND__) ? []: [config];
 if (buildConfig.__SSR__) {
     ServersConfig.push(
         ServerConfig({
