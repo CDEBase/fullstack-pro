@@ -12,6 +12,7 @@ const __GRAPHQL_ENDPOINT__ = process.env.GRAPHQL_URL ? new URL(process.env.GRAPH
 const config = {
     __SERVER__: false,
     __CLIENT__: true,
+    __SSR_BACKEND__: process.env.SSR_BACKEND,
     __SSR__: process.env.NODE_ENV === 'production' || process.env.SSR === 'true', // enableing SSR only in Production as in Dev we have a issue
     __DEBUGGING__: false,
     __TEST__: false,
