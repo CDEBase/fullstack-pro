@@ -182,12 +182,6 @@ pipeline {
       }
     }
 
-    stage('Docker login'){
-      steps{
-        sh 'cat "$GCR_KEY" | docker login -u _json_key --password-stdin https://gcr.io'
-      }
-    }
-
     stage('Dev Docker Images') {
       options {
          timeout(time: params.BUILD_TIME_OUT, unit: 'MINUTES')
@@ -608,9 +602,7 @@ def generateBuildStage(server) {
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
         sh """
             lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run docker:${env.BUILD_COMMAND};
-            docker tag ${name}:${version} ${REPOSITORY_SERVER}/${name}:${version}
-            docker push ${REPOSITORY_SERVER}/${name}:${version}
-            docker rmi ${REPOSITORY_SERVER}/${name}:${version}
+            def Image = docker.build(${REPOSITORY_SERVER}/${name}:${version}, "-f Dockerfile .")
         """
       } catch (e) {
         slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage docker-build ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${e}", channel: 'idestack-automation')
