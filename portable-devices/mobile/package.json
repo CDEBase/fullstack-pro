@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-mobile-device",
-    "version": "0.0.1",
+    "version": "0.0.59-alpha.2",
     "private": true,
     "main": "index.js",
     "scripts": {
@@ -66,7 +66,7 @@
         "@common-stack/client-react": "^0.5.6",
         "@common-stack/core": "^0.5.1",
         "@expo/vector-icons": "~13.0.0",
-        "@react-native-async-storage/async-storage": "1.17.11",        
+        "@react-native-async-storage/async-storage": "1.17.11",
         "@react-native-community/cameraroll": "~4.1.2",
         "@react-native-community/masked-view": "~0.1.10",
         "@react-native-community/netinfo": "9.3.7",
@@ -78,7 +78,7 @@
         "@react-navigation/native": "^6.0.10",
         "@react-navigation/native-stack": "^6.6.2",
         "@react-navigation/stack": "^6.2.1",
-        "@sample-stack/counter-module-mobile": "link:../../packages-modules/counter/mobile",
+        "@sample-stack/counter-module-mobile": "0.0.59-alpha.1",
         "apollo-link-debounce": "^3.0.0",
         "apollo-link-logger": "^2.0.0",
         "apollo-server-errors": "^3.3.1",
@@ -144,7 +144,7 @@
         "rxjs": "^6.5.3",
         "rxjs-compat": "^6.5.3",
         "rxjs-hooks": "^0.5.2",
-        "sentry-expo": "~6.2.0",        
+        "sentry-expo": "~6.2.0",
         "text-encoding-polyfill": "^0.6.7"
     },
     "devDependencies": {
