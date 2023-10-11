@@ -19,6 +19,6 @@
     "npmClient": "yarn",
     "useWorkspaces": true,
     "useNx": true,
-    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
+    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*", "update-docker-publish"],
     "version": "0.0.59-beta.4"
 }
