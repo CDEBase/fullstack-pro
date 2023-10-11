@@ -5,12 +5,12 @@
         "publish": {
             "registry": "https://registry.npmjs.org",
             "graphType": "all",
-            "allowBranch": ["publish", "devpublish", "devpublishn2"],
+            "allowBranch": ["publish", "devpublish", "devpublishn2",  "update-docker-publish"],
             "message": "chore(release): publish",
             "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md", "**/example/**"]
         },
         "version": {
-            "allowBranch": ["master", "develop", "publish", "devpublish", "devpublishn2"],
+            "allowBranch": ["master", "develop", "publish", "devpublish", "devpublishn2",  "update-docker-publish"],
             "private": true,
             "conventionalCommits": true,
             "message": "chore: release package(s)"
@@ -19,6 +19,6 @@
     "npmClient": "yarn",
     "useWorkspaces": true,
     "useNx": true,
-    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*", "update-docker-publish"],
+    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
     "version": "0.0.59-beta.4"
 }
