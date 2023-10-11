@@ -114,9 +114,9 @@
         "@types/react-dom": "^18.0.8",
         "chokidar": "^3.5.3",
         "html-to-text": "^8.0.0",
-        "react": "18.0.0",
-        "react-dom": "18.0.0",
-        "react-native-gesture-handler": "~2.5.0"
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-native-gesture-handler": "~2.9.0"
     },
     "dependencies": {
         "dataloader": "^2.1.0",

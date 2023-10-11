@@ -37,7 +37,7 @@ async function renderServerSide(req, res) {
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
         // Wrap your application using "collectChunks"
-        const JSX = extractor.collectChunks(App);
+        const JSX = extractor.collectChunks(App());
         const content = ReactDOMServer.renderToString(JSX);
 
         

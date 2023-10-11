@@ -1,42 +1,42 @@
 {
-  "name": "@sample-stack/counter-module-electron",
-  "version": "0.0.1",
-  "description": "Sample core for higher packages to depend on",
-  "license": "ISC",
-  "author": "CDMBase LLC",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "scripts": {
-    "build": "yarn build:clean && yarn build:lib",
-    "build:clean": "rimraf lib",
-    "build:lib": "webpack",
-    "build:lib:watch": "yarn build:lib -- --watch",
-    "jest": "./node_modules/.bin/jest",
-    "prepublish": "yarn build",
-    "test": "cross-env ENV_FILE=../../config/test/test.env jest",
-    "test:debug": "npm test -- --runInBand",
-    "test:watch": "npm test -- --watch",
-    "watch": "yarn build:lib:watch"
-  },
-  "dependencies": {
-    "@sample-stack/counter-module-browser": "0.0.1"
-  },
-  "peerDependencies": {
-    "@common-stack/client-react": "*",
-    "native-base": "*",
-    "react": "*",
-    "react-native": "*",
-    "react-redux": "*",
-    "react-router": "*",
-    "react-router-dom": "*",
-    "redux": "*",
-    "redux-observable": "*",
-    "rxjs": "*"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "typescript": {
-    "definition": "lib/index.d.ts"
-  }
+    "name": "@sample-stack/counter-module-electron",
+    "version": "0.0.59-alpha.1",
+    "description": "Sample core for higher packages to depend on",
+    "license": "ISC",
+    "author": "CDMBase LLC",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "scripts": {
+        "build": "yarn build:clean && yarn build:lib",
+        "build:clean": "rimraf lib",
+        "build:lib": "webpack",
+        "build:lib:watch": "yarn build:lib -- --watch",
+        "jest": "./node_modules/.bin/jest",
+        "prepublish": "yarn build",
+        "test": "cross-env ENV_FILE=../../config/test/test.env jest",
+        "test:debug": "npm test -- --runInBand",
+        "test:watch": "npm test -- --watch",
+        "watch": "yarn build:lib:watch"
+    },
+    "dependencies": {
+        "@sample-stack/counter-module-browser": "0.0.59-alpha.1"
+    },
+    "peerDependencies": {
+        "@common-stack/client-react": "*",
+        "native-base": "*",
+        "react": "*",
+        "react-native": "*",
+        "react-redux": "*",
+        "react-router": "*",
+        "react-router-dom": "*",
+        "redux": "*",
+        "redux-observable": "*",
+        "rxjs": "*"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "typescript": {
+        "definition": "lib/index.d.ts"
+    }
 }
