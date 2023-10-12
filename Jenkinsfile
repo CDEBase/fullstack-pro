@@ -607,7 +607,7 @@ def generateBuildStage(server) {
       def name = getName(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
         sh """
-            lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run build
+            lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run build;
             def newImage = docker.build("${REPOSITORY_SERVER}/${name}:${version}", "-f Dockerfile .")
         """
       } catch (e) {
