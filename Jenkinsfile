@@ -608,7 +608,7 @@ def generateBuildStage(server) {
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def imageTag = "${REPOSITORY_SERVER}/${name}:${version}"
       sh "lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run build;"
-      def newImage = docker.build("test:123", "-f Dockerfile .")
+      def newImage = docker.build("$imageTag", "-f Dockerfile servers/$server")
       } catch (e) {
         slackSend (color: '#FF0000', message: "FAILED:  Job  '${env.JOB_NAME}'  BUILD NUMBER:  '${env.BUILD_NUMBER}'  Job failed in stage docker-build ${server}. click <${env.RUN_DISPLAY_URL}|here> to see the log. Error: ${e}", channel: 'idestack-automation')
         throw(e)
