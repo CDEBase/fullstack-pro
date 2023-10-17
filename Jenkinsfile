@@ -608,8 +608,8 @@ def generateBuildStage(server) {
       def version = getVersion(pwd() + params.DEPLOYMENT_PATH + "/${server}/package.json")
       def imageTag = "${REPOSITORY_SERVER}/${name}:${version}"
       sh "lerna exec --scope=*${server} ${params.BUILD_STRATEGY} run build;"
-      docker.withRegistry('https://gcr.io', 'jenkins-gcr-login-key') {
-        def newImage = docker.build("$imageTag", "-f servers/$server/Dockerfile .")
+      def newImage = docker.build("$imageTag", "-f servers/$server/Dockerfile .")
+      docker.withRegistry('https://gcr.io', "gcr:jenkins-gcr-login-key") {
         newImage.push()
       }
       } catch (e) {
