@@ -26,10 +26,10 @@
         "docker:build:debug": "yarn build:debug && docker build . -t $npm_package_name:$npm_package_version",
         "docker:run": "docker run  --env-file ../../config/staging/docker-staging.env  -p 3010:3010  -it $npm_package_name:$npm_package_version",
         "jest": "./node_modules/.bin/jest",
-        "start": "cross-env NODE_ENV=production pm2-runtime  dist/index.js",
-        "start:dev": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env node --harmony dist",
-        "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env node --harmony dist",
-        "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env node --harmony dist",
+        "start": "cross-env NODE_ENV=production tsx  dist/main.js",
+        "start:dev": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env tsx dist/main.js",
+        "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env tsx dist/main.js",
+        "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env tsx dist/main.js",
         "test": "jest",
         "test:debug": "npm test -- --runInBand",
         "test:watch": "npm test -- --watch",
@@ -114,7 +114,8 @@
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "raf": "3.4.1",
-        "rimraf": "^3.0.2"
+        "rimraf": "^3.0.2",
+        "tsx": "^3.13.0"
     },
     "peerDependencies": {
         "body-parser": "*"
