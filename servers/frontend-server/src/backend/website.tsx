@@ -11,7 +11,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
+import createEmotionCache from '../common/createEmotionCache';
 import createEmotionServer from '@emotion/server/create-instance';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createClientContainer } from '../config/client.service';
@@ -20,9 +20,8 @@ import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 
 let assetMap;
-const key = 'custom';
-const cache = createCache({ key });
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
+const cache = createEmotionCache();
+const { extractCriticalToChunks, extractCritical } = createEmotionServer(cache);
 
 async function renderServerSide(req, res) {
     try {
@@ -88,9 +87,21 @@ async function renderServerSide(req, res) {
         // console.log('---loadable', path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'));
         // const content = ReactDOMServer.renderToString(JSX);
         // console.log('---CONTENT', content, '----- JSX', JSX);
-        // const chunks = extractCriticalToChunks(Root);
-
-        // const appStyles = constructStyleTagsFromChunks(chunks);
+        const emotionStyles = extractCriticalToChunks(content);
+        let emotionIds: string[] = [];
+        // const emotionStyles = constructStyleTagsFromChunks(chunks);
+        const emotionStyleTags = emotionStyles.styles.map((style) => {
+            emotionIds.push(...style.ids) 
+            return (
+                <style
+                  data-emotion={`${style.key} ${style.ids.join(" ")}`}
+                  key={style.key}
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{ __html: style.css }}
+                />
+              )
+        });
+        
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();
@@ -115,7 +126,8 @@ async function renderServerSide(req, res) {
                     assetMap={assetMap}
                     helmet={helmetContext.helmet}
                     extractor={extractor}
-                    // styleSheet={appStyles}
+                    styleSheet={emotionStyleTags}
+                    emotionIds={emotionIds}
                     env={env}
                     reduxState={reduxState}
                     scriptsInserts={clientModules.scriptsInserts}
