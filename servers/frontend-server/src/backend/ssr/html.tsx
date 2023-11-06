@@ -17,6 +17,7 @@ const Html = ({
     content,
     state,
     reduxState,
+    emotionIds,
     headElements,
     env,
     assetMap,
@@ -29,6 +30,7 @@ const Html = ({
     content?: any;
     state: any;
     reduxState: any;
+    emotionIds: string;
     headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
@@ -51,8 +53,8 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
-                {/* {extractor.getLinkElements()}
-                {extractor.getStyleElements()} */}
+                {extractor.getLinkElements()}
+                {extractor.getStyleElements()}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
                 {headElements}
                 <meta charSet="utf-8" />
@@ -71,7 +73,7 @@ const Html = ({
                         }}
                     />
                 )}
-                {/* {styleSheet} */}
+                {styleSheet}
                 {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;
@@ -112,7 +114,15 @@ const Html = ({
                     }}
                     charSet="UTF-8"
                 />
-                {/* {extractor.getScriptElements()} */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__EMOTION_IDS__=${serialize(emotionIds, {
+                            isJSON: false,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
+                {extractor.getScriptElements()}
             </body>
         </html>
     );
