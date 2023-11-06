@@ -40,19 +40,23 @@ async function renderServerSide(req, res) {
 
         console.log('--EXTRACTOR', extractor);
         const helmetContext = {} as FilledContext;
-        const Root = (<ChunkExtractorManager extractor={extractor}>
+        const Root = (
+            <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
                     <ReduxProvider store={store}>
                         <ApolloProvider client={client}>
                             <CacheProvider value={cache}>
-                                <StaticRouter location={req.url} context={context}>
-                                    <MainRoute />
-                                </StaticRouter>
+                                {clientModules.getWrappedRoot(
+                                    <StaticRouter location={req.url} context={context}>
+                                        <MainRoute />
+                                    </StaticRouter>,
+                                )}
                             </CacheProvider>
                         </ApolloProvider>
                     </ReduxProvider>
                 </HelmetProvider>
-            </ChunkExtractorManager>);
+            </ChunkExtractorManager>
+        );
         // console.log('---store', store);
         try {
             await getDataFromTree(Root);
@@ -84,7 +88,7 @@ async function renderServerSide(req, res) {
         // console.log('---loadable', path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'));
         // const content = ReactDOMServer.renderToString(JSX);
         // console.log('---CONTENT', content, '----- JSX', JSX);
-        // const chunks = extractCriticalToChunks(JSX);
+        // const chunks = extractCriticalToChunks(Root);
 
         // const appStyles = constructStyleTagsFromChunks(chunks);
         if (context.url) {
