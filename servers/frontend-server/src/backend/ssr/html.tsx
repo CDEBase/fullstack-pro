@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import serialize from 'serialize-javascript';
-import { HelmetData } from 'react-helmet';
+import { HelmetServerState } from 'react-helmet-async';
+import { ChunkExtractor } from '@loadable/server';
 
 /**
  * A simple herlper function to prepare the HTML markup. This loads:
@@ -21,6 +22,7 @@ const Html = ({
     assetMap,
     styleSheet,
     helmet,
+    extractor,
     stylesInserts = [],
     scriptsInserts = [],
 }: {
@@ -31,12 +33,15 @@ const Html = ({
     assetMap?: string[];
     env: any;
     styleSheet?: any;
-    helmet?: HelmetData;
+    helmet: HelmetServerState;
+    extractor: ChunkExtractor;
     stylesInserts?: any[];
     scriptsInserts?: string[];
 }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
+
+    // console.log('--- html attributes >>>>', helmet.title.toComponent(), helmet.meta.toComponent());
     return (
         <html lang="en" {...htmlAttrs}>
             <head>
@@ -46,6 +51,8 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
+                {/* {extractor.getLinkElements()}
+                {extractor.getStyleElements()} */}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
                 {headElements}
                 <meta charSet="utf-8" />
@@ -72,15 +79,15 @@ const Html = ({
                 })}
             </head>
             <body {...bodyAttrs}>
-                <div id="root" />
-                <div className="demo">
+                <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
+                {/* <div className="demo">
                     <div
                         id="content"
                         dangerouslySetInnerHTML={{
                             __html: content || '',
                         }}
                     />
-                </div>
+                </div> */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
@@ -105,6 +112,7 @@ const Html = ({
                     }}
                     charSet="UTF-8"
                 />
+                {/* {extractor.getScriptElements()} */}
             </body>
         </html>
     );
