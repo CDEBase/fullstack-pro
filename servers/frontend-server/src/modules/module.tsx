@@ -9,20 +9,18 @@ const features = new Feature(FeatureWithRouterFactory, counterModules);
 
 console.log(features.getMenus());
 
-export const MainRoute = props => (
+export const MainRoute = (props) => (
     <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
         <SiderMenu
             collapsed={false}
             menuData={features.getMenus()}
-            location={window.location as any}
+            location={{pathname: '/'} as any}
             segments={features.sidebarSegments}
         />
         <Layout>
             <Layout.Content style={{ height: '100%' }}>
                 <section className="flex-grow" style={{ height: '100%' }}>
-                    <React.Suspense fallback={<span>Loading....</span>}>
-                        {features.getRoutes()}
-                    </React.Suspense>
+                    {features.getRoutes()}
                 </section>
             </Layout.Content>
         </Layout>
