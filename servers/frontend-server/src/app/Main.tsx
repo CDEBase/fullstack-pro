@@ -8,8 +8,9 @@ import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
 import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
+import { hydrate } from '@emotion/css'
 
+import createEmotionCache from '../common/createEmotionCache';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
@@ -18,7 +19,8 @@ const { apolloClient: client } = createClientContainer();
 
 const history = createBrowserHistory();
 const { store } = createReduxStore(history);
-const cache = createCache();
+const cache = createEmotionCache();
+hydrate(window.__EMOTION_IDS__);
 
 export class Main extends React.Component<{}, {}> {
     public render() {
