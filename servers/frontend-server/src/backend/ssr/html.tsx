@@ -53,7 +53,7 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
-                {extractor.getLinkElements()}
+                {/*extractor.getLinkElements()*/}
                 {extractor.getStyleElements()}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
                 {headElements}
@@ -82,14 +82,6 @@ const Html = ({
             </head>
             <body {...bodyAttrs}>
                 <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
-                {/* <div className="demo">
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{
-                            __html: content || '',
-                        }}
-                    />
-                </div> */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {

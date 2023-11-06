@@ -8,7 +8,7 @@ import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-console.log(features.getMenus());
+// console.log(features.getMenus());
 
 export const MainRoute = (props) => (
     <ErrorBoundary>

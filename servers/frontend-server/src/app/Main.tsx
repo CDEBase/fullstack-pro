@@ -22,27 +22,23 @@ const { store } = createReduxStore(history);
 const cache = createEmotionCache();
 hydrate(window.__EMOTION_IDS__);
 
-export class Main extends React.Component<{}, {}> {
-    public render() {
-        let persistor = persistStore(store);
-        return (
-            <HelmetProvider>
-                <Provider store={store}>
-                    <ApolloProvider client={client}>
-                        <PersistGate persistor={persistor}>
-                            <CacheProvider value={cache}>
-                                {modules.getWrappedRoot(
-                                    <ConnectedRouter history={history}>
-                                        <MainRoute />
-                                    </ConnectedRouter>,
-                                )}
-                            </CacheProvider>
-                        </PersistGate>
-                    </ApolloProvider>
-                </Provider>
-            </HelmetProvider>
-        );
-    }
-}
+let persistor = persistStore(store);
+const Main = () => (
+    <HelmetProvider>
+        <Provider store={store}>
+            <ApolloProvider client={client}>
+                <PersistGate persistor={persistor}>
+                    <CacheProvider value={cache}>
+                        {modules.getWrappedRoot(
+                            <ConnectedRouter history={history}>
+                                <MainRoute />
+                            </ConnectedRouter>,
+                        )}
+                    </CacheProvider>
+                </PersistGate>
+            </ApolloProvider>
+        </Provider>
+    </HelmetProvider>
+);
 
 export default Main;

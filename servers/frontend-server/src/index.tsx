@@ -18,7 +18,10 @@ import Main from './app/Main';
 if (__SSR__) {
     loadableReady(() => {
         const root = document.getElementById('root');
-        ReactDOM.hydrate(<Main />, root);
+        console.log('Root----', root!.innerHTML);
+        // if (!root!.innerHTML) {
+            // ReactDOM.hydrate(<Main />, root);
+        // }
     });
 } else {
     const rootEl = document.getElementById('root');

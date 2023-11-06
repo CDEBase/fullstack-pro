@@ -36,8 +36,7 @@ async function renderServerSide(req, res) {
             entrypoints: ['index'],
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
-
-        console.log('--EXTRACTOR', extractor);
+        
         const helmetContext = {} as FilledContext;
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
@@ -75,7 +74,7 @@ async function renderServerSide(req, res) {
             console.log(JSON.stringify(e));
         }
         const content = ReactDOMServer.renderToString(Root);
-        console.log('---CONTENT', content);
+        console.log('---CONTENT', content.length);
         if (context.pageNotFound === true) {
             res.status(404);
         }
@@ -118,9 +117,9 @@ async function renderServerSide(req, res) {
                 <Html
                     content={content}
                     headElements={[
-                        ...extractor.getScriptElements(),
-                        ...extractor.getLinkElements(),
-                        ...extractor.getStyleElements(),
+                        // ...extractor.getScriptElements(),
+                        // ...extractor.getLinkElements(),
+                        // ...extractor.getStyleElements(),
                     ]}
                     state={apolloState}
                     assetMap={assetMap}
