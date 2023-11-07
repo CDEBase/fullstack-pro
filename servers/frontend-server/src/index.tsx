@@ -19,9 +19,7 @@ if (__SSR__) {
     loadableReady(() => {
         const root = document.getElementById('root');
         console.log('Root----', root!.innerHTML);
-        // if (!root!.innerHTML) {
-            // ReactDOM.hydrate(<Main />, root);
-        // }
+        hydrateRoot(root, <Main />);
     });
 } else {
     const rootEl = document.getElementById('root');
