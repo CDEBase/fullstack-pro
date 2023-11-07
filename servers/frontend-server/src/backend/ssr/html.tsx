@@ -30,7 +30,7 @@ const Html = ({
     content?: any;
     state: any;
     reduxState: any;
-    emotionIds: string;
+    emotionIds: string[];
     headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
