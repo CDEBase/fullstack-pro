@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.59-alpha.9](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.8...v0.0.59-alpha.9) (2023-11-07)
+
+**Note:** Version bump only for package sample-stack
+
 ## [0.0.59-alpha.8](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.7...v0.0.59-alpha.8) (2023-11-06)
 
 **Note:** Version bump only for package sample-stack
