@@ -241,15 +241,13 @@ const config = {
             new LoadablePlugin(),
         ])
         .concat(
-            buildConfig.__SSR__
-                ? []
-                : [
+                [
                       new HtmlWebpackPlugin({
                           template: '../../tools/html-plugin-template.ejs',
                           inject: true,
                           cache: false,
                       }),
-                  ],
+                ],
         ),
     optimization: {
         splitChunks: {

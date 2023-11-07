@@ -23,7 +23,7 @@ let assetMap;
 const cache = createEmotionCache();
 const { extractCriticalToChunks, extractCritical } = createEmotionServer(cache);
 
-async function renderServerSide(req, res) {
+async function renderServerSide(req, res, data) {
     try {
         const { apolloClient: client } = createClientContainer();
 
@@ -31,47 +31,34 @@ async function renderServerSide(req, res) {
         const history = createMemoryHistory({ initialEntries: [req.url] });
         const { store } = createReduxStore(history);
 
-        const extractor = new ChunkExtractor({
-            statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
-            entrypoints: ['index'],
-            publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
-        });
+        // const extractor = new ChunkExtractor({
+        //     statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
+        //     entrypoints: ['index'],
+        //     publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
+        // });
         
         const helmetContext = {} as FilledContext;
         const Root = (
-            <ChunkExtractorManager extractor={extractor}>
-                <HelmetProvider context={helmetContext}>
-                    <ReduxProvider store={store}>
-                        <ApolloProvider client={client}>
-                            <CacheProvider value={cache}>
-                                {clientModules.getWrappedRoot(
-                                    <StaticRouter location={req.url} context={context}>
-                                        <MainRoute />
-                                    </StaticRouter>,
-                                )}
-                            </CacheProvider>
-                        </ApolloProvider>
-                    </ReduxProvider>
-                </HelmetProvider>
-            </ChunkExtractorManager>
+            <HelmetProvider context={helmetContext}>
+                <ReduxProvider store={store}>
+                    <ApolloProvider client={client}>
+                        <CacheProvider value={cache}>
+                            {clientModules.getWrappedRoot(
+                                <StaticRouter location={req.url} context={context}>
+                                    <MainRoute />
+                                </StaticRouter>,
+                            )}
+                        </CacheProvider>
+                    </ApolloProvider>
+                </ReduxProvider>
+            </HelmetProvider>
         );
-        // console.log('---store', store);
+        
         try {
             await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
-            // if (e instanceof ApolloError) {
-            //     const notFound = e.graphQLErrors.some((ge) => (ge.extensions as any)?.code === 'NOT_FOUND');
-            //     if (notFound)
-            //         store.dispatch(
-            //             setError({
-            //                 errorType: ErrorEnum.NOT_FOUND,
-            //             }),
-            //         );
-            // }
-            console.log(e.name);
-            console.log(e.message);
-            console.log(JSON.stringify(e));
+            console.log(e);
         }
         const content = ReactDOMServer.renderToString(Root);
         console.log('---CONTENT', content.length);
@@ -79,16 +66,8 @@ async function renderServerSide(req, res) {
             res.status(404);
         }
 
-        // else {
-        // res.status(200);
-        // }
-
-        // console.log('---loadable', path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'));
-        // const content = ReactDOMServer.renderToString(JSX);
-        // console.log('---CONTENT', content, '----- JSX', JSX);
         const emotionStyles = extractCriticalToChunks(content);
         let emotionIds: string[] = [];
-        // const emotionStyles = constructStyleTagsFromChunks(chunks);
         const emotionStyleTags = emotionStyles.styles.map((style) => {
             emotionIds.push(...style.ids) 
             return (
@@ -108,33 +87,19 @@ async function renderServerSide(req, res) {
             if (__DEV__ || !assetMap) {
                 assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'assets.json')).toString());
             }
-            const apolloState = Object.assign({}, client.extract());
-            const reduxState = Object.assign({}, store.getState());
-            const env = {
-                ...publicEnv,
-            };
-            const page = (
-                <Html
-                    content={content}
-                    headElements={[
-                        // ...extractor.getScriptElements(),
-                        // ...extractor.getLinkElements(),
-                        // ...extractor.getStyleElements(),
-                    ]}
-                    state={apolloState}
-                    assetMap={assetMap}
-                    helmet={helmetContext.helmet}
-                    extractor={extractor}
-                    styleSheet={emotionStyleTags}
-                    emotionIds={emotionIds}
-                    env={env}
-                    reduxState={reduxState}
-                    scriptsInserts={clientModules.scriptsInserts}
-                    stylesInserts={clientModules.stylesInserts}
-                />
-            );
+            const apolloState = {...client.extract()};
+            const reduxState = {...store.getState()};
+            const env = {...publicEnv};
+
+            data = data.replace(/{\/\*__ENV__\*\/}/, JSON.stringify(env));
+            data = data.replace(/{\/\*__APOLLO_STATE__\*\/}/, JSON.stringify(apolloState));
+            data = data.replace(/{\/\*__PRELOADED_STATE__\*\/}/, JSON.stringify(reduxState));
+            data = data.replace(/{\/\*__EMOTION_IDS__\*\/}/, JSON.stringify(emotionIds));
+            data = data.replace(/<!--%__CONTENT__%-->/, content);
+            console.log('---HTML CONTENT', data.length);
+            
             res.status(200);
-            res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
+            res.send(data);
             res.end();
         }
     } catch (err) {
@@ -144,13 +109,22 @@ async function renderServerSide(req, res) {
 }
 export const websiteMiddleware = async (req, res, next) => {
     try {
-        if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
-        } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
-            logger.debug('FRONEND_BUILD_DIR with index.html');
-            res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
+        if (/[^\\/]+\.[^\\/]+$/.test(req.path)) {
+            const filePath = path.resolve(__FRONTEND_BUILD_DIR__, req.path);
+            res.sendFile(filePath, (err) => {
+                if (err) {
+                    res.status(err.status).end();
+                }
+            });
         } else {
-            next();
+            const filePath = path.resolve(__FRONTEND_BUILD_DIR__, 'index.html');
+            fs.readFile(filePath, 'utf8', async (err, data: string) => {
+                if (err) {
+                    res.send(err).end();
+                } else {
+                    await renderServerSide(req, res, data);
+                }
+            });
         }
     } catch (e) {
         logger.error('RENDERING ERROR:', e);

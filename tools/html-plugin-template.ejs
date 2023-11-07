@@ -4,25 +4,25 @@
 <head>
     <base href="/">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        window.__ENV__ = {/*__ENV__*/}
+    </script>
+    <script>
+        window.__PRELOADED_STATE__ = {/*__PRELOADED_STATE__*/}
+    </script>
+    <script>
+        window.__APOLLO_STATE__ = {/*__APOLLO_STATE__*/}
+    </script>
+    <script>
+        window.__EMOTION_IDS__ = {/*__EMOTION_IDS__*/}
+    </script>
 </head>
-
 <body>
-    <div class="demo">
-        <div id="root">
-            Try building the demo:
-            <pre>
-        </pre> ...and refreshing this page!
-        </div>
-    </div>
-    <footer class="dark">
-        <section class="container copyright">
-            CDMBase LLC
-        </section>
-    </footer>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"><!--%__CONTENT__%--></div>
 </body>
-
 </html>
