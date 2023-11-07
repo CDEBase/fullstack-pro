@@ -31,11 +31,13 @@ async function renderServerSide(req, res, data) {
         const history = createMemoryHistory({ initialEntries: [req.url] });
         const { store } = createReduxStore(history);
 
-        // const extractor = new ChunkExtractor({
-        //     statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
-        //     entrypoints: ['index'],
-        //     publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
-        // });
+        const extractor = new ChunkExtractor({
+            statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
+            entrypoints: ['index'],
+            publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
+        });
+
+        console.log('extractor----', extractor);
         
         const helmetContext = {} as FilledContext;
         const Root = (
