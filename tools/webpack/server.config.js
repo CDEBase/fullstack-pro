@@ -9,7 +9,7 @@ const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    `(${modulenameExtra}@sample-stack*|antd/es/style/default.less|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
 );
 
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
