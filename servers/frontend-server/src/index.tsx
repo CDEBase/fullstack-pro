@@ -18,7 +18,7 @@ import Main from './app/Main';
 // if (__SSR__) {
     loadableReady(() => {
         const rootEl = document.getElementById('root');
-        const roo = hydrateRoot(rootEl, <Main/> );
+        hydrateRoot(rootEl, <React.StrictMode> <Main/> </React.StrictMode>, );
     });
 // } else {
     // const rootEl = document.getElementById('root');
