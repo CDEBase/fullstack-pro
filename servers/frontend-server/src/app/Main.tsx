@@ -7,10 +7,10 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
-import { CacheProvider } from '@emotion/react';
-import { hydrate } from '@emotion/css'
+// import { CacheProvider } from '@emotion/react';
+// import { hydrate } from '@emotion/css'
 
-import createEmotionCache from '../common/createEmotionCache';
+// import createEmotionCache from '../common/createEmotionCache';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
@@ -19,8 +19,8 @@ const { apolloClient: client } = createClientContainer();
 
 const history = createBrowserHistory();
 const { store } = createReduxStore(history);
-const cache = createEmotionCache();
-hydrate(window.__EMOTION_IDS__);
+// const cache = createEmotionCache();
+// hydrate(window.__EMOTION_IDS__);
 
 export class Main extends React.Component<{}, {}> {
     public render() {
@@ -30,13 +30,13 @@ export class Main extends React.Component<{}, {}> {
                 <Provider store={store}>
                     <ApolloProvider client={client}>
                         <PersistGate persistor={persistor}>
-                            <CacheProvider value={cache}>
+                            {/* <CacheProvider value={cache}> */}
                                 {modules.getWrappedRoot(
                                     <ConnectedRouter history={history}>
                                         <MainRoute />
                                     </ConnectedRouter>,
                                 )}
-                            </CacheProvider>
+                            {/* </CacheProvider> */}
                         </PersistGate>
                     </ApolloProvider>
                 </Provider>

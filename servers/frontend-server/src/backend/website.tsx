@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
-import { Html } from './ssr/html';
+// import { CacheProvider } from '@emotion/react';
+// import createEmotionServer from '@emotion/server/create-instance';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -10,18 +11,17 @@ import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
-import { CacheProvider } from '@emotion/react';
-import createEmotionCache from '../common/createEmotionCache';
-import createEmotionServer from '@emotion/server/create-instance';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { Html } from './ssr/html';
+import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 
 let assetMap;
-const cache = createEmotionCache();
-const { extractCriticalToChunks, extractCritical } = createEmotionServer(cache);
+// const cache = createEmotionCache();
+// const { extractCriticalToChunks, extractCritical } = createEmotionServer(cache);
 
 async function renderServerSide(req, res) {
     try {
@@ -44,13 +44,13 @@ async function renderServerSide(req, res) {
                 <HelmetProvider context={helmetContext}>
                     <ReduxProvider store={store}>
                         <ApolloProvider client={client}>
-                            <CacheProvider value={cache}>
+                            {/* <CacheProvider value={cache}> */}
                                 {clientModules.getWrappedRoot(
                                     <StaticRouter location={req.url} context={context}>
                                         <MainRoute />
                                     </StaticRouter>,
                                 )}
-                            </CacheProvider>
+                            {/* </CacheProvider> */}
                         </ApolloProvider>
                     </ReduxProvider>
                 </HelmetProvider>
@@ -87,20 +87,20 @@ async function renderServerSide(req, res) {
         // console.log('---loadable', path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'));
         // const content = ReactDOMServer.renderToString(JSX);
         // console.log('---CONTENT', content, '----- JSX', JSX);
-        const emotionStyles = extractCriticalToChunks(content);
+        // const emotionStyles = extractCriticalToChunks(content);
         let emotionIds: string[] = [];
         // const emotionStyles = constructStyleTagsFromChunks(chunks);
-        const emotionStyleTags = emotionStyles.styles.map((style) => {
-            emotionIds.push(...style.ids) 
-            return (
-                <style
-                  data-emotion={`${style.key} ${style.ids.join(" ")}`}
-                  key={style.key}
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{ __html: style.css }}
-                />
-              )
-        });
+        // const emotionStyleTags = emotionStyles.styles.map((style) => {
+        //     emotionIds.push(...style.ids) 
+        //     return (
+        //         <style
+        //           data-emotion={`${style.key} ${style.ids.join(" ")}`}
+        //           key={style.key}
+        //           // eslint-disable-next-line react/no-danger
+        //           dangerouslySetInnerHTML={{ __html: style.css }}
+        //         />
+        //       )
+        // });
         
         if (context.url) {
             res.writeHead(301, { Location: context.url });
@@ -118,15 +118,15 @@ async function renderServerSide(req, res) {
                 <Html
                     content={content}
                     headElements={[
-                        ...extractor.getScriptElements(),
-                        ...extractor.getLinkElements(),
-                        ...extractor.getStyleElements(),
+                        // ...extractor.getScriptElements(),
+                        // ...extractor.getLinkElements(),
+                        // ...extractor.getStyleElements(),
                     ]}
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmetContext.helmet}
                     extractor={extractor}
-                    styleSheet={emotionStyleTags}
+                    // styleSheet={emotionStyleTags}
                     emotionIds={emotionIds}
                     env={env}
                     reduxState={reduxState}

@@ -239,18 +239,18 @@ const config = {
             ),
             new WebpackManifestPlugin({ fileName: 'assets.json' }),
             new LoadablePlugin(),
-        ])
-        .concat(
-            buildConfig.__SSR__
-                ? []
-                : [
-                      new HtmlWebpackPlugin({
-                          template: '../../tools/html-plugin-template.ejs',
-                          inject: true,
-                          cache: false,
-                      }),
-                  ],
-        ),
+        ]),
+        // .concat(
+        //     buildConfig.__SSR__
+        //         ? []
+        //         : [
+        //               new HtmlWebpackPlugin({
+        //                   template: '../../tools/html-plugin-template.ejs',
+        //                   inject: true,
+        //                   cache: false,
+        //               }),
+        //           ],
+        // ),
     optimization: {
         splitChunks: {
             chunks: 'all',
