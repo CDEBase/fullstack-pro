@@ -6,19 +6,60 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
-// load environment config
+import { ApolloProvider } from '@apollo/client';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { persistStore } from 'redux-persist';
+import { createBrowserHistory } from 'history';
+import { HelmetProvider } from 'react-helmet-async';
+// import { CacheProvider } from '@emotion/react';
+// import { hydrate } from '@emotion/css'
+
+// import createEmotionCache from '../common/createEmotionCache';
+import { createReduxStore } from './config/redux-config';
+import { createClientContainer } from './config/client.service';
+import modules, { MainRoute } from './modules';
 import './config/public-config';
+
+const { apolloClient: client } = createClientContainer();
+
+const history = createBrowserHistory();
+const { store } = createReduxStore(history);
 
 // add any css files
 
-import Main from './app/Main';
+// import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 // if (__SSR__) {
-    loadableReady(() => {
-        const rootEl = document.getElementById('root');
-        hydrateRoot(rootEl, <React.StrictMode> <Main/> </React.StrictMode>, );
+    
+    const rootEl = document.getElementById('root');
+    let persistor = persistStore(store);
+    persistor.subscribe(() => {
+        const { bootstrapped } = persistor.getState();
+
+        if (bootstrapped) {
+            loadableReady(() => {
+                hydrateRoot(rootEl, 
+                    <HelmetProvider>
+                        <Provider store={store}>
+                            <ApolloProvider client={client}>
+                                {/* <PersistGate persistor={persistor}> */}
+                                    {/* <CacheProvider value={cache}> */}
+                                        {modules.getWrappedRoot(
+                                            <ConnectedRouter history={history}>
+                                                <MainRoute />
+                                            </ConnectedRouter>,
+                                        )}
+                                    {/* </CacheProvider> */}
+                                {/* </PersistGate> */}
+                            </ApolloProvider>
+                        </Provider>
+                    </HelmetProvider>
+                );
+            });
+        }
     });
 // } else {
     // const rootEl = document.getElementById('root');
