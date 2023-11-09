@@ -15,10 +15,15 @@ import Main from './app/Main';
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 if (__SSR__) {
-    
     loadableReady(() => {
         const rootEl = document.getElementById('root');
-       hydrateRoot(rootEl, <Main />);
+        let Comp;
+        if (__DEV__) {
+            Comp = <React.StrictMode><Main /></React.StrictMode>;
+        } else {
+            Comp = <Main />;
+        }
+        hydrateRoot(rootEl, Comp);
     });
 } else {
     const rootEl = document.getElementById('root');
@@ -44,7 +49,7 @@ if (__SSR__) {
                 try {
                     console.log('Updating front-end');
                     frontendReloadCount = (frontendReloadCount || 0) + 1;
-    
+
                     renderApp({ key: frontendReloadCount });
                 } catch (err) {
                     // log(err.stack);
