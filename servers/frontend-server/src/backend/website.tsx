@@ -80,19 +80,7 @@ async function renderServerSide(req, res) {
         // else {
         // res.status(200);
         // }
-        const emotionStyles = extractCriticalToChunks(content);
-        let emotionIds: string[] = [];
-        const emotionStyleTags = emotionStyles.styles.map((style) => {
-            emotionIds.push(...style.ids) 
-            return (
-                <style
-                  data-emotion={`${style.key} ${style.ids.join(" ")}`}
-                  key={style.key}
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{ __html: style.css }}
-                />
-              )
-        });
+
         
         if (context.url) {
             res.writeHead(301, { Location: context.url });
@@ -106,6 +94,20 @@ async function renderServerSide(req, res) {
             const env = {
                 ...publicEnv,
             };
+
+            const emotionStyles = extractCriticalToChunks(content);
+            let emotionIds: string[] = [];
+            const emotionStyleTags = emotionStyles.styles.map((style) => {
+                emotionIds.push(...style.ids) 
+                return (
+                    <style
+                      data-emotion={`${style.key} ${style.ids.join(" ")}`}
+                      key={style.key}
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{ __html: style.css }}
+                    />
+                  )
+            });
             const page = (
                 <Html
                     content={content}
