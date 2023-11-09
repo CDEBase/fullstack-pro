@@ -18,7 +18,7 @@ const Html = ({
     state,
     reduxState,
     emotionIds,
-    headElements,
+    // headElements,
     env,
     assetMap,
     styleSheet,
@@ -31,7 +31,7 @@ const Html = ({
     state: any;
     reduxState: any;
     emotionIds: string[];
-    headElements: React.ReactElement<any>[];
+    // headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
     styleSheet?: any;
@@ -43,7 +43,6 @@ const Html = ({
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
-    // console.log('--- html attributes >>>>', helmet.title.toComponent(), helmet.meta.toComponent());
     return (
         <html lang="en" {...htmlAttrs}>
             <head>
@@ -73,7 +72,7 @@ const Html = ({
                         }}
                     />
                 )}
-                {/* {styleSheet} */}
+                {styleSheet}
                 {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;
@@ -82,14 +81,6 @@ const Html = ({
             </head>
             <body {...bodyAttrs}>
                 <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
-                {/* <div className="demo">
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{
-                            __html: content || '',
-                        }}
-                    />
-                </div> */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
