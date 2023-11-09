@@ -1,6 +1,6 @@
 {
     "name": "@sample-stack/counter-module-electron",
-    "version": "0.0.59-alpha.5",
+    "version": "0.0.59-alpha.10",
     "description": "Sample core for higher packages to depend on",
     "license": "ISC",
     "author": "CDMBase LLC",
@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/counter-module-browser": "0.0.59-alpha.5"
+        "@sample-stack/counter-module-browser": "0.0.59-alpha.10"
     },
     "peerDependencies": {
         "@common-stack/client-react": "*",
