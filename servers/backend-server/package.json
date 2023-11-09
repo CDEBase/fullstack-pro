@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-backend-server",
-    "version": "0.0.59-alpha.13",
+    "version": "0.0.59-alpha.14",
     "private": true,
     "description": "Starter kit for apollo server using webpack and typescript",
     "keywords": [
@@ -73,10 +73,10 @@
         "@graphql-tools/stitch": "^8.7.29",
         "@graphql-tools/utils": "^8.0.0",
         "@graphql-tools/wrap": "^8.4.20",
-        "@sample-stack/core": "0.0.59-alpha.13",
-        "@sample-stack/counter-module-server": "0.0.59-alpha.13",
-        "@sample-stack/platform-server": "0.0.59-alpha.13",
-        "@sample-stack/store": "0.0.59-alpha.13",
+        "@sample-stack/core": "0.0.59-alpha.14",
+        "@sample-stack/counter-module-server": "0.0.59-alpha.14",
+        "@sample-stack/platform-server": "0.0.59-alpha.14",
+        "@sample-stack/store": "0.0.59-alpha.14",
         "apollo-datasource": "^3.3.1",
         "apollo-datasource-rest": "^3.3.1",
         "apollo-errors": "^1.9.0",

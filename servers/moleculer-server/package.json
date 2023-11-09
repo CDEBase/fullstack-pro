@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-moleculer-server",
-    "version": "0.0.59-alpha.13",
+    "version": "0.0.59-alpha.14",
     "private": true,
     "description": "My Moleculer microservices project",
     "keywords": [
@@ -40,9 +40,9 @@
         "@common-stack/core": "0.5.1",
         "@common-stack/server-core": "0.5.1",
         "@common-stack/store-mongo": "0.5.3",
-        "@sample-stack/core": "0.0.59-alpha.13",
-        "@sample-stack/counter-module-server": "0.0.59-alpha.13",
-        "@sample-stack/platform-server": "0.0.59-alpha.13",
+        "@sample-stack/core": "0.0.59-alpha.14",
+        "@sample-stack/counter-module-server": "0.0.59-alpha.14",
+        "@sample-stack/platform-server": "0.0.59-alpha.14",
         "apollo-datasource": "^3.3.1",
         "apollo-server-cache-memcached": "^3.3.1",
         "apollo-server-cache-redis": "^3.3.1",

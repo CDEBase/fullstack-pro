@@ -1,6 +1,6 @@
 {
     "name": "admin-layout-browser-extension",
-    "version": "0.0.59-alpha.13",
+    "version": "0.0.59-alpha.14",
     "private": true,
     "description": "react chrome extension template",
     "homepage": "/",
