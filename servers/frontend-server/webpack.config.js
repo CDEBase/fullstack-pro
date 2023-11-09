@@ -199,7 +199,6 @@ const config = {
             zlib: 'browserify-zlib',
         },
         alias: {
-            '@admin-layout/assets': '@pubngo-stack/assets',
             // process: 'process/browser.js',
             stream: 'stream-browserify',
             // zlib: 'browserify-zlib',
