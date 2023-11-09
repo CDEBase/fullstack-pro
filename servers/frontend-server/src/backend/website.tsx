@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
-import { Html } from './ssr/html';
+import { CacheProvider } from '@emotion/react';
+import createEmotionServer from '@emotion/server/create-instance';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -10,10 +11,9 @@ import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
-import { CacheProvider } from '@emotion/react';
-import createEmotionCache from '../common/createEmotionCache';
-import createEmotionServer from '@emotion/server/create-instance';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { Html } from './ssr/html';
+import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
@@ -37,7 +37,6 @@ async function renderServerSide(req, res) {
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
 
-        console.log('--EXTRACTOR', extractor);
         const helmetContext = {} as FilledContext;
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
@@ -70,12 +69,10 @@ async function renderServerSide(req, res) {
             //             }),
             //         );
             // }
-            console.log(e.name);
-            console.log(e.message);
-            console.log(JSON.stringify(e));
+            console.log(e);
         }
         const content = ReactDOMServer.renderToString(Root);
-        console.log('---CONTENT', content);
+        console.log('---CONTENT', content.length);
         if (context.pageNotFound === true) {
             res.status(404);
         }
@@ -83,13 +80,8 @@ async function renderServerSide(req, res) {
         // else {
         // res.status(200);
         // }
-
-        // console.log('---loadable', path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'));
-        // const content = ReactDOMServer.renderToString(JSX);
-        // console.log('---CONTENT', content, '----- JSX', JSX);
         const emotionStyles = extractCriticalToChunks(content);
         let emotionIds: string[] = [];
-        // const emotionStyles = constructStyleTagsFromChunks(chunks);
         const emotionStyleTags = emotionStyles.styles.map((style) => {
             emotionIds.push(...style.ids) 
             return (
@@ -117,11 +109,11 @@ async function renderServerSide(req, res) {
             const page = (
                 <Html
                     content={content}
-                    headElements={[
-                        ...extractor.getScriptElements(),
-                        ...extractor.getLinkElements(),
-                        ...extractor.getStyleElements(),
-                    ]}
+                    // headElements={[
+                    //     ...extractor.getScriptElements(),
+                    //     ...extractor.getLinkElements(),
+                    //     ...extractor.getStyleElements(),
+                    // ]}
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmetContext.helmet}

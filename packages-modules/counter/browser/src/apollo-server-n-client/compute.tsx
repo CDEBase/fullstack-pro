@@ -12,9 +12,9 @@ export const counterPageStore: any[] = [
         icon: 'export',
         key: 'dashboard',
         component: Dashboard,
-        tab: 'Apollo Server & Client',
+        tab: 'Apollo Server',
         position: IMenuPosition.MIDDLE,
-        name: 'Apollo Server & Client',
+        name: 'Apollo Server',
         path: '/apollo-server-n-client',
     },
     {

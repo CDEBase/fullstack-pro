@@ -18,7 +18,7 @@ const Html = ({
     state,
     reduxState,
     emotionIds,
-    headElements,
+    // headElements,
     env,
     assetMap,
     styleSheet,
@@ -31,7 +31,7 @@ const Html = ({
     state: any;
     reduxState: any;
     emotionIds: string[];
-    headElements: React.ReactElement<any>[];
+    // headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
     styleSheet?: any;
@@ -43,7 +43,6 @@ const Html = ({
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
 
-    // console.log('--- html attributes >>>>', helmet.title.toComponent(), helmet.meta.toComponent());
     return (
         <html lang="en" {...htmlAttrs}>
             <head>
@@ -56,7 +55,7 @@ const Html = ({
                 {extractor.getLinkElements()}
                 {extractor.getStyleElements()}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
-                {headElements}
+                {/* {headElements} */}
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                 <link rel="icon" type="image/png" href={`${assetMap['favicon-32x32.png']}`} sizes="32x32" />
@@ -82,14 +81,6 @@ const Html = ({
             </head>
             <body {...bodyAttrs}>
                 <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
-                {/* <div className="demo">
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{
-                            __html: content || '',
-                        }}
-                    />
-                </div> */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {

@@ -3,10 +3,9 @@ import 'reflect-metadata';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
-// load environment config
+
 import './config/public-config';
 
 // add any css files
@@ -17,8 +16,14 @@ import Main from './app/Main';
 // tslint:disable-next-line
 if (__SSR__) {
     loadableReady(() => {
-        const root = document.getElementById('root');
-        ReactDOM.hydrate(<Main />, root);
+        const rootEl = document.getElementById('root');
+        let Comp;
+        if (__DEV__) {
+            Comp = <React.StrictMode><Main /></React.StrictMode>;
+        } else {
+            Comp = <Main />;
+        }
+        hydrateRoot(rootEl, Comp);
     });
 } else {
     const rootEl = document.getElementById('root');
@@ -44,7 +49,7 @@ if (__SSR__) {
                 try {
                     console.log('Updating front-end');
                     frontendReloadCount = (frontendReloadCount || 0) + 1;
-    
+
                     renderApp({ key: frontendReloadCount });
                 } catch (err) {
                     // log(err.stack);
