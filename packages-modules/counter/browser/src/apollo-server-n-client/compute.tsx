@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-import { lazy } from '@loadable/component'
+import loadable from '@loadable/component'
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
-const Dashboard = lazy(() => import('../common/components/Dashboard'));
-const Counter = lazy(() => import('./containers/Counter'));
+const Dashboard = loadable(() => import('../common/components/Dashboard'));
+const Counter = loadable(() => import('./containers/Counter'));
 
 export const counterPageStore: any[] = [
     {
@@ -12,9 +12,9 @@ export const counterPageStore: any[] = [
         icon: 'export',
         key: 'dashboard',
         component: Dashboard,
-        tab: 'Apollo Server & Client',
+        tab: 'Apollo Server',
         position: IMenuPosition.MIDDLE,
-        name: 'Apollo Server & Client',
+        name: 'Apollo Server',
         path: '/apollo-server-n-client',
     },
     {

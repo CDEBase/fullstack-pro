@@ -4,6 +4,7 @@ const path = require('path');
 const waitOn = require('wait-on');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
@@ -16,7 +17,6 @@ const EnvListPlugin = require('@common-stack/env-list-loader');
 const ServerConfig = require('../../tools/webpack/server.config');
 
 const bundleStats = process.env.BUNDLE_STATS || false;
-
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
@@ -27,6 +27,9 @@ const plugins = [
         process: 'process/browser.js',
         Buffer: ['buffer', 'Buffer'],
     }),
+    // new CopyWebpackPlugin({
+    //     patterns: [{ from: './public/.well-known', to: './.well-known' }],
+    // }),
 ];
 if (bundleStats) {
     plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
@@ -85,11 +88,22 @@ const config = {
                 use: { loader: 'url-loader', options: { name: '[fullhash].[ext]', limit: 100000 } },
             },
             {
+                // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
+                test: /config\/(env-config|public-config)\.(j|t)s/,
+                use: {
+                    loader: '@common-stack/env-list-loader',
+                },
+            },
+            {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: { loader: 'url-loader', options: { name: '[fullhash].[ext]', limit: 100000 } },
             },
             {
-                test: /\.(otf|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                test: /\.ttf(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: { loader: 'url-loader', options: { name: '[fullhash].[ext]', limit: 100000 } },
+            },
+            {
+                test: /\.(otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: { loader: 'file-loader', options: { name: '[fullhash].[ext]' } },
             },
             {
@@ -166,9 +180,28 @@ const config = {
             '.json',
         ],
         fallback: {
+            assert: 'assert/',
+            buffer: 'buffer/',
+            constants: 'constants-browserify',
             fs: false,
             path: require.resolve('path-browserify'),
+            http: 'stream-http',
+            https: 'https-browserify',
+            os: 'os-browserify/browser',
             process: 'process/browser.js',
+            stream: 'stream-browserify',
+            _stream_duplex: 'readable-stream/duplex',
+            _stream_passthrough: 'readable-stream/passthrough',
+            _stream_readable: 'readable-stream/readable',
+            _stream_transform: 'readable-stream/transform',
+            _stream_writable: 'readable-stream/writable',
+            string_decoder: 'string_decoder/',
+            zlib: 'browserify-zlib',
+        },
+        alias: {
+            // process: 'process/browser.js',
+            stream: 'stream-browserify',
+            // zlib: 'browserify-zlib',
         },
     },
     watchOptions: { ignored: /dist/ },
@@ -179,7 +212,7 @@ const config = {
         path: path.join(__dirname, `${buildConfig.__FRONTEND_BUILD_DIR__}`),
         publicPath: '/',
     },
-    devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
+    devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'eval-cheap-source-map',
     mode: process.env.NODE_ENV || 'development',
     performance: { hints: false },
     plugins: (process.env.NODE_ENV !== 'production'
@@ -262,7 +295,7 @@ const config = {
     devServer: {
         hot: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        // open: true,
+        open: true,
         historyApiFallback: true,
         port: buildConfig.__WEB_DEV_SERVER_PORT__,
         devMiddleware: {
@@ -273,7 +306,7 @@ const config = {
             ? {
                   proxy: {
                       '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
-                          target: 'http://localhost:3000',
+                          target: 'http://localhost:8080',
                           logLevel: 'info',
                       },
                   },
@@ -282,7 +315,7 @@ const config = {
     },
 };
 
-const ServersConfig = (buildConfig.__SSR__ && buildConfig.__SSR_BACKEND__) ? []: [config];
+const ServersConfig = buildConfig.__SSR__ && buildConfig.__SSR_BACKEND__ ? [] : [config];
 if (buildConfig.__SSR__) {
     ServersConfig.push(
         ServerConfig({

@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
@@ -9,7 +9,7 @@ const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 
 const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
 const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@pubngo-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    `(${modulenameExtra}@sample-stack*|antd/es/style/default.less|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
 );
 
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
@@ -22,31 +22,36 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     name: 'server',
     module: {
         rules: [
+            { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
             {
                 test: /\.(png|ico|jpg|gif|xml)$/,
-                use: { loader: 'url-loader', options: { name: '[hash].[ext]', limit: 100000 } },
+                use: { loader: 'url-loader', options: { name: '[fullhash].[ext]', limit: 100000 } },
             },
             {
-                test: /\.woff(2)?(\?[0-9a-z]+)?$/,
-                use: { loader: 'url-loader', options: { name: '[hash].[ext]', limit: 100000 } },
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: { loader: 'url-loader', options: { name: '[fullhash].[ext]', limit: 100000 } },
             },
             {
-                test: /\.(otf|ttf|eot|svg)(\?[0-9a-z]+)?$/,
-                use: { loader: 'file-loader', options: { name: '[hash].[ext]' } },
+                test: /\.(otf|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: { loader: 'file-loader', options: { name: '[fullhash].[ext]' } },
             },
             {
                 test: /\.css$/,
                 use: [
-                    { loader: 'isomorphic-style-loader' },
-                    { loader: 'css-loader', options: { sourceMap: true } },
+                    process.env.NODE_ENV === 'production'
+                        ? { loader: MiniCSSExtractPlugin.loader }
+                        : { loader: 'style-loader' },
+                    { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
                     { loader: 'postcss-loader', options: { sourceMap: true } },
                 ],
             },
             {
                 test: /\.scss$/,
                 use: [
-                    { loader: 'isomorphic-style-loader' },
-                    { loader: 'css-loader', options: { sourceMap: true } },
+                    process.env.NODE_ENV === 'production'
+                        ? { loader: MiniCSSExtractPlugin.loader }
+                        : { loader: 'style-loader' },
+                    { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
                     { loader: 'postcss-loader', options: { sourceMap: true } },
                     { loader: 'sass-loader', options: { sourceMap: true } },
                 ],
@@ -54,8 +59,10 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
             {
                 test: /\.less$/,
                 use: [
-                    { loader: 'isomorphic-style-loader' },
-                    { loader: 'css-loader', options: { sourceMap: true } },
+                    process.env.NODE_ENV === 'production'
+                        ? { loader: MiniCSSExtractPlugin.loader }
+                        : { loader: 'style-loader' },
+                    { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
                     { loader: 'postcss-loader', options: { sourceMap: true } },
                     { loader: 'less-loader', options: { javascriptEnabled: true, sourceMap: true } },
                 ],

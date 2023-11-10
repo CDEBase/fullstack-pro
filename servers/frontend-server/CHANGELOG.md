@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.59-alpha.17](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.16...v0.0.59-alpha.17) (2023-11-10)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.16](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.15...v0.0.59-alpha.16) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.15](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.14...v0.0.59-alpha.15) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.14](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.13...v0.0.59-alpha.14) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.13](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.12...v0.0.59-alpha.13) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.12](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.11...v0.0.59-alpha.12) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.11](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.10...v0.0.59-alpha.11) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.10](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.9...v0.0.59-alpha.10) (2023-11-09)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.9](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.8...v0.0.59-alpha.9) (2023-11-07)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.8](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.7...v0.0.59-alpha.8) (2023-11-06)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.7](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.6...v0.0.59-alpha.7) (2023-11-06)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.6](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.5...v0.0.59-alpha.6) (2023-11-06)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
+## [0.0.59-alpha.5](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.4...v0.0.59-alpha.5) (2023-11-06)
+
+**Note:** Version bump only for package sample-stack-frontend-server
+
 ## [0.0.59-alpha.4](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.3...v0.0.59-alpha.4) (2023-10-10)
 
 **Note:** Version bump only for package sample-stack-frontend-server
