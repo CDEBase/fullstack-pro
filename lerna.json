@@ -20,5 +20,5 @@
     "useWorkspaces": true,
     "useNx": true,
     "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
-    "version": "0.0.59-alpha.16"
+    "version": "0.0.59-alpha.17"
 }
