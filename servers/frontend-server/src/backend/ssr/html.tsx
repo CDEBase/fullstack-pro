@@ -30,7 +30,7 @@ const Html = ({
     content?: any;
     state: any;
     reduxState: any;
-    emotionIds: string[];
+    emotionIds?: string[];
     // headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
@@ -65,6 +65,7 @@ const Html = ({
                 <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
                 <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
                 <style id="font-stylesheet" />
+                __STYLESHEET__
                 {!!__DEV__ && (
                     <style
                         dangerouslySetInnerHTML={{
@@ -72,7 +73,6 @@ const Html = ({
                         }}
                     />
                 )}
-                {styleSheet}
                 {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;

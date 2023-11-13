@@ -24,7 +24,7 @@ const cache = createEmotionCache();
 export class Main extends React.Component<{}, {}> {
     public render() {
         if (__SSR__) {
-            hydrate(window.__EMOTION_IDS__);
+            // hydrate(window.__EMOTION_IDS__);
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>

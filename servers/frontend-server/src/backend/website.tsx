@@ -12,6 +12,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
@@ -21,7 +22,9 @@ import clientModules, { MainRoute } from '../modules';
 
 let assetMap;
 const cache = createEmotionCache();
-const { extractCriticalToChunks, extractCritical } = createEmotionServer(cache);
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
+
+const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
@@ -44,31 +47,24 @@ async function renderServerSide(req, res) {
                     <ReduxProvider store={store}>
                         <ApolloProvider client={client}>
                             <CacheProvider value={cache}>
-                                {clientModules.getWrappedRoot(
-                                    <StaticRouter location={req.url} context={context}>
-                                        <MainRoute />
-                                    </StaticRouter>,
-                                )}
+                                <StyleProvider cache={antdCache}>
+                                    {clientModules.getWrappedRoot(
+                                        <StaticRouter location={req.url} context={context}>
+                                            <MainRoute />
+                                        </StaticRouter>,
+                                    )}
+                                </StyleProvider>
                             </CacheProvider>
                         </ApolloProvider>
                     </ReduxProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
         );
-        // console.log('---store', store);
+
         try {
             await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
-            // if (e instanceof ApolloError) {
-            //     const notFound = e.graphQLErrors.some((ge) => (ge.extensions as any)?.code === 'NOT_FOUND');
-            //     if (notFound)
-            //         store.dispatch(
-            //             setError({
-            //                 errorType: ErrorEnum.NOT_FOUND,
-            //             }),
-            //         );
-            // }
             console.log(e);
         }
         const content = ReactDOMServer.renderToString(Root);
@@ -77,22 +73,25 @@ async function renderServerSide(req, res) {
             res.status(404);
         }
 
-        // else {
-        // res.status(200);
-        // }
+        let styleSheet = extractStyle(antdCache);
         const emotionStyles = extractCriticalToChunks(content);
+        const styles = constructStyleTagsFromChunks(emotionStyles);
+        styleSheet = styleSheet + styles;
+        
         let emotionIds: string[] = [];
-        const emotionStyleTags = emotionStyles.styles.map((style) => {
-            emotionIds.push(...style.ids) 
-            return (
-                <style
-                  data-emotion={`${style.key} ${style.ids.join(" ")}`}
-                  key={style.key}
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{ __html: style.css }}
-                />
-              )
-        });
+        // const emotionStyleTags = emotionStyles.styles.map((style) => {
+        //     emotionIds.push(...style.ids) 
+        //     return (
+        //         <style
+        //           data-emotion={`${style.key} ${style.ids.join(" ")}`}
+        //           key={style.key}
+        //           data-s=""
+        //           // eslint-disable-next-line react/no-danger
+        //           dangerouslySetInnerHTML={{ __html: style.css }}
+        //         />
+        //       )
+        // });
+        // console.log('emotionIds---', emotionIds);
         
         if (context.url) {
             res.writeHead(301, { Location: context.url });
@@ -118,16 +117,16 @@ async function renderServerSide(req, res) {
                     assetMap={assetMap}
                     helmet={helmetContext.helmet}
                     extractor={extractor}
-                    styleSheet={emotionStyleTags}
-                    emotionIds={emotionIds}
                     env={env}
                     reduxState={reduxState}
                     scriptsInserts={clientModules.scriptsInserts}
                     stylesInserts={clientModules.stylesInserts}
                 />
             );
+            let pageContent = ReactDOMServer.renderToStaticMarkup(page);
+            pageContent = pageContent.replace(/__STYLESHEET__/, styleSheet);
             res.status(200);
-            res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
+            res.send(`<!doctype html>\n${pageContent}`);
             res.end();
         }
     } catch (err) {

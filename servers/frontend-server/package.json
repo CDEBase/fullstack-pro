@@ -42,6 +42,7 @@
         "watch:test": "cross-env ENV_FILE=../../config/test/test.env yarn webpack-dev-server"
     },
     "dependencies": {
+        "@ant-design/static-style-extract": "^1.0.2",
         "@apollo/client": "~3.7.1",
         "@apollo/react-components": "^4.0.0",
         "@apollo/react-hoc": "^4.0.0",
