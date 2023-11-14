@@ -8,6 +8,9 @@ const config = {
     __GRAPHQL_URL__: process.env.GRAPHQL_URL || '/graphql',
     __API_URL__: process.env.API_URL || '/graphql',
     __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || './dist/web',
+    __CHAKRA__: process.env.CHAKRA === 'true' || false,
+    __ANTUI__: process.env.ANTUI === 'true' || false,
 };
 
+console.log('---CONFIG', config);
 module.exports = config;
