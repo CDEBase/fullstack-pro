@@ -74,7 +74,7 @@ if ((module as any).hot) {
             logger.error(error.stack);
         }
     });
-    (module as any).hot.accept(['./website'], () => {
+    (module as any).hot.accept(['./website-antui', './website-chakra-antui', './website-chakra'], () => {
         logger.debug('...reloading middleware');
     });
 
