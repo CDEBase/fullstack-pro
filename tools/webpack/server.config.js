@@ -116,6 +116,10 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
           ]
         : []
     ).concat([
+        new MiniCSSExtractPlugin({
+            chunkFilename: '[name].[id].[chunkhash].css',
+            filename: `[name].[chunkhash].css`,
+        }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
         new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: true }),
         new webpack.DefinePlugin(
