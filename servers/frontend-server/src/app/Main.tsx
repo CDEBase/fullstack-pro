@@ -1,7 +1,7 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -23,36 +23,34 @@ export class Main extends React.Component<{}, {}> {
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>
-                    <Provider store={store}>
-                        <ApolloProvider client={client}>
-                            <PersistGate loading={null} persistor={persistor}>
-                                {() => (
-                                    {modules.getWrappedRoot(
-                                        <ConnectedRouter history={history}>
-                                            <MainRoute />
-                                        </ConnectedRouter>,
-                                    )}
+                    <ReduxProvider store={store}>
+                        <PersistGate loading={null} persistor={persistor}>
+                            {() => (
+                                <ConnectedRouter history={history}>
+                                    <ApolloProvider client={client}>
+                                        <MainRoute />
+                                    </ApolloProvider>
+                                </ConnectedRouter>,
                                 )}
-                            </PersistGate>
-                        </ApolloProvider>
-                    </Provider>
+                        </PersistGate>
+                    </ReduxProvider>
                 </HelmetProvider>
             );
         } else {
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>
-                    <Provider store={store}>
-                        <ApolloProvider client={client}>
-                            <PersistGate persistor={persistor}>
+                    <ReduxProvider store={store}>
+                        <PersistGate persistor={persistor}>
+                            <ApolloProvider client={client}>
+                                <ConnectedRouter history={history}>
                                     {modules.getWrappedRoot(
-                                        <ConnectedRouter history={history}>
-                                            <MainRoute />
-                                        </ConnectedRouter>,
+                                        <MainRoute />
                                     )}
-                            </PersistGate>
-                        </ApolloProvider>
-                    </Provider>
+                                </ConnectedRouter>,
+                            </ApolloProvider>
+                        </PersistGate>
+                    </ReduxProvider>
                 </HelmetProvider>
             );
         }

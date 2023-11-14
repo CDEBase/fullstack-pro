@@ -44,19 +44,19 @@ async function renderServerSide(req, res) {
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
-                    <ReduxProvider store={store}>
-                        <ApolloProvider client={client}>
-                            <CacheProvider value={cache}>
-                                <StyleProvider cache={antdCache}>
+                    <CacheProvider value={cache}>
+                        <StyleProvider cache={antdCache}>
+                            <ReduxProvider store={store}>
+                                <ApolloProvider client={client}>
                                     {clientModules.getWrappedRoot(
                                         <StaticRouter location={req.url} context={context}>
                                             <MainRoute />
                                         </StaticRouter>,
                                     )}
-                                </StyleProvider>
-                            </CacheProvider>
-                        </ApolloProvider>
-                    </ReduxProvider>
+                                </ApolloProvider>
+                            </ReduxProvider>
+                        </StyleProvider>
+                    </CacheProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
         );
@@ -68,7 +68,6 @@ async function renderServerSide(req, res) {
             console.log(e);
         }
         const content = ReactDOMServer.renderToString(Root);
-        console.log('---CONTENT', content.length);
         if (context.pageNotFound === true) {
             res.status(404);
         }
@@ -76,10 +75,9 @@ async function renderServerSide(req, res) {
         let styleSheet = extractStyle(antdCache);
         const emotionStyles = extractCriticalToChunks(content);
         const styles = constructStyleTagsFromChunks(emotionStyles);
-        console.log('--_STYLES', styles);
 
         styleSheet = styleSheet + styles;
-        
+
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();

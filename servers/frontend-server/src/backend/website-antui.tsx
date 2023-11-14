@@ -38,17 +38,17 @@ async function renderServerSide(req, res) {
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
-                    <ReduxProvider store={store}>
-                        <ApolloProvider client={client}>
-                            <StyleProvider cache={antdCache}>
+                    <StyleProvider cache={antdCache}>
+                        <ReduxProvider store={store}>
+                            <ApolloProvider client={client}>
                                 {clientModules.getWrappedRoot(
                                     <StaticRouter location={req.url} context={context}>
                                         <MainRoute />
                                     </StaticRouter>,
                                 )}
-                            </StyleProvider>
-                        </ApolloProvider>
-                    </ReduxProvider>
+                            </ApolloProvider>
+                        </ReduxProvider>
+                    </StyleProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
         );
