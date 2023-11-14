@@ -8,7 +8,7 @@ import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
-import { websiteMiddleware } from './website-chakra-antui';
+import { websiteMiddleware } from './middlewares/website';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';

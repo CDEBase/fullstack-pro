@@ -27,7 +27,8 @@ const config = {
         process.env.WEBSITE_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__WEB_DEV_SERVER_PORT__}`,
     __BACKEND_URL__:
         process.env.LOCAL_BACKEND_URL || `${__SERVER_PROTOCOL__}://${__SERVER_HOST__}:${__WEB_SERVER_PORT__}`,
+    __CHAKRA__: false,
+    __ANTUI__: false,
 };
 
-console.log('---CONFIG', config);
 module.exports = config;

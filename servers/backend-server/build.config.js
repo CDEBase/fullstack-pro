@@ -11,4 +11,5 @@ const config = {
     __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || '../frontend-server/dist/web',
 };
 
+console.log('---CONFIG', config);
 module.exports = config;
