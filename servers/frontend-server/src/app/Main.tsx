@@ -26,12 +26,14 @@ export class Main extends React.Component<{}, {}> {
                     <ReduxProvider store={store}>
                         <PersistGate loading={null} persistor={persistor}>
                             {() => (
-                                <ConnectedRouter history={history}>
-                                    <ApolloProvider client={client}>
-                                        <MainRoute />
-                                    </ApolloProvider>
-                                </ConnectedRouter>,
-                                )}
+                                <ApolloProvider client={client}>
+                                    {modules.getWrappedRoot(
+                                        <ConnectedRouter history={history}>
+                                            <MainRoute />
+                                        </ConnectedRouter>,
+                                    )}
+                                </ApolloProvider>
+                            )}
                         </PersistGate>
                     </ReduxProvider>
                 </HelmetProvider>
@@ -44,10 +46,8 @@ export class Main extends React.Component<{}, {}> {
                         <PersistGate persistor={persistor}>
                             <ApolloProvider client={client}>
                                 <ConnectedRouter history={history}>
-                                    {modules.getWrappedRoot(
-                                        <MainRoute />
-                                    )}
-                                </ConnectedRouter>,
+                                    {modules.getWrappedRoot(<MainRoute />)}
+                                </ConnectedRouter>
                             </ApolloProvider>
                         </PersistGate>
                     </ReduxProvider>
