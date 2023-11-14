@@ -8,7 +8,7 @@ import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
-import { websiteMiddleware } from './website';
+import { websiteMiddleware } from './website-chakra-antui';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
 import { config } from '../config';
@@ -74,7 +74,7 @@ if ((module as any).hot) {
             logger.error(error.stack);
         }
     });
-    (module as any).hot.accept(['./website'], () => {
+    (module as any).hot.accept(['./website-antui', './website-chakra-antui', './website-chakra'], () => {
         logger.debug('...reloading middleware');
     });
 
