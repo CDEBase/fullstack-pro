@@ -15,6 +15,8 @@ let __CLIENT_SERVICE__: {
     services: any;
     logger: CdmLogger.ILogger;
 };
+const initialState = __CLIENT__ ? { ...window.__APOLLO_STATE__ } : {};
+
 export const createClientContainer = () => {
     if (__CLIENT_SERVICE__) {
         return __CLIENT_SERVICE__;
@@ -29,7 +31,7 @@ export const createClientContainer = () => {
         scope: __CLIENT__ ? 'browser' : 'server',
         clientState,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        initialState: null,
+        initialState,
         logger,
     });
     // attaching the context to client as a workaround.
