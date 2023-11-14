@@ -8,7 +8,6 @@ import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
 import { CacheProvider } from '@emotion/react';
-import { hydrate } from '@emotion/css';
 
 import createEmotionCache from '../common/createEmotionCache';
 import { createReduxStore } from '../config/redux-config';
@@ -24,7 +23,6 @@ const cache = createEmotionCache();
 export class Main extends React.Component<{}, {}> {
     public render() {
         if (__SSR__) {
-            // hydrate(window.__EMOTION_IDS__);
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>

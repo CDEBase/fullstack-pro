@@ -18,10 +18,8 @@ const Html = ({
     state,
     reduxState,
     emotionIds,
-    // headElements,
     env,
     assetMap,
-    styleSheet,
     helmet,
     extractor,
     stylesInserts = [],
@@ -31,10 +29,8 @@ const Html = ({
     state: any;
     reduxState: any;
     emotionIds?: string[];
-    // headElements: React.ReactElement<any>[];
     assetMap?: string[];
     env: any;
-    styleSheet?: any;
     helmet: HelmetServerState;
     extractor: ChunkExtractor;
     stylesInserts?: any[];

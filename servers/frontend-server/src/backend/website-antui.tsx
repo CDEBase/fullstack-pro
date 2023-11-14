@@ -2,8 +2,6 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
-import { CacheProvider } from '@emotion/react';
-import createEmotionServer from '@emotion/server/create-instance';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -14,16 +12,12 @@ import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
-import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 
 let assetMap;
-const cache = createEmotionCache();
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
-
 const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
@@ -46,15 +40,13 @@ async function renderServerSide(req, res) {
                 <HelmetProvider context={helmetContext}>
                     <ReduxProvider store={store}>
                         <ApolloProvider client={client}>
-                            <CacheProvider value={cache}>
-                                <StyleProvider cache={antdCache}>
-                                    {clientModules.getWrappedRoot(
-                                        <StaticRouter location={req.url} context={context}>
-                                            <MainRoute />
-                                        </StaticRouter>,
-                                    )}
-                                </StyleProvider>
-                            </CacheProvider>
+                            <StyleProvider cache={antdCache}>
+                                {clientModules.getWrappedRoot(
+                                    <StaticRouter location={req.url} context={context}>
+                                        <MainRoute />
+                                    </StaticRouter>,
+                                )}
+                            </StyleProvider>
                         </ApolloProvider>
                     </ReduxProvider>
                 </HelmetProvider>
@@ -74,25 +66,7 @@ async function renderServerSide(req, res) {
         }
 
         let styleSheet = extractStyle(antdCache);
-        const emotionStyles = extractCriticalToChunks(content);
-        const styles = constructStyleTagsFromChunks(emotionStyles);
-        styleSheet = styleSheet + styles;
-        
-        let emotionIds: string[] = [];
-        // const emotionStyleTags = emotionStyles.styles.map((style) => {
-        //     emotionIds.push(...style.ids) 
-        //     return (
-        //         <style
-        //           data-emotion={`${style.key} ${style.ids.join(" ")}`}
-        //           key={style.key}
-        //           data-s=""
-        //           // eslint-disable-next-line react/no-danger
-        //           dangerouslySetInnerHTML={{ __html: style.css }}
-        //         />
-        //       )
-        // });
-        // console.log('emotionIds---', emotionIds);
-        
+
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();
@@ -108,11 +82,6 @@ async function renderServerSide(req, res) {
             const page = (
                 <Html
                     content={content}
-                    // headElements={[
-                    //     ...extractor.getScriptElements(),
-                    //     ...extractor.getLinkElements(),
-                    //     ...extractor.getStyleElements(),
-                    // ]}
                     state={apolloState}
                     assetMap={assetMap}
                     helmet={helmetContext.helmet}
