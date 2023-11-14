@@ -26,40 +26,40 @@ export class Main extends React.Component<{}, {}> {
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>
-                    <Provider store={store}>
-                        <ApolloProvider client={client}>
-                            <PersistGate loading={null} persistor={persistor}>
-                                {() => (
-                                    <CacheProvider value={cache}>
+                    <CacheProvider value={cache}>
+                        <Provider store={store}>
+                            <ApolloProvider client={client}>
+                                <PersistGate loading={null} persistor={persistor}>
+                                    {() => (
                                         {modules.getWrappedRoot(
                                             <ConnectedRouter history={history}>
                                                 <MainRoute />
                                             </ConnectedRouter>,
                                         )}
-                                    </CacheProvider>
-                                )}
-                            </PersistGate>
-                        </ApolloProvider>
-                    </Provider>
+                                        )}
+                                </PersistGate>
+                            </ApolloProvider>
+                        </Provider>
+                    </CacheProvider>
                 </HelmetProvider>
             );
         } else {
             let persistor = persistStore(store);
             return (
                 <HelmetProvider>
-                    <Provider store={store}>
-                        <ApolloProvider client={client}>
-                            <PersistGate persistor={persistor}>
-                                <CacheProvider value={cache}>
+                    <CacheProvider value={cache}>
+                        <Provider store={store}>
+                            <ApolloProvider client={client}>
+                                <PersistGate persistor={persistor}>
                                     {modules.getWrappedRoot(
                                         <ConnectedRouter history={history}>
                                             <MainRoute />
                                         </ConnectedRouter>,
                                     )}
-                                </CacheProvider>
-                            </PersistGate>
-                        </ApolloProvider>
-                    </Provider>
+                                </PersistGate>
+                            </ApolloProvider>
+                        </Provider>
+                    </CacheProvider>
                 </HelmetProvider>
             );
         }
