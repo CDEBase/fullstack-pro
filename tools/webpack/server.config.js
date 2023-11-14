@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
@@ -101,10 +100,10 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: 'main.js',
+        filename: '[name].js',
         path: path.join(currentDir, 'dist'),
         publicPath: '/',
-        sourceMapFilename: '[name].[chunkhash].js.map',
+        sourceMapFilename: '[name].[chunkhash][ext].map',
     },
     devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-source-map',
     mode: process.env.NODE_ENV || 'development',
@@ -126,14 +125,6 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: '../../tools/esm-wrapper.js',
-                    to: 'index.js',
-                },
-            ],
-        }),
     ]),
     target: 'node',
     externals: [
