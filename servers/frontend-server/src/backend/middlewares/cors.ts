@@ -3,9 +3,9 @@ import cors from 'cors';
 import { logger } from '@common-stack/client-core';
 import { config } from '../../config';
 
-const { CLIENT_URL, BACKEND_URL } = config;
+const { CLIENT_URL, BACKEND_URL, LOCAL_GRAPHQL_URL } = config;
 
-const corsWhitelist = [CLIENT_URL, BACKEND_URL];
+const corsWhitelist = [CLIENT_URL, BACKEND_URL, LOCAL_GRAPHQL_URL];
 logger.info('corsWhitelist (%j)', corsWhitelist);
 
 const corsOptions: cors.CorsOptions = {
