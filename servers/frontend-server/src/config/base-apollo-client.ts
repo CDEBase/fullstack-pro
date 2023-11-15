@@ -65,6 +65,8 @@ export const createApolloClient = ({
     const isServer = scope === 'server';
     let link;
 
+    console.log('----DETAILS OF APOLLO ');
+    console.log('isServer:', isServer, 'isBrowser:', isBrowser, 'isDev:', isDev, 'isSSR:', isSSR, 'httpGraphqlUrl:', httpGraphqlURL, 'httpLocalGraphqlURL:', httpLocalGraphqlURL, 'initialState:', initialState)
     const cache = new InMemoryCache({
         dataIdFromObject: getDataIdFromObject,
         possibleTypes: clientState.possibleTypes,
