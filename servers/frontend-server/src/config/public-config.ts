@@ -6,7 +6,7 @@ import { lowerCase } from 'lodash';
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
  */
-const publicEnv = ['NODE_ENV', 'GRAPHQL_URL', 'FACEBOOK_APP_ID', 'GA_ID', 'LOG_LEVEL'];
+const publicEnv = ['NODE_ENV', 'GRAPHQL_URL', 'FACEBOOK_APP_ID', 'LOCAL_GRAPHQL_URL', 'GA_ID', 'LOG_LEVEL'];
 
 const isBrowser = typeof window !== 'undefined';
 
