@@ -168,7 +168,7 @@ export const createApolloClient = ({
             }),
         );
     } else if (isServer) {
-        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
+        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, batchInterval: 2000, batchMax: 100 });
     } else {
         link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
     }
