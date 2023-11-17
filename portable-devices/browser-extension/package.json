@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "^4.2.2",
-        "@apollo/client": "~3.7.1",
+        "@apollo/client": "~3.6.10",
         "@apollo/react-common": "^3.1.4",
         "@cdm-logger/client": "^7.0.12",
         "@common-stack/client-core": "0.2.33",
