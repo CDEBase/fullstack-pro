@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-desktop-device",
-    "version": "0.0.59-alpha.18",
+    "version": "0.0.59-alpha.28",
     "private": true,
     "description": "App is based on Electron, React, Redux and NodeJS as a back end",
     "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
