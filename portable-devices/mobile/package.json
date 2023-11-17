@@ -60,7 +60,7 @@
         "expo-modules-autolinking": "~1.1.0"
     },
     "dependencies": {
-        "@apollo/client": "~3.7.1",
+        "@apollo/client": "~3.6.10",
         "@cdm-logger/client": "^7.0.12",
         "@common-stack/client-core": "^0.5.1",
         "@common-stack/client-react": "^0.5.6",
