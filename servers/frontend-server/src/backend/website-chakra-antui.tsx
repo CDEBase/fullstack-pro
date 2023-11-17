@@ -39,7 +39,6 @@ async function renderServerSide(req, res) {
             entrypoints: ['index'],
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
-
         const helmetContext = {} as FilledContext;
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
@@ -47,13 +46,14 @@ async function renderServerSide(req, res) {
                     <CacheProvider value={cache}>
                         <StyleProvider cache={antdCache}>
                             <ReduxProvider store={store}>
-                                <ApolloProvider client={client}>
-                                    {clientModules.getWrappedRoot(
+                                {clientModules.getWrappedRoot(
+                                    <ApolloProvider client={client}>
                                         <StaticRouter location={req.url} context={context}>
                                             <MainRoute />
-                                        </StaticRouter>,
-                                    )}
-                                </ApolloProvider>
+                                        </StaticRouter>
+                                        ,
+                                    </ApolloProvider>,
+                                )}
                             </ReduxProvider>
                         </StyleProvider>
                     </CacheProvider>
@@ -72,8 +72,6 @@ async function renderServerSide(req, res) {
             res.status(404);
         }
 
-
-
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();
@@ -83,6 +81,8 @@ async function renderServerSide(req, res) {
             }
             // data
             const apolloState = Object.assign({}, client.extract());
+
+            console.log('---APOLLO STATE', apolloState);
             const reduxState = Object.assign({}, store.getState());
             const env = {
                 ...publicEnv,

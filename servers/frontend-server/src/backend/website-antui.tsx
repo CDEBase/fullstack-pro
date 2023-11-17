@@ -40,13 +40,14 @@ async function renderServerSide(req, res) {
                 <HelmetProvider context={helmetContext}>
                     <StyleProvider cache={antdCache}>
                         <ReduxProvider store={store}>
-                            <ApolloProvider client={client}>
-                                {clientModules.getWrappedRoot(
+                            {clientModules.getWrappedRoot(
+                                <ApolloProvider client={client}>
                                     <StaticRouter location={req.url} context={context}>
                                         <MainRoute />
-                                    </StaticRouter>,
-                                )}
-                            </ApolloProvider>
+                                    </StaticRouter>
+                                    ,
+                                </ApolloProvider>,
+                            )}
                         </ReduxProvider>
                     </StyleProvider>
                 </HelmetProvider>
@@ -65,7 +66,6 @@ async function renderServerSide(req, res) {
             res.status(404);
         }
 
-        
         if (context.url) {
             res.writeHead(301, { Location: context.url });
             res.end();
