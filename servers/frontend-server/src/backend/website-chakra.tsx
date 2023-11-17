@@ -43,13 +43,14 @@ async function renderServerSide(req, res) {
                 <HelmetProvider context={helmetContext}>
                     <CacheProvider value={cache}>
                         <ReduxProvider store={store}>
-                            <ApolloProvider client={client}>
-                                {clientModules.getWrappedRoot(
+                            {clientModules.getWrappedRoot(
+                                <ApolloProvider client={client}>
                                     <StaticRouter location={req.url} context={context}>
                                         <MainRoute />
-                                    </StaticRouter>,
-                                )}
-                            </ApolloProvider>
+                                    </StaticRouter>
+                                    ,
+                                </ApolloProvider>,
+                            )}
                         </ReduxProvider>
                     </CacheProvider>
                 </HelmetProvider>

@@ -134,7 +134,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apollo/client@latest", "@apollo/client@~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0 || ~3.7.0", "@apollo/client@~3.7.1":
+"@apollo/client@latest", "@apollo/client@~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0 || ~3.7.0", "@apollo/client@~3.7.1", "@apollo/client@~3.8.1":
   version "3.7.17"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.17.tgz#1d2538729fd8ef138aa301a7cf62704474e57b72"
   integrity sha512-0EErSHEtKPNl5wgWikHJbKFAzJ/k11O0WO2QyqZSHpdxdAnw7UWHY4YiLbHCFG7lhrD+NTQ3Z/H9Jn4rcikoJA==
@@ -6372,49 +6372,6 @@
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.5.1.tgz#5f1b518ec5fa54437c0b7c4a821546c64fed6922"
   integrity sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==
-
-"@sample-stack/assets@link:packages/assets":
-  version "0.0.1"
-
-"@sample-stack/core@link:packages/sample-core":
-  version "0.0.1"
-
-"@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
-    antd "~5.1.7"
-
-"@sample-stack/counter-module-electron@link:packages-modules/counter/electron":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/counter-module-browser" "link:packages-modules/counter/browser"
-
-"@sample-stack/counter-module-mobile@link:packages-modules/counter/mobile":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
-    antd "~5.1.7"
-
-"@sample-stack/counter-module-server@link:packages-modules/counter/server":
-  version "0.0.1"
-
-"@sample-stack/platform-browser@link:packages/sample-platform/browser":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/platform-server@link:packages/sample-platform/server":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-
-"@sample-stack/store@link:packages/sample-store":
-  version "0.0.1"
-  dependencies:
-    "@sample-stack/core" "link:packages/sample-core"
-    knex "^2.3.0"
-    sequelize "^5.21.3"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
