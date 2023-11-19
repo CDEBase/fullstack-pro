@@ -1,5 +1,5 @@
 # The official nodejs docker image
-FROM node:18.18-alpine
+FROM node:18.18-bullseye-slim
 ENV PYTHON /usr/bin/python
 
 # Copy package.json only to temp folder, install its dependencies,
@@ -10,12 +10,14 @@ COPY .npmrc /tmp/.npmrc
 ADD package.json /tmp/package.json
 RUN set -ex \
 	&& cd /tmp \
+	&& npm install -g node-gyp \
 	&& yarn config set network-timeout 300000 \
 	&& yarn install \
 	&& rm -f /tmp/.npmrc \
 	&& mkdir -p /home/app \
 	&& cp -a /tmp/node_modules /home/app/ \
 	&& rm -Rf /tmp/*
+
 
 WORKDIR /home/app
 
