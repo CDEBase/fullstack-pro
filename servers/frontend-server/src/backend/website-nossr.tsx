@@ -59,19 +59,15 @@ async function renderServerSide(req, res) {
             const page = (
                 <Html
                     content={content}
-                    headElements={[
-                        ...extractor.getScriptElements(),
-                        ...extractor.getLinkElements(),
-                        ...extractor.getStyleElements(),
-                    ]}
                     state={{}}
                     assetMap={assetMap}
                     helmet={helmet}
+                    extractor={extractor}
                     styleSheet={appStyles}
                     env={env}
                     reduxState={{}}
                     scriptsInserts={[]}
-                     stylesInserts={[]}
+                    stylesInserts={[]}
                 />
             );
             res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
