@@ -1,6 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { Feature } from '@common-stack/server-core';
-import CounterModule from '@sample-stack/counter-module-server';
+// import CounterModule from '@sample-stack/counter-module-server';
 import { TaggedType } from '@common-stack/core';
 import { config } from '../config';
 
@@ -25,4 +25,4 @@ const DefaultFeature = new Feature({
 
 export const ExternalModules = new Feature<any>({});
 
-export default new Feature(DefaultFeature, ExternalModules, CounterModule);
+export default new Feature(DefaultFeature, ExternalModules);

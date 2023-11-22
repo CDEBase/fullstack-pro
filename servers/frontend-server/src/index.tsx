@@ -10,7 +10,7 @@ import './config/public-config';
 
 // add any css files
 
-import Main from './app/MainChakra';
+import Main from './app/MainReactRouter';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
@@ -30,6 +30,7 @@ if (__SSR__) {
     let frontendReloadCount = 0;
     const renderApp = ({ key }: { key: number }) => createRoot(rootEl!).render(<Main key={key} />);
     renderApp({ key: frontendReloadCount });
+    
     if (__DEV__) {
         if ((module as any).hot) {
             (module as any).hot.accept();
@@ -45,7 +46,7 @@ if (__SSR__) {
                 }
             });
             //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
-            (module as any).hot.accept('./app/Main', () => {
+            (module as any).hot.accept('./app/MainReactRouter', () => {
                 try {
                     console.log('Updating front-end');
                     frontendReloadCount = (frontendReloadCount || 0) + 1;
@@ -57,4 +58,5 @@ if (__SSR__) {
             });
         }
     }
+    
 }

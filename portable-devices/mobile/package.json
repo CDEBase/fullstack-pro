@@ -83,7 +83,6 @@
         "apollo-link-logger": "^2.0.0",
         "apollo-server-errors": "^3.3.1",
         "big-integer": "^1.6.51",
-        "connected-react-router": "^6.9.1",
         "expo": "~48.0.20",
         "expo-asset": "~8.9.1",
         "expo-build-properties": "~0.6.0",

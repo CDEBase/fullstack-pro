@@ -74,7 +74,6 @@
         "@graphql-tools/utils": "^8.0.0",
         "@graphql-tools/wrap": "^8.4.20",
         "@sample-stack/core": "link:../../packages/sample-core",
-        "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
         "@sample-stack/platform-server": "link:../../packages/sample-platform/server",
         "@sample-stack/store": "link:../../packages/sample-store",
         "apollo-datasource": "^3.3.1",

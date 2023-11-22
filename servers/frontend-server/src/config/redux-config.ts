@@ -6,10 +6,11 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
+import { createReduxHistoryContext } from "redux-first-history";
+import { createBrowserHistory } from 'history';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { createClientContainer } from './client.service';
@@ -34,20 +35,20 @@ export const persistConfig = {
     transforms: modules.reduxPersistStateTransformers,
 };
 
-export const getStoreReducer = (history: any, reducers: any) =>
-    combineReducers({
-        router: connectRouter(history),
-        ...reducers,
-    });
-
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (history) => {
-    // only in server side, url will be passed.
-    // middleware
-    const router = connectRouter(history);
+export const createReduxStore = () => {
+    const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
+        history: createBrowserHistory(),
+        //other options if needed 
+    });
+    
+    const reducers = {
+        router: routerReducer,
+        ...modules.reducers,
+    };
 
     let store;
     if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
@@ -58,7 +59,7 @@ export const createReduxStore = (history) => {
         store.replaceReducer(
             persistReducer(
                 persistConfig,
-                getStoreReducer((module as any).hot.data.history || history, modules.reducers),
+                combineReducers(reducers),
             ),
         );
         // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
@@ -77,12 +78,14 @@ export const createReduxStore = (history) => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [thunkMiddleware, routerMiddleware(history)],
+            middleware: [thunkMiddleware],
             epicMiddleware,
             rootEpic: rootEpic as any,
-            reducers: { router, ...modules.reducers },
+            reducers,
         });
     }
+    const history = createReduxHistory(store);
+
     if ((module as any).hot) {
         (module as any).hot.dispose((data) => {
             // console.log("Saving Redux store:", JSON.stringify(store.getState()));
@@ -100,5 +103,5 @@ export const createReduxStore = (history) => {
         });
     }
     container.bind('ReduxStore').toConstantValue(store);
-    return { store };
+    return { store, history };
 };
