@@ -22,7 +22,7 @@ async function renderServerSide(req, res) {
         const App = () => (
                 <CacheProvider value={cache}>
                     <StaticRouter location={req.url} context={context}>
-                        <div>test</div>
+                        <div>Loading...</div>
                     </StaticRouter>
                 </CacheProvider>
         );
@@ -70,7 +70,10 @@ async function renderServerSide(req, res) {
                     stylesInserts={[]}
                 />
             );
-            res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(page)}`);
+            let pageContent = ReactDOMServer.renderToStaticMarkup(page);
+            pageContent = pageContent.replace(/__STYLESHEET__/, '');
+            res.status(200);
+            res.send(`<!doctype html>\n${pageContent}`);
             res.end();
         }
     } catch (err) {
