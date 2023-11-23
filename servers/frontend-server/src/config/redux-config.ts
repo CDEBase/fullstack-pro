@@ -40,11 +40,11 @@ export const persistConfig = {
  * `combineReducers`
  */
 export const createReduxStore = () => {
-    const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
+    const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
         history: createBrowserHistory(),
         //other options if needed 
     });
-    
+
     const reducers = {
         router: routerReducer,
         ...modules.reducers,
@@ -78,12 +78,13 @@ export const createReduxStore = () => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [thunkMiddleware],
+            middleware: [thunkMiddleware, routerMiddleware],
             epicMiddleware,
             rootEpic: rootEpic as any,
             reducers,
         });
     }
+
     const history = createReduxHistory(store);
 
     if ((module as any).hot) {

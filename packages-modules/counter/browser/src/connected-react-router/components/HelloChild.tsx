@@ -31,9 +31,9 @@ const HelloChildComponent = ({ pathname, search, hash }: HelloChildProps) => (
 );
 
 const mapStateToProps = (state: State) => ({
-    pathname: state.router.location.pathname,
-    search: state.router.location.search,
-    hash: state.router.location.hash,
+    pathname: state.router?.location.pathname,
+    search: state.router?.location.search,
+    hash: state.router?.location.hash,
 });
 
 export const HelloChild = connect(mapStateToProps)(HelloChildComponent);
