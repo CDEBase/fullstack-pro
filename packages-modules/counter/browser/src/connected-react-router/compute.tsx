@@ -7,13 +7,11 @@ import loadable from '@loadable/component'
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 
-import Dashboard from '../common/components/Dashboard';
-import Counter from './components/Counter';
-import Hello from './components/Hello';
 
-// const Dashboard = loadable(() => import('../common/components/Dashboard'));
-// const Counter = loadable(() => import('./components/Counter'));
-// const Hello = loadable(() => import('./components/Hello'));
+
+const Dashboard = loadable(() => import('../common/components/Dashboard'));
+const Counter = loadable(() => import('./components/Counter'));
+const Hello = loadable(() => import('./components/Hello'));
 
 export const counterPageStore: IRoute[] = [
     {
