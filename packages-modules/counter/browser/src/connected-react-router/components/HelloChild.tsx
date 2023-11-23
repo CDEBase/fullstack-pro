@@ -14,9 +14,10 @@ interface HelloChildProps {
 const HelloChildComponent = ({ pathname, search, hash }: HelloChildProps) => (
     <div>
         Hello-Child 23423
-    <ul>
-            <li><Link to={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}?color=Blue&size=40`}>with query string</Link></li>
-            <li><Link to={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}#lovelove`}>with hash</Link></li>
+        <ul>
+            {/* <Link>has problem to load. we may not able to use react-router components outside of forntend-server</Link> */}
+            <li><a href={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}?color=Blue&size=40`}>with query string</a></li>
+            <li><a href={`${CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO}#lovelove`}>with hash</a></li>
         </ul>
         <div>
             pathname: {pathname}

@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "~5.1.7"
+    "antd": "~5.1.7",
+    "react-router": "^6.4.0",
+    "react-router-dom": "^6.4.0"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
