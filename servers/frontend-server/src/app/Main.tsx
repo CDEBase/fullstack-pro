@@ -16,11 +16,11 @@ const { apolloClient: client } = createClientContainer();
 
 const history = createBrowserHistory();
 const { store } = createReduxStore(history);
+let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {
     public render() {
         if (__SSR__) {
-            let persistor = persistStore(store);
             return (
                 <HelmetProvider>
                     <ReduxProvider store={store}>
@@ -39,7 +39,6 @@ export class Main extends React.Component<{}, {}> {
                 </HelmetProvider>
             );
         } else {
-            let persistor = persistStore(store);
             return (
                 <HelmetProvider>
                     <ReduxProvider store={store}>
