@@ -31,12 +31,12 @@ function main() {
 
     // Paths to update scripts
     const updateLernaScript = path.join(__dirname, 'updateLernaVersion.js');
-    const updateConfigScript = path.join(__dirname, 'updateConfiguration.js');
+ //   const updateConfigScript = path.join(__dirname, 'updateConfiguration.js');
     const updateJenkinsfileScript = path.join(__dirname, 'updateJenkinsfile.js');
 
     // Run update scripts with predefined paths
     runScript(updateLernaScript, [LERNA_JSON_PATH, version]);
-    runScript(updateConfigScript, [CONFIG_FILE_PATH, version]);
+//    runScript(updateConfigScript, [CONFIG_FILE_PATH, version]);
     runScript(updateJenkinsfileScript, [JENKINSFILE_PATH, version]);
 
     // Perform Git operations
