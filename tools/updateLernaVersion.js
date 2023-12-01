@@ -17,11 +17,14 @@ function updateLernaJson(filePath, versionArg) {
         }
 
         // Update the version field
-        const majorVersion = versionArg.substring(1).split('.')[0];
-        lernaConfig.version = `${majorVersion}.0.0`;
+        // Extract major and minor version, assuming format vMajor.Minor (e.g., v2.1)
+        const versionComponents = versionArg.substring(1).split('.');
+        const majorVersion = versionComponents[0];
+        const minorVersion = versionComponents.length > 1 ? versionComponents[1] : '0';
+        lernaConfig.version = `${majorVersion}.${minorVersion}.0`;
 
         // Update the allowBranch fields
-        const branchName = `devpublish${majorVersion}`;
+        const branchName = `devpublish${majorVersion}${minorVersion !== '0' ? '.' + minorVersion : ''}`;
         lernaConfig.command.publish.allowBranch.push(branchName);
         lernaConfig.command.version.allowBranch.push(branchName);
 
@@ -40,8 +43,8 @@ function updateLernaJson(filePath, versionArg) {
 const filePath = process.argv[2];
 const versionArg = process.argv[3];
 
-if (!filePath || !versionArg || !versionArg.match(/^v\d+$/)) {
-    console.error('Usage: node updateLernaVersion.js <path-to-lerna.json> v[Major]');
+if (!filePath || !versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
+    console.error('Usage: node updateLernaVersion.js <path-to-lerna.json> v[Major].[Minor]');
     process.exit(1);
 }
 
