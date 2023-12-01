@@ -1,46 +1,39 @@
 const { execSync } = require('child_process');
 const path = require('path');
 
-// Define file paths
-const JENKINSFILE_PATH = path.join(__dirname, '../Jenkinsfile');
-const CONFIG_FILE_PATH = path.join(__dirname, '../values-dev.yaml');
 const LERNA_JSON_PATH = path.join(__dirname, '../lerna.json');
+const JENKINSFILE_PATH = path.join(__dirname, '../Jenkinsfile');
+const CONFIG_FILE_PATH = path.join(__dirname, '../values-dev.yaml'); // Updated path
 
 function runScript(scriptPath, args) {
+    console.log(`Running script: ${scriptPath} with args: ${args}`);
     try {
-        execSync(`node ${scriptPath} ${args.join(' ')}`, { stdio: 'inherit' });
+        const output = execSync(`node ${scriptPath} ${args}`, { stdio: 'pipe' });
+        console.log(output.toString());
     } catch (error) {
-        console.error(`Error running script ${scriptPath}:`, error);
+        console.error(`Error running script ${scriptPath}: ${error}`);
         process.exit(1);
     }
 }
 
-function gitOperations(version) {
-    // Git operations as before
-    // ...
+function main(versionArg) {
+    console.log(`Updating to version: ${versionArg}`);
+
+    // Update lerna.json
+    runScript('./tools/updateLernaVersion.js', `${LERNA_JSON_PATH} ${versionArg}`);
+
+    // Update Jenkinsfile
+    runScript('./tools/updateJenkinsfileVersion.js', `${JENKINSFILE_PATH} ${versionArg}`);
+
+    // Update configuration file
+    runScript('./tools/updateConfiguration.js', `${CONFIG_FILE_PATH} ${versionArg}`);
 }
 
-function main() {
-    const args = process.argv.slice(2);
-    if (args.length !== 1 || !args[0].match(/^v\d+(\.\d+)?$/)) {
-        console.error('Usage: node deployVersionUpdate.js v[Major].[Minor]');
-        process.exit(1);
-    }
+const versionArg = process.argv[2];
 
-    const [version] = args;
-
-    // Paths to update scripts
-    const updateLernaScript = path.join(__dirname, 'updateLernaVersion.js');
- //   const updateConfigScript = path.join(__dirname, 'updateConfiguration.js');
-    const updateJenkinsfileScript = path.join(__dirname, 'updateJenkinsfile.js');
-
-    // Run update scripts with predefined paths
-    runScript(updateLernaScript, [LERNA_JSON_PATH, version]);
-//    runScript(updateConfigScript, [CONFIG_FILE_PATH, version]);
-    runScript(updateJenkinsfileScript, [JENKINSFILE_PATH, version]);
-
-    // Perform Git operations
-    gitOperations(version);
+if (!versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
+    console.error('Usage: node deployVersionUpdate.js v[Major].[Minor]');
+    process.exit(1);
 }
 
-main();
+main(versionArg);

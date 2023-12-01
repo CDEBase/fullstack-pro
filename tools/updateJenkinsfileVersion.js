@@ -1,32 +1,33 @@
 const fs = require('fs');
 
+// Function to update the Jenkinsfile
 function updateJenkinsfile(filePath, versionArg) {
-    // Read the existing Jenkinsfile
-    fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
+    // Read the Jenkinsfile
+    fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
-            console.error(`Error reading file: ${err}`);
+            console.error(`Error reading the Jenkinsfile: ${err}`);
             return;
         }
 
-        // Determine the branch names
-        const majorVersion = versionArg.match(/^v(\d+)(\.\d+)?$/)[1];
-        const minorVersion = versionArg.match(/^v\d+(\.\d+)?$/)[2] || '';
-        const developBranch = `develop${majorVersion}${minorVersion}`;
-        const publishBranch = `devpublish${majorVersion}${minorVersion}`;
+        // Extract the major and minor version (if present)
+        const versionParts = versionArg.match(/^v(\d+)(\.(\d+))?$/);
+        const majorVersion = versionParts[1];
+        const minorVersion = versionParts[3] || '0';
+        const versionSuffix = `${majorVersion}.${minorVersion}`;
 
-        // Update Jenkinsfile content
-        let updatedData = data.replace(/(string\(name: 'VERSION', defaultValue: ')([^']+)/, `$1${versionArg}`);
-        updatedData = updatedData.replace(/(string\(name: 'DEVELOP_BRANCH', defaultValue: ')([^']+)/, `$1${developBranch}`);
-        updatedData = updatedData.replace(/(string\(name: 'REPOSITORY_BRANCH', defaultValue: ')([^']+)/, `$1${developBranch}`);
-        updatedData = updatedData.replace(/(string\(name: 'PUBLISH_BRANCH', defaultValue: ')([^']+)/, `$1${publishBranch}`);
+        // Update the branch names
+        let updatedData = data
+            .replace(/(REPOSITORY_BRANCH = 'develop)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`)
+            .replace(/(DEVELOP_BRANCH = 'develop)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`)
+            .replace(/(PUBLISH_BRANCH = 'devpublish)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`);
 
-        // Write the updated Jenkinsfile
-        fs.writeFile(filePath, updatedData, 'utf8', writeErr => {
+        // Write the updated Jenkinsfile back
+        fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
             if (writeErr) {
-                console.error(`Error writing file: ${writeErr}`);
+                console.error(`Error writing the Jenkinsfile: ${writeErr}`);
                 return;
             }
-            console.log(`Jenkinsfile updated successfully with version ${versionArg}, develop branch ${developBranch}, and publish branch ${publishBranch}`);
+            console.log(`Jenkinsfile updated successfully for version ${versionArg}.`);
         });
     });
 }
