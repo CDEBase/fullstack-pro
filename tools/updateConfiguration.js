@@ -15,8 +15,14 @@ function updateConfiguration(filePath, newVersion) {
                              .replace(/CONNECTION_ID: v\d+(\.\d+)?/g, `CONNECTION_ID: ${newVersion}`);
 
         // Update CLIENT_URL
-        updatedData = updatedData.replace(/CLIENT_URL: "https:\/\/[\w-]+-v\d+(\.\d+)?\.[\w-]+\.\w+\/?"/g, match => {
-            return match.replace(/-v\d+(\.\d+)?/, `-${newVersion}`);
+        updatedData = updatedData.replace(/CLIENT_URL: "https:\/\/[\w-]+-v\d+(\.\d+)?\.[\w-]+(\.\w+)?\/?"/g, match => {
+            const domainParts = match.match(/https:\/\/[\w-]+-v\d+(\.\d+)?(\.[\w-]+)+/g);
+            if (domainParts && domainParts.length > 0) {
+                const domain = domainParts[0];
+                const newDomain = domain.replace(/-v\d+(\.\d+)?/, `-${newVersion}`);
+                return match.replace(domain, newDomain);
+            }
+            return match;
         });
 
         // Write the updated configuration back to the file
