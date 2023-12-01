@@ -2,7 +2,6 @@ const fs = require('fs');
 
 // Function to update the Jenkinsfile
 function updateJenkinsfile(filePath, versionArg) {
-    // Read the Jenkinsfile
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error(`Error reading the Jenkinsfile: ${err}`);
@@ -17,9 +16,12 @@ function updateJenkinsfile(filePath, versionArg) {
 
         // Update the branch names
         let updatedData = data
-            .replace(/(REPOSITORY_BRANCH = 'develop)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`)
-            .replace(/(DEVELOP_BRANCH = 'develop)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`)
-            .replace(/(PUBLISH_BRANCH = 'devpublish)(\d+(\.\d+)?)'/, `$1${versionSuffix}'`);
+            .replace(/(REPOSITORY_BRANCH = 'develop)(\d+(\.\d+)?')/, `REPOSITORY_BRANCH = 'develop${versionSuffix}'`)
+            .replace(/(DEVELOP_BRANCH = 'develop)(\d+(\.\d+)?')/, `DEVELOP_BRANCH = 'develop${versionSuffix}'`)
+            .replace(/(PUBLISH_BRANCH = 'devpublish)(\d+(\.\d+)?')/, `PUBLISH_BRANCH = 'devpublish${versionSuffix}'`);
+
+        // Debugging - Log the updated lines for verification
+        console.log(updatedData.match(/(REPOSITORY_BRANCH|DEVELOP_BRANCH|PUBLISH_BRANCH).*?;/g));
 
         // Write the updated Jenkinsfile back
         fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
