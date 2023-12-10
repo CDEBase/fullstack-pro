@@ -9,7 +9,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { persistReducer } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
-import { createReduxHistoryContext } from "redux-first-history";
+import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
@@ -39,10 +39,10 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = () => {
+export const createReduxStore = (hist?: any) => {
     const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
-        history: createBrowserHistory(),
-        //other options if needed 
+        history: hist ?? createBrowserHistory(),
+        // other options if needed
     });
 
     const reducers = {
@@ -56,12 +56,7 @@ export const createReduxStore = () => {
         store = (module as any).hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
-        store.replaceReducer(
-            persistReducer(
-                persistConfig,
-                combineReducers(reducers),
-            ),
-        );
+        store.replaceReducer(persistReducer(persistConfig, combineReducers(reducers)));
         // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
     } else {
         // If we have preloaded state, save it.
@@ -72,6 +67,7 @@ export const createReduxStore = () => {
         if (__CLIENT__) {
             delete window.__PRELOADED_STATE__;
         }
+
         store = createBaseReduxStore({
             scope: __CLIENT__ ? 'browser' : 'server',
             isDebug: true,

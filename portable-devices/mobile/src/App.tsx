@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { MainRoute } from './modules/modules';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ConnectedRouter } from 'connected-react-router';
 import {
   createReduxStore,
   history,
@@ -29,9 +28,7 @@ export default function App() {
           <ApolloProvider client={client}>
             <PersistGate persistor={persistor}>
               <NativeRouter>
-                <ConnectedRouter history={history}>
                   <MainRoute />
-                </ConnectedRouter>
               </NativeRouter>
             </PersistGate>
           </ApolloProvider>

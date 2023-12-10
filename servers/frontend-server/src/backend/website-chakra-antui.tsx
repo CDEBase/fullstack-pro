@@ -7,7 +7,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
@@ -31,7 +31,7 @@ async function renderServerSide(req, res) {
         const { apolloClient: client } = createClientContainer();
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
-        const history = createMemoryHistory({ initialEntries: [req.url] });
+        const history = createMemoryHistory({ initialEntries: [req.url] }); // match initial route to express path
         const { store } = createReduxStore(history);
 
         const extractor = new ChunkExtractor({

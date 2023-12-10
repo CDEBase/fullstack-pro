@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { HistoryRouter  } from 'redux-first-history/rr6';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
@@ -28,9 +28,9 @@ export class Main extends React.Component<{}, {}> {
                             {() => (
                                 <ApolloProvider client={client}>
                                     {modules.getWrappedRoot(
-                                        <ConnectedRouter history={history}>
+                                        <HistoryRouter history={history}>
                                             <MainRoute />
-                                        </ConnectedRouter>,
+                                        </HistoryRouter>,
                                     )}
                                 </ApolloProvider>
                             )}
@@ -45,9 +45,9 @@ export class Main extends React.Component<{}, {}> {
                     <ReduxProvider store={store}>
                         <PersistGate persistor={persistor}>
                             <ApolloProvider client={client}>
-                                <ConnectedRouter history={history}>
+                                <HistoryRouter history={history}>
                                     {modules.getWrappedRoot(<MainRoute />)}
-                                </ConnectedRouter>
+                                </HistoryRouter>
                             </ApolloProvider>
                         </PersistGate>
                     </ReduxProvider>
