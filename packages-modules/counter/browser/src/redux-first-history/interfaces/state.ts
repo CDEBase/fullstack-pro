@@ -1,4 +1,4 @@
-// import { RouterState } from 'connected-react-router';
+// import { RouterState } from 'redux-first-history';
 
 export interface State {
     connectedReactRouterCounter: number;

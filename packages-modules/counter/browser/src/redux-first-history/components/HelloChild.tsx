@@ -36,5 +36,6 @@ const mapStateToProps = (state: State) => ({
     search: state.router?.location.search,
     hash: state.router?.location.hash,
 });
+console.log('---MAP STATE TO PROPS')
 
 export const HelloChild = connect(mapStateToProps)(HelloChildComponent);
