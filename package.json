@@ -306,6 +306,8 @@
         "raw-loader": "^4.0.2",
         "react-addons-test-utils": "^16.0.0-alpha.3",
         "react-refresh": "^0.14.0",
+        "react-router": "^6.4.0",
+        "react-router-dom": "^6.4.0",
         "react-test-renderer": "^18.2.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
