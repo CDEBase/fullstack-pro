@@ -9,15 +9,8 @@ import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 
-// console.log(features.getRoutes());
-// features.getRoutes() shouyld be updated as following, this code will be replaced after that.
-let routeConfig = sortKeys(features.routeConfig)
-    .map((route) => Object.values(route)[0])
-    .map((route) => ({ ...route, Component: route.component }));
-console.log(routeConfig);
-
 export const MainRoute = (props) => {
-    const routes = useRoutes(routeConfig);
+    const routes = useRoutes(features.getConfiguredRoutes());
 
     return <ConfigProvider theme={{ hashed: false }}>
         <ErrorBoundary>
