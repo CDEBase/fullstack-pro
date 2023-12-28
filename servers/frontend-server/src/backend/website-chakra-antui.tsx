@@ -7,7 +7,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
@@ -48,10 +48,9 @@ async function renderServerSide(req, res) {
                             <ReduxProvider store={store}>
                                 {clientModules.getWrappedRoot(
                                     <ApolloProvider client={client}>
-                                        <StaticRouter location={req.url} context={context}>
+                                        <StaticRouter location={req.url}>
                                             <MainRoute />
                                         </StaticRouter>
-                                        ,
                                     </ApolloProvider>,
                                 )}
                             </ReduxProvider>
