@@ -184,20 +184,20 @@ export const SiderMenu = (props: ISiderMenu.Props) => {
     /**
      * get SubMenu or Item
      */
-    const getSubMenuOrItem = item => {
+    const getSubMenuOrItem = (item, key) => {
         const { styles = {} } = props;
         if (item.children && item.children.some(child => child.name)) {
             const childrenItems = getNavMenuItems(item.children);
             if (childrenItems && childrenItems.length > 0) {
                 return (
-                    <SubMenu title={item.name} key={item.path}>
+                    <SubMenu title={item.name} key={`${item.path}-${key}`}>
                         {childrenItems}
                     </SubMenu>
                 );
             }
             return null;
         } else {
-            return <Menu.Item key={item.path}>{getMenuItemPath(item)}</Menu.Item>;
+            return <Menu.Item key={`${item.path}-${key}`}>{getMenuItemPath(item)}</Menu.Item>;
         }
     }
     /**
@@ -208,9 +208,9 @@ export const SiderMenu = (props: ISiderMenu.Props) => {
             return [];
         }
         return menusData.filter(item => item.name && !item.hideInMenu)
-            .map(item => {
+            .map((item, key) => {
                 // make dom
-                const ItemDom = getSubMenuOrItem(item);
+                const ItemDom = getSubMenuOrItem(item, key);
                 return checkPermissionItem(item.authority, ItemDom);
             })
             .filter(item => item);

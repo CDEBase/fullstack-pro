@@ -11,19 +11,21 @@ export const counterPageStore: any[] = [
         exact: false,
         icon: 'export',
         key: 'dashboard',
-        component: Dashboard,
+        // component: Dashboard,
         tab: 'Apollo Server',
         position: IMenuPosition.MIDDLE,
         name: 'Apollo Server',
         path: '/apollo-server-n-client',
-    },
-    {
-        key: 'counter',
-        name: 'Counter',
-        icon: 'appstore-o',
-        component: Counter,
-        position: IMenuPosition.MIDDLE,
-        path: '/apollo-server-n-client/counter',
+        routes: [
+            {
+                key: 'counter',
+                name: 'Counter',
+                icon: 'appstore-o',
+                component: Counter,
+                position: IMenuPosition.MIDDLE,
+                path: '/apollo-server-n-client/counter',
+            },
+        ],
     },
 ];
 

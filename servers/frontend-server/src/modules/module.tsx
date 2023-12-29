@@ -7,14 +7,10 @@ import '@sample-stack/assets';
 import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
-const routeConfig = {
-    routes: [
-        ...features.getConfiguredRoutes2(),
-        { component: () => <h1 data-testid="test">Fallback</h1> },
-    ],
+const routes = features.getRoutes2({
     withRoutesElement: true,
-}
-console.log(routeConfig);
+})
+// console.log(features.getMenus(), routes);
 export const MainRoute = (props) => {
     return (
         <ConfigProvider theme={{ hashed: false }}>
@@ -29,7 +25,7 @@ export const MainRoute = (props) => {
                     <Layout>
                         <Layout.Content style={{ height: '100%' }}>
                             <section className="flex-grow" style={{ height: '100%' }}>
-                                {renderRoutes2(routeConfig)}
+                                {routes}
                             </section>
                         </Layout.Content>
                     </Layout>

@@ -3,11 +3,8 @@ import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 import loadable  from '@loadable/component'
 
-
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
-
-
 
 const Dashboard = loadable(() => import('../common/components/Dashboard'));
 const Counter = loadable(() => import('./components/Counter'));
@@ -17,29 +14,31 @@ export const counterPageStore: IRoute[] = [
     {
         exact: false,
         icon: 'export',
-        component: Dashboard,
+        // component: Dashboard,
         position: IMenuPosition.MIDDLE,
-        name: 'Connected React Router',
+        name: 'Redux First History',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-    },
-    {
-        exact: true,
-        icon: 'export',
-        name: 'Hello',
-        component: Hello,
-        position: IMenuPosition.MIDDLE,
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
-    },
-    {
-        exact: true,
-        icon: 'export',
-        name: 'Counter',
-        component: Counter,
-        position: IMenuPosition.MIDDLE,
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+        routes: [
+            {
+                exact: true,
+                icon: 'export',
+                name: 'Hello',
+                component: Hello,
+                position: IMenuPosition.MIDDLE,
+                key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
+                path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
+            },
+            {
+                exact: true,
+                icon: 'export',
+                name: 'Counter',
+                component: Counter,
+                position: IMenuPosition.MIDDLE,
+                key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+                path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+            },
+        ],
     },
 ];
 
