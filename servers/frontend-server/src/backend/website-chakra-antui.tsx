@@ -12,6 +12,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { HistoryRouter } from 'redux-first-history/rr6';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
@@ -48,9 +49,9 @@ async function renderServerSide(req, res) {
                             <ReduxProvider store={store}>
                                 {clientModules.getWrappedRoot(
                                     <ApolloProvider client={client}>
-                                        <StaticRouter location={req.url}>
+                                        <HistoryRouter history={history}>
                                             <MainRoute />
-                                        </StaticRouter>
+                                        </HistoryRouter>
                                     </ApolloProvider>,
                                 )}
                             </ReduxProvider>

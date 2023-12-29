@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Layout, ConfigProvider } from 'antd';
 import counterModules from '@sample-stack/counter-module-browser';
-import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
+import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
 import { SiderMenu } from './layout';
 import '@sample-stack/assets';
 import { ErrorBoundary } from '../app/ErrorBoundary';
@@ -9,6 +9,7 @@ import { ErrorBoundary } from '../app/ErrorBoundary';
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 const routes = features.getRoutes2({
     withRoutesElement: true,
+    isServer: __SERVER__,
 })
 // console.log(features.getMenus(), routes);
 export const MainRoute = (props) => {
