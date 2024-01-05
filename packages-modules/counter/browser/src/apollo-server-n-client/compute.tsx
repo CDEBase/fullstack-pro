@@ -16,16 +16,14 @@ export const counterPageStore: any[] = [
         position: IMenuPosition.MIDDLE,
         name: 'Apollo Server',
         path: '/apollo-server-n-client',
-        routes: [
-            {
-                key: 'counter',
-                name: 'Counter',
-                icon: 'appstore-o',
-                component: Counter,
-                position: IMenuPosition.MIDDLE,
-                path: '/apollo-server-n-client/counter',
-            },
-        ],
+    },
+    {
+        key: 'counter',
+        name: 'Counter',
+        icon: 'appstore-o',
+        component: Counter,
+        position: IMenuPosition.MIDDLE,
+        path: '/apollo-server-n-client/counter',
     },
 ];
 
