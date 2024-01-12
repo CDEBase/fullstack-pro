@@ -12,6 +12,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { InversifyProvider } from '@common-stack/client-react';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
@@ -25,7 +26,7 @@ const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionS
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client } = createClientContainer();
+        const { apolloClient: client, container } = createClientContainer();
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
@@ -43,14 +44,16 @@ async function renderServerSide(req, res) {
                 <HelmetProvider context={helmetContext}>
                     <CacheProvider value={cache}>
                         <ReduxProvider store={store}>
-                            {clientModules.getWrappedRoot(
-                                <ApolloProvider client={client}>
-                                    <StaticRouter location={req.url} context={context}>
-                                        <MainRoute />
-                                    </StaticRouter>
-                                    ,
-                                </ApolloProvider>,
-                            )}
+                            <InversifyProvider container={container} modules={clientModules}>
+                                {clientModules.getWrappedRoot(
+                                    <ApolloProvider client={client}>
+                                        <StaticRouter location={req.url} context={context}>
+                                            <MainRoute />
+                                        </StaticRouter>
+                                        ,
+                                    </ApolloProvider>,
+                                )}
+                            </InversifyProvider>
                         </ReduxProvider>
                     </CacheProvider>
                 </HelmetProvider>
@@ -82,6 +85,11 @@ async function renderServerSide(req, res) {
             res.writeHead(301, { Location: context.url });
             res.end();
         } else {
+            if (context.pageNotFound === true) {
+                res.status(404);
+                res.end();
+            }
+
             if (__DEV__ || !assetMap) {
                 assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'assets.json')).toString());
             }
@@ -116,7 +124,7 @@ async function renderServerSide(req, res) {
             res.end();
         }
     } catch (err) {
-        logger.error('SERVER SIDE RENDER failed due to (%j) ', err.message);
+        logger.error(err, 'SERVER SIDE RENDER failed due to (%j) ', err.message);
         logger.debug(err);
     }
 }

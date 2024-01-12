@@ -10,7 +10,7 @@ logger.info('corsWhitelist (%j)', corsWhitelist);
 
 const corsOptions: cors.CorsOptions = {
     origin: (origin, callback) => {
-        if (corsWhitelist.indexOf(origin) !== -1) {
+        if (origin && corsWhitelist.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             // TODO: only throw when in debug mode
@@ -20,7 +20,7 @@ const corsOptions: cors.CorsOptions = {
             callback(null, true);
         }
     },
-    credentials: false,
+    credentials: true,
 };
 
 export const corsMiddleware = cors(corsOptions);

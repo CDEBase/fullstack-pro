@@ -12,20 +12,19 @@ import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
-import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
 
-const { apolloClient, container, services } = createClientContainer();
-
-export const epicMiddleware = createEpicMiddleware({
-    dependencies: {
-        apolloClient,
-        routes: modules.getConfiguredRoutes(),
-        services,
-        container,
-        logger,
-    },
-});
+export const epicMiddlewareFunc = (apolloClient, services, container) =>
+    createEpicMiddleware({
+        dependencies: {
+            apolloClient,
+            routes: modules.getConfiguredRoutes(),
+            services,
+            container,
+            logger,
+        },
+    });
+let __CLIENT_REDUX_STORE__;
 
 export const persistConfig = {
     key: REDUX_PERSIST_KEY,
@@ -44,7 +43,7 @@ export const getStoreReducer = (history: any, reducers: any) =>
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (history) => {
+export const createReduxStore = (history, apolloClient, services, container) => {
     // only in server side, url will be passed.
     // middleware
     const router = connectRouter(history);
@@ -78,7 +77,7 @@ export const createReduxStore = (history) => {
             initialState,
             persistConfig,
             middleware: [thunkMiddleware, routerMiddleware(history)],
-            epicMiddleware,
+            epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers: { router, ...modules.reducers },
         });
@@ -99,6 +98,17 @@ export const createReduxStore = (history) => {
             epic$.next(nextRootEpic);
         });
     }
-    container.bind('ReduxStore').toConstantValue(store);
+    if (container.isBound('ReduxStore')) {
+        container
+            .rebind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
+    } else {
+        container
+            .bind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
+    }
+    __CLIENT_REDUX_STORE__ = store;
     return { store };
 };

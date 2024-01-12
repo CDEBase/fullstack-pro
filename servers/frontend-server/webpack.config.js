@@ -19,11 +19,12 @@ const ServerConfig = require('../../tools/webpack/server.config');
 const bundleStats = process.env.BUNDLE_STATS || false;
 const buildConfig = require('./build.config');
 
-const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
+const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
 const modulenameRegex = new RegExp(`node_modules(?![\\\\/](${modulenameExtra}@sample-stack)).*`);
 
 const plugins = [
     new webpack.ProvidePlugin({
+        // this is required for public.config.js
         process: 'process/browser.js',
         Buffer: ['buffer', 'Buffer'],
     }),
@@ -80,6 +81,11 @@ const config = {
         index: ['raf/polyfill', 'core-js/stable', 'regenerator-runtime/runtime', './src/index.tsx'],
     },
     name: 'web',
+    snapshot: {
+        managedPaths: [
+            /^(.+?[\\/]node_modules[\\/](?!(@adminide-stack[\\/]msal-browser))(@.+?[\\/])?.+?)[\\/]/,
+          ],
+    },
     module: {
         rules: [
             { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
@@ -135,11 +141,20 @@ const config = {
                         : { loader: 'style-loader' },
                     { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
                     { loader: 'postcss-loader', options: { sourceMap: true } },
-                    { loader: 'less-loader', options: { javascriptEnabled: true, sourceMap: true } },
+                    { loader: 'less-loader', options: { lessOptions: { javascriptEnabled: true }, sourceMap: true } },
                 ],
             },
             { test: /\.graphqls/, use: { loader: 'raw-loader' } },
             { test: /\.(graphql|gql)$/, use: [{ loader: 'graphql-tag/loader' }] },
+            {
+                test: /config\/(env-config|public-config)\.(j|t)s/,
+                use: {
+                    loader: '@common-stack/env-list-loader',
+                    options: {
+                        search: /\/\/ENVFROMENVALID/,
+                    },
+                },
+            },
             {
                 test: /\.[jt]sx?$/,
                 exclude: modulenameRegex,
@@ -182,9 +197,9 @@ const config = {
         fallback: {
             assert: 'assert/',
             buffer: 'buffer/',
-            constants: 'constants-browserify',
             fs: false,
             path: require.resolve('path-browserify'),
+            crypto: 'crypto-browserify',
             http: 'stream-http',
             https: 'https-browserify',
             os: 'os-browserify/browser',
@@ -199,9 +214,8 @@ const config = {
             zlib: 'browserify-zlib',
         },
         alias: {
-            // process: 'process/browser.js',
+            // this is required for '@react-pdf/renderer'
             stream: 'stream-browserify',
-            // zlib: 'browserify-zlib',
         },
     },
     watchOptions: { ignored: /dist/ },
@@ -291,7 +305,14 @@ const config = {
         runtimeChunk: true,
         concatenateModules: false,
     },
-    node: { __dirname: true, __filename: true },
+    node: {
+        // provides the global variable named "global"
+        global: true,
+
+        // provide __filename and __dirname global variables
+        __filename: true,
+        __dirname: true,
+    },
     devServer: {
         hot: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
@@ -306,7 +327,7 @@ const config = {
             ? {
                   proxy: {
                       '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
-                          target: 'http://localhost:8080',
+                          target: buildConfig.__WEB_SERVER_PORT__,
                           logLevel: 'info',
                       },
                   },
