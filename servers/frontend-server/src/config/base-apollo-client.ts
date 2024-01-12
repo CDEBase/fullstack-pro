@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client';
+import { ApolloClient, ApolloClientOptions, ApolloLink, gql } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
@@ -70,7 +70,7 @@ export const createApolloClient = ({
         possibleTypes: clientState.possibleTypes,
         typePolicies: clientState.typePolicies,
     });
-
+    logger.debug('created new apollo memory cache');
     const attemptConditions = async (count: number, operation: any, error: Error) => {
         const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => func(count, operation, error));
 
@@ -87,8 +87,15 @@ export const createApolloClient = ({
         attempts: attemptConditions,
     });
 
-    if (_apolloClient && _memoryCache) {
+    if (!isServer && _apolloClient && _memoryCache) {
+        if (initialState && _apolloClient) {
+            // Get existing cache, loading during client side data fetching
+            const existingCache = _apolloClient.extract();
+            _apolloClient.cache.restore(merge(initialState, existingCache));
+            logger.debug('apollo cache is restored');
+        }
         // return quickly if client is already created.
+        logger.debug('return singleton apollo client');
         return {
             apolloClient: _apolloClient,
             cache: _memoryCache,
@@ -99,7 +106,8 @@ export const createApolloClient = ({
         const connectionParams = async () => {
             const param: { [key: string]: any } = {};
             for (const connectionParam of clientState.connectionParams) {
-                merge(param, await connectionParam);
+                const result = await connectionParam as Function
+                merge(param, await result());
             }
             return param;
         };
@@ -163,12 +171,13 @@ export const createApolloClient = ({
             wsLink,
             new HttpLink({
                 uri: httpGraphqlURL,
+                credentials: 'include'
             }),
         );
     } else if (isServer) {
-        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, batchInterval: 2000, batchMax: 100 });
+        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, batchInterval: 2000, batchMax: 100, credentials: 'include' });
     } else {
-        link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any });
+        link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, credentials: 'include' });
     }
 
     const links = [errorLink, retrylink, ...(clientState.preLinks || []), link];
@@ -185,6 +194,7 @@ export const createApolloClient = ({
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
         cache,
+        credentials: 'include',
         connectToDevTools: isBrowser && (isDev || isDebug),
     };
     if (isSSR) {
@@ -198,13 +208,25 @@ export const createApolloClient = ({
         }
     }
     _apolloClient = new ApolloClient<any>(params);
-
+    logger.debug('create new apollo client');
     clientState?.defaults?.forEach((x) => {
-        if (x.type === 'query') {
-            cache.writeQuery(x);
-        } else if (x.type === 'fragment') {
-            cache.writeFragment(x);
+        try {
+            if (x.type === 'query') {
+                cache.writeQuery({
+                    query: x.query,
+                    data: x.data,
+                })
+            } else if (x.type === 'fragment') {
+                cache.writeFragment({
+                    id: x.id,
+                    fragment: x.fragment,
+                    data: x.data,
+                });
+            }
+        } catch (err) {
+            console.error('error writing cache', err);
         }
+
     });
 
     return { apolloClient: _apolloClient, cache };

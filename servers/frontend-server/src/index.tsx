@@ -5,12 +5,15 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
-
+// load environment config
+import 'react-datepicker/dist/react-datepicker.css';
+import 'suneditor/dist/css/suneditor.min.css';
+import './index.css';
 import './config/public-config';
 
 // add any css files
 
-import Main from './app/MainChakra';
+import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line

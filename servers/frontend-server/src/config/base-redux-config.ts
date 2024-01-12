@@ -84,15 +84,15 @@ export const createReduxStore = ({
 
     const enhancers: () => StoreEnhancer<any>[] = () => [applyMiddleware(...middlewares)];
 
-    const composeEnhancers: any =
-        ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+    const composeEnhancers: any = (typeof window === 'undefined')
+        ? compose
+        : ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     const rootReducer = combineReducers(reducers);
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
-
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
-    if (isBrowser || isElectronMain) {
-        // no SSR for now
+
+    if (isBrowser || isElectronMain || __SSR__) {
         if (epicMiddleware) {
             epicMiddleware.run(rootEpic);
         }

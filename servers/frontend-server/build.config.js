@@ -1,3 +1,4 @@
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 const config = {
     ...require('../../build.config'),
     __CLIENT__: true,

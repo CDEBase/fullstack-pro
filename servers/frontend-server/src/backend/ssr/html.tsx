@@ -38,7 +38,6 @@ const Html = ({
 }) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent(); // react-helmet html document tags
     const bodyAttrs = helmet.bodyAttributes.toComponent(); // react-helmet body document tags
-
     return (
         <html lang="en" {...htmlAttrs}>
             <head>
@@ -65,7 +64,7 @@ const Html = ({
                 {!!__DEV__ && (
                     <style
                         dangerouslySetInnerHTML={{
-                            __html: stylesInserts.map((style) => style._getCss()).join(''),
+                            __html: stylesInserts.map((style) => `src="node_modules/${style}`).join(''),
                         }}
                     />
                 )}

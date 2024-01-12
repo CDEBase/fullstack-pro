@@ -49,6 +49,8 @@ node_modules
 .node_repl_history
 .dist
 
+# ignore temp created for pushing prod changes to devleop
+lerna-temp.json
 # IDE 
 .idea
 *.DS_Store
