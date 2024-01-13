@@ -6,9 +6,6 @@ import * as React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
 // load environment config
-import 'react-datepicker/dist/react-datepicker.css';
-import 'suneditor/dist/css/suneditor.min.css';
-import './index.css';
 import './config/public-config';
 
 // add any css files

@@ -4,23 +4,19 @@ import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
 import path from 'path';
 import fs from 'fs';
-import url from 'url';
 import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
-import { InversifyProvider, PluginArea } from '@common-stack/client-react';
-import { loadLifecycle, ORG_NAME_CHANGE } from '@adminide-stack/platform-client';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
-import { loadExtensionController } from '@adminide-stack/extension-module-browser';
-import { persistStore } from 'redux-persist';
+import { InversifyProvider } from '@common-stack/client-react';
 import { Html } from './ssr/html';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import { cacheMiddleware } from './middlewares/cache';
 
 let assetMap;
 const antdCache = createAntdCache();
@@ -47,7 +43,6 @@ async function renderServerSide(req, res) {
                             <InversifyProvider container={container} modules={clientModules}>
                                 {clientModules.getWrappedRoot(
                                     <ApolloProvider client={client}>
-                                        <PluginArea />
                                         <StaticRouter location={req.url} context={context}>
                                             <MainRoute />
                                         </StaticRouter>
@@ -63,23 +58,6 @@ async function renderServerSide(req, res) {
         let content = '';
 
         try {
-            const orgName = await loadLifecycle(req.url, clientModules.getConfiguredRoutes(), client, logger, {  loadRoot: true});
-            // console.log('orgName', orgName);
-            if (orgName) {
-                store.dispatch({
-                    type: ORG_NAME_CHANGE,
-                    payload: { orgName },
-                });
-            }
-            // store.dispatch({
-            //     type: LOCATION_CHANGE,
-            //     payload: {
-            //         location: url.parse(req.url),
-            //         action: 'POP',
-            //         isFirstRendering: true,
-            //     }
-            // });
-            loadExtensionController(container, serviceFunc(), client, null);
             content = await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
@@ -139,7 +117,9 @@ async function renderServerSide(req, res) {
 export const websiteMiddleware = async (req, res, next) => {
     try {
         if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
+            return cacheMiddleware(req, res, async () => {
+                return await renderServerSide(req, res);
+            });
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
             logger.debug('FRONEND_BUILD_DIR with index.html');
             res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));

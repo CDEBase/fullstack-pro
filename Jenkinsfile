@@ -20,6 +20,7 @@ pipeline {
     string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
+    string(name: 'BUILD_MODULE_TO_INCLUDE', defaultValue: '@sample-stack*', description: 'build env')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:CDEBase/fullstack-pro.git', description: 'ssh url of the git repository')
     string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
     string(name: 'DEVELOP_BRANCH', defaultValue: 'develop', description: 'Develop branch as default for the development.')
@@ -199,7 +200,10 @@ pipeline {
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
-      environment{ deployment_env = 'dev' }
+      environment { 
+          deployment_env = 'dev'
+          BUILD_MODULE_TO_INCLUDE = "${params.BUILD_MODULE_TO_INCLUDE}"
+        }
         steps{
           load "./jenkins_variables.groovy"
           script {
