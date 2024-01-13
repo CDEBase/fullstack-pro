@@ -11,10 +11,12 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+import { InversifyProvider } from '@common-stack/client-react';
 import { Html } from './ssr/html';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import { cacheMiddleware } from './middlewares/cache';
 
 let assetMap;
 const antdCache = createAntdCache();
@@ -41,7 +43,6 @@ async function renderServerSide(req, res) {
                             <InversifyProvider container={container} modules={clientModules}>
                                 {clientModules.getWrappedRoot(
                                     <ApolloProvider client={client}>
-                                        <PluginArea />
                                         <StaticRouter location={req.url} context={context}>
                                             <MainRoute />
                                         </StaticRouter>
@@ -116,7 +117,9 @@ async function renderServerSide(req, res) {
 export const websiteMiddleware = async (req, res, next) => {
     try {
         if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
+            return cacheMiddleware(req, res, async () => {
+                return await renderServerSide(req, res);
+            });
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
             logger.debug('FRONEND_BUILD_DIR with index.html');
             res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));

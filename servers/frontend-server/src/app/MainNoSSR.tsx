@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { SlotFillProvider } from '@common-stack/components-pro';
-import { PluginArea, InversifyProvider } from '@common-stack/client-react';
+import { InversifyProvider } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -28,7 +28,6 @@ export class Main extends React.Component<{}, {}> {
                             <InversifyProvider container={container} modules={modules}>
                                 <PersistGate persistor={persistor}>
                                     <ApolloProvider client={client}>
-                                        <PluginArea />
                                         <ConnectedRouter history={history}>
                                             {modules.getWrappedRoot(<MainRoute />)}
                                         </ConnectedRouter>
