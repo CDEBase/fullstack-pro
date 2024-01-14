@@ -4,9 +4,9 @@ import { config } from '../../config';
 
 const redis = new Redis(config.REDIS_URL);
 
-client.on('connect', ()=>logger.info('Redis Client connected in Client Server'));
-client.on('error', err => logger.error('Redis Client Error', err));
-// client.flushdb((err, succeeded) => logger.info(succeeded, err));
+redis.on('connect', ()=>logger.info('Redis Client connected in Client Server'));
+redis.on('error', err => logger.error('Redis Client Error', err));
+// redis.flushdb((err, succeeded) => logger.info(succeeded, err));
 
 export const cacheMiddleware = (req, res, next) => {
   res.setHeader('Cache-Control', `public, max-age=300, s-maxage=3600`)
