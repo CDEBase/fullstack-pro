@@ -10,13 +10,14 @@ import {
     applyMiddleware,
     StoreEnhancer,
     Middleware,
-    compose,
     Action,
     ReducersMapObject,
     PreloadedState,
+    compose,
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
+import { composeWithDevTools } from "redux-devtools-extension";
 
 interface IReduxStore<S = any> {
     scope: 'browser' | 'server' | 'native' | 'ElectronMain';
@@ -81,7 +82,7 @@ export const createReduxStore = ({
     if (postMiddleware) {
         middlewares.push(...postMiddleware);
     }
-
+    
     const enhancers: () => StoreEnhancer<any>[] = () => [applyMiddleware(...middlewares)];
 
     const composeEnhancers: any = (typeof window === 'undefined')

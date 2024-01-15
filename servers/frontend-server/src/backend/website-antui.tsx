@@ -5,7 +5,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
@@ -105,9 +105,9 @@ async function renderServerSide(req, res) {
             );
             let pageContent = ReactDOMServer.renderToStaticMarkup(page);
             pageContent = pageContent.replace(/__STYLESHEET__/, styleSheet);
-            res.status(200);
+            // res.status(200);
             res.send(`<!doctype html>\n${pageContent}`);
-            res.end();
+            // res.end();
         }
     } catch (err) {
         logger.error(err,'SERVER SIDE RENDER failed due to (%j) ', err.message);

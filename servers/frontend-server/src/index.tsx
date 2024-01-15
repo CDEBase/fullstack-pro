@@ -30,6 +30,7 @@ if (__SSR__) {
     let frontendReloadCount = 0;
     const renderApp = ({ key }: { key: number }) => createRoot(rootEl!).render(<Main key={key} />);
     renderApp({ key: frontendReloadCount });
+    
     if (__DEV__) {
         if ((module as any).hot) {
             (module as any).hot.accept();
@@ -57,4 +58,5 @@ if (__SSR__) {
             });
         }
     }
+    
 }

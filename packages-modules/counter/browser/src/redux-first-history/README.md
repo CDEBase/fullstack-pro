@@ -7,4 +7,4 @@ In Hello link, you will see that the HelloChild component can access router stat
 
 Reference:
 
-https://github.com/supasate/connected-react-router/tree/master/examples/typescript
+https://github.com/supasate/redux-first-history/tree/master/examples/typescript

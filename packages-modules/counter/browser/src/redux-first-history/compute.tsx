@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
-import loadable  from '@loadable/component'
+import loadable from '@loadable/component'
 
 
 import { getFilteredMenus, getFilteredRoutes } from '../utils';

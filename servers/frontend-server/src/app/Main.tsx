@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/client';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { InversifyProvider } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { HistoryRouter  } from 'redux-first-history/rr6';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
@@ -16,11 +16,12 @@ import modules, { MainRoute } from '../modules';
 const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
 const history = createBrowserHistory();
-const { store } = createReduxStore(history,client, serviceFunc(), container);
+const { store, reduxHistory } = createReduxStore(history, client, serviceFunc(), container);
 let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {
     public render() {
+        console.log(reduxHistory);
         if (__SSR__) {
             return (
                 <HelmetProvider>
@@ -30,9 +31,9 @@ export class Main extends React.Component<{}, {}> {
                                 <PersistGate loading={null} persistor={persistor}>
                                     {() => (
                                         <ApolloProvider client={client}>
-                                            <ConnectedRouter history={history}>
+                                            <HistoryRouter history={reduxHistory}>
                                                 {modules.getWrappedRoot(<MainRoute />)}
-                                            </ConnectedRouter>
+                                            </HistoryRouter>
                                         </ApolloProvider>
                                     )}
                                 </PersistGate>
@@ -49,11 +50,10 @@ export class Main extends React.Component<{}, {}> {
                             <InversifyProvider container={container} modules={modules}>
                                 <PersistGate persistor={persistor}>
                                     <ApolloProvider client={client}>
-                                        <ConnectedRouter history={history}>
+                                        <HistoryRouter history={reduxHistory}>
                                             {modules.getWrappedRoot(<MainRoute />)}
-                                        </ConnectedRouter>
+                                        </HistoryRouter>
                                     </ApolloProvider>
-                                    ,
                                 </PersistGate>
                             </InversifyProvider>
                         </ReduxProvider>

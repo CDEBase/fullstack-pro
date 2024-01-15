@@ -1,0 +1,64 @@
+/// <reference path='../../../../typings/index.d.ts' />
+import * as React from 'react';
+import { ApolloProvider } from '@apollo/client';
+import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import { HelmetProvider } from 'react-helmet-async';
+import { CacheProvider } from '@emotion/react';
+import { HistoryRouter } from 'redux-first-history/rr6';
+import createEmotionCache from '../common/createEmotionCache';
+import { createReduxStore } from '../config/redux-config';
+import { createClientContainer } from '../config/client.service';
+import modules, { MainRoute } from '../modules';
+
+const { apolloClient: client } = createClientContainer();
+
+const { store, history } = createReduxStore();
+const cache = createEmotionCache();
+
+export class Main extends React.Component<{}, {}> {
+  public render() {
+    if (__SSR__) {
+      let persistor = persistStore(store);
+      return (
+        <HelmetProvider>
+          <CacheProvider value={cache}>
+            <ReduxProvider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                {() => (
+                  <ApolloProvider client={client}>
+                    {modules.getWrappedRoot(
+                      <HistoryRouter history={history}>
+                        <MainRoute />
+                      </HistoryRouter>,
+                    )}
+                  </ApolloProvider>
+                )}
+              </PersistGate>
+            </ReduxProvider>
+          </CacheProvider>
+        </HelmetProvider>
+      );
+    } else {
+      let persistor = persistStore(store);
+      return (
+        <HelmetProvider>
+          <CacheProvider value={cache}>
+            <ReduxProvider store={store}>
+              <PersistGate persistor={persistor}>
+                <ApolloProvider client={client}>
+                  <HistoryRouter history={history}>
+                    {modules.getWrappedRoot(<MainRoute />)}
+                  </HistoryRouter>
+                </ApolloProvider>
+              </PersistGate>
+            </ReduxProvider>
+          </CacheProvider>
+        </HelmetProvider>
+      );
+    }
+  }
+}
+
+export default Main;
