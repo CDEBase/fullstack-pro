@@ -5,12 +5,12 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
-
+// load environment config
 import './config/public-config';
 
 // add any css files
 
-import Main from './app/MainReactRouter';
+import Main from './app/Main';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
@@ -46,7 +46,7 @@ if (__SSR__) {
                 }
             });
             //  but if RHL not working we can uncomment below code to make normal HMR to refresh the page
-            (module as any).hot.accept('./app/MainReactRouter', () => {
+            (module as any).hot.accept('./app/Main', () => {
                 try {
                     console.log('Updating front-end');
                     frontendReloadCount = (frontendReloadCount || 0) + 1;

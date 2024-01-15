@@ -19,11 +19,11 @@ const { apolloClient: client } = createClientContainer();
 const history = createBrowserHistory();
 const { store } = createReduxStore(history);
 const cache = createEmotionCache();
+let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {
     public render() {
         if (__SSR__) {
-            let persistor = persistStore(store);
             return (
                 <HelmetProvider>
                     <CacheProvider value={cache}>
@@ -44,7 +44,6 @@ export class Main extends React.Component<{}, {}> {
                 </HelmetProvider>
             );
         } else {
-            let persistor = persistStore(store);
             return (
                 <HelmetProvider>
                     <CacheProvider value={cache}>

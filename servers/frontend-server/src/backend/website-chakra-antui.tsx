@@ -12,6 +12,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { InversifyProvider } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
@@ -28,7 +29,7 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client } = createClientContainer();
+        const { apolloClient: client, container } = createClientContainer();
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] }); // match initial route to express path
@@ -46,14 +47,16 @@ async function renderServerSide(req, res) {
                     <CacheProvider value={cache}>
                         <StyleProvider cache={antdCache}>
                             <ReduxProvider store={store}>
-                                {clientModules.getWrappedRoot(
-                                    <ApolloProvider client={client}>
-                                        <StaticRouter location={req.url} context={context}>
-                                            <MainRoute />
-                                        </StaticRouter>
-                                        ,
-                                    </ApolloProvider>,
-                                )}
+                                <InversifyProvider container={container} modules={clientModules}>
+                                    {clientModules.getWrappedRoot(
+                                        <ApolloProvider client={client}>
+                                            <StaticRouter location={req.url} context={context}>
+                                                <MainRoute />
+                                            </StaticRouter>
+                                            ,
+                                        </ApolloProvider>,
+                                    )}
+                                </InversifyProvider>
                             </ReduxProvider>
                         </StyleProvider>
                     </CacheProvider>

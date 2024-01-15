@@ -11,56 +11,63 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+import { InversifyProvider } from '@common-stack/client-react';
 import { Html } from './ssr/html';
-import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import { cacheMiddleware } from './middlewares/cache';
 
 let assetMap;
 const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client } = createClientContainer();
-
+        const { apolloClient: client, container, serviceFunc } = req;
+        // container.bind(IClientContainerService.ExtensionController).toConstantValue({});
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history);
+        const { store } = createReduxStore(history, client, serviceFunc, container);
 
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
             entrypoints: ['index'],
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
-
         const helmetContext = {} as FilledContext;
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
                     <StyleProvider cache={antdCache}>
                         <ReduxProvider store={store}>
-                            {clientModules.getWrappedRoot(
-                                <ApolloProvider client={client}>
-                                    <StaticRouter location={req.url} context={context}>
-                                        <MainRoute />
-                                    </StaticRouter>
-                                    ,
-                                </ApolloProvider>,
-                            )}
+                            <InversifyProvider container={container} modules={clientModules}>
+                                {clientModules.getWrappedRoot(
+                                    <ApolloProvider client={client}>
+                                        <StaticRouter location={req.url} context={context}>
+                                            <MainRoute />
+                                        </StaticRouter>
+                                    </ApolloProvider>,
+                                    req,
+                                )}
+                            </InversifyProvider>
                         </ReduxProvider>
                     </StyleProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
         );
+        let content = '';
 
         try {
-            await getDataFromTree(Root);
+            content = await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
             console.log(e);
         }
-        const content = ReactDOMServer.renderToString(Root);
+
+        if (!content) {
+            content = ReactDOMServer.renderToString(Root);
+        }
+        console.log('Content---', content.length);
 
         if (context.pageNotFound === true) {
             res.status(404);
@@ -74,6 +81,7 @@ async function renderServerSide(req, res) {
                 assetMap = JSON.parse(fs.readFileSync(path.join(__FRONTEND_BUILD_DIR__, 'assets.json')).toString());
             }
             // data
+
             const apolloState = Object.assign({}, client.extract());
             const reduxState = Object.assign({}, store.getState());
             const env = {
@@ -97,19 +105,21 @@ async function renderServerSide(req, res) {
             );
             let pageContent = ReactDOMServer.renderToStaticMarkup(page);
             pageContent = pageContent.replace(/__STYLESHEET__/, styleSheet);
-            res.status(200);
+            // res.status(200);
             res.send(`<!doctype html>\n${pageContent}`);
-            res.end();
+            // res.end();
         }
     } catch (err) {
-        logger.error('SERVER SIDE RENDER failed due to (%j) ', err.message);
-        logger.debug(err);
+        logger.error(err,'SERVER SIDE RENDER failed due to (%j) ', err.message);
+        logger.info(err);
     }
 }
 export const websiteMiddleware = async (req, res, next) => {
     try {
         if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
+            return cacheMiddleware(req, res, async () => {
+                return await renderServerSide(req, res);
+            });
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
             logger.debug('FRONEND_BUILD_DIR with index.html');
             res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
