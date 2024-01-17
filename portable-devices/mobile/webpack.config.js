@@ -35,6 +35,7 @@ module.exports = async function (env, argv) {
         new EnvListPlugin.Plugin(),
     );
     config.plugins.push(
+        new EnvListPlugin.Plugin(),
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __DEBUGGING__: false,

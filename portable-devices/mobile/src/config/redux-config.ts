@@ -33,6 +33,8 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
+
+
 export const createReduxStore = () => {
     // middleware
     const router = connectRouter(history);
