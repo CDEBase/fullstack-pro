@@ -13,10 +13,10 @@ import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
 
-const { apolloClient: client, container } = createClientContainer();
+const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
 const history = createBrowserHistory();
-const { store } = createReduxStore(history);
+const { store } = createReduxStore(history,client, serviceFunc(), container);const cache = createEmotionCache();
 let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {

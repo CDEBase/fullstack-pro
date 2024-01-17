@@ -14,6 +14,7 @@ import {
     Action,
     ReducersMapObject,
     PreloadedState,
+    Store,
 } from 'redux';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
@@ -88,6 +89,7 @@ export const createReduxStore = ({
         ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
     const rootReducer = combineReducers(reducers);
+
     const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
 
     const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
