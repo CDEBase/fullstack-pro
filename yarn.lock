@@ -2137,7 +2137,7 @@
   resolved "https://registry.yarnpkg.com/@browser-bunyan/levels/-/levels-1.8.0.tgz#1c0a98d04284e0620e8ee414d7ce43385080a5cf"
   integrity sha512-f9oSDik8kAl+4rhVyHqIr012P1boHFUKc7D9nzA5+lDsFoP90UQnDwpseqBdF2mTaWYju10E7h+GdH8u+7MHOQ==
 
-"@cdm-logger/client@^7.0.12", "@cdm-logger/client@^7.0.14":
+"@cdm-logger/client@^7.0.14":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@cdm-logger/client/-/client-7.0.14.tgz#06b17043eec4b10c9283ffd3fbc34a7a22995cd2"
   integrity sha512-saqN5WaxYq9H3DT/b8NdO0otwt+PUkW0kwetisbbINsiDYBwNXiEyaw53fPeooni5dUq7iPV1pFg035f8wLUBw==
@@ -2151,7 +2151,7 @@
   resolved "https://registry.yarnpkg.com/@cdm-logger/core/-/core-7.0.14.tgz#1850927bf57cd6e3709598055e9d365367fd191e"
   integrity sha512-+Y2YBTlklRc0lQ/nfzkAPEBjYJTgTST2K1YLbO8w1OYnYGXu82zIOILn2P+6/4FkCldB+BZT6/F4qxEmKd0J1A==
 
-"@cdm-logger/electron@^7.0.12":
+"@cdm-logger/electron@^7.0.14":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@cdm-logger/electron/-/electron-7.0.14.tgz#c3221a2a8811b0cea82186d82c7267662e066e95"
   integrity sha512-LyaUn7wT40mSUynn8jxjC6A2j4gh1BbI5Y1wFl3dI7PjRZYF73XehDyib7+NiExhfStUsZstVXIR3hHaIRmUIw==
@@ -2159,7 +2159,7 @@
     "@cdm-logger/core" "^7.0.14"
     "@cdm-logger/server" "^7.0.14"
 
-"@cdm-logger/server@^7.0.12", "@cdm-logger/server@^7.0.14":
+"@cdm-logger/server@^7.0.14":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@cdm-logger/server/-/server-7.0.14.tgz#3d21cd34aab2b82b00758cf099751dca4eb56f07"
   integrity sha512-FZGWbpMDpEMr1HrGRGzRK3MlriJ1Ejnhct2AQIBYUOJTFZ6J4lbXLCMFQCP3+2/FAowqViKkqJTH9A0phMjn0A==
