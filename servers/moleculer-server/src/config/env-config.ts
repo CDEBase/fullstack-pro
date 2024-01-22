@@ -10,6 +10,7 @@ export const config = envalid.cleanEnv(process.env, {
     NATS_USER: str(),
     NATS_PW: str(),
     MONGO_URL: str(),
+    HEMERA_LOG_LEVEL: str(),
     REDIS_CLUSTER_URL: json({devDefault: '[{"port":6379,"host":"localhost"}]',  example: '[{"port":6379,"host":"localhost"}]'}),
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),

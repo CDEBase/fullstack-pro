@@ -17,7 +17,11 @@ export const config = envalid.cleanEnv(process.env, {
     REDIS_URL: str({ devDefault: 'localhost' }),
     REDIS_CLUSTER_ENABLED: bool({ devDefault: false }),
     REDIS_SENTINEL_ENABLED: bool({ devDefault: true }),
-    HEMERA_LOG_LEVEL: str({ default: 'info' }),
+    HEMERA_LOG_LEVEL: str({
+        default: 'info',
+        devDefault: 'info',
+        choices: ['fatal', 'error', 'warn', 'info', 'debug', 'trace'],
+    }),
     BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
     CLIENT_URL: str({ devDefault: __BACKEND_URL__ }),
