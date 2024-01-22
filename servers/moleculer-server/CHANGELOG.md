@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.59-alpha.39](https://github.com/CDEBase/fullstack-pro/compare/v0.0.59-alpha.38...v0.0.59-alpha.39) (2024-01-22)
+
+**Note:** Version bump only for package sample-stack-moleculer-server
+
 ## [0.0.59-alpha.38](https://github.com/CDEBase/fullstack-pro/compare/v0.0.59-alpha.37...v0.0.59-alpha.38) (2024-01-18)
 
 **Note:** Version bump only for package sample-stack-moleculer-server
