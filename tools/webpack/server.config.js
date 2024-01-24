@@ -5,6 +5,8 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
 let modulenameRegex;
@@ -142,6 +144,8 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
+        new WebpackManifestPlugin({ fileName: 'assets.json' }),
+        new LoadablePlugin(),
     ]),
     target: 'node',
     externals: [

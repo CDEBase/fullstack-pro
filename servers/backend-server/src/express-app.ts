@@ -34,10 +34,12 @@ export function expressApp(options: IModuleService, middlewares, http?) {
         res.header('Access-Control-Allow-Credentials', JSON.stringify(true));
         res.header('Access-Control-Allow-Origin', req.headers.origin as string);
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+        res.header(
+            'Access-Control-Allow-Headers',
+            'X-Requested-With, X-HTTP-Method-Override, X-CSP-Nonce, Content-Type, Accept',
+        );
         next();
     });
-
 
     const corsOptions = {
         origin: true,
