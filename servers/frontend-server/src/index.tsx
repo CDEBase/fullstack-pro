@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
+import { removeUniversalPortals } from '@common-stack/components-pro';
 // load environment config
 import './config/public-config';
 
@@ -16,6 +17,8 @@ import Main from './app/MainAnt';
 // tslint:disable-next-line
 if (__SSR__) {
     loadableReady(() => {
+        removeUniversalPortals(window.__SLOT_FILLS__ || []);
+        
         const rootEl = document.getElementById('root');
         let Comp;
         if (__DEV__) {
