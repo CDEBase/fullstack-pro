@@ -111,6 +111,7 @@ async function renderServerSide(req, res) {
                     helmet={helmetContext.helmet}
                     extractor={extractor}
                     env={env}
+                    fills={fills}
                     reduxState={reduxState}
                     scriptsInserts={clientModules.scriptsInserts}
                     stylesInserts={clientModules.stylesInserts}

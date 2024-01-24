@@ -19,6 +19,7 @@ const Html = ({
     reduxState,
     emotionIds,
     env,
+    fills,
     assetMap,
     helmet,
     extractor,
@@ -31,6 +32,7 @@ const Html = ({
     emotionIds?: string[];
     assetMap?: string[];
     env: any;
+    fills?: string[],
     helmet: HelmetServerState;
     extractor: ChunkExtractor;
     stylesInserts?: any[];
@@ -47,8 +49,8 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
-                {extractor.getLinkElements()}
-                {extractor.getStyleElements()}
+                {/* {extractor.getLinkElements()}
+                {extractor.getStyleElements()} */}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
                 {/* {headElements} */}
                 <meta charSet="utf-8" />
@@ -59,6 +61,7 @@ const Html = ({
                 <link rel="mask-icon" href={`${assetMap['safari-pinned-tab.svg']}`} color="#5bbad5" />
                 <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
                 <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
+                <script>{`var exports = {};`}</script>
                 <style id="font-stylesheet" />
                 __STYLESHEET__
                 {!!__DEV__ && (
@@ -104,6 +107,14 @@ const Html = ({
                     dangerouslySetInnerHTML={{
                         __html: `window.__EMOTION_IDS__=${serialize(emotionIds, {
                             isJSON: false,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__SLOT_FILLS__=${serialize(fills, {
+                            isJSON: true,
                         })};`,
                     }}
                     charSet="UTF-8"

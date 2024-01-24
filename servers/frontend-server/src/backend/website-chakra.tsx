@@ -21,6 +21,7 @@ import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import { cacheMiddleware } from './middlewares/cache';
 import GA4Provider from '../components/GaProvider';
 
 let assetMap;
@@ -127,6 +128,7 @@ async function renderServerSide(req, res) {
                     helmet={helmetContext.helmet}
                     extractor={extractor}
                     env={env}
+                    fills={fills}
                     reduxState={reduxState}
                     scriptsInserts={clientModules.scriptsInserts}
                     stylesInserts={clientModules.stylesInserts}
@@ -147,7 +149,9 @@ async function renderServerSide(req, res) {
 export const websiteMiddleware = async (req, res, next) => {
     try {
         if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
+            return cacheMiddleware(req, res, async () => {
+                return await renderServerSide(req, res);
+            });
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
             logger.debug('FRONEND_BUILD_DIR with index.html');
             res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
