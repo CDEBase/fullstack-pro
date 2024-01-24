@@ -21,6 +21,7 @@ import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
+import GA4Provider from '../components/GaProvider';
 
 let assetMap;
 const cache = createEmotionCache();
@@ -54,7 +55,9 @@ async function renderServerSide(req, res) {
                                     {clientModules.getWrappedRoot(
                                         <ApolloProvider client={client}>
                                             <StaticRouter location={req.url} context={context}>
-                                                <MainRoute />
+                                                <GA4Provider>
+                                                    <MainRoute />
+                                                </GA4Provider>
                                             </StaticRouter>
                                             ,
                                         </ApolloProvider>,
