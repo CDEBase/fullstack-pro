@@ -4,6 +4,8 @@ import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
 import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
+import { persistStore } from 'redux-persist';
+import { SlotFillProvider, replaceServerFills } from '@common-stack/components-pro';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -12,7 +14,7 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
-import { InversifyProvider } from '@common-stack/client-react';
+import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
@@ -29,11 +31,12 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container } = createClientContainer();
+        const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history);
+        const { store } = createReduxStore(history, client, serviceFunc(), container);
+        let persistor = persistStore(store); // this is needed for ssr
 
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
@@ -41,36 +44,43 @@ async function renderServerSide(req, res) {
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
         const helmetContext = {} as FilledContext;
+        let slotFillContext = { fills: {} };
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
                     <CacheProvider value={cache}>
                         <StyleProvider cache={antdCache}>
-                            <ReduxProvider store={store}>
-                                <InversifyProvider container={container} modules={clientModules}>
-                                    {clientModules.getWrappedRoot(
-                                        <ApolloProvider client={client}>
-                                            <StaticRouter location={req.url} context={context}>
-                                                <MainRoute />
-                                            </StaticRouter>
-                                            ,
-                                        </ApolloProvider>,
-                                    )}
-                                </InversifyProvider>
-                            </ReduxProvider>
+                            <SlotFillProvider context={slotFillContext}>
+                                <ReduxProvider store={store}>
+                                    <InversifyProvider container={container} modules={clientModules}>
+                                        <PluginArea />
+                                        {clientModules.getWrappedRoot(
+                                            <ApolloProvider client={client}>
+                                                <StaticRouter location={req.url} context={context}>
+                                                    <MainRoute />
+                                                </StaticRouter>
+                                                ,
+                                            </ApolloProvider>,
+                                        )}
+                                    </InversifyProvider>
+                                </ReduxProvider>
+                            </SlotFillProvider>
                         </StyleProvider>
                     </CacheProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
         );
 
+        let content = '';
         try {
-            await getDataFromTree(Root);
+            content = await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
             console.log(e);
         }
-        const content = ReactDOMServer.renderToString(Root);
+        if (!content) {
+            content = ReactDOMServer.renderToString(Root);
+        }
         if (context.pageNotFound === true) {
             res.status(404);
         }
@@ -85,7 +95,6 @@ async function renderServerSide(req, res) {
             // data
             const apolloState = Object.assign({}, client.extract());
 
-            console.log('---APOLLO STATE', apolloState);
             const reduxState = Object.assign({}, store.getState());
             const env = {
                 ...publicEnv,
@@ -95,6 +104,9 @@ async function renderServerSide(req, res) {
             const emotionStyles = extractCriticalToChunks(content);
             const styles = constructStyleTagsFromChunks(emotionStyles);
             styleSheet = styleSheet + styles;
+            // fills
+            const fills = Object.keys(slotFillContext.fills);
+            content = replaceServerFills(content, fills);
             // Html Page
             const page = (
                 <Html
