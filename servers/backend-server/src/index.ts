@@ -1,10 +1,6 @@
 /// <reference types="webpack-env" />
-import * as dotenv from 'dotenv';
+import './env';
 import 'reflect-metadata';
-
-if (process.env.ENV_FILE) {
-    dotenv.config({ path: process.env.ENV_FILE })
-}
 import { logger } from '@cdm-logger/server';
 import { Service } from './service';
 

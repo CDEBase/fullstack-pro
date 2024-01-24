@@ -238,6 +238,7 @@
         "dotenv-webpack": "^8.0.1",
         "enzyme": "^3.11.0",
         "esbuild": "^0.15.13",
+        "esbuild-loader": "^4.0.3",
         "eslint": "^8.27.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.5.0",
