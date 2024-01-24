@@ -10,7 +10,7 @@ import './config/public-config';
 
 // add any css files
 
-import Main from './app/Main';
+import Main from './app/MainAnt';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line

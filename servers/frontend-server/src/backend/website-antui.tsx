@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { ApolloProvider } from '@apollo/client/react/react.cjs';
 import { getDataFromTree } from '@apollo/client/react/ssr/ssr.cjs';
+import { persistStore } from 'redux-persist';
+import { SlotFillProvider, replaceServerFills } from '@common-stack/components-pro';
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -11,7 +13,7 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
-import { InversifyProvider } from '@common-stack/client-react';
+import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Html } from './ssr/html';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
@@ -27,30 +29,34 @@ async function renderServerSide(req, res) {
         // container.bind(IClientContainerService.ExtensionController).toConstantValue({});
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history, client, serviceFunc, container);
-
+        const { store } = createReduxStore(history, client, serviceFunc(), container);
+        let persistor = persistStore(store); // this is needed for ssr
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
             entrypoints: ['index'],
             publicPath: !__DEV__ && __CDN_URL__ ? __CDN_URL__ : '/',
         });
         const helmetContext = {} as FilledContext;
+        let slotFillContext = { fills: {} };
         const Root = (
             <ChunkExtractorManager extractor={extractor}>
                 <HelmetProvider context={helmetContext}>
                     <StyleProvider cache={antdCache}>
-                        <ReduxProvider store={store}>
-                            <InversifyProvider container={container} modules={clientModules}>
-                                {clientModules.getWrappedRoot(
-                                    <ApolloProvider client={client}>
-                                        <StaticRouter location={req.url} context={context}>
-                                            <MainRoute />
-                                        </StaticRouter>
-                                    </ApolloProvider>,
-                                    req,
-                                )}
-                            </InversifyProvider>
-                        </ReduxProvider>
+                        <SlotFillProvider context={slotFillContext}>
+                            <ReduxProvider store={store}>
+                                <InversifyProvider container={container} modules={clientModules}>
+                                    <PluginArea />
+                                    {clientModules.getWrappedRoot(
+                                        <ApolloProvider client={client}>
+                                            <StaticRouter location={req.url} context={context}>
+                                                <MainRoute />
+                                            </StaticRouter>
+                                        </ApolloProvider>,
+                                        req,
+                                    )}
+                                </InversifyProvider>
+                            </ReduxProvider>
+                        </SlotFillProvider>
                     </StyleProvider>
                 </HelmetProvider>
             </ChunkExtractorManager>
@@ -89,6 +95,10 @@ async function renderServerSide(req, res) {
             };
             // styles
             let styleSheet = extractStyle(antdCache);
+
+            // fills
+            const fills = Object.keys(slotFillContext.fills);
+            content = replaceServerFills(content, fills);
             // html page
             const page = (
                 <Html
@@ -110,7 +120,7 @@ async function renderServerSide(req, res) {
             res.end();
         }
     } catch (err) {
-        logger.error(err,'SERVER SIDE RENDER failed due to (%j) ', err.message);
+        logger.error(err, 'SERVER SIDE RENDER failed due to (%j) ', err.message);
         logger.info(err);
     }
 }
