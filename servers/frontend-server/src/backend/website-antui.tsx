@@ -19,6 +19,7 @@ import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 import { cacheMiddleware } from './middlewares/cache';
+import GA4Provider from '../components/GaProvider';
 
 let assetMap;
 const antdCache = createAntdCache();
@@ -49,7 +50,9 @@ async function renderServerSide(req, res) {
                                     {clientModules.getWrappedRoot(
                                         <ApolloProvider client={client}>
                                             <StaticRouter location={req.url} context={context}>
-                                                <MainRoute />
+                                                <GA4Provider>
+                                                    <MainRoute />
+                                                </GA4Provider>
                                             </StaticRouter>
                                         </ApolloProvider>,
                                         req,
