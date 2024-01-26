@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as express from 'express';
-
+import * as bodyParser from 'body-parser';
 import modules from './modules';
 import { errorMiddleware } from './middleware/error';
 import { contextServicesMiddleware } from './middleware/services';
@@ -39,6 +39,17 @@ export function expressApp(options: IModuleService, middlewares, http?) {
         );
         next();
     });
+
+    app.use(
+        bodyParser.json({
+            limit: '50mb',
+            verify: (req, res, buf) => {
+                // #Todo: Find some proper solution for it
+                (req as any).rawBody = buf;
+            },
+        }),
+    );
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
     for (const applyMiddleware of modules.middlewares) {
         applyMiddleware(app);

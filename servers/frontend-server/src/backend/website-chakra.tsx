@@ -17,7 +17,6 @@ import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
-import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
@@ -30,7 +29,7 @@ const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionS
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, serviceFunc } = createClientContainer();
+        const { apolloClient: client, container, serviceFunc } = req;
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });

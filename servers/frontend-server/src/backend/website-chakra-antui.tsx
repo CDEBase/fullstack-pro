@@ -18,7 +18,6 @@ import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
-import { createClientContainer } from '../config/client.service';
 import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
@@ -33,7 +32,7 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, serviceFunc } = createClientContainer();
+        const { apolloClient: client, container, serviceFunc } = req;
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const history = createMemoryHistory({ initialEntries: [req.url] });
