@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const path = require('path');
 
 // Define the path to lerna.json relative to the tools directory
-const LERNA_JSON_PATH = path.join(__dirname, '../lerna.json'); // Update this to the actual relative path of your lerna.json file
+const LERNA_JSON_PATH = path.join(__dirname, '../../lerna.json'); // Update this to the actual relative path of your lerna.json file
 
 function updateVersion(versionArg) {
     const scriptPath = path.join(__dirname, 'updateLernaVersion.js');

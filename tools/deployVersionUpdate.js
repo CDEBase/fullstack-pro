@@ -20,13 +20,13 @@ function main(versionArg) {
     console.log(`Updating to version: ${versionArg}`);
 
     // Update lerna.json
-    runScript('./tools/updateLernaVersion.js', `${LERNA_JSON_PATH} ${versionArg}`);
+    runScript('./tools/deploy-cli/updateLernaVersion.js', `${LERNA_JSON_PATH} ${versionArg}`);
 
     // Update Jenkinsfile
-    runScript('./tools/updateJenkinsfileVersion.js', `${JENKINSFILE_PATH} ${versionArg}`);
+    runScript('./tools/deploy-cli/updateJenkinsfileVersion.js', `${JENKINSFILE_PATH} ${versionArg}`);
 
     // Update configuration file
-    runScript('./tools/updateConfiguration.js', `${CONFIG_FILE_PATH} ${versionArg}`);
+    runScript('./tools/deploy-cli/updateConfiguration.js', `${CONFIG_FILE_PATH} ${versionArg}`);
 }
 
 const versionArg = process.argv[2];

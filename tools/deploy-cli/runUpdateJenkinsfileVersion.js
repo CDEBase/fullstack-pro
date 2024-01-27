@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const path = require('path');
 
 // Use __dirname to get the directory of the current script and specify the relative path to the Jenkinsfile
-const jenkinsfilePath = path.join(__dirname, '../Jenkinsfile'); // Replace with your actual Jenkinsfile relative path
+const jenkinsfilePath = path.join(__dirname, '../../Jenkinsfile'); // Replace with your actual Jenkinsfile relative path
 
 // Function to run the update script
 function runUpdateScript(versionArg) {
