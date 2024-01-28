@@ -28,7 +28,6 @@ function updateConfiguration(filePath, newVersion) {
                 return match;
             },
         );
-
         // Write the updated configuration back to the file
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
             if (err) {
@@ -36,6 +35,7 @@ function updateConfiguration(filePath, newVersion) {
                 return;
             }
             console.log(`Configuration file updated successfully.`);
+            console.log(`Manually update CLIENT_URL in values-dev.yaml and values-prod.yaml`)
         });
     });
 }
@@ -44,7 +44,7 @@ function updateConfiguration(filePath, newVersion) {
 const filePath = process.argv[2];
 const versionArg = process.argv[3];
 
-if (!filePath || !versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {    
+if (!filePath || !versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
     console.error('Usage: node updateConfiguration.js v[Major].[Minor]');
     process.exit(1);
 }
