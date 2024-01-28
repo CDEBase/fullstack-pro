@@ -10,15 +10,29 @@ function updateJenkinsfile(filePath, versionArg) {
 
         // Extract the major and minor version (if present)
         const versionParts = versionArg.match(/^v(\d+)(\.(\d+))?$/);
+        if (!versionParts) {
+            console.error('Invalid version format. Please use the format v[Major].[Minor]');
+            return;
+        }
         const majorVersion = versionParts[1];
         const minorVersion = versionParts[3] || '0';
         const versionSuffix = `${majorVersion}.${minorVersion}`;
 
-        // Update the branch names
-        let updatedData = data
-            .replace(/(REPOSITORY_BRANCH = 'develop)(\d+(\.\d+)?')/, `REPOSITORY_BRANCH = 'develop${versionSuffix}'`)
-            .replace(/(DEVELOP_BRANCH = 'develop)(\d+(\.\d+)?')/, `DEVELOP_BRANCH = 'develop${versionSuffix}'`)
-            .replace(/(PUBLISH_BRANCH = 'devpublish)(\d+(\.\d+)?')/, `PUBLISH_BRANCH = 'devpublish${versionSuffix}'`);
+        console.log('---DATA of jenkins', data);
+        // Update the branch names using correct regular expressions
+        const updatedData = data
+            .replace(
+                /string\(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch with changes'\)/,
+                `string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop${versionSuffix}', description: 'the branch with changes')`,
+            )
+            .replace(
+                /string\(name: 'DEVELOP_BRANCH', defaultValue: 'develop', description: 'the branch for the development'\)/,
+                `string(name: 'DEVELOP_BRANCH', defaultValue: 'develop${versionSuffix}', description: 'the branch for the development')`,
+            )
+            .replace(
+                /string\(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'the publish branch for packages release'\)/,
+                `string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish${versionSuffix}', description: 'the publish branch for packages release')`,
+            );
 
         // Debugging - Log the updated lines for verification
         console.log(updatedData.match(/(REPOSITORY_BRANCH|DEVELOP_BRANCH|PUBLISH_BRANCH).*?;/g));
