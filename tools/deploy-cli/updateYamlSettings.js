@@ -1,6 +1,5 @@
 /* eslint-disable jest/require-hook */
 const fs = require('fs');
-const path = require('path');
 
 // Function to update the configuration file
 function updateConfiguration(filePath, newVersion) {
@@ -41,19 +40,14 @@ function updateConfiguration(filePath, newVersion) {
     });
 }
 
-// Path to the configuration file (adjust this path according to your project structure)
-const configFilePath = path.join(__dirname, '../path/to/your/configuration/file'); // Replace with your actual file path
-
 // Process command line arguments
-const versionArg = process.argv[2];
+const filePath = process.argv[2];
+const versionArg = process.argv[3];
 
-if (!versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
+if (!filePath || !versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {    
     console.error('Usage: node updateConfiguration.js v[Major].[Minor]');
     process.exit(1);
 }
 
-// Define the path to lerna.json relative to the tools directory
-const DEV_YAML_SETTIGNS = path.join(__dirname, '../../values-dev.yaml'); // Update this to the actual relative path of your lerna.json file
-
 // Call the function with the provided version argument
-updateConfiguration(DEV_YAML_SETTIGNS, versionArg);
+updateConfiguration(filePath, versionArg);

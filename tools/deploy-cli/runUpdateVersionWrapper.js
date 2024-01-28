@@ -25,7 +25,7 @@ function runUpdateVersion(versionArg) {
 const versionArg = process.argv[2];
 
 if (!versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
-    console.error('Usage: node updateVersionWrapper.js v[Major].[Minor]');
+    console.error('Usage: node runUpdateVersionWrapper.js v[Major].[Minor]');
     process.exit(1);
 }
 

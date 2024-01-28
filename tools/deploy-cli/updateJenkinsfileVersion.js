@@ -15,9 +15,8 @@ function updateJenkinsfile(filePath, versionArg) {
             return;
         }
         const majorVersion = versionParts[1];
-        const minorVersion = versionParts[3] || '0';
-        const versionSuffix = `${majorVersion}-${minorVersion}`;
-
+        const minorVersion = versionParts[3];
+        const versionSuffix = minorVersion ? `${majorVersion}-${minorVersion}` : majorVersion;
         // Update the branch names using correct regular expressions
         const updatedData = data
             .replace(
