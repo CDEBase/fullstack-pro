@@ -9,22 +9,20 @@ import { logger } from '@cdm-logger/server';
 import { ChunkExtractor } from '@loadable/server';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import createEmotionServer from '@emotion/server/create-instance'
+import createEmotionServer from '@emotion/server/create-instance';
 import publicEnv from '../config/public-config';
 
 let assetMap;
 const key = 'custom';
 const cache = createCache({ key });
-const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
+const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
 async function renderServerSide(req, res) {
     try {
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const App = () => (
-                <CacheProvider value={cache}>
-                    <StaticRouter location={req.url} context={context}>
-                        <div>Loading...</div>
-                    </StaticRouter>
-                </CacheProvider>
+            <CacheProvider value={cache}>
+                <StaticRouter location={req.url} context={context} />
+            </CacheProvider>
         );
         if (context.pageNotFound === true) {
             res.status(404);
@@ -40,10 +38,9 @@ async function renderServerSide(req, res) {
         const JSX = extractor.collectChunks(App());
         const content = ReactDOMServer.renderToString(JSX);
 
-        
-        const chunks = extractCriticalToChunks(JSX)
+        const chunks = extractCriticalToChunks(JSX);
 
-        const appStyles = constructStyleTagsFromChunks(chunks)
+        const appStyles = constructStyleTagsFromChunks(chunks);
         // We need to tell Helmet to compute the right meta tags, title, and such.
         const helmet = Helmet.renderStatic(); // Avoid memory leak while tracking mounted instances
         if (context.url) {
