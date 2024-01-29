@@ -46,9 +46,9 @@ async function renderServerSide(req, res) {
                         <SlotFillProvider context={slotFillContext}>
                             <ReduxProvider store={store}>
                                 <InversifyProvider container={container} modules={clientModules}>
-                                    <PluginArea />
                                     {clientModules.getWrappedRoot(
                                         <ApolloProvider client={client}>
+                                            <PluginArea />
                                             <StaticRouter location={req.url} context={context}>
                                                 <GA4Provider>
                                                     <MainRoute />
