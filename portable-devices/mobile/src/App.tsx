@@ -15,9 +15,8 @@ import {
 import { NativeBaseProvider } from 'native-base';
 import { createClientContainer } from './config/client.service';
 
-const { apolloClient: client, container } = createClientContainer();
-
-const store = createReduxStore();
+const { apolloClient: client, container, serviceFunc } = createClientContainer();
+const { store } = createReduxStore(history, client, serviceFunc(), container);
 
 export default function App() {
 
