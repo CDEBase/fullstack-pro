@@ -20,6 +20,10 @@ function updateJenkinsfile(filePath, versionArg) {
         // Update the branch names using correct regular expressions
         const updatedData = data
             .replace(
+                /string\(name: 'VERSION', defaultValue: '.*?', description: 'version of the deployment', trim: true\)/,
+                `string(name: 'VERSION', defaultValue: 'v${versionSuffix}', description: 'version of the deployment', trim: true)`
+            )
+            .replace(
                 /string\(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch with changes'\)/,
                 `string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop${versionSuffix}', description: 'the branch with changes')`,
             )
