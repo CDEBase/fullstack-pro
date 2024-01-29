@@ -19,6 +19,9 @@ export const epicMiddleware = createEpicMiddleware({
         services,
         container,
         logger,
+        config: {
+            loadRoot: true,
+        },
     },
 });
 
