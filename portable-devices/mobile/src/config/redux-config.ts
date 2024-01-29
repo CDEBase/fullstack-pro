@@ -7,13 +7,12 @@ import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { rootEpic } from './epic-config';
 import history from './router-history';
-import { createClientContainer } from './client.service';
 
 export { history };
-const { apolloClient, container, services } = createClientContainer();
 
-export const epicMiddleware = createEpicMiddleware({
-    dependencies: {
+export const epicMiddlewareFunc = (apolloClient, services, container) =>
+    createEpicMiddleware({
+        dependencies: {
         apolloClient,
         routes: modules.getConfiguredRoutes(),
         services,
@@ -36,9 +35,7 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-
-
-export const createReduxStore = () => {
+export const createReduxStore = (history, apolloClient, services, container) => {
     // middleware
     const router = connectRouter(history);
 
@@ -49,11 +46,21 @@ export const createReduxStore = () => {
         initialState: {},
         persistConfig,
         middleware: [routerMiddleware(history)],
-        epicMiddleware,
+        epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
         rootEpic: rootEpic as any,
         reducers: { router, ...modules.reducers },
     });
-    container.bind('ReduxStore').toConstantValue(store);
+    if (container.isBound('ReduxStore')) {
+        container
+            .rebind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
+    } else {
+        container
+            .bind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
+    }
 
-    return store;
+    return { store };
 };
