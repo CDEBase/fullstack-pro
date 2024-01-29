@@ -2,9 +2,9 @@ const { exec } = require('child_process');
 const path = require('path');
 
 // Define the path to lerna.json relative to the tools directory
-const LERNA_JSON_PATH = path.join(__dirname, '../lerna.json'); // Update this to the actual relative path of your lerna.json file
+const LERNA_JSON_PATH = path.join(__dirname, '../../lerna.json'); // Update this to the actual relative path of your lerna.json file
 
-function updateVersion(versionArg) {
+function runUpdateVersion(versionArg) {
     const scriptPath = path.join(__dirname, 'updateLernaVersion.js');
 
     exec(`node ${scriptPath} ${LERNA_JSON_PATH} ${versionArg}`, (err, stdout, stderr) => {
@@ -25,8 +25,8 @@ function updateVersion(versionArg) {
 const versionArg = process.argv[2];
 
 if (!versionArg || !versionArg.match(/^v\d+(\.\d+)?$/)) {
-    console.error('Usage: node updateVersionWrapper.js v[Major].[Minor]');
+    console.error('Usage: node runUpdateVersionWrapper.js v[Major].[Minor]');
     process.exit(1);
 }
 
-updateVersion(versionArg);
+runUpdateVersion(versionArg);
