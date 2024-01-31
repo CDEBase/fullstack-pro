@@ -12,13 +12,11 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
 import createEmotionCache from '../common/createEmotionCache';
-import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 import { cacheMiddleware } from './middlewares/cache';
@@ -32,11 +30,9 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, serviceFunc } = req;
+        const { apolloClient: client, container, store } = req;
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
-        const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history, client, serviceFunc(), container);
         let persistor = persistStore(store); // this is needed for ssr
 
         const extractor = new ChunkExtractor({
