@@ -8,10 +8,8 @@ export const containerMiddleware = (req, res, next) => {
     const { container, serviceFunc, logger, apolloClient } = createClientContainer(req, res);
     const history = createMemoryHistory({ initialEntries: [req.url] });
     const { store } = createReduxStore(history, apolloClient, serviceFunc(), container);
-    // req.container = clientContainer.container;
     req.container = container;
     req.apolloClient = apolloClient;
-    req.serviceFunc = serviceFunc;
     req.logger = logger;
     req.store = store;
     // Cleanup logic after the response is sent
