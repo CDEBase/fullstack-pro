@@ -8,9 +8,10 @@ import * as path from 'path';
 import * as url from 'url';
 import 'isomorphic-fetch';
 import { logger } from '@cdm-logger/server';
-import { websiteMiddleware } from './website-chakra-antui';
+import { websiteMiddleware } from './website-antui';
 import { corsMiddleware } from './middlewares/cors';
 import { errorMiddleware } from './middlewares/error';
+import { containerMiddleware } from './middlewares/container';
 import { config } from '../config';
 import modules from './modules';
 
@@ -22,12 +23,14 @@ const app = express();
 
 app.use(corsMiddleware);
 app.options('*', corsMiddleware);
+app.use(cookiesMiddleware());
+
+app.use(containerMiddleware);
 
 for (const applyBeforeware of modules.beforewares) {
     applyBeforeware(app);
 }
 
-app.use(cookiesMiddleware());
 
 // By default it uses backend_url port, which may conflict with graphql server.
 const { port: serverPort } = url.parse(config.LOCAL_BACKEND_URL);
@@ -49,6 +52,13 @@ app.use(
 );
 
 app.use(websiteMiddleware);
+
+for (const applyMiddleware of modules.middlewares) {
+    applyMiddleware(app);
+}
+
+// Error handlers
+// app.use(handleAuthErrors);
 
 if (__DEV__) {
     app.use(errorMiddleware);

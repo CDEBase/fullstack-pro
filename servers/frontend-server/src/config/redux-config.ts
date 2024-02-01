@@ -12,20 +12,19 @@ import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
-import { createClientContainer } from './client.service';
 import { rootEpic, epic$ } from './epic-config';
 
-const { apolloClient, container, services } = createClientContainer();
-
-export const epicMiddleware = createEpicMiddleware({
-    dependencies: {
-        apolloClient,
-        routes: modules.getConfiguredRoutes(),
-        services,
-        container,
-        logger,
-    },
-});
+export const epicMiddlewareFunc = (apolloClient, services, container) =>
+    createEpicMiddleware({
+        dependencies: {
+            apolloClient,
+            routes: modules.getConfiguredRoutes(),
+            services,
+            container,
+            logger,
+        },
+    });
+let __CLIENT_REDUX_STORE__;
 
 export const persistConfig = {
     key: REDUX_PERSIST_KEY,
@@ -38,7 +37,7 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (history) => {
+export const createReduxStore = (history, apolloClient, services, container) => {
     const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
         history,
         //other options if needed 
@@ -78,27 +77,38 @@ export const createReduxStore = (history) => {
             initialState,
             persistConfig,
             middleware: [thunkMiddleware, routerMiddleware],
-            epicMiddleware,
+            epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers,
         });
     }
-    if ((module as any).hot) {
-        (module as any).hot.dispose((data) => {
-            // console.log("Saving Redux store:", JSON.stringify(store.getState()));
-            data.store = store;
-            data.history = history;
-        });
-        (module as any).hot.accept('../config/epic-config', () => {
-            // we may need to reload epic always as we don't
-            // know whether it is updated using our `modules`
-            const nextRootEpic = require('./epic-config').rootEpic;
-            // First kill any running epics
-            store.dispatch({ type: 'EPIC_END' });
-            // Now setup the new one
-            epic$.next(nextRootEpic);
-        });
+    // if ((module as any).hot) {
+    //     (module as any).hot.dispose((data) => {
+    //         // console.log("Saving Redux store:", JSON.stringify(store.getState()));
+    //         data.store = store;
+    //         data.history = history;
+    //     });
+    //     (module as any).hot.accept('../config/epic-config', () => {
+    //         // we may need to reload epic always as we don't
+    //         // know whether it is updated using our `modules`
+    //         const nextRootEpic = require('./epic-config').rootEpic;
+    //         // First kill any running epics
+    //         store.dispatch({ type: 'EPIC_END' });
+    //         // Now setup the new one
+    //         epic$.next(nextRootEpic);
+    //     });
+    // }
+    if (container.isBound('ReduxStore')) {
+        container
+            .rebind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
+    } else {
+        container
+            .bind('ReduxStore')
+            .toDynamicValue(() => store)
+            .inRequestScope();
     }
-    container.bind('ReduxStore').toConstantValue(store);
+    __CLIENT_REDUX_STORE__ = store;
     return { store };
 };

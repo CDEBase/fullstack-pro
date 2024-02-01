@@ -1,17 +1,28 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const Dotenv = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 const EnvListPlugin = require('@common-stack/env-list-loader');
 const buildConfig = require('./build.config');
 
-const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
-const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
-);
+const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
+let modulenameRegex;
+
+try {
+    modulenameRegex = new RegExp(
+        `(${modulenameExtra}ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    );
+    console.log('Module Name Regex: ', modulenameRegex);
+} catch (error) {
+    console.error('Error creating regex for module name: ', error);
+}
+
+if (process.env.BUILD_MODULE_TO_INCLUDE) {
+    console.log('Build Module to include (BUILD_MODULE_TO_INCLUDE): ', process.env.BUILD_MODULE_TO_INCLUDE);
+} else {
+    console.log('BUILD_MODULE_TO_INCLUDE is not set.');
+}
 
 const config = {
     entry: {
@@ -63,12 +74,30 @@ const config = {
             },
             { test: /\.graphqls/, use: { loader: 'raw-loader' } },
             { test: /\.(graphql|gql)$/, use: [{ loader: 'graphql-tag/loader' }] },
+            // {
+            //     test: /\.[tj]sx?$/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: { babelrc: true, rootMode: 'upward-optional' },
+            //     },
+            // },
             {
-                test: /\.[tj]sx?$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: { babelrc: true, rootMode: 'upward-optional' },
+                test: /\.tsx?$/, // for TypeScript
+                loader: 'esbuild-loader',
+                options: {
+                    loader: 'tsx', // Or 'ts' for TypeScript without JSX
+                    target: 'es2015', // Specify ECMAScript target version
                 },
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.jsx?$/, // for JavaScript
+                loader: 'esbuild-loader',
+                options: {
+                    loader: 'jsx', // Or 'js' for plain JavaScript
+                    target: 'es2015',
+                },
+                exclude: /node_modules/,
             },
             {
                 // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
@@ -102,7 +131,7 @@ const config = {
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: 'main.js',
+        filename: 'index.js',
         path: path.join(__dirname, 'dist'),
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
@@ -129,14 +158,14 @@ const config = {
                 })),
             ),
         ),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: '../../tools/esm-wrapper.js',
-                    to: 'index.js',
-                },
-            ],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: '../../tools/esm-wrapper.js',
+        //             to: 'index.js',
+        //         },
+        //     ],
+        // }),
     ]),
     target: 'node',
     externals: [

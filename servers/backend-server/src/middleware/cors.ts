@@ -1,7 +1,7 @@
+/* eslint-disable jest/require-hook */
 import * as cors from 'cors';
-import * as express from 'express';
-import { config } from '../config';
 import { logger } from '@cdm-logger/server';
+import { config } from '../config';
 
 const CLIENT_URL = config.CLIENT_URL;
 const BACKEND_URL = config.BACKEND_URL;
@@ -10,6 +10,7 @@ const corsWhitelist = [
     BACKEND_URL,
     CLIENT_URL,
     config.GRAPHQL_URL,
+    // 'http://localhost:3000',
 ];
 logger.info('Cors whitelist: %j', corsWhitelist);
 const corsOptions = {
@@ -24,7 +25,7 @@ const corsOptions = {
             callback(null, true);
         }
     },
-    credentails: false,
+    credentials: true,
 };
 
 export const corsMiddleware = cors(corsOptions);

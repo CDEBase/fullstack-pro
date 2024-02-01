@@ -1,15 +1,30 @@
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 const webpack = require('webpack');
 const path = require('path');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const Dotenv = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
-const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
-const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack*|antd/es/style/default.less|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
-);
+const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
+let modulenameRegex;
+
+try {
+    modulenameRegex = new RegExp(
+        `(${modulenameExtra}@test-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`
+    );
+    console.log('Module Name Regex: ', modulenameRegex);
+} catch (error) {
+    console.error('Error creating regex for module name: ', error);
+}
+
+if (process.env.BUILD_MODULE_TO_INCLUDE) {
+    console.log('Build Module to include (BUILD_MODULE_TO_INCLUDE): ', process.env.BUILD_MODULE_TO_INCLUDE);
+} else {
+    console.log('BUILD_MODULE_TO_INCLUDE is not set.');
+}
 
 const config = ({ buildConfig, indexFilePath, currentDir }) => ({
     entry: {
@@ -63,13 +78,13 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                         : { loader: 'style-loader' },
                     { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
                     { loader: 'postcss-loader', options: { sourceMap: true } },
-                    { loader: 'less-loader', options: { javascriptEnabled: true, sourceMap: true } },
+                    { loader: 'less-loader', options: { lessOptions: { javascriptEnabled: true }, sourceMap: true } },
                 ],
             },
             { test: /\.graphqls/, use: { loader: 'raw-loader' } },
             { test: /\.(graphql|gql)$/, use: [{ loader: 'graphql-tag/loader' }] },
             {
-                test: /\.[tj]sx?$/,
+                test: /\.(mjs|mts|[tj]sx?)$/,
                 use: {
                     loader: 'babel-loader',
                     options: { babelrc: true, rootMode: 'upward-optional' },
@@ -129,6 +144,8 @@ const config = ({ buildConfig, indexFilePath, currentDir }) => ({
                 })),
             ),
         ),
+        new WebpackManifestPlugin({ fileName: 'assets.json' }),
+        new LoadablePlugin(),
     ]),
     target: 'node',
     externals: [

@@ -1,7 +1,9 @@
-import { LOG_LEVEL } from '@env';
+import {
+    LOG_LEVEL
+} from '@env';
 
 const config = {
-    LOG_LEVEL,
+    LOG_LEVEL
 };
 
 export default config;

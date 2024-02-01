@@ -8,6 +8,7 @@ import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageDisable
 import { WebSocketServer } from 'ws';
 import { IModuleService } from '../interfaces';
 import { GraphqlWs } from './graphql-ws';
+import { config } from '../config/env-config';
 
 type ILogger = CdmLogger.ILogger;
 
@@ -30,6 +31,7 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
     }
     return dataSources;
 };
+
 
 let wsServerCleanup: any;
 export class GraphqlServer {
@@ -59,8 +61,16 @@ export class GraphqlServer {
         this.logger.info('GraphqlServer initializing...');
         const apolloServer = this.configureApolloServer();
         await apolloServer.start();
-        apolloServer.applyMiddleware({ app: this.app });
-        this.logger.info('GraphqlServer initialized');
+        const corsOptions = {
+            origin: [config.CLIENT_URL],
+            credentials: true,
+        };
+        apolloServer.applyMiddleware({
+            app: this.app,
+            cors: corsOptions,
+            path: __GRAPHQL_ENDPOINT__,
+        });
+        this.logger.info('GraphqlServer initialized - ', config.CLIENT_URL);
     }
 
     getUserIpAddress(req) {
@@ -126,7 +136,7 @@ export class GraphqlServer {
                 }
                 return {
                     req,
-                    // res,
+                    res,
                     ...context,
                     ...addons,
                 };

@@ -45,7 +45,7 @@ const brokerConfig: BrokerOptions = {
     },
     // Default log level for built-in console logger. It can be overwritten in logger options above.
     // Available values: trace, debug, info, warn, error, fatal
-    logLevel: config.LOG_LEVEL as any,
+    logLevel: config.HEMERA_LOG_LEVEL as any,
 
     // Define transporter.
     // More info: https://moleculer.services/docs/0.14/networking.html

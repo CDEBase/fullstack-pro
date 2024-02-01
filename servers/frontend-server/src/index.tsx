@@ -5,17 +5,20 @@ import 'reflect-metadata';
 import * as React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { loadableReady } from '@loadable/component';
-
+import { removeUniversalPortals } from '@common-stack/components-pro';
+// load environment config
 import './config/public-config';
 
 // add any css files
 
-import Main from './app/MainChakra';
+import Main from './app/MainAnt';
 
 // Virtual (module as any), generated in-memory by zenjs, contains count of backend rebuilds
 // tslint:disable-next-line
 if (__SSR__) {
     loadableReady(() => {
+        removeUniversalPortals(window.__SLOT_FILLS__ || []);
+        
         const rootEl = document.getElementById('root');
         let Comp;
         if (__DEV__) {
