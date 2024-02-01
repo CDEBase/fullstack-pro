@@ -3,13 +3,12 @@ import * as React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
 import { CacheProvider } from '@emotion/react';
-
+import { HistoryRouter } from 'redux-first-history/rr6';
+import { createBrowserHistory } from 'history';
 import createEmotionCache from '../common/createEmotionCache';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
@@ -37,13 +36,13 @@ export class Main extends React.Component<{}, {}> {
                                         {() => (
                                             <ApolloProvider client={client}>
                                                 <PluginArea />
-                                                <ConnectedRouter history={history}>
+                                                <HistoryRouter history={history}>
                                                     {modules.getWrappedRoot(
                                                         <GA4Provider>
                                                             <MainRoute />
                                                         </GA4Provider>,
                                                     )}
-                                                </ConnectedRouter>
+                                                </HistoryRouter>
                                                 ,
                                             </ApolloProvider>
                                         )}
@@ -81,6 +80,7 @@ export class Main extends React.Component<{}, {}> {
             );
         }
     }
+  }
 }
 
 export default Main;

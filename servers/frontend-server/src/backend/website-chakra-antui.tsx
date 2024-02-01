@@ -9,10 +9,10 @@ import { SlotFillProvider, replaceServerFills } from '@common-stack/components-p
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
-import { StaticRouter } from 'react-router';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
+import { HistoryRouter } from 'redux-first-history/rr6';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
@@ -53,11 +53,11 @@ async function renderServerSide(req, res) {
                                         {clientModules.getWrappedRoot(
                                             <ApolloProvider client={client}>
                                                 <PluginArea />
-                                                <StaticRouter location={req.url} context={context}>
+                                                <HistoryRouter history={history}>
                                                     <GA4Provider>
                                                         <MainRoute />
                                                     </GA4Provider>
-                                                </StaticRouter>
+                                                </HistoryRouter>
                                                 ,
                                             </ApolloProvider>,
                                         )}

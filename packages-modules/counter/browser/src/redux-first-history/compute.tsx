@@ -3,11 +3,8 @@ import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 import loadable  from '@loadable/component'
 
-
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
-
-
 
 const Dashboard = loadable(() => import('../common/components/Dashboard'));
 const Counter = loadable(() => import('./components/Counter'));
@@ -17,9 +14,9 @@ export const counterPageStore: IRoute[] = [
     {
         exact: false,
         icon: 'export',
-        component: Dashboard,
+        // component: Dashboard,
         position: IMenuPosition.MIDDLE,
-        name: 'Connected React Router',
+        name: 'Redux First History',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     },
