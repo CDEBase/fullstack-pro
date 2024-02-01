@@ -63,13 +63,13 @@ export class Main extends React.Component<{}, {}> {
                                     <PersistGate persistor={persistor}>
                                         <ApolloProvider client={client}>
                                             <PluginArea />
-                                            <ConnectedRouter history={history}>
+                                            <HistoryRouter history={history}>
                                                 {modules.getWrappedRoot(
                                                     <GA4Provider>
                                                         <MainRoute />
                                                     </GA4Provider>,
                                                 )}
-                                            </ConnectedRouter>
+                                            </HistoryRouter>
                                         </ApolloProvider>
                                     </PersistGate>
                                 </InversifyProvider>
@@ -80,7 +80,6 @@ export class Main extends React.Component<{}, {}> {
             );
         }
     }
-  }
 }
 
 export default Main;

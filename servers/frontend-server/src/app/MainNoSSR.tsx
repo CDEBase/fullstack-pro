@@ -3,7 +3,6 @@ import { ApolloProvider } from '@apollo/client';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
@@ -31,13 +30,11 @@ export class Main extends React.Component<{}, {}> {
                             <PersistGate persistor={persistor}>
                                 <ApolloProvider client={client}>
                                     <PluginArea />
-                                    <ConnectedRouter history={history}>
                                         {modules.getWrappedRoot(
                                             <GA4Provider>
                                                 <MainRoute />
                                             </GA4Provider>,
                                         )}
-                                    </ConnectedRouter>
                                 </ApolloProvider>
                                 ,
                             </PersistGate>
