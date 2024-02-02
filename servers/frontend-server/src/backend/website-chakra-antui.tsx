@@ -11,11 +11,13 @@ import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { HistoryRouter } from 'redux-first-history/rr6';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
+import { createReduxStore } from '../config/redux-config';
 import createEmotionCache from '../common/createEmotionCache';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
@@ -30,7 +32,9 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, store } = req;
+        const { apolloClient: client, container, serviceFunc } = req;
+        const history = createMemoryHistory({ initialEntries: [req.url] });
+        const { store } = createReduxStore(history, client, serviceFunc, container);
 
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         let persistor = persistStore(store); // this is needed for ssr
@@ -58,7 +62,6 @@ async function renderServerSide(req, res) {
                                                         <MainRoute />
                                                     </GA4Provider>
                                                 </HistoryRouter>
-                                                ,
                                             </ApolloProvider>,
                                         )}
                                     </InversifyProvider>
@@ -123,9 +126,9 @@ async function renderServerSide(req, res) {
             );
             let pageContent = ReactDOMServer.renderToStaticMarkup(page);
             pageContent = pageContent.replace(/__STYLESHEET__/, styleSheet);
-            res.status(200);
+            // res.status(200);
             res.send(`<!doctype html>\n${pageContent}`);
-            res.end();
+            // res.end();
         }
     } catch (err) {
         logger.error('SERVER SIDE RENDER failed due to (%j) ', err.message);

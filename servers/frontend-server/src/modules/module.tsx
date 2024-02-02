@@ -8,13 +8,12 @@ import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 const configuredRoutes = features.getConfiguredRoutes2();
-const configuredMenus = features.getConfiguredMenus();
 const routes = renderRoutes2({
     routes: configuredRoutes,
     withRoutesElement: true,
     isServer: __SERVER__,
 })
-// console.log(configuredMenus, configuredRoutes);
+// console.log(configuredRoutes);
 export const MainRoute = (props) => {
     return (
         <ConfigProvider theme={{ hashed: false }}>
