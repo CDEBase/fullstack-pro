@@ -7,13 +7,15 @@ import { SlotFillProvider, replaceServerFills } from '@common-stack/components-p
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Html } from './ssr/html';
+import { createReduxStore } from '../config/redux-config';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 import { cacheMiddleware } from './middlewares/cache';
@@ -24,7 +26,10 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, store } = req;
+        const { apolloClient: client, container, serviceFunc } = req;
+        const history = createMemoryHistory({ initialEntries: [req.url] });
+        const { store } = createReduxStore(history, client, serviceFunc, container);
+
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         let persistor = persistStore(store); // this is needed for ssr
         const extractor = new ChunkExtractor({

@@ -110,5 +110,5 @@ export const createReduxStore = (history, apolloClient, services, container) => 
             .inRequestScope();
     }
     __CLIENT_REDUX_STORE__ = store;
-    return { store };
+    return { store, createReduxHistory };
 };
