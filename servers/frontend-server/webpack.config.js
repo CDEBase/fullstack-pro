@@ -288,7 +288,7 @@ const config = {
             new LoadablePlugin(),
         ])
         .concat(
-            buildConfig.__SSR__
+            buildConfig.__SSR__ || !buildConfig.__DEV__
                 ? []
                 : [
                       new HtmlWebpackPlugin({
@@ -323,7 +323,7 @@ const config = {
             publicPath: '/',
             writeToDisk: (pathname) => /(assets.json|loadable-stats.json)$/.test(pathname),
         },
-        ...(buildConfig.__SSR__
+        ...(buildConfig.__SSR__ && buildConfig.__DEV__
             ? {
                   proxy: {
                       '!(/sockjs-node/**/*|/*.hot-update.{json,js})': {
@@ -337,7 +337,7 @@ const config = {
 };
 
 const ServersConfig = buildConfig.__SSR__ && buildConfig.__SSR_BACKEND__ ? [] : [config];
-if (buildConfig.__SSR__) {
+if (buildConfig.__SSR__ || !buildConfig.__DEV__) {
     ServersConfig.push(
         ServerConfig({
             buildConfig: { ...buildConfig, __CLIENT__: false, __SERVER__: true },
