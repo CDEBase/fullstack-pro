@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-frontend-server",
-    "version": "0.0.59-alpha.54",
+    "version": "0.0.59-alpha.57",
     "private": true,
     "description": "Sample Client server",
     "homepage": "https://github.com/cdmbase/fullstack-pro#readme",
