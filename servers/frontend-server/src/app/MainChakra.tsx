@@ -62,7 +62,7 @@ export class Main extends React.Component<{}, {}> {
                                     <PersistGate persistor={persistor}>
                                         <ApolloProvider client={client}>
                                             <PluginArea />
-                                            <HistoryRouter history={history}>
+                                            <HistoryRouter history={createReduxHistory(store)}>
                                                 {modules.getWrappedRoot(
                                                     <GA4Provider>
                                                         <MainRoute />

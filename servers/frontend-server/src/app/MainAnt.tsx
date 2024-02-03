@@ -17,7 +17,7 @@ import GA4Provider from '../components/GaProvider';
 const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
 const history = createBrowserHistory();
-const { store } = createReduxStore(history, client, serviceFunc(), container);
+const { store, createReduxHistory } = createReduxStore(history, client, serviceFunc(), container);
 let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {
@@ -32,7 +32,7 @@ export class Main extends React.Component<{}, {}> {
                                     {() => (
                                         <ApolloProvider client={client}>
                                             <PluginArea />
-                                            <HistoryRouter history={history}>
+                                            <HistoryRouter history={createReduxHistory(store)}>
                                                 {modules.getWrappedRoot(
                                                     <GA4Provider>
                                                         <MainRoute />
@@ -56,7 +56,7 @@ export class Main extends React.Component<{}, {}> {
                                 <PersistGate persistor={persistor}>
                                     <ApolloProvider client={client}>
                                         <PluginArea />
-                                        <HistoryRouter history={history}>
+                                        <HistoryRouter history={createReduxHistory(store)}>
                                             {modules.getWrappedRoot(
                                                 <GA4Provider>
                                                     <MainRoute />

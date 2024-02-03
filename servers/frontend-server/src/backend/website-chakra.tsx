@@ -55,7 +55,6 @@ async function renderServerSide(req, res) {
                                                     <MainRoute />
                                                 </GA4Provider>
                                             </StaticRouter>
-                                            ,
                                         </ApolloProvider>,
                                     )}
                                 </InversifyProvider>

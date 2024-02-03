@@ -7,7 +7,7 @@ import { State } from '../interfaces';
 
 const CounterComponent: React.FC<StateProps & DispatchProps> = (props) => (
     <div>
-        Counter: {props.count}
+        {`Counter: ${props.count}`}
         <button onClick={props.increment}>+</button>
         <button onClick={props.decrement}>-</button>
     </div>

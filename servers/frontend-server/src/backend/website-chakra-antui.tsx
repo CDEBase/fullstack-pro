@@ -11,13 +11,11 @@ import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
-import { HistoryRouter } from 'redux-first-history/rr6';
+import { StaticRouter } from 'react-router-dom/server';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
-import { createReduxStore } from '../config/redux-config';
 import createEmotionCache from '../common/createEmotionCache';
 import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
@@ -32,13 +30,9 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, serviceFunc } = req;
-        const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history, client, serviceFunc, container);
-
+        const { apolloClient: client, container, store } = req;
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         let persistor = persistStore(store); // this is needed for ssr
-
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
             entrypoints: ['index'],
@@ -57,11 +51,11 @@ async function renderServerSide(req, res) {
                                         {clientModules.getWrappedRoot(
                                             <ApolloProvider client={client}>
                                                 <PluginArea />
-                                                <HistoryRouter history={history}>
+                                                <StaticRouter location={req.url} context={context}>
                                                     <GA4Provider>
                                                         <MainRoute />
                                                     </GA4Provider>
-                                                </HistoryRouter>
+                                                </StaticRouter>
                                             </ApolloProvider>,
                                         )}
                                     </InversifyProvider>
