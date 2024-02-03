@@ -16,7 +16,7 @@ let assetMap;
 const key = 'custom';
 const cache = createCache({ key });
 const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
-async function renderServerSide(req, res) {
+export async function renderServerSideNoSSR(req, res) {
     try {
         let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
         const App = () => (
@@ -78,18 +78,3 @@ async function renderServerSide(req, res) {
         logger.debug(err);
     }
 }
-export const websiteMiddleware = async (req, res, next) => {
-    try {
-        if (req.path.indexOf('.') < 0 && __SSR__) {
-            return await renderServerSide(req, res);
-        } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
-            logger.debug('FRONEND_BUILD_DIR with index.html');
-            res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
-        } else {
-            next();
-        }
-    } catch (e) {
-        logger.error('RENDERING ERROR:', e);
-        return next(e);
-    }
-};
