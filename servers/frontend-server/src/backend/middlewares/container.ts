@@ -7,11 +7,14 @@ import { createClientContainer } from '../../config/client.service';
 export const containerMiddleware = (req, res, next) => {
     const { container, serviceFunc, logger, apolloClient } = createClientContainer(req, res);
     const history = createMemoryHistory({ initialEntries: [req.url] });
-    const { store } = createReduxStore(history, apolloClient, serviceFunc(), container);
+    const services = serviceFunc();
+    const { store } = createReduxStore(history, apolloClient, services, container);
     req.container = container;
     req.apolloClient = apolloClient;
     req.logger = logger;
     req.store = store;
+    req.history = history;
+    req.services = services;
     // Cleanup logic after the response is sent
     res.on('finish', () => {
         try {
@@ -27,6 +30,8 @@ export const containerMiddleware = (req, res, next) => {
             if (req.container.isBound(ClientTypes.ApolloClientFactory)) {
                 req.container.unbind(ClientTypes.ApolloClientFactory);
             }
+            req.services = null;
+            req.history = null;
         } catch (error) {
             console.log('container stats', req.container);
             console.error('Error during container cleanup:', error);
