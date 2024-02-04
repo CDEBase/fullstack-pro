@@ -32,7 +32,7 @@
         "start:dev": "cross-env NODE_ENV=development ENV_FILE=../../config/development/dev.env tsx dist/index.js",
         "start:SSR": "yarn build:SSR && yarn start",
         "start:devSSR": "yarn build:devSSR && yarn start:dev",
-        "start:staging": "cross-env NODE_ENV=staging ENV_FILE=../../config/staging/staging.env tsx dist/index.js",
+        "start:staging": "yarn build && cross-env NODE_ENV=production ENV_FILE=../../config/staging/staging.env tsx dist/index.js",
         "start:test": "cross-env NODE_ENV=test ENV_FILE=../../config/test/test.env tsx dist/index.js",
         "test": "jest",
         "test:debug": "npm test -- --runInBand",
