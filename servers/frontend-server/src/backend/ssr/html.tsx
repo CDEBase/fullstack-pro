@@ -32,7 +32,7 @@ const Html = ({
     emotionIds?: string[];
     assetMap?: string[];
     env: any;
-    fills?: string[],
+    fills?: string[];
     helmet: HelmetServerState;
     extractor: ChunkExtractor;
     stylesInserts?: any[];
@@ -78,6 +78,7 @@ const Html = ({
                 })}
             </head>
             <body {...bodyAttrs}>
+                <noscript>You need to enable JavaScript to run this app.</noscript>
                 <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
                 <script
                     dangerouslySetInnerHTML={{
