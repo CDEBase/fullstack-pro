@@ -30,8 +30,12 @@ export const containerMiddleware = (req, res, next) => {
             if (req.container.isBound(ClientTypes.ApolloClientFactory)) {
                 req.container.unbind(ClientTypes.ApolloClientFactory);
             }
-            req.services = null;
-            req.history = null;
+            if (req.services) {
+                req.services = null;
+            }
+            if (req.history) {
+                req.history = null;
+            }
         } catch (error) {
             console.log('container stats', req.container);
             console.error('Error during container cleanup:', error);
