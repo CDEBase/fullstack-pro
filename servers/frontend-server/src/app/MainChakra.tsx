@@ -19,7 +19,7 @@ import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
 const history = createBrowserHistory();
-const { store } = createReduxStore(history, client, serviceFunc(), container);
+const { store, createReduxHistory } = createReduxStore(history, client, serviceFunc(), container);
 const cache = createEmotionCache();
 let persistor = persistStore(store);
 
@@ -36,14 +36,13 @@ export class Main extends React.Component<{}, {}> {
                                         {() => (
                                             <ApolloProvider client={client}>
                                                 <PluginArea />
-                                                <HistoryRouter history={history}>
+                                                <HistoryRouter history={createReduxHistory(store)}>
                                                     {modules.getWrappedRoot(
                                                         <GA4Provider>
                                                             <MainRoute />
                                                         </GA4Provider>,
                                                     )}
                                                 </HistoryRouter>
-                                                ,
                                             </ApolloProvider>
                                         )}
                                     </PersistGate>

@@ -63,7 +63,6 @@ export class Main extends React.Component<{}, {}> {
                                             )}
                                         </HistoryRouter>
                                     </ApolloProvider>
-                                    ,
                                 </PersistGate>
                             </InversifyProvider>
                         </ReduxProvider>
