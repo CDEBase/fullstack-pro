@@ -1,6 +1,6 @@
 {
     "name": "sample-stack-moleculer-server",
-    "version": "3.0.1-alpha.0",
+    "version": "3.0.1-alpha.2",
     "private": true,
     "description": "My Moleculer microservices project",
     "keywords": [
