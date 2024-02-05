@@ -12,16 +12,17 @@ export { history };
 export const epicMiddlewareFunc = (apolloClient, services, container) =>
     createEpicMiddleware({
         dependencies: {
-        apolloClient,
-        routes: modules.getConfiguredRoutes(),
-        services,
-        container,
-        logger,
-        config: {
-            loadRoot: true,
+            apolloClient,
+            routes: modules.getConfiguredRoutes(),
+            services,
+            container,
+            logger,
+            config: {
+                loadRoot: true,
+                isMobile: true,
+            },
         },
-    },
-});
+    });
 
 export const persistConfig = {
     key: REDUX_PERSIST_KEY,
@@ -36,14 +37,13 @@ export const persistConfig = {
  */
 export const createReduxStore = (history, apolloClient, services, container) => {
     // middleware
-
     const store = createBaseReduxStore({
         scope: 'browser',
         isDebug: __DEBUGGING__,
         isDev: process.env.NODE_ENV === 'development',
         initialState: {},
         persistConfig,
-        middleware: [routerMiddleware],
+        middleware: [],
         epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
         rootEpic: rootEpic as any,
         reducers: { ...modules.reducers },

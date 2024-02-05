@@ -20,6 +20,7 @@ import publicEnv from '../config/public-config';
 import clientModules, { MainRoute } from '../modules';
 import { cacheMiddleware } from './middlewares/cache';
 import GA4Provider from '../components/GaProvider';
+import { renderServerSideNoSSR } from './renderServerSideNoSSR';
 
 let assetMap;
 const antdCache = createAntdCache();
@@ -135,8 +136,7 @@ export const websiteMiddleware = async (req, res, next) => {
                 return await renderServerSide(req, res);
             });
         } else if (req.path.indexOf('.') < 0 && !__SSR__ && req.method === 'GET' && !__DEV__) {
-            logger.debug('FRONEND_BUILD_DIR with index.html');
-            res.sendFile(path.resolve(__FRONTEND_BUILD_DIR__, 'index.html'));
+            return await renderServerSideNoSSR(req, res);
         } else {
             next();
         }

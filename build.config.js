@@ -13,7 +13,7 @@ const config = {
     __SERVER__: false,
     __CLIENT__: true,
     __SSR_BACKEND__: process.env.SSR_BACKEND,
-    __SSR__: process.env.NODE_ENV === 'production' || process.env.SSR === 'true', // enableing SSR only in Production as in Dev we have a issue
+    __SSR__: process.env.SSR === 'true',
     __DEBUGGING__: false,
     __TEST__: false,
     __WEB_DEV_SERVER_PORT__,
