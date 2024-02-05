@@ -1,46 +1,24 @@
 {
-  "$schema": "./node_modules/lerna/schemas/lerna-schema.json",
-  "changelog": true,
-  "command": {
-    "publish": {
-      "registry": "https://registry.npmjs.org",
-      "graphType": "all",
-      "allowBranch": [
-        "publish",
-        "devpublish",
-        "devpublishn2",
-        "devpublish3"
-      ],
-      "message": "chore(release): publish",
-      "ignoreChanges": [
-        "**/__fixtures__/**",
-        "**/__tests__/**",
-        "**/*.md",
-        "**/example/**"
-      ]
+    "$schema": "./node_modules/lerna/schemas/lerna-schema.json",
+    "changelog": true,
+    "command": {
+        "publish": {
+            "registry": "https://registry.npmjs.org",
+            "graphType": "all",
+            "allowBranch": ["publish", "devpublish", "devpublishn2", "devpublish3"],
+            "message": "chore(release): publish",
+            "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md", "**/example/**"]
+        },
+        "version": {
+            "allowBranch": ["master", "develop", "publish", "devpublish", "devpublishn2", "devpublish3"],
+            "private": true,
+            "conventionalCommits": true,
+            "message": "chore: release package(s)"
+        }
     },
-    "version": {
-      "allowBranch": [
-        "master",
-        "develop",
-        "publish",
-        "devpublish",
-        "devpublishn2",
-        "devpublish3"
-      ],
-      "private": true,
-      "conventionalCommits": true,
-      "message": "chore: release package(s)"
-    }
-  },
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "useNx": true,
-  "packages": [
-    "packages-modules/**",
-    "packages/**",
-    "servers/*",
-    "portable-devices/*"
-  ],
-  "version": "3.0.0"
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "useNx": true,
+    "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
+    "version": "3.0.1-alpha.0"
 }
