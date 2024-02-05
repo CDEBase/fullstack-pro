@@ -12,6 +12,7 @@ module.exports = (api) => {
             plugins: [
                 'babel-plugin-dynamic-import-node',
                 '@babel/plugin-transform-destructuring',
+                '@emotion/babel-plugin',
                 '@babel/plugin-transform-modules-commonjs',
                 ['@babel/plugin-transform-for-of'],
                 '@babel/plugin-transform-regenerator',
