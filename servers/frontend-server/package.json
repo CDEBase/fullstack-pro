@@ -100,7 +100,6 @@
         "react-router-config": "^5.1.1",
         "react-router-dom": "^5.3.3",
         "react-transition-group": "^4.3.0",
-        "redis": "^2.8.0",
         "redux": "^4.0.5",
         "redux-logger": "^3.0.6",
         "redux-observable": "^1.2.0",
