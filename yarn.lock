@@ -2238,7 +2238,7 @@
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/components-pro@^0.5.26":
+"@common-stack/components-pro@0.5.26", "@common-stack/components-pro@^0.5.26":
   version "0.5.26"
   resolved "https://registry.yarnpkg.com/@common-stack/components-pro/-/components-pro-0.5.26.tgz#452ceac9ef40cd996366b72cb87ebf7a7e83434f"
   integrity sha512-cgKJxNEKEJhDtLKCneihpPD9IGdiIUtb3giAg7X84FhaPaSLuNRf6W+4Dy5UuW+LSrXzyOjH56QhFwjq4gzxdQ==
