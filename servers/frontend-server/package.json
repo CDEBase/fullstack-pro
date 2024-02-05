@@ -123,7 +123,7 @@
         "pm2": "^5.2.2",
         "raf": "3.4.1",
         "rimraf": "^3.0.2",
-        "tsx": "^3.13.0"
+        "tsx": "^4.7.0"
     },
     "peerDependencies": {
         "body-parser": "*"
