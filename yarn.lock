@@ -2245,7 +2245,7 @@
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/components-pro@^3.0.1-alpha.0":
+"@common-stack/components-pro@3.0.1-alpha.0", "@common-stack/components-pro@^3.0.1-alpha.0":
   version "3.0.1-alpha.0"
   resolved "https://registry.yarnpkg.com/@common-stack/components-pro/-/components-pro-3.0.1-alpha.0.tgz#678196666bff0ba1934765ba6517e87d03e73188"
   integrity sha512-vF1nbsvhzmp9kMSzxVdy06FYR/aAJQeWZyf8LHposR9f6AYkU1RoYAr30AyGuw++URY1zg/gG6hzR2HAEyqu/g==
@@ -27202,7 +27202,7 @@ react-resizable@^1.10.1:
     prop-types "15.x"
     react-draggable "^4.0.3"
 
-react-router-dom@^6.4.0:
+react-router-dom@^6.21.3:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.22.0.tgz#177c8bd27146decbb991eafb5df159f7a9f70035"
   integrity sha512-z2w+M4tH5wlcLmH3BMMOMdrtrJ9T3oJJNsAlBJbwk+8Syxd5WFJ7J5dxMEW0/GEXD1BBis4uXRrNIz3mORr0ag==
@@ -27210,7 +27210,7 @@ react-router-dom@^6.4.0:
     "@remix-run/router" "1.15.0"
     react-router "6.22.0"
 
-react-router@6.22.0, react-router@^6.4.0:
+react-router@6.22.0, react-router@^6.21.3:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.22.0.tgz#a22b44851a79dafc6b944cb418db3e80622b9be1"
   integrity sha512-q2yemJeg6gw/YixRlRnVx6IRJWZD6fonnfZhN1JIOhV2iJCPeRNSH3V1ISwHf+JWcESzLC3BOLD1T07tmO5dmg==
