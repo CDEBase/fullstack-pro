@@ -20,5 +20,5 @@
     "useWorkspaces": true,
     "useNx": true,
     "packages": ["packages-modules/**", "packages/**", "servers/*", "portable-devices/*"],
-    "version": "3.0.1-alpha.2"
+    "version": "3.0.1-alpha.3"
 }
