@@ -122,6 +122,7 @@
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "raf": "3.4.1",
+        "redux-devtools-extension": "^2.13.9",
         "rimraf": "^3.0.2",
         "tsx": "^4.7.0"
     },
