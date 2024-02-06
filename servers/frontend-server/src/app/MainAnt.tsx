@@ -23,6 +23,7 @@ let persistor = persistStore(store);
 export class Main extends React.Component<{}, {}> {
     public render() {
         if (__SSR__) {
+            modules.hydrate(container, window.__APOLLO_STATE__);
             return (
                 <HelmetProvider>
                     <SlotFillProvider>
