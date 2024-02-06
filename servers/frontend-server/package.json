@@ -118,6 +118,7 @@
     "devDependencies": {
         "@babel/polyfill": "7.12.1",
         "@loadable/babel-plugin": "^5.16.1",
+        "redux-devtools-extension": "^2.13.9",
         "cross-env": "^7.0.3",
         "pm2": "^5.2.2",
         "raf": "3.4.1",
