@@ -36,7 +36,7 @@
     "dependencies": {
         "@cdm-logger/client": "^7.0.14",
         "@cdm-logger/server": "^7.0.14",
-        "@common-stack/client-core": "0.5.26",
+        "@common-stack/client-core": "0.5.27",
         "@common-stack/core": "0.5.26",
         "@common-stack/server-core": "0.5.26",
         "@common-stack/store-mongo": "0.5.26",
