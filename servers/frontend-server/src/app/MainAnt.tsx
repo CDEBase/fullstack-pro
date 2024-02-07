@@ -20,41 +20,16 @@ const history = createBrowserHistory();
 const { store } = createReduxStore(history, client, serviceFunc(), container);
 let persistor = persistStore(store);
 
-export class Main extends React.Component<{}, {}> {
-    public render() {
-        if (__SSR__) {
-            modules.hydrate(container, window.__APOLLO_STATE__);
-            return (
-                <HelmetProvider>
-                    <SlotFillProvider>
-                        <ReduxProvider store={store}>
-                            <InversifyProvider container={container} modules={modules}>
-                                <PersistGate loading={null} persistor={persistor}>
-                                    {() => (
-                                        <ApolloProvider client={client}>
-                                            <PluginArea />
-                                            <ConnectedRouter history={history}>
-                                                {modules.getWrappedRoot(
-                                                    <GA4Provider>
-                                                        <MainRoute />
-                                                    </GA4Provider>,
-                                                )}
-                                            </ConnectedRouter>
-                                        </ApolloProvider>
-                                    )}
-                                </PersistGate>
-                            </InversifyProvider>
-                        </ReduxProvider>
-                    </SlotFillProvider>
-                </HelmetProvider>
-            );
-        } else {
-            return (
-                <HelmetProvider>
-                    <SlotFillProvider>
-                        <ReduxProvider store={store}>
-                            <InversifyProvider container={container} modules={modules}>
-                                <PersistGate persistor={persistor}>
+const Main = () => {
+    if (__SSR__) {
+        modules.hydrate(container, window.__APOLLO_STATE__);
+        return (
+            <HelmetProvider>
+                <SlotFillProvider>
+                    <ReduxProvider store={store}>
+                        <InversifyProvider container={container} modules={modules}>
+                            <PersistGate loading={null} persistor={persistor}>
+                                {() => (
                                     <ApolloProvider client={client}>
                                         <PluginArea />
                                         <ConnectedRouter history={history}>
@@ -65,15 +40,38 @@ export class Main extends React.Component<{}, {}> {
                                             )}
                                         </ConnectedRouter>
                                     </ApolloProvider>
-                                    ,
-                                </PersistGate>
-                            </InversifyProvider>
-                        </ReduxProvider>
-                    </SlotFillProvider>
-                </HelmetProvider>
-            );
-        }
+                                )}
+                            </PersistGate>
+                        </InversifyProvider>
+                    </ReduxProvider>
+                </SlotFillProvider>
+            </HelmetProvider>
+        );
+    } else {
+        return (
+            <HelmetProvider>
+                <SlotFillProvider>
+                    <ReduxProvider store={store}>
+                        <InversifyProvider container={container} modules={modules}>
+                            <PersistGate persistor={persistor}>
+                                <ApolloProvider client={client}>
+                                    <PluginArea />
+                                    <ConnectedRouter history={history}>
+                                        {modules.getWrappedRoot(
+                                            <GA4Provider>
+                                                <MainRoute />
+                                            </GA4Provider>,
+                                        )}
+                                    </ConnectedRouter>
+                                </ApolloProvider>
+                                ,
+                            </PersistGate>
+                        </InversifyProvider>
+                    </ReduxProvider>
+                </SlotFillProvider>
+            </HelmetProvider>
+        );
     }
-}
+};
 
 export default Main;

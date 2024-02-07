@@ -24,8 +24,7 @@ const { store } = createReduxStore(history, client, serviceFunc(), container);
 const cache = createEmotionCache();
 let persistor = persistStore(store);
 
-export class Main extends React.Component<{}, {}> {
-    public render() {
+const Main = () => {
         if (__SSR__) {
             modules.hydrate(container, window.__APOLLO_STATE__);
             return (
@@ -82,6 +81,5 @@ export class Main extends React.Component<{}, {}> {
             );
         }
     }
-}
 
 export default Main;
