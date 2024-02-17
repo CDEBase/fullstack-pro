@@ -235,7 +235,7 @@ const config = {
                   typeof STORYBOOK_MODE === 'undefined'
                       ? [
                             new WaitOnWebpackPlugin(
-                                `tcp:${buildConfig.__SERVER_HOST__}:${buildConfig.__API_SERVER_PORT__}`,
+                                `tcp:${buildConfig.__LOCAL_SERVER_HOST__}:${buildConfig.__API_SERVER_PORT__}`,
                             ),
                         ]
                       : [],
