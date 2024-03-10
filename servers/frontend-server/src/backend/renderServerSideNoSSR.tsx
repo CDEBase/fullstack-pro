@@ -4,7 +4,7 @@ import { Html } from './ssr/html';
 import Helmet from 'react-helmet';
 import path from 'path';
 import fs from 'fs';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor } from '@loadable/server';
 import { CacheProvider } from '@emotion/react';

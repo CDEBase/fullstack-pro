@@ -39,9 +39,8 @@ const CounterView = ({
       {renderMetaData()}
       <section>
           <p>
-            Current counter, is {counter?.amount} and cached data. This is being stored
-            server-side in the database and using Apollo subscription for
-            real-time updates.
+            {`Current counter, is ${counter?.amount} and cached data. This is being stored
+            server-side in the database and using Apollo subscription for real-time updates.`}
           </p>
           <button id="graphql-button" color="primary" onClick={addCounter(1)}>
             Click to increase counter
@@ -65,9 +64,8 @@ const CounterView = ({
       </section>
       <section>
         <p>
-          Current reduxCount, is {reduxCount}. This is being stored
-            client-side with Redux.
-          </p>
+          {`Current reduxCount, is ${reduxCount}. This is being stored client-side with Redux.`}
+        </p>
         <button
           id="redux-button"
           color="primary"
@@ -78,9 +76,8 @@ const CounterView = ({
       </section>
       <section>
         <p>
-          Current apolloLinkStateCount, is {counterState}. This is being
-            stored client-side with Apollo Link State.
-          </p>
+          {`Current apolloLinkStateCount, is ${counterState}. This is being stored client-side with Apollo Link State.`}
+        </p>
         <button
           id="apollo-link-button"
           color="primary"

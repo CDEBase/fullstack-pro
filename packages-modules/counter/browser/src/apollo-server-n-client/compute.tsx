@@ -11,7 +11,7 @@ export const counterPageStore: any[] = [
         exact: false,
         icon: 'export',
         key: 'dashboard',
-        component: Dashboard,
+        // component: Dashboard,
         tab: 'Apollo Server',
         position: IMenuPosition.MIDDLE,
         name: 'Apollo Server',
