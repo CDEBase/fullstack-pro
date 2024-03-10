@@ -118,6 +118,7 @@
         "html-to-text": "^8.0.0",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-native": "0.71.14",
         "react-native-gesture-handler": "~2.9.0"
     },
     "dependencies": {
@@ -154,6 +155,7 @@
         "@babel/register": "^7.18.9",
         "@babel/runtime": "^7.20.1",
         "@common-stack/env-list-loader": "0.5.8",
+        "@emotion/babel-plugin": "^11.11.0",
         "@graphql-codegen/add": "^2.0.2",
         "@graphql-codegen/cli": "^1.21.8",
         "@graphql-codegen/fragment-matcher": "^2.0.1",

@@ -3,12 +3,11 @@ import { ApolloProvider } from '@apollo/client';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { HistoryRouter } from 'redux-first-history/rr6';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
-
+import { HistoryRouter } from 'redux-first-history/rr6';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { MainRoute } from '../modules';
