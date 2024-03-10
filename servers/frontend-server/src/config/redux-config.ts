@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
-import { createReduxHistoryContext } from "redux-first-history";
+import { createEnhancer, reducer } from 'redux-data-router';
 import { persistReducer } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
@@ -37,14 +37,9 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (history, apolloClient, services, container) => {
-    const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
-        history,
-        //other options if needed 
-    });
-
+export const createReduxStore = (apolloClient, services, container, router) => {
     const reducers = {
-        router: routerReducer,
+        router: reducer,
         ...modules.reducers,
     };
 
@@ -54,13 +49,7 @@ export const createReduxStore = (history, apolloClient, services, container) => 
         store = (module as any).hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
-        store.replaceReducer(
-            persistReducer(
-                persistConfig,
-                combineReducers(reducers),
-            ),
-        );
-        // store.replaceReducer(storeReducer((module as any).hot.data.history || history));
+        store.replaceReducer(persistReducer(persistConfig, combineReducers(reducers)));
     } else {
         // If we have preloaded state, save it.
         const initialState = __CLIENT__
@@ -76,28 +65,13 @@ export const createReduxStore = (history, apolloClient, services, container) => 
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [thunkMiddleware, routerMiddleware],
+            middleware: [thunkMiddleware],
+            enhancers: [createEnhancer(router)],
             epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers,
         });
     }
-    // if ((module as any).hot) {
-    //     (module as any).hot.dispose((data) => {
-    //         // console.log("Saving Redux store:", JSON.stringify(store.getState()));
-    //         data.store = store;
-    //         data.history = history;
-    //     });
-    //     (module as any).hot.accept('../config/epic-config', () => {
-    //         // we may need to reload epic always as we don't
-    //         // know whether it is updated using our `modules`
-    //         const nextRootEpic = require('./epic-config').rootEpic;
-    //         // First kill any running epics
-    //         store.dispatch({ type: 'EPIC_END' });
-    //         // Now setup the new one
-    //         epic$.next(nextRootEpic);
-    //     });
-    // }
     if (container.isBound('ReduxStore')) {
         container
             .rebind('ReduxStore')
@@ -109,6 +83,5 @@ export const createReduxStore = (history, apolloClient, services, container) => 
             .toDynamicValue(() => store)
             .inRequestScope();
     }
-    __CLIENT_REDUX_STORE__ = store;
-    return { store, createReduxHistory };
+    return { store };
 };

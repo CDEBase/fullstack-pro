@@ -7,7 +7,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { HelmetProvider } from 'react-helmet-async';
 import { CacheProvider } from '@emotion/react';
-import { HistoryRouter } from 'redux-first-history/rr6';
 import { createBrowserHistory } from 'history';
 import createEmotionCache from '../common/createEmotionCache';
 import { createReduxStore } from '../config/redux-config';

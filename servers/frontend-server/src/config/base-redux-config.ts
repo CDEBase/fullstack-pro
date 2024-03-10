@@ -4,32 +4,23 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-import {
-    createStore,
-    combineReducers,
-    applyMiddleware,
-    StoreEnhancer,
-    Middleware,
-    Action,
-    ReducersMapObject,
-    PreloadedState,
-} from 'redux';
+import { configureStore, combineReducers, Tuple } from '@reduxjs/toolkit';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
-import { composeWithDevTools } from "redux-devtools-extension";
 
 interface IReduxStore<S = any> {
     scope: 'browser' | 'server' | 'native' | 'ElectronMain';
     isDebug: boolean;
     isDev: boolean;
-    reducers: ReducersMapObject<S>;
-    rootEpic?: Epic<Action<S>, Action<any>, void, any>;
-    epicMiddleware?: EpicMiddleware<Action<S>, Action<any>>;
-    preMiddleware?: Middleware[];
-    postMiddleware?: Middleware[];
-    middleware?: Middleware[];
-    initialState: PreloadedState<S>;
-    persistConfig?: PersistConfig<S, any>;
+    reducers: any; // Use slices for reducers when using Redux Toolkit
+    enhancers?: any[];
+    rootEpic?: Epic;
+    epicMiddleware?: EpicMiddleware<any, any, S, any>;
+    preMiddleware?: any[];
+    postMiddleware?: any[];
+    middleware?: any[];
+    initialState?: S;
+    persistConfig?: PersistConfig<S>;
 }
 /**
  * Add any reducers required for this app dirctly in to
@@ -41,61 +32,43 @@ export const createReduxStore = ({
     isDev,
     reducers,
     rootEpic,
+    enhancers = [],
     epicMiddleware,
-    preMiddleware,
-    postMiddleware,
-    middleware,
-    initialState = {},
+    preMiddleware = [],
+    postMiddleware = [],
+    middleware = [],
+    initialState,
     persistConfig,
 }: IReduxStore<any>) => {
     const isBrowser = scope === 'browser';
     const isElectronMain = scope === 'ElectronMain';
+
+    const rootReducer = combineReducers(reducers);
+    const persistedReducer = persistConfig && isBrowser ? persistReducer(persistConfig, rootReducer) : rootReducer;
+
     /**
      * Add middleware that required for this app.
      */
 
-    const middlewares: Middleware[] = [];
-    // add epicMiddleware
-    if (epicMiddleware) {
-        middlewares.push(epicMiddleware);
-    }
-    if (preMiddleware) {
-        middlewares.unshift(...preMiddleware);
-    }
-    // Add redux logger during development only
-    if ((isDev || isDebug) && isBrowser) {
-        const { createLogger } = require('redux-logger');
+    // Configure middlewares
+    const middlewares = [
+        ...preMiddleware,
+        ...(epicMiddleware ? [epicMiddleware] : []),
+        ...middleware,
+        ...postMiddleware,
+    ];
 
-        middlewares.push(
-            createLogger({
-                level: 'info',
-                collapsed: true,
-            }),
-        );
-    }
+    const store = configureStore({
+        reducer: persistedReducer as any,
+        middleware: () => new Tuple(...middlewares),
 
-    if (middleware) {
-        middlewares.push(...middleware);
-    }
+        devTools: isDev || isDebug,
+        preloadedState: initialState,
+        enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),
+    });
 
-    if (postMiddleware) {
-        middlewares.push(...postMiddleware);
-    }
-
-    const enhancers: () => StoreEnhancer<any>[] = () => [applyMiddleware(...middlewares)];
-
-    const composeEnhancers: any = (typeof window === 'undefined')
-        ? composeWithDevTools
-        : ((isDev || isDebug) && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || composeWithDevTools;
-
-    const rootReducer = combineReducers(reducers);
-    const persistedReducer = persistConfig ? persistReducer(persistConfig, rootReducer) : rootReducer;
-    const store = createStore(persistedReducer, initialState, composeEnhancers(...enhancers()));
-
-    if (isBrowser || isElectronMain || __SSR__) {
-        if (epicMiddleware) {
-            epicMiddleware.run(rootEpic);
-        }
+    if ((isBrowser || isElectronMain || __SSR__) && epicMiddleware && rootEpic) {
+        epicMiddleware.run(rootEpic);
     }
 
     return store;
