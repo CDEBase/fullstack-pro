@@ -82,10 +82,6 @@ async function renderServerSide(req, res) {
         let content = '';
 
         try {
-            await clientModules.beforeSSR({
-                request: req,
-                module: clientModules,
-            });
             content = await getDataFromTree(Root);
         } catch (e: any) {
             console.log('Apollo Error! Rendering result anyways');
