@@ -2284,6 +2284,11 @@
   dependencies:
     strip-comments "^2.0.1"
 
+"@common-stack/remix-router-redux@3.0.3-alpha.1":
+  version "3.0.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@common-stack/remix-router-redux/-/remix-router-redux-3.0.3-alpha.1.tgz#15295599d81f8330be4ef0cb7ad9b013ec6ac2cc"
+  integrity sha512-qs/3wRp2bjsvpqKJgx9G1F8V+J7KLmIlDPFFuLGB8OImvtSIoY5FVrbQVRBwbCt8+FzhJNpzzC9aQFLE/QMFGA==
+
 "@common-stack/server-core@3.0.3-alpha.0":
   version "3.0.3-alpha.0"
   resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-3.0.3-alpha.0.tgz#2ec0279e6d56c9a127ab06e94accdf71b0389c67"

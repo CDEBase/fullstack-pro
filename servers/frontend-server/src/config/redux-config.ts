@@ -6,13 +6,12 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from '@reduxjs/toolkit';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { createEpicMiddleware } from 'redux-observable';
-import { createEnhancer, reducer } from '@cdmbase/redux-data-router';
+import { createRouterReducer, createRouterMiddleware } from '@common-stack/remix-router-redux';
 import { persistReducer } from 'redux-persist';
-import thunkMiddleware from 'redux-thunk';
 import { REDUX_PERSIST_KEY } from '@common-stack/client-core';
 import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
-import { rootEpic, epic$ } from './epic-config';
+import { rootEpic } from './epic-config';
 
 export const epicMiddlewareFunc = (apolloClient, services, container) =>
     createEpicMiddleware({
@@ -39,7 +38,7 @@ export const persistConfig = {
  */
 export const createReduxStore = (apolloClient, services, container, router) => {
     const reducers = {
-        router: reducer,
+        router: createRouterReducer({}),
         ...modules.reducers,
     };
 
@@ -65,8 +64,7 @@ export const createReduxStore = (apolloClient, services, container, router) => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [thunkMiddleware],
-            enhancers: [createEnhancer(router)],
+            middleware: [createRouterMiddleware({ router } as any)],
             epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers,

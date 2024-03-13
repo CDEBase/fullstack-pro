@@ -57,15 +57,12 @@ export const createReduxStore = ({
         ...middleware,
         ...postMiddleware,
     ];
-    const allEnhancers = () => [applyMiddleware(...middlewares)];
     const store = configureStore({
         reducer: persistedReducer as any,
-        // middleware: () => new Tuple(...middlewares),
-
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares),
         devTools: isDev || isDebug,
         preloadedState: initialState,
-        // enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),
-        enhancers: [compose(...allEnhancers())] as any
+        enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),
     });
 
     if ((isBrowser || isElectronMain || __SSR__) && epicMiddleware && rootEpic) {

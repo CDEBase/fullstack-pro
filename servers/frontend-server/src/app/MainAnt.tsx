@@ -7,6 +7,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { persistStore } from 'redux-persist';
 import { HelmetProvider } from 'react-helmet-async';
+import { createReduxRouter } from '@common-stack/remix-router-redux';
+import { createBrowserHistory } from 'history';
 import { createReduxStore } from '../config/redux-config';
 import { createClientContainer } from '../config/client.service';
 import modules, { createMainRoute } from '../modules/module';
@@ -16,7 +18,9 @@ const { apolloClient: client, container, serviceFunc } = createClientContainer()
 
 const mainRoute = createMainRoute({ client });
 const router = createBrowserRouter(mainRoute);
+const browserHistory = createBrowserHistory();
 const { store } = createReduxStore(client, serviceFunc(), container, router);
+createReduxRouter({store, history: browserHistory, router});
 let persistor = persistStore(store);
 
 export class Main extends React.Component<{}, {}> {

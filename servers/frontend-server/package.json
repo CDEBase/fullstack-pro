@@ -54,6 +54,7 @@
         "@common-stack/client-core": "3.0.3-alpha.2",
         "@common-stack/client-react": "3.0.3-alpha.2",
         "@common-stack/core": "3.0.3-alpha.0",
+        "@common-stack/remix-router-redux": "3.0.3-alpha.1",
         "@common-stack/server-core": "3.0.3-alpha.0",
         "@emotion/css": "^11.10.0",
         "@emotion/react": "^11.10.4",
