@@ -4,7 +4,6 @@ import { mergeMap, takeUntil } from 'rxjs/operators';
 import modules from '../modules';
 
 export const epic$ = new BehaviorSubject(combineEpics(...modules.epics));
-console.log('=-===Epic', modules.epics)
 // Since we're using mergeMap, by default any new
 // epic that comes in will be merged into the previous
 // one, unless an EPIC_END action is dispatched first,
