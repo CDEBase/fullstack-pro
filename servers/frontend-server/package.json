@@ -100,7 +100,7 @@
         "react-router": "^6.21.3",
         "react-router-dom": "^6.21.3",
         "react-transition-group": "^4.3.0",
-        "redux-data-router": "^1.0.1",
+        "@cdmbase/redux-data-router": "^1.0.10",
         "redux-logger": "^3.0.6",
         "redux-observable": "^1.2.0",
         "redux-persist": "^6.0.0",

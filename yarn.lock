@@ -2032,13 +2032,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.23.5":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.0.tgz#584c450063ffda59697021430cb47101b085951e"
-  integrity sha512-Chk32uHMg6TnQdvw2e9IlqPpFX/6NLuK0Ys2PqLb7/gL5uFn9mXvK715FGLlOLQrcO4qIkNHkvPGktzzXexsFw==
-  dependencies:
-    regenerator-runtime "^0.14.0"
-
 "@babel/runtime@^7.7.6":
   version "7.23.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.9.tgz#47791a15e4603bb5f905bc0753801cf21d6345f7"
@@ -2174,6 +2167,11 @@
     "@cdm-logger/core" "^7.0.14"
     bunyan "^1.8.15"
     bunyan-prettystream-circularsafe "^0.3.1"
+
+"@cdmbase/redux-data-router@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@cdmbase/redux-data-router/-/redux-data-router-1.0.10.tgz#79e9761145ff9ae5621e2a6751d01c70c41fdeab"
+  integrity sha512-spiY/0UP/XWKfR535kFoYNZ+W8TMG/mBiGFFks2R+2zqfglboogo68lARFAZYZc6ax1tNvnzUOqmmZ7IOPBzFA==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -6435,15 +6433,6 @@
     lodash "^4.17.21"
     prop-types "^15.8.1"
 
-"@redux-devtools/core@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/core/-/core-4.0.0.tgz#38fc67e1c423d4b8487538f7b4aa03e2893b27be"
-  integrity sha512-9smPIgjVxSwCmA35SOwy/ZmlVdKfrdWQHxZdBeXw3G4u+guCl7hBLaOqqUhgceKdsX0IkdIr0v5TLpm2gQT2oQ==
-  dependencies:
-    "@babel/runtime" "^7.23.5"
-    "@redux-devtools/instrument" "^2.2.0"
-    lodash "^4.17.21"
-
 "@redux-devtools/dock-monitor@^3.0.1":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@redux-devtools/dock-monitor/-/dock-monitor-3.0.2.tgz#94bcf41b96ca58393407311202df54652fa9c9b1"
@@ -6455,27 +6444,10 @@
     prop-types "^15.8.1"
     react-dock "^0.6.0"
 
-"@redux-devtools/dock-monitor@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/dock-monitor/-/dock-monitor-4.0.0.tgz#cadc89ea1919af8a04126731fc1e0bf4f440aa48"
-  integrity sha512-SRAn5gYv0eH4B9nnfp+V/yF9lNVYaohAl3+KnjfhEkkcoWQFpdCHGkKJjW6Uuc+CYtqZ0t3GmKHD5RdXgtOxuw==
-  dependencies:
-    "@babel/runtime" "^7.23.5"
-    parse-key "^0.2.1"
-    react-dock "^0.6.0"
-
 "@redux-devtools/instrument@^2.1.1":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@redux-devtools/instrument/-/instrument-2.1.2.tgz#fe66ad414fe37bfc5f02a0489cc60f039a687fc2"
   integrity sha512-MMA6BzJkrqPmDpGxyegO/GLCVGLF1vhphGArYZkfP8sDLBp2RxFprdH2fcUsyJZQC4WxAd5pIRJzr7mynOb2lg==
-  dependencies:
-    "@babel/runtime" "^7.23.2"
-    lodash "^4.17.21"
-
-"@redux-devtools/instrument@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/instrument/-/instrument-2.2.0.tgz#bc9d015da693aa9fabdb32f4fd07ee4c1328eb95"
-  integrity sha512-HKaL+ghBQ4ZQkM/kEQIKx8dNwz4E1oeiCDfdQlpPXxEi/BrisyrFFncAXb1y2HIJsLV9zSvQUR2jRtMDWgfi8w==
   dependencies:
     "@babel/runtime" "^7.23.2"
     lodash "^4.17.21"
@@ -6491,18 +6463,6 @@
     "@types/redux-devtools-themes" "^1.0.2"
     lodash.debounce "^4.0.8"
     prop-types "^15.8.1"
-    react-json-tree "^0.18.0"
-    redux-devtools-themes "^1.0.0"
-
-"@redux-devtools/log-monitor@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@redux-devtools/log-monitor/-/log-monitor-5.0.0.tgz#2e87b06af9fd845827cc09a77d1497c47d12e7c7"
-  integrity sha512-6Wy9QWe6hJwEhjLFKpH2feRDNOu7/sF2Wp2+nXuzxJhDJsR7FZ9U+F3PzPv25dhnb8Bh4lKQihJ1aTvyj9Oyig==
-  dependencies:
-    "@babel/runtime" "^7.23.5"
-    "@types/lodash.debounce" "^4.0.9"
-    "@types/redux-devtools-themes" "^1.0.3"
-    lodash.debounce "^4.0.8"
     react-json-tree "^0.18.0"
     redux-devtools-themes "^1.0.0"
 
@@ -7974,13 +7934,6 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.debounce@^4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@types/lodash.debounce/-/lodash.debounce-4.0.9.tgz#0f5f21c507bce7521b5e30e7a24440975ac860a5"
-  integrity sha512-Ma5JcgTREwpLRwMM+XwBR7DaWe96nC38uCBDFKZWbNKD+osjVzdpnUSwBcqCptrp16sSOLBAUb50Car5I0TCsQ==
-  dependencies:
-    "@types/lodash" "*"
-
 "@types/lodash@*", "@types/lodash@^4.14.178", "@types/lodash@^4.14.182", "@types/lodash@^4.14.191":
   version "4.14.200"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.200.tgz#435b6035c7eba9cdf1e039af8212c9e9281e7149"
@@ -8222,13 +8175,6 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/redux-devtools-themes/-/redux-devtools-themes-1.0.2.tgz#e632d89e939108971124bbfaa33f23fb80a40afb"
   integrity sha512-91K1hPGDAEQNb/Re3PdBOQSNh/pswy/14DSStyyKnjJ4pM0nupmk1AS3Tf231yVrj+LfpFmdCGxVAm5dtqxS3g==
-  dependencies:
-    "@types/base16" "*"
-
-"@types/redux-devtools-themes@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@types/redux-devtools-themes/-/redux-devtools-themes-1.0.3.tgz#fd96db006b2b6ba133a1aff8ef3d520718aa0c4b"
-  integrity sha512-KqiQ2+6VTb1Yn02+ZNQsB0XcoJTu/W4AhnIUaeTnkVFie5YWMoeSpW4IOFYJ2/HJ+wi1kLw+PHDgjZ3t+M6IRw==
   dependencies:
     "@types/base16" "*"
 
@@ -27648,11 +27594,6 @@ redis-parser@^3.0.0:
   integrity sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==
   dependencies:
     redis-errors "^1.0.0"
-
-redux-data-router@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/redux-data-router/-/redux-data-router-1.0.1.tgz#138ebfdcb637b447a97d27377d9434f75cdd198c"
-  integrity sha512-NBLawYNFfCYO0Qv8jrpcaYqa4MnfnVrqfDmTrm61CWZles5bs/eEMwFqZx1yThVmr2y+EkDufxLLASyUFm3W7g==
 
 redux-devtools-extension@^2.13.9:
   version "2.13.9"

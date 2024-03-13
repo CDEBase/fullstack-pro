@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-import { configureStore, combineReducers, Tuple } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, Tuple, applyMiddleware, compose } from '@reduxjs/toolkit';
 import { EpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, PersistConfig } from 'redux-persist';
 
@@ -57,14 +57,15 @@ export const createReduxStore = ({
         ...middleware,
         ...postMiddleware,
     ];
-
+    const allEnhancers = () => [applyMiddleware(...middlewares)];
     const store = configureStore({
         reducer: persistedReducer as any,
-        middleware: () => new Tuple(...middlewares),
+        // middleware: () => new Tuple(...middlewares),
 
         devTools: isDev || isDebug,
         preloadedState: initialState,
-        enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),
+        // enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),
+        enhancers: [compose(...allEnhancers())] as any
     });
 
     if ((isBrowser || isElectronMain || __SSR__) && epicMiddleware && rootEpic) {
