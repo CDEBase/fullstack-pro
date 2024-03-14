@@ -1,25 +1,30 @@
-/// <reference path='../../../../typings/index.d.ts' />
 import * as React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/index.js';
 import { SlotFillProvider } from '@common-stack/components-pro';
+import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
+import { createReduxRouter } from '@common-stack/remix-router-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { persistStore } from 'redux-persist';
 import { HelmetProvider } from 'react-helmet-async';
 import { CacheProvider } from '@emotion/react';
-import createEmotionCache from '../common/createEmotionCache';
+import { createBrowserHistory } from 'history';
+
 import { createReduxStore } from '../config/redux-config';
+import createEmotionCache from '../common/createEmotionCache';
 import { createClientContainer } from '../config/client.service';
 import modules, { createMainRoute } from '../modules/module';
 import GA4Provider from '../components/GaProvider';
-import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 
 const { apolloClient: client, container, serviceFunc } = createClientContainer();
 
 const mainRoute = createMainRoute({ client });
 const router = createBrowserRouter(mainRoute);
+const browserHistory = createBrowserHistory();
 const { store } = createReduxStore(client, serviceFunc(), container, router);
+createReduxRouter({store, history: browserHistory, router});
+const cache = createEmotionCache();
 let persistor = persistStore(store);
 
 const Main = () => {
