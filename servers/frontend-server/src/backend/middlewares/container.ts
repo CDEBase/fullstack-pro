@@ -1,19 +1,19 @@
 import { ClientTypes } from '@common-stack/core';
-import { createMemoryHistory } from 'history';
+import { createMemoryRouter } from 'react-router-dom';
+import { createMainRoute } from '../../modules/module';
 import { createReduxStore } from '../../config/redux-config';
 import { createClientContainer } from '../../config/client.service';
 
 // Middleware to attach child container to the request and clean up after response
 export const containerMiddleware = (req, res, next) => {
     const { container, serviceFunc, logger, apolloClient } = createClientContainer(req, res);
-    const history = createMemoryHistory({ initialEntries: [req.url] });
+    const router = createMemoryRouter(createMainRoute(apolloClient));
     const services = serviceFunc();
-    const { store } = createReduxStore(history, apolloClient, services, container);
+    const { store } = createReduxStore(apolloClient, services, container, router);
     req.container = container;
     req.apolloClient = apolloClient;
     req.logger = logger;
     req.store = store;
-    req.history = history;
     req.services = services;
     // Cleanup logic after the response is sent
     res.on('finish', () => {
@@ -32,9 +32,6 @@ export const containerMiddleware = (req, res, next) => {
             }
             if (req.services) {
                 req.services = null;
-            }
-            if (req.history) {
-                req.history = null;
             }
         } catch (error) {
             console.log('container stats', req.container);

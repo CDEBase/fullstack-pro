@@ -37,4 +37,20 @@ export const MainRoute = (props) => {
         </ConfigProvider>
     );
 }
+
+export const createMainRoute = (args: any) => {
+    const routes = renderRoutes2({ 
+        routes: configuredRoutes, 
+        isServer: __SERVER__, 
+        // withRoutesElement: !__SERVER__,
+        loaderArgs: args,
+    });
+    // console.log('------routes', routes);
+    return [{
+        path: '/',
+        element: <MainRoute />,
+        children: routes,
+    }];
+};
+
 export default features;
