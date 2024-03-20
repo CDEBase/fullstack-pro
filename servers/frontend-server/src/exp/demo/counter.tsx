@@ -1,7 +1,10 @@
+import { useParams } from '@remix-run/react';
+
 export default function Counter() {
+  const params = useParams();
   return (
     <div>
-      <h5> - Counter</h5>
+      <p>Count: {params?.num ?? 0}</p>
     </div>
   )
 }
