@@ -128,7 +128,6 @@
         "pm2": "^5.2.2",
         "raf": "3.4.1",
         "redux-devtools-extension": "^2.13.9",
-        "remix-json-routes": "^0.1.1",
         "rimraf": "^3.0.2",
         "tsx": "^4.7.0",
         "typescript": "^5.1.6",
