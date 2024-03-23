@@ -11656,6 +11656,15 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-codegen@^4.1.0:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-codegen/-/babel-plugin-codegen-4.1.5.tgz#01a24e3014fb13207bca3cb4fad16d9824ea8cfb"
+  integrity sha512-mId3XW/ndFe7kqUdDUPvMhzYC7ST2gC+C20pO2jVVRQqlHrB1KbMpI/mpawX3DKkAmAuAzWVcBFHb5ULRyNl4A==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    babel-plugin-macros "^3.0.1"
+    require-from-string "^2.0.2"
+
 babel-plugin-component@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-component/-/babel-plugin-component-1.1.1.tgz#9b023a23ff5c9aae0fd56c5a18b9cab8c4d45eea"
@@ -11707,7 +11716,7 @@ babel-plugin-jest-hoist@^29.6.3:
     "@types/babel__core" "^7.1.14"
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-macros@^3.1.0:
+babel-plugin-macros@^3.0.1, babel-plugin-macros@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-macros/-/babel-plugin-macros-3.1.0.tgz#9ef6dc74deb934b4db344dc973ee851d148c50c1"
   integrity sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==
@@ -30503,11 +30512,6 @@ remedial@^1.0.7:
   resolved "https://registry.yarnpkg.com/remedial/-/remedial-1.0.8.tgz#a5e4fd52a0e4956adbaf62da63a5a46a78c578a0"
   integrity sha512-/62tYiOe6DzS5BqVsNpH/nkGlX45C/Sp6V+NtiN6JQNS1Viay7cWkazmRkrQrdFj2eshDe96SIQNIoMxqhzBOg==
 
-remix-json-routes@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/remix-json-routes/-/remix-json-routes-0.1.1.tgz#d0e9196aaebf29ae03ae3472d064bc3c267ef16f"
-  integrity sha512-AqoH4z96e8+1tVZyOAhPLG9mmXTR2S9MTf5ZyB8e4GcqCEGeWmbI6sCQZpORKXChwE0RkmQxyIm47DFz9fBSxg==
-
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -30909,6 +30913,11 @@ roarr@^2.15.3:
     json-stringify-safe "^5.0.1"
     semver-compare "^1.0.0"
     sprintf-js "^1.1.2"
+
+rollup-plugin-codegen@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-codegen/-/rollup-plugin-codegen-1.0.0.tgz#6d74b5ec308bc45a74e6a256ba8ac78e4efb7df2"
+  integrity sha512-dDGSP/I/y6BemGaOZoeUZVfjFi6Ky9uMGuFurJVZV08s0Q11qXLPTsMqvy1zmxPJptH2yV9PV7ruBwxQc03TmA==
 
 rollup-plugin-esbuild@^5.0.0:
   version "5.0.0"
@@ -34732,6 +34741,16 @@ vite-node@^1.2.0:
     pathe "^1.1.1"
     picocolors "^1.0.0"
     vite "^5.0.0"
+
+vite-plugin-babel@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-babel/-/vite-plugin-babel-1.2.0.tgz#0d803d489c2a7e63ceb93e37533de298e1537c71"
+  integrity sha512-ltAnq535Ubf9sDbVCkztAdkwx5aQbNrwPFs+iZTJ5FaAhTdxjqmLGpxsAaRfJWEKBJ/kFf9KwMoTdArm0IRUUw==
+
+vite-plugin-codegen@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-codegen/-/vite-plugin-codegen-1.1.1.tgz#a7ee1e48414fc2a6c18e86da26c542561dbf3cb6"
+  integrity sha512-wX3ZGmVM75VQuiQwuGR/sQq3CAPsE96yGb/cNyooKNHFGp82Vyzi522Z9fpNdKXeST71RJvRfdOqKXUtuGDBUA==
 
 vite-tsconfig-paths@^4.2.1:
   version "4.3.2"

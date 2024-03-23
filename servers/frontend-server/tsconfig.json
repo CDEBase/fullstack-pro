@@ -1,11 +1,20 @@
 {
+  "exclude": [
+    "node_modules",
+    "lib",
+    "dist",
+    "webpack.config.js",
+    "rollup.config.js",
+  ],
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**/*.codegen",
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
+    "**/.client/**/*.tsx",
+    "src/routes/*.codegen.d.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

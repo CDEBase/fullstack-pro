@@ -1,0 +1,7 @@
+module.exports = function() {
+  return `
+import React from "react";
+import jsx from "@emotion/react/jsx-runtime";
+export default function Outer() {return "Hello World";};
+  `;
+};
