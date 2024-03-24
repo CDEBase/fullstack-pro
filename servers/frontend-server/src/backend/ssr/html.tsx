@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import serialize from 'serialize-javascript';
-import { HelmetData } from 'react-helmet';
+import { HelmetServerState } from 'react-helmet-async';
+import { ChunkExtractor } from '@loadable/server';
 
 /**
  * A simple herlper function to prepare the HTML markup. This loads:
@@ -16,22 +17,24 @@ const Html = ({
     content,
     state,
     reduxState,
-    headElements,
+    emotionIds,
     env,
+    fills,
     assetMap,
-    styleSheet,
     helmet,
+    extractor,
     stylesInserts = [],
     scriptsInserts = [],
 }: {
     content?: any;
     state: any;
     reduxState: any;
-    headElements: React.ReactElement<any>[];
+    emotionIds?: string[];
     assetMap?: string[];
     env: any;
-    styleSheet?: any;
-    helmet?: HelmetData;
+    fills?: string[];
+    helmet: HelmetServerState;
+    extractor: ChunkExtractor;
     stylesInserts?: any[];
     scriptsInserts?: string[];
 }) => {
@@ -46,8 +49,10 @@ const Html = ({
                 {helmet.style.toComponent()}
                 {helmet.script.toComponent()}
                 {helmet.noscript.toComponent()}
+                {/* {extractor.getLinkElements()}
+                {extractor.getStyleElements()} */}
                 {assetMap['vendor.js'] && <script src={`${assetMap['vendor.js']}`} charSet="utf-8" />}
-                {headElements}
+                {/* {headElements} */}
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                 <link rel="icon" type="image/png" href={`${assetMap['favicon-32x32.png']}`} sizes="32x32" />
@@ -56,15 +61,16 @@ const Html = ({
                 <link rel="mask-icon" href={`${assetMap['safari-pinned-tab.svg']}`} color="#5bbad5" />
                 <link rel="shortcut icon" href={`${assetMap['favicon.ico']}`} />
                 <meta name="msapplication-config" content={`${assetMap['browserconfig.xml']}`} />
+                <script>{`var exports = {};`}</script>
                 <style id="font-stylesheet" />
+                __STYLESHEET__
                 {!!__DEV__ && (
                     <style
                         dangerouslySetInnerHTML={{
-                            __html: stylesInserts.map((style) => style._getCss()).join(''),
+                            __html: stylesInserts.map((style) => `src="node_modules/${style}`).join(''),
                         }}
                     />
                 )}
-                {/* {styleSheet} */}
                 {scriptsInserts.map((script, i) => {
                     if (script) {
                         return <script key={i} src={script} />;
@@ -72,15 +78,8 @@ const Html = ({
                 })}
             </head>
             <body {...bodyAttrs}>
-                <div id="root" />
-                <div className="demo">
-                    <div
-                        id="content"
-                        dangerouslySetInnerHTML={{
-                            __html: content || '',
-                        }}
-                    />
-                </div>
+                <noscript>You need to enable JavaScript to run this app.</noscript>
+                <div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.__ENV__=${serialize(env, {
@@ -105,6 +104,23 @@ const Html = ({
                     }}
                     charSet="UTF-8"
                 />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__EMOTION_IDS__=${serialize(emotionIds, {
+                            isJSON: false,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__SLOT_FILLS__=${serialize(fills, {
+                            isJSON: true,
+                        })};`,
+                    }}
+                    charSet="UTF-8"
+                />
+                {extractor.getScriptElements()}
             </body>
         </html>
     );

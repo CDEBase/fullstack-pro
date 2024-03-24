@@ -1,5 +1,5 @@
 # The official nodejs docker image
-FROM node:16.17
+FROM node:18.18-bullseye
 
 ENV PYTHON /usr/bin/python
 

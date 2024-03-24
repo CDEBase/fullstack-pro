@@ -13,23 +13,24 @@ pipeline {
     string(name: 'CONNECTION_ID', defaultValue: 'test', description: 'connection id', trim: true)
     string(name: 'WORKSPACE_ID', defaultValue: 'fullstack-pro', description: 'workspace id', trim: true)
     string(name: 'UNIQUE_NAME', defaultValue: 'default', description: 'chart name', trim: true)
-    string(name: 'VERSION', defaultValue: 'v1', description: 'version of the deployment', trim: true)
+    string(name: 'VERSION', defaultValue: 'v3', description: 'version of the deployment', trim: true)
     string(name: 'HEMERA_LOG_LEVEL', defaultValue: 'info', description: 'log level for hemera')
     string(name: 'LOG_LEVEL', defaultValue: 'info', description: 'log level')
     string(name: 'DEPLOYMENT_PATH', defaultValue: '/servers', description: 'folder path to load helm charts')
-    string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish', description: 'publish branch')
+    string(name: 'PUBLISH_BRANCH', defaultValue: 'devpublish3', description: 'the publish branch for packages release')
     string(name: 'EXCLUDE_SETTING_NAMESPACE_FILTER', defaultValue: 'brigade', description: 'exclude setting namespace that matches search string')
     string(name: 'GIT_CREDENTIAL_ID', defaultValue: 'fullstack-pro-github-deploy-key', description: 'jenkins credential id of git deploy secret')
+    string(name: 'BUILD_MODULE_TO_INCLUDE', defaultValue: '@sample-stack*', description: 'build env')
     string(name: 'REPOSITORY_SSH_URL', defaultValue: 'git@github.com:CDEBase/fullstack-pro.git', description: 'ssh url of the git repository')
-    string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop', description: 'the branch of repository')
-    string(name: 'DEVELOP_BRANCH', defaultValue: 'develop', description: 'Develop branch as default for the development.')
+    string(name: 'REPOSITORY_BRANCH', defaultValue: 'develop3', description: 'the branch with changes')
+    string(name: 'DEVELOP_BRANCH', defaultValue: 'develop3', description: 'the branch for the development')
     string(name: 'MASTER_BRANCH', defaultValue: 'master', description: 'Master branch as default branch for production.')
 
     // by default first value of the choice will be choosen
     choice choices: ['auto', 'force'], description: 'Choose merge strategy', name: 'NPM_PUBLISH_STRATEGY'
     choice choices: ['yarn', 'npm'], description: 'Choose build strategy', name: 'BUILD_STRATEGY'
     choice choices: ['0.7.9','0.7.7', '0.6.0'], description: 'Choose Idestack chart version', name: 'IDESTACK_CHART_VERSION'
-    choice choices: ['nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
+    choice choices: ['nodejs18', 'nodejs16', 'nodejs14'], description: 'Choose NodeJS version', name: 'NODEJS_TOOL_VERSION'    
     choice choices: ['buildOnly', 'buildAndTest', 'buildAndPublish',  'mobileBuild', 'mobilePreview', 'mobilePreviewLocal', 'mobilePreviewSubmit', 'mobileProd', 'mobileProdSubmit', 'devDeployOnly', 'stageDeploy', 'stageDeployOnly', 'prodDeploy', 'prodDeployOnly', 'allenv'], description: 'Where to deploy micro services?', name: 'ENV_CHOICE'
     choice choices: ['all', 'ios', 'android' ], description: 'Mobile type if it is mobile build?', name: 'MOBILE_CHOICE'
     booleanParam (defaultValue: false, description: 'Skip production release approval', name: 'SKIP_RELEASE_APPROVAL')
@@ -199,7 +200,10 @@ pipeline {
       }
 
       // Below variable is only set to load all (variables, functions) from jenkins_variables.groovy file.
-      environment{ deployment_env = 'dev' }
+      environment { 
+          deployment_env = 'dev'
+          BUILD_MODULE_TO_INCLUDE = "${params.BUILD_MODULE_TO_INCLUDE}"
+        }
         steps{
           load "./jenkins_variables.groovy"
           script {

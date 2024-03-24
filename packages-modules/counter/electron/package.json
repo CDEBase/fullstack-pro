@@ -19,14 +19,7 @@
     "watch": "yarn build:lib:watch"
   },
   "dependencies": {
-    "@sample-stack/counter-module-browser": "0.0.1"
-  },
-  "devDependencies": {
-    "@open-wc/building-rollup": "^1.10.0",
-    "@rollup/plugin-graphql": "1.0.0",
-    "@rollup/plugin-image": "^2.0.6",
-    "@rollup/plugin-typescript": "^6.1.0",
-    "rollup": "latest"
+    "@sample-stack/counter-module-browser": "link:../browser"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",

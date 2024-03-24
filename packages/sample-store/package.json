@@ -19,7 +19,7 @@
     "watch": "yarn build:lib:watch"
   },
   "dependencies": {
-    "@sample-stack/core": "0.0.1",
+    "@sample-stack/core": "link:../sample-core",
     "knex": "^2.3.0",
     "sequelize": "^5.21.3"
   },
