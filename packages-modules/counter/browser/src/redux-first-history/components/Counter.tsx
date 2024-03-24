@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect, useDispatch } from 'react-redux';
-import { LOCATION_CHANGE } from '@cdmbase/redux-data-router';
+import { LOCATION_CHANGE } from '@common-stack/remix-router-redux';
 import { increment, decrement } from '../redux';
 import { State } from '../interfaces';
 
