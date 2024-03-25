@@ -6,26 +6,28 @@ import { getFilteredMenus, getFilteredRoutes } from '../utils';
 const Dashboard = loadable(() => import('../common/components/Dashboard'));
 const Counter = loadable(() => import('./containers/Counter'));
 
-export const counterPageStore: any[] = [
-    {
-        exact: false,
-        icon: 'export',
-        key: 'dashboard',
-        // component: Dashboard,
-        tab: 'Apollo Server',
-        position: IMenuPosition.MIDDLE,
-        name: 'Apollo Server',
-        path: '/apollo-server-n-client',
-    },
-    {
-        key: 'counter',
-        name: 'Counter',
-        icon: 'appstore-o',
-        component: Counter,
-        position: IMenuPosition.MIDDLE,
-        path: '/apollo-server-n-client/counter',
-    },
-];
+import counterPageStore from './compute.route.json';
+// export const counterPageStore: any[] = [
+//     {
+//         exact: false,
+//         icon: 'export',
+//         key: 'dashboard',
+//         // component: Dashboard,
+//         tab: 'Apollo Server',
+//         position: IMenuPosition.MIDDLE,
+//         name: 'Apollo Server',
+//         path: '/apollo-server-n-client',
+//     },
+//     {
+//         key: 'counter',
+//         name: 'Counter',
+//         icon: 'appstore-o',
+//         // component: Counter,
+//         position: IMenuPosition.MIDDLE,
+//         path: '/apollo-server-n-client/counter',
+//         file: () => import('./containers/Counter')
+//     },
+// ];
 
 const selectedRoutesAndMenus = ['dashboard', 'counter'];
 

@@ -15,7 +15,7 @@
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
     "src/routes/*.codegen.d.ts"
-  ],
+, "src/routes/outer.codegen.js"  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["@remix-run/node", "vite/client"],

@@ -1,0 +1,19 @@
+[
+    {
+        "exact": false,
+        "icon": "export",
+        "key": "dashboard",
+        "tab": "Apollo Server",
+        "position": "MIDDLE",
+        "name": "Apollo Server",
+        "path": "/apollo-server-n-client"
+    },
+    {
+        "key": "counter",
+        "name": "Counter",
+        "icon": "appstore-o",
+        "position": "MIDDLE",
+        "path": "/apollo-server-n-client/counter",
+        "file": "./containers/Counter"
+    }
+]

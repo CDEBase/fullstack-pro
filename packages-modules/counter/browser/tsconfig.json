@@ -12,6 +12,7 @@
     "declarationMap": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
+    "resolveJsonModule": true,
     "types": [
       "@types/node",
       "@types/jest",

@@ -2,6 +2,8 @@ import graphql from '@rollup/plugin-graphql';
 import image from '@rollup/plugin-image';
 import typescript from '@rollup/plugin-typescript';
 import { string } from 'rollup-plugin-string';
+import json from '@rollup/plugin-json'
+import routePlugin from './rollup.routePlugin.mjs';
 
 const bundle = (config) => ({
     ...config,
@@ -22,6 +24,8 @@ export default [
                 include: '**/*.graphql',
             }),
             typescript({ noEmitOnError: true }),
+            routePlugin(),
+            json(),
         ],
         output: [
             {
