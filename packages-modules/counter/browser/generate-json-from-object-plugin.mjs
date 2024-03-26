@@ -5,6 +5,7 @@ import glob from 'glob';
 import fs from 'fs';
 import path from 'path';
 
+const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 const globPromise = promisify(glob.glob); // Make sure to call .glob here
 
 export default function generateJsonFromSpecificFiles(options = {}) {
@@ -28,12 +29,25 @@ export default function generateJsonFromSpecificFiles(options = {}) {
 
             for (const file of relativeFiles) {
                 const relativePath = file.startsWith('.') ? file : `./${file}`;
-
+                const baseRoutePath = path.dirname(pkg.name + relativePath.substring(1));
+                
                 try {
                     // Dynamically import the JS file assuming it exports filteredRoutes
                     const module = await import(relativePath); // file is already absolute
                     if (module.filteredRoutes) {
-                        allFilteredRoutes.push(...module.filteredRoutes);
+                        const newRoutes = module.filteredRoutes.map((filteredRoute) => {
+                            let routConfig = Object.values(filteredRoute)[0];
+                            if (routConfig.file) {
+                                routConfig = {
+                                    ...routConfig,
+                                    file: routConfig.file.startsWith('./') 
+                                        ? baseRoutePath + '/' + routConfig.file.substring(2) 
+                                        : baseRoutePath + '/' + routConfig.file,
+                                }
+                            }
+                            return { [routConfig.path]: routConfig };
+                        });
+                        allFilteredRoutes.push(...newRoutes);
                     }
                 } catch (error) {
                     this.warn(`Error importing ${file}: ${error}`);

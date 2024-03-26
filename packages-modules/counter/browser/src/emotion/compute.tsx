@@ -11,7 +11,7 @@ export const emotionPageStore: any[] = [
         position: IMenuPosition.MIDDLE,
         name: 'Emotion Styling',
         path: '/emotion',
-        file: import('./components/CompledWithTheme')
+        file: './components/CompledWithTheme'
     },
 ];
 

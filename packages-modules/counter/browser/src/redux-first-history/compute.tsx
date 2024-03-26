@@ -14,7 +14,7 @@ export const counterPageStore: IRoute[] = [
         name: 'Redux First History',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        file: import('../common/components/Dashboard'),
+        file: '../common/components/Dashboard',
     },
     {
         exact: true,
@@ -24,7 +24,7 @@ export const counterPageStore: IRoute[] = [
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
-        file: import('./components/Hello'),
+        file: './components/Hello',
     },
     {
         exact: true,
@@ -34,7 +34,7 @@ export const counterPageStore: IRoute[] = [
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
-        file: import('./components/Counter'),
+        file: './components/Counter',
     },
 ];
 
