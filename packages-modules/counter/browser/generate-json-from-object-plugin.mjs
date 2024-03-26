@@ -38,11 +38,12 @@ export default function generateJsonFromSpecificFiles(options = {}) {
                         const newRoutes = module.filteredRoutes.map((filteredRoute) => {
                             let routConfig = Object.values(filteredRoute)[0];
                             if (routConfig.file) {
+                                let filePath = routConfig.file.startsWith('./') ?
+                                    baseRoutePath + '/' + routConfig.file.substring(2) : baseRoutePath + '/' + routConfig.file;
+                                filePath = filePath.endsWith('.js') ? filePath : filePath + '.js';
                                 routConfig = {
                                     ...routConfig,
-                                    file: routConfig.file.startsWith('./') 
-                                        ? baseRoutePath + '/' + routConfig.file.substring(2) 
-                                        : baseRoutePath + '/' + routConfig.file,
+                                    file: filePath,
                                 }
                             }
                             return { [routConfig.path]: routConfig };
