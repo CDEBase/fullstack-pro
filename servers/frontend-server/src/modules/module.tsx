@@ -8,11 +8,11 @@ import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
 const configuredRoutes = features.getConfiguredRoutes2();
-const routes = renderRoutes2({
-    routes: configuredRoutes,
-    withRoutesElement: true,
-    isServer: __SERVER__,
-})
+// const routes = renderRoutes2({
+//     routes: configuredRoutes,
+//     withRoutesElement: true,
+//     isServer: __SERVER__,
+// })
 // console.log(configuredRoutes);
 export const MainRoute = (props) => {
     return (

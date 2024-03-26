@@ -22,9 +22,10 @@ export default function Index() {
         <ul>
           <li><Link to={'/'}>Home</Link></li>
           <li><Link to={'/demo'}>Demo</Link></li>
-          <li><Link to={'/demo/counter'}>Demo/Counter</Link></li>
-          <li><Link to={'/demo/counter/10'}>Demo/Counter with param 10</Link></li>
-          <li><Link to={'/codegen'}>Outer modules with codegen</Link></li>
+          <li><Link to={'/demo/ex'}>Demo/Exp</Link></li>
+          <li><Link to={'/demo/ex/10'}>Demo/Ex with param 10</Link></li>
+          <li><Link to={'/apollo-server-n-client'}>apollo-server</Link></li>
+          <li><Link to={'/apollo-server-n-client/counter'}>apollo-server Counter</Link></li>
         </ul>
       </aside>
       <section style={{ flexGrow: 2 }}>
