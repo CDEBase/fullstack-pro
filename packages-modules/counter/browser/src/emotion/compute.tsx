@@ -5,13 +5,13 @@ import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
 export const emotionPageStore: any[] = [
     {
-        // component: ComplexWithTheme,
         tab: 'Emotion Styling',
         key: 'emotion',
         position: IMenuPosition.MIDDLE,
         name: 'Emotion Styling',
+        component: () => import('./components/CompledWithTheme'),
         path: '/emotion',
-        file: import('./components/CompledWithTheme')
+        file: './components/CompledWithTheme'
     },
 ];
 

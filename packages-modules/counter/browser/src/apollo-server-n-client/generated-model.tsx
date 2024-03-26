@@ -1,10 +1,10 @@
 /* tslint:disable */
 import * as SchemaTypes from '../generated-models';
 
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client/index.js';
 import * as Apollo from '@apollo/client';
 import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/client/react/components';
+import * as ApolloReactComponents from '@apollo/client/react/components/index.js';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const defaultOptions =  {}
 

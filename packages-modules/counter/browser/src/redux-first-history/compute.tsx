@@ -5,36 +5,36 @@ import { getFilteredMenus, getFilteredRoutes } from '../utils/menu';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 
 
-export const counterPageStore: IRoute[] = [
+export const counterPageStore = [
     {
         exact: false,
         icon: 'export',
-        // component: Dashboard,
+        component: () => import('../common/components/Dashboard'),
         position: IMenuPosition.MIDDLE,
         name: 'Redux First History',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        file: import('../common/components/Dashboard'),
+        file: '../common/components/Dashboard',
     },
     {
         exact: true,
         icon: 'export',
         name: 'Hello',
-        // component: Hello,
+        component: () => import('./components/Hello'),
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
-        file: import('./components/Hello'),
+        file: './components/Hello',
     },
     {
         exact: true,
         icon: 'export',
         name: 'Counter',
-        // component: Counter,
+        component: () => import('./components/Counter'),
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
-        file: import('./components/Counter'),
+        file: './components/Counter',
     },
 ];
 

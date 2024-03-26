@@ -8,9 +8,9 @@ export const commonPageStore: any[] = [
         key: 'home',
         exact: true,
         name: 'Home',
-        // component: Home,
+        component: () => import('../common/components/Home'),
         position: IMenuPosition.MIDDLE,
-        file: import('../common/components/Home'),
+        file: '../common/components/Home',
     },
 ];
 

@@ -1,13 +1,35 @@
-// import React from "react";
-import outerModule from './outer.codegen';
+import pkg from '../../package.json' assert { type: "json" };
+import counterRoutes from '@sample-stack/counter-module-browser/lib/routes.json' assert { type: "json" };
+
+const dependencies: any = pkg.dependencies;
+
+const getFilePath = (file: string, module: string) => {
+  let link = dependencies[module];
+  let filePath = file;
+  
+  if (link && link.startsWith('link:')) {
+    link = link.replace('link:', '');
+    filePath = filePath.replace(module, link);
+    filePath = '../' + filePath; // escape from src/
+  } else {
+    filePath = '../node_modules/' + filePath; // escape from src/, enter node_modules/
+  }
+  return filePath;
+};
 
 export const generateRemixRoutes = async (route) => {
   
   route("/", "exp/index.tsx", () => {
-    route("codegen", outerModule);
     route("demo", "exp/demo/index.tsx", () => {
       route("counter", "exp/demo/counter.tsx", { id: 'counter0' });
       route("counter/:num", "exp/demo/counter.tsx", { id: 'counter1' });
     });
+
+    counterRoutes.forEach((routeConfig: any) => {
+      const { path, file, ...routeParams }: any = Object.values(routeConfig)[0];
+      const filePath = getFilePath(file, '@sample-stack/counter-module-browser');
+      route(path, filePath, routeParams);
+    });
   });
+
 }
