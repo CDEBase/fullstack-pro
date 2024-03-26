@@ -19,17 +19,9 @@ const getFilePath = (file: string, module: string) => {
 
 export const generateRemixRoutes = async (route) => {
   
-  route("/", "exp/index.tsx", () => {
-    route("demo", "exp/demo/index.tsx", () => {
-      route("counter", "exp/demo/counter.tsx", { id: 'counter0' });
-      route("counter/:num", "exp/demo/counter.tsx", { id: 'counter1' });
-    });
-
-    counterRoutes.forEach((routeConfig: any) => {
-      const { path, file, ...routeParams }: any = Object.values(routeConfig)[0];
-      const filePath = getFilePath(file, '@sample-stack/counter-module-browser');
-      route(path, filePath, routeParams);
-    });
+  counterRoutes.forEach((routeConfig: any) => {
+    const { path, file, ...routeParams }: any = Object.values(routeConfig)[0];
+    const filePath = getFilePath(file, '@sample-stack/counter-module-browser');
+    route(path, filePath, routeParams);
   });
-
 }

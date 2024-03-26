@@ -4,20 +4,19 @@ import counterModules from '@sample-stack/counter-module-browser';
 import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
 import { SiderMenu } from './layout';
 import '@sample-stack/assets';
-import { ErrorBoundary } from '../app/ErrorBoundary';
+// import { ErrorBoundary } from '../app/ErrorBoundary';
 
 const features = new Feature(FeatureWithRouterFactory, counterModules);
-const configuredRoutes = features.getConfiguredRoutes2();
-const routes = renderRoutes2({
-    routes: configuredRoutes,
-    withRoutesElement: true,
-    isServer: __SERVER__,
-})
+// const configuredRoutes = features.getConfiguredRoutes2();
+// const routes = renderRoutes2({
+//     routes: configuredRoutes,
+//     withRoutesElement: true,
+//     isServer: __SERVER__,
+// })
 // console.log(configuredRoutes);
-export const MainRoute = (props) => {
+export const MainRoute = ({children}: any) => {
     return (
         <ConfigProvider theme={{ hashed: false }}>
-            <ErrorBoundary>
                 <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
                     <SiderMenu
                         collapsed={false}
@@ -28,29 +27,13 @@ export const MainRoute = (props) => {
                     <Layout>
                         <Layout.Content style={{ height: '100%' }}>
                             <section className="flex-grow" style={{ height: '100%' }}>
-                                {routes}
+                                {children}
                             </section>
                         </Layout.Content>
                     </Layout>
                 </Layout>
-            </ErrorBoundary>
         </ConfigProvider>
     );
 }
-
-export const createMainRoute = (args: any) => {
-    const routes = renderRoutes2({ 
-        routes: configuredRoutes, 
-        isServer: __SERVER__, 
-        // withRoutesElement: !__SERVER__,
-        loaderArgs: args,
-    });
-    // console.log('------routes', routes);
-    return [{
-        path: '/',
-        element: <MainRoute />,
-        children: routes,
-    }];
-};
 
 export default features;

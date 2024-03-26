@@ -36,16 +36,16 @@ export const persistConfig = {
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (apolloClient, services, container, router) => {
+export const createReduxStore = (apolloClient, services, container) => {
     const reducers = {
         router: createRouterReducer({}),
         ...modules.reducers,
     };
 
     let store;
-    if ((module as any).hot && (module as any).hot.data && (module as any).hot.data.store) {
-        // console.log('Restoring Redux store:', JSON.stringify((module as any).hot.data.store.getState()));
-        store = (module as any).hot.data.store;
+    if (import.meta.hot && import.meta.hot.data && import.meta.hot.data.store) {
+        // console.log('Restoring Redux store:', JSON.stringify(import.meta.hot.data.store.getState()));
+        store = import.meta.hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
         store.replaceReducer(persistReducer(persistConfig, combineReducers(reducers)));
@@ -64,7 +64,7 @@ export const createReduxStore = (apolloClient, services, container, router) => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [createRouterMiddleware({ router } as any)],
+            middleware: [], //createRouterMiddleware({ router } as any)
             epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers,

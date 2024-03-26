@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { GraphQLResolveInfo } from 'graphql';
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from '@apollo/client/index.js';
+import * as Apollo from '@apollo/client/index.js';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };

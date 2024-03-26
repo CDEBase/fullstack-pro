@@ -1,7 +1,7 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import { logger } from '@cdm-logger/client';
 import { lowerCase } from 'lodash-es';
-
+import dotenv from 'dotenv';
 /**
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
@@ -11,7 +11,9 @@ const publicEnv = ['NODE_ENV', 'GRAPHQL_URL', 'FACEBOOK_APP_ID', 'LOCAL_GRAPHQL_
 const isBrowser = typeof window !== 'undefined';
 
 if (!isBrowser) {
-    process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+    if (process.env.ENV_FILE !== null) {
+        // dotenv.config({ path: process.env.ENV_FILE });
+    }
 }
 const base = (isBrowser ? window.__ENV__ || (typeof __ENV__ !== 'undefined' && __ENV__) : process.env) || {};
 const env: any = {};

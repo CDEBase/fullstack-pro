@@ -1,6 +1,6 @@
 import * as H from 'history';
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@remix-run/react';
 import * as PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Avatar } from 'antd';

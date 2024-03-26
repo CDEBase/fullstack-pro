@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
+// process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 
 const __API_SERVER_PORT__ = process.env.GRAPHQL_URL ? new URL(process.env.GRAPHQL_URL).port : 8080;
 const __WEB_SERVER_PORT__ = process.env.LOCAL_BACKEND_URL ? new URL(process.env.LOCAL_BACKEND_URL).port : 3000;
@@ -29,5 +29,4 @@ const config = {
         process.env.LOCAL_BACKEND_URL || `${__SERVER_PROTOCOL__}://${__LOCAL_SERVER_HOST__}:${__WEB_SERVER_PORT__}`,
 };
 
-console.log('---CONFIG', config);
 module.exports = config;
