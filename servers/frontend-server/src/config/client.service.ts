@@ -4,7 +4,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { ClientTypes } from '@common-stack/client-core';
 import { Container, interfaces } from 'inversify';
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client/index.js';
 import { CdmLogger } from '@cdm-logger/core';
 import { merge } from 'lodash';
 import modules, { UtilityClass, logger } from '../modules';
