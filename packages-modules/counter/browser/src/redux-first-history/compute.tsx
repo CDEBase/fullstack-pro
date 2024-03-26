@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
-import loadable  from '@loadable/component'
 
-import { getFilteredMenus, getFilteredRoutes } from '../utils';
+import { getFilteredMenus, getFilteredRoutes } from '../utils/menu';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 
-const Dashboard = loadable(() => import('../common/components/Dashboard'));
-const Counter = loadable(() => import('./components/Counter'));
-const Hello = loadable(() => import('./components/Hello'));
 
 export const counterPageStore: IRoute[] = [
     {
@@ -19,24 +14,27 @@ export const counterPageStore: IRoute[] = [
         name: 'Redux First History',
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+        file: import('../common/components/Dashboard'),
     },
     {
         exact: true,
         icon: 'export',
         name: 'Hello',
-        component: Hello,
+        // component: Hello,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
+        file: import('./components/Hello'),
     },
     {
         exact: true,
         icon: 'export',
         name: 'Counter',
-        component: Counter,
+        // component: Counter,
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
+        file: import('./components/Counter'),
     },
 ];
 

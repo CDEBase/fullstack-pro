@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-import loadable from '@loadable/component'
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
-
-const Dashboard = loadable(() => import('../common/components/Dashboard'));
-const Counter = loadable(() => import('./containers/Counter'));
 
 export const counterPageStore: any[] = [
     {
@@ -16,14 +12,16 @@ export const counterPageStore: any[] = [
         position: IMenuPosition.MIDDLE,
         name: 'Apollo Server',
         path: '/apollo-server-n-client',
+        file: import('../common/components/Dashboard'),
     },
     {
         key: 'counter',
         name: 'Counter',
         icon: 'appstore-o',
-        component: Counter,
+        // component: Counter,
         position: IMenuPosition.MIDDLE,
         path: '/apollo-server-n-client/counter',
+        // file: import('./containers/Counter'),
     },
 ];
 
