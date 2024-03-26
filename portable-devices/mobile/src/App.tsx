@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/index.js';
 import { Provider } from 'react-redux';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { NativeBaseProvider } from 'native-base';

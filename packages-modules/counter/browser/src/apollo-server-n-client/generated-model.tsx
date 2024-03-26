@@ -1,27 +1,11 @@
 /* tslint:disable */
 import * as SchemaTypes from '../generated-models';
 
-import { gql } from '@apollo/client/index.js';
-import * as Apollo from '@apollo/client';
-import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/client/react/components/index.js';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-const defaultOptions =  {}
+import { DocumentNode } from 'graphql';
+import * as Apollo from '@apollo/client/index.js';
+const defaultOptions = {} as const;
 
-export const AddCounterStateDocument = gql`
-    mutation addCounterState($amount: Int!) {
-  addCounterState(amount: $amount) @client {
-    counter
-  }
-}
-    `;
-export type AddCounterStateMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
-export type AddCounterStateComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>, 'mutation'>;
-
-    export const AddCounterStateComponent = (props: AddCounterStateComponentProps) => (
-      <ApolloReactComponents.Mutation<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables> mutation={AddCounterStateDocument} {...props} />
-    );
-    
+export const AddCounterStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCounterState"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounterState"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounterStateMutation__
@@ -47,20 +31,7 @@ export function useAddCounterStateMutation(baseOptions?: Apollo.MutationHookOpti
 export type AddCounterStateMutationHookResult = ReturnType<typeof useAddCounterStateMutation>;
 export type AddCounterStateMutationResult = Apollo.MutationResult<SchemaTypes.AddCounterStateMutation>;
 export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounterStateMutation, SchemaTypes.AddCounterStateMutationVariables>;
-export const AddCounterDocument = gql`
-    mutation addCounter($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
-}
-    `;
-export type AddCounterMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
-export type AddCounterComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>, 'mutation'>;
-
-    export const AddCounterComponent = (props: AddCounterComponentProps) => (
-      <ApolloReactComponents.Mutation<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables> mutation={AddCounterDocument} {...props} />
-    );
-    
+export const AddCounterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCounter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounterMutation__
@@ -86,20 +57,7 @@ export function useAddCounterMutation(baseOptions?: Apollo.MutationHookOptions<S
 export type AddCounterMutationHookResult = ReturnType<typeof useAddCounterMutation>;
 export type AddCounterMutationResult = Apollo.MutationResult<SchemaTypes.AddCounterMutation>;
 export type AddCounterMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounterMutation, SchemaTypes.AddCounterMutationVariables>;
-export const AddCounter_WsDocument = gql`
-    mutation AddCounter_WS($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
-}
-    `;
-export type AddCounter_WsMutationFn = Apollo.MutationFunction<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
-export type AddCounter_WsComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>, 'mutation'>;
-
-    export const AddCounter_WsComponent = (props: AddCounter_WsComponentProps) => (
-      <ApolloReactComponents.Mutation<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables> mutation={AddCounter_WsDocument} {...props} />
-    );
-    
+export const AddCounter_WsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddCounter_WS"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounter_WsMutation__
@@ -125,18 +83,7 @@ export function useAddCounter_WsMutation(baseOptions?: Apollo.MutationHookOption
 export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
 export type AddCounter_WsMutationResult = Apollo.MutationResult<SchemaTypes.AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.AddCounter_WsMutation, SchemaTypes.AddCounter_WsMutationVariables>;
-export const SyncCachedCounterDocument = gql`
-    mutation SyncCachedCounter {
-  syncCachedCounter
-}
-    `;
-export type SyncCachedCounterMutationFn = Apollo.MutationFunction<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
-export type SyncCachedCounterComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>, 'mutation'>;
-
-    export const SyncCachedCounterComponent = (props: SyncCachedCounterComponentProps) => (
-      <ApolloReactComponents.Mutation<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables> mutation={SyncCachedCounterDocument} {...props} />
-    );
-    
+export const SyncCachedCounterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncCachedCounter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncCachedCounter"}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useSyncCachedCounterMutation__
@@ -161,19 +108,7 @@ export function useSyncCachedCounterMutation(baseOptions?: Apollo.MutationHookOp
 export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
 export type SyncCachedCounterMutationResult = Apollo.MutationResult<SchemaTypes.SyncCachedCounterMutation>;
 export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<SchemaTypes.SyncCachedCounterMutation, SchemaTypes.SyncCachedCounterMutationVariables>;
-export const CounterCacheQueryDocument = gql`
-    query counterCacheQuery {
-  counterCache {
-    amount
-  }
-}
-    `;
-export type CounterCacheQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>, 'query'>;
-
-    export const CounterCacheQueryComponent = (props: CounterCacheQueryComponentProps) => (
-      <ApolloReactComponents.Query<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables> query={CounterCacheQueryDocument} {...props} />
-    );
-    
+export const CounterCacheQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"counterCacheQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterCache"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterCacheQueryQuery__
@@ -198,22 +133,15 @@ export function useCounterCacheQueryLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
         }
+export function useCounterCacheQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
+        }
 export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
 export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
+export type CounterCacheQuerySuspenseQueryHookResult = ReturnType<typeof useCounterCacheQuerySuspenseQuery>;
 export type CounterCacheQueryQueryResult = Apollo.QueryResult<SchemaTypes.CounterCacheQueryQuery, SchemaTypes.CounterCacheQueryQueryVariables>;
-export const CounterStateDocument = gql`
-    query CounterState {
-  counterState @client {
-    counter
-  }
-}
-    `;
-export type CounterStateComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>, 'query'>;
-
-    export const CounterStateComponent = (props: CounterStateComponentProps) => (
-      <ApolloReactComponents.Query<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables> query={CounterStateDocument} {...props} />
-    );
-    
+export const CounterStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CounterState"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterState"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterStateQuery__
@@ -238,22 +166,15 @@ export function useCounterStateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, options);
         }
+export function useCounterStateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>(CounterStateDocument, options);
+        }
 export type CounterStateQueryHookResult = ReturnType<typeof useCounterStateQuery>;
 export type CounterStateLazyQueryHookResult = ReturnType<typeof useCounterStateLazyQuery>;
+export type CounterStateSuspenseQueryHookResult = ReturnType<typeof useCounterStateSuspenseQuery>;
 export type CounterStateQueryResult = Apollo.QueryResult<SchemaTypes.CounterStateQuery, SchemaTypes.CounterStateQueryVariables>;
-export const CounterQueryDocument = gql`
-    query counterQuery {
-  counter {
-    amount
-  }
-}
-    `;
-export type CounterQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>, 'query'>;
-
-    export const CounterQueryComponent = (props: CounterQueryComponentProps) => (
-      <ApolloReactComponents.Query<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables> query={CounterQueryDocument} {...props} />
-    );
-    
+export const CounterQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"counterQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterQueryQuery__
@@ -278,22 +199,15 @@ export function useCounterQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, options);
         }
+export function useCounterQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>(CounterQueryDocument, options);
+        }
 export type CounterQueryQueryHookResult = ReturnType<typeof useCounterQueryQuery>;
 export type CounterQueryLazyQueryHookResult = ReturnType<typeof useCounterQueryLazyQuery>;
+export type CounterQuerySuspenseQueryHookResult = ReturnType<typeof useCounterQuerySuspenseQuery>;
 export type CounterQueryQueryResult = Apollo.QueryResult<SchemaTypes.CounterQueryQuery, SchemaTypes.CounterQueryQueryVariables>;
-export const OnCounterUpdatedDocument = gql`
-    subscription onCounterUpdated {
-  counterUpdated {
-    amount
-  }
-}
-    `;
-export type OnCounterUpdatedComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables>, 'subscription'>;
-
-    export const OnCounterUpdatedComponent = (props: OnCounterUpdatedComponentProps) => (
-      <ApolloReactComponents.Subscription<SchemaTypes.OnCounterUpdatedSubscription, SchemaTypes.OnCounterUpdatedSubscriptionVariables> subscription={OnCounterUpdatedDocument} {...props} />
-    );
-    
+export const OnCounterUpdatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onCounterUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useOnCounterUpdatedSubscription__
