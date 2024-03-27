@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "@remix-run/react": "^2.8.1",
     "antd": "~5.1.7"
   },
   "peerDependencies": {
