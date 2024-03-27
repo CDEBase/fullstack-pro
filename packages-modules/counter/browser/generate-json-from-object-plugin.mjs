@@ -44,9 +44,10 @@ export default function generateJsonFromSpecificFiles(options = {}) {
                                 routConfig = {
                                     ...routConfig,
                                     file: filePath,
+                                    module: pkg.name,
                                 }
                             }
-                            return { [routConfig.path]: routConfig };
+                            return { [routConfig.key]: routConfig };
                         });
                         allFilteredRoutes.push(...newRoutes);
                     }
