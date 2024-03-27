@@ -95,12 +95,11 @@ function handleBrowserRequest(
                   <InversifyProvider container={container} modules={clientModules}>
                     {clientModules.getWrappedRoot(
                       <ApolloProvider client={client}>
-                        <PluginArea />
-                          <RemixServer
-                            context={remixContext}
-                            url={request.url}
-                            abortDelay={ABORT_DELAY}
-                          />
+                        <RemixServer
+                          context={remixContext}
+                          url={request.url}
+                          abortDelay={ABORT_DELAY}
+                        />
                       </ApolloProvider>,
                       request,
                     )}

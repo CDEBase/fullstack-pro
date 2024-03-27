@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import { ErrorBoundary } from './app/ErrorBoundary';
 import { MainRoute } from './modules';
+import { PluginArea } from '@common-stack/client-react';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         __STYLESHEET__
       </head>
       <body>
+        <PluginArea />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -39,4 +41,4 @@ export default function App() {
   );
 }
 
-export { ErrorBoundary }
+// export { ErrorBoundary }

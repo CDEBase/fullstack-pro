@@ -44,7 +44,6 @@ startTransition(() => {
                 <PersistGate loading={null} persistor={persistor}>
                   {() => (
                     <ApolloProvider client={client}>
-                      <PluginArea />
                       {modules.getWrappedRoot(<RemixBrowser />)}
                     </ApolloProvider>
                   )}
