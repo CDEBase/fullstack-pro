@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const wrapperComponentImportPath = '../components/Wrapper'; // Adjust the path as necessary
+// const authWrapperImportPath = '../components/Wrapper'; // Adjust the path as necessary
+const authWrapperImportPath = '@adminide-stack/user-auth0-browser-ant';
 
 export function getRootPath() {
   const directoryName = path.dirname(process.cwd());
@@ -19,11 +20,10 @@ export function wrapRouteComponent(file: string) {
   try {
     const wrappedContent = `
 import * as React from 'react';
-import Wrapper from '${wrapperComponentImportPath}';
+import { authWrapper } from '${authWrapperImportPath}';
 import Component from './${fileName}';
 var WrappedComponent = (props) => {
-  return (React.createElement(Wrapper, null,
-    React.createElement(Component, props)));
+  return (authWrapper(React.createElement(Component, props), props));
 };export{WrappedComponent as default};
 `;
     fileName = `_authenticate${fileName}`;

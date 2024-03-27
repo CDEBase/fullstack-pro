@@ -40,7 +40,7 @@ const createRecursiveRoutes = (routes: [], route: DefineRouteFunction) => {
       const { path, file, module, ...routeParams }: any = routeConfig;
       
       let filePath = `${module}${file}`;
-      if (routeParams.exact === true) {
+      if (routeParams.auth === true) {
         filePath = wrapRouteComponent(filePath);
       }
       filePath = genFilePath(filePath, module);
