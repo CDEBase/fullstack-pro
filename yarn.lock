@@ -2427,6 +2427,13 @@
   dependencies:
     "@common-stack/core" "3.0.3-alpha.0"
 
+"@common-stack/client-core@3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-3.0.3-alpha.8.tgz#86fead3521c05f791533d2d4cfdf4591519e04d9"
+  integrity sha512-LP0hOOSzNKwDsh+j5uPZNbve4ZUbae/Jg71YQYKmDKxxgxlUH5cX7voQtvQNDxDTdOUgdB7SDFhuixVdyV1lxQ==
+  dependencies:
+    "@common-stack/core" "3.0.3-alpha.8"
+
 "@common-stack/client-react@3.0.3-alpha.2", "@common-stack/client-react@^3.0.3-alpha.2":
   version "3.0.3-alpha.2"
   resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.2.tgz#3785d156ce9c5d3b0fb19e182e2a8cb393a433a3"
@@ -2434,6 +2441,18 @@
   dependencies:
     "@common-stack/client-core" "3.0.3-alpha.2"
     "@common-stack/core" "3.0.3-alpha.0"
+    "@wordpress/hooks" "^3.53.0"
+    browser-bunyan "^1.6.3"
+    history-with-query "^4.10.4"
+    sort-keys "^4.1.0"
+
+"@common-stack/client-react@3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.8.tgz#9c1b086aebc92cd7efc1c04af4a86f78111ec688"
+  integrity sha512-7fV8XRuBh/XrHp//ERYWc063YRAVEs1jrvFu4cF2ANHjBp4lKJVnqbss3p1qLbzHDuFL6pirJkeLg+5C6hGBWg==
+  dependencies:
+    "@common-stack/client-core" "3.0.3-alpha.8"
+    "@common-stack/core" "3.0.3-alpha.8"
     "@wordpress/hooks" "^3.53.0"
     browser-bunyan "^1.6.3"
     history-with-query "^4.10.4"
@@ -2458,6 +2477,11 @@
   version "3.0.3-alpha.0"
   resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-3.0.3-alpha.0.tgz#5710849e1e184da024fbd337b40a33aebee7cc05"
   integrity sha512-vil3sGPtDQ96Mllyk4mT6rCoQvCsaNWfSDDVetnE6Bz5lpymenJQ7PuxdfaepcT9dKa3OAHcw78MMz5aYgz6jw==
+
+"@common-stack/core@3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-3.0.3-alpha.8.tgz#e48a1efb07cc12b54216fb5fc3785ea1b307429f"
+  integrity sha512-uUaYZB+GPP9OGBfwV8jC9oIkVUMizDpLNmxkEQfwosHw/KjZFaJJly+wYBpd5gEDf+XFzasKnjF2uIa1Xj3TCA==
 
 "@common-stack/env-list-loader@0.5.8":
   version "0.5.8"
@@ -2491,6 +2515,15 @@
   integrity sha512-jAD3Ll3z3UUZNgWWn1RoAu00zbWulC0nLeELLA8FCItAdBsiJhtwfl90hhsqDZ+qUtATpsN/rADo226SBBaxWg==
   dependencies:
     "@common-stack/core" "3.0.3-alpha.0"
+
+"@common-stack/vite-routes-plugin@3.0.3-alpha.9":
+  version "3.0.3-alpha.9"
+  resolved "https://registry.yarnpkg.com/@common-stack/vite-routes-plugin/-/vite-routes-plugin-3.0.3-alpha.9.tgz#c9e5b9c92c4a1f6a5eeb297ed2b6789977e3597c"
+  integrity sha512-8VfJGk6Iu6xV34+ospvHdeppLiSQBeBWCM/6IToDSHP/Sdjft4UGP2XGWBlZiui3ZaL0COFexqCbSKqNNh9YlQ==
+  dependencies:
+    "@common-stack/client-react" "3.0.3-alpha.8"
+    "@common-stack/core" "3.0.3-alpha.8"
+    glob-all "^3.3.1"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -7582,6 +7615,7 @@
 "@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
+    "@remix-run/react" "^2.8.1"
     "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
     antd "~5.1.7"
 
@@ -16386,6 +16420,13 @@ esbuild-plugins-node-modules-polyfill@^1.6.0:
     local-pkg "^0.5.0"
     resolve.exports "^2.0.2"
 
+esbuild-register@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/esbuild-register/-/esbuild-register-3.5.0.tgz#449613fb29ab94325c722f560f800dd946dc8ea8"
+  integrity sha512-+4G/XmakeBAsvJuDugJvtyF1x+XJT4FMocynNpxrvEBViirpfUn2PgNpCHedfWhF4WokNsO/OvMKrmJOIJsI5A==
+  dependencies:
+    debug "^4.3.4"
+
 esbuild-sunos-64@0.15.18:
   version "0.15.18"
   resolved "https://registry.yarnpkg.com/esbuild-sunos-64/-/esbuild-sunos-64-0.15.18.tgz#fd528aa5da5374b7e1e93d36ef9b07c3dfed2971"
@@ -18916,6 +18957,14 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
+glob-all@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/glob-all/-/glob-all-3.3.1.tgz#6be2d5d8276902319f640fbf839fbe15b35e7667"
+  integrity sha512-Y+ESjdI7ZgMwfzanHZYQ87C59jOO0i+Hd+QYtVt9PhLi6d8wlOpzQnfBxWUlaTuAoR3TkybLqqbIoWveU4Ji7Q==
+  dependencies:
+    glob "^7.2.3"
+    yargs "^15.3.1"
+
 glob-base@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-base/-/glob-base-0.3.0.tgz#dbb164f6221b1c0b1ccf82aea328b497df0ea3c4"
@@ -19008,7 +19057,7 @@ glob@7.2.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@7.2.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0:
+glob@7.2.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0, glob@^7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
   integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==

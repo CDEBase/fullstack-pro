@@ -41,4 +41,4 @@ export default function App() {
   );
 }
 
-// export { ErrorBoundary }
+export { ErrorBoundary }

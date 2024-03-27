@@ -29,7 +29,7 @@ export default function generateJsonFromSpecificFiles(options = {}) {
 
             for (const file of relativeFiles) {
                 const relativePath = file.startsWith('.') ? file : `./${file}`;
-                const baseRoutePath = path.dirname(pkg.name + relativePath.substring(1));
+                const baseRoutePath = path.dirname(relativePath.substring(1));
                 
                 try {
                     // Dynamically import the JS file assuming it exports filteredRoutes
