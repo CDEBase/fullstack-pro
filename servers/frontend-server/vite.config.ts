@@ -2,7 +2,7 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-import { generateRemixRoutes } from "./src/routes";
+import { generateRemixRoutes } from "./tools/generateRoutes";
 
 export default defineConfig({
   plugins: [

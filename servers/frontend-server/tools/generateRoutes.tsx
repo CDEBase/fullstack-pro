@@ -1,4 +1,4 @@
-import pkg from '../../package.json' assert { type: "json" };
+import pkg from '../package.json' assert { type: "json" };
 import { Feature, FeatureWithRouterFactory } from '@common-stack/client-react';
 import { DefineRouteFunction } from '@remix-run/dev/dist/config/routes';
 import counterModules from '@sample-stack/counter-module-browser';
