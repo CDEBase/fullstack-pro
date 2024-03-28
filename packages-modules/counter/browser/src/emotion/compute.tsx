@@ -1,20 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-import loadable from '@loadable/component'
 
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
 
-const ComplexWithTheme = loadable(() => import('./components/CompledWithTheme'));
-
 export const emotionPageStore: any[] = [
     {
-        component: ComplexWithTheme,
         tab: 'Emotion Styling',
         key: 'emotion',
         position: IMenuPosition.MIDDLE,
         name: 'Emotion Styling',
+        component: () => import('./components/CompledWithTheme'),
         path: '/emotion',
+        file: './components/CompledWithTheme'
     },
 ];
 

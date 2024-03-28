@@ -6,6 +6,7 @@
   "author": "CDMBase LLC",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
+    "@remix-run/react": "^2.8.1",
     "antd": "~5.1.7"
   },
   "peerDependencies": {
@@ -28,7 +30,6 @@
     "@rollup/plugin-image": "*",
     "@rollup/plugin-typescript": "*",
     "react": "*",
-    "react-native": "*",
     "react-redux": "*",
     "react-router": "*",
     "react-router-dom": "*",

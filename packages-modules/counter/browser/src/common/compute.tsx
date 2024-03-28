@@ -1,10 +1,6 @@
-import * as React from 'react';
 import { IMenuPosition } from '@common-stack/client-react';
-import loadable from '@loadable/component'
 
 import { getFilteredMenus, getFilteredRoutes } from '../utils';
-
-const Home = loadable(() => import('../common/components/Home'));
 
 export const commonPageStore: any[] = [
     {
@@ -12,8 +8,10 @@ export const commonPageStore: any[] = [
         key: 'home',
         exact: true,
         name: 'Home',
-        component: Home,
+        component: () => import('../common/components/Home'),
+        wrapper: () => import('../common/components/Wrapper'),
         position: IMenuPosition.MIDDLE,
+        file: '../common/components/Home',
     },
 ];
 

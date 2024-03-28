@@ -1,15 +1,17 @@
 import { config as dotenvConfig } from 'dotenv';
 
+let dotEnvResult;
 if (process.env.ENV_FILE !== null) {
-    dotenvConfig({ path: process.env.ENV_FILE });
+    dotEnvResult = dotenvConfig({ path: process.env.ENV_FILE });
 }
 
-import buildConfig from '../../build.config';
+import buildConfig from '../../buildconfig.mjs';
 
 const config = {
     ...buildConfig,
-    __CLIENT__: true,
-    __SERVER__: false,
+    __ENV__: dotEnvResult ? dotEnvResult.parsed : null,
+    __CLIENT__: typeof window !== 'undefined',
+    __SERVER__: typeof window === 'undefined',
     __DEV__: process.env.NODE_ENV !== 'production',
     __TEST__: false,
     __CDN_URL__: process.env.CDN_URL || '',
@@ -18,4 +20,5 @@ const config = {
     __FRONTEND_BUILD_DIR__: process.env.FRONTEND_BUILD_DIR || './dist/web',
 };
 
+console.log('---CONFIG', config);
 export default config;

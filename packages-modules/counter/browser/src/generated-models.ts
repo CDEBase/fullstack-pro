@@ -1,32 +1,35 @@
 /* tslint:disable */
 import { GraphQLResolveInfo } from 'graphql';
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { DocumentNode } from 'graphql';
+import * as Apollo from '@apollo/client/index.js';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
-const defaultOptions =  {}
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type ClientCounter = {
   __typename?: 'ClientCounter';
-  counter?: Maybe<Scalars['Int']>;
+  counter?: Maybe<Scalars['Int']['output']>;
 };
 
 /**  Database counter  */
 export type Counter = {
   __typename?: 'Counter';
   /**  Current amount  */
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['output'];
 };
 
 export type Mutation = {
@@ -37,22 +40,22 @@ export type Mutation = {
   /**  add Counter  */
   addMoleculerCounter?: Maybe<Counter>;
   /**  sync cached counter with current value  */
-  syncCachedCounter?: Maybe<Scalars['Boolean']>;
+  syncCachedCounter?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
 export type MutationAddCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+  amount?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type MutationAddCounterStateArgs = {
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['input'];
 };
 
 
 export type MutationAddMoleculerCounterArgs = {
-  amount?: Maybe<Scalars['Int']>;
+  amount?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
@@ -74,95 +77,50 @@ export type Subscription = {
 };
 
 export type AddCounterStateMutationVariables = Exact<{
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['input'];
 }>;
 
 
-export type AddCounterStateMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
+export type AddCounterStateMutation = { __typename?: 'Mutation', addCounterState?: { __typename?: 'ClientCounter', counter?: number | null } | null };
 
 export type AddCounterMutationVariables = Exact<{
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['input'];
 }>;
 
 
-export type AddCounterMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type AddCounterMutation = { __typename?: 'Mutation', addCounter?: { __typename?: 'Counter', amount: number } | null };
 
 export type AddCounter_WsMutationVariables = Exact<{
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['input'];
 }>;
 
 
-export type AddCounter_WsMutation = (
-  { __typename?: 'Mutation' }
-  & { addCounter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type AddCounter_WsMutation = { __typename?: 'Mutation', addCounter?: { __typename?: 'Counter', amount: number } | null };
 
 export type SyncCachedCounterMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SyncCachedCounterMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'syncCachedCounter'>
-);
+export type SyncCachedCounterMutation = { __typename?: 'Mutation', syncCachedCounter?: boolean | null };
 
 export type CounterCacheQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterCacheQueryQuery = (
-  { __typename?: 'Query' }
-  & { counterCache?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type CounterCacheQueryQuery = { __typename?: 'Query', counterCache?: { __typename?: 'Counter', amount: number } | null };
 
 export type CounterStateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterStateQuery = (
-  { __typename?: 'Query' }
-  & { counterState?: Maybe<(
-    { __typename?: 'ClientCounter' }
-    & Pick<ClientCounter, 'counter'>
-  )> }
-);
+export type CounterStateQuery = { __typename?: 'Query', counterState?: { __typename?: 'ClientCounter', counter?: number | null } | null };
 
 export type CounterQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CounterQueryQuery = (
-  { __typename?: 'Query' }
-  & { counter?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type CounterQueryQuery = { __typename?: 'Query', counter?: { __typename?: 'Counter', amount: number } | null };
 
 export type OnCounterUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnCounterUpdatedSubscription = (
-  { __typename?: 'Subscription' }
-  & { counterUpdated?: Maybe<(
-    { __typename?: 'Counter' }
-    & Pick<Counter, 'amount'>
-  )> }
-);
+export type OnCounterUpdatedSubscription = { __typename?: 'Subscription', counterUpdated?: { __typename?: 'Counter', amount: number } | null };
 
 
 
@@ -172,21 +130,7 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -200,7 +144,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -245,28 +189,30 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
-  Counter: ResolverTypeWrapper<Counter>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ClientCounter: ResolverTypeWrapper<ClientCounter>;
+  Counter: ResolverTypeWrapper<Counter>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Query: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   Subscription: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
-  Counter: Counter;
-  Int: Scalars['Int'];
+  Boolean: Scalars['Boolean']['output'];
   ClientCounter: ClientCounter;
+  Counter: Counter;
+  Int: Scalars['Int']['output'];
   Mutation: {};
-  Boolean: Scalars['Boolean'];
+  Query: {};
+  String: Scalars['String']['output'];
   Subscription: {};
-  String: Scalars['String'];
 };
 
 export type ClientCounterResolvers<ContextType = any, ParentType extends ResolversParentTypes['ClientCounter'] = ResolversParentTypes['ClientCounter']> = {
@@ -280,9 +226,9 @@ export type CounterResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddCounterArgs, never>>;
+  addCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, Partial<MutationAddCounterArgs>>;
   addCounterState?: Resolver<Maybe<ResolversTypes['ClientCounter']>, ParentType, ContextType, RequireFields<MutationAddCounterStateArgs, 'amount'>>;
-  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, RequireFields<MutationAddMoleculerCounterArgs, never>>;
+  addMoleculerCounter?: Resolver<Maybe<ResolversTypes['Counter']>, ParentType, ContextType, Partial<MutationAddMoleculerCounterArgs>>;
   syncCachedCounter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
 };
 
@@ -307,20 +253,8 @@ export type Resolvers<ContextType = any> = {
 };
 
 
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
-
-export const AddCounterStateDocument = gql`
-    mutation addCounterState($amount: Int!) {
-  addCounterState(amount: $amount) @client {
-    counter
-  }
-}
-    `;
+export const AddCounterStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCounterState"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounterState"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounterStateMutation__
@@ -346,13 +280,7 @@ export function useAddCounterStateMutation(baseOptions?: Apollo.MutationHookOpti
 export type AddCounterStateMutationHookResult = ReturnType<typeof useAddCounterStateMutation>;
 export type AddCounterStateMutationResult = Apollo.MutationResult<AddCounterStateMutation>;
 export type AddCounterStateMutationOptions = Apollo.BaseMutationOptions<AddCounterStateMutation, AddCounterStateMutationVariables>;
-export const AddCounterDocument = gql`
-    mutation addCounter($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
-}
-    `;
+export const AddCounterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCounter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounterMutation__
@@ -378,13 +306,7 @@ export function useAddCounterMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddCounterMutationHookResult = ReturnType<typeof useAddCounterMutation>;
 export type AddCounterMutationResult = Apollo.MutationResult<AddCounterMutation>;
 export type AddCounterMutationOptions = Apollo.BaseMutationOptions<AddCounterMutation, AddCounterMutationVariables>;
-export const AddCounter_WsDocument = gql`
-    mutation AddCounter_WS($amount: Int!) {
-  addCounter(amount: $amount) {
-    amount
-  }
-}
-    `;
+export const AddCounter_WsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddCounter_WS"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"amount"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCounter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amount"},"value":{"kind":"Variable","name":{"kind":"Name","value":"amount"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useAddCounter_WsMutation__
@@ -410,11 +332,7 @@ export function useAddCounter_WsMutation(baseOptions?: Apollo.MutationHookOption
 export type AddCounter_WsMutationHookResult = ReturnType<typeof useAddCounter_WsMutation>;
 export type AddCounter_WsMutationResult = Apollo.MutationResult<AddCounter_WsMutation>;
 export type AddCounter_WsMutationOptions = Apollo.BaseMutationOptions<AddCounter_WsMutation, AddCounter_WsMutationVariables>;
-export const SyncCachedCounterDocument = gql`
-    mutation SyncCachedCounter {
-  syncCachedCounter
-}
-    `;
+export const SyncCachedCounterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncCachedCounter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncCachedCounter"}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useSyncCachedCounterMutation__
@@ -439,13 +357,7 @@ export function useSyncCachedCounterMutation(baseOptions?: Apollo.MutationHookOp
 export type SyncCachedCounterMutationHookResult = ReturnType<typeof useSyncCachedCounterMutation>;
 export type SyncCachedCounterMutationResult = Apollo.MutationResult<SyncCachedCounterMutation>;
 export type SyncCachedCounterMutationOptions = Apollo.BaseMutationOptions<SyncCachedCounterMutation, SyncCachedCounterMutationVariables>;
-export const CounterCacheQueryDocument = gql`
-    query counterCacheQuery {
-  counterCache {
-    amount
-  }
-}
-    `;
+export const CounterCacheQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"counterCacheQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterCache"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterCacheQueryQuery__
@@ -470,16 +382,15 @@ export function useCounterCacheQueryLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
         }
+export function useCounterCacheQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>(CounterCacheQueryDocument, options);
+        }
 export type CounterCacheQueryQueryHookResult = ReturnType<typeof useCounterCacheQueryQuery>;
 export type CounterCacheQueryLazyQueryHookResult = ReturnType<typeof useCounterCacheQueryLazyQuery>;
+export type CounterCacheQuerySuspenseQueryHookResult = ReturnType<typeof useCounterCacheQuerySuspenseQuery>;
 export type CounterCacheQueryQueryResult = Apollo.QueryResult<CounterCacheQueryQuery, CounterCacheQueryQueryVariables>;
-export const CounterStateDocument = gql`
-    query CounterState {
-  counterState @client {
-    counter
-  }
-}
-    `;
+export const CounterStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CounterState"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterState"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterStateQuery__
@@ -504,16 +415,15 @@ export function useCounterStateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
         }
+export function useCounterStateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CounterStateQuery, CounterStateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CounterStateQuery, CounterStateQueryVariables>(CounterStateDocument, options);
+        }
 export type CounterStateQueryHookResult = ReturnType<typeof useCounterStateQuery>;
 export type CounterStateLazyQueryHookResult = ReturnType<typeof useCounterStateLazyQuery>;
+export type CounterStateSuspenseQueryHookResult = ReturnType<typeof useCounterStateSuspenseQuery>;
 export type CounterStateQueryResult = Apollo.QueryResult<CounterStateQuery, CounterStateQueryVariables>;
-export const CounterQueryDocument = gql`
-    query counterQuery {
-  counter {
-    amount
-  }
-}
-    `;
+export const CounterQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"counterQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useCounterQueryQuery__
@@ -538,16 +448,15 @@ export function useCounterQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
         }
+export function useCounterQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CounterQueryQuery, CounterQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CounterQueryQuery, CounterQueryQueryVariables>(CounterQueryDocument, options);
+        }
 export type CounterQueryQueryHookResult = ReturnType<typeof useCounterQueryQuery>;
 export type CounterQueryLazyQueryHookResult = ReturnType<typeof useCounterQueryLazyQuery>;
+export type CounterQuerySuspenseQueryHookResult = ReturnType<typeof useCounterQuerySuspenseQuery>;
 export type CounterQueryQueryResult = Apollo.QueryResult<CounterQueryQuery, CounterQueryQueryVariables>;
-export const OnCounterUpdatedDocument = gql`
-    subscription onCounterUpdated {
-  counterUpdated {
-    amount
-  }
-}
-    `;
+export const OnCounterUpdatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onCounterUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"counterUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode;
 
 /**
  * __useOnCounterUpdatedSubscription__

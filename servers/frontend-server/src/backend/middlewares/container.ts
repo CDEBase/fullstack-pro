@@ -1,15 +1,14 @@
 import { ClientTypes } from '@common-stack/core';
-import { createMemoryRouter } from 'react-router-dom';
-import { createMainRoute } from '../../modules/module';
+// import { createMemoryRouter } from 'react-router-dom';
 import { createReduxStore } from '../../config/redux-config';
 import { createClientContainer } from '../../config/client.service';
 
 // Middleware to attach child container to the request and clean up after response
 export const containerMiddleware = (req, res, next) => {
     const { container, serviceFunc, logger, apolloClient } = createClientContainer(req, res);
-    const router = createMemoryRouter(createMainRoute(apolloClient));
+    // const router = createMemoryRouter(createMainRoute(apolloClient));
     const services = serviceFunc();
-    const { store } = createReduxStore(apolloClient, services, container, router);
+    const { store } = createReduxStore(apolloClient, services, container);
     req.container = container;
     req.apolloClient = apolloClient;
     req.logger = logger;

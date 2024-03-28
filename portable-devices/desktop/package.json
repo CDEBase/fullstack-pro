@@ -40,7 +40,7 @@
     "dependencies": {
         "@ant-design/compatible": "^1.0.5",
         "@ant-design/icons": "^4.2.2",
-        "@apollo/client": "~3.6.10",
+        "@apollo/client": "^3.9.0",
         "@cdm-logger/client": "^7.0.14",
         "@cdm-logger/electron": "^7.0.14",
         "@cdm-logger/server": "^7.0.14",

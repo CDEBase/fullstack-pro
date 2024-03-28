@@ -5,6 +5,12 @@ import express from "express";
 
 installGlobals();
 
+import buildConfig from './build.config.mjs';
+
+Object.entries(buildConfig).forEach(([k, v]) => {
+  global[k] = typeof v !== 'string' ? v : `"${v.replace(/\\/g, '\\\\')}"`;
+});
+
 const viteDevServer =
   process.env.NODE_ENV === "production"
     ? undefined
