@@ -173,6 +173,7 @@
         "@redux-devtools/core": "^3.13.1",
         "@redux-devtools/dock-monitor": "^3.0.1",
         "@redux-devtools/log-monitor": "^4.0.1",
+        "@remix-run/dev": "^2.8.1",
         "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-graphql": "2.0.2",
         "@rollup/plugin-image": "^3.0.1",

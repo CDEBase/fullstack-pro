@@ -1,3 +1,6 @@
+/// <reference types="vite/client" />
+/// <reference types="@remix-run/node" />
+
 interface Window {
   __ENV__: any,
   __APOLLO_STATE__: any,
