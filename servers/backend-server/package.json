@@ -61,7 +61,7 @@
         "html-to-text": "^8.0.0"
     },
     "dependencies": {
-        "@apollo/client": "~3.6.10",
+        "@apollo/client": "^3.9.0",
         "@babel/runtime": "^7.20.1",
         "@cdm-logger/server": "^7.0.14",
         "@common-stack/core": "3.0.3-alpha.0",

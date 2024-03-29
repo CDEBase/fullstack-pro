@@ -7,14 +7,14 @@
     "rollup.config.js",
   ],
   "include": [
+    "env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.codegen",
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx",
-    "src/routes/*.codegen.d.ts"
+    "**/.client/**/*.tsx"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -37,5 +37,6 @@
 
     // Vite takes care of building everything, not tsc.
     "noEmit": true
-  }
+  },
+  "skipLibCheck": true
 }

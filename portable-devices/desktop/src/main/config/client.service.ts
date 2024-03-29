@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientTypes } from '@common-stack/client-core';
 import { interfaces } from 'inversify';
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient } from '@apollo/client/index.js';
 import { CdmLogger } from '@cdm-logger/core';
 import modules, { container, logger } from '../modules';
 import { createApolloClient } from '../../common/config/base-apollo-client';

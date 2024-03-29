@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/index.js';
 import { Provider } from 'react-redux';
 import { PluginArea } from '@common-stack/client-react';
 import { ConnectedRouter } from 'connected-react-router';

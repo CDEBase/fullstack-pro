@@ -17,8 +17,8 @@
     "type": "module",
     "scripts": {
         "prebuild": "yarn build:clean",
-        "build": "remix vite:build",
-        "dev": "node ./server.js",
+        "build": "ENV_FILE=../../config/production/prod.env remix vite:build",
+        "dev": "ENV_FILE=../../config/development/dev.env node ./server.js",
         "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
         "start": "cross-env NODE_ENV=production node ./server.js",
         "typecheck": "tsc",
@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "@ant-design/static-style-extract": "^1.0.2",
-        "@apollo/client": "~3.6.10",
+        "@apollo/client": "^3.9.0",
         "@apollo/react-hoc": "^4.0.0",
         "@cdm-logger/client": "^7.0.14",
         "@cdm-logger/server": "^7.0.14",
@@ -110,7 +110,6 @@
     "devDependencies": {
         "@babel/polyfill": "7.12.1",
         "@loadable/babel-plugin": "^5.16.1",
-        "@remix-run/dev": "^2.8.1",
         "@types/compression": "^1.7.5",
         "@types/express": "^4.17.20",
         "@types/morgan": "^1.9.9",
@@ -135,8 +134,6 @@
         "tsx": "^4.7.0",
         "typescript": "^5.1.6",
         "vite": "^5.1.0",
-        "vite-plugin-babel": "^1.2.0",
-        "vite-plugin-codegen": "^1.1.1",
         "vite-tsconfig-paths": "^4.2.1"
     },
     "peerDependencies": {

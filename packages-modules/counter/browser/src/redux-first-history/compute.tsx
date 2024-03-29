@@ -1,30 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
-import loadable  from '@loadable/component'
 
-import { getFilteredMenus, getFilteredRoutes } from '../utils';
+import { getFilteredMenus, getFilteredRoutes } from '../utils/menu';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 
-const Dashboard = loadable(() => import('../common/components/Dashboard'));
-const Counter = loadable(() => import('./components/Counter'));
-const Hello = loadable(() => import('./components/Hello'));
 
-export const counterPageStore: IRoute[] = [
-    {
-        exact: false,
-        icon: 'export',
-        // component: Dashboard,
-        position: IMenuPosition.MIDDLE,
-        name: 'Redux First History',
-        key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-        path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
-    },
+export const counterPageStore = [
+    // {
+    //     exact: false,
+    //     icon: 'export',
+    //     component: () => import('../common/components/Dashboard'),
+    //     position: IMenuPosition.MIDDLE,
+    //     name: 'Redux First History',
+    //     key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+    //     path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
+    // },
     {
         exact: true,
         icon: 'export',
         name: 'Hello',
-        component: Hello,
+        component: () => import('./components/Hello'),
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
@@ -33,7 +28,7 @@ export const counterPageStore: IRoute[] = [
         exact: true,
         icon: 'export',
         name: 'Counter',
-        component: Counter,
+        component: () => import('./components/Counter'),
         position: IMenuPosition.MIDDLE,
         key: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.COUNTER,

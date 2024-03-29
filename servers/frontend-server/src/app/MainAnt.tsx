@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/index.js';
 import { SlotFillProvider } from '@common-stack/components-pro';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { Provider as ReduxProvider } from 'react-redux';
