@@ -16,7 +16,7 @@ export const counterPageStore = [
     //     path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HOME,
     // },
     {
-        exact: true,
+        exact: false,
         icon: 'export',
         name: 'Hello',
         component: () => import('./components/Hello'),
@@ -25,7 +25,7 @@ export const counterPageStore = [
         path: CONNECTED_REACT_ROUTER_ROUTES_TYPES.HELLO,
     },
     {
-        exact: true,
+        exact: false,
         icon: 'export',
         name: 'Counter',
         component: () => import('./components/Counter'),

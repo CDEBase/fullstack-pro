@@ -7,10 +7,11 @@ export const emotionPageStore: any[] = [
     {
         tab: 'Emotion Styling',
         key: 'emotion',
+        exact: false,
         position: IMenuPosition.MIDDLE,
         name: 'Emotion Styling',
         component: () => import('./components/CompledWithTheme'),
-        path: '/emotion',
+        path: '//emotion',
     },
 ];
 

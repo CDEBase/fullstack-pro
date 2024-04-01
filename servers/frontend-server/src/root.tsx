@@ -6,7 +6,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { ErrorBoundary } from './app/ErrorBoundary';
-import { MainRoute } from './modules';
 import { PluginArea } from '@common-stack/client-react';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -34,11 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    // <MainRoute>
-      <Outlet />
-    // </MainRoute>
-  );
+  return <Outlet />;
 }
 
 export { ErrorBoundary }

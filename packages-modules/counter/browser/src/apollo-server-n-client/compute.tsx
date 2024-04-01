@@ -11,15 +11,16 @@ export const counterPageStore: any[] = [
     tab: 'Apollo Server',
     position: IMenuPosition.MIDDLE,
     name: 'Apollo Server',
-    path: '/apollo-server-n-client',
+    path: '//apollo-server-n-client',
   },
   {
     key: 'counter',
+    exact: false,
     name: 'Counter',
     icon: 'appstore-o',
     component: () => import('./containers/Counter'),
     position: IMenuPosition.MIDDLE,
-    path: '/apollo-server-n-client/counter',
+    path: '//apollo-server-n-client/counter',
   },
 ];
 
