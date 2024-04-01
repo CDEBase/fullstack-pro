@@ -22,7 +22,7 @@ for (const v of publicEnv) {
 }
 
 export default env;
-
+console.log("---HEHEH")
 if (isBrowser) {
     // process[lowerCase('env')] = env; // to avoid webpack to replace `process` with actual value.
     // process.APP_ENV = env;
@@ -33,8 +33,11 @@ if (isBrowser) {
     window.__CLIENT__ = true;
     window.__SERVER__ = false;
 } else {
+    console.log('---SERERER')
     global.__CLIENT__ = false;
     global.__SERVER__ = true;
+    __CLIENT__ = false;
+    __SERVER__ = true;
 }
 
 try {

@@ -265,6 +265,7 @@
         "fork-ts-checker-webpack-plugin": "^7.2.13",
         "freeport-async": "^2.0.0",
         "fs-extra": "^10.1.0",
+        "glob-all": "^3.3.1",
         "html-loader": "^4.2.0",
         "html-webpack-plugin": "^5.5.0",
         "http-proxy-middleware": "^2.0.6",

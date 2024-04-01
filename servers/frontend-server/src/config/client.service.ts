@@ -17,7 +17,13 @@ let __CLIENT_SERVICE__: {
     serviceFunc: () => any;
     logger: CdmLogger.ILogger;
 };
-const initialState = __CLIENT__ ? { ...window.__APOLLO_STATE__ } : {};
+function isClient() {
+    return typeof window !== 'undefined';
+  }
+  console.log('---WINDOW--', typeof  window);
+
+console.log('---CLLIINE', __CLIENT__,      isClient())
+const initialState = __CLIENT__ && isClient() ? { ...window.__APOLLO_STATE__ } : {};
 const utility = new UtilityClass(modules);
 
 const container = modules.createContainers({}) as Container;
@@ -58,7 +64,7 @@ export const createClientContainer = (req?: any, res?: any) => {
         isDev: process.env.NODE_ENV === 'development',
         isDebug: __DEBUGGING__,
         isSSR: __SSR__,
-        scope: __CLIENT__ ? 'browser' : 'server',
+        scope: isClient() &&  typeof window !== 'undefined' ? 'browser' : 'server',
         clientState,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
         initialState,

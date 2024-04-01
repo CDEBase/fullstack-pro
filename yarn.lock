@@ -2418,29 +2418,29 @@
   dependencies:
     chalk "^4.1.0"
 
-"@common-stack/client-core@3.0.3-alpha.2", "@common-stack/client-core@^3.0.3-alpha.2":
-  version "3.0.3-alpha.2"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-3.0.3-alpha.2.tgz#79d926efff39f12444f7ec50ee6ec93d0f44797d"
-  integrity sha512-G8UnSir6b3fw8z2JdwEXtrX6Y586Rtn9c1CIDoern8gTFsfDcKY/OetqrvgRR2A/TVT6ACLpKExqImbW2Ej50g==
+"@common-stack/client-core@3.0.3-alpha.10", "@common-stack/client-core@^3.0.3-alpha.10":
+  version "3.0.3-alpha.10"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-core/-/client-core-3.0.3-alpha.10.tgz#c8412ee4de0d1aedca0a1c3bf9562659724e7f63"
+  integrity sha512-wksW6Brt+ngxVL8wiwaP/jHGqJFghOYaTMHmDzMj4Ug3XS8xEpkGwTqcuhNi7ievMrF5DPDDw+v4W/wXSVniEw==
   dependencies:
-    "@common-stack/core" "3.0.3-alpha.0"
+    "@common-stack/core" "3.0.3-alpha.8"
 
-"@common-stack/client-react@3.0.3-alpha.2", "@common-stack/client-react@^3.0.3-alpha.2":
-  version "3.0.3-alpha.2"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.2.tgz#3785d156ce9c5d3b0fb19e182e2a8cb393a433a3"
-  integrity sha512-UsfFEc6auO/dW5GJ8hqzyvnbIarjnz153+Ao91+xz3kNsZpzNaRrU18rkHJOGzTnEuNgq4ovVIOiUrwRTHNABA==
+"@common-stack/client-react@3.0.3-alpha.10", "@common-stack/client-react@^3.0.3-alpha.10":
+  version "3.0.3-alpha.10"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.10.tgz#796150b223c07a57ab15a68a818b3737ac705041"
+  integrity sha512-cbI3FnAyDQgG8sFSE1EjV23gkMiYpUBKhio8o6P94pJM9lmfdGCIu+Loix68k7Mql1oGqmPrVedbLA15HXTsiQ==
   dependencies:
-    "@common-stack/client-core" "3.0.3-alpha.2"
-    "@common-stack/core" "3.0.3-alpha.0"
+    "@common-stack/client-core" "3.0.3-alpha.10"
+    "@common-stack/core" "3.0.3-alpha.8"
     "@wordpress/hooks" "^3.53.0"
     browser-bunyan "^1.6.3"
     history-with-query "^4.10.4"
     sort-keys "^4.1.0"
 
-"@common-stack/components-pro@3.0.3-alpha.2", "@common-stack/components-pro@^3.0.3-alpha.2":
-  version "3.0.3-alpha.2"
-  resolved "https://registry.yarnpkg.com/@common-stack/components-pro/-/components-pro-3.0.3-alpha.2.tgz#4778acb692efdf6defd98aa67e1947b425f7668c"
-  integrity sha512-86p20YwvH7+PJI0Qm18r8I6NB1XwMROiXYrpfYS669st25EhIdXeU/FYHnC5dqc2Urug1MUkLYoGakT6c90mcg==
+"@common-stack/components-pro@3.0.3-alpha.5", "@common-stack/components-pro@^3.0.3-alpha.5":
+  version "3.0.3-alpha.5"
+  resolved "https://registry.yarnpkg.com/@common-stack/components-pro/-/components-pro-3.0.3-alpha.5.tgz#54f883ef52c0ea50f92cae3bc40e211a9b3507a4"
+  integrity sha512-Dg2ZeBeGkeAUHHdBV3plrbyNocV386D+BpUxV+Be1ZpuzsZgBsGYkLLBdsa6xLP/Al5LX+FeoIAdYDIaJZkQ5w==
   dependencies:
     "@wordpress/compose" "^6.30.0"
     "@wordpress/element" "^5.30.0"
@@ -2452,10 +2452,10 @@
     sort-keys "^4.1.0"
     valtio "^1.7.0"
 
-"@common-stack/core@3.0.3-alpha.0", "@common-stack/core@^3.0.3-alpha.0":
-  version "3.0.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-3.0.3-alpha.0.tgz#5710849e1e184da024fbd337b40a33aebee7cc05"
-  integrity sha512-vil3sGPtDQ96Mllyk4mT6rCoQvCsaNWfSDDVetnE6Bz5lpymenJQ7PuxdfaepcT9dKa3OAHcw78MMz5aYgz6jw==
+"@common-stack/core@3.0.3-alpha.8", "@common-stack/core@^3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/core/-/core-3.0.3-alpha.8.tgz#e48a1efb07cc12b54216fb5fc3785ea1b307429f"
+  integrity sha512-uUaYZB+GPP9OGBfwV8jC9oIkVUMizDpLNmxkEQfwosHw/KjZFaJJly+wYBpd5gEDf+XFzasKnjF2uIa1Xj3TCA==
 
 "@common-stack/env-list-loader@0.5.8":
   version "0.5.8"
@@ -2464,31 +2464,31 @@
   dependencies:
     strip-comments "^2.0.1"
 
-"@common-stack/env-list-loader@3.0.3-alpha.0":
-  version "3.0.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@common-stack/env-list-loader/-/env-list-loader-3.0.3-alpha.0.tgz#9b755326d78da4d2cb8cfa1e76808a9acfae57ba"
-  integrity sha512-ob4kNYQzWdGL5yzBtmj8nUoeXW2DdOwFTlf9zhQQxy248tbwVhhvEc3d8SoPhOwjYrG9Di9QshN0dNsuT2tEtw==
+"@common-stack/env-list-loader@3.0.3-alpha.5":
+  version "3.0.3-alpha.5"
+  resolved "https://registry.yarnpkg.com/@common-stack/env-list-loader/-/env-list-loader-3.0.3-alpha.5.tgz#6fe9cecfd9fb10c18966680f0eb49f492b26d0f1"
+  integrity sha512-Kmd+pVMNR8uJAqoxqHNNv5QPxx3NkKtbMv/yM2DBYfpM9soCfOyNW2Ufw4Sc4XZ9PleMmbR425dhkTluRWSKTg==
   dependencies:
     strip-comments "^2.0.1"
 
-"@common-stack/remix-router-redux@3.0.3-alpha.1":
-  version "3.0.3-alpha.1"
-  resolved "https://registry.yarnpkg.com/@common-stack/remix-router-redux/-/remix-router-redux-3.0.3-alpha.1.tgz#15295599d81f8330be4ef0cb7ad9b013ec6ac2cc"
-  integrity sha512-qs/3wRp2bjsvpqKJgx9G1F8V+J7KLmIlDPFFuLGB8OImvtSIoY5FVrbQVRBwbCt8+FzhJNpzzC9aQFLE/QMFGA==
+"@common-stack/remix-router-redux@3.0.3-alpha.6":
+  version "3.0.3-alpha.6"
+  resolved "https://registry.yarnpkg.com/@common-stack/remix-router-redux/-/remix-router-redux-3.0.3-alpha.6.tgz#0585150d800a5ccfd350770764569b8b9964a741"
+  integrity sha512-EsO2TXU81WbjPxwSQQnGwQOkO9LYsMiX7YYntE8g9ECgJTPqfs0AiIbvM1qGMpWNED80BKhDtRU1tjDuEA7kUA==
 
-"@common-stack/server-core@3.0.3-alpha.0":
-  version "3.0.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-3.0.3-alpha.0.tgz#2ec0279e6d56c9a127ab06e94accdf71b0389c67"
-  integrity sha512-LBGQDNAjmrU1hKIo29/1MWl6yx1v6NBCnIh+vxAqsrjRXwpCPiSyP8PO09/LQkz+csp/jq7TCZPlKnp/y3+Tkg==
+"@common-stack/server-core@3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/server-core/-/server-core-3.0.3-alpha.8.tgz#69091638e2269d3f1cd8e2fd258d2a37fd178b6e"
+  integrity sha512-mPy+XpqX2tJQ+sHZ65vuBVYYSJXLX9LzzE2TbMh+Udy60hz1+hA8VgjDRvGofZWtu2MJIcbgXhxNwGe6Id32SA==
   dependencies:
-    "@common-stack/core" "3.0.3-alpha.0"
+    "@common-stack/core" "3.0.3-alpha.8"
 
-"@common-stack/store-mongo@3.0.3-alpha.0":
-  version "3.0.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-3.0.3-alpha.0.tgz#36e800dea4eb32ddb1319279c6d382d8f33aea4e"
-  integrity sha512-jAD3Ll3z3UUZNgWWn1RoAu00zbWulC0nLeELLA8FCItAdBsiJhtwfl90hhsqDZ+qUtATpsN/rADo226SBBaxWg==
+"@common-stack/store-mongo@3.0.3-alpha.8":
+  version "3.0.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@common-stack/store-mongo/-/store-mongo-3.0.3-alpha.8.tgz#5079b6c5bfff5ca542d1a0d3e6ce6667860caaed"
+  integrity sha512-pYOwTBeP2kSS5AG4gXCC41Eunn1hb2pXKMtHYNeYcfWIU403hLUtDbv7qdWgrJWyCgRAUEgIT0pMfbXzl/JlLw==
   dependencies:
-    "@common-stack/core" "3.0.3-alpha.0"
+    "@common-stack/core" "3.0.3-alpha.8"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -7552,6 +7552,7 @@
 "@sample-stack/counter-module-browser@link:packages-modules/counter/browser":
   version "0.0.1"
   dependencies:
+    "@remix-run/react" "^2.8.1"
     "@sample-stack/platform-browser" "link:packages/sample-platform/browser"
     antd "~5.1.7"
 
@@ -14238,6 +14239,13 @@ cross-fetch@3.1.4:
   dependencies:
     node-fetch "2.6.1"
 
+cross-fetch@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.0.0.tgz#f037aef1580bb3a1a35164ea2a848ba81b445983"
+  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
+  dependencies:
+    node-fetch "^2.6.12"
+
 cross-fetch@^3.1.5:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.8.tgz#0327eba65fd68a7d119f8fb2bf9334a1a7956f82"
@@ -15359,17 +15367,20 @@ dotenv-defaults@^2.0.2:
   dependencies:
     dotenv "^8.2.0"
 
+dotenv-esm@^16.0.3-4:
+  version "16.0.3-4"
+  resolved "https://registry.yarnpkg.com/dotenv-esm/-/dotenv-esm-16.0.3-4.tgz#5f4acb241ec930a240840ff013df88cbf33cce95"
+  integrity sha512-IbGsV3yC5qo6U9pl4vAYkufD6ti3sTJhSAp5En3WXNyIEQgB/jt1GbGsxR3JCqAkOckVa0XZZGCBT3RE49RXXA==
+
 dotenv-expand@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
 
-dotenv-safe@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/dotenv-safe/-/dotenv-safe-8.2.0.tgz#8d548c7318a62c09a66c4dc8c31864cc007c78ba"
-  integrity sha512-uWwWWdUQkSs5a3mySDB22UtNwyEYi0JtEQu+vDzIqr9OjbDdC2Ip13PnSpi/fctqlYmzkxCeabiyCAOROuAIaA==
-  dependencies:
-    dotenv "^8.2.0"
+dotenv-safe@^9.0.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv-safe/-/dotenv-safe-9.1.0.tgz#670470f573fd6972e6b9d12396edf13d5f30b611"
+  integrity sha512-2qwVAnUN+EDpu41pIK1XiJpHXKHV9Dnti3cE1EnUXT1/BV5+B7xuSZtgZ/4LExkCpp5F6BGikraezQL+8hKCOA==
 
 dotenv-webpack@^8.0.1:
   version "8.0.1"
@@ -15378,7 +15389,7 @@ dotenv-webpack@^8.0.1:
   dependencies:
     dotenv-defaults "^2.0.2"
 
-dotenv@^16.0.0:
+dotenv@^16.0.0, dotenv@^16.4.5:
   version "16.4.5"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
@@ -18858,6 +18869,14 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
+glob-all@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/glob-all/-/glob-all-3.3.1.tgz#6be2d5d8276902319f640fbf839fbe15b35e7667"
+  integrity sha512-Y+ESjdI7ZgMwfzanHZYQ87C59jOO0i+Hd+QYtVt9PhLi6d8wlOpzQnfBxWUlaTuAoR3TkybLqqbIoWveU4Ji7Q==
+  dependencies:
+    glob "^7.2.3"
+    yargs "^15.3.1"
+
 glob-base@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-base/-/glob-base-0.3.0.tgz#dbb164f6221b1c0b1ccf82aea328b497df0ea3c4"
@@ -18950,7 +18969,7 @@ glob@7.2.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@7.2.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0:
+glob@7.2.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0, glob@^7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
   integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==
@@ -34537,7 +34556,7 @@ uuid@^7.0.3:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
   integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
 
-uuid@^9.0.0:
+uuid@^9.0.0, uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { Operation } from '@apollo/client';
+import { Operation } from '@apollo/client/index.js';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { DocumentNode, OperationDefinitionNode } from 'graphql';
 import { mockSingleLink, mockObservableLink } from '@apollo/client/testing';

@@ -1,5 +1,5 @@
 import { ofType } from 'redux-observable';
-import { map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators/index.js';
 import { LOCATION_CHANGE } from '@common-stack/remix-router-redux';
 
 // Assuming LOCATION_CHANGE action type and a dummy action creator for demonstration
