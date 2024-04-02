@@ -21,12 +21,14 @@ export const getFilteredMenus = (accountPageStore, selectedMenu) =>
     });
 
 export const getFilteredRoutes = (accountPageStore, selectedRoutes) =>
-    filterStore(accountPageStore, selectedRoutes).map((item) => {
-        const { path } = item;
-        return {
-            [path]: item,
-        };
-    });
+    filterStore(accountPageStore, selectedRoutes)
+        .filter((item) => !!item.path)
+        .map((item) => {
+            const { path } = item;
+            return {
+                [path]: item,
+            };
+        });
 
 export const getFilteredTabs = (accountPageStore, selectedTabs) =>
     filterStore(accountPageStore, selectedTabs).map((item) => {

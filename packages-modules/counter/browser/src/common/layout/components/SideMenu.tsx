@@ -1,11 +1,12 @@
 import * as H from 'history';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Outlet, useNavigate, Link } from '@remix-run/react';
 import * as PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
-import { Layout, Menu, Avatar } from 'antd';
-import { IMenuPosition } from '@common-stack/client-react';
-
+import { Layout, Menu, Avatar, ConfigProvider, Button } from 'antd';
+import { Feature, FeatureWithRouterFactory, IMenuPosition } from '@common-stack/client-react';
+import counterModule from '../../../index'
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -78,10 +79,13 @@ export namespace ISiderMenu {
     export type State = CompState;
 }
 
-export default (props: ISiderMenu.Props) => {
+export const SideBar = (props: ISiderMenu.Props) => {
+    const features = new Feature(FeatureWithRouterFactory, counterModule);
+    debugger
+    const { menuData = features.getMenus(), location = { pathname: '/' }, segments = features.sidebarSegments } = props
     const [privateValues] = useState({
-        menus: props.menuData,
-        flatMenuKeys: getFlatMenuKeys(props.menuData)
+        menus: menuData,
+        flatMenuKeys: getFlatMenuKeys(menuData)
     });
 
     // public static contextTypes = {
@@ -99,7 +103,7 @@ export default (props: ISiderMenu.Props) => {
         setState({
             openKeys: getDefaultCollapsedSubMenus(props)
         })
-    }, [props.location.pathname])
+    }, [location.pathname])
 
     /**
      * Convert pathname to openKeys
@@ -107,8 +111,7 @@ export default (props: ISiderMenu.Props) => {
      * @param props
      */
     const getDefaultCollapsedSubMenus = (props) => {
-        const { location: { pathname } } = props;
-        return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(pathname));
+        return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(location?.pathname));
     }
 
     const [state, setState] = useState({
@@ -150,8 +153,10 @@ export default (props: ISiderMenu.Props) => {
      * @memberOf SiderMenu
      */
     const getMenuItemPath = item => {
+        const navigate = useNavigate()
         const { styles = {} } = props;
         const itemPath = conversionPath(item.path);
+        debugger
         const icon = getIcon(item.icon);
         const { target, name } = item;
         // Is it a http link
@@ -167,13 +172,13 @@ export default (props: ISiderMenu.Props) => {
             <Link
                 to={itemPath}
                 target={target}
-                replace={itemPath === props.location.pathname}
+                replace={itemPath === location.pathname}
                 onClick={
                     props.isMobile
                         ? () => {
                             props.onCollapse(true);
                         }
-                        : undefined
+                        : () => navigate(itemPath)
                 }
             >
                 {icon}
@@ -234,8 +239,7 @@ export default (props: ISiderMenu.Props) => {
 
     // Get the currently selected menu
     const getSelectedMenuKeys = () => {
-        const { location: { pathname } } = props;
-        return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(pathname));
+        return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(location.pathname));
     }
     // conversion Path
     const conversionPath = path => {
@@ -265,7 +269,7 @@ export default (props: ISiderMenu.Props) => {
     }
 
     // const { renderer } = this.context;
-    const { logo, collapsed, segments = [], onCollapse, styles = {} } = props;
+    const { logo, collapsed, onCollapse, styles = {} } = props;
     const { openKeys } = state;
     // Don't show popup menu when it is been collapsed
     const menuProps = collapsed ? {} : { openKeys };
@@ -276,48 +280,60 @@ export default (props: ISiderMenu.Props) => {
     }
 
     return (
-        <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
-            <Sider
-                trigger={null}
-                collapsible={true}
-                collapsed={collapsed}
-                breakpoint="lg"
-                onCollapse={onCollapse}
-                width={256}
-                className={styles.sider}
-            >
-                {getLogo((privateValues.menus.filter(menu => menu.position === IMenuPosition.LOGO) || [])[0])}
-                <div className={styles.grow}>
-                    <Menu
-                        key="Menu-Middle"
-                        theme="dark"
-                        mode="inline"
-                        {...menuProps}
-                        className={styles.grow}
-                        onOpenChange={handleOpenChange}
-                        selectedKeys={selectedKeys}
-                        style={{ padding: '16px 0', width: '100%' }}
-                    >
-                        {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.MIDDLE))}
-                    </Menu>
-                    {segments.map((segment, segmentIndex) => (
-                        <div key={segmentIndex}>
-                            {React.cloneElement(segment, { collapsed })}
-                        </div>
-                    ))}
-                </div>
+        <Sider
+            trigger={null}
+            collapsible={true}
+            collapsed={collapsed}
+            breakpoint="lg"
+            onCollapse={onCollapse}
+            width={256}
+            className={styles.sider}
+        >
+            {getLogo((privateValues.menus.filter(menu => menu.position === IMenuPosition.LOGO) || [])[0])}
+            <div className={styles.grow}>
                 <Menu
-                    key="Menu-Bottom"
+                    key="Menu-Middle"
                     theme="dark"
                     mode="inline"
                     {...menuProps}
+                    className={styles.grow}
                     onOpenChange={handleOpenChange}
                     selectedKeys={selectedKeys}
                     style={{ padding: '16px 0', width: '100%' }}
                 >
-                    {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.BOTTOM))}
+                    {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.MIDDLE))}
                 </Menu>
-            </Sider>
-        </Layout>
+                {segments.map((segment, segmentIndex) => (
+                    <div key={segmentIndex}>
+                        {React.cloneElement(segment, { collapsed })}
+                    </div>
+                ))}
+            </div>
+            <Menu
+                key="Menu-Bottom"
+                theme="dark"
+                mode="inline"
+                {...menuProps}
+                onOpenChange={handleOpenChange}
+                selectedKeys={selectedKeys}
+                style={{ padding: '16px 0', width: '100%' }}
+            >
+                {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.BOTTOM))}
+            </Menu>
+        </Sider>
+    )
+}
+
+export default (props) => {
+    return (
+        <BrowserRouter>
+            <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
+                <SideBar
+                    collapsed={false}
+                    {...props}
+                />
+                <Outlet />
+            </Layout>
+        </BrowserRouter>
     )
 }

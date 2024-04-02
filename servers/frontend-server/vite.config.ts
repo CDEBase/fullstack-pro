@@ -34,17 +34,32 @@ export default defineConfig((d) => {
         },
         plugins: [
             remix({
+                ssr: false,
                 appDirectory: 'src',
-                routes: async (defineRoutes) =>
-                    defineRoutes((routeFn) => {
-                        defineRoutesConfig(routeFn, {
-                            routesFileName: 'routes.json',
-                            packages: ['@sample-stack/counter-module-browser'],
-                            rootPath: resolve(directoryName, '../..'),
-                        });
-                    }),
+                routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
+                // defineRoutes((routeFn) => {
+                //     defineRoutesConfig(routeFn, {
+                //         routesFileName: 'routes.json',
+                //         packages: ['@sample-stack/counter-module-browser'],
+                //         rootPath: resolve(directoryName, '../..'),
+                //     });
+                // }),
             }),
             tsconfigPaths({ ignoreConfigErrors: true }),
         ],
     };
 });
+
+
+// remix({
+//     ssr: false,
+//     appDirectory: 'src',
+//     routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
+//     // defineRoutes((routeFn) => {
+//     //     defineRoutesConfig(routeFn, {
+//     //         routesFileName: 'routes.json',
+//     //         packages: ['@sample-stack/counter-module-browser'],
+//     //         rootPath: resolve(directoryName, '../..'),
+//     //     });
+//     // }),
+// }),
