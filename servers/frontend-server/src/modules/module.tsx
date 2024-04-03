@@ -4,7 +4,6 @@ import counterModules from '@sample-stack/counter-module-browser';
 import { Feature, FeatureWithRouterFactory, renderRoutes2 } from '@common-stack/client-react';
 import { SiderMenu } from './layout';
 import '@sample-stack/assets';
-import { ClientOnly } from "remix-utils";
 import { BrowserRouter } from 'react-router-dom';
 // import { ErrorBoundary } from '../app/ErrorBoundary';
 
