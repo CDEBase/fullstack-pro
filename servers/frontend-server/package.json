@@ -17,7 +17,7 @@
     "type": "module",
     "scripts": {
         "prebuild": "yarn build:clean",
-        "build": "remix vite:build",
+        "build": "ENV_FILE=../../config/development/dev.env  remix vite:build",
         "dev": "ENV_FILE=../../config/development/dev.env node ./server.js",
         "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
         "start": "cross-env NODE_ENV=production node ./server.js",

@@ -1,6 +1,6 @@
 import { combineEpics, ofType } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs';
-import { mergeMap, takeUntil } from 'rxjs/operators';
+import { mergeMap, takeUntil } from 'rxjs/operators/index.js';
 import modules from '../modules';
 
 export const epic$ = new BehaviorSubject(combineEpics(...modules.epics));
