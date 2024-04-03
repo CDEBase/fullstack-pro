@@ -45,7 +45,7 @@
         "@cdm-logger/electron": "^7.0.14",
         "@cdm-logger/server": "^7.0.14",
         "@common-stack/client-core": "3.0.3-alpha.10",
-        "@common-stack/client-react": "3.0.3-alpha.10",
+        "@common-stack/client-react": "3.0.3-alpha.11",
         "@common-stack/core": "3.0.3-alpha.8",
         "@common-stack/server-core": "3.0.3-alpha.8",
         "@sample-stack/core": "link:../../packages/sample-core",

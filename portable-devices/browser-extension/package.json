@@ -38,7 +38,7 @@
         "@apollo/react-common": "^3.1.4",
         "@cdm-logger/client": "^7.0.14",
         "@common-stack/client-core": "3.0.3-alpha.10",
-        "@common-stack/client-react": "3.0.3-alpha.10",
+        "@common-stack/client-react": "3.0.3-alpha.11",
         "@common-stack/components-pro": "^3.0.3-alpha.5",
         "@common-stack/core": "3.0.3-alpha.8",
         "@common-stack/env-list-loader": "3.0.3-alpha.5",

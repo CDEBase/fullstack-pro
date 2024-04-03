@@ -40,7 +40,7 @@
         "@cdm-logger/server": "^7.0.14",
         "@common-stack/components-pro": "3.0.3-alpha.5",
         "@common-stack/client-core": "3.0.3-alpha.10",
-        "@common-stack/client-react": "3.0.3-alpha.10",
+        "@common-stack/client-react": "3.0.3-alpha.11",
         "@common-stack/core": "3.0.3-alpha.8",
         "@common-stack/remix-router-redux": "3.0.3-alpha.6",
         "@common-stack/server-core": "3.0.3-alpha.8",

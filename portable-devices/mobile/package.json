@@ -64,7 +64,7 @@
         "@apollo/client": "~3.9.10",
         "@cdm-logger/client": "^7.0.14",
         "@common-stack/client-core": "^3.0.3-alpha.10",
-        "@common-stack/client-react": "^3.0.3-alpha.10",
+        "@common-stack/client-react": "^3.0.3-alpha.11",
         "@common-stack/core": "^3.0.3-alpha.8",
         "@expo/vector-icons": "~13.0.0",
         "@react-native-async-storage/async-storage": "1.17.11",
