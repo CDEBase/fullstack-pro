@@ -34,7 +34,7 @@ export default defineConfig((d) => {
         },
         plugins: [
             remix({
-                ssr: false,
+                ssr: true,
                 appDirectory: 'src',
                 routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
                 // defineRoutes((routeFn) => {

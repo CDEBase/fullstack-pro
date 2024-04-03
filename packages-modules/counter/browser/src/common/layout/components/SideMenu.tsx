@@ -7,6 +7,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Avatar, ConfigProvider, Button } from 'antd';
 import { Feature, FeatureWithRouterFactory, IMenuPosition } from '@common-stack/client-react';
 import counterModule from '../../../index'
+import { ClientOnly } from '../../components/ClientOnly';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -324,16 +325,30 @@ export const SideBar = (props: ISiderMenu.Props) => {
     )
 }
 
+export async function clientLoader() {
+    return null;
+}
+
+export function HydrateFallback() {
+    return <h1>Loading...</h1>;
+}
+
 export default (props) => {
     return (
-        <BrowserRouter>
-            <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
-                <SideBar
-                    collapsed={false}
-                    {...props}
-                />
-                <Outlet />
-            </Layout>
-        </BrowserRouter>
+        <ClientOnly>
+            {
+                () => {
+                    return (<BrowserRouter>
+                        <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
+                            <SideBar
+                                collapsed={false}
+                                {...props}
+                            />
+                            <Outlet />
+                        </Layout>
+                    </BrowserRouter>)
+                }
+            }
+        </ClientOnly>
     )
 }
