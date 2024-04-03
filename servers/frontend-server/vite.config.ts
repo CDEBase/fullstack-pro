@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { jsxRoutes } from 'remix-json-routes';
 import routes from './src/routes';
 import dotenv from 'dotenv-esm';
-import { loadRoutesConfig, defineRoutesConfig } from './json-wrapper';
+import { defineRoutesConfig } from './json-wrapper';
 import buildConfig from './build.config.mjs';
 
 
@@ -36,14 +36,15 @@ export default defineConfig((d) => {
             remix({
                 ssr: true,
                 appDirectory: 'src',
-                routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
-                // defineRoutes((routeFn) => {
-                //     defineRoutesConfig(routeFn, {
-                //         routesFileName: 'routes.json',
-                //         packages: ['@sample-stack/counter-module-browser'],
-                //         rootPath: resolve(directoryName, '../..'),
-                //     });
-                // }),
+                // routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
+                routes: async (defineRoutes) =>
+                    defineRoutes((routeFn) => {
+                        defineRoutesConfig(routeFn, {
+                            routesFileName: 'routes.json',
+                            packages: ['@sample-stack/counter-module-browser'],
+                            rootPath: resolve(directoryName, '../..'),
+                        });
+                    }),
             }),
             tsconfigPaths({ ignoreConfigErrors: true }),
         ],

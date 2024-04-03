@@ -2427,10 +2427,10 @@
   dependencies:
     "@common-stack/core" "3.0.3-alpha.8"
 
-"@common-stack/client-react@3.0.3-alpha.10", "@common-stack/client-react@^3.0.3-alpha.10":
-  version "3.0.3-alpha.10"
-  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.10.tgz#796150b223c07a57ab15a68a818b3737ac705041"
-  integrity sha512-cbI3FnAyDQgG8sFSE1EjV23gkMiYpUBKhio8o6P94pJM9lmfdGCIu+Loix68k7Mql1oGqmPrVedbLA15HXTsiQ==
+"@common-stack/client-react@3.0.3-alpha.11", "@common-stack/client-react@^3.0.3-alpha.11":
+  version "3.0.3-alpha.11"
+  resolved "https://registry.yarnpkg.com/@common-stack/client-react/-/client-react-3.0.3-alpha.11.tgz#82c1c9af55acc196d5e099f800c60bf0d7ef784c"
+  integrity sha512-SGBEpqmLjCbwIVrVKmapN1hB9DHdOgL5n08rUIGZkJgS/InoTDBTx5fekQJgILjfNC9qWjp8s0fC0QG/xExsPg==
   dependencies:
     "@common-stack/client-core" "3.0.3-alpha.10"
     "@common-stack/core" "3.0.3-alpha.8"
