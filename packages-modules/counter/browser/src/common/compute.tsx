@@ -8,6 +8,7 @@ export const commonPageStore: any[] = [
         key: 'home',
         exact: false,
         name: 'Home',
+        clientOnly: true,
         component: () => import('../common/layout/components/SideMenu'),
         wrapper: () => import('../common/components/Wrapper'),
         position: IMenuPosition.MIDDLE,

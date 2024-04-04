@@ -5,6 +5,7 @@ import { isArray, mergeWith } from 'lodash-es';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuid } from 'uuid';
+import { wrapRouteComponent } from './wrapperComponent';
 
 function getRootPath() {
     const directoryName = dirname(fileURLToPath(import.meta.url));
@@ -51,18 +52,20 @@ export function loadRoutesConfig(options) {
     return result;
 }
 
-export function jsonRoutes(defineRoutes, routes) {
-    return defineRoutes((route) =>
-        routes.forEach((r) => {
-            return defineRoute(route, { ...r, path: r.relativePath });
-        }),
-    );
-}
+// export function jsonRoutes(defineRoutes, routes) {
+//     return defineRoutes((route) =>
+//         routes.forEach((r) => {
+//             return defineRoute(route, r);
+//         }),
+//     );
+// }
 
 function defineRoute(routeFn, jsonRoute) {
-    const { routes = null, relativePath: path, file: componentFile, ...rest } = jsonRoute;
+    const { routes = null, relativePath: path, file: componentFile, clientOnly, auth, ...rest } = jsonRoute;
     const rootPath = '../../..';
-    let file = `${rootPath}/node_modules/${componentFile}`;
+    // let file = `${rootPath}/node_modules/${componentFile}`;
+    let file = wrapRouteComponent(componentFile, auth, clientOnly );
+    console.log('--FILE---DEFINE ROUTE', file);
     let opts = { ...rest, id: uuid() };
     if (routes) {
         routeFn(path, file, opts, () => {

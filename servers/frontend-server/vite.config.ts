@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { jsxRoutes } from 'remix-json-routes';
 import routes from './src/routes';
 import dotenv from 'dotenv-esm';
-import { defineRoutesConfig } from './json-wrapper';
+import { defineRoutesConfig } from './tools/json-wrapper';
 import buildConfig from './build.config.mjs';
 
 
@@ -34,7 +34,7 @@ export default defineConfig((d) => {
         },
         plugins: [
             remix({
-                ssr: true,
+                ssr: false,
                 appDirectory: 'src',
                 // routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
                 routes: async (defineRoutes) =>

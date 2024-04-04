@@ -1,18 +1,16 @@
 import * as H from 'history';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from '@remix-run/router';
 import { Outlet, useNavigate, Link } from '@remix-run/react';
-import * as PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Avatar, ConfigProvider, Button } from 'antd';
 import { Feature, FeatureWithRouterFactory, IMenuPosition } from '@common-stack/client-react';
-import counterModule from '../../../index'
-import { ClientOnly } from '../../components/ClientOnly';
+import counterModule from '../../../index';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 export function urlToList(url) {
-    const urllist = url.split('/').filter(i => i);
+    const urllist = url.split('/').filter((i) => i);
     return urllist.map((urlItem, index) => {
         return `/${urllist.slice(0, index + 1).join('/')}`;
     });
@@ -27,7 +25,7 @@ const getImageUrl = (picture) => {
  * [{path: string}, {path: string}] => {path, path2}
  * @param menu
  */
-export const getFlatMenuKeys = menu =>
+export const getFlatMenuKeys = (menu) =>
     menu.reduce((keys, item) => {
         keys.push(item.path);
         if (item.children) {
@@ -36,17 +34,16 @@ export const getFlatMenuKeys = menu =>
         return keys;
     }, []);
 
-
 /**
  * Find all matched menu keys based on paths
  * @param flatMenuKeys: [/abc, /abc/:id, /abc/:id/info]
  * @param paths: [/abc/ /abc/11, /abc/11/info]
  */
 export const getMenuMatchKeys = (flatMenuKeys, paths) =>
-    paths.reduce((matchKeys, path) => (
-        matchKeys.concat(
-            flatMenuKeys.filter(item => pathToRegexp(item).test(path)),
-        )), []);
+    paths.reduce(
+        (matchKeys, path) => matchKeys.concat(flatMenuKeys.filter((item) => pathToRegexp(item).test(path))),
+        [],
+    );
 
 export namespace ISiderMenu {
     export interface CompProps {
@@ -81,12 +78,11 @@ export namespace ISiderMenu {
 }
 
 export const SideBar = (props: ISiderMenu.Props) => {
-    const features = new Feature(FeatureWithRouterFactory, counterModule);
-    debugger
-    const { menuData = features.getMenus(), location = { pathname: '/' }, segments = features.sidebarSegments } = props
+    const features = new Feature(counterModule);
+    const { menuData = features.getMenus(), location = { pathname: '/' }, segments = features.sidebarSegments } = props;
     const [privateValues] = useState({
         menus: menuData,
-        flatMenuKeys: getFlatMenuKeys(menuData)
+        flatMenuKeys: getFlatMenuKeys(menuData),
     });
 
     // public static contextTypes = {
@@ -98,13 +94,13 @@ export const SideBar = (props: ISiderMenu.Props) => {
             user: {},
             isMobile: false,
         };
-    }
+    };
 
     useEffect(() => {
         setState({
-            openKeys: getDefaultCollapsedSubMenus(props)
-        })
-    }, [location.pathname])
+            openKeys: getDefaultCollapsedSubMenus(props),
+        });
+    }, [location.pathname]);
 
     /**
      * Convert pathname to openKeys
@@ -113,11 +109,11 @@ export const SideBar = (props: ISiderMenu.Props) => {
      */
     const getDefaultCollapsedSubMenus = (props) => {
         return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(location?.pathname));
-    }
+    };
 
     const [state, setState] = useState({
-        openKeys: getDefaultCollapsedSubMenus(props)
-    })
+        openKeys: getDefaultCollapsedSubMenus(props),
+    });
 
     /**
      * Allow menu.js config icon as string or ReactNode
@@ -130,11 +126,12 @@ export const SideBar = (props: ISiderMenu.Props) => {
         const { styles = {} } = props;
         if (typeof icon === 'string' && icon.indexOf('http') === 0) {
             return <img src={icon} alt="icon" className={styles.icon} />;
-        } if (typeof icon === 'string') {
+        }
+        if (typeof icon === 'string') {
             return <div data-type={icon} style={styles.icon} />;
         }
         return icon;
-    }
+    };
 
     const getAvatar = (menu) => {
         const { styles = {}, user } = props;
@@ -142,22 +139,20 @@ export const SideBar = (props: ISiderMenu.Props) => {
             <span data-user={user.nickname} id={!user || user.isTest ? `cde-user-placeholder` : 'cde-user'}>
                 <div style={{ marginRight: '7px' }} data-src={getImageUrl(user.picture)}>
                     {user.nickname || 'Guest'}
-                </div>
-                {' '}
+                </div>{' '}
                 <span> {user.nickname || 'Guest'}</span>
             </span>
         );
-    }
+    };
 
     /**
      * Judge whether it is http link.return or a Link
      * @memberOf SiderMenu
      */
-    const getMenuItemPath = item => {
-        const navigate = useNavigate()
+    const getMenuItemPath = (item) => {
+        const navigate = useNavigate();
         const { styles = {} } = props;
         const itemPath = conversionPath(item.path);
-        debugger
         const icon = getIcon(item.icon);
         const { target, name } = item;
         // Is it a http link
@@ -177,8 +172,8 @@ export const SideBar = (props: ISiderMenu.Props) => {
                 onClick={
                     props.isMobile
                         ? () => {
-                            props.onCollapse(true);
-                        }
+                              props.onCollapse(true);
+                          }
                         : () => navigate(itemPath)
                 }
             >
@@ -186,13 +181,13 @@ export const SideBar = (props: ISiderMenu.Props) => {
                 <span>{name}</span>
             </Link>
         );
-    }
+    };
     /**
      * get SubMenu or Item
      */
     const getSubMenuOrItem = (item, key) => {
         const { styles = {} } = props;
-        if (item.children && item.children.some(child => child.name)) {
+        if (item.children && item.children.some((child) => child.name)) {
             const childrenItems = getNavMenuItems(item.children);
             if (childrenItems && childrenItems.length > 0) {
                 return (
@@ -205,22 +200,23 @@ export const SideBar = (props: ISiderMenu.Props) => {
         } else {
             return <Menu.Item key={`${item.path}-${key}`}>{getMenuItemPath(item)}</Menu.Item>;
         }
-    }
+    };
     /**
      * @memberof SiderMenu
      */
-    const getNavMenuItems = menusData => {
+    const getNavMenuItems = (menusData) => {
         if (!menusData) {
             return [];
         }
-        return menusData.filter(item => item.name && !item.hideInMenu)
+        return menusData
+            .filter((item) => item.name && !item.hideInMenu)
             .map((item, key) => {
                 // make dom
                 const ItemDom = getSubMenuOrItem(item, key);
                 return checkPermissionItem(item.authority, ItemDom);
             })
-            .filter(item => item);
-    }
+            .filter((item) => item);
+    };
 
     /**
      * Generates LOGO
@@ -228,28 +224,30 @@ export const SideBar = (props: ISiderMenu.Props) => {
      */
     const getLogo = (logo) => {
         const { styles = {} } = props;
-        return logo && (
-            <div className={styles.logo} key="logo">
-                <Link to="/">
-                    <img src={logo.icon} alt="logo" />
-                    <h1>{logo.name}</h1>
-                </Link>
-            </div>
+        return (
+            logo && (
+                <div className={styles.logo} key="logo">
+                    <Link to="/">
+                        <img src={logo.icon} alt="logo" />
+                        <h1>{logo.name}</h1>
+                    </Link>
+                </div>
+            )
         );
-    }
+    };
 
     // Get the currently selected menu
     const getSelectedMenuKeys = () => {
         return getMenuMatchKeys(privateValues.flatMenuKeys, urlToList(location.pathname));
-    }
+    };
     // conversion Path
-    const conversionPath = path => {
+    const conversionPath = (path) => {
         if (path && path.indexOf('http') === 0) {
             return path;
         } else {
             return `/${path || ''}`.replace(/\/+/g, '/');
         }
-    }
+    };
     // permission to check
     const checkPermissionItem = (authority, ItemDom) => {
         if (props.Authorized && props.Authorized.check) {
@@ -257,17 +255,17 @@ export const SideBar = (props: ISiderMenu.Props) => {
             return check(authority, ItemDom);
         }
         return ItemDom;
-    }
-    const isMainMenu = key => {
-        return privateValues.menus.some(item => key && (item.key === key || item.path === key));
-    }
-    const handleOpenChange = openKeys => {
+    };
+    const isMainMenu = (key) => {
+        return privateValues.menus.some((item) => key && (item.key === key || item.path === key));
+    };
+    const handleOpenChange = (openKeys) => {
         const lastOpenKey = openKeys[openKeys.length - 1];
-        const moreThanOne = openKeys.filter(openKey => isMainMenu(openKey)).length > 1;
+        const moreThanOne = openKeys.filter((openKey) => isMainMenu(openKey)).length > 1;
         setState({
             openKeys: moreThanOne ? [lastOpenKey] : [...openKeys],
         });
-    }
+    };
 
     // const { renderer } = this.context;
     const { logo, collapsed, onCollapse, styles = {} } = props;
@@ -290,7 +288,7 @@ export const SideBar = (props: ISiderMenu.Props) => {
             width={256}
             className={styles.sider}
         >
-            {getLogo((privateValues.menus.filter(menu => menu.position === IMenuPosition.LOGO) || [])[0])}
+            {getLogo((privateValues.menus.filter((menu) => menu.position === IMenuPosition.LOGO) || [])[0])}
             <div className={styles.grow}>
                 <Menu
                     key="Menu-Middle"
@@ -302,12 +300,10 @@ export const SideBar = (props: ISiderMenu.Props) => {
                     selectedKeys={selectedKeys}
                     style={{ padding: '16px 0', width: '100%' }}
                 >
-                    {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.MIDDLE))}
+                    {getNavMenuItems(privateValues.menus.filter((menu) => menu.position === IMenuPosition.MIDDLE))}
                 </Menu>
                 {segments.map((segment, segmentIndex) => (
-                    <div key={segmentIndex}>
-                        {React.cloneElement(segment, { collapsed })}
-                    </div>
+                    <div key={segmentIndex}>{React.cloneElement(segment, { collapsed })}</div>
                 ))}
             </div>
             <Menu
@@ -319,11 +315,11 @@ export const SideBar = (props: ISiderMenu.Props) => {
                 selectedKeys={selectedKeys}
                 style={{ padding: '16px 0', width: '100%' }}
             >
-                {getNavMenuItems(privateValues.menus.filter(menu => menu.position === IMenuPosition.BOTTOM))}
+                {getNavMenuItems(privateValues.menus.filter((menu) => menu.position === IMenuPosition.BOTTOM))}
             </Menu>
         </Sider>
-    )
-}
+    );
+};
 
 export async function clientLoader() {
     return null;
@@ -333,22 +329,11 @@ export function HydrateFallback() {
     return <h1>Loading...</h1>;
 }
 
-export default (props) => {
-    return (
-        <ClientOnly>
-            {
-                () => {
-                    return (<BrowserRouter>
-                        <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
-                            <SideBar
-                                collapsed={false}
-                                {...props}
-                            />
-                            <Outlet />
-                        </Layout>
-                    </BrowserRouter>)
-                }
-            }
-        </ClientOnly>
-    )
-}
+export default (props) => (
+    <>
+        <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
+            <SideBar collapsed={false} {...props} />
+            <Outlet />
+        </Layout>
+    </>
+);

@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from '@remix-run/react';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from '../constants';
 
 export const HelloChild = () => {
