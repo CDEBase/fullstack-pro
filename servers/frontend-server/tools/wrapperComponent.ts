@@ -4,63 +4,52 @@ import * as path from 'path';
 const authWrapperImportPath = '@adminide-stack/user-auth0-browser-ant';
 
 // Utility function to get the project's root directory.
-export function getRootPath() {
+export function getRootPath(): string {
     return process.cwd();
 }
 
 /**
- *
- * @param file Function to wrap a route component, conditionally with an auth wrapper.
- * If auth is not required, a dummy wrapper is used that simply renders the component.
- *
- * @param {string} file - The path to the original component file.
- * @param {boolean} needsAuth - Indicates whether the component requires authentication.
- * @returns {string} The path to the wrapped component, relative to the project root.
+ * Wraps a route component with optional authentication and client-only rendering.
+ * 
+ * @param {string} file - The relative path to the original component file.
+ * @param {boolean} [needsAuth=false] - Indicates whether the component requires authentication.
+ * @param {boolean} [clientOnly=false] - Indicates whether the component should only render on the client side.
+ * @returns {string} The relative path to the wrapped component, from the project root.
  */
-export function wrapRouteComponent(file: string, needsAuth = false, clientOnly = false) {
-    const basePath = path.join(getRootPath(), 'node-modules');
-    const fileName = path.basename(file, '.js');
-    const wrappedFileName = `Wrapped${fileName}.tsx`;
-    const newFileDir = path.join(getRootPath(), 'app');
-
-    // Construct the conditional wrapper logic based on the needsAuth and clientOnly flags.
-    const authWrapperImport = needsAuth ? `import { authWrapper } from '${authWrapperImportPath}';\n` : '';
-    const clientOnlyImport = clientOnly ? `import { ClientOnly } from 'remix-utils/client-only';\n` : '';
-    const originalComponentImport = `import OriginalComponent from '${file}';\n`;
-    const componentWrapper = needsAuth
-        ? `const WrappedComponent = (props) => authWrapper(React.createElement(OriginalComponent, props));\n`
-        : `const DummyWrapper = (props) => <OriginalComponent {...props} />;\n`;
-    const clientOnlyWrapper = clientOnly
-        ? `<ClientOnly>{() => <${needsAuth ? 'WrappedComponent' : 'DummyWrapper'} {...props} />}</ClientOnly>`
-        : `<${needsAuth ? 'WrappedComponent' : 'DummyWrapper'} {...props} />`;
-
+export function wrapRouteComponent(file: string, needsAuth = false, clientOnly = false): string {
     try {
-        // Generate the wrapper component content, combining the necessary wrappers.
+        const basePath = path.join(getRootPath(), 'node-modules');
+        const fileName = `Wrapped${path.basename(file, '.js')}.tsx`;
+        const newFilePath = path.join(getRootPath(), 'app', fileName);
+
+        const authImport = needsAuth ? `import { authWrapper } from '${authWrapperImportPath}';` : '';
+        const clientOnlyImport = clientOnly ? `import { ClientOnly } from 'remix-utils/client-only';` : '';
+        const originalComponentImport = `import OriginalComponent from '${file}';`;
+        
+        const componentDeclaration = needsAuth
+            ? 'const EnhancedComponent = (props) => authWrapper(React.createElement(OriginalComponent, props));'
+            : '';
+        
+        const componentUsage = clientOnly
+            ? `<ClientOnly>{() => <${needsAuth ? 'EnhancedComponent' : 'OriginalComponent'} {...props} />}</ClientOnly>`
+            : `<${needsAuth ? 'EnhancedComponent' : 'OriginalComponent'} {...props} />`;
+
         const wrappedContent = `
-    import * as React from 'react';
-    ${authWrapperImport}${clientOnlyImport}${originalComponentImport}
-    ${componentWrapper}
-    export default function Component(props) {
-      return (
-        ${clientOnlyWrapper}
-      );
-    }
-    `;
-
-        // Determine the new file path for the wrapped component.
-        const newFilePath = path.join(newFileDir, wrappedFileName);
-
-        // Write the wrapped component's code to the new file.
-        fs.writeFileSync(newFilePath, wrappedContent, 'utf8');
-
+import * as React from 'react';
+${authImport}
+${clientOnlyImport}
+${originalComponentImport}
+${componentDeclaration}
+export default function Component(props) {
+    return (${componentUsage});
+}`;
+        
+        fs.writeFileSync(newFilePath, wrappedContent.trim(), 'utf8');
         console.log(`Wrapped component generated at: ${newFilePath}`);
 
-        // Return the path of the new, wrapped component, relative to the project root.
-        const relativeFilePath = path.relative(basePath, newFilePath);
-        return relativeFilePath;
+        return path.relative(basePath, newFilePath);
     } catch (error) {
         console.error('Error wrapping component:', error);
-        // Return the original file path if an error occurs during wrapping.
         return file;
     }
 }

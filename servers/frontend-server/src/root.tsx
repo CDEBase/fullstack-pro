@@ -7,8 +7,12 @@ import {
 } from "@remix-run/react";
 import { ErrorBoundary } from './app/ErrorBoundary';
 import { PluginArea } from '@common-stack/client-react';
+import publicEnv from './config/public-config';
+
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const envScript = `window.__ENV__ = ${JSON.stringify(publicEnv)}`;
+
   return (
     <html lang="en">
       <head>
@@ -23,7 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        <script>window.__ENV__=[__ENV__]</script>
+        <script dangerouslySetInnerHTML={{ __html: envScript }} />
         <script>window.__APOLLO_STATE__=[__APOLLO_STATE__]</script>
         <script>window.__PRELOADED_STATE__=[__PRELOADED_STATE__]</script>
         <script>window.__SLOT_FILLS__=[__SLOT_FILLS__]</script>

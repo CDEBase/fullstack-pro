@@ -6,19 +6,21 @@
 import 'reflect-metadata';
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
-console.log('---STARRRR')
+console.log('---STARRRR');
 import { PassThrough } from 'node:stream';
 import type { AppLoadContext, EntryContext } from '@remix-run/node';
 import { createReadableStreamFromReadable } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
 import { isbot } from 'isbot';
-import { getDataFromTree } from "@apollo/client/react/ssr";
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import { ApolloProvider } from '@apollo/client/index.js';
+import { SlotFillProvider, replaceServerFills } from '@common-stack/components-pro';
+import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { renderToPipeableStream } from 'react-dom/server';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createReduxStore } from './config/redux-config';
 import { createClientContainer } from './config/client.service';
-
+import clientModules from './modules/module';
 const ABORT_DELAY = 5_000;
 
 export default function handleRequest(
@@ -93,12 +95,17 @@ function handleBrowserRequest(
         const { container, serviceFunc, logger, apolloClient: client } = createClientContainer(request);
         const services = serviceFunc();
         const { store } = createReduxStore(client, services, container);
+        let slotFillContext = { fills: {} };
         const { pipe, abort } = renderToPipeableStream(
-            <ReduxProvider store={store}>
-                <ApolloProvider client={client}>
-                    <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />
-                </ApolloProvider>
-            </ReduxProvider>,
+            <SlotFillProvider context={slotFillContext}>
+                <ReduxProvider store={store}>
+                    <InversifyProvider container={container} modules={clientModules}>
+                        <ApolloProvider client={client}>
+                            <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />
+                        </ApolloProvider>
+                    </InversifyProvider>
+                </ReduxProvider>
+            </SlotFillProvider>,
             {
                 onShellReady() {
                     shellRendered = true;
