@@ -1,7 +1,7 @@
 import * as H from 'history';
 import React, { useState, useEffect } from 'react';
 // import { BrowserRouter } from '@remix-run/router';
-import { Outlet, useNavigate, Link } from '@remix-run/react';
+import { Outlet, useNavigate, Link, useRouteLoaderData } from '@remix-run/react';
 import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Avatar, ConfigProvider, Button } from 'antd';
 import { Feature, FeatureWithRouterFactory, IMenuPosition } from '@common-stack/client-react';
@@ -172,8 +172,8 @@ export const SideBar = (props: ISiderMenu.Props) => {
                 onClick={
                     props.isMobile
                         ? () => {
-                              props.onCollapse(true);
-                          }
+                            props.onCollapse(true);
+                        }
                         : () => navigate(itemPath)
                 }
             >
@@ -329,11 +329,17 @@ export function HydrateFallback() {
     return <h1>Loading...</h1>;
 }
 
-export default (props) => (
-    <>
-        <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
-            <SideBar collapsed={false} {...props} />
-            <Outlet />
-        </Layout>
-    </>
-);
+export default (props) => {
+    const result = useRouteLoaderData("root")
+    console.log("_____________")
+    console.log("______res_______", result)
+    console.log("_____________")
+    return (
+        <>
+            <Layout hasSider={true} style={{ minHeight: '100vh', display: 'flex' }}>
+                <SideBar collapsed={false} {...props} />
+                <Outlet />
+            </Layout>
+        </>
+    )
+};

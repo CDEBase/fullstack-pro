@@ -6,9 +6,13 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { ErrorBoundary } from './app/ErrorBoundary';
-import { PluginArea } from '@common-stack/client-react';
-import publicEnv from './config/public-config';
+import counterModules from '@sample-stack/counter-module-browser';
+import { Feature, FeatureWithRouterFactory, PluginArea } from '@common-stack/client-react';
 
+export const loader = async () => {
+  const features = new Feature(FeatureWithRouterFactory, counterModules);
+  return { menuData: features.getMenus() };
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const envScript = `window.__ENV__ = ${JSON.stringify(publicEnv)}`;
