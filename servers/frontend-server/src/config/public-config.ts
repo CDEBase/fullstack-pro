@@ -1,7 +1,6 @@
 /// <reference path='../../../../typings/index.d.ts' />
 import { logger } from '@cdm-logger/client';
 import { lowerCase } from 'lodash-es';
-import dotenv from 'dotenv';
 /**
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
