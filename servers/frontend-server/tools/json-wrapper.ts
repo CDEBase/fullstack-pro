@@ -64,9 +64,9 @@ function defineRoute(routeFn, jsonRoute) {
     const { routes = null, relativePath: path, file: componentFile, clientOnly, auth, ...rest } = jsonRoute;
     const rootPath = '../../..';
     // let file = `${rootPath}/node_modules/${componentFile}`;
-    let file = wrapRouteComponent(componentFile, auth, clientOnly );
+    const file = wrapRouteComponent(componentFile, auth, clientOnly);
     console.log('--FILE---DEFINE ROUTE', file);
-    let opts = { ...rest, id: uuid() };
+    const opts = { ...rest, id: uuid() };
     if (routes) {
         routeFn(path, file, opts, () => {
             routes.forEach((c) => defineRoute(routeFn, c));

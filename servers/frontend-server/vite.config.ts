@@ -8,6 +8,7 @@ import routes from './src/routes';
 import dotenv from 'dotenv-esm';
 import { defineRoutesConfig } from './tools/json-wrapper';
 import buildConfig from './build.config.mjs';
+import routeConfigurationPlugin from './plugins/routes-configuration'
 
 
 const directoryName = dirname(fileURLToPath(import.meta.url));
@@ -33,6 +34,11 @@ export default defineConfig((d) => {
             ),
         },
         plugins: [
+            routeConfigurationPlugin({
+                routesFileName: 'routes.json',
+                packages: ['@sample-stack/counter-module-browser'],
+                rootPath: resolve(directoryName, '../..'),
+            }),
             remix({
                 ssr: false,
                 appDirectory: 'src',

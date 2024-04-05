@@ -6,6 +6,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Layout, Menu, Avatar } from 'antd';
 import { IMenuPosition } from '@common-stack/client-react';
 
+
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -177,8 +178,8 @@ export class SiderMenu extends React.PureComponent<ISiderMenu.Props, ISiderMenu.
                 onClick={
                     this.props.isMobile
                         ? () => {
-                              this.props.onCollapse(true);
-                          }
+                            this.props.onCollapse(true);
+                        }
                         : undefined
                 }
             >
