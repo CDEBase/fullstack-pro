@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 // import { BrowserRouter } from '@remix-run/router';
 import { Outlet, useNavigate, Link } from '@remix-run/react';
 import pathToRegexp from 'path-to-regexp';
-import { Layout, Menu, Avatar, ConfigProvider, Button } from 'antd';
-import { Feature, FeatureWithRouterFactory, IMenuPosition } from '@common-stack/client-react';
-import counterModule from '../../../index';
+import { Layout, Menu } from 'antd';
+import { IMenuPosition } from '@common-stack/client-react';
+//@ts-ignore
+import { routesConfiguration } from 'virtual:routes-configuration'
+
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -28,8 +30,8 @@ const getImageUrl = (picture) => {
 export const getFlatMenuKeys = (menu) =>
     menu.reduce((keys, item) => {
         keys.push(item.path);
-        if (item.children) {
-            return keys.concat(getFlatMenuKeys(item.children));
+        if (item.routes) {
+            return keys.concat(getFlatMenuKeys(item.routes));
         }
         return keys;
     }, []);
@@ -78,16 +80,11 @@ export namespace ISiderMenu {
 }
 
 export const SideBar = (props: ISiderMenu.Props) => {
-    const features = new Feature(counterModule);
-    const { menuData = features.getMenus(), location = { pathname: '/' }, segments = features.sidebarSegments } = props;
+    const { menuData = routesConfiguration, location = { pathname: '/' }, segments = [] } = props;
     const [privateValues] = useState({
         menus: menuData,
         flatMenuKeys: getFlatMenuKeys(menuData),
     });
-
-    // public static contextTypes = {
-    //     renderer: PropTypes.any.isRequired,
-    // };
 
     const defaultProps = () => {
         return {
@@ -172,8 +169,8 @@ export const SideBar = (props: ISiderMenu.Props) => {
                 onClick={
                     props.isMobile
                         ? () => {
-                              props.onCollapse(true);
-                          }
+                            props.onCollapse(true);
+                        }
                         : () => navigate(itemPath)
                 }
             >
@@ -187,8 +184,8 @@ export const SideBar = (props: ISiderMenu.Props) => {
      */
     const getSubMenuOrItem = (item, key) => {
         const { styles = {} } = props;
-        if (item.children && item.children.some((child) => child.name)) {
-            const childrenItems = getNavMenuItems(item.children);
+        if (item.routes && item.routes.some((child) => child.name)) {
+            const childrenItems = getNavMenuItems(item.routes);
             if (childrenItems && childrenItems.length > 0) {
                 return (
                     <SubMenu title={item.name} key={`${item.path}-${key}`}>
