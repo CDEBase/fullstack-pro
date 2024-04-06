@@ -9,6 +9,7 @@ import dotenv from 'dotenv-esm';
 import { defineRoutesConfig } from './tools/json-wrapper';
 import buildConfig from './build.config.mjs';
 import routeConfigurationPlugin from './plugins/routes-configuration'
+import cdmModulesConfiguration from './plugins/modues-configuration'
 
 
 const directoryName = dirname(fileURLToPath(import.meta.url));
@@ -38,6 +39,11 @@ export default defineConfig((d) => {
                 routesFileName: 'routes.json',
                 packages: ['@sample-stack/counter-module-browser'],
                 rootPath: resolve(directoryName, '../..'),
+            }),
+            cdmModulesConfiguration({
+                modulePaths: [
+                    '@sample-stack/counter-module-browser/lib/common/module.js'
+                ]
             }),
             remix({
                 ssr: true,
