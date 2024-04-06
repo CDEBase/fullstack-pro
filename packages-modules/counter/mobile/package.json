@@ -19,8 +19,7 @@
     "watch": "yarn build:lib:watch"
   },
   "dependencies": {
-    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser",
-    "antd": "~5.1.7"
+    "@sample-stack/platform-browser": "link:../../../packages/sample-platform/browser"
   },
   "peerDependencies": {
     "@common-stack/client-react": "*",
