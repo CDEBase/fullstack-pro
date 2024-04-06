@@ -1,7 +1,6 @@
 import { Plugin } from 'vite'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import { Feature } from '@common-stack/client-react';
+import fs from 'fs';
 
 export interface Options {
   modulePaths: string[]
@@ -9,15 +8,23 @@ export interface Options {
 
 async function loadModuleFromPaths(options: Options) {
   const paths = options.modulePaths
-  const directoryName = dirname(fileURLToPath(import.meta.url));
-  const rootPath = directoryName.split('/node_modules')[0];
+  const rootPath = '../../node_modules'
   const modules = paths.map((item) => {
-    return `${rootPath}/node_modules/${item}`;
-  }).map((path) => {
-    return import(path)
+    return `${rootPath}/${item}`;
   })
-  const resolvedModules = await Promise.all(modules)
-  const feature = new Feature(...resolvedModules)
+    .filter((path) => {
+      if (!fs.existsSync(path)) {
+        console.warn("PATH DOES'NT EXIST", path)
+        return false;
+      }
+      return true;
+    })
+    .map((path) => {
+      return import(path).then((module) => module.default)
+    })
+
+  const resolvedModules = modules?.length ? await Promise.all(modules) : []
+  const feature = resolvedModules?.length ? new Feature(...resolvedModules) : {}
   const namedBundle = `export const moduleConfiguration = ${JSON.stringify(feature)}`
   return namedBundle;
 }
