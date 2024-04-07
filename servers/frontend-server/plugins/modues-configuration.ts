@@ -1,6 +1,7 @@
 import { Plugin } from 'vite'
 import { Feature } from '@common-stack/client-react';
 import fs from 'fs';
+import { instanceToPlain } from 'class-transformer'
 
 export interface Options {
   modulePaths: string[]
@@ -25,7 +26,8 @@ async function loadModuleFromPaths(options: Options) {
 
   const resolvedModules = modules?.length ? await Promise.all(modules) : []
   const feature = resolvedModules?.length ? new Feature(...resolvedModules) : {}
-  const namedBundle = `export const moduleConfiguration = ${JSON.stringify(feature)}`
+
+  const namedBundle = `export default ${JSON.stringify(feature)}`
   return namedBundle;
 }
 
