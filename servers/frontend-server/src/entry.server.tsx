@@ -6,9 +6,9 @@
 import 'reflect-metadata';
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
-console.log('---STARRRR');
-import { PassThrough } from 'node:stream';
+import { PassThrough, Transform } from 'node:stream';
 import type { AppLoadContext, EntryContext } from '@remix-run/node';
+import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from '@remix-run/react';
 import { CacheProvider as EmotionCacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
@@ -19,14 +19,41 @@ import { SlotFillProvider, replaceServerFills } from '@common-stack/components-p
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { renderToPipeableStream } from 'react-dom/server';
 import { Provider as ReduxProvider } from 'react-redux';
-
+import serialize from 'serialize-javascript';
 import createEmotionCache from './common/createEmotionCache';
 import { createReduxStore } from './config/redux-config';
 import { createClientContainer } from './config/client.service';
-import clientModules from './modules/module';
+// import clientModules from './modules/module';
 const ABORT_DELAY = 5_000;
 
+class ConstantsTransform extends Transform {
+    _fills: string[];
+    _apolloState: any;
+    _reduxState: any;
 
+    constructor(fills: string[], apolloState: any, reduxState: any) {
+        super();
+        this._fills = fills;
+        this._apolloState = apolloState;
+        this._reduxState = reduxState;
+    }
+
+    _transform(chunk, encoding, callback) {
+        let transformedChunk = chunk.toString();
+    
+        if (transformedChunk.includes('[__APOLLO_STATE__]')) {
+            transformedChunk = transformedChunk.replace('[__APOLLO_STATE__]', serialize(this._apolloState, { isJSON: true }));
+        } 
+        if (transformedChunk.includes('[__PRELOADED_STATE__]')) {
+            transformedChunk = transformedChunk.replace('[__PRELOADED_STATE__]', serialize(this._reduxState, { isJSON: true }));
+        }
+        if (transformedChunk.includes('[__SLOT_FILLS__]')) {
+            transformedChunk = transformedChunk.replace('[__SLOT_FILLS__]', serialize(this._fills, { isJSON: true }));
+        }
+        
+        callback(null, transformedChunk);
+    }
+}
 
 export default function handleRequest(
     request: Request,
@@ -39,8 +66,8 @@ export default function handleRequest(
     loadContext: AppLoadContext,
 ) {
     return isbot(request.headers.get('user-agent') || '')
-        ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext)
-        : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext);
+        ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext)
+        : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext);
 }
 
 function handleBotRequest(
@@ -48,47 +75,28 @@ function handleBotRequest(
     responseStatusCode: number,
     responseHeaders: Headers,
     remixContext: EntryContext,
+    loadContext: AppLoadContext,
 ) {
     return new Promise((resolve, reject) => {
         let shellRendered = false;
-        const emotionCache = createEmotionCache();
-        const { container, serviceFunc, logger, apolloClient: client } = createClientContainer(request);
-        const services = serviceFunc();
-        const { store } = createReduxStore(client, services, container);
-        let slotFillContext = { fills: {} };
         const { pipe, abort } = renderToPipeableStream(
-            <EmotionCacheProvider value={emotionCache}>
-                <SlotFillProvider context={slotFillContext}>
-                    <ReduxProvider store={store}>
-                        <InversifyProvider container={container} modules={clientModules}>
-                            {clientModules.getWrappedRoot(
-                                <ApolloProvider client={client}>
-                                    <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />
-                                </ApolloProvider>,
-                                request,
-                            )}
-                        </InversifyProvider>
-                    </ReduxProvider>
-                </SlotFillProvider>
-                ,
-            </EmotionCacheProvider>,
+            <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />,
             {
                 onAllReady() {
                     shellRendered = true;
-                    const reactBody = new PassThrough();
-                    const emotionServer = createEmotionServer(emotionCache);
-                    const bodyWithStyles = emotionServer.renderStylesToNodeStream();
+                    const body = new PassThrough();
+                    const stream = createReadableStreamFromReadable(body);
 
-                    responseHeaders.set('Content-Type', 'text/html');
+                    responseHeaders.set("Content-Type", "text/html");
 
                     resolve(
-                        new Response(bodyWithStyles, {
+                        new Response(stream, {
                             headers: responseHeaders,
                             status: responseStatusCode,
-                        }),
+                        })
                     );
 
-                    pipe(reactBody);
+                    pipe(body);
                 },
                 onShellError(error: unknown) {
                     reject(error);
@@ -114,25 +122,22 @@ function handleBrowserRequest(
     responseStatusCode: number,
     responseHeaders: Headers,
     remixContext: EntryContext,
+    loadContext: AppLoadContext,
 ) {
     return new Promise((resolve, reject) => {
         let shellRendered = false;
         const emotionCache = createEmotionCache();
-        const { container, serviceFunc, logger, apolloClient: client } = createClientContainer(request);
-        const services = serviceFunc();
-        const { store } = createReduxStore(client, services, container);
         let slotFillContext = { fills: {} };
+        const { module: clientModules, container, apolloClient: client, store }: 
+            AppLoadContext & { clientModules?: any, container?: any, client?: any, store?: any } = loadContext;
         const { pipe, abort } = renderToPipeableStream(
             <EmotionCacheProvider value={emotionCache}>
                 <SlotFillProvider context={slotFillContext}>
                     <ReduxProvider store={store}>
                         <InversifyProvider container={container} modules={clientModules}>
-                            {clientModules.getWrappedRoot(
-                                <ApolloProvider client={client}>
-                                    <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />
-                                </ApolloProvider>,
-                                request,
-                            )}
+                            <ApolloProvider client={client}>
+                                <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />
+                            </ApolloProvider>
                         </InversifyProvider>
                     </ReduxProvider>
                 </SlotFillProvider>
@@ -140,12 +145,18 @@ function handleBrowserRequest(
             {
                 onShellReady() {
                     shellRendered = true;
-                    const reactBody = new PassThrough();
+                    let body = new PassThrough();
+
+                    const apolloState = {...client.extract()};
+                    const reduxState = {...store.getState()};
+                    const fills = Object.keys(slotFillContext.fills);
+                    const transform = new ConstantsTransform(fills, apolloState, reduxState);
+                    
                     const emotionServer = createEmotionServer(emotionCache);
-
                     const bodyWithStyles = emotionServer.renderStylesToNodeStream();
-                    reactBody.pipe(bodyWithStyles);
-
+                    
+                    body.pipe(transform).pipe(bodyWithStyles);
+                    
                     responseHeaders.set('Content-Type', 'text/html');
 
                     resolve(
@@ -155,7 +166,7 @@ function handleBrowserRequest(
                         }),
                     );
 
-                    pipe(reactBody);
+                    pipe(body);
                 },
                 onShellError(error: unknown) {
                     reject(error);

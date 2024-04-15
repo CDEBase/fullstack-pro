@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import * as IORedis from 'ioredis';
 import { logger } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';

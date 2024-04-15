@@ -30,7 +30,7 @@ const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionS
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, store } = req;
+        const { apolloClient: client, container, store, history } = req;
 
         let persistor = persistStore(store); // this is needed for ssr
         try {
@@ -150,9 +150,9 @@ async function renderServerSide(req, res) {
 
             let pageContent = ReactDOMServer.renderToStaticMarkup(page);
             pageContent = pageContent.replace(/__STYLESHEET__/, styleSheet);
-            res.status(200);
+            // res.status(200);
             res.send(`<!doctype html>\n${pageContent}`);
-            res.end();
+            // res.end();
         }
     } catch (err) {
         logger.error(err, 'SERVER SIDE RENDER failed due to (%j) ', err.message);

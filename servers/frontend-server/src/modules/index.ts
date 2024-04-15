@@ -1,10 +1,10 @@
 import '../config/public-config';
 import { ClientLogger } from '@cdm-logger/client';
-import modules, { MainRoute } from './module';
+import modules from './module';
 
 export class UtilityClass {
     // tslint:disable-next-line:no-shadowed-variable
-    constructor(private modules) {}
+    constructor(private modules) { }
 
     public getCacheKey(storeObj) {
         return this.modules.getDataIdFromObject(storeObj);
@@ -16,4 +16,4 @@ const logger = ClientLogger.create(process.env.APP_NAME || 'Fullstack-Pro', {
 });
 
 export default modules;
-export { MainRoute, logger };
+export { logger };

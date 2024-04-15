@@ -1,3 +1,4 @@
+import "reflect-metadata";
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -13,7 +14,7 @@ import { createReduxStore as createBaseReduxStore } from './base-redux-config';
 import modules, { logger } from '../modules';
 import { rootEpic } from './epic-config';
 
-export const epicMiddlewareFunc = (apolloClient, services, container) =>
+export const epicMiddlewareFunc = (apolloClient: any, services: any, container: any) =>
     createEpicMiddleware({
         dependencies: {
             apolloClient,
@@ -21,42 +22,46 @@ export const epicMiddlewareFunc = (apolloClient, services, container) =>
             services,
             container,
             logger,
+            config: {
+                loadRoot: true,
+            }
         },
     });
-let __CLIENT_REDUX_STORE__;
 
 export const persistConfig = {
     key: REDUX_PERSIST_KEY,
     storage,
     stateReconciler: autoMergeLevel2,
     transforms: modules.reduxPersistStateTransformers,
+    blacklist: ['router']
 };
 
 /**
  * Add any reducers required for this app dirctly in to
  * `combineReducers`
  */
-export const createReduxStore = (apolloClient, services, container) => {
+export const createReduxStore = (apolloClient: any, services: any, container: any) => {
     const reducers = {
         router: createRouterReducer({}),
         ...modules.reducers,
     };
 
-    let store;
+    let store: any;
     if (import.meta.hot && import.meta.hot.data && import.meta.hot.data.store) {
         // console.log('Restoring Redux store:', JSON.stringify(import.meta.hot.data.store.getState()));
         store = import.meta.hot.data.store;
         // replace the reducers always as we don't have ablity to find
         // new reducer added through our `modules`
-        store.replaceReducer(persistReducer(persistConfig, combineReducers(reducers)));
+        store.replaceReducer(persistReducer(persistConfig, combineReducers(reducers) as any));
     } else {
-        // If we have preloaded state, save it.
-        const initialState = __CLIENT__ && typeof window !== 'undefined'
-            ? { ...window.__PRELOADED_STATE__ } // #952 TODO we need cookie to have id_token for SSR to work properly
-            : {};
-        // Delete it once we have it stored in a variable
+        let initialState = {};
+        let middlewares: any[] = [];
         if (__CLIENT__ && typeof window !== 'undefined') {
-            delete window.__PRELOADED_STATE__;
+            initialState = { ...window.__PRELOADED_STATE__ }; // #952 TODO we need cookie to have id_token for SSR to work properly
+            delete window.__PRELOADED_STATE__; // Delete it once we have it stored in a variable
+            
+            // it doesn't work, since __remixRouter is not created yet.
+            // middlewares = [createRouterMiddleware({ router: window.__remixRouter } as any)]; 
         }
         store = createBaseReduxStore({
             scope: __CLIENT__ && typeof window !== 'undefined' ? 'browser' : 'server',
@@ -64,7 +69,7 @@ export const createReduxStore = (apolloClient, services, container) => {
             isDev: process.env.NODE_ENV === 'development',
             initialState,
             persistConfig,
-            middleware: [], //createRouterMiddleware({ router } as any)
+            middleware: middlewares,
             epicMiddleware: epicMiddlewareFunc(apolloClient, services, container),
             rootEpic: rootEpic as any,
             reducers,

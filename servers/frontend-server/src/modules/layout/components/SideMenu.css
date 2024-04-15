@@ -1,0 +1,20 @@
+.ant-menu-inline-collapsed {
+    width: 0px !important;
+}
+.ant-menu-inline-collapsed > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+    padding: 0px 17px;
+}
+.bottom-navigation {
+    font-size: 25px;
+    padding: 12px;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    display: flex;
+}
+.bottom-navigation li {
+    padding: 0 15px;
+}
+.bottom-navigation li span {
+    margin-right: 15px;
+}

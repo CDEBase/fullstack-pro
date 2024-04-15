@@ -5,7 +5,7 @@ import { createReduxStore } from '../../config/redux-config';
 import { createClientContainer } from '../../config/client.service';
 
 // Middleware to attach child container to the request and clean up after response
-export const containerMiddleware = (req, res, next) => {
+export const containerMiddleware = async (req, res, next) => {
     const { container, serviceFunc, logger, apolloClient } = createClientContainer(req, res);
     const router = createMemoryRouter(createMainRoute(apolloClient));
     const services = serviceFunc();

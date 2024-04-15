@@ -6,7 +6,7 @@
 /* eslint-disable no-underscore-dangle */
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { EpicMiddleware, Epic } from 'redux-observable';
-import { persistReducer, PersistConfig } from 'redux-persist';
+import { persistReducer, PersistConfig, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 interface IReduxStore<S = any> {
     scope: 'browser' | 'server' | 'native' | 'ElectronMain';
@@ -50,16 +50,21 @@ export const createReduxStore = ({
      * Add middleware that required for this app.
      */
 
-    // Configure middlewares
+        // Configure middlewares
     const middlewares = [
-        ...preMiddleware,
-        ...(epicMiddleware ? [epicMiddleware] : []),
-        ...middleware,
-        ...postMiddleware,
-    ];
+            ...preMiddleware,
+            ...(epicMiddleware ? [epicMiddleware] : []),
+            ...middleware,
+            ...postMiddleware,
+        ];
     const store = configureStore({
         reducer: persistedReducer as any,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(...middlewares),
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: {
+                    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                },
+            }).concat(...middlewares),
         devTools: isDev || isDebug,
         preloadedState: initialState,
         enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(...enhancers),

@@ -1,3 +1,4 @@
+import "reflect-metadata";
 /* eslint-disable jest/require-hook */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
