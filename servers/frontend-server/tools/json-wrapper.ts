@@ -4,7 +4,7 @@ import globAll from 'glob-all';
 import { isArray, mergeWith } from 'lodash-es';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { v4 as uuid } from 'uuid';
+import { createHash } from "node:crypto";
 import { wrapRouteComponent } from './wrapperComponent';
 
 function getRootPath() {
@@ -12,6 +12,11 @@ function getRootPath() {
     const rootPath = directoryName.split('/node_modules')[0];
     return rootPath;
 }
+
+const getHash = (source: string, maxLength: number = 8): string => {
+    let hash = createHash("sha256").update(source).digest("hex");
+    return typeof maxLength === "number" ? hash.slice(0, maxLength) : hash;
+};
 
 export function resolvePathsUsingPackages(packages, fileName, rootPath) {
     const basePath = rootPath || getRootPath();
@@ -61,18 +66,38 @@ export function loadRoutesConfig(options) {
 // }
 
 function defineRoute(routeFn, jsonRoute) {
-    const { routes = null, relativePath: path, file: componentFile, clientOnly, auth, ...rest } = jsonRoute;
-    const rootPath = '../../..';
+    const {
+        routes = null,
+        relativePath: path,
+        componentPath,
+        clientOnly,
+        auth,
+        loader = false,
+        action = false,
+        wrapperPaths = [],
+        ...rest
+    } = jsonRoute;
+
     // let file = `${rootPath}/node_modules/${componentFile}`;
-    const file = wrapRouteComponent(componentFile, auth, clientOnly);
-    console.log('--FILE---DEFINE ROUTE', file);
-    const opts = { ...rest, id: uuid() };
-    if (routes) {
-        routeFn(path, file, opts, () => {
-            routes.forEach((c) => defineRoute(routeFn, c));
-        });
-    } else {
-        routeFn(path, file, opts);
+    if (componentPath) {
+        // Modify wrapperPaths array conditionally based on auth and clientOnly
+        if (auth) {
+            wrapperPaths.push('$authWrapper'); // Add a placeholder for the auth wrapper
+        }
+        if (clientOnly) {
+            wrapperPaths.push('$clientOnlyWrapper'); // Add a placeholder for the client-only wrapper
+        }
+
+        const options = { hasLoader: loader, hasAction: action, suffix: getHash(rest.path || '/') };
+        const file = wrapRouteComponent(componentPath, wrapperPaths, options);
+        const opts = { ...rest, id: rest.path };
+        if (routes) {
+            routeFn(path, file, opts, () => {
+                routes.forEach((c) => defineRoute(routeFn, c));
+            });
+        } else {
+            routeFn(path, file, opts);
+        }
     }
 }
 
