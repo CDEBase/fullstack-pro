@@ -3,13 +3,15 @@ import feature from './modules/module';
 import { createReduxStore } from './config/redux-config';
 import { createClientContainer } from './config/client.service';
 
+const routeConfig = feature.getConfiguredRoutes();
 export const loadContext = (req: Request, res: Response) => {
   const { container, serviceFunc, apolloClient } = createClientContainer(req, res);
   const services = serviceFunc();
   const { store } = createReduxStore(apolloClient, services, container);
-  
+
   return {
     module: feature,
+    routeConfig,
     store,
     container,
     apolloClient,
