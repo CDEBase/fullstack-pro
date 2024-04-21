@@ -109,6 +109,8 @@ export default function modifyLibFilesPlugin(options = {}) {
                                     // Get the parent object expression to add the new property
                                     const parentObject = astroPath.findParent((p) => p.isObjectExpression());
                                     if (parentObject) {
+                                        // remove component
+                                        astroPath.remove(); 
                                         parentObject.node.properties.push(fileProperty);
                                         if (hasLoader) {
                                             parentObject.node.properties.push(t.objectProperty(t.identifier('loader'), t.booleanLiteral(true)));
@@ -157,6 +159,7 @@ export default function modifyLibFilesPlugin(options = {}) {
                                                 t.identifier('wrapperPaths'), // Property key
                                                 wrapperPathsArrayExpression, // Property value
                                             );
+                                            astroPath.remove(); 
                                             // Ensure the parent object expression exists and has properties
                                             if (
                                                 parentObjectExpression &&

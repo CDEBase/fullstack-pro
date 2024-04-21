@@ -60,7 +60,6 @@ const config = {
         'react',
         'react-redux',
         'react-helmet',
-        'react-loadable',
         'react-router',
         'react-router-config',
         'react-router-dom',
