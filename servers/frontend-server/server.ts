@@ -7,26 +7,26 @@ import config from './build.config.mjs';
 installGlobals();
 
 const viteDevServer =
-  process.env.NODE_ENV === 'production'
-    ? undefined
-    : await import('vite').then((vite) =>
-        vite.createServer({
-          server: { middlewareMode: true },
-        }),
-      );
+    process.env.NODE_ENV === 'production'
+        ? undefined
+        : await import('vite').then((vite) =>
+              vite.createServer({
+                  server: { middlewareMode: true },
+              }),
+          );
 
 const remixHandler = createRequestHandler({
-  async getLoadContext(req, res) {
-    Object.keys(config).forEach((key) => {
-      global[key] = config[key];
-    });
+    async getLoadContext(req, res) {
+        Object.keys(config).forEach((key) => {
+            global[key] = config[key];
+        });
 
-    const { loadContext } = await import('./src/load-context.server.ts');
-    return loadContext(req, res);
-  },
-  build: viteDevServer
-    ? () => viteDevServer.ssrLoadModule('virtual:remix/server-build')
-    : await import('./build/server/index.js'),
+        const { loadContext } = await import('./src/load-context.server.ts');
+        return loadContext(req, res);
+    },
+    build: viteDevServer
+        ? () => viteDevServer.ssrLoadModule('virtual:remix/server-build')
+        : await import('./build/server/index.js'),
 });
 
 const app = express();
@@ -38,10 +38,10 @@ app.disable('x-powered-by');
 
 // handle asset requests
 if (viteDevServer) {
-  app.use(viteDevServer.middlewares);
+    app.use(viteDevServer.middlewares);
 } else {
-  // Vite fingerprints its assets so we can cache forever.
-  app.use('/assets', express.static('build/client/assets', { immutable: true, maxAge: '1y' }));
+    // Vite fingerprints its assets so we can cache forever.
+    app.use('/assets', express.static('build/client/assets', { immutable: true, maxAge: '1y' }));
 }
 
 // Everything else (like favicon.ico) is cached for an hour. You may want to be

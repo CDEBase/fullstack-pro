@@ -54,6 +54,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <ScrollRestoration />
                 <Scripts />
                 {getConstants()}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `if (global === undefined) { var global = window; }`,
+                    }}
+                />
             </body>
         </html>
     );

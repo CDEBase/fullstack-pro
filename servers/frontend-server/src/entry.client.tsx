@@ -28,6 +28,8 @@ const emotionCache = createEmotionCache();
 window.__remixStore = store;
 removeUniversalPortals(window.__SLOT_FILLS__ || []);
 
+clientModules.hydrate(container, window.__APOLLO_STATE__);
+
 startTransition(() => {
     hydrateRoot(
         document,
@@ -36,9 +38,13 @@ startTransition(() => {
                 <SlotFillProvider>
                     <ReduxProvider store={store}>
                         <InversifyProvider container={container} modules={clientModules}>
-                            <ApolloProvider client={client}>
-                                <RemixBrowser />
-                            </ApolloProvider>
+                            <PersistGate loading={null} persistor={persistor}>
+                                {() => (
+                                    <ApolloProvider client={client}>
+                                        <RemixBrowser />
+                                    </ApolloProvider>
+                                )}
+                            </PersistGate>
                         </InversifyProvider>
                     </ReduxProvider>
                 </SlotFillProvider>
