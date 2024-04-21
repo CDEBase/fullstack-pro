@@ -3,8 +3,6 @@ import { defineConfig } from 'vite';
 import { dirname, resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { fileURLToPath } from 'url';
-import { jsxRoutes } from 'remix-json-routes';
-import routes from './src/routes';
 import dotenv from 'dotenv-esm';
 import { defineRoutesConfig } from './tools/json-wrappers';
 import buildConfig from './build.config.mjs';

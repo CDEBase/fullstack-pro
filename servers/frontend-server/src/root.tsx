@@ -17,11 +17,11 @@ export function loader() {
 
 export function Layout({ children }: { children: React.ReactNode }) {
     const data = useLoaderData();
-    
-    React.useLayoutEffect(() => {
-        subscribeReduxRouter({store: window.__remixStore, router: window.__remixRouter} as any);
+
+    React.useEffect(() => {
+        subscribeReduxRouter({ store: window.__remixStore, router: window.__remixRouter } as any);
     }, []);
-    
+
     const getConstants = () => {
         if (typeof window === 'undefined') {
             return (
@@ -34,11 +34,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     <script>window.__APOLLO_STATE__=[__APOLLO_STATE__]</script>
                     <script>window.__PRELOADED_STATE__=[__PRELOADED_STATE__]</script>
                     <script>window.__SLOT_FILLS__=[__SLOT_FILLS__]</script>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `if (global === undefined) { var global = window; }`,
+                        }}
+                    />
                 </>
             );
         }
         return null;
-    }
+    };
 
     return (
         <html lang="en">
@@ -47,6 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Meta />
                 <Links />
+                {(typeof window === 'undefined') ? `[__STYLESHEET__]` : ''}
             </head>
             <body>
                 <PluginArea />
@@ -54,11 +60,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <ScrollRestoration />
                 <Scripts />
                 {getConstants()}
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `if (global === undefined) { var global = window; }`,
-                    }}
-                />
             </body>
         </html>
     );
