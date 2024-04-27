@@ -24,7 +24,7 @@ function updateLernaJson(filePath, versionArg) {
         lernaConfig.version = `${majorVersion}.${minorVersion}.0`;
 
         // Update the allowBranch fields
-        const branchName = `devpublish${majorVersion}${minorVersion !== '0' ? '.' + minorVersion : ''}`;
+        const branchName = `devpublish${majorVersion}${minorVersion !== '0' ? '_' + minorVersion : ''}`;
         lernaConfig.command.publish.allowBranch.push(branchName);
         lernaConfig.command.version.allowBranch.push(branchName);
 
