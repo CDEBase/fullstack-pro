@@ -1,10 +1,14 @@
 import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
+import { ApolloServerPluginCacheControl, ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import 'isomorphic-fetch';
 import { Express } from 'express';
 import * as http from 'http';
-import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
+import Keyv from 'keyv';
+import KeyvRedis from '@keyv/redis';
+import { KeyvAdapter } from '@apollo/utils.keyvadapter';
+import { RedisCache, RedisClusterCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
-import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 import { WebSocketServer } from 'ws';
 import { IModuleService } from '../interfaces';
 import { GraphqlWs } from './graphql-ws';
@@ -31,7 +35,6 @@ const constructDataSourcesForSubscriptions = (context, cache, dataSources) => {
     }
     return dataSources;
 };
-
 
 let wsServerCleanup: any;
 export class GraphqlServer {
@@ -89,7 +92,9 @@ export class GraphqlServer {
             debug,
             schema: this.moduleService.schema,
             dataSources: () => this.moduleService.dataSource,
-            cache: this.cache,
+            cache: new KeyvAdapter(new Keyv({ store: new KeyvRedis(this.cache) }), {
+                disableBatchReads: true,
+            }),
             context: async ({
                 req,
                 res,
@@ -148,6 +153,10 @@ export class GraphqlServer {
                 // ApolloServerPluginLandingPageGraphQLPlayground(),
                 // ApolloServerPluginLandingPageDisabled(),
                 ApolloServerPluginDrainHttpServer({ httpServer: this.httpServer }),
+                ApolloServerPluginCacheControl(),
+                responseCachePlugin({
+                    sessionId: (requestContext) => requestContext?.userContext?.accountId || null,
+                }),
             ],
         };
         if (this.enableSubscription) {
