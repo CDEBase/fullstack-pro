@@ -17,6 +17,7 @@ export const resolver: (options: any) => IResolvers<IContext> = (options) => ({
     },
     Mutation: {
         async addCounter(obj, { amount }, context) {
+            console.log(context);
             await context.counterMockService.addCounter(amount);
             const counter = await context.counterMockService.counterQuery();
 

@@ -1,24 +1,29 @@
-import { DataSource, DataSourceConfig } from 'apollo-datasource';
+import { Container } from 'inversify';
+import type { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { ApolloError } from 'apollo-server-errors';
-import { InMemoryLRUCache } from 'apollo-server-caching';
-// import { setupCaching } from './cache';
-import { KeyValueCache } from 'apollo-server-caching';
-import { IService, IContext, ICounterService } from '../interfaces';
+import { ICounterService } from '../interfaces';
 import { setupCaching } from './cache';
 import { Counter } from '../generated-models';
+import { TYPES } from '../constants';
 
 export interface CacheOptions {
     ttl?: number;
 }
 
-export class CounterDataSource extends DataSource<IService> implements ICounterService {
-    private context!: IContext;
+type Options = {
+    cache: KeyValueCache;
+    context: {
+        container: Container;
+    };
+};
+
+export class CounterDataSource implements ICounterService {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(private readonly options: Options) {
+        this.initialize();
+    }
 
     private cacheCounterService: ICounterService;
-
-    constructor() {
-        super();
-    }
 
     public counterQuery(): Counter | Promise<Counter> | PromiseLike<Counter> {
         return this.cacheCounterService.counterQuery();
@@ -28,14 +33,14 @@ export class CounterDataSource extends DataSource<IService> implements ICounterS
         return this.cacheCounterService.addCounter();
     }
 
-    public initialize(config: DataSourceConfig<IContext>) {
-        this.context = config.context;
-        if (!this.context.counterMockService) {
+    public initialize() {
+        const { context, cache } = this.options;
+        const counterService = context.container.getNamed<ICounterService>(TYPES.CounterMockService, 'proxy');
+        if (!counterService) {
             throw new ApolloError('Missing TextFileService in the context!');
         }
         try {
-            const cache = config.cache || new InMemoryLRUCache<string>();
-            this.cacheCounterService = setupCaching({ counterService: config.context.counterMockService, cache });
+            this.cacheCounterService = setupCaching({ counterService, cache });
         } catch (err) {
             throw new ApolloError(`Setting up cache in the FilesDataSource failed due to ${err}`);
         }

@@ -3,32 +3,24 @@ import { interfaces } from 'inversify';
 import schema from './schema/schema.graphql';
 import { ICounterService, IService } from './interfaces';
 import { resolver } from './resolvers';
-import { localCounterModule, externalCounterModule } from './containers';
+import { externalCounterModule, localCounterModule } from './containers';
 import { CounterMockMoleculerService } from './services';
 import { TYPES } from './constants';
 import { CounterDataSource } from './dataloader';
 
-const counterServiceGen = (container: interfaces.Container): IService => {
-    return {
-        counterMockService: container.getNamed<ICounterService>(TYPES.CounterMockService, 'proxy'),
-    };
-};
-
-const dataSources: (container: interfaces.Container) => any = () => {
-    return {
-        counterCache: new CounterDataSource(),
-    };
-};
+const counterServiceGen = (container: interfaces.Container): IService => ({
+    counterMockService: container.getNamed<ICounterService>(TYPES.CounterMockService, 'proxy'),
+});
 
 export default new Feature({
     schema,
     createContainerFunc: [localCounterModule],
     createResolversFunc: resolver,
     createServiceFunc: counterServiceGen,
-    // createContextFunc: () => ({ counterMock: counterMock }), // note anything set here should be singleton.
-    createDataSourceFunc: dataSources,
+    createDataSourceFunc: (options) => ({
+        counterCache: new CounterDataSource(options),
+    }),
     createHemeraContainerFunc: [externalCounterModule],
     addBrokerClientServiceClass: [CounterMockMoleculerService],
     addBrokerMainServiceClass: [],
 });
-
