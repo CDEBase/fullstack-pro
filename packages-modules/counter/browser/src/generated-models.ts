@@ -247,24 +247,24 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
-  Counter: ResolverTypeWrapper<Counter>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   ClientCounter: ResolverTypeWrapper<ClientCounter>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Counter: ResolverTypeWrapper<Counter>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
-  Counter: Counter;
-  Int: Scalars['Int'];
   ClientCounter: ClientCounter;
+  Int: Scalars['Int'];
+  Counter: Counter;
   Mutation: {};
   Boolean: Scalars['Boolean'];
+  Query: {};
   Subscription: {};
   String: Scalars['String'];
 };

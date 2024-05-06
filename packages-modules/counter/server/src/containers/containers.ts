@@ -1,5 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { CounterMockService, CounterMockProxyService } from '../services';
+import { CounterMockProxyService, CounterMockService } from '../services';
 import { TYPES } from '../constants';
 import { ICounterService } from '../interfaces';
 

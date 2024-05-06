@@ -1,13 +1,10 @@
 import { useServer } from 'graphql-ws/lib/use/ws';
-import { GraphQLSchema, parse, getOperationAST, GraphQLError, validate } from 'graphql';
-import { GraphQLServerOptions } from 'apollo-server-core/dist/graphqlOptions';
-import { Context } from 'apollo-server-core';
-import { RedisClusterCache, RedisCache } from 'apollo-server-cache-redis';
+import { getOperationAST, GraphQLError, GraphQLSchema, parse, validate } from 'graphql';
+import { RedisCache, RedisClusterCache } from 'apollo-server-cache-redis';
 import { CdmLogger } from '@cdm-logger/core';
 import { Disposable, SubscribeMessage } from 'graphql-ws';
 import { WebSocketServer } from 'ws';
 import { IModuleService } from '../interfaces';
-import { createContextFromConnectionParams } from './utils';
 
 type ILogger = CdmLogger.ILogger;
 

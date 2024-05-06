@@ -181,10 +181,21 @@ export class StackServer {
         // set the service container
         this.serviceContainer = await allModules.createContainers({ ...settings, mongoConnection: mongoClient });
         const createServiceContext = allModules.createServiceContext({ ...settings, mongoConnection: mongoClient });
+
+        const options = {
+            cache: redisClient,
+            context: {
+                logger: serverLogger,
+                container: this.serviceContainer,
+            },
+        };
+        const dataSource = allModules.createDataSource(options);
+        console.trace();
+        console.log({ dataSource, options });
         const serviceBroker: IModuleService = {
             serviceContainer: this.serviceContainer,
             serviceContext: createServiceContext,
-            dataSource: allModules.createDataSource(),
+            dataSource,
             defaultPreferences: allModules.createDefaultPreferences(),
             createContext: async (req, res) => allModules.createContext(req, res),
             logger: serverLogger,
