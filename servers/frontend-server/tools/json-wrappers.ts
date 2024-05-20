@@ -5,6 +5,7 @@ import { isArray, mergeWith } from 'lodash-es';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from "node:crypto";
+import { IOptions } from './types';
 import { wrapRouteComponent } from './wrapperComponent';
 
 function getRootPath() {
@@ -14,7 +15,7 @@ function getRootPath() {
 }
 
 const getHash = (source: string, maxLength: number = 8): string => {
-    let hash = createHash("sha256").update(source).digest("hex");
+    const hash = createHash("sha256").update(source).digest("hex");
     return typeof maxLength === "number" ? hash.slice(0, maxLength) : hash;
 };
 
@@ -72,23 +73,55 @@ function defineRoute(routeFn, jsonRoute) {
         componentPath,
         clientOnly,
         auth,
-        loader = false,
-        action = false,
+        hasLoader = false,
+        hasAction = false,
+        hasClientLoader = false,
+        hasClientAction = false,
+        hasComponent = false,
+        hasErrorBoundary = false,
+        hasLinks = false,
+        hasMeta = false,
+        hasHydrateFallback = false,
+        hasShouldRevalidate = false,
+        hasHandle = false,
+        hasHeaders = false,
         wrapperPaths = [],
+        middlewares = [],
+        authority = [],
+        extraProps = {},
+        loaderDeferKeys,
         ...rest
     } = jsonRoute;
 
     // let file = `${rootPath}/node_modules/${componentFile}`;
     if (componentPath) {
-        // Modify wrapperPaths array conditionally based on auth and clientOnly
-        if (auth) {
-            wrapperPaths.push('$authWrapper'); // Add a placeholder for the auth wrapper
-        }
         if (clientOnly) {
             wrapperPaths.push('$clientOnlyWrapper'); // Add a placeholder for the client-only wrapper
         }
-
-        const options = { hasLoader: loader, hasAction: action, suffix: getHash(rest.path || '/') };
+        if (authority.length > 0) {
+            wrapperPaths.push('$permissionWrapper'); // Add a placeholder for the permission wrapper at last
+        }
+    
+        const options: IOptions = { 
+            requireAuth: auth, 
+            hasLoader, 
+            hasAction, 
+            hasClientLoader, 
+            hasComponent,
+            hasErrorBoundary,
+            hasLinks,
+            hasMeta,
+            hasHydrateFallback,
+            hasShouldRevalidate,
+            hasHandle,
+            hasHeaders,
+            hasClientAction,
+            loaderDeferKeys: loaderDeferKeys,
+            suffix: getHash(rest.path || '/'),
+            middlewares,
+            authority, 
+            extraProps,
+        };
         const file = wrapRouteComponent(componentPath, wrapperPaths, options);
         const opts = { ...rest, id: rest.path };
         if (routes) {

@@ -1,4 +1,4 @@
-import { Plugin } from 'vite'
+import { Plugin } from 'vite';
 import { getSortedRoutes } from '@common-stack/client-react/lib/route/get-routes.js';
 import fs from 'fs';
 import { isArray, mergeWith } from 'lodash-es';

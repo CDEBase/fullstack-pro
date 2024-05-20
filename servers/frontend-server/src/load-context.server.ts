@@ -1,19 +1,19 @@
-import "reflect-metadata";
+import 'reflect-metadata';
+import { getRedisClient } from './config/redis-config.server';
 import feature from './modules/module';
-import { createReduxStore } from './config/redux-config';
-import { createClientContainer } from './config/client.service';
 
 const routeConfig = feature.getConfiguredRoutes();
-export const loadContext = (req: Request, res: Response) => {
-  const { container, serviceFunc, apolloClient } = createClientContainer(req, res);
-  const services = serviceFunc();
-  const { store } = createReduxStore(apolloClient, services, container);
+const redisClient = getRedisClient();
+export const loadContext = async (req: Request, res: Response) => {
+    const { container, store, apolloClient, services }: any = req;
 
-  return {
-    module: feature,
-    routeConfig,
-    store,
-    container,
-    apolloClient,
-  }
-}
+    return {
+        modules: feature,
+        routeConfig,
+        store,
+        container,
+        apolloClient,
+        services,
+        redisClient,
+    };
+};

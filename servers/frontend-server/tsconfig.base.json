@@ -1,21 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2020",
+    "module": "ES2022",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
     "jsx": "react",
+    "skipLibCheck": true,
     "declaration": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "noImplicitAny": false,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "pretty": true,
     "removeComments": false,
     "lib": [
-      "es2017",
+      "ES2020",
       "dom",
       "esnext.asynciterable"
+    ],
+    "typeRoots": [
+      "./typings/*.d.ts",
+      "node_modules/@types"
     ],
     "types": [
       "@types/node",
@@ -23,6 +30,9 @@
     ]
   },
   "include": [
-    "../../typings/*.d.ts"
+    "./typings/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

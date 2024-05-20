@@ -4,14 +4,19 @@ import { dirname, resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv-esm';
+import envOnly from 'vite-env-only';
+import { installGlobals } from '@remix-run/node';
 import { defineRoutesConfig } from './tools/json-wrappers';
 import buildConfig from './build.config.mjs';
-import routeConfigurationPlugin from './plugins/routes-configuration'
 
+// This installs globals such as "fetch", "Response", "Request" and "Headers".
+installGlobals();
 
 const directoryName = dirname(fileURLToPath(import.meta.url));
-export default defineConfig((d) => {
-    console.log('---IS SSR BUILD', d);
+const packages: string[] = ['@sample-stack/counter-module-browser'];
+
+export default defineConfig(({ isSsrBuild }) => {
+    console.log('---IS SSR BUILD', isSsrBuild);
 
     let dotEnvResult;
     if (process.env.NODE_ENV !== 'production') {
@@ -26,45 +31,25 @@ export default defineConfig((d) => {
             ...Object.assign(
                 ...Object.entries(buildConfig).map(([k, v]) => ({
                     [k]: typeof v !== 'string' ? v : `"${v.replace(/\\/g, '\\\\')}"`,
-                    // __SSR__: process.env.SSR === 'true',
-                    // __CLIENT__: !isSsrBuild,
+                    __SERVER__: true,
+                    __CLIENT__: false,
                 })),
             ),
         },
         plugins: [
-            routeConfigurationPlugin({
-                routesFileName: 'routes.json',
-                packages: ['@sample-stack/counter-module-browser'],
-                rootPath: resolve(directoryName, '../..'),
-            }),
             remix({
-                ssr: true,
                 appDirectory: 'src',
-                // routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
                 routes: async (defineRoutes) =>
                     defineRoutes((routeFn) => {
                         defineRoutesConfig(routeFn, {
                             routesFileName: 'routes.json',
-                            packages: ['@sample-stack/counter-module-browser'],
+                            packages: packages,
                             rootPath: resolve(directoryName, '../..'),
                         });
                     }),
             }),
             tsconfigPaths({ ignoreConfigErrors: true }),
+            envOnly(),
         ],
     };
 });
-
-
-// remix({
-//     ssr: false,
-//     appDirectory: 'src',
-//     routes: async (defineRoutes) => jsxRoutes(defineRoutes, routes)
-//     // defineRoutes((routeFn) => {
-//     //     defineRoutesConfig(routeFn, {
-//     //         routesFileName: 'routes.json',
-//     //         packages: ['@sample-stack/counter-module-browser'],
-//     //         rootPath: resolve(directoryName, '../..'),
-//     //     });
-//     // }),
-// }),
