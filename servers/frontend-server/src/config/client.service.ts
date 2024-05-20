@@ -1,4 +1,4 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 /* eslint-disable jest/require-hook */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,21 +12,7 @@ import modules, { UtilityClass, logger } from '../modules';
 import { createApolloClient } from './base-apollo-client';
 import { config } from './browser-env-config';
 
-let __CLIENT_SERVICE__: {
-    apolloClient: ApolloClient<any>;
-    container: Container;
-    serviceFunc: () => any;
-    logger: CdmLogger.ILogger;
-};
-function isClient() {
-    return typeof window !== 'undefined';
-  }
-  console.log('---WINDOW--', typeof  window);
-
-console.log('---CLLIINE', __CLIENT__,      isClient())
-const initialState = __CLIENT__ && isClient() ? { ...window.__APOLLO_STATE__ } : {};
 const utility = new UtilityClass(modules);
-
 const container = modules.createContainers({}) as Container;
 container.bind(ClientTypes.Logger).toConstantValue(logger);
 container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
@@ -42,8 +28,8 @@ export const createClientContainer = (req?: any, res?: any) => {
         .toDynamicValue((context) => new Error('Too early to bind ApolloClient'))
         .inRequestScope();
     childContainer
-        .bind<() => ApolloClient<NormalizedCacheObject>>(ClientTypes.ApolloClientFactory)
-        .toFactory<ApolloClient<NormalizedCacheObject>>((context: interfaces.Context) => () => {
+        .bind<ApolloClient<NormalizedCacheObject>>(ClientTypes.ApolloClientFactory)
+        .toDynamicValue<() => ApolloClient<NormalizedCacheObject>>((context: interfaces.Context) => () => {
             const newClient = childContainer.get<ApolloClient<NormalizedCacheObject>>(ClientTypes.ApolloClient);
             return newClient;
         });
@@ -56,8 +42,8 @@ export const createClientContainer = (req?: any, res?: any) => {
         container: childContainer,
         requestResponsePair: {
             req,
-            res
-        }
+            res,
+        },
     });
     const { apolloClient, cache } = createApolloClient({
         httpGraphqlURL: config.GRAPHQL_URL,
@@ -65,16 +51,18 @@ export const createClientContainer = (req?: any, res?: any) => {
         isDev: process.env.NODE_ENV === 'development',
         isDebug: __DEBUGGING__,
         isSSR: __SSR__,
-        scope: isClient() &&  typeof window !== 'undefined' ? 'browser' : 'server',
+        scope: typeof window !== 'undefined' ? 'browser' : 'server',
         clientState,
         getDataIdFromObject: (result) => modules.getDataIdFromObject(result),
-        initialState,
+        initialState: typeof window !== 'undefined' ? window?.__APOLLO_STATE__ : undefined,
         logger,
     });
-    childContainer
-        .bind(ClientTypes.InMemoryCache)
-        .toDynamicValue((context) => cache)
-        .inRequestScope();
+    if (!childContainer.isBound(ClientTypes.InMemoryCache)) {
+        childContainer
+            .bind(ClientTypes.InMemoryCache)
+            .toDynamicValue((context) => cache)
+            .inRequestScope();
+    }
     childContainer
         .rebind(ClientTypes.ApolloClient)
         .toDynamicValue((context) => apolloClient)
@@ -83,7 +71,7 @@ export const createClientContainer = (req?: any, res?: any) => {
     // const services = serviceFunc();
     const serviceFunc = () => services;
     (apolloClient as any).container = services;
-    __CLIENT_SERVICE__ = {
+    const clientService = {
         container: childContainer,
         apolloClient,
         serviceFunc,
@@ -95,5 +83,10 @@ export const createClientContainer = (req?: any, res?: any) => {
             delete window.__APOLLO_STATE__;
         });
     }
-    return __CLIENT_SERVICE__;
+    if (typeof window !== 'undefined') {
+        window.__CLIENT_SERVICE__ = clientService;
+    }
+
+
+    return clientService;
 };

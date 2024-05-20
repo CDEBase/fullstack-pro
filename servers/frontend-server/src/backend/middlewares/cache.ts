@@ -26,3 +26,25 @@ export const cacheMiddleware = (req, res, next) => {
     }
   })
 }
+
+export const cacheMiddlewareSync = async (req: any, res: any, next: any) => {
+  res.setHeader('Cache-Control', `public, max-age=300, s-maxage=3600`)
+
+  const key = req.url
+  const result = await redis.get(key).then((value: any) => {
+    return value
+  }).catch((err: any) => {
+    console.error(err);
+    return null
+  })
+
+  // if (result != null) {
+  //   return JSON.parse(result)
+  // } else {
+  const body = await next()
+  const reply = await redis.set(key, JSON.stringify(body), 'EX', 300)
+  logger.info(`Redis Client set new value of key - ${key}`, reply)
+
+  return body
+  // }
+}

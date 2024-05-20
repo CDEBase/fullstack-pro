@@ -1,9 +1,6 @@
-// version 09/18/2021
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client/index.js';
-import { InMemoryCache } from '@apollo/client/cache';
+// apolloClient.ts
+import { isBoolean } from 'lodash-es';
+import { ApolloClient, ApolloClientOptions, ApolloLink, NormalizedCacheObject, InMemoryCache } from '@apollo/client/index.js';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
@@ -11,14 +8,14 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
-import fetch from 'cross-fetch';
-import { isBoolean, merge } from 'lodash-es';
-import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
 import { createClient } from 'graphql-ws';
+import fetch from 'cross-fetch';
+import { CdmLogger } from '@cdm-logger/core';
+import { createCache, initializeCache } from './base-apollo-cache';
 
 const schema = `
-
+  # Add your schema here
 `;
 
 interface IApolloClientParams {
@@ -37,18 +34,14 @@ interface IApolloClientParams {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
-            // tslint:disable-next-line
             invariant.warn(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
         );
     }
     if (networkError) {
-        // tslint:disable-next-line
         invariant.warn(`[Network error]: ${networkError}`);
     }
 });
 
-let _apolloClient: ApolloClient<any>;
-let _memoryCache: InMemoryCache;
 export const createApolloClient = ({
     scope,
     isDev,
@@ -60,53 +53,33 @@ export const createApolloClient = ({
     httpLocalGraphqlURL,
     initialState,
     logger,
-}: IApolloClientParams) => {
+}: IApolloClientParams): { apolloClient: ApolloClient<NormalizedCacheObject>, cache: InMemoryCache } => {
     const isBrowser = scope === 'browser';
     const isServer = scope === 'server';
-    let link;
 
-    const cache = new InMemoryCache({
-        dataIdFromObject: getDataIdFromObject,
-        possibleTypes: clientState.possibleTypes,
-        typePolicies: clientState.typePolicies,
-    });
-    logger.debug('created new apollo memory cache');
-    const attemptConditions = async (count: number, operation: any, error: Error) => {
-        const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => func(count, operation, error));
+    const cache = createCache({ getDataIdFromObject, clientState, logger });
+    logger.debug('Created new Apollo memory cache');
 
-        try {
-            const result = await promises;
-            return !!result.find((item) => item && isBoolean(item));
-        } catch (e) {
-            logger.trace('Error occured in retryLink Attempt condition', e);
-            throw e;
-        }
-    };
-
-    const retrylink = new RetryLink({
-        attempts: attemptConditions,
+    const retryLink = new RetryLink({
+        attempts: async (count, operation, error) => {
+            const promises = (clientState.retryLinkAttemptFuncs || []).map((func) => func(count, operation, error));
+            try {
+                const result = await Promise.all(promises);
+                return !!result.find((item) => item && isBoolean(item));
+            } catch (e) {
+                logger.trace('Error occurred in retryLink Attempt condition', e);
+                throw e;
+            }
+        },
     });
 
-    if (!isServer && _apolloClient && _memoryCache) {
-        if (initialState && _apolloClient) {
-            // Get existing cache, loading during client side data fetching
-            const existingCache = _apolloClient.extract();
-            _apolloClient.cache.restore(merge(initialState, existingCache));
-            logger.debug('apollo cache is restored');
-        }
-        // return quickly if client is already created.
-        logger.debug('return singleton apollo client');
-        return {
-            apolloClient: _apolloClient,
-            cache: _memoryCache,
-        };
-    }
-    _memoryCache = cache;
+    let link: ApolloLink;
+
     if (isBrowser) {
         const connectionParams = async () => {
             const param: { [key: string]: any } = {};
             for (const connectionParam of clientState.connectionParams) {
-                const result = await connectionParam as Function
+                const result = await connectionParam as Function;
                 merge(param, await result());
             }
             return param;
@@ -129,19 +102,16 @@ export const createApolloClient = ({
                     connected: (socket) => {
                         activeSocket = socket;
                     },
-                    error: async (error: Error[]) => {
+                    error: async (error) => {
                         logger.error(error, '[WS connectionCallback error] %j');
-                        const promises = (clientState.connectionCallbackFuncs || []).map((func) =>
-                            func(wsLink, error, {}),
-                        );
+                        const promises = (clientState.connectionCallbackFuncs || []).map((func) => func(wsLink, error, {}));
                         try {
-                            await promises;
+                            await Promise.all(promises);
                         } catch (err) {
                             logger.trace('Error occurred in connectionCallback condition', err);
                             throw err;
                         }
                     },
-                    // connected: (socket, payload) => {}
                     ping: (received) => {
                         logger.trace('Pinged Server');
                         if (!received)
@@ -165,69 +135,48 @@ export const createApolloClient = ({
                 if (operationName.endsWith('_WS')) {
                     return true;
                 }
-                const operationAST = getOperationAST(query as any, operationName);
+                const operationAST = getOperationAST(query, operationName);
                 return !!operationAST && operationAST.operation === 'subscription';
             },
             wsLink,
-            new HttpLink({
-                uri: httpGraphqlURL,
-                credentials: 'include'
-            }),
+            new HttpLink({ uri: httpGraphqlURL, credentials: 'include', fetch }),
         );
     } else if (isServer) {
-        link = new BatchHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, batchInterval: 2000, batchMax: 100, credentials: 'include' });
+        link = new BatchHttpLink({
+            uri: httpLocalGraphqlURL,
+            fetch,
+            batchInterval: 2000,
+            batchMax: 100,
+            credentials: 'include',
+        });
     } else {
-        link = createHttpLink({ uri: httpLocalGraphqlURL, fetch: fetch as any, credentials: 'include' });
+        link = new HttpLink({ uri: httpLocalGraphqlURL, fetch, credentials: 'include' });
     }
 
-    const links = [errorLink, retrylink, ...(clientState.preLinks || []), link];
-
-    // Add apollo logger during development only
-    // if (isBrowser && (isDev || isDebug)) {
-    //     const apolloLogger = require('apollo-link-logger');
-    //     links.unshift(apolloLogger.default);
-    // }
+    const links = [errorLink, retryLink, ...(clientState.preLinks || []), link];
 
     const params: ApolloClientOptions<any> = {
         queryDeduplication: true,
-        typeDefs: schema.concat(<string>clientState.typeDefs),
+        typeDefs: schema.concat(clientState.typeDefs || ''),
         resolvers: clientState.resolvers as any,
         link: ApolloLink.from(links),
         cache,
         credentials: 'include',
         connectToDevTools: isBrowser && (isDev || isDebug),
     };
+
     if (isSSR) {
         if (isBrowser) {
-            if (initialState) {
-                cache.restore(initialState);
-            }
             params.ssrForceFetchDelay = 100;
         } else if (isServer) {
             params.ssrMode = true;
         }
     }
-    _apolloClient = new ApolloClient<any>(params);
-    logger.debug('create new apollo client');
-    clientState?.defaults?.forEach((x) => {
-        try {
-            if (x.type === 'query') {
-                cache.writeQuery({
-                    query: x.query,
-                    data: x.data,
-                })
-            } else if (x.type === 'fragment') {
-                cache.writeFragment({
-                    id: x.id,
-                    fragment: x.fragment,
-                    data: x.data,
-                });
-            }
-        } catch (err) {
-            console.error('error writing cache', err);
-        }
 
-    });
+    const apolloClient = new ApolloClient<any>(params);
+    logger.debug('Created new Apollo client');
 
-    return { apolloClient: _apolloClient, cache };
+    initializeCache({ cache, initialState, clientState, logger });
+
+    return { apolloClient, cache };
 };

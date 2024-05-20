@@ -50,19 +50,27 @@ export const createReduxStore = ({
      * Add middleware that required for this app.
      */
 
-        // Configure middlewares
+    // Configure middlewares
     const middlewares = [
-            ...preMiddleware,
-            ...(epicMiddleware ? [epicMiddleware] : []),
-            ...middleware,
-            ...postMiddleware,
-        ];
+        ...preMiddleware,
+        ...(epicMiddleware ? [epicMiddleware] : []),
+        ...middleware,
+        ...postMiddleware,
+    ];
     const store = configureStore({
         reducer: persistedReducer as any,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({
                 serializableCheck: {
-                    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                    ignoredActions: [
+                        FLUSH,
+                        REHYDRATE,
+                        PAUSE,
+                        PERSIST,
+                        PURGE,
+                        REGISTER,
+                        // CONTRIBUTION_ACTION_TYPES.REGISTER_CONTRIBUTIONS, // need to pass from modules
+                    ],
                 },
             }).concat(...middlewares),
         devTools: isDev || isDebug,

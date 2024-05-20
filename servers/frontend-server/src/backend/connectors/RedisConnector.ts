@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { defaultsDeep } from 'lodash-es';
 import * as IORedis from 'ioredis';
 import { logger } from '@cdm-logger/server';
 import { CdmLogger } from '@cdm-logger/core';
@@ -19,7 +19,7 @@ export class RedisConnector {
      * @param {object} opts
      */
     constructor(opts?: IORedis.RedisOptions | IORedis.ClusterOptions) {
-        this.opts = _.defaultsDeep(opts, {
+        this.opts = defaultsDeep(opts, {
             prefix: null,
         });
         this.logger = logger.child({ className: 'RedisConnector' });

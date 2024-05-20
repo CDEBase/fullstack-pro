@@ -7,5 +7,5 @@ const features = new Feature(
     CounterModule,
 );
 
-export const registeredPlugins = features.getComponentFillPlugins();
+export const plugins = features.getComponentFillPlugins();
 export default features;

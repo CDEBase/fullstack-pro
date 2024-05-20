@@ -23,7 +23,7 @@ export const epicMiddlewareFunc = (apolloClient: any, services: any, container: 
             container,
             logger,
             config: {
-                loadRoot: true,
+                loadRoot: false,
             }
         },
     });

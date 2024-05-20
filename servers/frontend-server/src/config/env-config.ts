@@ -1,8 +1,6 @@
-import * as envalid from 'envalid';
+import { str, bool, json, cleanEnv } from 'envalid';
 
-const { str, bool, json } = envalid;
-
-export const config = envalid.cleanEnv(process.env, {
+export const config = cleanEnv(process.env, {
     NODE_ENV: str({ default: 'production', choices: ['production', 'staging', 'development', 'test'] }),
     BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),
     LOCAL_BACKEND_URL: str({ devDefault: __BACKEND_URL__ }),

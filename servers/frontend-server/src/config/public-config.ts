@@ -10,16 +10,18 @@ import { lowerCase } from 'lodash-es';
 /**
  * This file opens up in public site, so make sure it is
  * not dependent on any other file that compromises the security.
+ * hello
  */
 const publicEnv = [
     'NODE_ENV',
-    'GRAPHQL_URL',
-    'GA_ID',
-    'LOG_LEVEL',
-    'CLIENT_URL',
-    'APP_DOMAIN',
     'APP_URL',
+    'GA_ID',
+    'GRAPHQL_URL',
+    'LOG_LEVEL',
+
+    'CLIENT_URL',
     'APP_NAME',
+    'APP_DOMAIN',
 ];
 
 const isBrowser = typeof window !== 'undefined';
@@ -31,11 +33,12 @@ for (const v of publicEnv) {
 }
 
 // add subscription url for temporary
-env.GRAPHQL_URL = env.GRAPHQL_URL || __GRAPHQL_URL__;
-env.GRAPHQL_SUBSCRIPTION_URL = env.GRAPHQL_SUBSCRIPTION_URL || env.GRAPHQL_URL.replace(/^http/, 'ws');
 export default env;
+
 if (isBrowser) {
-    let process: any = {};
+    // process[lowerCase('env')] = env; // to avoid webpack to replace `process` with actual value.
+    // process.APP_ENV = env;
+    const process: any = {};
     process[lowerCase('env')] = env; // to avoid webpack to replace `process` with actual value.
     process.APP_ENV = env;
     window.process = process;
