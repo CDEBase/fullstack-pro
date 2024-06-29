@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.4](https://github.com/cdmbase/fullstack-pro/compare/v3.0.1-alpha.3...v3.0.1-alpha.4) (2024-06-29)
+
+### Bug Fixes
+
+-   resolved some issues ([70fa0f3](https://github.com/cdmbase/fullstack-pro/commit/70fa0f320f802667f300ba07aad70461ea9c3938))
+-   roue configuration update ([cd92775](https://github.com/cdmbase/fullstack-pro/commit/cd9277525b528ee48b896fd11ce8d52306ac89ad))
+
 ## [3.0.1-alpha.3](https://github.com/cdmbase/fullstack-pro/compare/v3.0.1-alpha.2...v3.0.1-alpha.3) (2024-02-06)
 
 **Note:** Version bump only for package sample-stack-frontend-server
