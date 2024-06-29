@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ApolloClient, ApolloClientOptions, ApolloLink, gql } from '@apollo/client';
+import { ApolloClient, ApolloClientOptions, ApolloLink } from '@apollo/client/index.js';
 import { InMemoryCache } from '@apollo/client/cache';
 import { HttpLink, createHttpLink } from '@apollo/client/link/http';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
@@ -11,8 +11,8 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getOperationAST } from 'graphql';
 import { invariant } from 'ts-invariant';
 import { IClientState } from '@common-stack/client-core';
-import fetch from 'node-fetch';
-import { isBoolean, merge } from 'lodash';
+import fetch from 'cross-fetch';
+import { isBoolean, merge } from 'lodash-es';
 import { CdmLogger } from '@cdm-logger/core';
 import { RetryLink } from '@apollo/client/link/retry';
 import { createClient } from 'graphql-ws';
@@ -184,8 +184,8 @@ export const createApolloClient = ({
 
     // Add apollo logger during development only
     if (isBrowser && (isDev || isDebug)) {
-        const apolloLogger = require('apollo-link-logger');
-        links.unshift(apolloLogger.default);
+        // const apolloLogger = require('apollo-link-logger');
+        // links.unshift(apolloLogger.default);
     }
 
     const params: ApolloClientOptions<any> = {

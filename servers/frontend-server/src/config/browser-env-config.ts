@@ -1,7 +1,12 @@
 import { str, cleanEnv } from 'envalid';
+import { getEnvironment } from '@common-stack/core';
 
-const env = (process as any).APP_ENV || process.env;
+const env = getEnvironment();
 
 export const config = cleanEnv(env, {
     GA_ID: str({ devDefault: 'G-xxxxxxx' }),
+    GRAPHQL_URL: str({ devDefault: __GRAPHQL_URL__ }),
+    LOCAL_GRAPHQL_URL: str({ default: __GRAPHQL_URL__ }),
+    GRAPHQL_SUBSCRIPTION_URL: str({ default: env?.GRAPHQL_URL?.replace(/^http/, 'ws') }),
+    LOG_LEVEL: str({ devDefault: 'debug' }),
 });

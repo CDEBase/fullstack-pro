@@ -9,21 +9,21 @@ import { SlotFillProvider, replaceServerFills } from '@common-stack/components-p
 import path from 'path';
 import fs from 'fs';
 import { Provider as ReduxProvider } from 'react-redux';
+import { StaticRouterProvider, createStaticHandler, createStaticRouter } from 'react-router-dom/server';
+import type { StaticHandlerContext } from 'react-router-dom/server';
 import { logger } from '@cdm-logger/server';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import { createMemoryHistory } from 'history';
 import { FilledContext, HelmetProvider } from 'react-helmet-async';
-import { HistoryRouter } from 'redux-first-history/rr6';
 import { InversifyProvider, PluginArea } from '@common-stack/client-react';
 import { createCache as createAntdCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Html } from './ssr/html';
-import { createReduxStore } from '../config/redux-config';
 import createEmotionCache from '../common/createEmotionCache';
 import publicEnv from '../config/public-config';
-import clientModules, { MainRoute } from '../modules';
+import clientModules, { createMainRoute } from '../modules/module';
 import { cacheMiddleware } from './middlewares/cache';
 import GA4Provider from '../components/GaProvider';
 import { renderServerSideNoSSR } from './renderServerSideNoSSR';
+import { createFetchRequest } from './request';
 
 let assetMap;
 const cache = createEmotionCache();
@@ -33,12 +33,27 @@ const antdCache = createAntdCache();
 
 async function renderServerSide(req, res) {
     try {
-        const { apolloClient: client, container, serviceFunc } = req;
-        const history = createMemoryHistory({ initialEntries: [req.url] });
-        const { store } = createReduxStore(history, client, serviceFunc, container);
-
-        let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
+        const { apolloClient: client, container, store } = req;
         let persistor = persistStore(store); // this is needed for ssr
+        try {
+            await clientModules.beforeSSR({
+                request: req,
+                module: clientModules,
+            });
+        } catch (e: any) {
+            console.log('Apollo Error! Rendering result anyways');
+            console.log(e);
+        }
+        let mainRoute: any = createMainRoute({client});
+        let handler = createStaticHandler(mainRoute);
+        // let context: { pageNotFound?: boolean; url?: string } = { pageNotFound: false };
+        let fetchRequest = createFetchRequest(req);
+        let context: any = await handler.query(fetchRequest) as StaticHandlerContext;
+
+        let router = createStaticRouter(
+            handler.dataRoutes,
+            context,
+        );
 
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(__FRONTEND_BUILD_DIR__, 'loadable-stats.json'),
@@ -58,12 +73,9 @@ async function renderServerSide(req, res) {
                                         {clientModules.getWrappedRoot(
                                             <ApolloProvider client={client}>
                                                 <PluginArea />
-                                                <HistoryRouter history={history}>
-                                                    <GA4Provider>
-                                                        <MainRoute />
-                                                    </GA4Provider>
-                                                </HistoryRouter>
+                                                <StaticRouterProvider router={router} context={context} />
                                             </ApolloProvider>,
+                                            req,
                                         )}
                                     </InversifyProvider>
                                 </ReduxProvider>

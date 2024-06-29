@@ -2,7 +2,7 @@
 import { Feature } from '@common-stack/client-react';
 import { IMenuPosition, IRoute } from '@common-stack/client-react';
 import Counter from './components/Counter';
-import { connectedReactRouterCounter } from './redux';
+import connectedReactRouterCounter from './redux';
 import { CONNECTED_REACT_ROUTER_ROUTES_TYPES } from './constants';
 import { getFilteredRoutes } from '../utils';
 
