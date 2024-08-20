@@ -1,0 +1,28 @@
+{
+    "output": "./e2e/output",
+    "helpers": {
+        "Puppeteer": {
+            "show": true,
+            "url": "http://localhost:3000"
+        }
+    },
+    "include": {
+        "I": "./e2e/steps_file.js",
+        "loginPage": "./e2e/pages/Login.js",
+        "dashboardPage": "./e2e/pages/Dashboard.js",
+        "workspaceFormPage": "./e2e/pages/WorkspaceForm.js"
+    },
+    "mocha": {},
+    "bootstrap": false,
+    "teardown": null,
+    "hooks": [],
+    "gherkin": {},
+    "plugins": {
+        "screenshotOnFail": {
+            "enabled": true
+        }
+    },
+    "tests": "./e2e/**/*_test.js",
+    "timeout": 10000,
+    "name": "frontend-server"
+}

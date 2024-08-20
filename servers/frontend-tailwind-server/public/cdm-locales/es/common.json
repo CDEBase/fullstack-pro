@@ -1,0 +1,40 @@
+{
+    "languages": "Idiomas",
+    "help": "Ayuda",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "download_block": "Descarga esta página a tu proyecto local",
+    "get_all_blocks": "Obtener todos los bloques",
+    "block_list": "Construye rápidamente páginas estándar basadas en el desarrollo de `bloques`",
+    "expand": "Expandir",
+    "collapse": "Colapsar",
+    "all": "Todo",
+    "search": "Buscar",
+    "search_example1": "Buscar ejemplo 1",
+    "search_example2": "Buscar ejemplo 2",
+    "search_example3": "Buscar ejemplo 3",
+    "notification": "Notificación",
+    "notification_empty": "Has visto todas las notificaciones.",
+    "message": "Mensaje",
+    "message_empty": "Has visto todos los mensajes.",
+    "event": "Evento",
+    "event_empty": "Has visto todos los eventos.",
+    "clear": "Limpiar",
+    "cleared": "Limpiado",
+    "no_notification": "No hay notificaciones",
+    "view_more": "Ver más",
+    "offline": "Estás desconectado ahora",
+    "serviceworker_updated": "Nuevo contenido está disponible",
+    "serviceworker_updated_hint": "Por favor presiona el botón \"Actualizar\" para recargar la página actual",
+    "refresh": "Actualizar",
+    "main": {
+        "text": {
+            "sub-heading": "hola mundo",
+            "main-heading": "rampage",
+            "user-auth-heading": "Encabezado de prueba de autenticación de usuario"
+        },
+        "auth": {
+            "login": "Iniciar sesión"
+        }
+    }
+}

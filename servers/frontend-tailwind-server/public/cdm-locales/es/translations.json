@@ -1,0 +1,17 @@
+{
+    "profile": {
+        "name": "Nombre",
+        "username": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "updateProfile": "Actualizar Perfil",
+        "notification": {
+            "heading": "Configuración de Notificaciones",
+            "changeAccount": "En cambio de configuración de cuenta",
+            "pullRequest": "En nuevas solicitudes de extracción"
+        },
+        "newPassword": "Nueva Contraseña",
+        "confirmPassword": "Confirmar Contraseña",
+        "setPassword": "Establecer Contraseña",
+        "oldPassword": "Contraseña Antigua"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "languages": "Languages",
+    "help": "Help",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "download_block": "Download this page to your local project",
+    "get_all_blocks": "Get all blocks",
+    "block_list": "Quickly build standard, pages based on `block` development",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "all": "All",
+    "search": "Search",
+    "search_example1": "Search example 1",
+    "search_example2": "Search example 2",
+    "search_example3": "Search example 3",
+    "notification": "Notification",
+    "notification_empty": "You have viewed all notifications.",
+    "message": "Message",
+    "message_empty": "You have viewed all messsages.",
+    "event": "Event",
+    "event_empty": "You have viewed all events.",
+    "clear": "Clear",
+    "cleared": "Cleared",
+    "no_notification": "No notifications",
+    "view_more": "View more",
+    "offline": "You are offline now",
+    "serviceworker_updated": "New content is available",
+    "serviceworker_updated_hint": "Please press the \"Refresh\" button to reload current page",
+    "refresh": "Refresh",
+    "main": {
+        "text": {
+            "sub-heading": "hello world",
+            "main-heading": "rampage",
+            "user-auth-heading": "User Auth Test Heading"
+        },
+        "auth": {
+            "login": "Login"
+        }
+    }
+}

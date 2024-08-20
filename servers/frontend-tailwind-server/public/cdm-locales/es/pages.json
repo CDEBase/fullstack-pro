@@ -1,0 +1,56 @@
+{
+    "pages": {
+        "layout": {
+            "userLayout_title": "Ant Design es la especificación de diseño web más influyente en el distrito de Xihu"
+        },
+        "welcome": {
+            "advanced_component": "Componente Avanzado",
+            "welcome": "Bienvenido",
+            "advanced_layout": "Diseño Avanzado",
+            "alert_message": "Se han lanzado componentes pesados más rápidos y fuertes."
+        },
+        "admin": {
+            "sub_page_title": "Esta página solo puede ser vista por Administradores",
+            "sub_page_alert_message": "Umi ui ha sido lanzado, bienvenido a usar npm run ui para comenzar la experiencia."
+        },
+        "login": {
+            "account_login": "Inicio de Sesión con Cuenta",
+            "error_message": "Nombre de usuario/contraseña incorrectos (admin/ant.design)",
+            "username_placeholder": "Nombre de usuario: admin o user",
+            "username_required": "¡Por favor ingresa tu nombre de usuario!",
+            "password_placeholder": "Contraseña: ant.design",
+            "password_required": "¡Por favor ingresa tu contraseña!",
+            "phone_login": "Inicio de Sesión con Teléfono",
+            "phone_login.error_message": "Error en el Código de Verificación",
+            "phone_number": "Número de Teléfono",
+            "phone_number_required": "¡Por favor ingresa tu número de teléfono!",
+            "phone_number_invalid": "¡Número de teléfono no válido!",
+            "captcha_placeholder": "Código de Verificación",
+            "captcha_required": "¡Por favor ingresa el código de verificación!",
+            "get_code": "Obtener Código",
+            "time_secs": "seg(s)",
+            "remember_me": "Recuérdame",
+            "forgot_password": "¿Olvidaste la Contraseña?",
+            "submit": "Enviar",
+            "login_with": "Iniciar sesión con:",
+            "register_account": "Registrar Cuenta"
+        },
+        "search_table": {
+            "new_rule": "Nueva Regla",
+            "rule_configuration": "Configuración de Regla",
+            "basic_information": "Información Básica",
+            "rule_name": "Nombre de la Regla",
+            "rule_name_placeholder": "¡Por favor ingresa el nombre de la regla!",
+            "rule_description": "Descripción de la Regla",
+            "rule_description_placeholder": "Por favor ingresa al menos cinco caracteres",
+            "desc_rules": "¡Por favor ingresa una descripción de la regla de al menos cinco caracteres!",
+            "configure_properties": "Configurar Propiedades",
+            "monitoring_object": "Objeto de Monitoreo",
+            "rule_template": "Plantilla de Regla",
+            "rule_type": "Tipo de Regla",
+            "scheduling_period_title": "Establecer Período de Programación",
+            "starting_time": "Hora de Inicio",
+            "scheduling_period_time_rules": "¡Por favor elige una hora de inicio!"
+        }
+    }
+}

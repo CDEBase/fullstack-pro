@@ -1,0 +1,17 @@
+{
+    "profile": {
+        "name": "Name",
+        "username": "Username",
+        "email": "Email",
+        "updateProfile": "Update Profile",
+        "notification": {
+            "heading": "Notification Setting",
+            "changeAccount": "On change account settings",
+            "pullRequest": "On new pull requests"
+        },
+        "newPassword": "New Password",
+        "oldPassword": "Old Password",
+        "confirmPassword": "Confirm Password",
+        "setPassword": "Set Password"
+    }
+}
