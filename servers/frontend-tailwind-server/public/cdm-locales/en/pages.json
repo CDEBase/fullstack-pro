@@ -1,56 +1,56 @@
 {
-    "pages": {
-        "layout": {
-            "userLayout_title": "Ant Design is the most influential web design specification in Xihu district"
-        },
-        "welcome": {
-            "advanced_component": "Advanced Component",
-            "welcome": "Welcome",
-            "advanced_layout": "Advanced Layout",
-            "alert_message": "Faster and stronger heavy-duty components have been released."
-        },
-        "admin": {
-            "sub_page_title": "This page can only be viewed by Admin",
-            "sub_page_alert_message": "Umi ui is now released, welcome to use npm run ui to start the experience."
-        },
-        "login": {
-            "account_login": "Account Login",
-            "error_message": "Incorrect username/password（admin/ant.design)",
-            "username_placeholder": "Username: admin or user",
-            "username_required": "Please input your username!",
-            "password_placeholder": "Password: ant.design",
-            "password_required": "Please input your password!",
-            "phone_login": "Phone Login",
-            "phone_login.error_message": "Verification Code Error",
-            "phone_number": "Phone Number",
-            "phone_number_required": "Please input your phone number!",
-            "phone_number_invalid": "Phone number is invalid!",
-            "captcha_placeholder": "Verification Code",
-            "captcha_required": "Please input verification code!",
-            "get_code": "Get Code",
-            "time_secs": "sec(s)",
-            "remember_me": "Remember me",
-            "forgot_password": "Forgot Password ?",
-            "submit": "Submit",
-            "login_with": "Login with :",
-            "register_account": "Register Account"
-        },
-        "search_table": {
-            "new_rule": "New Rule",
-            "rule_configuration": "Rule configuration",
-            "basic_information": "Basic Information",
-            "rule_name": "Rule Name",
-            "rule_name_placeholder": "Please enter the rule name!",
-            "rule_description": "Rule Description",
-            "rule_description_placeholder": "Please enter at least five characters",
-            "desc_rules": "Please enter a rule description of at least five characters!",
-            "configure_properties": "Configure Properties",
-            "monitoring_object": "Monitoring Object",
-            "rule_template": "Rule Template",
-            "rule_type": "Rule Type",
-            "scheduling_period_title": "Set Scheduling Period",
-            "starting_time": "Starting Time",
-            "scheduling_period_time_rules": "Please choose a start time!"
-        }
+  "pages": {
+    "layout": {
+      "userLayout_title": "Ant Design is the most influential web design specification in Xihu district"
+    },
+    "welcome": {
+      "advanced_component": "Advanced Component",
+      "welcome": "Welcome",
+      "advanced_layout": "Advanced Layout",
+      "alert_message": "Faster and stronger heavy-duty components have been released."
+    },
+    "admin": {
+      "sub_page_title": "This page can only be viewed by Admin",
+      "sub_page_alert_message": "Umi ui is now released, welcome to use npm run ui to start the experience."
+    },
+    "login": {
+      "account_login": "Account Login",
+      "error_message": "Incorrect username/password（admin/ant.design)",
+      "username_placeholder": "Username: admin or user",
+      "username_required": "Please input your username!",
+      "password_placeholder": "Password: ant.design",
+      "password_required": "Please input your password!",
+      "phone_login": "Phone Login",
+      "phone_login.error_message": "Verification Code Error",
+      "phone_number": "Phone Number",
+      "phone_number_required": "Please input your phone number!",
+      "phone_number_invalid": "Phone number is invalid!",
+      "captcha_placeholder": "Verification Code",
+      "captcha_required": "Please input verification code!",
+      "get_code": "Get Code",
+      "time_secs": "sec(s)",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot Password ?",
+      "submit": "Submit",
+      "login_with": "Login with :",
+      "register_account": "Register Account"
+    },
+    "search_table": {
+      "new_rule": "New Rule",
+      "rule_configuration": "Rule configuration",
+      "basic_information": "Basic Information",
+      "rule_name": "Rule Name",
+      "rule_name_placeholder": "Please enter the rule name!",
+      "rule_description": "Rule Description",
+      "rule_description_placeholder": "Please enter at least five characters",
+      "desc_rules": "Please enter a rule description of at least five characters!",
+      "configure_properties": "Configure Properties",
+      "monitoring_object": "Monitoring Object",
+      "rule_template": "Rule Template",
+      "rule_type": "Rule Type",
+      "scheduling_period_title": "Set Scheduling Period",
+      "starting_time": "Starting Time",
+      "scheduling_period_time_rules": "Please choose a start time!"
     }
+  }
 }

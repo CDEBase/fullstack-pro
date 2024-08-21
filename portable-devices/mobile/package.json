@@ -63,9 +63,9 @@
     "dependencies": {
         "@apollo/client": "^3.9.0",
         "@cdm-logger/client": "^9.0.3",
-        "@common-stack/client-core": "^5.0.4-alpha.6",
-        "@common-stack/client-react": "^5.0.4-alpha.6",
-        "@common-stack/core": "^5.0.4-alpha.5",
+        "@common-stack/client-core": "^6.0.1-alpha.0",
+        "@common-stack/client-react": "^6.0.1-alpha.0",
+        "@common-stack/core": "^6.0.1-alpha.0",
         "@expo/vector-icons": "~13.0.0",
         "@react-native-async-storage/async-storage": "1.17.11",
         "@react-native-community/cameraroll": "~4.1.2",
