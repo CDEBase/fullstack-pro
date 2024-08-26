@@ -1,106 +1,121 @@
-/* eslint-disable jest/require-hook */
-/* eslint-disable no-loop-func */
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable consistent-return */
-const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
-
-const SERVER_FOLDER = './servers';
 const simpleGit = require('simple-git');
+const glob = require('glob');
 
 const git = simpleGit();
+const monorepoRoot = path.resolve(__dirname, '..');
 
-const searchAndUpdate = (dependencies, filePath, obj) => {
-    const fileWrie = filePath;
-    const packageDir = path.dirname(filePath);
-    console.log('---PACKAGE DIR', packageDir);
-    for (const key in dependencies) {
-        if (dependencies[key].includes('link:')) {
-            const relativeDepFolder = dependencies[key].split('link:')[1];
-            console.log('--FOLDER ROAD', relativeDepFolder);
-            const dependencyFolder = path.join(packageDir, relativeDepFolder);
-            try {
-                fs.readdirSync(dependencyFolder);
-            } catch (err) {
+// matching prettier format
+const JSON_SPACING = 4;
+const ADD_END_NEWLINE = true; // Set to true to add a newline at the end of the file
 
-                console.log(`--- err ${err.message}`);
-                console.log(
-                    `err Search for dependency of ${filePath} with package path ${relativeDepFolder} not found`,
-                );
-                throw err;
-            }
-            glob(`${dependencyFolder}/package.json`, { ignore: '**/node_modules/**' }, (err, files) => {
-                if (err) return console.error(`Unable to scan directory: ${err}`);
-                console.log(files);
-                files.forEach((file) => {
-                    fs.readFile(file, 'utf-8', (err, data) => {
-                        if (err) return console.error(`Unable to scan directory: ${err}`);
-                        try {
-                            const objVersion = JSON.parse(data);
-                            const { version } = objVersion;
-                            dependencies[key] = `${version}`;
-                            const str = JSON.stringify(obj, null, 2);
-                            fs.writeFileSync(fileWrie, str, 'ascii');
-                        } catch (err) {
-                            console.error(`Failed at file: ${file}`)
-                            throw (err);
-                        }
+const findPackageJsonFiles = () => {
+    return new Promise((resolve, reject) => {
+        glob(
+            `${monorepoRoot}/+(servers|portable-devices|packages|packages-modules)/**/package.json`,
+            { onlyFiles: true, ignore: '**/node_modules/**' },
+            (err, files) => {
+                if (err) reject(`Unable to scan directory: ${err}`);
+                resolve(files);
+            },
+        );
+    });
+};
 
-                    });
-                });
+const buildPackageMap = async () => {
+    const packageJsonFiles = await findPackageJsonFiles();
+    const packageMap = new Map();
+
+    packageJsonFiles.forEach((file) => {
+        const packageJson = JSON.parse(fs.readFileSync(file, 'utf8'));
+        if (packageJson.name) {
+            packageMap.set(packageJson.name, {
+                path: path.dirname(file),
+                version: packageJson.version,
             });
         }
+    });
+
+    return packageMap;
+};
+
+const searchAndUpdate = (dependencies, filePath, obj, packageMap) => {
+    let modified = false;
+
+    for (const key in dependencies) {
+        if (dependencies[key].startsWith('link:')) {
+            const relativeDepFolder = dependencies[key].split('link:')[1];
+            const dependencyFolder = path.join(path.dirname(filePath), relativeDepFolder);
+
+            try {
+                const packageJsonPath = path.join(dependencyFolder, 'package.json');
+                const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+                if (dependencies[key] !== packageJson.version) {
+                    dependencies[key] = packageJson.version;
+                    modified = true;
+                }
+            } catch (err) {
+                console.error(`Error updating ${key} in ${filePath}: ${err.message}`);
+                throw err;
+            }
+        } else if (packageMap.has(key)) {
+            const version = packageMap.get(key).version;
+            if (dependencies[key] !== version) {
+                dependencies[key] = version;
+                modified = true;
+            }
+        }
+    }
+
+    if (modified) {
+        // Write the updated package.json back to disk with or without a newline at the end
+        let formattedJson = JSON.stringify(obj, null, JSON_SPACING);
+        if (ADD_END_NEWLINE) {
+            formattedJson += '\n';
+        }
+        fs.writeFileSync(filePath, formattedJson, 'utf8');
+    }
+
+    return modified;
+};
+
+const updateDependencies = async () => {
+    const packageMap = await buildPackageMap();
+    const packageJsonFiles = await findPackageJsonFiles();
+    const modifiedFiles = [];
+
+    packageJsonFiles.forEach((file) => {
+        if (!file.includes('node_modules')) {
+            try {
+                const data = fs.readFileSync(file, 'utf8');
+                const obj = JSON.parse(data);
+                const { dependencies, peerDependencies, devDependencies } = obj;
+
+                let modified = false;
+                modified = searchAndUpdate(dependencies, file, obj, packageMap) || modified;
+                modified = searchAndUpdate(peerDependencies, file, obj, packageMap) || modified;
+                modified = searchAndUpdate(devDependencies, file, obj, packageMap) || modified;
+
+                if (modified) {
+                    modifiedFiles.push(file);
+                }
+            } catch (err) {
+                console.error(`Unable to read file ${file}: ${err.message}`);
+            }
+        }
+    });
+
+    if (modifiedFiles.length > 0) {
+        await git.add(modifiedFiles);
+        await git.commit('Updated packages to use correct versions and linked dependencies');
+    } else {
+        console.log('No changes detected');
     }
 };
 
-glob(
-    './+(servers|portable-devices|packages|packages-modules)/**/package.json',
-    { onlyFiles: false, ignore: '**/node_modules/**' },
-    (err, files) => {
-        if (err) return console.error(`Unable to scan directory: ${err}`);
-        files.forEach((file) => {
-            if (!file.includes('node_modules')) {
-                fs.readFile(file, 'utf-8', (err, data) => {
-                    if (err) return console.error(`Unable to scan directory: ${err}`);
-                    try {
-                        const obj = JSON.parse(data);
-                        const { dependencies, peerDependencies, devDependencies } = obj;
-                        searchAndUpdate(dependencies, file, obj);
-                        searchAndUpdate(peerDependencies, file, obj);
-                        searchAndUpdate(devDependencies, file, obj);
-                    } catch (err) {
-                        console.error(`Errored at ${file}`);
-                        console.error(err);
-                    }
-                });
-            }
-        });
-        git.add('.')
-            .then(() => {
-                git.status()
-                    .then((status) => {
-                        console.log('POST GIT CHANGES', status);
-                        if (status.modified.length) {
-                            const fileArray = status.modified.filter((element) => element.includes('package.json'));
-                            const addArray = fileArray.map((element) => `./${element}`);
-                            git.add(addArray);
-                            git.commit('corrected packages version!');
-                        } else console.log('no change');
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    });
-            })
-            .catch((err) => console.error(err));
-    },
-);
+updateDependencies()
+    .then(() => {
+        console.log('Dependencies updated successfully.');
+    })
+    .catch((err) => console.error(`Error in updateDependencies: ${err.message}`));

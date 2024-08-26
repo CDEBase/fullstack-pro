@@ -1,4 +1,4 @@
-FROM node:16.17-alpine
+FROM node:18.20-alpine
 
 # Copy package.json only to temp folder, install its dependencies,
 # set workdir and copy the dependnecies there
@@ -7,6 +7,10 @@ FROM node:16.17-alpine
 COPY .npmrc /tmp/.npmrc 
 ADD package.json /tmp/package.json
 RUN set -ex \
+  && apk add --no-cache \
+	curl \
+	ca-certificates \
+	build-base \
 	&& cd /tmp \
 	&& yarn config set network-timeout 300000 \
 	&& yarn install \

@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { ClientTypes } from '@common-stack/client-react';
-import { logger } from '@cdm-logger/client';
+import { ClientLogger } from '@cdm-logger/client';
 import modules, { MainRoute } from './modules';
 import { navigate } from './navigator';
 
 Object.assign(global, require('../../build.config'));
 
-
-class UtilityClass {
+export class UtilityClass {
     // tslint:disable-next-line:no-shadowed-variable
     constructor(private modules) {}
 
@@ -16,16 +15,14 @@ class UtilityClass {
         return this.modules.getDataIdFromObject(storeObj);
     }
 
-    public navigate(name: string, params: never){
+    public navigate(name: string, params: never) {
         return navigate(name, params);
     }
 }
 
-const utility = new UtilityClass(modules);
-// additional bindings to container
-const container = modules.createContainers({}) as any;
-container.bind(ClientTypes.Logger).toConstantValue(logger);
-container.bind(ClientTypes.UtilityClass).toConstantValue(utility);
+const logger = ClientLogger.create(process.env.APP_NAME || 'Fullstack-Pro', {
+    level: (process.env.LOG_LEVEL as any) || 'info',
+});
 
 export default modules;
-export { MainRoute, container, logger };
+export { MainRoute, logger };

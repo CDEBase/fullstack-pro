@@ -1,33 +1,25 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build"
-        ]
-      }
-    }
-  },
-  "namedInputs": {
-    "adminide": [
-      "{projectRoot}/packages/**/*",
-      "{projectRoot}/packages-modules/**/*"
-    ]
-  },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "adminide"
-      ]
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nx-aws-plugin/nx-aws-cache",
+            "options": {
+                "runtimeCacheInputs": ["node --version"],
+                "awsAccessKeyId": "xxxx",
+                "awsSecretAccessKey": "xxxx",
+                "awsRegion": "ca-central-1",
+                "awsBucket": "clockbook-screenshot"
+            }
+        }
     },
-    "test": {
-      "dependsOn": [
-        "build"
-      ]
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["default", "^default", "{projectRoot}/src/**/*"],
+            "cache": true,
+            "outputs": ["{projectRoot}/lib"]
+        },
+        "test": {
+            "dependsOn": ["^test"]
+        }
     }
-  }
 }

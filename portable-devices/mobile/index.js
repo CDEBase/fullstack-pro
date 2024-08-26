@@ -4,6 +4,7 @@
 import { registerRootComponent } from 'expo';
 import './shim';
 import 'react-native-reanimated'; // to fix web crash
+import 'react-native-gesture-handler';
 
 import App from './App';
 

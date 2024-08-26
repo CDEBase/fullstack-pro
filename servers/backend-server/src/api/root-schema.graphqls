@@ -1,13 +1,65 @@
 scalar AnyObject
+scalar Date
+scalar Time
+scalar DateTime
+scalar Timestamp
+scalar URI
+scalar URIInput
+scalar Observable
+
 scalar JSON
 scalar JSONObject
+
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+enum CacheControlScope {
+    PUBLIC
+    PRIVATE
+}
+
+"""
+An object with an ID.
+"""
+interface Node {
+    """
+    The ID of the node.
+    """
+    id: ID!
+}
+
+# Pagination information. See https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo.
+type PageInfo {
+    # Whether there is a next page of nodes in the connection.
+    hasNextPage: Boolean!
+}
+
+"""
+Represents a null return value.
+"""
+type EmptyResponse {
+    # A dummy null value.
+    alwaysNil: String
+}
+
 type FieldError {
-  field: String!
-  message: String!
+    field: String!
+    message: String!
+}
+
+input Sort {
+    key: String!
+    value: SortEnum!
+}
+
+enum SortEnum {
+    ASC
+    DESC
 }
 
 type Query {
-    dummy: Int
+    """
+    Looks up a node by ID.
+    """
+    node(id: ID!): Node
 }
 
 type Mutation {
@@ -18,10 +70,44 @@ type Subscription {
     dummy: Int
 }
 
-interface Node {
-      id: ID!
+type AdminIdeSettings {
+    dummy: Int
 }
 
+"""
+All Moleculer Topic names are extended from this.
+"""
+enum MoleculerServiceName {
+    dummy
+}
+
+interface IResourceUtilizationSettings {
+    subTopic: String
+    adminApiNamespace: String
+}
+
+"""
+Input geometry of the location.
+List the `longitude` first and then `latitude`
+ - Validate longitude values are between `-180` and `180`
+ - Validate latitude values are between `-90` and `90`
+"""
+input GeoLocation_Input {
+    type: String = "Point"
+    coordinates: [Float]
+}
+
+type GeoLocation {
+    coordinates: [Float]
+}
+
+enum MailTemplateId {
+    dummy
+}
+
+enum MoleculerCronServiceName {
+    dummy
+}
 
 schema {
     query: Query

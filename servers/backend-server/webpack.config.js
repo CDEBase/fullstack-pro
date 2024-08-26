@@ -1,17 +1,37 @@
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const Dotenv = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 const EnvListPlugin = require('@common-stack/env-list-loader');
+const { writeBackendModuleFile } = require('@common-stack/rollup-vite-utils/lib/utils/utils.cjs');
+const packageConfig = require('./config.json');
 const buildConfig = require('./build.config');
 
-const modulenameExtra = process.env.MODULENAME_EXTRA ? `${process.env.MODULENAME_EXTRA}|` : '';
-const modulenameRegex = new RegExp(
-    `(${modulenameExtra}@sample-stack*|ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
-);
+const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
+let modulenameRegex;
+
+try {
+    modulenameRegex = new RegExp(
+        `(${modulenameExtra}ts-invariant|@common-stack/server-stack|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+    );
+    console.log('Module Name Regex: ', modulenameRegex);
+} catch (error) {
+    console.error('Error creating regex for module name: ', error);
+}
+
+if (process.env.BUILD_MODULE_TO_INCLUDE) {
+    console.log('Build Module to include (BUILD_MODULE_TO_INCLUDE): ', process.env.BUILD_MODULE_TO_INCLUDE);
+} else {
+    console.log('BUILD_MODULE_TO_INCLUDE is not set.');
+}
+
+try {
+    writeBackendModuleFile(path.join(__dirname, 'src/modules'), packageConfig);
+} catch (e) {
+    console.error(e);
+}
 
 const config = {
     entry: {
@@ -61,14 +81,32 @@ const config = {
                     { loader: 'less-loader', options: { javascriptEnabled: true, sourceMap: true } },
                 ],
             },
-            { test: /\.graphqls/, use: { loader: 'raw-loader' } },
+            { test: /\.graphqls$/, use: { loader: 'raw-loader' } },
             { test: /\.(graphql|gql)$/, use: [{ loader: 'graphql-tag/loader' }] },
+            // {
+            //     test: /\.[tj]sx?$/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: { babelrc: true, rootMode: 'upward-optional' },
+            //     },
+            // },
             {
-                test: /\.[tj]sx?$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: { babelrc: true, rootMode: 'upward-optional' },
+                test: /\.tsx?$/, // for TypeScript
+                loader: 'esbuild-loader',
+                options: {
+                    loader: 'tsx', // Or 'ts' for TypeScript without JSX
+                    target: 'es2015', // Specify ECMAScript target version
                 },
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.jsx?$/, // for JavaScript
+                loader: 'esbuild-loader',
+                options: {
+                    loader: 'jsx', // Or 'js' for plain JavaScript
+                    target: 'es2015',
+                },
+                exclude: /node_modules/,
             },
             {
                 // searches for files ends with <dir>/config/env-config.js or <dir>/config/public-config.js
@@ -82,6 +120,10 @@ const config = {
         unsafeCache: false,
     },
     resolve: {
+        alias: {
+            // Define your alias here
+            '@src': path.resolve(__dirname, 'src'),
+        },
         symlinks: true,
         cacheWithContext: false,
         unsafeCache: false,
@@ -102,7 +144,7 @@ const config = {
     watchOptions: { ignored: /dist/ },
     output: {
         pathinfo: false,
-        filename: 'main.js',
+        filename: 'index.js',
         path: path.join(__dirname, 'dist'),
         publicPath: '/',
         sourceMapFilename: '[name].[chunkhash].js.map',
@@ -129,14 +171,14 @@ const config = {
                 })),
             ),
         ),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: '../../tools/esm-wrapper.js',
-                    to: 'index.js',
-                },
-            ],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: '../../tools/esm-wrapper.js',
+        //             to: 'index.js',
+        //         },
+        //     ],
+        // }),
     ]),
     target: 'node',
     externals: [

@@ -1,5 +1,5 @@
-import * as DataLoader from 'dataloader';
-import { KeyValueCache } from 'apollo-server-caching';
+import DataLoader from 'dataloader';
+import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { logger } from '@cdm-logger/server';
 import { config } from '../config';
 import { ICounterService } from '../interfaces';
@@ -14,9 +14,7 @@ export const setupCaching = ({
     cache: KeyValueCache<string>;
 }) => {
     const loader = new DataLoader<string, Counter>(
-        (args) => {
-            return (counterService.counterQuery() as Promise<Counter>).then((data) => [data]);
-        },
+        (args) => (counterService.counterQuery() as Promise<Counter>).then((data) => [data]),
         { batch: false },
     );
     const cachedCounterService: ICounterService = {} as ICounterService;

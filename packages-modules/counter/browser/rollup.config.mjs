@@ -1,27 +1,18 @@
-import graphql from '@rollup/plugin-graphql';
-import image from '@rollup/plugin-image';
-import typescript from '@rollup/plugin-typescript';
-import { string } from 'rollup-plugin-string';
+import { createRollupConfig } from '../../../rollup.config.base.mjs';
+import json from '@rollup/plugin-json';
+// Define any additional plugins specific to this bundle
+const additionalPlugins = [
+    json()
+];
 
-const bundle = (config) => ({
-    ...config,
-    input: 'src/index.ts',
-    // marking all node modules as external
-    external: (id) => !/^[./]/.test(id),
-});
-const globals = { react: 'React' };
-
+// Use the createRollupConfig function to merge the base and specific configurations
 export default [
-    bundle({
+    createRollupConfig({
+        input: ['src/index.ts'],
         plugins: [
-            image(),
-            graphql({
-                include: '**/*.gql',
-            }),
-            string({
-                include: '**/*.graphql',
-            }),
-            typescript({ noEmitOnError: true }),
+            // Spread in additional plugins specific to this config
+            ...additionalPlugins,
+           
         ],
         output: [
             {
@@ -33,7 +24,7 @@ export default [
                 sourcemap: true,
                 preserveModules: true,
                 chunkFileNames: '[name]-[hash].[format].js',
-                globals,
+                globals: { react: 'React' },
             },
         ],
     }),

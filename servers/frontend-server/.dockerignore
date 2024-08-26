@@ -1,5 +1,11 @@
 *
+!app/
+!public/
+!tools/
 !dist/
+!build/
+!server.ts
+!src
 !*.js
 !*.json
 !.npmrc

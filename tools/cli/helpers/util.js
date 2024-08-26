@@ -1,7 +1,7 @@
 const shell = require('shelljs');
 const fs = require('fs');
 const { pascalize, decamelize } = require('humps');
-const { startCase } = require('lodash');
+const { startCase } = require('lodash-es');
 const { BASE_PATH } = require('../config');
 
 /**
@@ -28,14 +28,14 @@ function renameFiles(destinationPath, moduleName) {
     shell.cd(destinationPath);
 
     // rename files
-    shell.ls('-Rl', '.').forEach(entry => {
+    shell.ls('-Rl', '.').forEach((entry) => {
         if (entry.isFile()) {
             shell.mv(entry.name, entry.name.replace('Module', Module));
         }
     });
 
     // replace module names
-    shell.ls('-Rl', '.').forEach(entry => {
+    shell.ls('-Rl', '.').forEach((entry) => {
         if (entry.isFile()) {
             shell.sed('-i', /\$module\$/g, moduleName, entry.name);
             shell.sed('-i', /\$_module\$/g, decamelize(moduleName), entry.name);
@@ -72,5 +72,5 @@ module.exports = {
     renameFiles,
     copyFiles,
     computeModulesPath,
-    runPrettier
+    runPrettier,
 };
