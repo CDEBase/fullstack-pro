@@ -1,8 +1,6 @@
-import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { ApolloError } from 'apollo-server-errors';
-import { InMemoryLRUCache } from 'apollo-server-caching';
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 // import { setupCaching } from './cache';
-import { KeyValueCache } from 'apollo-server-caching';
 import { IService, IContext, ICounterService } from '../interfaces';
 import { setupCaching } from './cache';
 import { Counter } from '../generated-models';
@@ -11,14 +9,12 @@ export interface CacheOptions {
     ttl?: number;
 }
 
-export class CounterDataSource extends DataSource<IService> implements ICounterService {
+export class CounterDataSource implements ICounterService {
     private context!: IContext;
 
     private cacheCounterService: ICounterService;
 
-    constructor() {
-        super();
-    }
+    constructor(private cache?) {}
 
     public counterQuery(): Counter | Promise<Counter> | PromiseLike<Counter> {
         return this.cacheCounterService.counterQuery();
@@ -28,7 +24,7 @@ export class CounterDataSource extends DataSource<IService> implements ICounterS
         return this.cacheCounterService.addCounter();
     }
 
-    public initialize(config: DataSourceConfig<IContext>) {
+    public initialize(config) {
         this.context = config.context;
         if (!this.context.counterMockService) {
             throw new ApolloError('Missing TextFileService in the context!');

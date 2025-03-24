@@ -19,20 +19,8 @@
       "ES2020",
       "dom",
       "esnext.asynciterable"
-    ],
-    "typeRoots": [
-      "./typings/*.d.ts",
-      "node_modules/@types"
-    ],
-    "types": [
-      "@types/node",
-      "@types/jest"
     ]
   },
-  "include": [
-    "./typings/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src", "typings/*.d.ts"],
+  "exclude": ["node_modules"]
 }

@@ -1,13 +1,13 @@
-const nodeExternals = require('webpack-node-externals');
-const webpack = require('webpack');
-const path = require('path');
-const fs = require('fs');
+var nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+var webpack = require('webpack');
+var path = require('path');
+var fs = require('fs');
 
-const webpackOpts = {
+var webpackOpts = {
     mode: 'development',
     entry: {
-        index: './src/index.ts',
-        'moleculer.config': './src/config/moleculer.config.ts',
+        main: './src/index.ts',
     },
     target: 'node',
     output: {
@@ -18,6 +18,14 @@ const webpackOpts = {
         extensions: ['.ts', '.js', '.json'],
     },
     plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: '../../tools/esm-wrapper.js',
+                    to: 'index.js',
+                },
+            ],
+        }),
         new webpack.LoaderOptionsPlugin({
             options: {
                 test: /\.ts$/,

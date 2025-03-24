@@ -1,9 +1,12 @@
+process.env.ENV_FILE !== null && require('dotenv').config({ path: process.env.ENV_FILE });
 const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 const EnvListPlugin = require('@common-stack/env-list-loader');
+const { writeBackendModuleFile } = require('@common-stack/rollup-vite-utils/lib/utils/utils.cjs');
+const packageConfig = require('./config.json');
 const buildConfig = require('./build.config');
 
 const modulenameExtra = process.env.BUILD_MODULE_TO_INCLUDE ? `${process.env.BUILD_MODULE_TO_INCLUDE}|` : '';
@@ -11,7 +14,7 @@ let modulenameRegex;
 
 try {
     modulenameRegex = new RegExp(
-        `(${modulenameExtra}ts-invariant|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
+        `(${modulenameExtra}ts-invariant|@common-stack/server-stack|webpack/hot/poll)|(\\.(css|less|scss|png|ico|jpg|gif|xml|woff|woff2|otf|ttf|eot|svg)(\\?[0-9a-z]+)?$)`,
     );
     console.log('Module Name Regex: ', modulenameRegex);
 } catch (error) {
@@ -22,6 +25,12 @@ if (process.env.BUILD_MODULE_TO_INCLUDE) {
     console.log('Build Module to include (BUILD_MODULE_TO_INCLUDE): ', process.env.BUILD_MODULE_TO_INCLUDE);
 } else {
     console.log('BUILD_MODULE_TO_INCLUDE is not set.');
+}
+
+try {
+    writeBackendModuleFile(path.join(__dirname, 'src/modules'), packageConfig);
+} catch (e) {
+    console.error(e);
 }
 
 const config = {
@@ -72,7 +81,7 @@ const config = {
                     { loader: 'less-loader', options: { javascriptEnabled: true, sourceMap: true } },
                 ],
             },
-            { test: /\.graphqls/, use: { loader: 'raw-loader' } },
+            { test: /\.graphqls$/, use: { loader: 'raw-loader' } },
             { test: /\.(graphql|gql)$/, use: [{ loader: 'graphql-tag/loader' }] },
             // {
             //     test: /\.[tj]sx?$/,
@@ -111,6 +120,10 @@ const config = {
         unsafeCache: false,
     },
     resolve: {
+        alias: {
+            // Define your alias here
+            '@src': path.resolve(__dirname, 'src'),
+        },
         symlinks: true,
         cacheWithContext: false,
         unsafeCache: false,

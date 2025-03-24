@@ -1,9 +1,9 @@
 import * as React from 'react';
 import update from 'immutability-helper';
-import { graphql } from '@apollo/react-hoc';
+import { graphql } from '@apollo/client/react/hoc';
 import compose from 'lodash/flowRight';
 import { CounterComponent, ICounterProps } from '../components';
-import { COUNT_SUBSCRIPTION, COUNT_QUERY, ADD_COUNT_MUTATION,} from '../graphql';
+import { COUNT_SUBSCRIPTION, COUNT_QUERY, ADD_COUNT_MUTATION } from '../graphql';
 import { logger } from '@cdm-logger/client';
 type SubscriptionProps = {
     subscribeToMore: Function;
@@ -60,7 +60,6 @@ type SubscriptionProps = {
 //     }
 // }
 
-
 // save(amount) {
 //     return () => mutate({
 //         variables: { amount },
@@ -85,56 +84,59 @@ const updateQueries = {
     },
 };
 
-export const CounterWithApollo: React.ComponentClass = (compose(
+export const CounterWithApollo: React.ComponentClass = compose(
     graphql<{}, any, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             save: (amount) => {
-                return () => mutate({
-                    variables: { amount },
-                    // optimisticResponse: {
-                    //     __typename: 'Mutation',
+                return () =>
+                    mutate({
+                        variables: { amount },
+                        // optimisticResponse: {
+                        //     __typename: 'Mutation',
 
-                    // },
-                });
+                        // },
+                    });
             },
         }),
     }),
     graphql<{}, any, {}, {}>(ADD_COUNT_MUTATION, {
         props: ({ ownProps, mutate }) => ({
             increment: (amount) => {
-                return () => mutate({
-                    variables: { amount },
-                    // updateQueries,
-                });
+                return () =>
+                    mutate({
+                        variables: { amount },
+                        // updateQueries,
+                    });
             },
         }),
     }),
-)(graphql<ICounterProps, countOptions, {}, {}>(COUNT_QUERY, {
-    name: 'countData',
-    props: ({ countData }: any) => {
-        const newlog = logger.child({ childName: 'UIController' });
-        newlog.debug('count data : (%j)', countData);
-        return {
-            subscribeToCount: params => {
-                // logger.debug('count subscript data (%j)', params);
-                return countData.subscribeToMore({
-                    document: COUNT_SUBSCRIPTION,
-                    variables: {},
-                    updateQuery: (prev: any, { subscriptionData }) => {
-                        const payload = subscriptionData.data && subscriptionData.data.subscribeToWorkspace;
-                        if (!payload) {
-                            return prev;
-                        }
-                        return payload;
-                    },
-                });
-            },
-            counter: countData.count && countData.count.amount,
-            isLoading: countData.loading,
-            isSaving: false,
-            load: () => countData.count.amount,
-            error: countData.error,
-        };
-    },
-})(CounterComponent as any))
+)(
+    graphql<ICounterProps, countOptions, {}, {}>(COUNT_QUERY, {
+        name: 'countData',
+        props: ({ countData }: any) => {
+            const newlog = logger.child({ childName: 'UIController' });
+            newlog.debug('count data : (%j)', countData);
+            return {
+                subscribeToCount: (params) => {
+                    // logger.debug('count subscript data (%j)', params);
+                    return countData.subscribeToMore({
+                        document: COUNT_SUBSCRIPTION,
+                        variables: {},
+                        updateQuery: (prev: any, { subscriptionData }) => {
+                            const payload = subscriptionData.data && subscriptionData.data.subscribeToWorkspace;
+                            if (!payload) {
+                                return prev;
+                            }
+                            return payload;
+                        },
+                    });
+                },
+                counter: countData.count && countData.count.amount,
+                isLoading: countData.loading,
+                isSaving: false,
+                load: () => countData.count.amount,
+                error: countData.error,
+            };
+        },
+    })(CounterComponent as any),
 );

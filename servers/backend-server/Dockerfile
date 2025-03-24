@@ -1,5 +1,5 @@
 # The official nodejs docker image
-FROM node:18.18-bullseye
+FROM node:20.16-bullseye
 
 ENV PYTHON /usr/bin/python
 
@@ -11,6 +11,7 @@ COPY .npmrc /tmp/.npmrc
 ADD package.json /tmp/package.json
 RUN set -ex \
 	&& cd /tmp \
+	&& npm install -g node-gyp \
 	&& yarn config set network-timeout 300000 \
 	&& yarn install \
 	&& rm -f /tmp/.npmrc \
@@ -23,7 +24,7 @@ WORKDIR /home/app
 # Copy the rest of the files to the container workdir
 ADD . /home/app
 
-ENV PORT=8080
+ENV PORT=9090
 EXPOSE ${PORT}
 
 CMD ["yarn", "start"]

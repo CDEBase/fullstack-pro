@@ -1,19 +1,13 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "sourceMap": true,
-    "declaration": false,
-    "allowSyntheticDefaultImports": true,
-    "rootDirs": ["./src","../knexfile.ts"],
-    "outDir": "./dist"
-  },
-  "include": [
-    "../../typings/*.d.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "dist",
-    "webpack.config.js"
-  ]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["src/*"]
+        },
+        "sourceMap": true,
+        "declaration": false,
+        "allowSyntheticDefaultImports": true,
+        "rootDirs": ["./src", "../knexfile.ts"],
+        "outDir": "./dist"
+    }
 }

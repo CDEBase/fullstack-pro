@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { KeyValueCache } from 'apollo-server-caching';
+import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { logger } from '@cdm-logger/server';
 import { config } from '../config';
 import { ICounterService } from '../interfaces';

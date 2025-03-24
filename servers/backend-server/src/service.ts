@@ -1,17 +1,16 @@
-import { StackServer } from './stack-server';
 import { logger } from '@cdm-logger/server';
 import * as url from 'url';
+import modules, { settings } from './modules';
+import { MainStackServer } from '@common-stack/server-stack';
 import { config } from './config';
 
 const { port: serverPort, pathname, hostname } = url.parse(config.BACKEND_URL);
 
 export class Service {
-
-    private app: StackServer;
+    private app: MainStackServer;
 
     public async initialize() {
-
-        this.app = new StackServer();
+        this.app = new MainStackServer(modules, settings);
         await this.app.initialize();
     }
 

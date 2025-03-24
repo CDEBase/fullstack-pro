@@ -2,6 +2,45 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { defaults } = require('jest-config');
 
+const packagesToTransform = [
+    '@apollo/client',
+    '@common-stack/client-core',
+    '@common-stack/client-react',
+    '@common-stack/core',
+    '@admin-layout/client',
+    '@common-stack/components-pro',
+    '@common-stack/server-core',
+    '@common-stack/cache-api-server',
+    '@common-stack/remix-router-redux',
+    '@cdmbase/redux-auth-wrapper',
+    '@cdmbase/remix-redis-session',
+    '@cdm-logger/server',
+    '@cdm-logger/core',
+    '@cdm-logger/client',
+    '@files-stack/server-core',
+    '@vscode-alt/monaco-editor',
+    '@workbench-stack/core',
+    '@workbench-stack/platform-server',
+    'abortable-rx',
+    'lodash-es',
+    'sort-keys',
+    'is-plain-obj',
+    'query-string',
+    'decode-uri-component',
+    'split-on-first',
+    'filter-obj',
+    'react-dnd-html5-backend',
+    'react-sortable-tree',
+    'react-dnd',
+    'dnd-core',
+];
+
+const generateTransformIgnorePattern = (packages) => {
+    const escapedPackages = packages.map((pkg) => pkg.replace(/\//g, '\\/'));
+    return `/node_modules/(?!(${escapedPackages.join('|')})/).+\\.js$`;
+};
+const transformIgnorePattern = generateTransformIgnorePattern(packagesToTransform);
+
 module.exports = {
     testEnvironment: 'node',
     setupFiles: [
@@ -10,11 +49,11 @@ module.exports = {
     ],
     preset: 'ts-jest',
     testMatch: null,
-    testRegex: '.*test*\\.(ts|tsx|js)$',
-    testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+    testRegex: '.*test\\.(ts|tsx|js)$',
+    testPathIgnorePatterns: ['/node_modules/', '/lib', '/dist/'],
     transform: {
         '\\.(gql)$': 'jest-transform-graphql',
-        '\\.(graphql|graphqls)$': 'jest-raw-loader',
+        '\\.(graphql|graphqls)$': '@glen/jest-raw-loader',
         '\\.(ts|tsx)$': 'ts-jest',
         // Use our custom transformer only for the *.js and *.jsx files
         '\\.(js|jsx)?$': './transform.js',
@@ -39,7 +78,7 @@ module.exports = {
         // because we don't need to use any kind of tree shaking right?!
         '^lodash-es$': '<rootDir>/node_modules/lodash/index.js',
     },
-    transformIgnorePatterns: ['/node_modules/(?!(babel-runtime|antd)).*/', '<rootDir>/node_modules/(?!lodash-es/.*)'],
+    transformIgnorePatterns: [transformIgnorePattern],
     clearMocks: true,
     verbose: true,
     // projects: ['<rootDir>'], // TODO need to test with it https://github.com/bryan-hunter/yarn-workspace-lerna-monorepo/blob/master/jest.config.base.js
