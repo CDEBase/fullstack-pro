@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2-alpha.0](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.68...v5.0.2-alpha.0) (2025-03-24)
+
+### Bug Fixes
+
+-   resolved some issues ([70fa0f3](https://github.com/cdmbase/fullstack-pro/commit/70fa0f320f802667f300ba07aad70461ea9c3938))
+-   roue configuration update ([cd92775](https://github.com/cdmbase/fullstack-pro/commit/cd9277525b528ee48b896fd11ce8d52306ac89ad))
+
 ## [0.0.59-alpha.68](https://github.com/cdmbase/fullstack-pro/compare/v0.0.59-alpha.67...v0.0.59-alpha.68) (2024-02-17)
 
 **Note:** Version bump only for package sample-stack-frontend-server
