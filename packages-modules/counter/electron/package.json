@@ -19,7 +19,7 @@
         "watch": "yarn build:lib:watch"
     },
     "dependencies": {
-        "@sample-stack/counter-module-browser": "0.0.59-alpha.18"
+        "@sample-stack/counter-module-browser": "0.0.1"
     },
     "peerDependencies": {
         "@common-stack/client-react": "*",

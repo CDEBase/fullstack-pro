@@ -33,7 +33,7 @@
         "@common-stack/server-core": "6.0.6-alpha.0",
         "@common-stack/server-stack": "6.0.6-alpha.0",
         "@common-stack/store-mongo": "6.0.2-alpha.2",
-        "@sample-stack/counter-module-server": "link:../../packages-modules/counter/server",
+        "@sample-stack/counter-module-server": "0.0.59-alpha.67",
         "app-root-path": "^3.0.0",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
